@@ -1,0 +1,3767 @@
+<!DOCTYPE html><html lang="en" data-preset="clinical" class=" "><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard · Smart Hospital</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Fonts: Inter + Roboto + Nunito (Theme Studio font-family choices) + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Roboto:wght@400;500;700;900&amp;family=Nunito:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+
+  <!-- 1. Bootstrap 5.3.3 — framework base (LTR/RTL swap based on language is_rtl) -->
+      <link href="https://demo.smart-hospital.in/backend/bootstrap5/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- 2. Design tokens (CSS custom properties for all 3 variants) — after BS5 -->
+  <link href="https://demo.smart-hospital.in/backend/css/sh-tokens.css" rel="stylesheet">
+
+  <!-- 3. Theme Studio per-user overlay — must load AFTER sh-tokens.css so user-customized
+       --accent / --link / --ink / --font / --text-scale / --density-y win by source order. -->
+  <style id="sh-theme-vars">
+/* Theme Studio per-request overlay. Higher source order than sh-tokens.css
+   variant-a/b/c blocks; same specificity (body[class*="variant-"]) so this wins. */
+:root { --text-scale: 1; }
+body[class*="variant-"] {
+  --bg: #F7FAFC;
+  --surface: #FFFFFF;
+  --surface-2: #F1F5F9;
+  --surface-3: #E2E8F0;
+  --ink: #0F172A;
+  --ink-2: #334155;
+  --muted: #64748B;
+  --faint: #94A3B8;
+  --border: #E2E8F0;
+  --border-light: #F1F5F9;
+  --border-strong: #CBD5E1;
+  --accent: #00B5AD;
+  --accent-ink: #FFFFFF;
+  --accent-soft: rgba(0,181,173,0.14);
+  --accent-dark: #009C95;
+  --link: #00B5AD;
+  --link-2: #009C95;
+  --rowhover: #F1F5F9;
+  --rail: #FFFFFF;
+  --rail-ink: #64748B;
+  --rail-ink-active: #0F172A;
+  --topbar: #FFFFFF;
+  --topbar-ink: #0F172A;
+  --font: 'Roboto', system-ui, -apple-system, sans-serif;
+  --density-y: 0.75rem;
+  --radius: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+}
+/* --text-scale lives on :root so that --fs-* token definitions (also on :root in
+   sh-tokens.css) resolve their var(--text-scale) correctly. Setting it on body would
+   bake in the wrong value when :root computes those tokens. */
+/* --density-y consumption: vertical padding on table cells + card bodies.
+   No-op when var falls back; takes effect when density buttons change the var. */
+.table > :not(caption) > * > * { padding-top: var(--density-y, 0.5rem) !important; padding-bottom: var(--density-y, 0.5rem) !important; }
+.card > .card-body { padding-top: calc(var(--density-y, 0.75rem) * 1.5); padding-bottom: calc(var(--density-y, 0.75rem) * 1.5); }
+</style>
+<script>document.documentElement.setAttribute('data-preset','clinical');</script>
+  <!-- 4. DataTables CSS (core + buttons + responsive + BS5 skin) -->
+  <link href="https://demo.smart-hospital.in/backend/dist/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="https://demo.smart-hospital.in/backend/dist/datatables/css/buttons.dataTables.min.css" rel="stylesheet">
+  <link href="https://demo.smart-hospital.in/backend/plugins/datatables/dataTables.bootstrap5.css" rel="stylesheet">
+  <link href="https://demo.smart-hospital.in/backend/dist/datatables/css/responsive.dataTables.min.css" rel="stylesheet">
+  <link href="https://demo.smart-hospital.in/backend/dist/datatables/css/rowReorder.dataTables.min.css" rel="stylesheet">
+
+  <!-- 5. Font Awesome 5 (fas/fab/far icons) + FA 4 fallback (fa icons) -->
+  <link href="https://demo.smart-hospital.in/backend/dist/css/all.css" rel="stylesheet">
+  <link href="https://demo.smart-hospital.in/backend/dist/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- 6. Select2 CSS -->
+  <link href="https://demo.smart-hospital.in/backend/plugins/select2/select2.min.css" rel="stylesheet">
+
+  <!-- 7. Date/time picker CSS — Tempus Dominus 6 (BS5 native, single library) -->
+  <link href="https://demo.smart-hospital.in/backend/plugins/tempus-dominus/css/tempus-dominus.min.css" rel="stylesheet">
+
+  <!-- 8. Toastr notifications CSS -->
+  <link href="https://demo.smart-hospital.in/backend/toast-alert/toastr.css" rel="stylesheet">
+
+  <!-- 9. Dropify (file upload), NProgress (progress bar) -->
+  <link rel="stylesheet" href="https://demo.smart-hospital.in/backend/dist/css/dropify.min.css">
+  <link href="https://demo.smart-hospital.in/backend/dist/css/nprogress.css" rel="stylesheet">
+
+  <!-- 10. FullCalendar -->
+  <link rel="stylesheet" href="https://demo.smart-hospital.in/backend/fullcalendar/dist/fullcalendar.min.css">
+  <link rel="stylesheet" href="https://demo.smart-hospital.in/backend/fullcalendar/dist/fullcalendar.print.min.css" media="print">
+
+  <!-- 11. Bootstrap Select -->
+  <link rel="stylesheet" type="text/css" href="https://demo.smart-hospital.in/backend/dist/css/bootstrap-select.min.css">
+
+  <!-- 12. Plugin CSS: iCheck, colorpicker, ionicons (datepicker/daterangepicker removed — replaced by Tempus Dominus 6 above) -->
+  <link rel="stylesheet" href="https://demo.smart-hospital.in/backend/plugins/iCheck/flat/blue.css">
+  <link rel="stylesheet" href="https://demo.smart-hospital.in/backend/plugins/colorpicker/bootstrap-colorpicker.css">
+  <link rel="stylesheet" href="https://demo.smart-hospital.in/backend/dist/css/ionicons.min.css">
+
+  <!-- 3. SH Theme (layout shell + BS5 overrides + custom components) — MUST load AFTER all plugin CSS so our overrides win -->
+  <link href="https://demo.smart-hospital.in/backend/css/sh-theme.css?v=1782816946" rel="stylesheet">
+
+  <!-- 3b. SH Dashboard styles — loaded ONLY on admin/admin/dashboard page (Variant B layout) -->
+      <link href="https://demo.smart-hospital.in/backend/css/sh-dashboard.css?v=1780163190" rel="stylesheet">
+  
+  <!-- 14. SH Admin RTL overrides — loaded LAST when RTL is active so all RTL rules win -->
+  
+  <!-- 13. Favicon -->
+    <link href="https://demo.smart-hospital.in/uploads/hospital_content/logo/0mini_logo.png" rel="shortcut icon" type="image/x-icon">
+
+  <!-- jQuery — must load before Bootstrap JS and all plugins -->
+  <script src="https://demo.smart-hospital.in/backend/custom/jquery.min.js"></script>
+
+  <!-- jQuery UI (sortable, draggable, datepicker) -->
+  <script src="https://demo.smart-hospital.in/backend/dist/js/jquery-ui.min.js"></script>
+
+  <!-- Color picker -->
+  <script src="https://demo.smart-hospital.in/backend/plugins/colorpicker/bootstrap-colorpicker.js"></script>
+
+  <!-- Date utilities (datejs library removed during TD 6 migration — was loaded but never used in project code) -->
+
+  <!-- SH Base URL (available to all inline scripts and sh-chrome.js) -->
+  <script>
+    var baseurl    = 'https://demo.smart-hospital.in/';
+    var SH_BASE    = baseurl;
+    var SH_CSRF_NAME  = 'ci_csrf_token';
+    var SH_CSRF_TOKEN = '';
+        var chk_validate = 'FNHAYZ-F8CLEU-KQTK7L-dHVybmIrbldVN0hLdlJiQ010WEYzdDI2bUF4NEFDSlk5VURtcFVoNjF5VT0=';
+  </script>
+
+    <script type="text/javascript">var base_url = 'https://demo.smart-hospital.in/';</script>
+  <!-- Header inline <style> block migrated to backend/css/sh-theme.css (2026-05-27) -->
+<style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style><style>.cke{visibility:hidden;}</style><style>@-webkit-keyframes swal2-show {
+  0% {
+    -webkit-transform: scale(0.7);
+            transform: scale(0.7); }
+  45% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05); }
+  80% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95); }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@keyframes swal2-show {
+  0% {
+    -webkit-transform: scale(0.7);
+            transform: scale(0.7); }
+  45% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05); }
+  80% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95); }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@-webkit-keyframes swal2-hide {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1; }
+  100% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+    opacity: 0; } }
+
+@keyframes swal2-hide {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1; }
+  100% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+    opacity: 0; } }
+
+@-webkit-keyframes swal2-animate-success-line-tip {
+  0% {
+    top: 1.1875em;
+    left: .0625em;
+    width: 0; }
+  54% {
+    top: 1.0625em;
+    left: .125em;
+    width: 0; }
+  70% {
+    top: 2.1875em;
+    left: -.375em;
+    width: 3.125em; }
+  84% {
+    top: 3em;
+    left: 1.3125em;
+    width: 1.0625em; }
+  100% {
+    top: 2.8125em;
+    left: .875em;
+    width: 1.5625em; } }
+
+@keyframes swal2-animate-success-line-tip {
+  0% {
+    top: 1.1875em;
+    left: .0625em;
+    width: 0; }
+  54% {
+    top: 1.0625em;
+    left: .125em;
+    width: 0; }
+  70% {
+    top: 2.1875em;
+    left: -.375em;
+    width: 3.125em; }
+  84% {
+    top: 3em;
+    left: 1.3125em;
+    width: 1.0625em; }
+  100% {
+    top: 2.8125em;
+    left: .875em;
+    width: 1.5625em; } }
+
+@-webkit-keyframes swal2-animate-success-line-long {
+  0% {
+    top: 3.375em;
+    right: 2.875em;
+    width: 0; }
+  65% {
+    top: 3.375em;
+    right: 2.875em;
+    width: 0; }
+  84% {
+    top: 2.1875em;
+    right: 0;
+    width: 3.4375em; }
+  100% {
+    top: 2.375em;
+    right: .5em;
+    width: 2.9375em; } }
+
+@keyframes swal2-animate-success-line-long {
+  0% {
+    top: 3.375em;
+    right: 2.875em;
+    width: 0; }
+  65% {
+    top: 3.375em;
+    right: 2.875em;
+    width: 0; }
+  84% {
+    top: 2.1875em;
+    right: 0;
+    width: 3.4375em; }
+  100% {
+    top: 2.375em;
+    right: .5em;
+    width: 2.9375em; } }
+
+@-webkit-keyframes swal2-rotate-success-circular-line {
+  0% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg); }
+  5% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg); }
+  12% {
+    -webkit-transform: rotate(-405deg);
+            transform: rotate(-405deg); }
+  100% {
+    -webkit-transform: rotate(-405deg);
+            transform: rotate(-405deg); } }
+
+@keyframes swal2-rotate-success-circular-line {
+  0% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg); }
+  5% {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg); }
+  12% {
+    -webkit-transform: rotate(-405deg);
+            transform: rotate(-405deg); }
+  100% {
+    -webkit-transform: rotate(-405deg);
+            transform: rotate(-405deg); } }
+
+@-webkit-keyframes swal2-animate-error-x-mark {
+  0% {
+    margin-top: 1.625em;
+    -webkit-transform: scale(0.4);
+            transform: scale(0.4);
+    opacity: 0; }
+  50% {
+    margin-top: 1.625em;
+    -webkit-transform: scale(0.4);
+            transform: scale(0.4);
+    opacity: 0; }
+  80% {
+    margin-top: -.375em;
+    -webkit-transform: scale(1.15);
+            transform: scale(1.15); }
+  100% {
+    margin-top: 0;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1; } }
+
+@keyframes swal2-animate-error-x-mark {
+  0% {
+    margin-top: 1.625em;
+    -webkit-transform: scale(0.4);
+            transform: scale(0.4);
+    opacity: 0; }
+  50% {
+    margin-top: 1.625em;
+    -webkit-transform: scale(0.4);
+            transform: scale(0.4);
+    opacity: 0; }
+  80% {
+    margin-top: -.375em;
+    -webkit-transform: scale(1.15);
+            transform: scale(1.15); }
+  100% {
+    margin-top: 0;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1; } }
+
+@-webkit-keyframes swal2-animate-error-icon {
+  0% {
+    -webkit-transform: rotateX(100deg);
+            transform: rotateX(100deg);
+    opacity: 0; }
+  100% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+    opacity: 1; } }
+
+@keyframes swal2-animate-error-icon {
+  0% {
+    -webkit-transform: rotateX(100deg);
+            transform: rotateX(100deg);
+    opacity: 0; }
+  100% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+    opacity: 1; } }
+
+body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast {
+  flex-direction: column;
+  align-items: stretch; }
+  body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast .swal2-actions {
+    flex: 1;
+    align-self: stretch;
+    justify-content: flex-end;
+    height: 2.2em; }
+  body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast .swal2-loading {
+    justify-content: center; }
+  body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast .swal2-input {
+    height: 2em;
+    margin: .3125em auto;
+    font-size: 1em; }
+  body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast .swal2-validationerror {
+    font-size: 1em; }
+
+body.swal2-toast-shown > .swal2-container {
+  position: fixed;
+  background-color: transparent; }
+  body.swal2-toast-shown > .swal2-container.swal2-shown {
+    background-color: transparent; }
+  body.swal2-toast-shown > .swal2-container.swal2-top {
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%); }
+  body.swal2-toast-shown > .swal2-container.swal2-top-end, body.swal2-toast-shown > .swal2-container.swal2-top-right {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: auto; }
+  body.swal2-toast-shown > .swal2-container.swal2-top-start, body.swal2-toast-shown > .swal2-container.swal2-top-left {
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: 0; }
+  body.swal2-toast-shown > .swal2-container.swal2-center-start, body.swal2-toast-shown > .swal2-container.swal2-center-left {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%); }
+  body.swal2-toast-shown > .swal2-container.swal2-center {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); }
+  body.swal2-toast-shown > .swal2-container.swal2-center-end, body.swal2-toast-shown > .swal2-container.swal2-center-right {
+    top: 50%;
+    right: 0;
+    bottom: auto;
+    left: auto;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%); }
+  body.swal2-toast-shown > .swal2-container.swal2-bottom-start, body.swal2-toast-shown > .swal2-container.swal2-bottom-left {
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0; }
+  body.swal2-toast-shown > .swal2-container.swal2-bottom {
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%); }
+  body.swal2-toast-shown > .swal2-container.swal2-bottom-end, body.swal2-toast-shown > .swal2-container.swal2-bottom-right {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: auto; }
+
+.swal2-popup.swal2-toast {
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+  padding: 0.625em;
+  box-shadow: 0 0 0.625em #d9d9d9;
+  overflow-y: hidden; }
+  .swal2-popup.swal2-toast .swal2-header {
+    flex-direction: row; }
+  .swal2-popup.swal2-toast .swal2-title {
+    justify-content: flex-start;
+    margin: 0 .6em;
+    font-size: 1em; }
+  .swal2-popup.swal2-toast .swal2-close {
+    position: initial; }
+  .swal2-popup.swal2-toast .swal2-content {
+    justify-content: flex-start;
+    font-size: 1em; }
+  .swal2-popup.swal2-toast .swal2-icon {
+    width: 2em;
+    min-width: 2em;
+    height: 2em;
+    margin: 0; }
+    .swal2-popup.swal2-toast .swal2-icon-text {
+      font-size: 2em;
+      font-weight: bold;
+      line-height: 1em; }
+    .swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring {
+      width: 2em;
+      height: 2em; }
+    .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+      top: .875em;
+      width: 1.375em; }
+      .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='left'] {
+        left: .3125em; }
+      .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='right'] {
+        right: .3125em; }
+  .swal2-popup.swal2-toast .swal2-actions {
+    height: auto;
+    margin: 0 .3125em; }
+  .swal2-popup.swal2-toast .swal2-styled {
+    margin: 0 .3125em;
+    padding: .3125em .625em;
+    font-size: 1em; }
+    .swal2-popup.swal2-toast .swal2-styled:focus {
+      box-shadow: 0 0 0 0.0625em #fff, 0 0 0 0.125em rgba(50, 100, 150, 0.4); }
+  .swal2-popup.swal2-toast .swal2-success {
+    border-color: #a5dc86; }
+    .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'] {
+      position: absolute;
+      width: 2em;
+      height: 2.8125em;
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg);
+      border-radius: 50%; }
+      .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'][class$='left'] {
+        top: -.25em;
+        left: -.9375em;
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+        -webkit-transform-origin: 2em 2em;
+                transform-origin: 2em 2em;
+        border-radius: 4em 0 0 4em; }
+      .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-circular-line'][class$='right'] {
+        top: -.25em;
+        left: .9375em;
+        -webkit-transform-origin: 0 2em;
+                transform-origin: 0 2em;
+        border-radius: 0 4em 4em 0; }
+    .swal2-popup.swal2-toast .swal2-success .swal2-success-ring {
+      width: 2em;
+      height: 2em; }
+    .swal2-popup.swal2-toast .swal2-success .swal2-success-fix {
+      top: 0;
+      left: .4375em;
+      width: .4375em;
+      height: 2.6875em; }
+    .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'] {
+      height: .3125em; }
+      .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'][class$='tip'] {
+        top: 1.125em;
+        left: .1875em;
+        width: .75em; }
+      .swal2-popup.swal2-toast .swal2-success [class^='swal2-success-line'][class$='long'] {
+        top: .9375em;
+        right: .1875em;
+        width: 1.375em; }
+  .swal2-popup.swal2-toast.swal2-show {
+    -webkit-animation: showSweetToast .5s;
+            animation: showSweetToast .5s; }
+  .swal2-popup.swal2-toast.swal2-hide {
+    -webkit-animation: hideSweetToast .2s forwards;
+            animation: hideSweetToast .2s forwards; }
+  .swal2-popup.swal2-toast .swal2-animate-success-icon .swal2-success-line-tip {
+    -webkit-animation: animate-toast-success-tip .75s;
+            animation: animate-toast-success-tip .75s; }
+  .swal2-popup.swal2-toast .swal2-animate-success-icon .swal2-success-line-long {
+    -webkit-animation: animate-toast-success-long .75s;
+            animation: animate-toast-success-long .75s; }
+
+@-webkit-keyframes showSweetToast {
+  0% {
+    -webkit-transform: translateY(-0.625em) rotateZ(2deg);
+            transform: translateY(-0.625em) rotateZ(2deg);
+    opacity: 0; }
+  33% {
+    -webkit-transform: translateY(0) rotateZ(-2deg);
+            transform: translateY(0) rotateZ(-2deg);
+    opacity: .5; }
+  66% {
+    -webkit-transform: translateY(0.3125em) rotateZ(2deg);
+            transform: translateY(0.3125em) rotateZ(2deg);
+    opacity: .7; }
+  100% {
+    -webkit-transform: translateY(0) rotateZ(0);
+            transform: translateY(0) rotateZ(0);
+    opacity: 1; } }
+
+@keyframes showSweetToast {
+  0% {
+    -webkit-transform: translateY(-0.625em) rotateZ(2deg);
+            transform: translateY(-0.625em) rotateZ(2deg);
+    opacity: 0; }
+  33% {
+    -webkit-transform: translateY(0) rotateZ(-2deg);
+            transform: translateY(0) rotateZ(-2deg);
+    opacity: .5; }
+  66% {
+    -webkit-transform: translateY(0.3125em) rotateZ(2deg);
+            transform: translateY(0.3125em) rotateZ(2deg);
+    opacity: .7; }
+  100% {
+    -webkit-transform: translateY(0) rotateZ(0);
+            transform: translateY(0) rotateZ(0);
+    opacity: 1; } }
+
+@-webkit-keyframes hideSweetToast {
+  0% {
+    opacity: 1; }
+  33% {
+    opacity: .5; }
+  100% {
+    -webkit-transform: rotateZ(1deg);
+            transform: rotateZ(1deg);
+    opacity: 0; } }
+
+@keyframes hideSweetToast {
+  0% {
+    opacity: 1; }
+  33% {
+    opacity: .5; }
+  100% {
+    -webkit-transform: rotateZ(1deg);
+            transform: rotateZ(1deg);
+    opacity: 0; } }
+
+@-webkit-keyframes animate-toast-success-tip {
+  0% {
+    top: .5625em;
+    left: .0625em;
+    width: 0; }
+  54% {
+    top: .125em;
+    left: .125em;
+    width: 0; }
+  70% {
+    top: .625em;
+    left: -.25em;
+    width: 1.625em; }
+  84% {
+    top: 1.0625em;
+    left: .75em;
+    width: .5em; }
+  100% {
+    top: 1.125em;
+    left: .1875em;
+    width: .75em; } }
+
+@keyframes animate-toast-success-tip {
+  0% {
+    top: .5625em;
+    left: .0625em;
+    width: 0; }
+  54% {
+    top: .125em;
+    left: .125em;
+    width: 0; }
+  70% {
+    top: .625em;
+    left: -.25em;
+    width: 1.625em; }
+  84% {
+    top: 1.0625em;
+    left: .75em;
+    width: .5em; }
+  100% {
+    top: 1.125em;
+    left: .1875em;
+    width: .75em; } }
+
+@-webkit-keyframes animate-toast-success-long {
+  0% {
+    top: 1.625em;
+    right: 1.375em;
+    width: 0; }
+  65% {
+    top: 1.25em;
+    right: .9375em;
+    width: 0; }
+  84% {
+    top: .9375em;
+    right: 0;
+    width: 1.125em; }
+  100% {
+    top: .9375em;
+    right: .1875em;
+    width: 1.375em; } }
+
+@keyframes animate-toast-success-long {
+  0% {
+    top: 1.625em;
+    right: 1.375em;
+    width: 0; }
+  65% {
+    top: 1.25em;
+    right: .9375em;
+    width: 0; }
+  84% {
+    top: .9375em;
+    right: 0;
+    width: 1.125em; }
+  100% {
+    top: .9375em;
+    right: .1875em;
+    width: 1.375em; } }
+
+body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+  overflow-y: hidden; }
+
+body.swal2-height-auto {
+  height: auto !important; }
+
+body.swal2-no-backdrop .swal2-shown {
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  background-color: transparent; }
+  body.swal2-no-backdrop .swal2-shown > .swal2-modal {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); }
+  body.swal2-no-backdrop .swal2-shown.swal2-top {
+    top: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%); }
+  body.swal2-no-backdrop .swal2-shown.swal2-top-start, body.swal2-no-backdrop .swal2-shown.swal2-top-left {
+    top: 0;
+    left: 0; }
+  body.swal2-no-backdrop .swal2-shown.swal2-top-end, body.swal2-no-backdrop .swal2-shown.swal2-top-right {
+    top: 0;
+    right: 0; }
+  body.swal2-no-backdrop .swal2-shown.swal2-center {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); }
+  body.swal2-no-backdrop .swal2-shown.swal2-center-start, body.swal2-no-backdrop .swal2-shown.swal2-center-left {
+    top: 50%;
+    left: 0;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%); }
+  body.swal2-no-backdrop .swal2-shown.swal2-center-end, body.swal2-no-backdrop .swal2-shown.swal2-center-right {
+    top: 50%;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%); }
+  body.swal2-no-backdrop .swal2-shown.swal2-bottom {
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%); }
+  body.swal2-no-backdrop .swal2-shown.swal2-bottom-start, body.swal2-no-backdrop .swal2-shown.swal2-bottom-left {
+    bottom: 0;
+    left: 0; }
+  body.swal2-no-backdrop .swal2-shown.swal2-bottom-end, body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
+    right: 0;
+    bottom: 0; }
+
+.swal2-container {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: transparent;
+  z-index: 1060;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; }
+  .swal2-container.swal2-top {
+    align-items: flex-start; }
+  .swal2-container.swal2-top-start, .swal2-container.swal2-top-left {
+    align-items: flex-start;
+    justify-content: flex-start; }
+  .swal2-container.swal2-top-end, .swal2-container.swal2-top-right {
+    align-items: flex-start;
+    justify-content: flex-end; }
+  .swal2-container.swal2-center {
+    align-items: center; }
+  .swal2-container.swal2-center-start, .swal2-container.swal2-center-left {
+    align-items: center;
+    justify-content: flex-start; }
+  .swal2-container.swal2-center-end, .swal2-container.swal2-center-right {
+    align-items: center;
+    justify-content: flex-end; }
+  .swal2-container.swal2-bottom {
+    align-items: flex-end; }
+  .swal2-container.swal2-bottom-start, .swal2-container.swal2-bottom-left {
+    align-items: flex-end;
+    justify-content: flex-start; }
+  .swal2-container.swal2-bottom-end, .swal2-container.swal2-bottom-right {
+    align-items: flex-end;
+    justify-content: flex-end; }
+  .swal2-container.swal2-grow-fullscreen > .swal2-modal {
+    display: flex !important;
+    flex: 1;
+    align-self: stretch;
+    justify-content: center; }
+  .swal2-container.swal2-grow-row > .swal2-modal {
+    display: flex !important;
+    flex: 1;
+    align-content: center;
+    justify-content: center; }
+  .swal2-container.swal2-grow-column {
+    flex: 1;
+    flex-direction: column; }
+    .swal2-container.swal2-grow-column.swal2-top, .swal2-container.swal2-grow-column.swal2-center, .swal2-container.swal2-grow-column.swal2-bottom {
+      align-items: center; }
+    .swal2-container.swal2-grow-column.swal2-top-start, .swal2-container.swal2-grow-column.swal2-center-start, .swal2-container.swal2-grow-column.swal2-bottom-start, .swal2-container.swal2-grow-column.swal2-top-left, .swal2-container.swal2-grow-column.swal2-center-left, .swal2-container.swal2-grow-column.swal2-bottom-left {
+      align-items: flex-start; }
+    .swal2-container.swal2-grow-column.swal2-top-end, .swal2-container.swal2-grow-column.swal2-center-end, .swal2-container.swal2-grow-column.swal2-bottom-end, .swal2-container.swal2-grow-column.swal2-top-right, .swal2-container.swal2-grow-column.swal2-center-right, .swal2-container.swal2-grow-column.swal2-bottom-right {
+      align-items: flex-end; }
+    .swal2-container.swal2-grow-column > .swal2-modal {
+      display: flex !important;
+      flex: 1;
+      align-content: center;
+      justify-content: center; }
+  .swal2-container:not(.swal2-top):not(.swal2-top-start):not(.swal2-top-end):not(.swal2-top-left):not(.swal2-top-right):not(.swal2-center-start):not(.swal2-center-end):not(.swal2-center-left):not(.swal2-center-right):not(.swal2-bottom):not(.swal2-bottom-start):not(.swal2-bottom-end):not(.swal2-bottom-left):not(.swal2-bottom-right) > .swal2-modal {
+    margin: auto; }
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .swal2-container .swal2-modal {
+      margin: 0 !important; } }
+  .swal2-container.swal2-fade {
+    transition: background-color .1s; }
+  .swal2-container.swal2-shown {
+    background-color: rgba(0, 0, 0, 0.4); }
+
+.swal2-popup {
+  display: none;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  width: 32em;
+  max-width: 100%;
+  padding: 1.25em;
+  border-radius: 0.3125em;
+  background: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  box-sizing: border-box; }
+  .swal2-popup:focus {
+    outline: none; }
+  .swal2-popup.swal2-loading {
+    overflow-y: hidden; }
+  .swal2-popup .swal2-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+  .swal2-popup .swal2-title {
+    display: block;
+    position: relative;
+    max-width: 100%;
+    margin: 0 0 0.4em;
+    padding: 0;
+    color: #595959;
+    font-size: 1.875em;
+    font-weight: 600;
+    text-align: center;
+    text-transform: none;
+    word-wrap: break-word; }
+  .swal2-popup .swal2-actions {
+    align-items: center;
+    justify-content: center;
+    margin: 1.25em auto 0; }
+    .swal2-popup .swal2-actions:not(.swal2-loading) .swal2-styled[disabled] {
+      opacity: .4; }
+    .swal2-popup .swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)); }
+    .swal2-popup .swal2-actions:not(.swal2-loading) .swal2-styled:active {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)); }
+    .swal2-popup .swal2-actions.swal2-loading .swal2-styled.swal2-confirm {
+      width: 2.5em;
+      height: 2.5em;
+      margin: .46875em;
+      padding: 0;
+      border: .25em solid transparent;
+      border-radius: 100%;
+      border-color: transparent;
+      background-color: transparent !important;
+      color: transparent;
+      cursor: default;
+      box-sizing: border-box;
+      -webkit-animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+              animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none; }
+    .swal2-popup .swal2-actions.swal2-loading .swal2-styled.swal2-cancel {
+      margin-right: 30px;
+      margin-left: 30px; }
+    .swal2-popup .swal2-actions.swal2-loading :not(.swal2-styled).swal2-confirm::after {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      margin-left: 5px;
+      border: 3px solid #999999;
+      border-radius: 50%;
+      border-right-color: transparent;
+      box-shadow: 1px 1px 1px #fff;
+      content: '';
+      -webkit-animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+              animation: swal2-rotate-loading 1.5s linear 0s infinite normal; }
+  .swal2-popup .swal2-styled {
+    margin: 0 .3125em;
+    padding: .625em 2em;
+    font-weight: 500;
+    box-shadow: none; }
+    .swal2-popup .swal2-styled:not([disabled]) {
+      cursor: pointer; }
+    .swal2-popup .swal2-styled.swal2-confirm {
+      border: 0;
+      border-radius: 0.25em;
+      background: initial;
+      background-color: #3085d6;
+      color: #fff;
+      font-size: 1.0625em; }
+    .swal2-popup .swal2-styled.swal2-cancel {
+      border: 0;
+      border-radius: 0.25em;
+      background: initial;
+      background-color: #aaa;
+      color: #fff;
+      font-size: 1.0625em; }
+    .swal2-popup .swal2-styled:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(50, 100, 150, 0.4); }
+    .swal2-popup .swal2-styled::-moz-focus-inner {
+      border: 0; }
+  .swal2-popup .swal2-footer {
+    justify-content: center;
+    margin: 1.25em 0 0;
+    padding-top: 1em;
+    border-top: 1px solid #eee;
+    color: #545454;
+    font-size: 1em; }
+  .swal2-popup .swal2-image {
+    max-width: 100%;
+    margin: 1.25em auto; }
+  .swal2-popup .swal2-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    justify-content: center;
+    width: 1.2em;
+    height: 1.2em;
+    padding: 0;
+    transition: color 0.1s ease-out;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: #cccccc;
+    font-family: serif;
+    font-size: 2.5em;
+    line-height: 1.2;
+    cursor: pointer;
+    overflow: hidden; }
+    .swal2-popup .swal2-close:hover {
+      -webkit-transform: none;
+              transform: none;
+      color: #f27474; }
+  .swal2-popup > .swal2-input,
+  .swal2-popup > .swal2-file,
+  .swal2-popup > .swal2-textarea,
+  .swal2-popup > .swal2-select,
+  .swal2-popup > .swal2-radio,
+  .swal2-popup > .swal2-checkbox {
+    display: none; }
+  .swal2-popup .swal2-content {
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    color: #545454;
+    font-size: 1.125em;
+    font-weight: 300;
+    line-height: normal;
+    word-wrap: break-word; }
+  .swal2-popup #swal2-content {
+    text-align: center; }
+  .swal2-popup .swal2-input,
+  .swal2-popup .swal2-file,
+  .swal2-popup .swal2-textarea,
+  .swal2-popup .swal2-select,
+  .swal2-popup .swal2-radio,
+  .swal2-popup .swal2-checkbox {
+    margin: 1em auto; }
+  .swal2-popup .swal2-input,
+  .swal2-popup .swal2-file,
+  .swal2-popup .swal2-textarea {
+    width: 100%;
+    transition: border-color .3s, box-shadow .3s;
+    border: 1px solid #d9d9d9;
+    border-radius: 0.1875em;
+    font-size: 1.125em;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06);
+    box-sizing: border-box; }
+    .swal2-popup .swal2-input.swal2-inputerror,
+    .swal2-popup .swal2-file.swal2-inputerror,
+    .swal2-popup .swal2-textarea.swal2-inputerror {
+      border-color: #f27474 !important;
+      box-shadow: 0 0 2px #f27474 !important; }
+    .swal2-popup .swal2-input:focus,
+    .swal2-popup .swal2-file:focus,
+    .swal2-popup .swal2-textarea:focus {
+      border: 1px solid #b4dbed;
+      outline: none;
+      box-shadow: 0 0 3px #c4e6f5; }
+    .swal2-popup .swal2-input::-webkit-input-placeholder,
+    .swal2-popup .swal2-file::-webkit-input-placeholder,
+    .swal2-popup .swal2-textarea::-webkit-input-placeholder {
+      color: #cccccc; }
+    .swal2-popup .swal2-input:-ms-input-placeholder,
+    .swal2-popup .swal2-file:-ms-input-placeholder,
+    .swal2-popup .swal2-textarea:-ms-input-placeholder {
+      color: #cccccc; }
+    .swal2-popup .swal2-input::-ms-input-placeholder,
+    .swal2-popup .swal2-file::-ms-input-placeholder,
+    .swal2-popup .swal2-textarea::-ms-input-placeholder {
+      color: #cccccc; }
+    .swal2-popup .swal2-input::placeholder,
+    .swal2-popup .swal2-file::placeholder,
+    .swal2-popup .swal2-textarea::placeholder {
+      color: #cccccc; }
+  .swal2-popup .swal2-range input {
+    width: 80%; }
+  .swal2-popup .swal2-range output {
+    width: 20%;
+    font-weight: 600;
+    text-align: center; }
+  .swal2-popup .swal2-range input,
+  .swal2-popup .swal2-range output {
+    height: 2.625em;
+    margin: 1em auto;
+    padding: 0;
+    font-size: 1.125em;
+    line-height: 2.625em; }
+  .swal2-popup .swal2-input {
+    height: 2.625em;
+    padding: 0.75em; }
+    .swal2-popup .swal2-input[type='number'] {
+      max-width: 10em; }
+  .swal2-popup .swal2-file {
+    font-size: 1.125em; }
+  .swal2-popup .swal2-textarea {
+    height: 6.75em;
+    padding: 0.75em; }
+  .swal2-popup .swal2-select {
+    min-width: 50%;
+    max-width: 100%;
+    padding: .375em .625em;
+    color: #545454;
+    font-size: 1.125em; }
+  .swal2-popup .swal2-radio,
+  .swal2-popup .swal2-checkbox {
+    align-items: center;
+    justify-content: center; }
+    .swal2-popup .swal2-radio label,
+    .swal2-popup .swal2-checkbox label {
+      margin: 0 .6em;
+      font-size: 1.125em; }
+    .swal2-popup .swal2-radio input,
+    .swal2-popup .swal2-checkbox input {
+      margin: 0 .4em; }
+  .swal2-popup .swal2-validationerror {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625em;
+    background: #f0f0f0;
+    color: #666666;
+    font-size: 1em;
+    font-weight: 300;
+    overflow: hidden; }
+    .swal2-popup .swal2-validationerror::before {
+      display: inline-block;
+      width: 1.5em;
+      min-width: 1.5em;
+      height: 1.5em;
+      margin: 0 .625em;
+      border-radius: 50%;
+      background-color: #f27474;
+      color: #fff;
+      font-weight: 600;
+      line-height: 1.5em;
+      text-align: center;
+      content: '!';
+      zoom: normal; }
+
+@supports (-ms-accelerator: true) {
+  .swal2-range input {
+    width: 100% !important; }
+  .swal2-range output {
+    display: none; } }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .swal2-range input {
+    width: 100% !important; }
+  .swal2-range output {
+    display: none; } }
+
+@-moz-document url-prefix() {
+  .swal2-close:focus {
+    outline: 2px solid rgba(50, 100, 150, 0.4); } }
+
+.swal2-icon {
+  position: relative;
+  justify-content: center;
+  width: 5em;
+  height: 5em;
+  margin: 1.25em auto 1.875em;
+  border: .25em solid transparent;
+  border-radius: 50%;
+  line-height: 5em;
+  cursor: default;
+  box-sizing: content-box;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  zoom: normal; }
+  .swal2-icon-text {
+    font-size: 3.75em; }
+  .swal2-icon.swal2-error {
+    border-color: #f27474; }
+    .swal2-icon.swal2-error .swal2-x-mark {
+      position: relative;
+      flex-grow: 1; }
+    .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+      display: block;
+      position: absolute;
+      top: 2.3125em;
+      width: 2.9375em;
+      height: .3125em;
+      border-radius: .125em;
+      background-color: #f27474; }
+      .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='left'] {
+        left: 1.0625em;
+        -webkit-transform: rotate(45deg);
+                transform: rotate(45deg); }
+      .swal2-icon.swal2-error [class^='swal2-x-mark-line'][class$='right'] {
+        right: 1em;
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg); }
+  .swal2-icon.swal2-warning {
+    border-color: #facea8;
+    color: #f8bb86; }
+  .swal2-icon.swal2-info {
+    border-color: #9de0f6;
+    color: #3fc3ee; }
+  .swal2-icon.swal2-question {
+    border-color: #c9dae1;
+    color: #87adbd; }
+  .swal2-icon.swal2-success {
+    border-color: #a5dc86; }
+    .swal2-icon.swal2-success [class^='swal2-success-circular-line'] {
+      position: absolute;
+      width: 3.75em;
+      height: 7.5em;
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg);
+      border-radius: 50%; }
+      .swal2-icon.swal2-success [class^='swal2-success-circular-line'][class$='left'] {
+        top: -.4375em;
+        left: -2.0635em;
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+        -webkit-transform-origin: 3.75em 3.75em;
+                transform-origin: 3.75em 3.75em;
+        border-radius: 7.5em 0 0 7.5em; }
+      .swal2-icon.swal2-success [class^='swal2-success-circular-line'][class$='right'] {
+        top: -.6875em;
+        left: 1.875em;
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+        -webkit-transform-origin: 0 3.75em;
+                transform-origin: 0 3.75em;
+        border-radius: 0 7.5em 7.5em 0; }
+    .swal2-icon.swal2-success .swal2-success-ring {
+      position: absolute;
+      top: -.25em;
+      left: -.25em;
+      width: 100%;
+      height: 100%;
+      border: 0.25em solid rgba(165, 220, 134, 0.3);
+      border-radius: 50%;
+      z-index: 2;
+      box-sizing: content-box; }
+    .swal2-icon.swal2-success .swal2-success-fix {
+      position: absolute;
+      top: .5em;
+      left: 1.625em;
+      width: .4375em;
+      height: 5.625em;
+      -webkit-transform: rotate(-45deg);
+              transform: rotate(-45deg);
+      z-index: 1; }
+    .swal2-icon.swal2-success [class^='swal2-success-line'] {
+      display: block;
+      position: absolute;
+      height: .3125em;
+      border-radius: .125em;
+      background-color: #a5dc86;
+      z-index: 2; }
+      .swal2-icon.swal2-success [class^='swal2-success-line'][class$='tip'] {
+        top: 2.875em;
+        left: .875em;
+        width: 1.5625em;
+        -webkit-transform: rotate(45deg);
+                transform: rotate(45deg); }
+      .swal2-icon.swal2-success [class^='swal2-success-line'][class$='long'] {
+        top: 2.375em;
+        right: .5em;
+        width: 2.9375em;
+        -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg); }
+
+.swal2-progresssteps {
+  align-items: center;
+  margin: 0 0 1.25em;
+  padding: 0;
+  font-weight: 600; }
+  .swal2-progresssteps li {
+    display: inline-block;
+    position: relative; }
+  .swal2-progresssteps .swal2-progresscircle {
+    width: 2em;
+    height: 2em;
+    border-radius: 2em;
+    background: #3085d6;
+    color: #fff;
+    line-height: 2em;
+    text-align: center;
+    z-index: 20; }
+    .swal2-progresssteps .swal2-progresscircle:first-child {
+      margin-left: 0; }
+    .swal2-progresssteps .swal2-progresscircle:last-child {
+      margin-right: 0; }
+    .swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep {
+      background: #3085d6; }
+      .swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep ~ .swal2-progresscircle {
+        background: #add8e6; }
+      .swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep ~ .swal2-progressline {
+        background: #add8e6; }
+  .swal2-progresssteps .swal2-progressline {
+    width: 2.5em;
+    height: .4em;
+    margin: 0 -1px;
+    background: #3085d6;
+    z-index: 10; }
+
+[class^='swal2'] {
+  -webkit-tap-highlight-color: transparent; }
+
+.swal2-show {
+  -webkit-animation: swal2-show 0.3s;
+          animation: swal2-show 0.3s; }
+  .swal2-show.swal2-noanimation {
+    -webkit-animation: none;
+            animation: none; }
+
+.swal2-hide {
+  -webkit-animation: swal2-hide 0.15s forwards;
+          animation: swal2-hide 0.15s forwards; }
+  .swal2-hide.swal2-noanimation {
+    -webkit-animation: none;
+            animation: none; }
+
+[dir='rtl'] .swal2-close {
+  right: auto;
+  left: 0; }
+
+.swal2-animate-success-icon .swal2-success-line-tip {
+  -webkit-animation: swal2-animate-success-line-tip 0.75s;
+          animation: swal2-animate-success-line-tip 0.75s; }
+
+.swal2-animate-success-icon .swal2-success-line-long {
+  -webkit-animation: swal2-animate-success-line-long 0.75s;
+          animation: swal2-animate-success-line-long 0.75s; }
+
+.swal2-animate-success-icon .swal2-success-circular-line-right {
+  -webkit-animation: swal2-rotate-success-circular-line 4.25s ease-in;
+          animation: swal2-rotate-success-circular-line 4.25s ease-in; }
+
+.swal2-animate-error-icon {
+  -webkit-animation: swal2-animate-error-icon 0.5s;
+          animation: swal2-animate-error-icon 0.5s; }
+  .swal2-animate-error-icon .swal2-x-mark {
+    -webkit-animation: swal2-animate-error-x-mark 0.5s;
+            animation: swal2-animate-error-x-mark 0.5s; }
+
+@-webkit-keyframes swal2-rotate-loading {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes swal2-rotate-loading {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }</style></head>
+<body class="variant-a" data-preset="clinical" data-chrome="dashboard">
+<script>
+/* Sidebar collapsed-state restore — runs BEFORE sidebar paints to prevent flash/flicker */
+(function(){try{if(localStorage.getItem('sh_sidebar_collapsed')==='1'){document.body.classList.add('sidebar-collapsed');}}catch(e){}})();
+</script>
+
+<!-- Admin sidebar (RBAC-aware server-side navigation) -->
+<nav class="sh-sidebar" id="sidebar">
+    <!-- Sidebar brand/logo -->
+    <div class="sh-sidebar-brand">
+                <a href="https://demo.smart-hospital.in/admin/admin/dashboard" class="sh-sidebar-logo">
+            <img src="https://demo.smart-hospital.in/uploads/hospital_content/logo/0mini_logo.png" alt="Logo" class="sh-sidebar-logo-img">
+            <span class="sh-sidebar-name">Smart Hospital &amp; Research Center</span>
+        </a>
+    </div>
+
+    <!-- Menu filter -->
+    <div class="sh-sidebar-search">
+        <div class="input-group input-group-sm">
+            <span class="input-group-text"><i class="fa fa-search"></i></span>
+            <input type="text" id="sidebar-menu-filter" class="form-control" placeholder="Filter Menu" autocomplete="off">
+            <button type="button" class="sh-search-clear" id="sidebar-menu-filter-clear" aria-label="Clear" tabindex="-1"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+
+    <!-- Navigation menu -->
+    <div class="sh-sidebar-scroll">
+        <ul class="sh-nav" id="sh-sidenav">
+            <li class="sh-section">Core Operations</li>
+            <li class="nav-item active">
+                <a class="nav-link" href="https://demo.smart-hospital.in/admin/admin/dashboard" data-tooltip="Dashboard">
+                   <i class="fas fa-television"></i> <span> Dashboard</span>
+               </a>
+           </li>  
+
+                               <li class="nav-item ">
+                        <a class="nav-link" href="https://demo.smart-hospital.in/admin/admin/search" data-tooltip="Patient">
+                        <i class="fa fa-user"></i><span> Patient</span></a>
+                    </li>
+            			
+			
+                                    <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/bill/dashboard" data-tooltip="Billing">
+                                <i class="fas fa-file-invoice"></i> <span> Billing</span>
+                            </a>
+                        </li>
+                                                <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/appointment/index" data-tooltip="Appointment">
+                                <i class="fa fa-calendar-check-o"></i> <span>Appointment</span>
+                            </a>
+                        </li>
+                                                <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/patient/search" data-tooltip="OPD - Out Patient">
+                                <i class="fas fa-stethoscope"></i> <span> OPD - Out Patient</span>
+                            </a>
+                        </li>
+                                                <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/patient/ipdsearch" data-tooltip="IPD - In Patient">
+                                <i class="fas fa-procedures" aria-hidden="true"></i> <span> IPD - In Patient</span>
+                            </a>
+                        </li>
+                        <li class="sh-section">Clinical</li>
+                                    <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/pharmacy/bill" data-tooltip="Pharmacy">
+                                <i class="fas fa-mortar-pestle"></i> <span> Pharmacy</span>
+                            </a>
+                        </li>
+                                                <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/pathology/gettestreportbatch" data-tooltip="Pathology">
+                                <i class="fas fa-flask"></i> <span>Pathology</span>
+                            </a>
+                        </li>
+                                                <li class="nav-item ">                               
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/radio/gettestreportbatch" data-tooltip="Radiology">
+                                <i class="fas fa-microscope"></i> <span>Radiology</span>
+                            </a>
+                        </li>
+                                                <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/bloodbankstatus/" data-tooltip="Blood Bank">
+                                <i class="fas fa-tint"></i> <span>Blood Bank</span>
+                            </a>
+                        </li>
+            			
+                                    <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/vehicle/getcallambulance" data-tooltip="Ambulance">
+                                <i class="fas fa-ambulance" aria-hidden="true"></i>
+                                <span> Ambulance</span>
+                            </a>
+                        </li>
+            			
+                                    <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/visitors" data-tooltip="Front Office">
+                                <i class="fas fa-dungeon"></i> <span>Front Office</span>
+                            </a>
+                        </li>
+            			
+            <li class="sh-section">Administration</li>
+                                    <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/birthordeath" aria-expanded="false" data-tooltip="Birth &amp; Death Record"><i class="fa fa-birthday-cake" aria-hidden="true"></i><span> Birth &amp; Death Record</span><i class="fa fa-angle-down ms-auto sidebar-arrow"></i></a>
+                            <ul class="sh-subnav " id="sub-1">
+                                                                <li class="nav-item" data-submenu="birthordeath/index"><a class="nav-link" href="https://demo.smart-hospital.in/admin/birthordeath"><i class="fas fa-angle-right"></i> Birth Record </a></li>
+                                                            <li class="nav-item" data-submenu="birthordeath/death"><a class="nav-link" href="https://demo.smart-hospital.in/admin/birthordeath/death"><i class="fas fa-angle-right"></i> Death Record</a></li>
+                                                            </ul>
+                        </li>
+            			
+			 
+             
+								
+            <li class="nav-item ">
+				<a class="nav-link d-flex align-items-center" href="#" role="button" aria-expanded="false" data-tooltip="Multi Branch"><i class="fa fa-sitemap ftlayer"></i> <span> Multi Branch</span> <i class="fa fa-angle-down ms-auto sidebar-arrow"></i></a>
+				<ul class="sh-subnav " id="sub-2">
+				
+										<li class="nav-item" data-submenu="admin/multibranch/branch/overview"><a class="nav-link" href="https://demo.smart-hospital.in/admin/multibranch/branch/overview"><i class="fa fa-angle-double-right"></i> Overview</a></li>	
+										
+										<li class="nav-item" data-submenu="admin/multibranch/branch/report"><a class="nav-link" href="https://demo.smart-hospital.in/admin/multibranch/branch/report"><i class="fa fa-angle-double-right"></i> Report</a></li>
+										
+										<li class="nav-item" data-submenu="admin/multibranch/branch"><a class="nav-link" href="https://demo.smart-hospital.in/admin/multibranch/branch"><i class="fa fa-angle-double-right"></i> Settings</a></li>
+							 
+                 
+
+				</ul>
+			</li> 
+						
+                                    <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/staff" data-tooltip="Human Resource">
+                                <i class="fas fa-sitemap"></i> <span>Human Resource</span>
+                            </a>
+                        </li>
+            			
+									<li class="nav-item ">
+							<a class="nav-link" href="https://demo.smart-hospital.in/admin/qrattendance/setting/index" aria-expanded="false" data-tooltip="QR Code Attendance"><i class="fa fa-qrcode" aria-hidden="true"></i><span>QR Code Attendance</span><i class="fa fa-angle-down ms-auto sidebar-arrow"></i></a>
+							<ul class="sh-subnav " id="sub-3">
+									
+																
+									<li class="nav-item" data-submenu="admin/qrattendance/attendance/index"><a class="nav-link" href="https://demo.smart-hospital.in/admin/qrattendance/attendance/index"><i class="fas fa-angle-right"></i> Attendance </a></li>
+									
+																
+									<li class="nav-item" data-submenu="admin/qrattendance/setting/index"><a class="nav-link" href="https://demo.smart-hospital.in/admin/qrattendance/setting/index"><i class="fas fa-angle-right"></i> Settings</a></li>
+									
+																
+							</ul>
+						</li>
+							
+									<li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/dutyroster/roster_report" data-tooltip="Duty Roster">
+                                <i class="fas fa-clock"></i> <span>Duty Roster</span>
+                            </a>
+                        </li>         
+				
+			
+								<li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/holiday/index" data-tooltip="Annual Calendar">
+                                <i class="fas fa-calculator"></i> <span> Annual Calendar </span>
+                            </a>
+                    </li>  
+								
+                                    <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/referral/payment" data-tooltip="Referral">
+                                <i class="fas fa-users"></i> <span>Referral</span>
+                            </a>
+                        </li>
+                                                <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/tpamanagement" data-tooltip="TPA Management">
+                                <i class="fas fa-umbrella"></i> <span>TPA Management</span>
+                            </a>
+                        </li>
+                                                    <li class="nav-item ">
+                                <a class="nav-link" href="#" aria-expanded="false" data-tooltip="Finance">
+                                <i class="fas fa-money-bill-wave"></i> <span>Finance</span> <i class="fa fa-angle-down ms-auto sidebar-arrow"></i>
+                                </a>
+                                <ul class="sh-subnav " id="sub-4">
+                                                                                    <li class="nav-item" data-submenu="income/index"><a class="nav-link" href="https://demo.smart-hospital.in/admin/income"><i class="fas fa-angle-right"></i> Income </a></li>
+                                                                                    <li class="nav-item" data-submenu="expense/index"><a class="nav-link" href="https://demo.smart-hospital.in/admin/expense"><i class="fas fa-angle-right"></i> Expenses</a></li>
+                                                                    </ul>
+                            </li>
+                                <li class="sh-section">Tools &amp; Content</li>					
+						
+                                        <li class="nav-item ">
+                            <a class="nav-link" href="https://demo.smart-hospital.in/admin/survey" aria-expanded="false" data-tooltip="Survey Forms"><i class="fas fa-clipboard-list"></i><span> Survey Forms</span><i class="fa fa-angle-down ms-auto sidebar-arrow"></i></a>
+                            <ul class="sh-subnav " id="sub-11">
+																
+                                <li class="nav-item" data-submenu="admin/survey"><a class="nav-link" href="https://demo.smart-hospital.in/admin/survey"><i class="fas fa-angle-right"></i> Survey Forms</a></li>
+								
+																
+                                <li class="nav-item" data-submenu="admin/survey/staff_forms"><a class="nav-link" href="https://demo.smart-hospital.in/admin/survey/staff_forms"><i class="fas fa-angle-right"></i> My Survey Forms</a></li>
+								
+								                            </ul>
+                        </li>
+						
+									
+				
+                                            <li class="nav-item ">
+                                <a class="nav-link" href="https://demo.smart-hospital.in/admin/notification" data-tooltip="Messaging">
+                                    <i class="fas fa-bullhorn"></i> <span>Messaging</span>
+                                </a>
+                            </li>
+                                                            <li class="nav-item ">
+                                <a class="nav-link" href="https://demo.smart-hospital.in/admin/itemstock" data-tooltip="Inventory">
+                                    <i class="fas fa-luggage-cart"></i> <span>Inventory</span>
+                                </a>
+                            </li>
+                                                            <li class="nav-item ">
+                                
+                            </li>
+                            
+                            <li class="nav-item ">
+                                <a class="nav-link d-flex align-items-center" href="#" role="button" aria-expanded="false" data-tooltip="Download Center">
+                                <i class="fas fa-download"></i> <span>Download Center</span> <i class="fa fa-angle-down ms-auto sidebar-arrow"></i>
+                                </a>
+                                <ul class="sh-subnav " id="sub-5">                                    
+									
+                                                                        
+										<li class="nav-item" data-submenu="admin/content/upload"><a class="nav-link" href="https://demo.smart-hospital.in/admin/content/upload"><i class="fas fa-angle-right"></i><span>Upload /Share Content</span></a></li>
+                                    
+                                    									
+										<li class="nav-item" data-submenu="admin/content/list"><a class="nav-link" href="https://demo.smart-hospital.in/admin/content/list"><i class="fas fa-angle-right"></i>Content Share List</a></li>
+									
+																		
+										<li class="nav-item" data-submenu="admin/contenttype"><a class="nav-link" href="https://demo.smart-hospital.in/admin/contenttype/"><i class="fas fa-angle-right"></i>Content Type</a></li>  
+									
+									                                
+                                </ul>
+                            </li>
+                            
+                                                            <li class="nav-item ">
+                                <a class="nav-link d-flex align-items-center" href="#" role="button" aria-expanded="false" data-tooltip="Certificate">
+                                <i class="fa fa-newspaper-o ftlayer"></i> <span>Certificate</span> <i class="fa fa-angle-down ms-auto sidebar-arrow"></i>
+                                </a>
+                                <ul class="sh-subnav " id="sub-6">
+                                                                       <li class="nav-item" data-submenu="admin/generatecertificate"><a class="nav-link" href="https://demo.smart-hospital.in/admin/generatecertificate"><i class="fas fa-angle-right"></i>Certificate </a></li>
+                                                                     <li class="nav-item" data-submenu="admin/generatepatientidcard"><a class="nav-link" href="https://demo.smart-hospital.in/admin/generatepatientidcard/"><i class="fas fa-angle-right"></i>Patient ID Card</a></li>
+                                                                         <li class="nav-item" data-submenu="admin/generatestaffidcard"><a class="nav-link" href="https://demo.smart-hospital.in/admin/generatestaffidcard/"><i class="fas fa-angle-right"></i>Staff ID Card</a></li>
+                                                                </ul>
+                            </li>
+                       
+                                                            <li class="nav-item ">
+                                <a class="nav-link" href="https://demo.smart-hospital.in/admin/front/page" data-tooltip="Front CMS">
+                                    <i class="fas fa-solar-panel"></i> <span>Front CMS</span>
+                                </a>
+                            </li>
+                				
+							
+                                            <li class="nav-item ">
+                               <a class="nav-link d-flex align-items-center" href="#" role="button" aria-expanded="false" data-tooltip="Live Consultation">
+                                    <i class="fa fa-video-camera ftlayer"></i> <span>Live Consultation</span> <i class="fa fa-angle-down ms-auto sidebar-arrow"></i>
+                                </a>
+                                 <ul class="sh-subnav " id="sub-8">
+                                                                            <li class="nav-item" data-submenu="conference/live_consult"><a class="nav-link" href="https://demo.smart-hospital.in/admin/zoom_conference/consult"><i class="fas fa-angle-right"></i> Live Consultation</a></li>
+                                                                            <li class="nav-item" data-submenu="conference/live_meeting"><a class="nav-link" href="https://demo.smart-hospital.in/admin/zoom_conference/meeting"><i class="fas fa-angle-right"></i> Live Meeting </a></li>
+                                                                    </ul>
+                            </li>
+                                <li class="sh-section">Reports &amp; Setup</li>
+                 
+                        <li class="nav-item ">
+                            <a class="nav-link d-flex align-items-center" href="#" role="button" aria-expanded="false" data-tooltip="Reports">
+                                <i class="fas fa-line-chart"></i> <span>Reports</span> <i class="fa fa-angle-down ms-auto sidebar-arrow"></i>
+                            </a>
+                            <ul class="sh-subnav " id="sub-9">                               
+                                
+                            							
+                                <li class="nav-item" data-submenu="reports/finance|transaction/transactionreport|income/incomesearch|income/incomegroup|income/alltransaction|expense/expensesearch|expense/expensegroup|patient/patientbillreport|referral/report|transaction/processingtransaction|report/balanceamount|report/incomeexpense"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/finance"><i class="fas fa-angle-right"></i> Finance</a></li>
+                                
+                                                        
+                                <li class="nav-item" data-submenu="reports/appointment|appointment/appointmentreport"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/appointment"><i class="fas fa-angle-right"></i> Appointment</a></li>
+                                
+                                                        
+                                <li class="nav-item" data-submenu="reports/opd|patient/opd_report|patient/opdreportbalance|patient/opddischargepatient"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/opd"><i class="fas fa-angle-right"></i> OPD</a></li>
+                                
+                                                        
+                                <li class="nav-item" data-submenu="reports/ipd|patient/ipdreport|patient/ipdreportbalance|patient/dischargepatientreport"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/ipd"><i class="fas fa-angle-right"></i> IPD</a></li>
+                                
+                                                        
+                                <li class="nav-item" data-submenu="report/pharmacy|pharmacy/billreport|expmedicine/expmedicinereport|report/stock_report|expmedicine/medicinepurchasereport|expmedicine/medicinepurchasereturnreport|report/salereturns|expmedicine/medicinesalereport|expmedicine/medicineprofitlossreport"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/pharmacy"><i class="fas fa-angle-right"></i> Pharmacy</a></li>
+                                
+                                                        
+                                <li class="nav-item" data-submenu="reports/pathology|pathology/pathologyreport|pathology/pathologybalancereport"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/pathology"><i class="fas fa-angle-right"></i> Pathology</a></li>
+                                
+                                                        
+                                <li class="nav-item" data-submenu="reports/radiology|radio/radiologyreport|radio/radiologybalancereport"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/radiology"><i class="fas fa-angle-right"></i> Radiology</a></li>
+                                
+                            
+                                <li class="nav-item" data-submenu="reports/bloodbank|bloodbank/bloodissuereport|bloodbank/componentissuereport|bloodbank/blooddonorreport"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/blood_bank"><i class="fas fa-angle-right"></i> Blood Bank</a></li>
+                                
+                            							
+                                <li class="nav-item" data-submenu="reports/ambulance|vehicle/ambulancereport"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/ambulance"><i class="fas fa-angle-right"></i> Ambulance</a></li>
+                                
+                                                        
+                                <li class="nav-item" data-submenu="reports/birth_death|birthordeath/birthreport|birthordeath/deathreport"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/birth_death"><i class="fas fa-angle-right"></i> Birth Death</a></li>
+                                
+                                                        
+                                <li class="nav-item" data-submenu="report/human_resource|payroll/payrollsearch|payroll/payrollreport|staffattendance/attendancereport|staffattendance/staffdaywiseattendancereport"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/human_resource"><i class="fas fa-angle-right"></i> Human Resource</a></li>
+                                 
+                                                        
+                                <li class="nav-item" data-submenu="reports/tpa|tpamanagement/tpareport"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/tpa"><i class="fas fa-angle-right"></i> TPA</a></li>
+                                 
+                                                        
+                                <li class="nav-item" data-submenu="reports/inventory|item/itemreport|item/additemreport|issueitem/issueinventoryreport"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/inventory"><i class="fas fa-angle-right"></i> Inventory</a></li>
+                                 
+                                                        
+                                <li class="nav-item" data-submenu="reports/live_consultation|zoom_conference/consult_report|zoom_conference/meeting_report"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/live_consultation"><i class="fas fa-angle-right"></i> Live Consultation</a></li>
+                                 
+                                                        
+                                <li class="nav-item" data-submenu="reports/log|admin/userlog|admin/audit"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/log"><i class="fas fa-angle-right"></i> Log</a></li>
+								 
+                                                        
+                                <li class="nav-item " data-submenu="reports/ot|operationtheatre/otreport"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/ot"><i class="fas fa-angle-right"></i> OT</a></li>
+                                 
+                                                        
+                                <li class="nav-item" data-submenu="reports/patient|patient/patientvisitreport|patient/patientcredentialreport"><a class="nav-link" href="https://demo.smart-hospital.in/admin/report/patient"><i class="fas fa-angle-right"></i> Patient</a></li>
+                                 
+                             
+                            </ul>
+                        </li>
+                				
+                 
+                            <li class="nav-item ">
+                                <a class="nav-link" href="#" aria-expanded="false" data-tooltip="Setup">
+									<i class="fas fa-cogs"></i> <span>Setup</span> <i class="fa fa-angle-down ms-auto sidebar-arrow"></i>
+                                </a>
+                                <ul class="sh-subnav " id="sub-10">
+                                 
+                                                            <li class="nav-item " data-submenu="schsettings/index"><a class="nav-link" href="https://demo.smart-hospital.in/schsettings"><i class="fas fa-angle-right"></i> Settings</a></li>
+                                                                        <li class="nav-item" data-submenu="admin/charges|admin/chargecategory|admin/chargetype|admin/taxcategory|admin/unittype"><a class="nav-link" href="https://demo.smart-hospital.in/admin/charges"><i class="fas fa-angle-right"></i> Hospital Charges</a></li>
+                                                                        <li class="nav-item" data-submenu="admin/setup/bed|admin/setup/bedtype|admin/setup/bedgroup|admin/setup/floor"><a class="nav-link" href="https://demo.smart-hospital.in/admin/setup/bed/status"><i class="fas fa-angle-right"></i> Bed</a></li>
+                                                                            <li class="nav-item" data-submenu="admin/printing"><a class="nav-link" href="https://demo.smart-hospital.in/admin/printing"><i class="fas fa-angle-right"></i> Print Header Footer</a></li>
+                                                                        <li class="nav-item" data-submenu="admin/visitorspurpose|admin/source|admin/complainttype"><a class="nav-link" href="https://demo.smart-hospital.in/admin/visitorspurpose"><i class="fas fa-angle-right"></i> Front Office</a></li>
+                                                                            <li class="nav-item " data-submenu="admin/operationtheatre/index|admin/operationtheatre/category|admin/operationtheatre/operation"><a class="nav-link" href="https://demo.smart-hospital.in/admin/operationtheatre/index"><i class="fas fa-angle-right"></i> Operations</a></li>
+                                                                            <li class="nav-item" data-submenu="admin/medicinecategory|admin/medicinedosage|admin/medicineunit"><a class="nav-link" href="https://demo.smart-hospital.in/admin/medicinecategory/medicine"><i class="fas fa-angle-right"></i> Pharmacy</a></li>
+                                                                            <li class="nav-item" data-submenu="admin/pathologycategory"><a class="nav-link" href="https://demo.smart-hospital.in/admin/pathologycategory/addcategory"><i class="fas fa-angle-right"></i> Pathology</a></li>
+                                                                            <li class="nav-item" data-submenu="admin/lab"><a class="nav-link" href="https://demo.smart-hospital.in/admin/lab/addlab"><i class="fas fa-angle-right"></i> Radiology</a></li>
+                                                                            <li class="nav-item" data-submenu="admin/bloodbank/products|admin/bloodbank/components"><a class="nav-link" href="https://demo.smart-hospital.in/admin/bloodbank/products"><i class="fas fa-angle-right"></i> Blood Bank</a></li>
+                                                        <li class="nav-item" data-submenu="symptoms/index"><a class="nav-link" href="https://demo.smart-hospital.in/admin/symptoms"><i class="fas fa-angle-right"></i> Symptoms</a></li>
+                                                    <li class="nav-item" data-submenu="icd10/index"><a class="nav-link" href="https://demo.smart-hospital.in/admin/icd10"><i class="fas fa-angle-right"></i> ICD-10</a></li>
+                                                    <li class="nav-item" data-submenu="finding/index"><a class="nav-link" href="https://demo.smart-hospital.in/admin/finding"><i class="fas fa-angle-right"></i> Findings</a></li>
+                                       
+							<li class="nav-item" data-submenu="vital/index"><a class="nav-link" href="https://demo.smart-hospital.in/admin/vital"><i class="fas fa-angle-right"></i> Vitals</a></li>
+                                            <li class="nav-item" data-submenu="conference/zoom_api_setting"><a class="nav-link" href="https://demo.smart-hospital.in/admin/zoom_conference"><i class="fas fa-angle-right"></i> Zoom Setting</a></li>
+                                               
+                                <li class="nav-item" data-submenu="admin/incomehead|admin/expensehead"><a class="nav-link" href="https://demo.smart-hospital.in/admin/incomehead"><i class="fas fa-angle-right"></i> Finance</a></li>
+                                                                                            <li class="nav-item" data-submenu="admin/leavetypes|admin/department|admin/designation|admin/specialist"><a class="nav-link" href="https://demo.smart-hospital.in/admin/leavetypes"><i class="fas fa-angle-right"></i> Human Resource</a></li>
+                                            				
+                                                    <li class="nav-item" data-submenu="admin/referral/commission|admin/referral/category"><a class="nav-link" href="https://demo.smart-hospital.in/admin/referral/commission"><i class="fas fa-angle-right"></i> Referral</a></li>
+                        
+                            <li class="nav-item" data-submenu="admin/onlineappointment/index|admin/onlineappointment/globalshift|admin/onlineappointment/doctorglobalshift|admin/appointpriority"><a class="nav-link" href="https://demo.smart-hospital.in/admin/onlineappointment/index"><i class="fas fa-angle-right"></i> Appointment</a></li>
+                                                                        <li class="nav-item" data-submenu="admin/itemcategory|admin/itemstore|admin/itemsupplier"><a class="nav-link" href="https://demo.smart-hospital.in/admin/itemcategory"><i class="fas fa-angle-right"></i> Inventory</a></li>
+                                                                          
+
+                                            <li class="nav-item" data-submenu="customfield/index"><a class="nav-link" href="https://demo.smart-hospital.in/admin/customfield"><i class="fas fa-angle-right"></i> Custom Fields</a>
+                                            </li>
+                                                                            </ul>
+
+                            </li>
+                    			
+				
+                
+
+        </ul>
+    </div><!-- /.sh-sidebar-scroll -->
+</nav>
+<script>
+/* sh-sidebar: tree toggle (replaces AdminLTE tree widget) */
+(function(){
+  var nav = document.getElementById('sh-sidenav');
+  if (!nav) return;
+  // Manual tree toggle + accordion (BS5 collapse is NOT used here: .sh-subnav
+  // toggles via CSS display, so BS5's Collapse only desynced state and left
+  // sibling panels open). One handler closes all open panels, then opens the
+  // clicked one if it was closed — giving toggle + single-open accordion.
+  nav.querySelectorAll('.sh-subnav').forEach(function(ul) {
+    var toggle = ul.previousElementSibling;
+    if (!toggle) return;
+    toggle.setAttribute('aria-expanded', ul.classList.contains('show') ? 'true' : 'false');
+    toggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      // Detect open by computed visibility, not just the .show class — another script
+      // (footer.php detectActiveSubmenu) may have opened a panel via inline display.
+      var wasOpen = (getComputedStyle(ul).display !== 'none');
+      // Accordion: close every panel. Clear BOTH the .show class and any inline
+      // display so a panel opened via inline style doesn't stay visually open.
+      nav.querySelectorAll('.sh-subnav').forEach(function(open) {
+        open.classList.remove('show');
+        open.style.display = '';
+        var ot = open.previousElementSibling;
+        if (ot) ot.setAttribute('aria-expanded', 'false');
+      });
+      // Re-open the clicked panel only if it had been closed.
+      if (!wasOpen) {
+        ul.classList.add('show'); // CSS .sh-subnav.show -> display:block
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+  /* Mark active submenu item — data-submenu supports | separated patterns.
+     Two ways a pattern can match:
+       (1) URL path: boundary-aware indexOf — pattern must be followed
+           by /, ?, #, or end-of-path (so "birthordeath/death" won't
+           false-match "birthordeath/deathreport").
+       (2) Session sub_menu: exact equality with the session value the
+           controller sets via $this->session->set_userdata('sub_menu', …).
+           This lets a controller explicitly highlight a parent menu
+           item from a child route (e.g. appointmentreport() sets
+           sub_menu = 'admin/multibranch/branch/report' so the Report
+           sidebar item lights up on /…/appointmentreport URL).
+     Then a "longest-match wins" pass: collect every match with its
+     pattern length, then activate only the items whose best match
+     equals the global maximum length. This makes the parent item
+     active on the parent URL, and only the child active on a deeper
+     URL. */
+  var path = window.location.pathname;
+  var sessionSubMenu = "";
+  var matches = [];
+  nav.querySelectorAll('[data-submenu]').forEach(function(li) {
+    var patterns = li.getAttribute('data-submenu').split('|');
+    var bestLen = 0;
+    patterns.forEach(function(p) {
+      p = p.trim();
+      if (!p) return;
+      var hit = false;
+      /* (1) URL path match */
+      var idx = path.indexOf(p);
+      if (idx >= 0) {
+        var next = path.charAt(idx + p.length);
+        if (next === '' || next === '/' || next === '?' || next === '#') {
+          hit = true;
+        }
+      }
+      /* (2) Session sub_menu match (server-side hint) */
+      if (!hit && sessionSubMenu && p === sessionSubMenu) {
+        hit = true;
+      }
+      if (hit && p.length > bestLen) { bestLen = p.length; }
+    });
+    if (bestLen > 0) { matches.push({ li: li, len: bestLen }); }
+  });
+  var maxLen = matches.reduce(function(m, x) { return x.len > m ? x.len : m; }, 0);
+  matches.forEach(function(m) {
+    if (m.len === maxLen) {
+      m.li.classList.add('active');
+      var ul = m.li.closest('.sh-subnav');
+      if (ul) { ul.classList.add('show'); }
+    }
+  });
+
+})();
+
+/* Sidebar scroll persistence — save .sh-sidebar-scroll's scrollTop on
+   any internal-link click (or form submit) and restore on the next page
+   load. Without this, the browser's default scroll-restoration is
+   inconsistent for inner scrollable containers across hard navigations:
+   it works for top-level items but breaks for deep menu items like
+   Multi Branch whose subnav is JS-expanded after page load, throwing
+   off the browser's structural heuristic. sessionStorage is per-tab so
+   a new tab gets its own scroll state. */
+(function(){
+  var scroll = document.querySelector('.sh-sidebar-scroll');
+  if (!scroll) return;
+  var KEY = 'sh-sidebar-scrollTop';
+
+  /* Restore — run on the next animation frame so the sidebar's
+     dynamic .show class on .sh-subnav is applied first (it changes
+     content height; restoring before that would scroll to the wrong
+     visual spot). */
+  try {
+    var saved = sessionStorage.getItem(KEY);
+    if (saved !== null) {
+      requestAnimationFrame(function() {
+        scroll.scrollTop = parseInt(saved, 10) || 0;
+      });
+    }
+  } catch (e) {}
+
+  /* Save on click of any same-origin nav link. Captured at document
+     level so we catch the click before the browser starts navigation. */
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href]');
+    if (!link) return;
+    var href = link.getAttribute('href') || '';
+    if (!href || href.charAt(0) === '#' || href.indexOf('javascript:') === 0) return;
+    try { sessionStorage.setItem(KEY, String(scroll.scrollTop)); } catch (e) {}
+  }, true);
+
+  /* Save on form submit too (sidebar search form, patient search, etc.). */
+  document.addEventListener('submit', function() {
+    try { sessionStorage.setItem(KEY, String(scroll.scrollTop)); } catch (e) {}
+  }, true);
+})();
+
+/* Sidebar menu filter */
+(function(){
+  var input = document.getElementById('sidebar-menu-filter');
+  if (!input) return;
+  var clearBtn = document.getElementById('sidebar-menu-filter-clear');
+  function toggleClear() { if (clearBtn) clearBtn.classList.toggle('show', input.value.length > 0); }
+  if (clearBtn) clearBtn.addEventListener('click', function() {
+    input.value = '';
+    input.dispatchEvent(new Event('input'));   // re-runs the filter → reveals all items
+    input.focus();
+  });
+  input.addEventListener('input', function() {
+    toggleClear();
+    var q = this.value.trim().toLowerCase();
+    var nav = document.getElementById('sh-sidenav');
+    if (!nav) return;
+    /* Show all items when query is empty */
+    if (!q) {
+      nav.querySelectorAll('.nav-item, .sh-section').forEach(function(el) { el.style.display = ''; });
+      return;
+    }
+    /* Hide section headers initially; reveal if a sibling item matches */
+    nav.querySelectorAll('.sh-section').forEach(function(s) { s.style.display = 'none'; });
+    /* Process top-level nav-items */
+    nav.querySelectorAll(':scope > .nav-item').forEach(function(li) {
+      var labelEl = li.querySelector('.nav-link > span') || li.querySelector('.nav-link');
+      var label = labelEl ? labelEl.textContent.toLowerCase() : '';   /* skip stray empty .nav-item with no link */
+      /* Check sub-items too */
+      var subMatch = false;
+      li.querySelectorAll('.sh-subnav .nav-item').forEach(function(sub) {
+        var st = sub.textContent.toLowerCase();
+        if (st.indexOf(q) !== -1) { sub.style.display = ''; subMatch = true; }
+        else { sub.style.display = 'none'; }
+      });
+      if (label.indexOf(q) !== -1 || subMatch) {
+        li.style.display = '';
+        /* Reveal preceding section header */
+        var prev = li.previousElementSibling;
+        while (prev) {
+          if (prev.classList.contains('sh-section')) { prev.style.display = ''; break; }
+          prev = prev.previousElementSibling;
+        }
+        /* If sub-items matched, expand the panel */
+        if (subMatch) {
+          var subnav = li.querySelector('.sh-subnav');
+          if (subnav) subnav.classList.add('show');
+        }
+      } else {
+        li.style.display = 'none';
+      }
+    });
+  });
+})();
+</script>
+
+<!-- ═══════════════════ TOP BAR (server-rendered, functional) ═══════════════════ -->
+<header class="topbar">
+  <!-- Sidebar toggle (hamburger) -->
+  <button type="button" class="tb-toggle" id="sidebarToggle" title="Toggle Sidebar" aria-label="Toggle sidebar">
+    <i class="fa fa-bars"></i>
+  </button>
+
+  <!-- Module name -->
+  <div class="tb-module">
+    <div class="ic"><i class="fa fa-home"></i></div>
+    Dashboard  </div>
+
+  <!-- Spacer -->
+  <div class="sh-tb-flex-spacer"></div>
+
+  <!-- Patient search -->
+    <form class="tb-patient-search sh-tb-search-form" role="search" action="https://demo.smart-hospital.in/admin/admin/search" method="POST">
+    <input type="hidden" name="ci_csrf_token" value="">    <label class="tb-search mb-0">
+      <input type="text" name="search_text" placeholder="Search By Patient Name" autocomplete="off">
+      <button type="submit" class="tb-search-submit">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+      </button>
+    </label>
+  </form>
+  
+  <!-- ═══════════════════ QUICK ADD (+) ═══════════════════ -->
+      <div class="sh-qa-wrap" id="shQuickAddWrap">
+    <button type="button" class="tb-btn tb-btn-plus" id="shQuickAddBtn" title="Quick Add (Ctrl+K)" aria-label="Quick Add" aria-haspopup="true" aria-expanded="false">
+      <i class="fa fa-plus"></i>
+    </button>
+    <div class="sh-qa-backdrop" id="shQuickAddBackdrop" aria-hidden="true"></div>
+    <div class="sh-qa-panel" id="shQuickAddPanel" role="dialog" aria-label="Quick Add">
+      <div class="sh-qa-head">
+        <h5 class="ttl"><i class="fa fa-plus-circle"></i> Quick Add</h5>
+        <span class="kbd-chip">Ctrl+K</span>
+      </div>
+      <div class="sh-qa-search-wrap">
+        <i class="fa fa-search si"></i>
+        <input type="text" class="sh-qa-search-in" id="shQuickAddSearch" placeholder="Type to searchâ€¦" autocomplete="off">
+      </div>
+      <div class="sh-qa-list" id="shQuickAddList">
+
+                <a class="sh-qa-item" href="https://demo.smart-hospital.in/admin/admin/search?action=add" data-search="add patient new register registration general">
+          <span class="ic qa-blue"><i class="fas fa-user-plus"></i></span>
+          <span class="lbl">Add Patient</span>
+          <span class="mod">Patient List</span>
+        </a>
+        
+                <a class="sh-qa-item" href="https://demo.smart-hospital.in/admin/patient/search?action=add" data-search="opd patient new outpatient visit consultation">
+          <span class="ic qa-teal"><i class="fas fa-stethoscope"></i></span>
+          <span class="lbl">New OPD Patient</span>
+          <span class="mod">OPD Patient</span>
+        </a>
+        
+                <a class="sh-qa-item" href="https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add" data-search="ipd patient new inpatient admission">
+          <span class="ic qa-blue"><i class="fas fa-procedures"></i></span>
+          <span class="lbl">New IPD Patient</span>
+          <span class="mod">IPD Patient</span>
+        </a>
+        
+                <a class="sh-qa-item" href="https://demo.smart-hospital.in/admin/appointment?action=add" data-search="appointment new schedule doctor booking">
+          <span class="ic qa-teal"><i class="fa fa-calendar-check-o"></i></span>
+          <span class="lbl">New Appointment</span>
+          <span class="mod">Appointment</span>
+        </a>
+        
+                <a class="sh-qa-item" href="https://demo.smart-hospital.in/admin/bill/dashboard" data-search="bill invoice new charge billing">
+          <span class="ic qa-green"><i class="fa fa-file-text-o"></i></span>
+          <span class="lbl">New Bill</span>
+          <span class="mod">Bill</span>
+        </a>
+        
+                <a class="sh-qa-item" href="https://demo.smart-hospital.in/admin/pharmacy/bill?action=add" data-search="pharmacy sale bill medicine drug invoice new">
+          <span class="ic qa-amber"><i class="fas fa-mortar-pestle"></i></span>
+          <span class="lbl">New Pharmacy Bill</span>
+          <span class="mod">Pharmacy Bill</span>
+        </a>
+        
+                <a class="sh-qa-item" href="https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add" data-search="pathology test lab new diagnostic">
+          <span class="ic qa-violet"><i class="fas fa-flask"></i></span>
+          <span class="lbl">New Pathology Test</span>
+          <span class="mod">Pathology Test</span>
+        </a>
+        
+                <a class="sh-qa-item" href="https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add" data-search="radiology test imaging xray scan new diagnostic">
+          <span class="ic qa-violet"><i class="fas fa-microscope"></i></span>
+          <span class="lbl">New Radiology Test</span>
+          <span class="mod">Radiology Test</span>
+        </a>
+        
+                <a class="sh-qa-item" href="https://demo.smart-hospital.in/admin/bloodbank/issue?action=add" data-search="blood issue bank new transfusion">
+          <span class="ic qa-red"><i class="fas fa-tint"></i></span>
+          <span class="lbl">New Blood Issue</span>
+          <span class="mod">Blood Issue</span>
+        </a>
+        
+                <a class="sh-qa-item" href="https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add" data-search="ambulance call new dispatch transport emergency">
+          <span class="ic qa-red"><i class="fas fa-ambulance"></i></span>
+          <span class="lbl">New Ambulance Call</span>
+          <span class="mod">Ambulance Call</span>
+        </a>
+        
+                <a class="sh-qa-item" href="https://demo.smart-hospital.in/admin/visitors?action=add" data-search="visitor log new front office entry">
+          <span class="ic qa-teal"><i class="fa fa-id-badge"></i></span>
+          <span class="lbl">New Visitor</span>
+          <span class="mod">Visitor</span>
+        </a>
+        
+                <a class="sh-qa-item" href="https://demo.smart-hospital.in/admin/income?action=add" data-search="income new payment received finance">
+          <span class="ic qa-green"><i class="fa fa-arrow-down"></i></span>
+          <span class="lbl">New Income</span>
+          <span class="mod">Income</span>
+        </a>
+        
+                <a class="sh-qa-item" href="https://demo.smart-hospital.in/admin/expense?action=add" data-search="expense new payment paid finance">
+          <span class="ic qa-red"><i class="fa fa-arrow-up"></i></span>
+          <span class="lbl">New Expense</span>
+          <span class="mod">Expense</span>
+        </a>
+        
+      </div>
+      <div class="sh-qa-empty" id="shQuickAddEmpty">
+        <i class="fa fa-search"></i>
+        No actions match      </div>
+      <div class="sh-qa-foot">
+        <div class="keys">
+          <span><span class="kbd">↑</span><span class="kbd">↓</span> navigate</span>
+          <span><span class="kbd">Enter</span> open</span>
+          <span><span class="kbd">Esc</span> close</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Right action buttons -->
+  <div class="tb-right">
+    <!-- Icon rail — recessed plate grouping status/locale icons -->
+    <div class="tb-rail">
+    <!-- Mobile-only "More" menu: surfaces icons hidden from the bar on small screens (Bed Status / Chat / Calendar) -->
+    <div class="dropdown tb-more-wrap">
+      <button class="tb-btn tb-more-btn" data-bs-toggle="dropdown" title="More" aria-expanded="false">
+        <i class="fa fa-ellipsis-v"></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end sh-tb-dr">
+                <li><a class="dropdown-item" href="#" onclick="getbedstatus(); return false;"><i class="fas fa-bed me-2"></i>Bed Status</a></li>
+                        <li><a class="dropdown-item" href="https://demo.smart-hospital.in/admin/chat"><i class="fa fa-comments me-2"></i>Chat</a></li>
+                        <li><a class="dropdown-item" href="https://demo.smart-hospital.in/admin/calendar/events"><i class="fa fa-calendar me-2"></i>Calendar</a></li>
+              </ul>
+    </div>
+        <div class="dropdown">
+      <button class="tb-btn tb-btn-flag" data-bs-toggle="dropdown" title="Language">
+        <img src="https://flagcdn.com/w20/us.png" srcset="https://flagcdn.com/w40/us.png 2x" width="20" height="15" alt="US" class="sh-tb-flag-img" onerror="this.outerHTML='<i class=\'fa fa-globe\'></i>'">
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end sh-tb-dropdown-lang">
+        <li>
+    <a class="dropdown-item" href="https://demo.smart-hospital.in/admin/language/user_language/66">
+                    <img src="https://flagcdn.com/w20/in.png" srcset="https://flagcdn.com/w40/in.png 2x" width="20" height="15" alt="" loading="lazy" class="sh-lang-flag me-2">
+                Hindi            </a>
+</li>
+<li>
+    <a class="dropdown-item" href="https://demo.smart-hospital.in/admin/language/user_language/26">
+                    <img src="https://flagcdn.com/w20/es.png" srcset="https://flagcdn.com/w40/es.png 2x" width="20" height="15" alt="" loading="lazy" class="sh-lang-flag me-2">
+                Spanish            </a>
+</li>
+<li>
+    <a class="dropdown-item" href="https://demo.smart-hospital.in/admin/language/user_language/22">
+                    <img src="https://flagcdn.com/w20/id.png" srcset="https://flagcdn.com/w40/id.png 2x" width="20" height="15" alt="" loading="lazy" class="sh-lang-flag me-2">
+                Indonesian            </a>
+</li>
+<li>
+    <a class="dropdown-item" href="https://demo.smart-hospital.in/admin/language/user_language/48">
+                    <img src="https://flagcdn.com/w20/pt.png" srcset="https://flagcdn.com/w40/pt.png 2x" width="20" height="15" alt="" loading="lazy" class="sh-lang-flag me-2">
+                Portuguese            </a>
+</li>
+<li>
+    <a class="dropdown-item active" href="https://demo.smart-hospital.in/admin/language/user_language/4">
+                    <img src="https://flagcdn.com/w20/us.png" srcset="https://flagcdn.com/w40/us.png 2x" width="20" height="15" alt="" loading="lazy" class="sh-lang-flag me-2">
+                English                    <i class="fas fa-check ms-2 float-end sh-fs-11" style="margin-top:3px;"></i>
+            </a>
+</li>
+<li>
+    <a class="dropdown-item" href="https://demo.smart-hospital.in/admin/language/user_language/5">
+                    <img src="https://flagcdn.com/w20/sa.png" srcset="https://flagcdn.com/w40/sa.png 2x" width="20" height="15" alt="" loading="lazy" class="sh-lang-flag me-2">
+                Arabic            </a>
+</li>
+<li>
+    <a class="dropdown-item" href="https://demo.smart-hospital.in/admin/language/user_language/65">
+                    <img src="https://flagcdn.com/w20/fr.png" srcset="https://flagcdn.com/w40/fr.png 2x" width="20" height="15" alt="" loading="lazy" class="sh-lang-flag me-2">
+                French            </a>
+</li>
+<li>
+    <a class="dropdown-item" href="https://demo.smart-hospital.in/admin/language/user_language/61">
+                    <img src="https://flagcdn.com/w20/tr.png" srcset="https://flagcdn.com/w40/tr.png 2x" width="20" height="15" alt="" loading="lazy" class="sh-lang-flag me-2">
+                Turkish            </a>
+</li>
+<li>
+    <a class="dropdown-item" href="https://demo.smart-hospital.in/admin/language/user_language/50">
+                    <img src="https://flagcdn.com/w20/ru.png" srcset="https://flagcdn.com/w40/ru.png 2x" width="20" height="15" alt="" loading="lazy" class="sh-lang-flag me-2">
+                Russian            </a>
+</li>
+      </ul>
+    </div>
+    
+        <button class="tb-btn" data-bs-toggle="modal" data-bs-target="#multiBranchSwitchModal" title="Switch Branch">
+      <i class="fa fa-exchange"></i>
+    </button>
+    
+        <button class="tb-btn" id="beddata" onclick="getbedstatus()" title="Bed Status">
+      <i class="fas fa-bed"></i>
+    </button>
+    
+        <a class="tb-btn" href="https://demo.smart-hospital.in/admin/chat" title="Chat">
+      <i class="fa fa-comments"></i>
+      <span class="dot"></span>    </a>
+    
+        <a class="tb-btn" href="https://demo.smart-hospital.in/admin/calendar/events" title="Calendar">
+      <i class="fa fa-calendar"></i>
+    </a>
+    
+	    <div class="dropdown">
+      <button class="tb-btn position-relative" data-bs-toggle="dropdown" title="Pending Forms">
+        <i class="fa fa-file-text-o"></i>
+        <span class="tb-badge">2</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end sh-tb-dropdown-cf">
+        <li class="px-3 py-2 border-bottom d-flex justify-content-between align-items-center">
+          <span class="fw-bold">Pending Forms (2)</span>
+          <a href="https://demo.smart-hospital.in/admin/survey/staff_forms" class="small">View All</a>
+        </li>
+                <li>
+          <a class="dropdown-item text-wrap" href="https://demo.smart-hospital.in/admin/survey/staff_fill/3">
+            <i class="fa fa-file-text-o me-2"></i>Patient Satisfaction Survey                      </a>
+        </li>
+                <li>
+          <a class="dropdown-item text-wrap" href="https://demo.smart-hospital.in/admin/survey/staff_fill/9">
+            <i class="fa fa-file-text-o me-2"></i>General Feedback                      </a>
+        </li>
+              </ul>
+    </div>
+    	
+	
+        <a class="tb-btn position-relative" href="https://demo.smart-hospital.in/admin/systemnotification" title="Notifications">
+      <i class="fa fa-bell"></i>
+            <span class="tb-badge" id="sh-notif-dot">99+</span>
+    </a>
+        </div><!-- /.tb-rail -->
+
+    <!-- User signet: Profile + Password + Logout -->
+    <div class="dropdown">
+      <a class="tb-signet" href="#" data-bs-toggle="dropdown">
+        <img src="https://demo.smart-hospital.in/uploads/staff_images/1.jpg?1791925411" alt="">
+        <div class="tb-signet-text">
+          <span class="tb-signet-name">Super Admin</span>
+          <span class="tb-signet-role">Super Admin</span>        </div>
+        <i class="fa fa-angle-down"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end sh-tb-dropdown-user">
+        <li class="px-3 py-2 border-bottom">
+          <div class="fw-bold text-capitalize">Super Admin</div>
+          <div class="text-muted small">Super Admin</div>
+        </li>
+        <li><a class="dropdown-item" href="https://demo.smart-hospital.in/admin/staff/profile/1"><i class="fa fa-user me-2"></i>Profile</a></li>
+        <li><a class="dropdown-item" href="https://demo.smart-hospital.in/admin/admin/changepass"><i class="fa fa-key me-2"></i>Change Password</a></li>
+        <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="https://demo.smart-hospital.in/admin/themestudio"><i class="fa fa-paint-brush me-2"></i>Backend Theme</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item text-danger" href="https://demo.smart-hospital.in/site/logout"><i class="fa fa-sign-out me-2"></i>Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════ QUICK ADD (+) BEHAVIOR ═══════════════════ -->
+<script>
+(function () {
+  var wrap = document.getElementById('shQuickAddWrap');
+  if (!wrap) return;
+  var btn      = document.getElementById('shQuickAddBtn');
+  var panel    = document.getElementById('shQuickAddPanel');
+  var backdrop = document.getElementById('shQuickAddBackdrop');
+  var search   = document.getElementById('shQuickAddSearch');
+  var list     = document.getElementById('shQuickAddList');
+  var empty    = document.getElementById('shQuickAddEmpty');
+  var items    = Array.prototype.slice.call(list.querySelectorAll('.sh-qa-item'));
+  var focusIdx = 0;
+
+  function visibleItems() {
+    return items.filter(function (el) { return el.style.display !== 'none'; });
+  }
+
+  function refocus() {
+    items.forEach(function (el) { el.classList.remove('is-focus'); });
+    var vis = visibleItems();
+    if (vis.length === 0) {
+      empty.style.display = 'block';
+      list.style.display = 'none';
+      return;
+    }
+    empty.style.display = 'none';
+    list.style.display  = '';
+    if (focusIdx >= vis.length) focusIdx = 0;
+    if (focusIdx < 0)           focusIdx = vis.length - 1;
+    vis[focusIdx].classList.add('is-focus');
+    if (vis[focusIdx].scrollIntoView) {
+      vis[focusIdx].scrollIntoView({ block: 'nearest' });
+    }
+  }
+
+  function openPanel() {
+    wrap.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+    search.value = '';
+    items.forEach(function (el) { el.style.display = ''; });
+    focusIdx = 0;
+    refocus();
+    setTimeout(function () { try { search.focus(); } catch (e) {} }, 50);
+  }
+
+  function closePanel() {
+    wrap.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+
+  function togglePanel() {
+    if (wrap.classList.contains('is-open')) { closePanel(); } else { openPanel(); }
+  }
+
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    togglePanel();
+  });
+  backdrop.addEventListener('click', closePanel);
+
+  /* Live search filter — matches data-search attribute + visible text */
+  search.addEventListener('input', function () {
+    var q = (search.value || '').trim().toLowerCase();
+    items.forEach(function (el) {
+      var hay = ((el.getAttribute('data-search') || '') + ' ' + el.textContent).toLowerCase();
+      el.style.display = (!q || hay.indexOf(q) !== -1) ? '' : 'none';
+    });
+    focusIdx = 0;
+    refocus();
+  });
+
+  /* Keyboard inside search input */
+  search.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { e.preventDefault(); closePanel(); return; }
+    if (e.key === 'ArrowDown') { e.preventDefault(); focusIdx++; refocus(); return; }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); focusIdx--; refocus(); return; }
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      var vis = visibleItems();
+      if (vis.length > 0 && vis[focusIdx]) { window.location.href = vis[focusIdx].href; }
+      return;
+    }
+  });
+
+  /* Global shortcuts: Ctrl+K (or Cmd+K) opens panel; Esc closes when open */
+  document.addEventListener('keydown', function (e) {
+    var k = (e.key || '').toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && k === 'k') {
+      e.preventDefault();
+      togglePanel();
+    } else if (k === 'escape' && wrap.classList.contains('is-open')) {
+      closePanel();
+    }
+  });
+})();
+</script>
+
+<main class="content">
+<!-- ═══════════════════ PAGE CONTENT START ═══════════════════ -->
+
+<!-- ═══════════ Alert banners — sh-alert minimal-inline style ═══════════ -->
+<div class="dash-alerts">
+    
+    
+            <div class="sh-alert success dashalert alert alert-dismissible fade show" role="alert">
+            <span class="ic"><i class="fa fa-bell"></i></span>
+            <span class="txt"><a href="https://demo.smart-hospital.in/admin/notification">Doctor's Meeting</a></span>
+            <button type="button" class="x alertclose close_notice" data-bs-dismiss="alert" aria-label="Close" data-noticeid="333"><i class="fa fa-times"></i></button>
+        </div>
+                <div class="sh-alert success dashalert alert alert-dismissible fade show" role="alert">
+            <span class="ic"><i class="fa fa-bell"></i></span>
+            <span class="txt"><a href="https://demo.smart-hospital.in/admin/notification">Children's Eye Health and Safety Awareness</a></span>
+            <button type="button" class="x alertclose close_notice" data-bs-dismiss="alert" aria-label="Close" data-noticeid="332"><i class="fa fa-times"></i></button>
+        </div>
+                <div class="sh-alert success dashalert alert alert-dismissible fade show" role="alert">
+            <span class="ic"><i class="fa fa-bell"></i></span>
+            <span class="txt"><a href="https://demo.smart-hospital.in/admin/notification">Blood Pressure Treatment Campaign</a></span>
+            <button type="button" class="x alertclose close_notice" data-bs-dismiss="alert" aria-label="Close" data-noticeid="331"><i class="fa fa-times"></i></button>
+        </div>
+        </div>
+
+<!-- ═══════════ Page header ═══════════ -->
+<div class="dash-page-head">
+    <div>
+        <h1>Dashboard</h1>
+        <div class="crumb">Home <i class="fa fa-angle-right mx-1"></i> Dashboard</div>
+    </div>
+</div>
+
+<!-- ═══════════ Hero KPIs (4 tiles with sparkline + delta) ═══════════ -->
+<div class="kpi-grid">
+
+        <div class="kpi s-green">
+        <div class="kpi-label">Total Revenue · MTD</div>
+        <div class="kpi-value">$ 24,076</div>
+        <div class="kpi-delta flat">
+                        0% vs last month        </div>
+        <!-- TODO: render sparkline from $kpi_revenue_spark (last 7 days) -->
+        <svg class="kpi-spark" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+            <path class="fill" d="M0,26 L20,22 L40,24 L60,18 L80,16 L100,10 L120,8 L120,32 L0,32 Z"></path>
+            <path class="line" d="M0,26 L20,22 L40,24 L60,18 L80,16 L100,10 L120,8"></path>
+        </svg>
+    </div>
+    
+        <div class="kpi s-green">
+        <div class="kpi-label">Bed Occupancy</div>
+        <div class="kpi-value">56<span class="unit">%</span></div>
+        <div class="kpi-delta flat">30 of 54 occupied</div>
+        <svg class="kpi-spark" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+            <path class="fill" d="M0,18 L20,20 L40,16 L60,14 L80,12 L100,14 L120,10 L120,32 L0,32 Z"></path>
+            <path class="line" d="M0,18 L20,20 L40,16 L60,14 L80,12 L100,14 L120,10"></path>
+        </svg>
+    </div>
+    
+        <a class="kpi s-green" href="https://demo.smart-hospital.in/admin/appointment">
+        <div class="kpi-label">Today's Appointments</div>
+        <div class="kpi-value">0</div>
+        <div class="kpi-delta">
+            0 Confirmed · 0 Pending        </div>
+        <svg class="kpi-spark" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+            <path class="fill" d="M0,24 L20,22 L40,20 L60,22 L80,16 L100,14 L120,12 L120,32 L0,32 Z"></path>
+            <path class="line" d="M0,24 L20,22 L40,20 L60,22 L80,16 L100,14 L120,12"></path>
+        </svg>
+    </a>
+    
+        <div class="kpi s-red">
+        <div class="kpi-label">Outstanding Bills</div>
+        <div class="kpi-value">$ 18,066</div>
+        <div class="kpi-delta neg">171 Unpaid · 67 Overdue</div>
+        <svg class="kpi-spark" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+            <path class="fill" d="M0,14 L20,16 L40,18 L60,16 L80,20 L100,22 L120,24 L120,32 L0,32 Z"></path>
+            <path class="line" d="M0,14 L20,16 L40,18 L60,16 L80,20 L100,22 L120,24"></path>
+        </svg>
+    </div>
+    </div>
+
+<!-- ═══════════ Operations snapshot (4 cards) ═══════════ -->
+<div class="ops-grid">
+
+        <div class="ops-card">
+        <div class="head">
+            <div class="ic blue"><i class="fa fa-calendar-check-o"></i></div>
+            <div class="lbl">Today Appointment</div>
+            <a class="meta" href="https://demo.smart-hospital.in/admin/appointment/index">View</a>
+        </div>
+        <div class="next-list">
+                            <div class="row muted"><span class="nm">No appointment for today</span></div>
+                    </div>
+    </div>
+    
+        <div class="ops-card">
+        <div class="head">
+            <div class="ic teal"><i class="fas fa-bed"></i></div>
+            <div class="lbl">Bed Occupancy</div>
+            <span class="meta tnum">54</span>
+        </div>
+        <div class="big">30<span class="unit"> / 54</span></div>
+        <div class="bar-wrap">
+            <div class="track "><i style="--w:56%"></i></div>
+            <div class="pct">56%</div>
+        </div>
+        <br>
+        <div class="sub">
+            24 Available ·
+            30 Allotted ·
+            0 Unused        </div>
+    </div>
+    
+        <div class="ops-card">
+        <div class="head">
+            <div class="ic amber"><i class="fas fa-pills"></i></div>
+            <div class="lbl">Medicines Stock</div>
+            <a class="meta" href="https://demo.smart-hospital.in/admin/pharmacy/search">Manage</a>
+        </div>
+        <div class="big">0</div>
+        <div class="sub">items below reorder · 0 Critical</div>
+                            <div class="sub"><i class="fas fa-hourglass-end"></i> 7 medicines expiring in 30 Days</div>
+            </div>
+    
+        <div class="ops-card">
+        <div class="head">
+            <div class="ic red"><i class="fas fa-tint"></i></div>
+            <div class="lbl">Blood Bank</div>
+            <a class="meta" href="https://demo.smart-hospital.in/admin/bloodbankstatus">Inventory</a>
+        </div>
+        <div class="bb-grid">
+                            <div class="bg low"><span class="g">B+</span><span class="u">1</span></div>
+                            <div class="bg low"><span class="g">A+</span><span class="u">2</span></div>
+                            <div class="bg low"><span class="g">AB-</span><span class="u">1</span></div>
+                            <div class="bg "><span class="g">AB+</span><span class="u">8</span></div>
+                            <div class="bg "><span class="g">O-</span><span class="u">6</span></div>
+                            <div class="bg "><span class="g">A-</span><span class="u">10</span></div>
+                            <div class="bg warn"><span class="g">B-</span><span class="u">5</span></div>
+                            <div class="bg low"><span class="g">O+</span><span class="u">2</span></div>
+                    </div>
+        <div class="bb-status">
+            <div class="bb-stat"><i class="fas fa-syringe"></i> Today <strong>0</strong> · This Week <strong>9</strong></div>
+        </div>
+    </div>
+    
+</div>
+
+<!-- ═══════════ Charts (Yearly Income vs Expense + Monthly Income Mix) ═══════════ -->
+<div class="dash-chart-row">
+
+        <div class="dash-chart-card">
+        <div class="dash-chart-card-h">
+            <h3>Yearly Income &amp; Expense</h3>
+            <span class="sub">12-month trend</span>
+        </div>
+        <div class="dash-chart-card-body collapse show" id="chart-yearly-body">
+            <div class="chart-summary">
+                <div class="stat"><span class="k">Income YTD</span><span class="v up">$ 223,509</span></div>
+                <div class="stat"><span class="k">Expense YTD</span><span class="v dn">$ 3,441,934</span></div>
+                                <div class="stat"><span class="k">Net</span><span class="v dn">$ -3,218,425</span></div>
+            </div>
+            <div class="dash-chart-canvas-wrap"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div><canvas id="lineChart" width="660" height="240" style="display: block; width: 660px; height: 240px;" class="chartjs-render-monitor"></canvas></div>
+        </div>
+    </div>
+    
+        <div class="dash-chart-card">
+        <div class="dash-chart-card-h">
+            <h3>Monthly Income Overview</h3>
+        </div>
+        <div class="dash-chart-card-body collapse show" id="chart-monthly-body">
+            <div class="doughnut-layout">
+                <div class="doughnut-wrap"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                    <canvas id="pieChart" width="200" height="200" style="display: block; width: 200px; height: 200px;" class="chartjs-render-monitor"></canvas>
+                    <div class="doughnut-center">
+                                                                        <span class="v">$ 24,076</span>
+                        <span class="l">8 sources</span>
+                    </div>
+                </div>
+                <ul class="donut-legend">
+                                            <li>
+                            <span class="sw" style="--c:#1B73E8"></span>
+                            <span class="nm">OPD</span>
+                            <span class="val">31%</span>
+                        </li>
+                                            <li>
+                            <span class="sw" style="--c:#22A06B"></span>
+                            <span class="nm">IPD</span>
+                            <span class="val">0%</span>
+                        </li>
+                                            <li>
+                            <span class="sw" style="--c:#00B5AD"></span>
+                            <span class="nm">Pharmacy</span>
+                            <span class="val">22%</span>
+                        </li>
+                                            <li>
+                            <span class="sw" style="--c:#F59E0B"></span>
+                            <span class="nm">Pathology</span>
+                            <span class="val">9%</span>
+                        </li>
+                                            <li>
+                            <span class="sw" style="--c:#7E57C2"></span>
+                            <span class="nm">Radiology</span>
+                            <span class="val">8%</span>
+                        </li>
+                                            <li>
+                            <span class="sw" style="--c:#AB47BC"></span>
+                            <span class="nm">Blood Bank</span>
+                            <span class="val">7%</span>
+                        </li>
+                                            <li>
+                            <span class="sw" style="--c:#E42527"></span>
+                            <span class="nm">Ambulance</span>
+                            <span class="val">5%</span>
+                        </li>
+                                            <li>
+                            <span class="sw" style="--c:#FF6B35"></span>
+                            <span class="nm">Income</span>
+                            <span class="val">18%</span>
+                        </li>
+                                    </ul>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<!-- ═══════════ Recent Activity (full-width table-card) ═══════════ -->
+<div class="dash-table-card">
+    <div class="dash-table-card-h">
+        <h3>Recent Activity</h3>
+    </div>
+    <table class="dash-tbl">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Action</th>
+                <th>Detail</th>
+                <th>Module</th>
+                <th class="num">Amount</th>
+                <th class="num">Time</th>
+            </tr>
+        </thead>
+        <tbody>
+                            <tr>
+                    <td><strong>—</strong></td>
+                    <td>posted bill payment</td>
+                    <td>#TXN-8850</td>
+                    <td><span class="badge-pill info">CASH</span></td>
+                    <td class="num">$ 121</td>
+                    <td class="num"><span class="meta-text">just now</span></td>
+                </tr>
+                            <tr>
+                    <td><strong>Daniel Wood (Patient)</strong></td>
+                    <td>posted bill payment</td>
+                    <td>#TXN-12525</td>
+                    <td><span class="badge-pill info">CASH</span></td>
+                    <td class="num">$ 121</td>
+                    <td class="num"><span class="meta-text">just now</span></td>
+                </tr>
+                            <tr>
+                    <td><strong>Kathleen Campbell (Patient)</strong></td>
+                    <td>posted bill payment</td>
+                    <td>#TXN-12486</td>
+                    <td><span class="badge-pill info">CASH</span></td>
+                    <td class="num">$ 166</td>
+                    <td class="num"><span class="meta-text">just now</span></td>
+                </tr>
+                            <tr>
+                    <td><strong>Olivier Thomas (Patient)</strong></td>
+                    <td>posted bill payment</td>
+                    <td>#TXN-12494</td>
+                    <td><span class="badge-pill info">CASH</span></td>
+                    <td class="num">$ 254</td>
+                    <td class="num"><span class="meta-text">just now</span></td>
+                </tr>
+                            <tr>
+                    <td><strong>Aaron Hardie (Patient)</strong></td>
+                    <td>posted bill payment</td>
+                    <td>#TXN-12502</td>
+                    <td><span class="badge-pill info">CASH</span></td>
+                    <td class="num">$ 101</td>
+                    <td class="num"><span class="meta-text">just now</span></td>
+                </tr>
+                            <tr>
+                    <td><strong>Seher (Patient)</strong></td>
+                    <td>posted bill payment</td>
+                    <td>#TXN-12524</td>
+                    <td><span class="badge-pill info">CASH</span></td>
+                    <td class="num">$ 121</td>
+                    <td class="num"><span class="meta-text">just now</span></td>
+                </tr>
+                            <tr>
+                    <td><strong>Chris Benjamin (Patient)</strong></td>
+                    <td>posted bill payment</td>
+                    <td>#TXN-12531</td>
+                    <td><span class="badge-pill info">CASH</span></td>
+                    <td class="num">$ 100</td>
+                    <td class="num"><span class="meta-text">just now</span></td>
+                </tr>
+                            <tr>
+                    <td><strong>Gaurav Shrivastava (Patient)</strong></td>
+                    <td>posted bill payment</td>
+                    <td>#TXN-12493</td>
+                    <td><span class="badge-pill info">CASH</span></td>
+                    <td class="num">$ 250</td>
+                    <td class="num"><span class="meta-text">just now</span></td>
+                </tr>
+                            <tr>
+                    <td><strong>mary yeboah (Patient)</strong></td>
+                    <td>registered new patient</td>
+                    <td>#1240</td>
+                    <td><span class="badge-pill info">OPD</span></td>
+                    <td class="num">—</td>
+                    <td class="num"><span class="meta-text">5h ago</span></td>
+                </tr>
+                            <tr>
+                    <td><strong>BLACKHORSE STUDIO (Patient)</strong></td>
+                    <td>registered new patient</td>
+                    <td>#1239</td>
+                    <td><span class="badge-pill info">OPD</span></td>
+                    <td class="num">—</td>
+                    <td class="num"><span class="meta-text">6h ago</span></td>
+                </tr>
+                    </tbody>
+    </table>
+</div>
+
+<!-- ═══════════ Staff & Attendance + Income by Module (2-col equal) ═══════════ -->
+<div class="dash-2col-equal">
+
+        <div class="dash-table-card">
+                <div class="dash-table-card-h">
+            <h3>Staff Attendance</h3>
+            <span class="sub">0 / 13 today · 0%</span>
+        </div>
+        <table class="dash-tbl">
+            <thead><tr><th>Role</th><th class="num">Total</th><th class="num">Present</th><th>Attendance</th></tr></thead>
+            <tbody>
+                                    <tr>
+                        <td><strong>Doctor</strong></td>
+                        <td class="num">4</td>
+                        <td class="num"><span class="badge-pill err">0</span></td>
+                        <td><span class="pbar crit"><span class="track crit"><i style="--w:0%"></i></span><span class="pct">0%</span></span></td>
+                    </tr>
+                                    <tr>
+                        <td><strong>Nurse</strong></td>
+                        <td class="num">2</td>
+                        <td class="num"><span class="badge-pill err">0</span></td>
+                        <td><span class="pbar crit"><span class="track crit"><i style="--w:0%"></i></span><span class="pct">0%</span></span></td>
+                    </tr>
+                                    <tr>
+                        <td><strong>Admin</strong></td>
+                        <td class="num">1</td>
+                        <td class="num"><span class="badge-pill err">0</span></td>
+                        <td><span class="pbar crit"><span class="track crit"><i style="--w:0%"></i></span><span class="pct">0%</span></span></td>
+                    </tr>
+                                    <tr>
+                        <td><strong>Accountant</strong></td>
+                        <td class="num">1</td>
+                        <td class="num"><span class="badge-pill err">0</span></td>
+                        <td><span class="pbar crit"><span class="track crit"><i style="--w:0%"></i></span><span class="pct">0%</span></span></td>
+                    </tr>
+                                    <tr>
+                        <td><strong>Pharmacist</strong></td>
+                        <td class="num">1</td>
+                        <td class="num"><span class="badge-pill err">0</span></td>
+                        <td><span class="pbar crit"><span class="track crit"><i style="--w:0%"></i></span><span class="pct">0%</span></span></td>
+                    </tr>
+                                    <tr>
+                        <td><strong>Pathologist</strong></td>
+                        <td class="num">1</td>
+                        <td class="num"><span class="badge-pill err">0</span></td>
+                        <td><span class="pbar crit"><span class="track crit"><i style="--w:0%"></i></span><span class="pct">0%</span></span></td>
+                    </tr>
+                                    <tr>
+                        <td><strong>Radiologist</strong></td>
+                        <td class="num">1</td>
+                        <td class="num"><span class="badge-pill err">0</span></td>
+                        <td><span class="pbar crit"><span class="track crit"><i style="--w:0%"></i></span><span class="pct">0%</span></span></td>
+                    </tr>
+                                    <tr>
+                        <td><strong>Super Admin</strong></td>
+                        <td class="num">1</td>
+                        <td class="num"><span class="badge-pill err">0</span></td>
+                        <td><span class="pbar crit"><span class="track crit"><i style="--w:0%"></i></span><span class="pct">0%</span></span></td>
+                    </tr>
+                                    <tr>
+                        <td><strong>Receptionist</strong></td>
+                        <td class="num">1</td>
+                        <td class="num"><span class="badge-pill err">0</span></td>
+                        <td><span class="pbar crit"><span class="track crit"><i style="--w:0%"></i></span><span class="pct">0%</span></span></td>
+                    </tr>
+                            </tbody>
+        </table>
+    </div>
+    
+        <div class="dash-table-card">
+                <div class="dash-table-card-h">
+            <h3>Income by Module · Oct 2026</h3>
+            <span class="sub">$ 24,076 Total</span>
+        </div>
+        <table class="dash-tbl">
+            <thead><tr><th>Module</th><th class="num">Income</th><th class="num">Share</th><th class="num">Last Month</th></tr></thead>
+            <tbody>
+                                    <tr>
+                        <td><span class="ic blue"><i class="fas fa-procedures"></i></span><strong>IPD</strong></td>
+                        <td class="num">$ 0.00</td>
+                        <td class="num">0%</td>
+                        <td class="num">$ 759</td>
+                    </tr>
+                                    <tr>
+                        <td><span class="ic green"><i class="fas fa-stethoscope"></i></span><strong>OPD</strong></td>
+                        <td class="num">$ 7,381.66</td>
+                        <td class="num">30.7%</td>
+                        <td class="num">$ 6,905</td>
+                    </tr>
+                                    <tr>
+                        <td><span class="ic teal"><i class="fas fa-mortar-pestle"></i></span><strong>Pharmacy</strong></td>
+                        <td class="num">$ 5,218.00</td>
+                        <td class="num">21.7%</td>
+                        <td class="num">$ 7,602</td>
+                    </tr>
+                                    <tr>
+                        <td><span class="ic amber"><i class="fas fa-microscope"></i></span><strong>Radiology</strong></td>
+                        <td class="num">$ 1,876.40</td>
+                        <td class="num">7.8%</td>
+                        <td class="num">$ 1,876</td>
+                    </tr>
+                                    <tr>
+                        <td><span class="ic violet"><i class="fas fa-flask"></i></span><strong>Pathology</strong></td>
+                        <td class="num">$ 2,203.41</td>
+                        <td class="num">9.2%</td>
+                        <td class="num">$ 1,821</td>
+                    </tr>
+                                    <tr>
+                        <td><span class="ic green"><i class="fas fa-money-bill-wave"></i></span><strong>General</strong></td>
+                        <td class="num">$ 4,400.00</td>
+                        <td class="num">18.3%</td>
+                        <td class="num">$ 1,600</td>
+                    </tr>
+                                    <tr>
+                        <td><span class="ic red"><i class="fas fa-tint"></i></span><strong>Blood Bank</strong></td>
+                        <td class="num">$ 1,752.00</td>
+                        <td class="num">7.3%</td>
+                        <td class="num">$ 1,410</td>
+                    </tr>
+                                    <tr>
+                        <td><span class="ic teal"><i class="fas fa-ambulance"></i></span><strong>Ambulance</strong></td>
+                        <td class="num">$ 1,244.75</td>
+                        <td class="num">5.2%</td>
+                        <td class="num">$ 1,244</td>
+                    </tr>
+                                                    <tr>
+                        <td><span class="ic red"><i class="fab fa-creative-commons-nc"></i></span><strong>Expenses</strong></td>
+                        <td class="num neg bold">−$ 394,228</td>
+                        <td class="num"><span class="badge-pill muted">—</span></td>
+                        <td class="num neg">−$ 383,528</td>
+                    </tr>
+                            </tbody>
+        </table>
+    </div>
+    
+</div>
+
+<!-- ═══════════ Chart.js scripts (yearly line + monthly doughnut) ═══════════ -->
+<script src="https://demo.smart-hospital.in/backend/js/Chart.bundle.js"></script>
+<script src="https://demo.smart-hospital.in/backend/js/utils.js"></script>
+
+<script type="text/javascript">
+(function() {
+    function tok(name) {
+        return getComputedStyle(document.body).getPropertyValue('--' + name).trim();
+    }
+
+    var yearly_collection = [20115,16852.190000000002,23087.47,29328.85,23412.96,13788.85,25272.4,24357.36,23217.62,24076.22,"0.00","0.00"];
+    var yearly_expense    = [142620,229050,353290,381700,397090,383900,393300,383228,383528,394228,0,0];
+    var MONTHS            = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+        var lineEl = document.getElementById('lineChart');
+    if (lineEl) {
+        var lineCtx = lineEl.getContext('2d');
+        new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: MONTHS,
+                datasets: [
+                                        {
+                        label: 'Income',
+                        data: yearly_collection,
+                        borderColor: tok('green'),
+                        backgroundColor: tok('green') + '22',
+                        fill: true,
+                        tension: 0.32,
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: tok('green'),
+                        pointBorderColor: tok('surface'),
+                        pointBorderWidth: 1.5,
+                        borderWidth: 2.5
+                    },
+                                                            {
+                        label: 'Expenses',
+                        data: yearly_expense,
+                        borderColor: tok('red'),
+                        backgroundColor: 'transparent',
+                        fill: false,
+                        tension: 0.32,
+                        borderDash: [5, 4],
+                        pointRadius: 2.5,
+                        pointHoverRadius: 5,
+                        pointBackgroundColor: tok('red'),
+                        pointBorderColor: tok('surface'),
+                        pointBorderWidth: 1.5,
+                        borderWidth: 2
+                    }
+                                    ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                tooltips: { mode: 'index', intersect: false },
+                hover: { mode: 'nearest', intersect: true },
+                legend: { position: 'bottom', labels: { fontColor: tok('ink-2'), fontSize: 12 } },
+                scales: {
+                    xAxes: [{
+                        gridLines: { color: tok('border-light'), zeroLineColor: tok('border') },
+                        ticks: { fontColor: tok('muted'), fontSize: 11 }
+                    }],
+                    yAxes: [{
+                        gridLines: { color: tok('border-light'), zeroLineColor: tok('border') },
+                        ticks: {
+                            fontColor: tok('muted'),
+                            fontSize: 11,
+                            beginAtZero: true,
+                            callback: function(v) { return '$ ' + (v >= 1000 ? (v/1000).toFixed(0) + 'K' : v); }
+                        }
+                    }]
+                }
+            }
+        });
+    }
+    
+        var pieEl = document.getElementById('pieChart');
+    if (pieEl) {
+        var pieCtx = pieEl.getContext('2d');
+        var jsonarr = {"value":[31,0,22,9,8,7,5,18],"label":["OPD","IPD","Pharmacy","Pathology","Radiology","Blood Bank","Ambulance","Income"]};
+        var palette = [tok('blue'), tok('green'), tok('teal'), tok('amber'), tok('violet'), tok('purple'), tok('red'), tok('orange')];
+        new Chart(pieCtx, {
+            type: 'doughnut',
+            data: {
+                labels: (jsonarr && jsonarr.label) || [],
+                datasets: [{
+                    data: (jsonarr && jsonarr.value) || [],
+                    backgroundColor: palette,
+                    borderColor: tok('surface'),
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutoutPercentage: 64,
+                legend: { display: false },
+                animation: { animateScale: true, animateRotate: true }
+            }
+        });
+    }
+    })();
+</script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    if (window.bootstrap && bootstrap.Tooltip) {
+        document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function(el){
+            new bootstrap.Tooltip(el);
+        });
+    }
+
+    $(document).on('click', '.close_notice', function () {
+        var data = $(this).data();
+        $.ajax({
+            type: "POST",
+            url: base_url + "admin/notification/read",
+            data: { 'notice': data.noticeid },
+            dataType: "json",
+            success: function (data) {
+                if (data.status == "fail") { errorMsg(data.msg); }
+                else { successMsg(data.msg); }
+            }
+        });
+    });
+});
+</script>
+<!-- ═══════════════════ PAGE CONTENT END ═══════════════════ -->
+</main><!-- /.content -->
+
+<!-- Bootstrap 5.3.3 JS Bundle (includes Popper.js) -->
+<script src="https://demo.smart-hospital.in/backend/bootstrap5/js/bootstrap.bundle.min.js"></script>
+<!-- Guard: patch Bootstrap Modal.getOrCreateInstance so data-bs-toggle="modal" without
+     data-bs-target doesn't crash (Bootstrap passes null element → _initializeBackDrop fails).
+     The onclick="holdModal(...)" on those elements still fires normally. -->
+<script>
+(function() {
+    if (typeof bootstrap === 'undefined' || !bootstrap.Modal) return;
+    var _orig = bootstrap.Modal.getOrCreateInstance;
+    bootstrap.Modal.getOrCreateInstance = function(element, config) {
+        if (!element) return { show: function(){}, hide: function(){}, toggle: function(){} };
+        return _orig.call(this, element, config);
+    };
+})();
+</script>
+
+<!-- jQuery shim: bridges BS3/BS4 $.fn.popover() and $.fn.tooltip() to BS5 native API -->
+<script>
+(function($) {
+    if (typeof bootstrap === 'undefined') return;
+    $.fn.popover = function(options) {
+        return this.each(function() {
+            if (typeof options === 'string') {
+                var inst = bootstrap.Popover.getInstance(this);
+                if (inst) inst[options]();
+            } else {
+                new bootstrap.Popover(this, options || {});
+            }
+        });
+    };
+    $.fn.tooltip = function(options) {
+        return this.each(function() {
+            if (typeof options === 'string') {
+                var inst = bootstrap.Tooltip.getInstance(this);
+                if (inst) inst[options]();
+            } else {
+                new bootstrap.Tooltip(this, options || {});
+            }
+        });
+    };
+}(jQuery));
+</script>
+
+<!-- Sidebar toggle (collapse/expand) — persists state in localStorage -->
+<script>
+(function() {
+  // Restore collapsed state on initial load (before paint to prevent flash)
+  if (localStorage.getItem('sh_sidebar_collapsed') === '1') {
+    document.body.classList.add('sidebar-collapsed');
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    var btn = document.getElementById('sidebarToggle');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        // QW-02 / mobile-sidebar (2026-05-18): at ≤768px the toggle opens an
+        // off-canvas drawer instead of collapsing the rail. Mobile state is
+        // not persisted (it should close on next page load).
+        if (window.matchMedia('(max-width: 768px)').matches) {
+          document.body.classList.toggle('sidebar-mobile-open');
+        } else {
+          var collapsed = document.body.classList.toggle('sidebar-collapsed');
+          localStorage.setItem('sh_sidebar_collapsed', collapsed ? '1' : '0');
+        }
+      });
+    }
+    // Click backdrop to close mobile drawer (the ::before pseudo sits at z-index 1055
+    // covering everything except the sidebar at z-index 1060; we detect clicks on it
+    // via "click happened outside .sh-sidebar while body.sidebar-mobile-open").
+    document.addEventListener('click', function(e) {
+      if (!document.body.classList.contains('sidebar-mobile-open')) return;
+      if (e.target.closest('.sh-sidebar')) return;       // click inside drawer — ignore
+      if (e.target.closest('#sidebarToggle')) return;    // click on toggle — toggle handler runs
+      document.body.classList.remove('sidebar-mobile-open');
+    });
+
+    // Auto-populate data-tooltip on each top-level nav-link
+    // (extracts the <span> text for collapsed-state hover tooltip)
+    document.querySelectorAll('.sh-sidebar .sh-nav > .nav-item > .nav-link').forEach(function(link) {
+      var span = link.querySelector('span');
+      if (span) {
+        var label = span.textContent.trim();
+        if (label) link.setAttribute('data-tooltip', label);
+      }
+    });
+
+
+    // Auto-detect active submenu by matching each submenu link's href against current URL.
+    // Defer to sidebar.php's data-submenu auto-detect (runs earlier) and any server-side
+    // set_SubSubmenu()/set_Submenu() highlights — those are more reliable for ambiguous URLs
+    // where one link's href is a prefix of another section's URL (e.g., /admin/income vs
+    // /admin/income/alltransactionreport).
+    (function detectActiveSubmenu() {
+      var serverActive = document.querySelector('.sh-sidebar .sh-subnav .nav-item.active');
+      if (serverActive) {
+        // Server (set_Submenu) already highlighted the active item. Make sure its
+        // parent panel is open, then scroll it into view — otherwise this path
+        // returned without scrolling and the sidebar stayed pinned at the top.
+        var sub = serverActive.closest('.sh-subnav');
+        // Open via the .show class only — CSS maps .sh-subnav.show -> display:block.
+        // Do NOT also set inline style.display: the sidebar accordion closes panels by
+        // removing the .show class, and an inline display:block would survive that and
+        // keep this panel visually open when another menu group is opened.
+        if (sub) { sub.classList.add('show'); }
+        requestAnimationFrame(function() {
+          var scrollEl = document.querySelector('.sh-sidebar-scroll');
+          if (!scrollEl) return;
+          var liRect = serverActive.getBoundingClientRect();
+          var elRect = scrollEl.getBoundingClientRect();
+          if (liRect.top < elRect.top || liRect.bottom > elRect.bottom) {
+            // Centre the active item using rendered positions (offsetParent-agnostic).
+            var target = scrollEl.scrollTop + (liRect.top - elRect.top) - (scrollEl.clientHeight / 2) + (liRect.height / 2);
+            scrollEl.scrollTop = Math.max(0, target);
+          }
+        });
+        return;
+      }
+      var currentPath = window.location.pathname.replace(/\/+$/, '');  // strip trailing slash
+      var subLinks = document.querySelectorAll('.sh-sidebar .sh-subnav .nav-item > .nav-link[href]');
+      var bestLi = null;
+      var bestLen = 0;
+
+      subLinks.forEach(function(a) {
+        var href = a.getAttribute('href');
+        if (!href || href === '#' || href.indexOf('javascript:') === 0) return;
+
+        // Convert href to absolute path (strip protocol+host if present)
+        var hrefPath;
+        try {
+          var url = new URL(href, window.location.origin);
+          hrefPath = url.pathname.replace(/\/+$/, '');
+        } catch (e) {
+          hrefPath = href.replace(/\/+$/, '');
+        }
+        if (!hrefPath) return;
+
+        // Match: current path must start with hrefPath (handles sub-actions like /edit/3)
+        if (currentPath === hrefPath || currentPath.indexOf(hrefPath + '/') === 0) {
+          if (hrefPath.length > bestLen) {
+            bestLi = a.closest('.nav-item');
+            bestLen = hrefPath.length;
+          }
+        }
+      });
+
+      if (bestLi) {
+        // Mark submenu item active
+        bestLi.classList.add('active');
+        var subLink = bestLi.querySelector(':scope > .nav-link');
+        if (subLink) subLink.classList.add('active');
+
+        // Open parent submenu container
+        var subnavUl = bestLi.closest('.sh-subnav');
+        if (subnavUl) {
+          subnavUl.classList.add('show'); // class only — see note above; no inline display
+          // Mark parent top-level nav-item as active too
+          var topLi = subnavUl.closest('.sh-nav > .nav-item') || subnavUl.parentElement;
+          if (topLi && topLi.classList) {
+            topLi.classList.add('active');
+            var topLink = topLi.querySelector(':scope > .nav-link');
+            if (topLink) {
+              topLink.classList.add('active');
+              topLink.setAttribute('aria-expanded', 'true');
+            }
+          }
+        }
+
+        // Auto-scroll active item into view (centered) — runs after layout is ready
+        requestAnimationFrame(function() {
+          var scrollEl = document.querySelector('.sh-sidebar-scroll');
+          if (!scrollEl) return;
+          var liRect = bestLi.getBoundingClientRect();
+          var elRect = scrollEl.getBoundingClientRect();
+          // Only scroll if active item is outside visible area
+          if (liRect.top < elRect.top || liRect.bottom > elRect.bottom) {
+            var offset = bestLi.offsetTop - (scrollEl.clientHeight / 2) + (bestLi.offsetHeight / 2);
+            scrollEl.scrollTop = Math.max(0, offset);
+          }
+        });
+      } else {
+        // No active submenu — try to scroll active top-level nav-item into view
+        requestAnimationFrame(function() {
+          var activeTop = document.querySelector('.sh-sidebar .sh-nav > .nav-item.active, .sh-sidebar .sh-nav > .nav-item > .nav-link.active');
+          var scrollEl = document.querySelector('.sh-sidebar-scroll');
+          if (!activeTop || !scrollEl) return;
+          var li = activeTop.closest('.nav-item');
+          if (!li) return;
+          var liRect = li.getBoundingClientRect();
+          var elRect = scrollEl.getBoundingClientRect();
+          if (liRect.top < elRect.top || liRect.bottom > elRect.bottom) {
+            var offset = li.offsetTop - (scrollEl.clientHeight / 2) + (li.offsetHeight / 2);
+            scrollEl.scrollTop = Math.max(0, offset);
+          }
+        });
+      }
+    })();
+
+    // Body-attached overlays for collapsed sidebar (escape overflow contexts):
+    //   • leaf items  -> name tooltip
+    //   • parent items (have a .sh-subnav) -> interactive flyout listing child links
+    var railTip = document.createElement('div');
+    railTip.className = 'sh-rail-tooltip';
+    document.body.appendChild(railTip);
+
+    var railFlyout = document.createElement('div');
+    railFlyout.className = 'sh-rail-flyout';
+    document.body.appendChild(railFlyout);
+
+    var railHideTimer = null;
+    function hideRailOverlays() { railTip.classList.remove('show'); railFlyout.classList.remove('show'); }
+    function scheduleRailHide() { railHideTimer = setTimeout(hideRailOverlays, 180); }
+    function cancelRailHide() { if (railHideTimer) { clearTimeout(railHideTimer); railHideTimer = null; } }
+
+    // Keep the flyout open while the pointer is over it (bridges the icon→panel gap).
+    railFlyout.addEventListener('mouseenter', cancelRailHide);
+    railFlyout.addEventListener('mouseleave', scheduleRailHide);
+
+    document.querySelectorAll('.sh-sidebar .sh-nav > .nav-item').forEach(function(item) {
+      var link = item.querySelector(':scope > .nav-link');
+      if (!link) return;
+      var subnav = item.querySelector(':scope > .sh-subnav');
+
+      link.addEventListener('mouseenter', function() {
+        if (!document.body.classList.contains('sidebar-collapsed')) return;
+        cancelRailHide();
+        var rect = link.getBoundingClientRect();
+
+        if (subnav) {
+          // Parent: show flyout with the parent label + cloned child links (preserves hrefs/RBAC).
+          var label = link.getAttribute('data-tooltip') || '';
+          railTip.classList.remove('show');
+          railFlyout.innerHTML = '<div class="sh-rail-flyout-title">' + label + '</div><ul>' + subnav.innerHTML + '</ul>';
+          railFlyout.style.left = (rect.right + 6) + 'px';
+          railFlyout.style.top  = rect.top + 'px';
+          railFlyout.classList.add('show');
+          // Clamp into viewport if it would overflow the bottom edge.
+          var fr = railFlyout.getBoundingClientRect();
+          if (fr.bottom > window.innerHeight - 8) {
+            railFlyout.style.top = Math.max(8, window.innerHeight - 8 - fr.height) + 'px';
+          }
+        } else {
+          // Leaf: simple name tooltip.
+          var lbl = link.getAttribute('data-tooltip');
+          if (!lbl) return;
+          railFlyout.classList.remove('show');
+          railTip.textContent = lbl;
+          railTip.style.left = (rect.right + 12) + 'px';
+          railTip.style.top  = (rect.top + rect.height / 2) + 'px';
+          railTip.classList.add('show');
+        }
+      });
+
+      item.addEventListener('mouseleave', function() {
+        if (subnav) { scheduleRailHide(); } else { railTip.classList.remove('show'); }
+      });
+    });
+  });
+})();
+</script>
+
+<!-- SH Chrome: injects module rail + topbar using data-chrome attribute on <body> -->
+<script src="https://demo.smart-hospital.in/backend/js/sh-chrome.js"></script>
+
+<!-- NProgress (page load progress bar) -->
+<script src="https://demo.smart-hospital.in/backend/dist/js/nprogress.js"></script>
+
+<!-- Dropify (file upload dropzones) -->
+<script src="https://demo.smart-hospital.in/backend/dist/js/dropify.min.js"></script>
+
+<!-- DataTables core + BS5 skin -->
+<script src="https://demo.smart-hospital.in/backend/dist/datatables/js/jquery.dataTables.min.js"></script>
+<script src="https://demo.smart-hospital.in/backend/plugins/datatables/dataTables.bootstrap5.min.js"></script>
+
+<!-- DataTables extensions: buttons, export, responsive -->
+<script src="https://demo.smart-hospital.in/backend/dist/datatables/js/dataTables.buttons.min.js"></script>
+<script src="https://demo.smart-hospital.in/backend/dist/datatables/js/jszip.min.js"></script>
+<script src="https://demo.smart-hospital.in/backend/dist/datatables/js/pdfmake.min.js"></script>
+<script src="https://demo.smart-hospital.in/backend/dist/datatables/js/vfs_fonts.js"></script>
+<script src="https://demo.smart-hospital.in/backend/dist/datatables/js/buttons.html5.min.js"></script>
+<script src="https://demo.smart-hospital.in/backend/dist/datatables/js/buttons.print.min.js"></script>
+<script src="https://demo.smart-hospital.in/backend/dist/datatables/js/buttons.colVis.min.js"></script>
+<script src="https://demo.smart-hospital.in/backend/dist/datatables/js/dataTables.responsive.min.js"></script>
+
+<!-- ss.custom.js — contains initDatatable() used by ALL server-side tables -->
+<script src="https://demo.smart-hospital.in/backend/dist/datatables/js/ss.custom.js?v=20260624b"></script>
+
+<!-- moment.js — must load before datetime-moment.js and datetimepicker -->
+<script src="https://demo.smart-hospital.in/backend/dist/js/moment.min.js"></script>
+
+<!-- DataTables datetime sorting (moment.js integration) -->
+<script src="https://demo.smart-hospital.in/backend/dist/datatables/js/datetime-moment.js"></script>
+
+<!-- Select2 -->
+<script src="https://demo.smart-hospital.in/backend/plugins/select2/select2.full.min.js"></script>
+<!-- Global Select2-in-modal fix (auto-injects dropdownParent for any .select2() target inside a .modal) -->
+<script src="https://demo.smart-hospital.in/backend/js/sh-select2-modal-fix.js"></script>
+
+<!-- CKEditor (replaces bootstrap3-wysihtml5) -->
+<!-- ckeditor.js auto-loads plugins/ckeditor/config.js (dark-aware: sets bodyClass=variant-b + keeps default contents.css). -->
+<!-- ckeditor_config.js is Front-CMS-specific (font-awesome contentsCss, no dark bodyClass) and is loaded by -->
+<!-- admin/front/pages/create.php & edit.php via customConfig — do NOT load it globally here or it clobbers the dark config. -->
+<script src="https://demo.smart-hospital.in/backend/plugins/ckeditor/ckeditor.js"></script>
+<!-- Syncs the editor iframe background/text to the live theme tokens (handles nightshift/midnight/oled/custom). -->
+<script src="https://demo.smart-hospital.in/backend/js/sh-ckeditor-theme.js"></script>
+
+<!-- Date/time picker — Tempus Dominus 6 (BS5 native, single library for all picker types) -->
+<!-- Popper.js MUST be loaded BEFORE Tempus Dominus (TD 6 requires window.Popper global; -->
+<!-- Bootstrap bundle includes Popper internally but does NOT expose it globally) -->
+<script src="https://demo.smart-hospital.in/backend/plugins/tempus-dominus/js/popper.min.js"></script>
+<script src="https://demo.smart-hospital.in/backend/plugins/tempus-dominus/js/tempus-dominus.min.js"></script>
+
+<!-- Toastr notifications -->
+<script src="https://demo.smart-hospital.in/backend/toast-alert/toastr.js"></script>
+
+<!-- SweetAlert2 -->
+<script src="https://demo.smart-hospital.in/backend/fullcalendar/sweetalert2.all.js"></script>
+
+<!-- FullCalendar -->
+<script src="https://demo.smart-hospital.in/backend/fullcalendar/dist/fullcalendar.min.js"></script>
+<script src="https://demo.smart-hospital.in/backend/fullcalendar/dist/locale-all.js"></script>
+
+<!-- Hospital custom JS — BS5-compatible version -->
+<script src="https://demo.smart-hospital.in/backend/js/hospital-custom-bs5.js?v=1778870562"></script>
+
+<!-- DataTables tooltip init (from original footer) -->
+<script type="text/javascript">
+$(document).ready(function () {
+    $(".dt-body-right a").tooltip();
+    // Event-delegated tooltip + popover init — handles DataTables AJAX rows, modals, and any other dynamically-injected content.
+    // Bound to DIFFERENT ancestor elements because in BS5 Popover extends Tooltip and shares DATA_KEY storage, so binding both
+    // to <body> silently drops the second one. <body> for tooltip, <html> (documentElement) for popover keeps them separated.
+    try {
+        if (!bootstrap.Tooltip.getInstance(document.body)) {
+            new bootstrap.Tooltip(document.body, { selector: '[data-bs-toggle="tooltip"]' });
+        }
+    } catch (e) {}
+    try {
+        if (!bootstrap.Popover.getInstance(document.documentElement)) {
+            new bootstrap.Popover(document.documentElement, { selector: '[data-bs-toggle="popover"]' });
+        }
+    } catch (e) {}
+});
+</script>
+
+<!-- Global date/time picker initialization — Tempus Dominus 6 (settings-driven from sch_settings) -->
+<script type="text/javascript">
+(function () {
+    // SETTINGS-DRIVEN VALUES (all from sch_settings table via Customlib)
+    var phpDateFormat     = 'd/m/Y';                  // e.g., 'd-m-Y'
+    var phpDateTimeFormat = 'd/m/Y h:i A';        // 24h: 'd-m-Y H:i' / 12h: 'd-m-Y h:i A'
+    var is24Hour          = false; // drives hourCycle config
+    var tdLocale          = 'en-US';
+
+    // PHP → Tempus Dominus 6 format mapping (TD 6 has its OWN tokens, NOT Luxon).
+    // Uses Unicode control chars (-	) as collision-proof sentinels.
+    // CRITICAL: TD 6 uses 'T'/'t' for AM/PM (NOT 'A'/'a' which are literal chars).
+    function phpToTd(fmt) {
+        return fmt
+            // Pass 1: PHP tokens → unique sentinel chars
+            .replace(/A/g, '')          // PHP 'A' = AM/PM uppercase
+            .replace(/a/g, '')          // PHP 'a' = am/pm lowercase
+            .replace(/M(?![a-z])/g, '') // PHP 'M' = 3-letter month (Jan, Feb)
+            .replace(/i/g, '')          // PHP 'i' = minutes
+            .replace(/h/g, '')          // PHP 'h' = 12-hour
+            .replace(/H/g, '')          // PHP 'H' = 24-hour
+            .replace(/m/g, '')          // PHP 'm' = numeric month
+            .replace(/d/g, '')          // PHP 'd' = day
+            .replace(/Y/g, '	')          // PHP 'Y' = 4-digit year
+            // Pass 2: sentinels → TD 6 tokens
+            .replace(//g, 'T')          // → AM/PM uppercase
+            .replace(//g, 't')          // → am/pm locale default
+            .replace(//g, 'MMM')        // → 3-letter month name
+            .replace(//g, 'mm')         // → minutes 2-digit
+            .replace(//g, 'hh')         // → 12-hour 2-digit
+            .replace(//g, 'HH')         // → 24-hour 2-digit
+            .replace(//g, 'MM')         // → month 2-digit
+            .replace(//g, 'dd')         // → day 2-digit
+            .replace(/	/g, 'yyyy');      // → year 4-digit
+    }
+    var tdDateFormat     = phpToTd(phpDateFormat);
+    var tdDateTimeFormat = phpToTd(phpDateTimeFormat);
+    var tdHourCycle      = is24Hour ? 'h23' : 'h12';
+
+    // Track initialized inputs to prevent re-init
+    var initFlag = '_pickerInit';
+
+    // Common base config for all picker variants
+    function baseConfig(format) {
+        return {
+            allowInputToggle: true,  // input click bhi picker open karega (icon ke saath)
+            container: document.body, // picker dropdown body level pe append (escapes modal stacking context — fixes z-index behind modal issue)
+            localization: {
+                format: format,
+                locale: tdLocale
+            },
+            display: {
+                buttons: { today: true, clear: true, close: true },
+                theme: 'light',
+                icons: {
+                    type: 'icons',
+                    time: 'fa fa-clock',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-arrow-up',
+                    down: 'fa fa-arrow-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-calendar-check',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
+                }
+            }
+        };
+    }
+
+    // ---- DATE-ONLY (.date) — clock components disabled ----
+    // Bridge: Tempus Dominus 6 fires 'change.td'; re-fire as legacy events so old handlers work.
+    function attachDpChangeBridge(el) {
+        el.addEventListener('change.td', function(e) {
+            if (!window.jQuery) return;
+            var detail = {date: e.detail && e.detail.date};
+            $(el).trigger('dp.change', [detail]);   // Bootstrap Datetimepicker legacy
+            $(el).trigger('changeDate', [detail]);  // Bootstrap Datepicker legacy
+        });
+    }
+
+    function initDatePicker(el) {
+        if (el[initFlag]) return;
+        var cfg = baseConfig(tdDateFormat);
+        cfg.display.components = {
+            calendar: true, decades: true, year: true, month: true, date: true,
+            clock: false, hours: false, minutes: false, seconds: false
+        };
+        el[initFlag] = new tempusDominus.TempusDominus(el, cfg);
+        attachDpChangeBridge(el);
+    }
+
+    // ---- DATETIME (.datetime) — full date + time, hourCycle from sch_settings ----
+    function initDateTimePicker(el) {
+        if (el[initFlag]) return;
+        var cfg = baseConfig(tdDateTimeFormat);
+        cfg.display.components = {
+            calendar: true, decades: true, year: true, month: true, date: true,
+            clock: true, hours: true, minutes: true, seconds: false
+        };
+        cfg.localization.hourCycle = tdHourCycle;
+        el[initFlag] = new tempusDominus.TempusDominus(el, cfg);
+        attachDpChangeBridge(el);
+    }
+
+    // ---- TIME-ONLY (.timepicker) — calendar disabled, hourCycle from settings ----
+    function initTimePicker(el) {
+        if (el[initFlag]) return;
+        var timeFormat = is24Hour ? 'HH:mm' : 'hh:mm T';
+        var cfg = baseConfig(timeFormat);
+        cfg.display.components = {
+            calendar: false, decades: false, year: false, month: false, date: false,
+            clock: true, hours: true, minutes: true, seconds: false
+        };
+        cfg.display.viewMode = 'clock';
+        cfg.localization.hourCycle = tdHourCycle;
+        el[initFlag] = new tempusDominus.TempusDominus(el, cfg);
+        attachDpChangeBridge(el);
+    }
+
+    // ---- DATERANGE (.daterange) — built-in range mode ----
+    function initDateRangePicker(el) {
+        if (el[initFlag]) return;
+        var cfg = baseConfig(tdDateFormat);
+        cfg.display.components = {
+            calendar: true, decades: true, year: true, month: true, date: true,
+            clock: false, hours: false, minutes: false, seconds: false
+        };
+        cfg.dateRange = true;
+        cfg.multipleDatesSeparator = ' to ';
+        el[initFlag] = new tempusDominus.TempusDominus(el, cfg);
+        attachDpChangeBridge(el);
+    }
+
+    // Initialize on existing elements (page load)
+    document.querySelectorAll('input.date').forEach(initDatePicker);
+    document.querySelectorAll('input.datetime').forEach(initDateTimePicker);
+    document.querySelectorAll('input.timepicker').forEach(initTimePicker);
+    document.querySelectorAll('input.daterange').forEach(initDateRangePicker);
+
+    // Event delegation for dynamically added inputs (preserves existing pattern from old footer)
+    document.body.addEventListener('focusin', function (e) {
+        var t = e.target;
+        if (!(t instanceof HTMLInputElement)) return;
+        if (t.classList.contains('date'))            initDatePicker(t);
+        else if (t.classList.contains('datetime'))   initDateTimePicker(t);
+        else if (t.classList.contains('timepicker')) initTimePicker(t);
+        else if (t.classList.contains('daterange'))  initDateRangePicker(t);
+    });
+
+    // ----------------------------------------------------------------
+    // PUBLIC API: window.SHPicker — modern helpers for per-page code
+    // Use these instead of old jQuery API:
+    //   OLD: $('#x').datepicker('update', date)        →  NEW: SHPicker.setDate('#x', date)
+    //   OLD: $('#x').data('DateTimePicker').date()     →  NEW: SHPicker.getDate('#x')
+    //   OLD: $('#x').timepicker('setTime', '09:00 AM') →  NEW: SHPicker.setDate('#x', '09:00 AM')
+    //   OLD: $('#x').on('changeDate', fn)              →  NEW: SHPicker.onChange('#x', fn)
+    // ----------------------------------------------------------------
+    window.SHPicker = {
+        getInstance: function(elOrSelector) {
+            var el = (typeof elOrSelector === 'string')
+                ? document.querySelector(elOrSelector) : elOrSelector;
+            if (!el) return null;
+            if (!el[initFlag]) {
+                if (el.classList.contains('date'))            initDatePicker(el);
+                else if (el.classList.contains('datetime'))   initDateTimePicker(el);
+                else if (el.classList.contains('timepicker')) initTimePicker(el);
+                else if (el.classList.contains('daterange'))  initDateRangePicker(el);
+                else                                          initDatePicker(el); // fallback
+            }
+            return el[initFlag] || null;
+        },
+        setDate: function(elOrSelector, dateOrTimeStr) {
+            var instance = this.getInstance(elOrSelector);
+            if (!instance) return;
+            var d;
+            if (dateOrTimeStr instanceof Date) {
+                d = dateOrTimeStr;
+            } else if (typeof dateOrTimeStr === 'string' && /^\d{1,2}:\d{2}/.test(dateOrTimeStr)) {
+                var m = dateOrTimeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+                if (m) {
+                    d = new Date();
+                    var h = parseInt(m[1], 10), mi = parseInt(m[2], 10);
+                    if (m[3]) {
+                        var ampm = m[3].toUpperCase();
+                        if (ampm === 'PM' && h < 12) h += 12;
+                        if (ampm === 'AM' && h === 12) h = 0;
+                    }
+                    d.setHours(h, mi, 0, 0);
+                }
+            } else {
+                d = new Date(dateOrTimeStr);
+            }
+            if (!d || isNaN(d)) return;
+            instance.dates.setValue(new tempusDominus.DateTime(d));
+        },
+        getDate: function(elOrSelector) {
+            var el = (typeof elOrSelector === 'string')
+                ? document.querySelector(elOrSelector) : elOrSelector;
+            if (!el) return null;
+            var instance = el[initFlag];
+            if (instance && instance.dates && instance.dates.lastPicked) {
+                var picked = instance.dates.lastPicked;
+                return (picked instanceof Date) ? picked : new Date(picked);
+            }
+            if (el.value) {
+                var d = new Date(el.value);
+                if (!isNaN(d)) return d;
+            }
+            return null;
+        },
+        setRestriction: function(elOrSelector, opts) {
+            var instance = this.getInstance(elOrSelector);
+            if (!instance) return;
+            var restrictions = {};
+            if (opts.minDate) restrictions.minDate = new tempusDominus.DateTime(opts.minDate);
+            if (opts.maxDate) restrictions.maxDate = new tempusDominus.DateTime(opts.maxDate);
+            instance.updateOptions({ restrictions: restrictions });
+        },
+        onChange: function(elOrSelector, callback) {
+            var instance = this.getInstance(elOrSelector);
+            if (!instance) return;
+            var el = (typeof elOrSelector === 'string')
+                ? document.querySelector(elOrSelector) : elOrSelector;
+            instance.subscribe(tempusDominus.Namespace.events.change, function(e) {
+                callback({ date: e.date, oldDate: e.oldDate, target: el });
+            });
+        }
+    };
+
+    // Backward-compat shim removed (2026-05-04) — all 104 view files migrated to modern SHPicker API.
+    // Use SHPicker.setDate() / SHPicker.getDate() / SHPicker.onChange() / SHPicker.setRestriction()
+    // for any new picker code instead of legacy jQuery $.fn.datepicker() / .data('DateTimePicker').
+})();
+</script>
+
+<!-- Flash message from session (CI flash data → toastr) -->
+
+<!-- Notification polling — parity with patient panel: live count badge + toastr bubbles + sound -->
+<!-- Notification bubble <style> block migrated to backend/css/sh-theme.css (2026-05-27) -->
+<script type="text/javascript">
+(function () {
+    var POLL_MS   = 60000;
+    var POLL_URL  = baseurl + 'admin/systemnotification/pollNotifications';
+    var NOTIF_URL = baseurl + 'admin/systemnotification';
+    var LS_KEY    = 'admin_notif_last_check';
+
+    var pageLoadTime  = new Date().toISOString();
+    var stored        = localStorage.getItem(LS_KEY);
+    var lastCheckTime = (stored && stored > pageLoadTime) ? stored : pageLoadTime;
+    localStorage.setItem(LS_KEY, lastCheckTime);
+
+    /* Single shared AudioContext. Mobile/desktop browsers start it SUSPENDED and
+       only allow it to be unlocked inside a real user-gesture handler — a poll
+       timer is not a gesture. So we create it once and resume() it on the first
+       tap/click/keypress; after that the polled beep can play. (Previously a new,
+       never-unlocked context was created per call, so mobile stayed silent.) */
+    var shAudioCtx = null;
+    function getAudioCtx() {
+        if (!shAudioCtx) {
+            try { shAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        return shAudioCtx;
+    }
+    function unlockAudio() {
+        var ctx = getAudioCtx();
+        if (!ctx) return;
+        if (ctx.state === 'suspended') { ctx.resume(); }
+        /* zero-volume blip fully unlocks the context on iOS Safari */
+        try {
+            var osc = ctx.createOscillator(), g = ctx.createGain();
+            g.gain.value = 0; osc.connect(g); g.connect(ctx.destination);
+            osc.start(); osc.stop(ctx.currentTime + 0.01);
+        } catch(e) {}
+        ['touchstart','touchend','click','keydown'].forEach(function(ev) {
+            document.removeEventListener(ev, unlockAudio, true);
+        });
+    }
+    ['touchstart','touchend','click','keydown'].forEach(function(ev) {
+        document.addEventListener(ev, unlockAudio, true);
+    });
+
+    function playSound() {
+        try {
+            var ctx = getAudioCtx();
+            if (!ctx) return;
+            if (ctx.state === 'suspended') { ctx.resume(); }
+            [0, 0.18].forEach(function(delay) {
+                var osc  = ctx.createOscillator();
+                var gain = ctx.createGain();
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.type = 'sine'; osc.frequency.value = 880;
+                gain.gain.setValueAtTime(0.12, ctx.currentTime + delay);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.3);
+                osc.start(ctx.currentTime + delay);
+                osc.stop(ctx.currentTime + delay + 0.3);
+            });
+        } catch(e) {}
+    }
+
+    function updateBadge(count) {
+        var dot = document.getElementById('sh-notif-dot');
+        if (!dot) return;
+        if (count > 0) {
+            dot.textContent = (count > 99) ? '99+' : count;
+            dot.style.display = '';
+        } else {
+            dot.style.display = 'none';
+        }
+    }
+
+    function isAlreadyShown(id) { return !!localStorage.getItem('a_notif_s_' + id); }
+    function markAsShown(id) {
+        localStorage.setItem('a_notif_s_' + id, '1');
+        var keys = [];
+        for (var k in localStorage) { if (k.indexOf('a_notif_s_') === 0) { keys.push(k); } }
+        if (keys.length > 100) {
+            keys.sort().slice(0, keys.length - 100).forEach(function(k) { localStorage.removeItem(k); });
+        }
+    }
+
+    function escapeHtml(s) { return $('<div/>').text(s == null ? '' : String(s)).html(); }
+
+    function getBubbleStage() {
+        var stage = document.getElementById('sh-bubble-stage');
+        if (!stage) { stage = document.createElement('div'); stage.id = 'sh-bubble-stage'; document.body.appendChild(stage); }
+        return stage;
+    }
+
+    function makeBubble(opts) {
+        var b = document.createElement('div');
+        b.className = 'sh-bubble' + (opts.kind ? ' sh-bubble--' + opts.kind : '');
+        var metaHtml = opts.viewHref
+            ? '<div class="sh-bubble-meta"><span>just now</span><a href="' + opts.viewHref + '" class="sh-bubble-view">View</a></div>'
+            : '';
+        /* Message body is rendered as HTML (matches prior toastr behavior). Controllers
+           send pre-formatted strings like "<p>Field required</p>" or "<br>"-separated
+           multi-error lists. Title stays escaped — it's a fixed string from our code. */
+        b.innerHTML =
+            '<div class="sh-bubble-icon"><i class="' + (opts.iconClass || 'fa fa-bell') + '"></i></div>' +
+            '<div class="sh-bubble-body">' +
+                '<h4 class="sh-bubble-ttl">' + escapeHtml(opts.title) + '</h4>' +
+                '<div class="sh-bubble-msg">' + (opts.message || '') + '</div>' +
+                metaHtml +
+            '</div>' +
+            '<button class="sh-bubble-x" aria-label="Dismiss"><i class="fa fa-times"></i></button>';
+        return b;
+    }
+
+    function presentBubble(b, dismissAfter) {
+        var stage = getBubbleStage();
+        stage.appendChild(b);
+        requestAnimationFrame(function() { b.classList.add('show'); });
+        var dur = dismissAfter || 8000;
+        var dismissTimer = setTimeout(function() { dismissBubble(b); }, dur);
+        b.addEventListener('mouseenter', function() { clearTimeout(dismissTimer); });
+        b.addEventListener('mouseleave', function() { dismissTimer = setTimeout(function() { dismissBubble(b); }, 3000); });
+        b.querySelector('.sh-bubble-x').addEventListener('click', function() { clearTimeout(dismissTimer); dismissBubble(b); });
+    }
+
+    function dismissBubble(b) { b.classList.remove('show'); setTimeout(function() { b.remove(); }, 300); }
+
+    function showToast(notif) {
+        if (isAlreadyShown(notif.id)) { return; }
+        markAsShown(notif.id);
+        presentBubble(makeBubble({
+            iconClass: notif.icon_class || 'fa fa-bell',
+            title:     notif.notification_title,
+            message:   notif.notification_desc,
+            viewHref:  NOTIF_URL
+        }));
+    }
+
+    function poll() {
+        $.ajax({
+            type: 'POST', url: POLL_URL, data: { last_check: lastCheckTime }, dataType: 'json',
+            success: function(res) {
+                if (!res || res.status !== 1) { return; }
+                updateBadge(res.unread_count);
+                if (res.new_notifications && res.new_notifications.length > 0) {
+                    var toShow = res.new_notifications.slice(0, 3);
+                    var extra  = res.new_notifications.length - 3;
+                    var hasNew = false;
+                    $.each(toShow, function(i, n) { if (!isAlreadyShown(n.id)) { hasNew = true; } showToast(n); });
+                    if (extra > 0) {
+                        presentBubble(makeBubble({
+                            iconClass: 'fa fa-bell',
+                            title:     extra + ' more notifications',
+                            message:   'Open the notification center to see all.',
+                            viewHref:  NOTIF_URL
+                        }));
+                    }
+                    if (hasNew) { playSound(); }
+                    var latest   = res.new_notifications[res.new_notifications.length - 1];
+                    var latestTs = new Date(latest.date.replace(' ', 'T') + 'Z');
+                    latestTs.setSeconds(latestTs.getSeconds() + 1);
+                    lastCheckTime = latestTs.toISOString().slice(0, 19).replace('T', ' ');
+                    localStorage.setItem(LS_KEY, lastCheckTime);
+                }
+            }
+        });
+    }
+
+    /* Override the global flash-message wrappers so save/edit/delete toasts use the
+       sh-bubble system (Variant 1: title + message, bottom-right, type-colored icon
+       block). Originally defined in hospital-custom-bs5.js as toastr wrappers. */
+    window.successMsg = function(msg) {
+        presentBubble(makeBubble({
+            kind: 'success', iconClass: 'fa fa-check',
+            title: 'Success', message: msg
+        }), 4000);
+    };
+    window.errorMsg = function(msg) {
+        presentBubble(makeBubble({
+            kind: 'error', iconClass: 'fa fa-exclamation-circle',
+            title: 'Error', message: msg
+        }), 8000);
+    };
+    window.warningMsg = function(msg) {
+        presentBubble(makeBubble({
+            kind: 'warn', iconClass: 'fa fa-exclamation-triangle',
+            title: 'Warning', message: msg
+        }), 6000);
+    };
+    window.infoMsg = function(msg) {
+        presentBubble(makeBubble({
+            kind: 'info', iconClass: 'fa fa-info-circle',
+            title: 'Heads up', message: msg
+        }), 5000);
+    };
+
+    var timer;
+    setTimeout(function() {
+        poll();
+        timer = setInterval(poll, POLL_MS);
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) { clearInterval(timer); }
+            else { setTimeout(function() { poll(); }, 1500); timer = setInterval(poll, POLL_MS); }
+        });
+    }, 3000);
+})();
+</script>
+
+
+<script>
+/* Global popup() — opens print HTML in a hidden iframe and triggers the browser print dialog.
+   Equivalent to the patient panel's layout/patient/footer.php version. */
+if (typeof popup === 'undefined') {
+    function popup(data) {
+        var base_url = 'https://demo.smart-hospital.in/';
+        var frame1 = $('<iframe />');
+        frame1[0].name = "frame1";
+        frame1.css({"position": "absolute", "top": "-1000000px"});
+        $("body").append(frame1);
+        var frameDoc = frame1[0].contentWindow
+            ? frame1[0].contentWindow
+            : (frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument);
+        frameDoc.document.open();
+        frameDoc.document.write('<html><head><title></title>');
+        frameDoc.document.write('<link rel="preconnect" href="https://fonts.googleapis.com">');
+        frameDoc.document.write('<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">');
+        frameDoc.document.write('<link rel="stylesheet" href="' + base_url + 'backend/bootstrap5/css/bootstrap.min.css">');
+        frameDoc.document.write('<link rel="stylesheet" href="' + base_url + 'backend/dist/css/font-awesome.min.css">');
+        frameDoc.document.write('<link rel="stylesheet" href="' + base_url + 'backend/dist/css/all.css">');
+        frameDoc.document.write('<link rel="stylesheet" href="' + base_url + 'backend/dist/css/sh-print.css">');
+        frameDoc.document.write('</head><body onload="window.print()">');
+        frameDoc.document.write(data);
+        frameDoc.document.write('</body></html>');
+        frameDoc.document.close();
+        setTimeout(function () { frame1.remove(); }, 3000);
+        return true;
+    }
+}
+</script>
+<!-- Bed Status Modal (populated via getbedstatus() AJAX) -->
+<div class="modal fade sh-modal sh-modal-accent" id="bedStatusModal" tabindex="-1" aria-labelledby="bedStatusModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bedStatusModalLabel">Bed Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="pup-scroll-area">
+                <div class="modal-body" id="bed-status-body"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- License-registration modals (opened by .purchasemodal click or hospital-custom.js auto-show when SHLK is empty) -->
+<div id="activelicmodal" class="modal fade sh-modal sh-modal-accent" tabindex="-1" aria-labelledby="activelicmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="activelicmodalLabel">Register your purchase code</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="https://demo.smart-hospital.in/admin/admin/updatePurchaseCode" method="POST" id="purchase_code">
+                <div class="modal-body lic_modal-body">
+                    <div class="alert alert-warning d-flex align-items-start gap-2 mb-3 layout-alert-sm" role="alert">
+                        <i class="fa fa-info-circle mt-1"></i>
+                        <div><b>Important:</b> Smart Hospital Regular License allows to use Smart Hospital for single hospital/branch/end/client but for customer convenience registering Smart Hospital allows to register Smart Hospital licence purchase code on upto 3 urls e.g. 1. For localhost 2. For testing environment and 3. For your production url (testing and production url should be on same domain).</div>
+                    </div>
+                    <div class="error_message"></div>
+                    <div class="mb-3">
+                        <label for="input-envato_market_purchase_code" class="form-label">Envato Market Purchase Code for Smart Hospital ( <a target="_blank" href="https://help.market.envato.com/hc/en-us/articles/202822600-Where-Is-My-Purchase-Code-"> How to find it?</a> )</label>
+                        <input type="text" class="form-control" id="input-envato_market_purchase_code" name="envato_market_purchase_code">
+                        <div id="error" class="text text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-email" class="form-label">Your Email Registered With Envato</label>
+                        <input type="text" class="form-control" id="input-email" name="email">
+                        <div id="error" class="text text-danger"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Saving...">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="addonModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Register your Addon</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="https://demo.smart-hospital.in/admin/admin/updateaddon" method="POST" id="addon_verify">
+                <div class="modal-body addon_modal-body">
+                    <div class="error_message">
+
+                    </div>
+                    <input type="hidden" name="addon" class="addon_type" value="">
+                    <input type="hidden" name="addon_version" class="addon_version" value="0">
+                    <div class="form-group">
+                        <label class="ainline"><span>Envato Market Purchase Code for Addon ( <a target="_blank" href="https://help.market.envato.com/hc/en-us/articles/202822600-Where-Is-My-Purchase-Code-"> How to find it?</a> )</span></label>
+                        <input type="text" class="form-control" id="input-app-envato_market_purchase_code" name="app-envato_market_purchase_code">
+                        <div id="error" class="input-error text text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Your Email Registered With Envato</label>
+                        <input type="text" class="form-control" id="input-app-email" name="app-email">
+                        <div id="error" class="input-error text text-danger"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Saving...">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Multi-branch switch modal (trigger button is in header.php; same visibility guard) -->
+<!-- Modal -->
+<div id="multiBranchSwitchModal" class="modal fade sh-modal sh-modal-accent" tabindex="-1" role="dialog" aria-labelledby="multiBranchSwitchModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <form action="https://demo.smart-hospital.in/admin/multibranch/branch/switch" method="POST" id="form_branch_change">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="multiBranchSwitchModalLabel">Switch Branch</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body branchSwitchbody">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-info" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Please Wait..">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+     $('#multiBranchSwitchModal').on('show.bs.modal', function (event) {
+      
+        var $modalDiv = $(event.delegateTarget);
+        $('.branchSwitchbody').html("");
+        $.ajax({
+            type: "POST",
+            url: baseurl + "admin/multibranch/branch/switchbranchlist",
+            dataType: 'JSON',
+            data: {},
+            beforeSend: function () {
+                $modalDiv.addClass('modal_loading');
+            },
+            success: function (data) {
+                $('.branchSwitchbody').html(data.page);
+            },
+            error: function (xhr) { // if error occured
+                $modalDiv.removeClass('modal_loading');
+            },
+            complete: function () {
+                $modalDiv.removeClass('modal_loading');
+            },
+        });
+    });
+
+    $(document).on('change', '.branch_chg', function () {
+        if ($(this).is(":checked")) {
+            $('input.branch_chg').not(this).prop('checked', false);
+        } 
+    });
+
+    $("#form_branch_change").on('submit', (function (e) {
+        e.preventDefault();
+         var form = $(this);
+        var $this = $(this).find("button[type=submit]:focus");
+        $.ajax({
+            url: form.attr('action'),
+            type: "POST",
+            data: form.serialize(), // serializes the form's elements.
+            dataType: 'json',          
+            beforeSend: function () {
+                $this.data('reset-html', $this.html()).prop('disabled', true).html($this.attr('data-loading-text'));
+            },
+            success: function (res)
+            {
+                    if (res.status) {
+                        successMsg(res.message);
+                        var modalInst = bootstrap.Modal.getInstance(document.getElementById('multiBranchSwitchModal'));
+                        if (modalInst) { modalInst.hide(); }
+                        window.location.href = baseurl + "admin/multibranch/branch";
+                    } else {
+                        errorMsg(res.message);
+                    }
+            },
+            error: function (xhr) { // if error occured
+                alert("Error occured.please try again");
+                $this.prop('disabled', false).html($this.data('reset-html'));
+            },
+            complete: function () {
+                $this.prop('disabled', false).html($this.data('reset-html'));
+            }
+
+        });
+    }));
+</script>
+
+
+<div class="sh-rail-tooltip"></div><div class="sh-rail-flyout"></div></body></html>

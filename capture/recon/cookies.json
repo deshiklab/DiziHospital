@@ -1,0 +1,12 @@
+[
+  {
+    "name": "ci_session",
+    "value": "e33c144a631is8eg21pp8tu2u9",
+    "domain": "demo.smart-hospital.in",
+    "path": "/",
+    "expires": 1791932617.214459,
+    "httpOnly": true,
+    "secure": false,
+    "sameSite": "Lax"
+  }
+]

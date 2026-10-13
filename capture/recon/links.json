@@ -1,0 +1,933 @@
+[
+  {
+    "text": "Smart Hospital & Research Center",
+    "href": "https://demo.smart-hospital.in/admin/admin/dashboard",
+    "cls": "sh-sidebar-logo",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Dashboard",
+    "href": "https://demo.smart-hospital.in/admin/admin/dashboard",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Patient",
+    "href": "https://demo.smart-hospital.in/admin/admin/search",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Billing",
+    "href": "https://demo.smart-hospital.in/admin/bill/dashboard",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Appointment",
+    "href": "https://demo.smart-hospital.in/admin/appointment/index",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "OPD - Out Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/search",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "IPD - In Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Pharmacy",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/bill",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Pathology",
+    "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Radiology",
+    "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Blood Bank",
+    "href": "https://demo.smart-hospital.in/admin/bloodbankstatus/",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Ambulance",
+    "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Front Office",
+    "href": "https://demo.smart-hospital.in/admin/visitors",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Birth & Death Record",
+    "href": "https://demo.smart-hospital.in/admin/birthordeath",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Birth Record",
+    "href": "https://demo.smart-hospital.in/admin/birthordeath",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Death Record",
+    "href": "https://demo.smart-hospital.in/admin/birthordeath/death",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Multi Branch",
+    "href": "#",
+    "cls": "nav-link d-flex align-items-center",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Overview",
+    "href": "https://demo.smart-hospital.in/admin/multibranch/branch/overview",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Report",
+    "href": "https://demo.smart-hospital.in/admin/multibranch/branch/report",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Settings",
+    "href": "https://demo.smart-hospital.in/admin/multibranch/branch",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Human Resource",
+    "href": "https://demo.smart-hospital.in/admin/staff",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "QR Code Attendance",
+    "href": "https://demo.smart-hospital.in/admin/qrattendance/setting/index",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Attendance",
+    "href": "https://demo.smart-hospital.in/admin/qrattendance/attendance/index",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Settings",
+    "href": "https://demo.smart-hospital.in/admin/qrattendance/setting/index",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Duty Roster",
+    "href": "https://demo.smart-hospital.in/admin/dutyroster/roster_report",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Annual Calendar",
+    "href": "https://demo.smart-hospital.in/admin/holiday/index",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Referral",
+    "href": "https://demo.smart-hospital.in/admin/referral/payment",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "TPA Management",
+    "href": "https://demo.smart-hospital.in/admin/tpamanagement",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Finance",
+    "href": "#",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Income",
+    "href": "https://demo.smart-hospital.in/admin/income",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Expenses",
+    "href": "https://demo.smart-hospital.in/admin/expense",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Survey Forms",
+    "href": "https://demo.smart-hospital.in/admin/survey",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Survey Forms",
+    "href": "https://demo.smart-hospital.in/admin/survey",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "My Survey Forms",
+    "href": "https://demo.smart-hospital.in/admin/survey/staff_forms",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Messaging",
+    "href": "https://demo.smart-hospital.in/admin/notification",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Inventory",
+    "href": "https://demo.smart-hospital.in/admin/itemstock",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Download Center",
+    "href": "#",
+    "cls": "nav-link d-flex align-items-center",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Upload /Share Content",
+    "href": "https://demo.smart-hospital.in/admin/content/upload",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Content Share List",
+    "href": "https://demo.smart-hospital.in/admin/content/list",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Content Type",
+    "href": "https://demo.smart-hospital.in/admin/contenttype/",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Certificate",
+    "href": "#",
+    "cls": "nav-link d-flex align-items-center",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Certificate",
+    "href": "https://demo.smart-hospital.in/admin/generatecertificate",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Patient ID Card",
+    "href": "https://demo.smart-hospital.in/admin/generatepatientidcard/",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Staff ID Card",
+    "href": "https://demo.smart-hospital.in/admin/generatestaffidcard/",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Front CMS",
+    "href": "https://demo.smart-hospital.in/admin/front/page",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Live Consultation",
+    "href": "#",
+    "cls": "nav-link d-flex align-items-center",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Live Consultation",
+    "href": "https://demo.smart-hospital.in/admin/zoom_conference/consult",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Live Meeting",
+    "href": "https://demo.smart-hospital.in/admin/zoom_conference/meeting",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Reports",
+    "href": "#",
+    "cls": "nav-link d-flex align-items-center",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Finance",
+    "href": "https://demo.smart-hospital.in/admin/report/finance",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Appointment",
+    "href": "https://demo.smart-hospital.in/admin/report/appointment",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "OPD",
+    "href": "https://demo.smart-hospital.in/admin/report/opd",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "IPD",
+    "href": "https://demo.smart-hospital.in/admin/report/ipd",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Pharmacy",
+    "href": "https://demo.smart-hospital.in/admin/report/pharmacy",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Pathology",
+    "href": "https://demo.smart-hospital.in/admin/report/pathology",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Radiology",
+    "href": "https://demo.smart-hospital.in/admin/report/radiology",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Blood Bank",
+    "href": "https://demo.smart-hospital.in/admin/report/blood_bank",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Ambulance",
+    "href": "https://demo.smart-hospital.in/admin/report/ambulance",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Birth Death",
+    "href": "https://demo.smart-hospital.in/admin/report/birth_death",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Human Resource",
+    "href": "https://demo.smart-hospital.in/admin/report/human_resource",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "TPA",
+    "href": "https://demo.smart-hospital.in/admin/report/tpa",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Inventory",
+    "href": "https://demo.smart-hospital.in/admin/report/inventory",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Live Consultation",
+    "href": "https://demo.smart-hospital.in/admin/report/live_consultation",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Log",
+    "href": "https://demo.smart-hospital.in/admin/report/log",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "OT",
+    "href": "https://demo.smart-hospital.in/admin/report/ot",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Patient",
+    "href": "https://demo.smart-hospital.in/admin/report/patient",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Setup",
+    "href": "#",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": true
+  },
+  {
+    "text": "Settings",
+    "href": "https://demo.smart-hospital.in/schsettings",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Hospital Charges",
+    "href": "https://demo.smart-hospital.in/admin/charges",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Bed",
+    "href": "https://demo.smart-hospital.in/admin/setup/bed/status",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Print Header Footer",
+    "href": "https://demo.smart-hospital.in/admin/printing",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Front Office",
+    "href": "https://demo.smart-hospital.in/admin/visitorspurpose",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Operations",
+    "href": "https://demo.smart-hospital.in/admin/operationtheatre/index",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Pharmacy",
+    "href": "https://demo.smart-hospital.in/admin/medicinecategory/medicine",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Pathology",
+    "href": "https://demo.smart-hospital.in/admin/pathologycategory/addcategory",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Radiology",
+    "href": "https://demo.smart-hospital.in/admin/lab/addlab",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Blood Bank",
+    "href": "https://demo.smart-hospital.in/admin/bloodbank/products",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Symptoms",
+    "href": "https://demo.smart-hospital.in/admin/symptoms",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "ICD-10",
+    "href": "https://demo.smart-hospital.in/admin/icd10",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Findings",
+    "href": "https://demo.smart-hospital.in/admin/finding",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Vitals",
+    "href": "https://demo.smart-hospital.in/admin/vital",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Zoom Setting",
+    "href": "https://demo.smart-hospital.in/admin/zoom_conference",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Finance",
+    "href": "https://demo.smart-hospital.in/admin/incomehead",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Human Resource",
+    "href": "https://demo.smart-hospital.in/admin/leavetypes",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Referral",
+    "href": "https://demo.smart-hospital.in/admin/referral/commission",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Appointment",
+    "href": "https://demo.smart-hospital.in/admin/onlineappointment/index",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Inventory",
+    "href": "https://demo.smart-hospital.in/admin/itemcategory",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Custom Fields",
+    "href": "https://demo.smart-hospital.in/admin/customfield",
+    "cls": "nav-link",
+    "inSidebar": true,
+    "visible": false
+  },
+  {
+    "text": "Add Patient Patient List",
+    "href": "https://demo.smart-hospital.in/admin/admin/search?action=add",
+    "cls": "sh-qa-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "New OPD Patient OPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/search?action=add",
+    "cls": "sh-qa-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "New IPD Patient IPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add",
+    "cls": "sh-qa-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "New Appointment Appointment",
+    "href": "https://demo.smart-hospital.in/admin/appointment?action=add",
+    "cls": "sh-qa-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "New Bill Bill",
+    "href": "https://demo.smart-hospital.in/admin/bill/dashboard",
+    "cls": "sh-qa-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "New Pharmacy Bill Pharmacy Bill",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add",
+    "cls": "sh-qa-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "New Pathology Test Pathology Test",
+    "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add",
+    "cls": "sh-qa-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "New Radiology Test Radiology Test",
+    "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add",
+    "cls": "sh-qa-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "New Blood Issue Blood Issue",
+    "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add",
+    "cls": "sh-qa-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "New Ambulance Call Ambulance Call",
+    "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add",
+    "cls": "sh-qa-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "New Visitor Visitor",
+    "href": "https://demo.smart-hospital.in/admin/visitors?action=add",
+    "cls": "sh-qa-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "New Income Income",
+    "href": "https://demo.smart-hospital.in/admin/income?action=add",
+    "cls": "sh-qa-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "New Expense Expense",
+    "href": "https://demo.smart-hospital.in/admin/expense?action=add",
+    "cls": "sh-qa-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Bed Status",
+    "href": "#",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Chat",
+    "href": "https://demo.smart-hospital.in/admin/chat",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Calendar",
+    "href": "https://demo.smart-hospital.in/admin/calendar/events",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Hindi",
+    "href": "https://demo.smart-hospital.in/admin/language/user_language/66",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Spanish",
+    "href": "https://demo.smart-hospital.in/admin/language/user_language/26",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Indonesian",
+    "href": "https://demo.smart-hospital.in/admin/language/user_language/22",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Portuguese",
+    "href": "https://demo.smart-hospital.in/admin/language/user_language/48",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "English",
+    "href": "https://demo.smart-hospital.in/admin/language/user_language/4",
+    "cls": "dropdown-item active",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Arabic",
+    "href": "https://demo.smart-hospital.in/admin/language/user_language/5",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "French",
+    "href": "https://demo.smart-hospital.in/admin/language/user_language/65",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Turkish",
+    "href": "https://demo.smart-hospital.in/admin/language/user_language/61",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Russian",
+    "href": "https://demo.smart-hospital.in/admin/language/user_language/50",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Chat",
+    "href": "https://demo.smart-hospital.in/admin/chat",
+    "cls": "tb-btn",
+    "inSidebar": false,
+    "visible": true
+  },
+  {
+    "text": "Calendar",
+    "href": "https://demo.smart-hospital.in/admin/calendar/events",
+    "cls": "tb-btn",
+    "inSidebar": false,
+    "visible": true
+  },
+  {
+    "text": "View All",
+    "href": "https://demo.smart-hospital.in/admin/survey/staff_forms",
+    "cls": "small",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Patient Satisfaction Survey",
+    "href": "https://demo.smart-hospital.in/admin/survey/staff_fill/3",
+    "cls": "dropdown-item text-wrap",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "General Feedback",
+    "href": "https://demo.smart-hospital.in/admin/survey/staff_fill/9",
+    "cls": "dropdown-item text-wrap",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "99+",
+    "href": "https://demo.smart-hospital.in/admin/systemnotification",
+    "cls": "tb-btn position-relative",
+    "inSidebar": false,
+    "visible": true
+  },
+  {
+    "text": "Super Admin SUPER ADMIN",
+    "href": "#",
+    "cls": "tb-signet",
+    "inSidebar": false,
+    "visible": true
+  },
+  {
+    "text": "Profile",
+    "href": "https://demo.smart-hospital.in/admin/staff/profile/1",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Change Password",
+    "href": "https://demo.smart-hospital.in/admin/admin/changepass",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Backend Theme",
+    "href": "https://demo.smart-hospital.in/admin/themestudio",
+    "cls": "dropdown-item",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Logout",
+    "href": "https://demo.smart-hospital.in/site/logout",
+    "cls": "dropdown-item text-danger",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "Doctor's Meeting",
+    "href": "https://demo.smart-hospital.in/admin/notification",
+    "cls": "",
+    "inSidebar": false,
+    "visible": true
+  },
+  {
+    "text": "Children's Eye Health and Safety Awareness",
+    "href": "https://demo.smart-hospital.in/admin/notification",
+    "cls": "",
+    "inSidebar": false,
+    "visible": true
+  },
+  {
+    "text": "Blood Pressure Treatment Campaign",
+    "href": "https://demo.smart-hospital.in/admin/notification",
+    "cls": "",
+    "inSidebar": false,
+    "visible": true
+  },
+  {
+    "text": "TODAY'S APPOINTMENTS 0 0 Confirmed · 0 Pending",
+    "href": "https://demo.smart-hospital.in/admin/appointment",
+    "cls": "kpi s-green",
+    "inSidebar": false,
+    "visible": true
+  },
+  {
+    "text": "View",
+    "href": "https://demo.smart-hospital.in/admin/appointment/index",
+    "cls": "meta",
+    "inSidebar": false,
+    "visible": true
+  },
+  {
+    "text": "Manage",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/search",
+    "cls": "meta",
+    "inSidebar": false,
+    "visible": true
+  },
+  {
+    "text": "Inventory",
+    "href": "https://demo.smart-hospital.in/admin/bloodbankstatus",
+    "cls": "meta",
+    "inSidebar": false,
+    "visible": true
+  },
+  {
+    "text": "How to find it?",
+    "href": "https://help.market.envato.com/hc/en-us/articles/202822600-Where-Is-My-Purchase-Code-",
+    "cls": "",
+    "inSidebar": false,
+    "visible": false
+  },
+  {
+    "text": "How to find it?",
+    "href": "https://help.market.envato.com/hc/en-us/articles/202822600-Where-Is-My-Purchase-Code-",
+    "cls": "",
+    "inSidebar": false,
+    "visible": false
+  }
+]

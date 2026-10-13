@@ -1,0 +1,23 @@
+[
+  {
+    "name": "ci_csrf_token",
+    "id": "",
+    "type": "hidden",
+    "ph": "",
+    "cls": ""
+  },
+  {
+    "name": "username",
+    "id": "al-username",
+    "type": "text",
+    "ph": "Username",
+    "cls": "lp-input"
+  },
+  {
+    "name": "password",
+    "id": "al-password",
+    "type": "password",
+    "ph": "••••••••",
+    "cls": "lp-input"
+  }
+]
