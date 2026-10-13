@@ -1,0 +1,467 @@
+{
+ "generated": "2026-10-13",
+ "counts": {
+  "screens": 76,
+  "forms": 96,
+  "detail": 2,
+  "roles": 9
+ },
+ "screens": [
+  {
+   "id": "001-dashboard",
+   "label": "Dashboard",
+   "section": "CORE OPERATIONS",
+   "title": "Dashboard"
+  },
+  {
+   "id": "002-patient",
+   "label": "Patient",
+   "section": "CORE OPERATIONS",
+   "title": "Patient List"
+  },
+  {
+   "id": "003-billing",
+   "label": "Billing",
+   "section": "CORE OPERATIONS",
+   "title": "Single Module Billing"
+  },
+  {
+   "id": "004-appointment",
+   "label": "Appointment",
+   "section": "CORE OPERATIONS",
+   "title": "Appointment"
+  },
+  {
+   "id": "005-opd-out-patient",
+   "label": "OPD - Out Patient",
+   "section": "CORE OPERATIONS",
+   "title": "OPD - Out Patient"
+  },
+  {
+   "id": "006-ipd-in-patient",
+   "label": "IPD - In Patient",
+   "section": "CORE OPERATIONS",
+   "title": "IPD Patient"
+  },
+  {
+   "id": "007-pharmacy",
+   "label": "Pharmacy",
+   "section": "CLINICAL",
+   "title": "Pharmacy Bill"
+  },
+  {
+   "id": "008-pathology",
+   "label": "Pathology",
+   "section": "CLINICAL",
+   "title": "Pathology Bill"
+  },
+  {
+   "id": "009-radiology",
+   "label": "Radiology",
+   "section": "CLINICAL",
+   "title": "Radiology Bill"
+  },
+  {
+   "id": "010-blood-bank",
+   "label": "Blood Bank",
+   "section": "CLINICAL",
+   "title": "Blood Bank"
+  },
+  {
+   "id": "011-ambulance",
+   "label": "Ambulance",
+   "section": "CLINICAL",
+   "title": "Ambulance Call List"
+  },
+  {
+   "id": "012-front-office",
+   "label": "Front Office",
+   "section": "CLINICAL",
+   "title": "Visitor List"
+  },
+  {
+   "id": "013-birth-death-record-birth-record",
+   "label": "Birth & Death Record \u203a Birth Record",
+   "section": "ADMINISTRATION",
+   "title": "Birth Record"
+  },
+  {
+   "id": "014-birth-death-record-death-record",
+   "label": "Birth & Death Record \u203a Death Record",
+   "section": "ADMINISTRATION",
+   "title": "Death Record"
+  },
+  {
+   "id": "015-multi-branch-overview",
+   "label": "Multi Branch \u203a Overview",
+   "section": "ADMINISTRATION",
+   "title": "Overview"
+  },
+  {
+   "id": "016-multi-branch-report",
+   "label": "Multi Branch \u203a Report",
+   "section": "ADMINISTRATION",
+   "title": "Report"
+  },
+  {
+   "id": "017-multi-branch-settings",
+   "label": "Multi Branch \u203a Settings",
+   "section": "ADMINISTRATION",
+   "title": "Setting"
+  },
+  {
+   "id": "018-human-resource",
+   "label": "Human Resource",
+   "section": "ADMINISTRATION",
+   "title": "Staff Directory"
+  },
+  {
+   "id": "019-qr-code-attendance-attendance",
+   "label": "QR Code Attendance \u203a Attendance",
+   "section": "ADMINISTRATION",
+   "title": "QR Code Attendance"
+  },
+  {
+   "id": "020-qr-code-attendance-settings",
+   "label": "QR Code Attendance \u203a Settings",
+   "section": "ADMINISTRATION",
+   "title": "Settings"
+  },
+  {
+   "id": "021-duty-roster",
+   "label": "Duty Roster",
+   "section": "ADMINISTRATION",
+   "title": "Duty Roster"
+  },
+  {
+   "id": "022-annual-calendar",
+   "label": "Annual Calendar",
+   "section": "ADMINISTRATION",
+   "title": "Annual Calendar"
+  },
+  {
+   "id": "023-referral",
+   "label": "Referral",
+   "section": "ADMINISTRATION",
+   "title": "Referral Payment List"
+  },
+  {
+   "id": "024-tpa-management",
+   "label": "TPA Management",
+   "section": "ADMINISTRATION",
+   "title": "TPA Management"
+  },
+  {
+   "id": "025-finance-income",
+   "label": "Finance \u203a Income",
+   "section": "ADMINISTRATION",
+   "title": "Income List"
+  },
+  {
+   "id": "026-finance-expenses",
+   "label": "Finance \u203a Expenses",
+   "section": "ADMINISTRATION",
+   "title": "Expense List"
+  },
+  {
+   "id": "027-survey-forms-survey-forms",
+   "label": "Survey Forms \u203a Survey Forms",
+   "section": "TOOLS & CONTENT",
+   "title": "Survey Forms"
+  },
+  {
+   "id": "028-survey-forms-my-survey-forms",
+   "label": "Survey Forms \u203a My Survey Forms",
+   "section": "TOOLS & CONTENT",
+   "title": "Survey Forms \u203a My Survey Forms"
+  },
+  {
+   "id": "029-messaging",
+   "label": "Messaging",
+   "section": "TOOLS & CONTENT",
+   "title": "Notice Board"
+  },
+  {
+   "id": "030-inventory",
+   "label": "Inventory",
+   "section": "TOOLS & CONTENT",
+   "title": "Item Stock List"
+  },
+  {
+   "id": "031-download-center-upload-share-content",
+   "label": "Download Center \u203a Upload /Share Content",
+   "section": "TOOLS & CONTENT",
+   "title": "Upload /Share Content"
+  },
+  {
+   "id": "032-download-center-content-share-list",
+   "label": "Download Center \u203a Content Share List",
+   "section": "TOOLS & CONTENT",
+   "title": "Content Share List"
+  },
+  {
+   "id": "033-download-center-content-type",
+   "label": "Download Center \u203a Content Type",
+   "section": "TOOLS & CONTENT",
+   "title": "Content Type"
+  },
+  {
+   "id": "034-certificate-certificate",
+   "label": "Certificate \u203a Certificate",
+   "section": "TOOLS & CONTENT",
+   "title": "Generate Certificate"
+  },
+  {
+   "id": "035-certificate-patient-id-card",
+   "label": "Certificate \u203a Patient ID Card",
+   "section": "TOOLS & CONTENT",
+   "title": "Generate Patient ID Card"
+  },
+  {
+   "id": "036-certificate-staff-id-card",
+   "label": "Certificate \u203a Staff ID Card",
+   "section": "TOOLS & CONTENT",
+   "title": "Generate Staff ID Card"
+  },
+  {
+   "id": "037-front-cms",
+   "label": "Front CMS",
+   "section": "TOOLS & CONTENT",
+   "title": "Page List"
+  },
+  {
+   "id": "038-live-consultation-live-consultation",
+   "label": "Live Consultation \u203a Live Consultation",
+   "section": "TOOLS & CONTENT",
+   "title": "Live Consultation"
+  },
+  {
+   "id": "039-live-consultation-live-meeting",
+   "label": "Live Consultation \u203a Live Meeting",
+   "section": "TOOLS & CONTENT",
+   "title": "Live Meeting"
+  },
+  {
+   "id": "040-reports-finance",
+   "label": "Reports \u203a Finance",
+   "section": "REPORTS & SETUP",
+   "title": "Finance"
+  },
+  {
+   "id": "041-reports-appointment",
+   "label": "Reports \u203a Appointment",
+   "section": "REPORTS & SETUP",
+   "title": "Appointment"
+  },
+  {
+   "id": "042-reports-opd",
+   "label": "Reports \u203a OPD",
+   "section": "REPORTS & SETUP",
+   "title": "OPD"
+  },
+  {
+   "id": "043-reports-ipd",
+   "label": "Reports \u203a IPD",
+   "section": "REPORTS & SETUP",
+   "title": "IPD"
+  },
+  {
+   "id": "044-reports-pharmacy",
+   "label": "Reports \u203a Pharmacy",
+   "section": "REPORTS & SETUP",
+   "title": "Pharmacy"
+  },
+  {
+   "id": "045-reports-pathology",
+   "label": "Reports \u203a Pathology",
+   "section": "REPORTS & SETUP",
+   "title": "Pathology"
+  },
+  {
+   "id": "046-reports-radiology",
+   "label": "Reports \u203a Radiology",
+   "section": "REPORTS & SETUP",
+   "title": "Radiology"
+  },
+  {
+   "id": "047-reports-blood-bank",
+   "label": "Reports \u203a Blood Bank",
+   "section": "REPORTS & SETUP",
+   "title": "Blood Bank"
+  },
+  {
+   "id": "048-reports-ambulance",
+   "label": "Reports \u203a Ambulance",
+   "section": "REPORTS & SETUP",
+   "title": "Ambulance"
+  },
+  {
+   "id": "049-reports-birth-death",
+   "label": "Reports \u203a Birth Death",
+   "section": "REPORTS & SETUP",
+   "title": "Birth Death Report"
+  },
+  {
+   "id": "050-reports-human-resource",
+   "label": "Reports \u203a Human Resource",
+   "section": "REPORTS & SETUP",
+   "title": "Human Resource"
+  },
+  {
+   "id": "051-reports-tpa",
+   "label": "Reports \u203a TPA",
+   "section": "REPORTS & SETUP",
+   "title": "TPA"
+  },
+  {
+   "id": "052-reports-inventory",
+   "label": "Reports \u203a Inventory",
+   "section": "REPORTS & SETUP",
+   "title": "Inventory"
+  },
+  {
+   "id": "053-reports-live-consultation",
+   "label": "Reports \u203a Live Consultation",
+   "section": "REPORTS & SETUP",
+   "title": "Live Consultation"
+  },
+  {
+   "id": "054-reports-log",
+   "label": "Reports \u203a Log",
+   "section": "REPORTS & SETUP",
+   "title": "Log"
+  },
+  {
+   "id": "055-reports-ot",
+   "label": "Reports \u203a OT",
+   "section": "REPORTS & SETUP",
+   "title": "OT"
+  },
+  {
+   "id": "056-reports-patient",
+   "label": "Reports \u203a Patient",
+   "section": "REPORTS & SETUP",
+   "title": "Reports \u203a Patient"
+  },
+  {
+   "id": "057-setup-hospital-charges",
+   "label": "Setup \u203a Hospital Charges",
+   "section": "REPORTS & SETUP",
+   "title": "Charges Details List"
+  },
+  {
+   "id": "058-setup-bed",
+   "label": "Setup \u203a Bed",
+   "section": "REPORTS & SETUP",
+   "title": "Bed Status"
+  },
+  {
+   "id": "059-setup-print-header-footer",
+   "label": "Setup \u203a Print Header Footer",
+   "section": "REPORTS & SETUP",
+   "title": "Appointment Header Footer"
+  },
+  {
+   "id": "060-setup-front-office",
+   "label": "Setup \u203a Front Office",
+   "section": "REPORTS & SETUP",
+   "title": "Purpose List"
+  },
+  {
+   "id": "061-setup-operations",
+   "label": "Setup \u203a Operations",
+   "section": "REPORTS & SETUP",
+   "title": "Operation List"
+  },
+  {
+   "id": "062-setup-pharmacy",
+   "label": "Setup \u203a Pharmacy",
+   "section": "REPORTS & SETUP",
+   "title": "Medicine Category List"
+  },
+  {
+   "id": "063-setup-pathology",
+   "label": "Setup \u203a Pathology",
+   "section": "REPORTS & SETUP",
+   "title": "Pathology Category List"
+  },
+  {
+   "id": "064-setup-radiology",
+   "label": "Setup \u203a Radiology",
+   "section": "REPORTS & SETUP",
+   "title": "Radiology Category List"
+  },
+  {
+   "id": "065-setup-blood-bank",
+   "label": "Setup \u203a Blood Bank",
+   "section": "REPORTS & SETUP",
+   "title": "Product List"
+  },
+  {
+   "id": "066-setup-symptoms",
+   "label": "Setup \u203a Symptoms",
+   "section": "REPORTS & SETUP",
+   "title": "Symptoms Head List"
+  },
+  {
+   "id": "067-setup-icd-10",
+   "label": "Setup \u203a ICD-10",
+   "section": "REPORTS & SETUP",
+   "title": "ICD-10 Codes List"
+  },
+  {
+   "id": "068-setup-findings",
+   "label": "Setup \u203a Findings",
+   "section": "REPORTS & SETUP",
+   "title": "Finding List"
+  },
+  {
+   "id": "069-setup-vitals",
+   "label": "Setup \u203a Vitals",
+   "section": "REPORTS & SETUP",
+   "title": "Vital List"
+  },
+  {
+   "id": "070-setup-zoom-setting",
+   "label": "Setup \u203a Zoom Setting",
+   "section": "REPORTS & SETUP",
+   "title": "Settings"
+  },
+  {
+   "id": "071-setup-finance",
+   "label": "Setup \u203a Finance",
+   "section": "REPORTS & SETUP",
+   "title": "Income Head List"
+  },
+  {
+   "id": "072-setup-human-resource",
+   "label": "Setup \u203a Human Resource",
+   "section": "REPORTS & SETUP",
+   "title": "Leave Type List"
+  },
+  {
+   "id": "073-setup-referral",
+   "label": "Setup \u203a Referral",
+   "section": "REPORTS & SETUP",
+   "title": "Referral Commission List"
+  },
+  {
+   "id": "074-setup-appointment",
+   "label": "Setup \u203a Appointment",
+   "section": "REPORTS & SETUP",
+   "title": "Slots"
+  },
+  {
+   "id": "075-setup-inventory",
+   "label": "Setup \u203a Inventory",
+   "section": "REPORTS & SETUP",
+   "title": "Item Category List"
+  },
+  {
+   "id": "076-setup-custom-fields",
+   "label": "Setup \u203a Custom Fields",
+   "section": "REPORTS & SETUP",
+   "title": "Add Custom Field"
+  }
+ ]
+}

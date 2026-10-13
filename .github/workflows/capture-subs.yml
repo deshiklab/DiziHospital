@@ -1,0 +1,55 @@
+name: capture-subs
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: capture
+  cancel-in-progress: false
+
+jobs:
+  subs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install playwright
+        run: |
+          cd tools/capture
+          npm install --no-audit --no-fund >/dev/null 2>&1
+          npx playwright install chromium >/dev/null 2>&1
+
+      - name: Capture sub-screens and record views
+        continue-on-error: true
+        timeout-minutes: 45
+        working-directory: tools/capture
+        env:
+          SH_USER: superadmin@gmail.com
+          SH_PASS: password
+          OUT_DIR: ../../capture
+        run: |
+          mkdir -p ../../capture/logs
+          git config user.name "capture-bot"
+          git config user.email "capture-bot@users.noreply.github.com"
+          node subs.js > ../../capture/logs/subs.log 2>&1
+          echo "subs_exit=$?" >> ../../capture/logs/subs.log
+
+      - name: Final commit
+        if: always()
+        run: |
+          git config user.name "capture-bot"
+          git config user.email "capture-bot@users.noreply.github.com"
+          git pull --rebase -q || true
+          git add -A capture
+          if git diff --cached --quiet; then echo "no changes"; else
+            git commit -q -m "chore(capture): sub-screen capture [skip ci]"
+            git push || (git pull --rebase -q && git push)
+          fi
