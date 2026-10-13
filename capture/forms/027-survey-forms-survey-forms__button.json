@@ -1,0 +1,263 @@
+{
+ "pageId": "027-survey-forms-survey-forms",
+ "pageLabel": "Survey Forms › Survey Forms",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/survey",
+ "from": "https://demo.smart-hospital.in/admin/survey",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/survey",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Survey Forms",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Survey Forms",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "tbl_published",
+    "rows": 5,
+    "columns": [
+     "Form Title",
+     "Target Audience",
+     "Submissions",
+     "Start Date – End Date",
+     "Action"
+    ]
+   },
+   {
+    "id": "tbl_closed",
+    "rows": 4,
+    "columns": [
+     "Form Title",
+     "Target Audience",
+     "Start Date – End Date",
+     "Action"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Survey Forms Create Survey Form"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "1",
+    "h": "https://demo.smart-hospital.in/admin/survey/submissions/9"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/edit/9"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/submissions/9"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/clone_form/9"
+   },
+   {
+    "t": "0",
+    "h": "https://demo.smart-hospital.in/admin/survey/submissions/6"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/edit/6"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/submissions/6"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/clone_form/6"
+   },
+   {
+    "t": "0",
+    "h": "https://demo.smart-hospital.in/admin/survey/submissions/3"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/edit/3"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/submissions/3"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/clone_form/3"
+   },
+   {
+    "t": "4",
+    "h": "https://demo.smart-hospital.in/admin/survey/submissions/2"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/edit/2"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/submissions/2"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/clone_form/2"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/edit/5"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/submissions/5"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/clone_form/5"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/edit/4"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/submissions/4"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/clone_form/4"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/edit/1"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/submissions/1"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/survey/clone_form/1"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "027-survey-forms-survey-forms__button.jpg"
+}

@@ -1,0 +1,682 @@
+{
+ "pageId": "030-inventory",
+ "pageLabel": "Inventory",
+ "trigger": {
+  "label": "Add Item Stock",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 1
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/itemstock",
+ "from": "https://demo.smart-hospital.in/admin/itemstock",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/itemstock",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Item Stock List",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Item Stock List",
+   "Add Item Stock",
+   "Edit Item Stock",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/itemstock/add",
+    "method": "post",
+    "name": "itemstockform",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Item Category *",
+      "name": "item_category_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Syringe Packs",
+       "Cotton Packs",
+       "Medical Equipment",
+       "Bed Sheets",
+       "Uniforms",
+       "Surgical blades",
+       "Automatic Blood Pressure Cuff",
+       "Medical scissors",
+       "Patient wheelchairs",
+       "Stools: designed for clinical use",
+       "Apparel",
+       "Cardiology"
+      ]
+     },
+     {
+      "label": "Item *",
+      "name": "item_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Supplier *",
+      "name": "supplier_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "VK Supplier",
+       "Quick Service"
+      ]
+     },
+     {
+      "label": "Store",
+      "name": "store_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "SK Pharma",
+       "Vinay Pharmacy",
+       "Vardaan"
+      ]
+     },
+     {
+      "label": "quantity",
+      "name": "quantity",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Purchase Price *",
+      "name": "purchase_price",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Date",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "item_photo",
+      "name": "item_photo",
+      "type": "file",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/itemstock/update",
+    "method": "post",
+    "name": "itemstockform",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Item Category *",
+      "name": "item_category_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Syringe Packs",
+       "Cotton Packs",
+       "Medical Equipment",
+       "Bed Sheets",
+       "Uniforms",
+       "Surgical blades",
+       "Automatic Blood Pressure Cuff",
+       "Medical scissors",
+       "Patient wheelchairs",
+       "Stools: designed for clinical use",
+       "Apparel",
+       "Cardiology"
+      ]
+     },
+     {
+      "label": "Item *",
+      "name": "item_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Supplier *",
+      "name": "supplier_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "VK Supplier",
+       "Quick Service"
+      ]
+     },
+     {
+      "label": "Store",
+      "name": "store_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "SK Pharma",
+       "Vinay Pharmacy",
+       "Vardaan"
+      ]
+     },
+     {
+      "label": "quantity",
+      "name": "quantity",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Purchase Price *",
+      "name": "purchase_price",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Date",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "item_photo",
+      "name": "item_photo",
+      "type": "file",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 74,
+    "columns": [
+     "Name",
+     "Category",
+     "Supplier",
+     "Store",
+     "Date",
+     "Description",
+     "Total Quantity",
+     "Generated By",
+     "Purchase Price ($)",
+     "Action"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Item Stock List Add Item Stock Issue Item Item"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Add Item Stock",
+    "href": "",
+    "target": "#myModal"
+   },
+   {
+    "text": "Issue Item",
+    "href": "https://demo.smart-hospital.in/admin/issueitem",
+    "target": ""
+   },
+   {
+    "text": "Item",
+    "href": "https://demo.smart-hospital.in/admin/item",
+    "target": ""
+   },
+   {
+    "text": "+",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Issue Item",
+    "h": "https://demo.smart-hospital.in/admin/issueitem"
+   },
+   {
+    "t": "Item",
+    "h": "https://demo.smart-hospital.in/admin/item"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Syringe",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Medical shoe and boot covers",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Dressing Cotton",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Uniform (Patient-Staff)",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Personal Protective Equipment Kit",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Bed Sheet",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Syringe",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Syringe",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Medical shoe and boot covers",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Dressing Cotton",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Uniform (Patient-Staff)",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Personal Protective Equipment Kit",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Bed Sheet",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Syringe",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Syringe",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Medical shoe and boot covers",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Dressing Cotton",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Uniform (Patient-Staff)",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Personal Protective Equipment Kit",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Bed Sheet",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Syringe",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Syringe",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Injection Supplies",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Medical Equipment",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Automatic Blood Pressure",
+    "h": "#"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Add Item Stock",
+  "bodyText": "Add Item Stock Item Item Category * Select Syringe Packs Cotton Packs Medical Equipment Bed Sheets Uniforms Surgical blades Automatic Blood Pressure Cuff Medical scissors Patient wheelchairs Stools: designed for clinical use Apparel Cardiology Item * Select Supplier * Select VK Supplier Quick Service Store Select SK Pharma Vinay Pharmacy Vardaan Purchase Details Quantity * + Purchase Price * Date Description Attach Document Drop a file here or click Cancel Save",
+  "required": 0,
+  "fieldCount": 9,
+  "errors": []
+ },
+ "file": "030-inventory__add-item-stock.jpg"
+}
