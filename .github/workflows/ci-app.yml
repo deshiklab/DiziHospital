@@ -1,0 +1,53 @@
+name: ci-app
+
+on:
+  push:
+    branches:
+      - main
+      - 'arena/**'
+    paths:
+      - 'apps/**'
+      - 'packages/**'
+      - 'services/**'
+      - 'tools/ci/**'
+      - 'package.json'
+      - 'docs/plan/design-tokens.json'
+      - '.github/workflows/ci-app.yml'
+  pull_request:
+    paths:
+      - 'apps/**'
+      - 'packages/**'
+      - 'services/**'
+      - 'tools/ci/**'
+      - 'package.json'
+      - 'docs/plan/design-tokens.json'
+      - '.github/workflows/ci-app.yml'
+
+concurrency:
+  group: ci-app-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: tokens, clean-room, docs links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # The generator has no dependencies, so no install step is needed for the gates below.
+      - name: Design tokens are in sync with the plan
+        run: npm run tokens:check
+
+      - name: Clean-room scan (no vendor material in the product)
+        run: npm run clean-room
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Every relative link in docs/ resolves
+        run: python3 tools/docs/check_links.py

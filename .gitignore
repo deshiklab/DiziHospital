@@ -1,2 +1,13 @@
 node_modules/
 .DS_Store
+
+# Build output — never committed, except the token package, whose generated files are committed on purpose so
+# the drift gate in CI has something to compare against (packages/tokens/dist).
+.next/
+.turbo/
+coverage/
+*.tsbuildinfo
+apps/*/dist/
+services/*/dist/
+.env
+.env.local

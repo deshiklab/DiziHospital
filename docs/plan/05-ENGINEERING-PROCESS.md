@@ -136,8 +136,11 @@ us legally free to license or sell it later. This is a process rule, not a hope.
 
 | Rule | How it is enforced |
 |---|---|
-| No vendor code, CSS, images, fonts, icons, SQL or templates in the repository | CI clean-room scan on every PR; PR checklist question; review by the tech lead for any file that looks copied |
+| No vendor code, CSS, images, fonts, icons, SQL or templates in **product directories** (`apps/`, `packages/`, `services/`) | CI clean-room scan (`node tools/ci/clean-room.mjs`) on every PR; PR checklist question; tech-lead review for anything that looks copied |
+| Vendor *reference* material stays in `docs/` only — captures, the mirrored public help library, analysis — never shipped in the app and never copied into it | Directory rule in review; the clean-room scan excludes `docs/` by design so the two are never confused |
+| Every plan artefact that could be mistaken for vendor work carries attribution | Mirrored help articles keep their source URL; the capture README records how the screenshots were obtained |
 | The new platform is written from our own capture, the mirrored public documentation and agreed requirements | Every behaviour in a story links to a capture artefact or a requirement, not to a vendor file |
+| The scan itself is tested | A planted violation must fail the build (`packages/tokens` CI job runs the scan on every push) |
 | If vendor source is ever purchased, a two-team wall applies | Documented in the ADR 0005 policy; code review checks authorship of anyone who has read vendor source |
 | The legacy instance is requested to change, never patched | `docs/vendor/requests.md`: ranked list with evidence (screenshot, reproduction, impact) and status, reviewed monthly with the vendor |
 | No vendor upgrade within ±14 days of a module cutover | Calendar check in the release meeting; bridge contract tests run before and after any approved upgrade |

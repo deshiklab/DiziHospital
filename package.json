@@ -1,0 +1,21 @@
+{
+  "name": "dizihospital",
+  "private": true,
+  "version": "0.1.0",
+  "description": "DiziHospital — modern hospital management platform (monorepo root)",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "services/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "tokens:build": "npm run build --workspace @dizi/tokens",
+    "tokens:check": "npm run check --workspace @dizi/tokens",
+    "clean-room": "node tools/ci/clean-room.mjs",
+    "verify": "npm run clean-room && npm run tokens:check"
+  }
+}

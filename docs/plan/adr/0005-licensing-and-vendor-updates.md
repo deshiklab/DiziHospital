@@ -17,10 +17,13 @@ to fork, no vendor branch to track, and no merge debt. What remains, and matters
 ## Decision
 
 1. **Clean-room rule.** The new platform is written from (a) our own capture of observable behaviour,
-   (b) the vendor's published documentation (mirrored in `docs/help-library/`), and (c) requirements agreed with
-   the hospital. No vendor source, CSS, images, fonts, icons, SQL or templates are copied into this repository.
-   A CI check scans for vendor asset paths and known vendor file markers; the pull-request checklist asks the
-   question explicitly.
+   (b) the vendor's publicly published documentation (mirrored for reference in `docs/help-library/`), and
+   (c) requirements agreed with the hospital. **Nothing vendor-authored is copied into product code**: no source,
+   CSS, images, fonts, icons, SQL or templates under `apps/`, `packages/` or `services/`.
+   Reference material is different from product material and is kept apart on purpose: the mirrored help library
+   and our capture screenshots live under `docs/` with attribution, are never shipped in the application, and may
+   not be copied into it. `tools/ci/clean-room.mjs` enforces exactly that — it scans product directories and
+   fails on vendor markers, while documentation directories are excluded by design.
 2. **Two-team wall if source is ever obtained.** If the source is purchased later (for example to accelerate
    the bridge), anyone who reads it may not write new-platform code, and vice versa. This protects the
    clean-room position that lets us license or sell our platform later.
