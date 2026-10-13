@@ -1,0 +1,75 @@
+name: capture-deep
+on:
+  push:
+    branches: [ arena/ac321db7-dizihospital ]
+    paths-ignore:
+      - 'capture/**'
+      - 'docs/**'
+  workflow_dispatch:
+
+concurrency:
+  group: capture-deep
+  cancel-in-progress: false
+
+jobs:
+  deep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install playwright
+        run: |
+          cd tools/capture
+          npm install --no-audit --no-fund >/dev/null 2>&1
+          npx playwright install chromium >/dev/null 2>&1
+          node -e "console.log('playwright ok:', !!require('playwright').chromium)"
+
+      - name: Forms and detail walk
+        continue-on-error: true
+        timeout-minutes: 80
+        working-directory: tools/capture
+        env:
+          SH_USER: superadmin@gmail.com
+          SH_PASS: password
+          OUT_DIR: ../../capture
+          BUDGET_MS: '3900000'
+        run: |
+          mkdir -p ../../capture/logs
+          git config user.name "capture-bot"
+          git config user.email "capture-bot@users.noreply.github.com"
+          node forms.js > ../../capture/logs/forms.log 2>&1
+          echo "forms_exit=$?" >> ../../capture/logs/forms.log
+
+      - name: Role dashboards and front site
+        continue-on-error: true
+        timeout-minutes: 60
+        working-directory: tools/capture
+        env:
+          OUT_DIR: ../../capture
+        run: |
+          mkdir -p ../../capture/logs
+          git config user.name "capture-bot"
+          git config user.email "capture-bot@users.noreply.github.com"
+          node roles.js > ../../capture/logs/roles.log 2>&1
+          echo "roles_exit=$?" >> ../../capture/logs/roles.log
+
+      - name: Final commit
+        if: always()
+        run: |
+          git config user.name "capture-bot"
+          git config user.email "capture-bot@users.noreply.github.com"
+          git pull --rebase -q || true
+          git add -A capture
+          if git diff --cached --quiet; then echo "no changes"; else
+            git commit -q -m "chore(capture): deep capture output [skip ci]"
+            git push || (git pull --rebase -q && git push)
+          fi
