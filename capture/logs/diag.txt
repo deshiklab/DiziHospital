@@ -1,0 +1,21 @@
+== whoami/pwd ==
+runner
+/home/runner/work/DiziHospital/DiziHospital
+total 32
+drwxr-xr-x 6 runner runner 4096 Oct 13 21:12 .
+drwxr-xr-x 3 runner runner 4096 Oct 13 21:12 ..
+drwxr-xr-x 7 runner runner 4096 Oct 13 21:12 .git
+drwxr-xr-x 3 runner runner 4096 Oct 13 21:12 .github
+-rw-r--r-- 1 runner runner   43 Oct 13 21:12 .gitignore
+-rw-r--r-- 1 runner runner   15 Oct 13 21:12 README.md
+drwxr-xr-x 3 runner runner 4096 Oct 13 21:12 capture
+drwxr-xr-x 3 runner runner 4096 Oct 13 21:12 tools
+== node ==
+v20.20.2
+10.8.2
+== tree tools ==
+tools/capture/crawl.js
+tools/capture/package.json
+tools/capture/recon.js
+== target site reachability ==
+http=200 time=0.372997
