@@ -295,6 +295,8 @@ def main():
                 break
         cat_entry = {'name': cat['name'], 'slug': slugify(cat['slug']), 'url': cat['url'],
                      'description': desc, 'articles': []}
+        catdir = os.path.join(OUT, cat_entry['slug'])
+        os.makedirs(catdir, exist_ok=True)
         print(f'[{ci}/{len(cats)}] {cat["name"]}: {len(art_urls)} articles')
         for u in art_urls:
             slug = u.rstrip('/').split('/')[-1]
@@ -320,8 +322,7 @@ def main():
                 continue
             parsed['category'] = {'name': (parsed.get('category') or {}).get('name') or cat['name'],
                                   'slug': (parsed.get('category') or {}).get('slug') or cat_entry['slug']}
-            os.makedirs(os.path.join(OUT, cat_entry['slug']), exist_ok=True)
-            with open(os.path.join(OUT, cat_entry['slug'], slug + '.md'), 'w') as f:
+            with open(os.path.join(catdir, slug + '.md'), 'w') as f:
                 f.write(f"# {parsed['title']}\n\n")
                 if parsed.get('date'):
                     f.write(f"_{parsed['date']}_ · ")
@@ -337,7 +338,7 @@ def main():
         index.append(cat_entry)
 
         # per-category index page
-        with open(os.path.join(OUT, cat_entry['slug'], '_index.md'), 'w') as f:
+        with open(os.path.join(catdir, '_index.md'), 'w') as f:
             f.write(f"# {cat['name']}\n\n")
             if desc:
                 f.write(desc + '\n\n')
