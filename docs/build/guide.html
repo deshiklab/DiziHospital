@@ -58,7 +58,8 @@ hr { border:none; border-top:1px solid var(--line); margin:18px 0; }
   </div>
   <div class="foot">
     Contents: Part 1 Operator wiki &amp; help handbook · Part 2 Screen-by-screen feature catalogue with screenshots ·
-    Part 3 Improvement backlog for the next phase. Screenshots were taken on the live demo instance.
+    Part 3 Improvement backlog · Part 4 Vendor help library index · Part 5 Selected help articles in full.
+    Application screenshots were taken on the live demo instance; help articles are mirrored from the vendor knowledge base.
   </div>
 </section>
 <h1 class="part">Contents</h1><p style="color:#6b7c93;margin-top:-6px">How this guide is organised</p>
@@ -150,6 +151,10 @@ hr { border:none; border-top:1px solid var(--line); margin:18px 0; }
 </ul>
 </div>
 
+<h2>Part 3 — Improvement backlog</h2>
+<ul><li><a href="#2-findings-backlog">Findings &amp; prioritised backlog</a></li></ul>
+<h2>Part 4 — Vendor help library (mirrored index)</h2>
+<h2>Part 5 — Selected help articles (full text)</h2>
 </div>
 <h1 class="part">Part 1 — Operator wiki &amp; help handbook</h1><p style="color:#6b7c93;margin-top:-6px">Task-oriented help: how to run every module, day to day.</p><h1 id="smart-hospital-wiki-operator-handbook">Smart Hospital — Wiki &amp; Operator Handbook</h1>
 <blockquote>
@@ -288,7 +293,8 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Symptoms / Findings / Vitals / ICD-10</strong> — the clinical libraries used by OPD and IPD.</li>
 <li><strong>Finance → Referral commission</strong>, <strong>Human Resource → Leave types</strong>, <strong>Appointment → slots / online appointment</strong>, <strong>Inventory → item categories</strong>, <strong>Custom Fields</strong>.</li>
 <li><strong>Users &amp; roles</strong>: create staff (HR → Add Staff) and assign the role that decides the menu they see.</li>
-<li><strong>Notification settings</strong> — SMS, e-mail and system notifications (vendor docs: <em>System Settings → Notification Setting / SMS Setting / Email Setting</em>).</li>
+<li><strong>Notification settings</strong> — per-event delivery over <strong>e-mail, SMS, WhatsApp and mobile-app push</strong> (<em>System Settings → Notification Setting</em>), plus the <em>SMS Setting</em> and <em>Email Setting</em> gateway credentials. See §6.2.</li>
+<li><strong>Two-Factor Authentication</strong> — 2FA setup for privileged staff (§9.2) using Google Authenticator.</li>
 <li><strong>Zoom setting</strong> (<code>/admin/zoom_conference</code>) if you will use teleconsultation.</li>
 <li><strong>Front CMS</strong> (<code>/admin/front/page</code>) to publish the public website.</li>
 </ol>
@@ -428,20 +434,67 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <h2 id="6-communication-content-and-documents">6. Communication, content and documents</h2>
 <h3 id="61-notice-board-messaging">6.1 Notice board / messaging</h3>
 <p><strong>Messaging</strong> (<code>/admin/notification</code>) — publish notices to selected audiences (roles, staff, patients, branch) with title, message, date, attachment and publish/expiry window. Recipients see them in the bell menu.</p>
-<h3 id="62-survey-forms">6.2 Survey forms</h3>
+<h3 id="62-notifications-sms-e-mail-and-whatsapp">6.2 Notifications, SMS, e-mail and WhatsApp</h3>
+<p>Notifications are <strong>event driven</strong>. For each event (for example <em>OPD Patient Registration</em>, <em>IPD Patient Discharge</em>,
+<em>Appointment Approved</em>, <em>Login Credentials</em>) you choose which channels deliver it:</p>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Where it is configured</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>System / in-app</strong></td>
+<td>System Settings → Notification Setting</td>
+<td>Bell menu + notice board</td>
+</tr>
+<tr>
+<td><strong>E-mail</strong></td>
+<td>Email Setting (SMTP credentials)</td>
+<td>Used for credentials and reports</td>
+</tr>
+<tr>
+<td><strong>SMS</strong></td>
+<td>SMS Setting (gateway credentials)</td>
+<td>Charged per message by the gateway</td>
+</tr>
+<tr>
+<td><strong>WhatsApp</strong></td>
+<td>WhatsApp Messaging → Meta (Cloud API) <strong>or</strong> Twilio</td>
+<td>One provider at a time; the template configured for the event is used</td>
+</tr>
+<tr>
+<td><strong>Mobile app push</strong></td>
+<td>Android app integration</td>
+<td>Free channel for installed patients/staff</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>WhatsApp setup</strong> — open <em>WhatsApp Messaging</em>, choose the <strong>Meta</strong> tab (official WhatsApp Business Cloud API) or the
+<strong>Twilio</strong> tab (sandbox or approved sender), enter the credentials, enable exactly one provider, then switch WhatsApp on
+per event on the Notification Setting page. The same event template that already goes out by e-mail/SMS is reused.
+Mirror: <code>docs/help-library/whatsapp-messaging/</code>.</p>
+</blockquote>
+<p><strong>Patient credentials</strong> can be sent from the patient record over any enabled channel (e-mail/SMS/WhatsApp/push), which is
+how patients get access to the patient panel (see §8).</p>
+<h3 id="63-survey-forms">6.3 Survey forms</h3>
 <p><strong>Survey Forms</strong> (<code>/admin/survey</code>) — build questionnaires (question types: text, textarea, radio, checkbox, dropdown, date, rating), publish them to selected roles/departments and read responses. <strong>My Survey Forms</strong> (<code>/admin/survey/staff_forms</code>) is the staff-facing list of forms assigned to the signed-in user.</p>
-<h3 id="63-download-center">6.3 Download center</h3>
+<h3 id="64-download-center">6.4 Download center</h3>
 <p><strong>Download Center</strong> (<code>/admin/content/upload</code>, <code>/admin/content/list</code>, <code>/admin/contenttype/</code>) — content types, upload/share files (reports, circulars, policies) with audience and download counters.</p>
-<h3 id="64-certificates-and-id-cards">6.4 Certificates and ID cards</h3>
+<h3 id="65-certificates-and-id-cards">6.5 Certificates and ID cards</h3>
 <ul>
 <li><strong>Certificate</strong> (<code>/admin/generatecertificate</code>) — choose module (OPD/IPD), discharged patients and a certificate template; generate <strong>single or multiple</strong> at once and print.</li>
 <li><strong>Patient ID Card</strong> (<code>/admin/generatepatientidcard/</code>) and <strong>Staff ID Card</strong> (<code>/admin/generatestaffidcard/</code>) — template-based cards with photo, ID and validity.</li>
 </ul>
-<h3 id="65-inventory">6.5 Inventory</h3>
+<h3 id="66-inventory">6.6 Inventory</h3>
 <p><strong>Inventory</strong> (<code>/admin/itemstock</code>) — item categories (Setup → Inventory), suppliers, item master, issue/return to departments, stock ledger and reorder alerts; <em>Inventory</em> report shows consumption.</p>
-<h3 id="66-front-cms-public-website">6.6 Front CMS (public website)</h3>
+<h3 id="67-front-cms-public-website">6.7 Front CMS (public website)</h3>
 <p><strong>Front CMS</strong> (<code>/admin/front/page</code>) manages the public site: pages, banners/sliders, news &amp; events, gallery, departments, doctors, contact and SEO metadata. Content published here appears on the hospital website and in the "What's new" block of the login page.</p>
-<h3 id="67-telemedicine">6.7 Telemedicine</h3>
+<h3 id="68-telemedicine">6.8 Telemedicine</h3>
 <ul>
 <li><strong>Live Consultation</strong> (<code>/admin/zoom_conference/consult</code>) — schedule a Zoom teleconsultation for a patient, share the join link, start/end the session; the call is logged for reporting.</li>
 <li><strong>Live Meeting</strong> (<code>/admin/zoom_conference/meeting</code>) — internal staff meetings with participants and schedule.</li>
@@ -449,7 +502,13 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </ul>
 <hr />
 <h2 id="7-reports">7. Reports</h2>
-<p><strong>Reports</strong> menu (17 reports). Every report shares the same pattern: <strong>date range + module-specific filters → Search → results table → export/print</strong>.</p>
+<p><strong>Reports</strong> menu (17 report screens in the admin UI). Every report shares the same pattern:
+<strong>date range + module-specific filters → Search → results table → export/print</strong>.</p>
+<blockquote>
+<p>The vendor help library documents <strong>44 report articles</strong> (per-report how-tos such as <em>Daily Transaction Report</em>,
+<em>Stock Report</em>, <em>Balance Amount Report</em>, <em>Pathology/Radiology Balance Report</em>). They are mirrored under
+<code>docs/help-library/reports/</code> and indexed in <code>docs/HELP-LIBRARY.md</code>.</p>
+</blockquote>
 <table>
 <thead>
 <tr>
@@ -532,20 +591,43 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <hr />
 <h2 id="8-patient-portal-public-website">8. Patient portal &amp; public website</h2>
 <ul>
-<li><strong>Patient portal</strong> (<code>/site/userlogin</code>) — patients log in with the e-mail captured at registration to see appointments, prescriptions, investigations/reports, bills and payments, and to request appointments.</li>
+<li><strong>Patient portal</strong> (<code>/site/userlogin</code>) — patients sign in with the credentials sent from the patient record and get their own <strong>dashboard</strong> (counts per module plus charts of medical history, findings and symptoms). Sections available to the patient:</li>
+<li><strong>My Appointments</strong> — view and <strong>book</strong> an appointment (date, specialist, doctor, shift, slot, priority, message, live-consultation option).</li>
+<li><strong>OPD</strong> — visits list; open a visit for overview, visits, charges, payment, lab investigations, timeline, medication, operation theatre and live consultation.</li>
+<li><strong>IPD</strong> — overview, nurse notes, consultant register, lab investigations, timeline, prescription, charges, payment, treatment history, medication, operation theatre, live consultation and bed history.</li>
+<li><strong>Pharmacy / Pathology / Radiology / Blood Bank / Ambulance</strong> — bill and payment history per module, printable bills and payment receipts.</li>
+<li><strong>Live Consultation</strong> — join the Zoom teleconsultation booked from appointment, OPD or IPD.</li>
+<li>Reference: <code>docs/help-library/patient-panel/</code>.</li>
 <li><strong>Public website</strong> — driven by Front CMS: home page with departments, doctors, services, health packages, news, gallery, contact and an <strong>online appointment</strong> form. Online bookings land in the admin <em>Online Appointment</em> queue.</li>
 <li><strong>New patient registration</strong> on the public site creates a patient record that appears in the admin Patient List with the same MR number.</li>
 </ul>
 <hr />
 <h2 id="9-roles-permissions-and-security">9. Roles, permissions and security</h2>
+<h3 id="91-roles-and-the-audit-trail">9.1 Roles and the audit trail</h3>
 <ul>
 <li>Nine staff roles ship by default; each role maps to a permission set that controls the sidebar and every screen.</li>
 <li>The signed-in role is shown in the header (e.g. <em>Super ADMIN</em>); switching role requires re-login.</li>
 <li>Every form carries a CSRF token; passwords are hashed; sessions expire per the configured timeout.</li>
 <li>The <strong>Log</strong> report and dashboard <em>Recent activity</em> give an audit trail of who did what and when.</li>
+<li>The <strong>Android app</strong> (vendor addon) provides the same staff/patient flows on mobile with push notifications; see
+  <code>docs/help-library/changelog/</code> and backlog E13 for mobile coverage.</li>
 <li>Vendor documentation covers SSL enablement, LAN deployment, and moving the installation between servers.</li>
 </ul>
 <hr />
+<h3 id="92-two-factor-authentication">9.2 Two-factor authentication</h3>
+<p>The product ships a <strong>Two Factor Authentication</strong> module (Google Authenticator / TOTP):</p>
+<ol>
+<li>Sign in as Super Admin (or the staff member) and open <strong>Two Factor Authentication → Setup 2FA</strong>.</li>
+<li>Install <strong>Google Authenticator</strong> (or any TOTP app) on the mobile device.</li>
+<li>Scan the QR code (or manually enter the key shown in the module) and confirm the 6-digit code to finish enrolment.</li>
+<li>From then on, sign-in asks for the current code in addition to the password.</li>
+<li>To reset a lost device, delete the 2FA account for that user from the same module and re-enrol.</li>
+<li>If automatic enrolment fails, the key for superadmin/staff can be configured manually (vendor article).</li>
+</ol>
+<blockquote>
+<p>Mirror: <code>docs/help-library/two-factor-authentication/</code>.
+<strong>Recommendation for DiziHospital:</strong> enforce 2FA for every role that can reach billing or clinical records (backlog E4).</p>
+</blockquote>
 <h2 id="10-troubleshooting-faq">10. Troubleshooting &amp; FAQ</h2>
 <table>
 <thead>
@@ -4299,10 +4381,34 @@ the next phase. Every item references evidence: the screenshot id is the file na
 </tr>
 <tr>
 <td>E4</td>
-<td>Security hardening not evidenced: no 2FA/MFA, no password policy UI, no session/IP log, no rate limiting on login (<code>/site/login</code>)</td>
+<td>Security hardening gaps: two-factor authentication <strong>exists</strong> (Google Authenticator, see <code>docs/help-library/two-factor-authentication/</code>) but is optional and per-user, and there is no password-policy UI, no session/IP register, no login throttling and no forced enrolment for privileged roles (<code>/site/login</code>)</td>
 <td>Breach and compliance risk</td>
-<td>MFA for admins, password policy, login throttling, session register, admin action audit</td>
+<td>Enforce 2FA for Super Admin/Admin and for any role that can see billing or clinical records, add recovery codes, password policy, login throttling, session register and admin action audit</td>
 <td><strong>P0</strong></td>
+<td>L</td>
+</tr>
+<tr>
+<td>E11</td>
+<td>Notification delivery (e-mail/SMS/WhatsApp/mobile push) is configured per event, but there is no delivery log, retry or failure alerting surfaced in the product (<code>docs/help-library/system-settings/</code>, <code>whatsapp-messaging/</code>)</td>
+<td>Reminders and credentials silently fail to send</td>
+<td>Delivery log with status/error per message, automatic retry with backoff, provider failover and a daily failure digest</td>
+<td>P1</td>
+<td>M</td>
+</tr>
+<tr>
+<td>E12</td>
+<td>WhatsApp is one-way (template notifications); patient replies are not captured into the app</td>
+<td>Patients reply "CONFIRM"/"cancel" and nothing happens</td>
+<td>Two-way WhatsApp/webhook inbox linked to the appointment and case, with opt-in/opt-out handling</td>
+<td>P2</td>
+<td>L</td>
+</tr>
+<tr>
+<td>E13</td>
+<td>The Android app and its push channel are documented by the vendor but not covered by our screen-level catalogue or by any in-repo test</td>
+<td>Mobile regressions invisible; parity unknown</td>
+<td>Add the Android app to the coverage map: capture its screens, document feature parity with the web app and add smoke tests</td>
+<td>P2</td>
 <td>L</td>
 </tr>
 <tr>
@@ -4428,4 +4534,6 @@ E1 API layer + E2 webhooks · E10 ABDM/FHIR · E6 observability · E8 CI/test ha
 <p>Every item above ships with: acceptance criteria written first, automated test where the layer allows it,
 documentation updated in this repo (<code>docs/</code>), a screenshot of the new state replacing the old one in <code>docs/assets/screens/</code>,
 and an entry in <code>docs/CHANGELOG.md</code>.</p>
+
+
 </body></html>
