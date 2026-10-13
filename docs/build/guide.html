@@ -4013,6 +4013,30 @@ the next phase. Every item references evidence: the screenshot id is the file na
 <td><strong>P0</strong></td>
 <td>M</td>
 </tr>
+<tr>
+<td>A6</td>
+<td>Character-encoding defects in the IPD patient header — <code>Â·</code> mojibake and a raw <code>&amp;mdash;</code> entity are printed where separators belong (<code>detail-ipd-profile.jpg</code>)</td>
+<td>Looks unprofessional on the screen a clinician opens most; same class of bug can corrupt names/addresses</td>
+<td>Force UTF-8 end to end (PHP output, DB connection charset, HTML meta), escape once only, add a smoke test asserting no raw entities in rendered pages</td>
+<td><strong>P0</strong></td>
+<td>S</td>
+</tr>
+<tr>
+<td>A7</td>
+<td>A stray literal <strong>"2"</strong> is rendered as a button/link on almost every list screen (visible in every captured profile, e.g. <code>002-patient</code>, <code>018-human-resource</code>) — a badge/count leaking into the DOM as an action label</td>
+<td>Confusing affordance; screen-reader noise</td>
+<td>Trace the label (likely a notification count template), give it a proper accessible name or render an icon with <code>aria-label</code></td>
+<td>P1</td>
+<td>S</td>
+</tr>
+<tr>
+<td>A8</td>
+<td>Field/column naming typos reach the UI: <code>refference</code> in the OPD/IPD form field names, "Complain" instead of "Complaint" (<code>005</code>, <code>012</code>)</td>
+<td>Data exports and integrations inherit the typos</td>
+<td>Terminology + field-name cleanup pass with a migration-safe alias map</td>
+<td>P2</td>
+<td>S</td>
+</tr>
 </tbody>
 </table>
 <h3 id="22-clinical-operational-workflow-gaps">2.2 Clinical &amp; operational workflow gaps</h3>
