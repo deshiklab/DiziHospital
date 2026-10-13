@@ -1,0 +1,511 @@
+{
+ "pageId": "076-setup-custom-fields",
+ "pageLabel": "Setup › Custom Fields",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/customfield",
+ "from": "https://demo.smart-hospital.in/admin/customfield",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/customfield",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Add Custom Field",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Add Custom Field",
+   "Custom Field List",
+   "Ambulance Call",
+   "Antenatal",
+   "Appointment",
+   "Birth Record",
+   "Blood Issue",
+   "Component Issue",
+   "Death Record",
+   "Donor",
+   "Expenses",
+   "Income",
+   "IPD",
+   "Consultant Register",
+   "IPD Nurse Note",
+   "OPD",
+   "OPD Recheckup",
+   "Operation",
+   "Prescription",
+   "Pathology",
+   "Pathology Test",
+   "Patient",
+   "Pharmacy",
+   "Radiology",
+   "Radiology Test",
+   "Staff",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/customfield",
+    "method": "post",
+    "name": "employeeform",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Field Belongs To",
+      "name": "belong_to",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Ambulance Call",
+       "Antenatal",
+       "Appointment",
+       "Birth Record",
+       "Blood Issue",
+       "Component Issue",
+       "Death Record",
+       "Donor",
+       "Expenses",
+       "Income",
+       "IPD",
+       "Consultant Register",
+       "IPD Nurse Note",
+       "OPD",
+       "OPD Recheckup",
+       "Operation",
+       "Prescription",
+       "Pathology",
+       "Pathology Test",
+       "Patient",
+       "Pharmacy",
+       "Radiology",
+       "Radiology Test",
+       "Staff"
+      ]
+     },
+     {
+      "label": "Field Type",
+      "name": "type",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Checkbox",
+       "Color Picker",
+       "Date Picker",
+       "Datetime Picker",
+       "Input",
+       "Hyperlink",
+       "Multi Select",
+       "Number",
+       "Dropdown",
+       "Textarea"
+      ]
+     },
+     {
+      "label": "Field Name",
+      "name": "name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "column",
+      "name": "column",
+      "type": "number",
+      "required": false
+     },
+     {
+      "label": "Field Values (Separate By Comma)",
+      "name": "field_values",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Required",
+      "name": "validation",
+      "type": "checkbox",
+      "required": false
+     },
+     {
+      "label": "On Table",
+      "name": "display_tbl",
+      "type": "checkbox",
+      "required": false
+     },
+     {
+      "label": "On Print",
+      "name": "display_print",
+      "type": "checkbox",
+      "required": false
+     },
+     {
+      "label": "On Report",
+      "name": "display_report",
+      "type": "checkbox",
+      "required": false
+     },
+     {
+      "label": "On Patient Panel",
+      "name": "display_patient",
+      "type": "checkbox",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [],
+  "tabs": [],
+  "sections": [
+   "Add Custom Field",
+   "Custom Field List",
+   "Ambulance Call",
+   "Antenatal",
+   "Appointment",
+   "Birth Record",
+   "Blood Issue",
+   "Component Issue",
+   "Death Record",
+   "Donor",
+   "Expenses",
+   "Income",
+   "IPD",
+   "Consultant Register",
+   "IPD Nurse Note",
+   "OPD",
+   "OPD Recheckup",
+   "Operation",
+   "Prescription",
+   "Pathology",
+   "Pathology Test",
+   "Patient",
+   "Pharmacy",
+   "Radiology",
+   "Radiology Test",
+   "Staff"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Ambulance Call",
+    "h": "#collapseambulance_call"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/11"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Antenatal",
+    "h": "#collapseantenatal"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/10"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Appointment",
+    "h": "#collapseappointment"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/4"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Birth Record",
+    "h": "#collapsebirth_report"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/12"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Blood Issue",
+    "h": "#collapseblood_issue"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/9"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Component Issue",
+    "h": "#collapsecomponent_issue"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/13"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Death Record",
+    "h": "#collapsedeath_report"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/14"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Donor",
+    "h": "#collapsedonor"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/15"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Expenses",
+    "h": "#collapseexpenses"
+   },
+   {
+    "t": "Income",
+    "h": "#collapseincome"
+   },
+   {
+    "t": "IPD",
+    "h": "#collapseipd"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/6"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Consultant Register",
+    "h": "#collapseipdconsultinstruction"
+   },
+   {
+    "t": "IPD Nurse Note",
+    "h": "#collapseipdnursenote"
+   },
+   {
+    "t": "OPD",
+    "h": "#collapseopd"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/5"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "OPD Recheckup",
+    "h": "#collapseopdrecheckup"
+   },
+   {
+    "t": "Operation",
+    "h": "#collapseoperationtheatre"
+   },
+   {
+    "t": "Prescription",
+    "h": "#collapseprescription"
+   },
+   {
+    "t": "Pathology",
+    "h": "#collapsepathology"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/8"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Pathology Test",
+    "h": "#collapsepathologytest"
+   },
+   {
+    "t": "Patient",
+    "h": "#collapsepatient"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/3"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Pharmacy",
+    "h": "#collapsepharmacy"
+   },
+   {
+    "t": "Radiology",
+    "h": "#collapseradiology"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/7"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Radiology Test",
+    "h": "#collapseradiologytest"
+   },
+   {
+    "t": "Staff",
+    "h": "#collapsestaff"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/customfield/edit/2"
+   },
+   {
+    "t": "",
+    "h": "#"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "076-setup-custom-fields__button.jpg"
+}
