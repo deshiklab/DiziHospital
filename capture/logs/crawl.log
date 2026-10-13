@@ -16,3 +16,31 @@
 2026-10-13T21:37:29.741Z [13/76] 013-birth-death-record-birth-record status=200
 2026-10-13T21:37:31.755Z [14/76] 014-birth-death-record-death-record status=200
 2026-10-13T21:37:34.274Z [15/76] 015-multi-branch-overview status=200
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:37:34.765Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected be
+2026-10-13T21:37:36.616Z [16/76] 016-multi-branch-report status=200
+2026-10-13T21:37:38.633Z [17/76] 017-multi-branch-settings status=200
+2026-10-13T21:37:41.140Z [18/76] 018-human-resource status=200
+2026-10-13T21:37:43.534Z [19/76] 019-qr-code-attendance-attendance status=200
+2026-10-13T21:37:45.400Z [20/76] 020-qr-code-attendance-settings status=200
+2026-10-13T21:37:47.266Z [21/76] 021-duty-roster status=200
+2026-10-13T21:37:49.172Z [22/76] 022-annual-calendar status=200
+2026-10-13T21:37:51.107Z [23/76] 023-referral status=200
+2026-10-13T21:37:53.119Z [24/76] 024-tpa-management status=200
+2026-10-13T21:37:55.154Z [25/76] 025-finance-income status=200
+2026-10-13T21:37:57.170Z [26/76] 026-finance-expenses status=200
+2026-10-13T21:37:59.165Z [27/76] 027-survey-forms-survey-forms status=200
+2026-10-13T21:38:01.032Z [28/76] 028-survey-forms-my-survey-forms status=200
+2026-10-13T21:38:02.935Z [29/76] 029-messaging status=200
+2026-10-13T21:38:05.006Z [30/76] 030-inventory status=200
