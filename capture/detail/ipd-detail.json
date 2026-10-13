@@ -1,0 +1,2053 @@
+{
+ "listUrl": "https://demo.smart-hospital.in/admin/patient/ipdsearch",
+ "href": "https://demo.smart-hospital.in/admin/patient/ipdprofile/138/1",
+ "id": "ipd-detail",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/patient/ipdprofile/138/1",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "AANU (1234) Admitted",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "IPD PATIENT",
+   "AANU (1234) Admitted",
+   "Nurse Notes",
+   "Vitals",
+   "Consultant Register",
+   "Prescription",
+   "Lab Investigation",
+   "Timeline",
+   "Live Consultation",
+   "Bed History",
+   "Medication",
+   "Operations",
+   "Charges",
+   "Payment",
+   "Treatment History",
+   "Postnatal History",
+   "Add Doctor",
+   "Discharge Revert",
+   "Add Timeline",
+   "Edit Nurse Note",
+   "Add Comment",
+   "Patient Discharge",
+   "Add Operation",
+   "Edit Operation",
+   "Edit Timeline",
+   "Edit Diagnosis",
+   "Patient Details",
+   "Prescription",
+   "Add Payment"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "form_doctor",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Select",
+      "name": "doctorOpt[]",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Sonia Bush (9002)",
+       "Sansa Gomez (9008)",
+       "Amit Singh (9009)"
+      ]
+     },
+     {
+      "label": "",
+      "name": "",
+      "type": "search",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "form_discharge_revert",
+    "visible": false,
+    "fields": [
+     {
+      "label": "bed_group_id",
+      "name": "bed_group_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "VIP Ward - Ground Floor",
+       "Private Ward - 3rd Floor",
+       "General Ward Male - 3rd Floor",
+       "ICU - 2nd Floor",
+       "NICU - 2nd Floor",
+       "AC (Normal) - 1st Floor",
+       "Non AC - 4th Floor"
+      ]
+     },
+     {
+      "label": "bed_no",
+      "name": "bed_no",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "discharge_revert_reason",
+      "name": "discharge_revert_reason",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "add_timeline",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Title *",
+      "name": "timeline_title",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Date *",
+      "name": "timeline_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Description",
+      "name": "timeline_desc",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "timeline_doc",
+      "name": "timeline_doc",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Visible to this person",
+      "name": "visible_check",
+      "type": "checkbox",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "edit_nursenote",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Date *",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Nurse *",
+      "name": "nurse",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "April Clinton (9020)",
+       "Natasha Romanoff (9010)"
+      ]
+     },
+     {
+      "label": "Note *",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Comment *",
+      "name": "comment",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "comment_nursenote",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Comment *",
+      "name": "comment_staff",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "form_operationtheatre",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Operation Category *",
+      "name": "operation_category",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "ENT and Oral Surgery",
+       "Gynaecology",
+       "Ophthalmology",
+       "Orthopedic Surgery",
+       "Plastic Surgery",
+       "Thoracic Surgery",
+       "Thoracic Surgery",
+       "Urology"
+      ]
+     },
+     {
+      "label": "Operation Name *",
+      "name": "operation_name",
+      "type": "select",
+      "required": false,
+      "options": []
+     },
+     {
+      "label": "Operation Date *",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Consultant Doctor *",
+      "name": "consultant_doctor",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Sansa Gomez (9008)",
+       "Sonia Bush (9002)"
+      ]
+     },
+     {
+      "label": "Assistant Consultant 1",
+      "name": "ass_consultant_1",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Assistant Consultant 2",
+      "name": "ass_consultant_2",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Anesthetist",
+      "name": "anesthetist",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Anesthesia Type",
+      "name": "anaethesia_type",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "OT Technician",
+      "name": "ot_technician",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "OT Assistant",
+      "name": "ot_assistant",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Remark",
+      "name": "ot_remark",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Result",
+      "name": "ot_result",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "form_editoperationtheatre",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Operation Category *",
+      "name": "eoperation_category",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "ENT and Oral Surgery",
+       "Gynaecology",
+       "Ophthalmology",
+       "Orthopedic Surgery",
+       "Plastic Surgery",
+       "Thoracic Surgery",
+       "Thoracic Surgery",
+       "Urology"
+      ]
+     },
+     {
+      "label": "Operation Name *",
+      "name": "eoperation_name",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Facelift Surgery",
+       "Tooth extraction",
+       "Arthroscopic surgery including ACL repai",
+       "Bronchoscopy",
+       "Cataract extraction ophthalmological pro",
+       "Coronary artery bypass",
+       "Dilation and curettage",
+       "Hydrocele and varicocele excision"
+      ]
+     },
+     {
+      "label": "Operation Date *",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Consultant Doctor *",
+      "name": "consultant_doctor",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Sansa Gomez (9008)",
+       "Sonia Bush (9002)"
+      ]
+     },
+     {
+      "label": "Assistant Consultant 1",
+      "name": "ass_consultant_1",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Assistant Consultant 2",
+      "name": "ass_consultant_2",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Anesthetist",
+      "name": "anesthetist",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Anaethesia Type",
+      "name": "anaethesia_type",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "OT Technician",
+      "name": "ot_technician",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "OT Assistant",
+      "name": "ot_assistant",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Remark",
+      "name": "eot_remark",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Result",
+      "name": "eot_result",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "edit_timeline",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Title *",
+      "name": "timeline_title",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Date *",
+      "name": "timeline_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Description",
+      "name": "timeline_desc",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "timeline_doc",
+      "name": "timeline_doc",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Visible to this person",
+      "name": "visible_check",
+      "type": "checkbox",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "form_editdiagnosis",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Report Type",
+      "name": "report_type",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Report Date",
+      "name": "report_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "report_document",
+      "name": "report_document",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Report Center Name",
+      "name": "report_center",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "add_payment",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Date *",
+      "name": "payment_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Amount ($) *",
+      "name": "amount",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Payment Mode",
+      "name": "payment_mode",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Cash",
+       "Cheque",
+       "Transfer to Bank Account",
+       "UPI",
+       "Online",
+       "Other"
+      ]
+     },
+     {
+      "label": "Cheque No *",
+      "name": "cheque_no",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Cheque Date *",
+      "name": "cheque_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "document",
+      "name": "document",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Note",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "add_medicationdose",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Date *",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "time",
+      "name": "time",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Medicine Category *",
+      "name": "medicine_category_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Syrup",
+       "Capsule",
+       "Injection",
+       "Ointment",
+       "Cream",
+       "Surgical",
+       "Drops",
+       "Inhalers",
+       "Implants / Patches",
+       "Liquid",
+       "Preparations",
+       "Diaper",
+       "Tablet"
+      ]
+     },
+     {
+      "label": "Medicine Name *",
+      "name": "medicine_name_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Dosage *",
+      "name": "dosage",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Remarks",
+      "name": "remark",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "add_medication",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Date *",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "time",
+      "name": "time",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Medicine Category *",
+      "name": "medicine_category_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Syrup",
+       "Capsule",
+       "Injection",
+       "Ointment",
+       "Cream",
+       "Surgical",
+       "Drops",
+       "Inhalers",
+       "Implants / Patches",
+       "Liquid",
+       "Preparations",
+       "Diaper",
+       "Tablet"
+      ]
+     },
+     {
+      "label": "Medicine Name *",
+      "name": "medicine_name_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Dosage *",
+      "name": "dosage",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Remarks",
+      "name": "remark",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "update_medication",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Date *",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "time",
+      "name": "time",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Medicine Category *",
+      "name": "medicine_category_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Syrup",
+       "Capsule",
+       "Injection",
+       "Ointment",
+       "Cream",
+       "Surgical",
+       "Drops",
+       "Inhalers",
+       "Implants / Patches",
+       "Liquid",
+       "Preparations",
+       "Diaper",
+       "Tablet"
+      ]
+     },
+     {
+      "label": "Medicine Name *",
+      "name": "medicine_name_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Dosage *",
+      "name": "dosage_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "1 CT",
+       "1 Micrometer (oi)",
+       "1 CT",
+       "1 HVL",
+       "1/2 HVL",
+       "1 KHz",
+       "0.5 CT",
+       "1 HVL",
+       "1 mm",
+       "2 mg"
+      ]
+     },
+     {
+      "label": "Remarks",
+      "name": "remark",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "add_charges",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Apply TPA",
+      "name": "is_tpa",
+      "type": "checkbox",
+      "required": false
+     },
+     {
+      "label": "Charge Type *",
+      "name": "charge_type",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "IPD",
+       "Procedures",
+       "Supplier",
+       "Operations",
+       "Others",
+       "Appointment",
+       "OPD",
+       "Pathology",
+       "Radiology",
+       "Blood Bank",
+       "Ambulance",
+       "Investigations"
+      ]
+     },
+     {
+      "label": "Charge Category *",
+      "name": "charge_category",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Charge Name *",
+      "name": "charge_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Standard Charge ($)",
+      "name": "standard_charge",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "TPA Charge ($)",
+      "name": "schedule_charge",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Qty *",
+      "name": "qty",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Total",
+      "name": "apply_charge",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "discount_percentage",
+      "name": "discount_percentage",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Discount",
+      "name": "discount_percentage_amount",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "charge_tax",
+      "name": "charge_tax",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "tax",
+      "name": "tax",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Net Amount",
+      "name": "amount",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Date *",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Charge Note",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "edit_charges",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Apply TPA",
+      "name": "is_tpa",
+      "type": "checkbox",
+      "required": false
+     },
+     {
+      "label": "Charge Type *",
+      "name": "charge_type",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "IPD",
+       "Procedures",
+       "Supplier",
+       "Operations",
+       "Others",
+       "Appointment",
+       "OPD",
+       "Pathology",
+       "Radiology",
+       "Blood Bank",
+       "Ambulance",
+       "Investigations"
+      ]
+     },
+     {
+      "label": "Charge Category *",
+      "name": "charge_category",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Charge Name *",
+      "name": "charge_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Standard Charge ($)",
+      "name": "standard_charge",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "TPA Charge ($)",
+      "name": "schedule_charge",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Qty *",
+      "name": "qty",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Date *",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Charge Note",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Total",
+      "name": "apply_charge",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "editdiscount_percentage",
+      "name": "editdiscount_percentage",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Discount",
+      "name": "discount_percentage",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "charge_tax",
+      "name": "charge_tax",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "tax",
+      "name": "tax",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Net Amount",
+      "name": "amount",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formeditrecord",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Symptoms Type",
+      "name": "symptoms_type",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Eating or weight problems",
+       "Emotional problems",
+       "Muscle or joint problems",
+       "Skin problems",
+       "Bladder problems",
+       "Stomach problems",
+       "Lung problems"
+      ]
+     },
+     {
+      "label": "Select",
+      "name": "",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Symptoms Description",
+      "name": "symptoms",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "ICD-10 Groups",
+      "name": "",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select Group",
+       "Infectious & Parasitic Diseases",
+       "Infectious Diseases",
+       "Mental & Behavioural Disorders",
+       "Neoplasms",
+       "Viral Diseases"
+      ]
+     },
+     {
+      "label": "ICD-10 Diagnosis",
+      "name": "icd_code_ids[]",
+      "type": "select",
+      "required": false,
+      "options": [
+       "[A09] Infectious Gastroenteritis",
+       "[A15.0] Pulmonary Tuberculosis",
+       "[B34.9] Viral Infection, Unspecified",
+       "[C50.9] Malignant Neoplasm of Breast",
+       "[F41.1] Generalized Anxiety Disorder"
+      ]
+     },
+     {
+      "label": "ICD-10 Diagnosis",
+      "name": "",
+      "type": "search",
+      "required": false
+     },
+     {
+      "label": "Note",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Admission Date *",
+      "name": "appointment_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Case",
+      "name": "case_type",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Casualty",
+      "name": "casualty",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Yes",
+       "No"
+      ]
+     },
+     {
+      "label": "Old Patient",
+      "name": "old_patient",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Yes",
+       "No"
+      ]
+     },
+     {
+      "label": "Credit Limit ($)",
+      "name": "credit_limit",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Reference",
+      "name": "refference",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Consultant Doctor *",
+      "name": "cons_doctor",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Sansa Gomez (9008)",
+       "Sonia Bush (9002)"
+      ]
+     },
+     {
+      "label": "Bed Group",
+      "name": "bed_group_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "VIP Ward - Ground Floor",
+       "Private Ward - 3rd Floor",
+       "General Ward Male - 3rd Floor",
+       "ICU - 2nd Floor",
+       "NICU - 2nd Floor",
+       "AC (Normal) - 1st Floor",
+       "Non AC - 4th Floor"
+      ]
+     },
+     {
+      "label": "Bed No. *",
+      "name": "bed_no",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Is Antenatal",
+      "name": "is_for_antenatal",
+      "type": "checkbox",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formdishrecord",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Diagnosis",
+      "name": "diagnosis",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "Operation",
+      "name": "operation",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "Note",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Investigation",
+      "name": "investigations",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Treatment At Home",
+      "name": "treatment_at_home",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "consultant_register_form",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Applied Date *",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Consultant Date *",
+      "name": "insdate",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Consultant Doctor *",
+      "name": "doctor_field",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Sansa Gomez (9008)",
+       "Sonia Bush (9002)"
+      ]
+     },
+     {
+      "label": "Instruction *",
+      "name": "instruction",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "editconsultant_register_form",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Applied Date *",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Instruction Date *",
+      "name": "insdate",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Consultant Doctor *",
+      "name": "doctor_field",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Sansa Gomez (9008)",
+       "Sonia Bush (9002)"
+      ]
+     },
+     {
+      "label": "Instruction *",
+      "name": "instruction",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "nurse_note_form",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Date *",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Nurse *",
+      "name": "nurse_field",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "April Clinton (9020)",
+       "Natasha Romanoff (9010)"
+      ]
+     },
+     {
+      "label": "Note *",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Comment *",
+      "name": "comment",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "alot_bed_form",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Bed Group *",
+      "name": "bedgroup",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "VIP Ward - Ground Floor",
+       "Private Ward - 3rd Floor",
+       "General Ward Male - 3rd Floor",
+       "ICU - 2nd Floor",
+       "NICU - 2nd Floor",
+       "AC (Normal) - 1st Floor",
+       "Non AC - 4th Floor"
+      ]
+     },
+     {
+      "label": "Bed No *",
+      "name": "bedno",
+      "type": "select",
+      "required": false,
+      "options": []
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "editpaymentform",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Date *",
+      "name": "payment_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Amount ($) *",
+      "name": "amount",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Payment Mode",
+      "name": "payment_mode",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Cash",
+       "Cheque",
+       "Transfer to Bank Account",
+       "UPI",
+       "Online",
+       "Other"
+      ]
+     },
+     {
+      "label": "Cheque No *",
+      "name": "cheque_no",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Cheque Date *",
+      "name": "cheque_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "document",
+      "name": "document",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Note",
+      "name": "note",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "form_postnatal",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Labor Time *",
+      "name": "labor_time",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Delivery time *",
+      "name": "delivery_time",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Routine Question",
+      "name": "routine_question",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "General Remark",
+      "name": "general_remark",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formadd",
+    "visible": false,
+    "fields": [
+     {
+      "label": "vital_name_1",
+      "name": "vital_name_1",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Height (1 - 200 Centimeters)",
+       "Weight (0 - 150 Kilograms)",
+       "Pulse (70 - 100 Beats per)",
+       "Temperature (95.8 - 99.3 Fahrenheit )",
+       "BP (90/60 - 140/90 mmHg)"
+      ]
+     },
+     {
+      "label": "from_reference_range_1",
+      "name": "from_reference_range_1",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "vital_date_1",
+      "name": "vital_date_1",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "edit_vital",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Vital Name *",
+      "name": "evital_name_edit",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Height (1 - 200 Centimeters)",
+       "Weight (0 - 150 Kilograms)",
+       "Pulse (70 - 100 Beats per)",
+       "Temperature (95.8 - 99.3 Fahrenheit )",
+       "BP (90/60 - 140/90 mmHg)"
+      ]
+     },
+     {
+      "label": "Vital Value *",
+      "name": "evital_value",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Vital Date *",
+      "name": "emessure_date",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "",
+    "rows": 2,
+    "columns": [
+     "Date",
+     "Height (1 - 200 Centimeters)",
+     "Weight (0 - 150 Kilograms)",
+     "Pulse (70 - 100 Beats per)",
+     "Temperature (95.8 - 99.3 Fahrenheit )",
+     "BP (90/60 - 140/90 mmHg)"
+    ]
+   },
+   {
+    "id": "DataTables_Table_1",
+    "rows": 2,
+    "columns": [
+     "Applied Date",
+     "Consultant Doctor",
+     "Instruction",
+     "Consultant Date",
+     "Action"
+    ]
+   },
+   {
+    "id": "DataTables_Table_2",
+    "rows": 2,
+    "columns": [
+     "Prescription No",
+     "Date",
+     "Finding",
+     "Action"
+    ]
+   },
+   {
+    "id": "DataTables_Table_3",
+    "rows": 2,
+    "columns": [
+     "Test Name",
+     "Lab",
+     "Sample Collected",
+     "Expected Date",
+     "Approved By",
+     "Action"
+    ]
+   },
+   {
+    "id": "DataTables_Table_4",
+    "rows": 2,
+    "columns": [
+     "Consultation Title",
+     "Date",
+     "Created By",
+     "Created For",
+     "Patient",
+     "Status",
+     "Action"
+    ]
+   },
+   {
+    "id": "DataTables_Table_5",
+    "rows": 2,
+    "columns": [
+     "Bed Group",
+     "Bed",
+     "From Date",
+     "To Date",
+     "Active Bed"
+    ]
+   },
+   {
+    "id": "DataTables_Table_6",
+    "rows": 2,
+    "columns": [
+     "Reference No",
+     "Operation Date",
+     "Operation Name",
+     "Operation Category",
+     "OT Technician",
+     "Action"
+    ]
+   },
+   {
+    "id": "DataTables_Table_7",
+    "rows": 3,
+    "columns": [
+     "Date",
+     "Charge Name / Charge Note",
+     "Charge Type",
+     "Charge Category",
+     "Qty",
+     "Standard Charge ($)",
+     "Applied Charge ($)",
+     "TPA Charge ($)",
+     "Discount ($)",
+     "Tax",
+     "Amount ($)",
+     "Action"
+    ]
+   },
+   {
+    "id": "DataTables_Table_8",
+    "rows": 2,
+    "columns": [
+     "Transaction ID",
+     "Date",
+     "Note",
+     "Payment Mode",
+     "Paid Amount ($)",
+     "Action"
+    ]
+   },
+   {
+    "id": "DataTables_Table_0",
+    "rows": 2,
+    "columns": [
+     "IPD No",
+     "Symptoms",
+     "Consultant Doctor",
+     "Bed"
+    ]
+   },
+   {
+    "id": "DataTables_Table_9",
+    "rows": 2,
+    "columns": [
+     "Labor Time",
+     "Delivery time",
+     "Routine Question",
+     "General Remark",
+     "Action"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 1,
+    "columns": [
+     "Date",
+     "Charge Type",
+     "Charge Category",
+     "Charge Name / Charge Note",
+     "Qty",
+     "Standard Charge ($)",
+     "TPA Charge ($)",
+     "Total ($)",
+     "Discount ($)",
+     "Tax ($)",
+     "Net Amount ($)",
+     "Action"
+    ]
+   },
+   {
+    "id": "tableID_vitals",
+    "rows": 2,
+    "columns": [
+     "Vital Name *",
+     "Vital Value *",
+     "Date *",
+     ""
+    ]
+   }
+  ],
+  "tabs": [
+   "Overview",
+   "Nurse Notes",
+   "Medication",
+   "Prescription",
+   "Consultant Register",
+   "Lab Investigation",
+   "Operations",
+   "Charges",
+   "Payments",
+   "Live Consultation",
+   "Bed History",
+   "Timeline",
+   "Treatment History",
+   "Vitals"
+  ],
+  "sections": [],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "Overview",
+    "h": "#overview"
+   },
+   {
+    "t": "Nurse Notes",
+    "h": "#nurse_note"
+   },
+   {
+    "t": "Medication",
+    "h": "#medication"
+   },
+   {
+    "t": "Prescription",
+    "h": "#prescription"
+   },
+   {
+    "t": "Consultant Register",
+    "h": "#consultant_register"
+   },
+   {
+    "t": "Lab Investigation",
+    "h": "#labinvestigation"
+   },
+   {
+    "t": "Operations",
+    "h": "#operationtheatre"
+   },
+   {
+    "t": "Charges",
+    "h": "#charges"
+   },
+   {
+    "t": "Payments",
+    "h": "#payment"
+   },
+   {
+    "t": "Live Consultation",
+    "h": "#live_consult"
+   },
+   {
+    "t": "Bed History",
+    "h": "#bed_history"
+   },
+   {
+    "t": "Timeline",
+    "h": "#timeline"
+   },
+   {
+    "t": "Treatment History",
+    "h": "#treatment_history"
+   },
+   {
+    "t": "Vitals",
+    "h": "#vitals"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/./uploads/patient_id_card/barcodes/1234.png?1791926945"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/./uploads/patient_id_card/qrcode/1234.png?1791926945"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Add Nurse Note",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "Add Vital",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "Consultant Register",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   },
+   {
+    "t": "Add Prescription",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#prescription"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Add Timeline",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   },
+   {
+    "t": "Add Medication Dose",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "Add Operation",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   },
+   {
+    "t": "Add Charges",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0);"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0);"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0);"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   },
+   {
+    "t": "Add Payment",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   }
+  ]
+ }
+}
