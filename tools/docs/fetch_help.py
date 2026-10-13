@@ -298,44 +298,42 @@ def main():
         print(f'[{ci}/{len(cats)}] {cat["name"]}: {len(art_urls)} articles')
         for u in art_urls:
             slug = u.rstrip('/').split('/')[-1]
-            md_path = os.path.join(OUT, cat_entry['slug'], slug + '.md')
-            art = None
             if slug in canonical:
-                # already mirrored under another category - link to that copy
-                cat_entry['articles'].append({'title': '', 'slug': slug, 'url': u, 'date': '',
-                                              'chars': 0, 'file': f"{canonical[slug]}/{slug}.md",
-                                              'mirrored_in': canonical[slug]})
+                # the same article is listed by more than one category - link to the mirrored copy
+                c = canonical[slug]
+                cat_entry['articles'].append({'title': c['title'], 'slug': slug, 'url': u,
+                                              'date': c['date'], 'chars': c['chars'],
+                                              'file': f"{c['dir']}/{slug}.md", 'mirrored_in': c['dir']})
                 continue
-            if False:
-                ar = get(u)
-                if not ar:
-                    report['failed'].append(u)
-                    continue
-                if not debug_written:
-                    os.makedirs(os.path.join(OUT, '_debug'), exist_ok=True)
-                    with open(os.path.join(OUT, '_debug', 'sample.html'), 'w') as f:
-                        f.write(ar.text[:400000])
-                    debug_written = True
-                parsed = parse_article(ar.text, u)
-                if not parsed:
-                    report['failed'].append(u + ' (parse)')
-                    continue
-                parsed['category'] = {'name': parsed['category']['name'] or cat['name'],
-                                      'slug': parsed['category']['slug'] or cat_entry['slug']}
-                os.makedirs(os.path.join(OUT, cat_entry['slug']), exist_ok=True)
-                with open(md_path, 'w') as f:
-                    f.write(f"# {parsed['title']}\n\n")
-                    if parsed['date']:
-                        f.write(f"_{parsed['date']}_ · ")
-                    f.write(f"[{cat['name']}]({cat['url']}) · vendor article: {parsed['url']}\n\n")
-                    f.write(parsed['body'] + '\n')
-                art = parsed
-                canonical[slug] = cat_entry['slug']
-                report['articles'] += 1
-                time.sleep(0.25)
-            cat_entry['articles'].append({'title': art['title'], 'slug': art['slug'], 'url': u,
-                                          'date': art.get('date', ''), 'chars': art.get('chars', 0),
-                                          'file': f"{cat_entry['slug']}/{art['slug']}.md"})
+            ar = get(u)
+            if not ar:
+                report['failed'].append(u)
+                continue
+            if not debug_written:
+                os.makedirs(os.path.join(OUT, '_debug'), exist_ok=True)
+                with open(os.path.join(OUT, '_debug', 'sample.html'), 'w') as f:
+                    f.write(ar.text[:400000])
+                debug_written = True
+            parsed = parse_article(ar.text, u)
+            if not parsed:
+                report['failed'].append(u + ' (parse)')
+                continue
+            parsed['category'] = {'name': (parsed.get('category') or {}).get('name') or cat['name'],
+                                  'slug': (parsed.get('category') or {}).get('slug') or cat_entry['slug']}
+            os.makedirs(os.path.join(OUT, cat_entry['slug']), exist_ok=True)
+            with open(os.path.join(OUT, cat_entry['slug'], slug + '.md'), 'w') as f:
+                f.write(f"# {parsed['title']}\n\n")
+                if parsed.get('date'):
+                    f.write(f"_{parsed['date']}_ · ")
+                f.write(f"[{cat['name']}]({cat['url']}) · vendor article: {parsed['url']}\n\n")
+                f.write(parsed['body'] + '\n')
+            canonical[slug] = {'dir': cat_entry['slug'], 'title': parsed['title'],
+                               'date': parsed.get('date', ''), 'chars': parsed.get('chars', 0)}
+            report['articles'] += 1
+            cat_entry['articles'].append({'title': parsed['title'], 'slug': slug, 'url': u,
+                                          'date': parsed.get('date', ''), 'chars': parsed.get('chars', 0),
+                                          'file': f"{cat_entry['slug']}/{slug}.md"})
+            time.sleep(0.25)
         index.append(cat_entry)
 
         # per-category index page
