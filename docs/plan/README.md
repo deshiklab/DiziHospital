@@ -55,8 +55,9 @@ no year-long freeze on improvements.
 **Sequencing.** P0 foundations (2 weeks) → P1 identity/patients/appointments (4) → P2 billing + OPD (5)
 → P3 pharmacy/inventory (4) → P4 lab/imaging/blood bank/ambulance (6) → P5 IPD/ward/OT (5) →
 P6 finance/insurance/reports (5) → P7 people/front office/admin (5) → P8 content/portal/website (4) →
-decommission (3). **≈ 575 engineer-days of screen work** per the generated screen map, ≈ 890 engineer-days
-with platform, design and testing overhead — about **8–11 months with two delivery streams**.
+decommission (3). **≈ 575 engineer-days of screen work** per the generated screen map and **≈ 1,060
+engineer-days** for the whole programme (platform, design, migration and hardening included) — about
+**8–11 months with two delivery streams**, 12–14 months with one.
 
 **First visible value.** By the end of week 6 the new UI is live for **patient registration, search and
 appointments** in one pilot OPD desk, with SSO, MFA and the new design system — while every other module

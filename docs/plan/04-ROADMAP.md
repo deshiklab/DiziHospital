@@ -2,7 +2,8 @@
 
 Sequence, scope, exit criteria and pilot waves. Sizes come from the generated
 [`03-SCREEN-MAP.md`](03-SCREEN-MAP.md) (575 engineer-days of screen work across 76 screens and 19 sub-screens).
-With platform (~35 %) and design/research/QA (~20 %) overhead the programme is **≈ 890 engineer-days**.
+With platform, design/research/QA, migration and hardening overhead the programme is
+**≈ 1,060 engineer-days** (see §6), i.e. **≈ 8–11 months** with the two streams below.
 
 **Assumed team** (D5 default): 1 UX designer, 1 tech lead, 4–6 engineers, 1 QA/SDET, part-time clinical lead,
 part-time DevOps. Two delivery streams run in parallel from P2, which is why the calendar below (~7.5–9 months)
