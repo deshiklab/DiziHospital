@@ -44,3 +44,31 @@ hint: Updates were rejected be
 2026-10-13T21:38:01.032Z [28/76] 028-survey-forms-my-survey-forms status=200
 2026-10-13T21:38:02.935Z [29/76] 029-messaging status=200
 2026-10-13T21:38:05.006Z [30/76] 030-inventory status=200
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:38:05.352Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected be
+2026-10-13T21:38:07.654Z [31/76] 031-download-center-upload-share-content status=200
+2026-10-13T21:38:09.685Z [32/76] 032-download-center-content-share-list status=200
+2026-10-13T21:38:11.566Z [33/76] 033-download-center-content-type status=200
+2026-10-13T21:38:13.583Z [34/76] 034-certificate-certificate status=200
+2026-10-13T21:38:15.598Z [35/76] 035-certificate-patient-id-card status=200
+2026-10-13T21:38:17.599Z [36/76] 036-certificate-staff-id-card status=200
+2026-10-13T21:38:19.500Z [37/76] 037-front-cms status=200
+2026-10-13T21:38:21.555Z [38/76] 038-live-consultation-live-consultation status=200
+2026-10-13T21:38:23.591Z [39/76] 039-live-consultation-live-meeting status=200
+2026-10-13T21:38:25.447Z [40/76] 040-reports-finance status=200
+2026-10-13T21:38:27.312Z [41/76] 041-reports-appointment status=200
+2026-10-13T21:38:29.178Z [42/76] 042-reports-opd status=200
+2026-10-13T21:38:31.046Z [43/76] 043-reports-ipd status=200
+2026-10-13T21:38:32.912Z [44/76] 044-reports-pharmacy status=200
+2026-10-13T21:38:34.779Z [45/76] 045-reports-pathology status=200
