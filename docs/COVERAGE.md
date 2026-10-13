@@ -15,6 +15,7 @@ How the documentation in this repository was produced, exactly what it covers, a
 | Public site | Home, department/doctor/news/contact pages, patient-portal sign-in | `capture/frontsite/*` |
 | Navigation truth | Rendered sidebar tree (sections → items → sub items) | `capture/nav.json` |
 | Vendor reference | Product documentation, help articles and system requirements | https://smart-hospital.in/docs/ and /articles |
+| Vendor help library | The complete article library mirrored into the repo (categories, articles and screenshots) | `docs/help-library/`, index in `docs/HELP-LIBRARY.md` |
 
 ## 2. How it was captured
 
@@ -54,9 +55,22 @@ node tools/docs/pdf.js               # docs/Smart-Hospital-Complete-Guide.pdf (n
 4. **Some workflows need configuration to demonstrate**, e.g. Zoom teleconsultation needs API keys, SMS/e-mail need gateway credentials; these screens are documented from their UI, not from live message delivery.
 5. **Report contents** depend on the demo's date range; the catalogue documents structure (filters, columns, actions) rather than the numbers shown.
 6. **Patient portal depth** is limited to the sign-in screen because the demo publishes no patient credentials; self-service screens inside the portal are covered as "to verify" in the backlog.
-7. **Not covered:** mobile apps (none exist for this product), the CodeCanyon installation wizard (documented by the vendor), server/infrastructure configuration, and anything requiring database-level access.
+7. **Mobile app:** the vendor also ships a **Smart Hospital Android app** (documented under the *Smart Hospital Android App* changelog category and referenced by the WhatsApp/notification articles). It was **not** captured in this pass because it is not reachable from the web demo — it is listed as coverage debt in the improvement backlog (E13).
+8. **Vendor-only features not visible in the demo:** WhatsApp Messaging, Two-Factor Authentication, e-mail/SMS gateways and the installation wizard cannot be exercised on the public demo (no credentials/keys). They are documented here from the vendor help library (`docs/help-library/`), and flagged in the backlog where verification is still required.
+9. **Not covered:** the CodeCanyon installation wizard internals (documented by the vendor), server/infrastructure configuration, and anything requiring database-level access.
 
-## 5. Repository layout
+## 5. Vendors' own help library (mirrored)
+
+`tools/docs/fetch_help.py` mirrors `smart-hospital.in/articles` — every category, every article and its screenshots —
+into `docs/help-library/`, rewritten to local Markdown with local images so the knowledge base works offline and can be
+diffed over time. `docs/HELP-LIBRARY.md` is the generated index, and a curated selection is printed in Part 4 of the PDF.
+
+```bash
+python3 tools/docs/fetch_help.py          # re-run in an environment that can reach smart-hospital.in
+python3 tools/docs/build_help_library.py  # rebuild docs/HELP-LIBRARY.md from the mirror
+```
+
+## 6. Repository layout
 
 ```
 capture/                 raw evidence (screenshots + JSON profiles + logs)
