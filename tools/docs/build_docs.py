@@ -175,6 +175,11 @@ ROLE_DESCRIPTIONS = {
 }
 
 DETAIL_TITLES = {
+    'ipd-profile': 'IPD patient case — every tab of an admitted patient',
+    'opd-profile-2': 'OPD patient record — every tab of an out-patient',
+    'opd-profile': 'OPD patient record',
+    'patient-profile': 'Patient master record',
+    'billing-screen': 'Single-module billing screens (OPD / appointment)',
     'ipd': 'IPD patient case (admitted patient)',
     'opd': 'OPD patient case',
     'appointment': 'Appointment record',
@@ -295,6 +300,30 @@ def main():
                 if d:
                     detail.append(d)
 
+    # sub-screens reachable but not present in the menu
+    subs = []
+    sdir = os.path.join(CAP, 'subs')
+    if os.path.isdir(sdir):
+        for f in sorted(os.listdir(sdir)):
+            if f.endswith('.json'):
+                d = jload(os.path.join(sdir, f))
+                prof = (d or {}).get('profile') or {}
+                title = (prof.get('pageTitle') or '')
+                status = d.get('status') if d else None
+                if not d or d.get('error') or 'Page Not Found' in title or (status not in (None, 200)):
+                    continue
+                subs.append(d)
+
+    # record views captured in the second pass
+    detail2 = []
+    d2dir = os.path.join(CAP, 'detail2')
+    if os.path.isdir(d2dir):
+        for f in sorted(os.listdir(d2dir)):
+            if f.endswith('.json') and '__tab-' not in f:
+                d = jload(os.path.join(d2dir, f))
+                if d and d.get('profile'):
+                    detail2.append(d)
+
     front = jload(os.path.join(CAP, 'frontsite', 'index.json'), {}) or {}
     today = datetime.date.today().isoformat()
     n_dialogs = sum(len([d for d in v if (d.get('form') or {}).get('fieldCount', 0) >= 3]) for v in dialogs.values())
@@ -394,7 +423,7 @@ def main():
         for n, r in enumerate(rows, start=1):
             prof = r['prof']
             rec = r['rec']
-            A(f"#### {i}.{n} {pretty_title(rec)}")
+            A(f"#### Screen {i}.{n} — {pretty_title(rec)}")
             A('')
             url = rec['url'].split('.in/', 1)[-1]
             A(f"- **Menu path:** {rec['section'].title()} → {rec['label']} · **URL:** `/{url}`")
@@ -460,7 +489,7 @@ def main():
                 gallery.append({'pageId': pid, 'title': title, 'fields': fields, 'trigger': trig,
                                 'slug': slugify(title), 'file': d.get('file'), 'json': d})
         if gallery:
-            A(f"#### {i}.{len(rows) + 1} Data-entry dialogs captured in this module")
+            A(f"#### Module {i} — data-entry dialogs captured")
             A('')
             A('| Screen | Dialog | Fields | Screenshot |')
             A('|---|---|---|---|')
@@ -486,20 +515,29 @@ def main():
         A('')
 
     # ------------------------------------------------------- detail views ---
-    if detail:
+    seen_names, records = set(), []
+    for d in [d for d in detail2] + [d for d in detail]:
+        name = d.get('id') or d.get('name') or ''
+        if name in seen_names:
+            continue
+        seen_names.add(name)
+        records.append(d)
+    if records:
         A('## 3. Record-level screens (opened from real data)')
         A('')
         A('These screens were reached by opening an actual record from a list, so they show the real clinical and financial layout, '
           'including every tab of the record.')
         A('')
-        for d in detail:
-            base = d.get('id') or ''
+        for d in records:
+            base = d.get('id') or d.get('name') or ''
             prof = d.get('profile') or {}
             title = DETAIL_TITLES.get(base, prof.get('pageTitle') or base)
-            shot = copy_shot(os.path.join(CAP, 'detail', base + '.jpg'), 'detail-' + base + '.jpg')
-            A(f"### 3.{detail.index(d) + 1} {title}")
+            srcdir = 'detail2' if os.path.exists(os.path.join(CAP, 'detail2', base + '.jpg')) else 'detail'
+            shot = copy_shot(os.path.join(CAP, srcdir, base + '.jpg'), 'detail-' + base + '.jpg')
+            A(f"### 3.{records.index(d) + 1} {title}")
             A('')
             A(f"- **Opened from:** `/{str(d.get('listUrl', '')).split('.in/', 1)[-1]}` → `/{str(d.get('href', '')).split('.in/', 1)[-1]}`")
+            A(f"- **Screenshot:** `docs/assets/screens/{shot or ''}`")
             if prof.get('tabs'):
                 A(f"- **Record tabs:** {' · '.join(t for t in prof['tabs'] if t)}")
             for t in prof.get('tables', [])[:3]:
@@ -512,20 +550,65 @@ def main():
             if shot:
                 A(f"![{title}](../assets/screens/{shot})")
                 A('')
-            tabs = [f for f in sorted(os.listdir(os.path.join(CAP, 'detail'))) if f.startswith(base + '__tab-') and f.endswith('.jpg')]
+            tabs = [f for f in sorted(os.listdir(os.path.join(CAP, srcdir))) if f.startswith(base + '__tab-') and f.endswith('.jpg')]
+            tabs.sort(key=lambda x: int(re.search(r'__tab-(\d+)', x).group(1)) if re.search(r'__tab-(\d+)', x) else 99)
             if tabs:
                 A(f"**Tabs of this record**")
                 A('')
                 for tf in tabs:
                     tslug = slugify(tf.replace('.jpg', '').split('__tab-', 1)[-1])
-                    tshot = copy_shot(os.path.join(CAP, 'detail', tf), f"detail-{base}__{tslug}.jpg")
+                    tshot = copy_shot(os.path.join(CAP, srcdir, tf), f"detail-{base}__{tslug}.jpg")
                     label = tf.replace('.jpg', '').split('__tab-', 1)[-1].replace('-', ' ')
                     if tshot:
                         A(f"![{title} — {label}](../assets/screens/{tshot})")
                         A('')
 
+    # -------------------------------------------------------- sub-screens ---
+    if subs:
+        A('## 4. Sub-screens reachable from the modules')
+        A('')
+        A('These screens are not menu entries but are reachable from the modules above (per-module billing, master imports, '
+          'return registers, status boards, payroll …). They are part of the product surface and are captured here for completeness.')
+        A('')
+        A('| # | Screen | Path | Purpose |')
+        A('|---|---|---|---|')
+        for n, d in enumerate(subs, start=1):
+            prof = d.get('profile') or {}
+            tt = (prof.get('pageTitle') or '').strip()
+            if not tt or 'Smart Hospital' in tt or tt.lower() in ('patient', 'dashboard'):
+                tt = (d.get('label') or tt or '').strip()
+            purp = PAGE_NOTES.get(d.get('id', ''), '')
+            if not purp:
+                cols = []
+                for t in (prof.get('tables') or [])[:1]:
+                    cols = [c for c in (t.get('columns') or []) if c][:6]
+                purp = ('Grid: ' + ' | '.join(cols)) if cols else (d.get('label') or '')
+            A(f"| {n} | **{tt}** | `{d.get('url', '')}` | {purp} |")
+        A('')
+        for n, d in enumerate(subs, start=1):
+            prof = d.get('profile') or {}
+            tt = (prof.get('pageTitle') or '').strip()
+            if not tt or 'Smart Hospital' in tt or tt.lower() in ('patient', 'dashboard'):
+                tt = (d.get('label') or tt or '').strip()
+            shot = copy_shot(os.path.join(CAP, 'subs', d.get('file', '')), 'sub-' + str(d.get('file', '')))
+            A(f"### 4.{n} {tt} — `{d.get('url', '')}`")
+            A('')
+            if prof.get('tabs'):
+                A(f"- **Tabs:** {' · '.join(t for t in prof['tabs'] if t)}")
+            for t in prof.get('tables', [])[:3]:
+                cols = [c for c in (t.get('columns') or []) if c]
+                if cols:
+                    A(f"- **Grid ({t.get('rows', '?')} rows):** {' | '.join(cols[:12])}")
+            for form in clean_forms(prof)[:2]:
+                A(form_block(form))
+            A('')
+            if shot:
+                A(f"![{tt}](../assets/screens/{shot})")
+                A('')
+        A('')
+
     # ------------------------------------------------------------- roles ---
-    A('## 4. Roles and access model')
+    A('## 5. Roles and access model')
     A('')
     A('Nine staff roles plus the patient portal. Each role gets its own dashboard and its own slice of the menu; '
       'the table below was produced by logging in as each role and reading the rendered sidebar.')
@@ -544,7 +627,7 @@ def main():
         if not r:
             continue
         shot = copy_shot(os.path.join(CAP, 'roles', key, 'dashboard.jpg'), f"role-{key}-dashboard.jpg")
-        A(f"### 4.{list(ROLE_DESCRIPTIONS).index(key) + 1} {label}")
+        A(f"### 5.{list(ROLE_DESCRIPTIONS).index(key) + 1} {label}")
         A('')
         A(f"{desc.capitalize()}.")
         A('')
@@ -564,7 +647,7 @@ def main():
 
     # ------------------------------------------------------------ portal ---
     if front:
-        A('## 5. Public website and patient portal')
+        A('## 6. Public website and patient portal')
         A('')
         home = front.get('home') or {}
         A('The same installation serves the public hospital website (driven by Front CMS) and a patient self-service portal.')
@@ -588,7 +671,7 @@ def main():
             A('')
 
     # ------------------------------------------------------- cross cutting ---
-    A('## 6. Cross-cutting platform features')
+    A('## 7. Cross-cutting platform features')
     A('')
     A('| Capability | What it does |')
     A('|---|---|')
@@ -616,7 +699,7 @@ def main():
     A('')
 
     # ---------------------------------------------------------- inventory ---
-    A('## 7. Complete screen inventory')
+    A('## 8. Complete screen inventory')
     A('')
     A('| # | Section | Menu item | Screen | URL | Screenshot |')
     A('|---|---|---|---|---|---|')
@@ -635,13 +718,13 @@ def main():
 
     summary = {
         'generated': today,
-        'counts': {'screens': len(index), 'forms': n_dialogs, 'detail': len(detail), 'roles': len(roles)},
+        'counts': {'screens': len(index), 'forms': n_dialogs, 'detail': len(records), 'roles': len(roles), 'subs': len(subs)},
         'screens': [{'id': r['id'], 'label': r['label'], 'section': r['section'], 'title': pretty_title(r)} for r in index],
     }
     with open(os.path.join(BUILD, 'catalog.json'), 'w') as f:
         json.dump(summary, f, indent=1)
     print(f"catalogue: {os.path.join(DOCS, 'FEATURE-CATALOG.md')}")
-    print(f"screens={len(index)} dialogs={n_dialogs} detail={len(detail)} roles={len(roles)} front={len(front.get('pages', []))}")
+    print(f"screens={len(index)} dialogs={n_dialogs} records={len(records)} subs={len(subs)} roles={len(roles)} front={len(front.get('pages', []))}")
 
 
 if __name__ == '__main__':

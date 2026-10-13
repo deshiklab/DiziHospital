@@ -152,7 +152,7 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 | 5 | **OPD - Out Patient** | OPD desk: Today / Upcoming / Old visit lists plus the "New Visit" workflow (symptoms, ICD-10, prescription, investigations, charges) and the patient view. | `/admin/patient/search` |
 | 6 | **IPD Patient** | IPD desk: admission, bed/ward allocation, consultant assignment, daily notes, medication, investigations, charges and discharge. | `/admin/patient/ipdsearch` |
 
-#### 1.1 Dashboard
+#### Screen 1.1 — Dashboard
 
 - **Menu path:** Core Operations → Dashboard · **URL:** `/admin/admin/dashboard`
 - **Purpose:** Role-aware landing page: KPI tiles (revenue MTD, bed occupancy, appointments, outstanding bills, medicine stock, blood-bank stock), a 12-month income-vs-expense trend, a module-wise income donut, the latest activity feed, staff attendance and module income table.
@@ -164,7 +164,7 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 
 ![Dashboard](../assets/screens/001-dashboard.jpg)
 
-#### 1.2 Patient List
+#### Screen 1.2 — Patient List
 
 - **Menu path:** Core Operations → Patient · **URL:** `/admin/admin/search`
 - **Purpose:** Master patient index. Search, add or import patients, view disabled patients, open the full patient profile and jump straight into a bill.
@@ -177,7 +177,7 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 
 ![Patient List](../assets/screens/002-patient.jpg)
 
-#### 1.3 Single Module Billing
+#### Screen 1.3 — Single Module Billing
 
 - **Menu path:** Core Operations → Billing · **URL:** `/admin/bill/dashboard`
 - **Purpose:** Billing workbench: single-module billing and OPD/IPD billing through a case ID, part payments, payment modes, discounting and printable receipts.
@@ -188,7 +188,7 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 
 ![Single Module Billing](../assets/screens/003-billing.jpg)
 
-#### 1.4 Appointment
+#### Screen 1.4 — Appointment
 
 - **Menu path:** Core Operations → Appointment · **URL:** `/admin/appointment/index`
 - **Purpose:** Appointment desk with Today / Upcoming / Old tabs, doctor-wise and queue views, slot validation and online-appointment handling.
@@ -205,7 +205,7 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 
 ![Appointment](../assets/screens/004-appointment.jpg)
 
-#### 1.5 OPD - Out Patient
+#### Screen 1.5 — OPD - Out Patient
 
 - **Menu path:** Core Operations → OPD - Out Patient · **URL:** `/admin/patient/search`
 - **Purpose:** OPD desk: Today / Upcoming / Old visit lists plus the "New Visit" workflow (symptoms, ICD-10, prescription, investigations, charges) and the patient view.
@@ -221,7 +221,7 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 
 ![OPD - Out Patient](../assets/screens/005-opd-out-patient.jpg)
 
-#### 1.6 IPD Patient
+#### Screen 1.6 — IPD Patient
 
 - **Menu path:** Core Operations → IPD - In Patient · **URL:** `/admin/patient/ipdsearch`
 - **Purpose:** IPD desk: admission, bed/ward allocation, consultant assignment, daily notes, medication, investigations, charges and discharge.
@@ -235,7 +235,7 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 
 ![IPD Patient](../assets/screens/006-ipd-in-patient.jpg)
 
-#### 1.7 Data-entry dialogs captured in this module
+#### Module 1 — data-entry dialogs captured
 
 | Screen | Dialog | Fields | Screenshot |
 |---|---|---|---|
@@ -283,7 +283,7 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 | 5 | **Ambulance Call List** | Ambulance call register with vehicle/driver, trip details and charges. | `/admin/vehicle/getcallambulance` |
 | 6 | **Visitor List** | Reception toolkit: visitor pass, phone call log, postal register and complaints. | `/admin/visitors` |
 
-#### 2.1 Pharmacy Bill
+#### Screen 2.1 — Pharmacy Bill
 
 - **Menu path:** Clinical → Pharmacy · **URL:** `/admin/pharmacy/bill`
 - **Purpose:** Pharmacy point of sale: batch-wise issue, GST, discounts, stock deduction and printable bill.
@@ -297,7 +297,7 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 
 ![Pharmacy Bill](../assets/screens/007-pharmacy.jpg)
 
-#### 2.2 Pathology Bill
+#### Screen 2.2 — Pathology Bill
 
 - **Menu path:** Clinical → Pathology · **URL:** `/admin/pathology/gettestreportbatch`
 - **Purpose:** Laboratory worklist: order intake, sample collection, result entry/approval and single or batch report generation.
@@ -311,7 +311,7 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 
 ![Pathology Bill](../assets/screens/008-pathology.jpg)
 
-#### 2.3 Radiology Bill
+#### Screen 2.3 — Radiology Bill
 
 - **Menu path:** Clinical → Radiology · **URL:** `/admin/radio/gettestreportbatch`
 - **Purpose:** Imaging worklist: order intake, scheduling, findings entry and batch report generation.
@@ -325,7 +325,7 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 
 ![Radiology Bill](../assets/screens/009-radiology.jpg)
 
-#### 2.4 Blood Bank
+#### Screen 2.4 — Blood Bank
 
 - **Menu path:** Clinical → Blood Bank · **URL:** `/admin/bloodbankstatus/`
 - **Purpose:** Blood bank: component stock by group, donor registry, issue to patient and status board.
@@ -340,7 +340,7 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 
 ![Blood Bank](../assets/screens/010-blood-bank.jpg)
 
-#### 2.5 Ambulance Call List
+#### Screen 2.5 — Ambulance Call List
 
 - **Menu path:** Clinical → Ambulance · **URL:** `/admin/vehicle/getcallambulance`
 - **Purpose:** Ambulance call register with vehicle/driver, trip details and charges.
@@ -354,7 +354,7 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 
 ![Ambulance Call List](../assets/screens/011-ambulance.jpg)
 
-#### 2.6 Visitor List
+#### Screen 2.6 — Visitor List
 
 - **Menu path:** Clinical → Front Office · **URL:** `/admin/visitors`
 - **Purpose:** Reception toolkit: visitor pass, phone call log, postal register and complaints.
@@ -366,7 +366,7 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 
 ![Visitor List](../assets/screens/012-front-office.jpg)
 
-#### 2.7 Data-entry dialogs captured in this module
+#### Module 2 — data-entry dialogs captured
 
 | Screen | Dialog | Fields | Screenshot |
 |---|---|---|---|
@@ -415,7 +415,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 | 13 | **Income List** | Income ledger: head-wise entries that feed the finance reports and the dashboard trend. | `/admin/income` |
 | 14 | **Expense List** | Expense ledger: head-wise entries with reference, invoice and remarks. | `/admin/expense` |
 
-#### 3.1 Birth Record
+#### Screen 3.1 — Birth Record
 
 - **Menu path:** Administration → Birth & Death Record › Birth Record · **URL:** `/admin/birthordeath`
 - **Purpose:** Birth & Death Record › Birth Record
@@ -428,7 +428,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![Birth Record](../assets/screens/013-birth-death-record-birth-record.jpg)
 
-#### 3.2 Death Record
+#### Screen 3.2 — Death Record
 
 - **Menu path:** Administration → Birth & Death Record › Death Record · **URL:** `/admin/birthordeath/death`
 - **Purpose:** Birth & Death Record › Death Record
@@ -441,7 +441,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![Death Record](../assets/screens/014-birth-death-record-death-record.jpg)
 
-#### 3.3 Overview
+#### Screen 3.3 — Overview
 
 - **Menu path:** Administration → Multi Branch › Overview · **URL:** `/admin/multibranch/branch/overview`
 - **Purpose:** Group console comparing branches on patients, collections and occupancy.
@@ -456,7 +456,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![Overview](../assets/screens/015-multi-branch-overview.jpg)
 
-#### 3.4 Report
+#### Screen 3.4 — Report
 
 - **Menu path:** Administration → Multi Branch › Report · **URL:** `/admin/multibranch/branch/report`
 - **Purpose:** Cross-branch comparative reporting with date range and module filters.
@@ -466,7 +466,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![Report](../assets/screens/016-multi-branch-report.jpg)
 
-#### 3.5 Setting
+#### Screen 3.5 — Setting
 
 - **Menu path:** Administration → Multi Branch › Settings · **URL:** `/admin/multibranch/branch`
 - **Purpose:** Branch master: create/edit branches, assign the branch admin and switch the active branch.
@@ -478,7 +478,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![Setting](../assets/screens/017-multi-branch-settings.jpg)
 
-#### 3.6 Staff Directory
+#### Screen 3.6 — Staff Directory
 
 - **Menu path:** Administration → Human Resource · **URL:** `/admin/staff`
 - **Purpose:** Staff directory with role, designation and department, plus entry points to attendance, payroll and leaves.
@@ -490,7 +490,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![Staff Directory](../assets/screens/018-human-resource.jpg)
 
-#### 3.7 QR Code Attendance
+#### Screen 3.7 — QR Code Attendance
 
 - **Menu path:** Administration → QR Code Attendance › Attendance · **URL:** `/admin/qrattendance/attendance/index`
 - **Purpose:** Scan-based staff attendance register with a monthly view and in/out times.
@@ -500,7 +500,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![QR Code Attendance](../assets/screens/019-qr-code-attendance-attendance.jpg)
 
-#### 3.8 Settings
+#### Screen 3.8 — Settings
 
 - **Menu path:** Administration → QR Code Attendance › Settings · **URL:** `/admin/qrattendance/setting/index`
 - **Purpose:** QR attendance rules: check-in window, working hours and device/QR configuration.
@@ -511,7 +511,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![Settings](../assets/screens/020-qr-code-attendance-settings.jpg)
 
-#### 3.9 Duty Roster
+#### Screen 3.9 — Duty Roster
 
 - **Menu path:** Administration → Duty Roster · **URL:** `/admin/dutyroster/roster_report`
 - **Purpose:** Shift roster per staff/department with print and export.
@@ -523,7 +523,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![Duty Roster](../assets/screens/021-duty-roster.jpg)
 
-#### 3.10 Annual Calendar
+#### Screen 3.10 — Annual Calendar
 
 - **Menu path:** Administration → Annual Calendar · **URL:** `/admin/holiday/index`
 - **Purpose:** Holiday and event calendar, plus to-dos per the vendor help articles.
@@ -536,7 +536,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![Annual Calendar](../assets/screens/022-annual-calendar.jpg)
 
-#### 3.11 Referral Payment List
+#### Screen 3.11 — Referral Payment List
 
 - **Menu path:** Administration → Referral · **URL:** `/admin/referral/payment`
 - **Purpose:** Referral commission ledger: payouts against referred cases with filters by referral person and period.
@@ -550,7 +550,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![Referral Payment List](../assets/screens/023-referral.jpg)
 
-#### 3.12 TPA Management
+#### Screen 3.12 — TPA Management
 
 - **Menu path:** Administration → TPA Management · **URL:** `/admin/tpamanagement`
 - **Purpose:** Insurance/TPA register: companies, policies and claim status per patient.
@@ -563,7 +563,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![TPA Management](../assets/screens/024-tpa-management.jpg)
 
-#### 3.13 Income List
+#### Screen 3.13 — Income List
 
 - **Menu path:** Administration → Finance › Income · **URL:** `/admin/income`
 - **Purpose:** Income ledger: head-wise entries that feed the finance reports and the dashboard trend.
@@ -575,7 +575,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![Income List](../assets/screens/025-finance-income.jpg)
 
-#### 3.14 Expense List
+#### Screen 3.14 — Expense List
 
 - **Menu path:** Administration → Finance › Expenses · **URL:** `/admin/expense`
 - **Purpose:** Expense ledger: head-wise entries with reference, invoice and remarks.
@@ -587,7 +587,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 ![Expense List](../assets/screens/026-finance-expenses.jpg)
 
-#### 3.15 Data-entry dialogs captured in this module
+#### Module 3 — data-entry dialogs captured
 
 | Screen | Dialog | Fields | Screenshot |
 |---|---|---|---|
@@ -657,7 +657,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 | 12 | **Live Consultation** | Zoom teleconsultation: schedule a session for a patient, share the link, start/end and log the call. | `/admin/zoom_conference/consult` |
 | 13 | **Live Meeting** | Internal staff video meetings with scheduling and participants. | `/admin/zoom_conference/meeting` |
 
-#### 4.1 Survey Forms
+#### Screen 4.1 — Survey Forms
 
 - **Menu path:** Tools & Content → Survey Forms › Survey Forms · **URL:** `/admin/survey`
 - **Purpose:** Survey builder: create questionnaires, assign them to roles/departments and read responses.
@@ -669,7 +669,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 ![Survey Forms](../assets/screens/027-survey-forms-survey-forms.jpg)
 
-#### 4.2 Survey Forms › My Survey Forms
+#### Screen 4.2 — Survey Forms › My Survey Forms
 
 - **Menu path:** Tools & Content → Survey Forms › My Survey Forms · **URL:** `/admin/survey/staff_forms`
 - **Purpose:** The signed-in staff member's own survey forms.
@@ -680,7 +680,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 ![Survey Forms › My Survey Forms](../assets/screens/028-survey-forms-my-survey-forms.jpg)
 
-#### 4.3 Notice Board
+#### Screen 4.3 — Notice Board
 
 - **Menu path:** Tools & Content → Messaging · **URL:** `/admin/notification`
 - **Purpose:** Notice board for staff/patients with audience targeting and attachments.
@@ -690,7 +690,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 ![Notice Board](../assets/screens/029-messaging.jpg)
 
-#### 4.4 Item Stock List
+#### Screen 4.4 — Item Stock List
 
 - **Menu path:** Tools & Content → Inventory · **URL:** `/admin/itemstock`
 - **Purpose:** Item stock control: categories, suppliers, issue and return, stock ledger and reorder levels.
@@ -702,7 +702,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 ![Item Stock List](../assets/screens/030-inventory.jpg)
 
-#### 4.5 Upload /Share Content
+#### Screen 4.5 — Upload /Share Content
 
 - **Menu path:** Tools & Content → Download Center › Upload /Share Content · **URL:** `/admin/content/upload`
 - **Purpose:** Upload/share documents with staff, patients or the public site, with content type and audience.
@@ -716,7 +716,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 ![Upload /Share Content](../assets/screens/031-download-center-upload-share-content.jpg)
 
-#### 4.6 Content Share List
+#### Screen 4.6 — Content Share List
 
 - **Menu path:** Tools & Content → Download Center › Content Share List · **URL:** `/admin/content/list`
 - **Purpose:** Everything shared so far, with filters and download counters.
@@ -727,7 +727,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 ![Content Share List](../assets/screens/032-download-center-content-share-list.jpg)
 
-#### 4.7 Content Type
+#### Screen 4.7 — Content Type
 
 - **Menu path:** Tools & Content → Download Center › Content Type · **URL:** `/admin/contenttype/`
 - **Purpose:** Content type master used when uploading shared content.
@@ -739,7 +739,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 ![Content Type](../assets/screens/033-download-center-content-type.jpg)
 
-#### 4.8 Generate Certificate
+#### Screen 4.8 — Generate Certificate
 
 - **Menu path:** Tools & Content → Certificate › Certificate · **URL:** `/admin/generatecertificate`
 - **Purpose:** Certificate generator: pick module and discharged patients, choose a template and generate single or bulk certificates.
@@ -752,7 +752,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 ![Generate Certificate](../assets/screens/034-certificate-certificate.jpg)
 
-#### 4.9 Generate Patient ID Card
+#### Screen 4.9 — Generate Patient ID Card
 
 - **Menu path:** Tools & Content → Certificate › Patient ID Card · **URL:** `/admin/generatepatientidcard/`
 - **Purpose:** Patient ID-card generation from templates with photo and MR number.
@@ -765,7 +765,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 ![Generate Patient ID Card](../assets/screens/035-certificate-patient-id-card.jpg)
 
-#### 4.10 Generate Staff ID Card
+#### Screen 4.10 — Generate Staff ID Card
 
 - **Menu path:** Tools & Content → Certificate › Staff ID Card · **URL:** `/admin/generatestaffidcard/`
 - **Purpose:** Staff ID-card generation from templates.
@@ -778,7 +778,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 ![Generate Staff ID Card](../assets/screens/036-certificate-staff-id-card.jpg)
 
-#### 4.11 Page List
+#### Screen 4.11 — Page List
 
 - **Menu path:** Tools & Content → Front CMS · **URL:** `/admin/front/page`
 - **Purpose:** Website content management: pages, banners, news, gallery, contact and SEO for the public site.
@@ -789,7 +789,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 ![Page List](../assets/screens/037-front-cms.jpg)
 
-#### 4.12 Live Consultation
+#### Screen 4.12 — Live Consultation
 
 - **Menu path:** Tools & Content → Live Consultation › Live Consultation · **URL:** `/admin/zoom_conference/consult`
 - **Purpose:** Zoom teleconsultation: schedule a session for a patient, share the link, start/end and log the call.
@@ -803,7 +803,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 ![Live Consultation](../assets/screens/038-live-consultation-live-consultation.jpg)
 
-#### 4.13 Live Meeting
+#### Screen 4.13 — Live Meeting
 
 - **Menu path:** Tools & Content → Live Consultation › Live Meeting · **URL:** `/admin/zoom_conference/meeting`
 - **Purpose:** Internal staff video meetings with scheduling and participants.
@@ -816,7 +816,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 ![Live Meeting](../assets/screens/039-live-consultation-live-meeting.jpg)
 
-#### 4.14 Data-entry dialogs captured in this module
+#### Module 4 — data-entry dialogs captured
 
 | Screen | Dialog | Fields | Screenshot |
 |---|---|---|---|
@@ -899,7 +899,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 | 36 | **Item Category List** | Item categories and the item master for inventory. | `/admin/itemcategory` |
 | 37 | **Add Custom Field** | Add hospital-specific fields to core entities without changing the schema. | `/admin/customfield` |
 
-#### 5.1 Finance
+#### Screen 5.1 — Finance
 
 - **Menu path:** Reports & Setup → Reports › Finance · **URL:** `/admin/report/finance`
 - **Purpose:** Reports › Finance
@@ -909,7 +909,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Finance](../assets/screens/040-reports-finance.jpg)
 
-#### 5.2 Appointment
+#### Screen 5.2 — Appointment
 
 - **Menu path:** Reports & Setup → Reports › Appointment · **URL:** `/admin/report/appointment`
 - **Purpose:** Reports › Appointment
@@ -919,7 +919,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Appointment](../assets/screens/041-reports-appointment.jpg)
 
-#### 5.3 OPD
+#### Screen 5.3 — OPD
 
 - **Menu path:** Reports & Setup → Reports › OPD · **URL:** `/admin/report/opd`
 - **Purpose:** Reports › OPD
@@ -929,7 +929,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![OPD](../assets/screens/042-reports-opd.jpg)
 
-#### 5.4 IPD
+#### Screen 5.4 — IPD
 
 - **Menu path:** Reports & Setup → Reports › IPD · **URL:** `/admin/report/ipd`
 - **Purpose:** Reports › IPD
@@ -939,7 +939,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![IPD](../assets/screens/043-reports-ipd.jpg)
 
-#### 5.5 Pharmacy
+#### Screen 5.5 — Pharmacy
 
 - **Menu path:** Reports & Setup → Reports › Pharmacy · **URL:** `/admin/report/pharmacy`
 - **Purpose:** Reports › Pharmacy
@@ -949,7 +949,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Pharmacy](../assets/screens/044-reports-pharmacy.jpg)
 
-#### 5.6 Pathology
+#### Screen 5.6 — Pathology
 
 - **Menu path:** Reports & Setup → Reports › Pathology · **URL:** `/admin/report/pathology`
 - **Purpose:** Reports › Pathology
@@ -959,7 +959,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Pathology](../assets/screens/045-reports-pathology.jpg)
 
-#### 5.7 Radiology
+#### Screen 5.7 — Radiology
 
 - **Menu path:** Reports & Setup → Reports › Radiology · **URL:** `/admin/report/radiology`
 - **Purpose:** Reports › Radiology
@@ -969,7 +969,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Radiology](../assets/screens/046-reports-radiology.jpg)
 
-#### 5.8 Blood Bank
+#### Screen 5.8 — Blood Bank
 
 - **Menu path:** Reports & Setup → Reports › Blood Bank · **URL:** `/admin/report/blood_bank`
 - **Purpose:** Reports › Blood Bank
@@ -979,7 +979,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Blood Bank](../assets/screens/047-reports-blood-bank.jpg)
 
-#### 5.9 Ambulance
+#### Screen 5.9 — Ambulance
 
 - **Menu path:** Reports & Setup → Reports › Ambulance · **URL:** `/admin/report/ambulance`
 - **Purpose:** Reports › Ambulance
@@ -989,7 +989,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Ambulance](../assets/screens/048-reports-ambulance.jpg)
 
-#### 5.10 Birth Death Report
+#### Screen 5.10 — Birth Death Report
 
 - **Menu path:** Reports & Setup → Reports › Birth Death · **URL:** `/admin/report/birth_death`
 - **Purpose:** Reports › Birth Death
@@ -999,7 +999,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Birth Death Report](../assets/screens/049-reports-birth-death.jpg)
 
-#### 5.11 Human Resource
+#### Screen 5.11 — Human Resource
 
 - **Menu path:** Reports & Setup → Reports › Human Resource · **URL:** `/admin/report/human_resource`
 - **Purpose:** Reports › Human Resource
@@ -1009,7 +1009,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Human Resource](../assets/screens/050-reports-human-resource.jpg)
 
-#### 5.12 TPA
+#### Screen 5.12 — TPA
 
 - **Menu path:** Reports & Setup → Reports › TPA · **URL:** `/admin/report/tpa`
 - **Purpose:** Reports › TPA
@@ -1019,7 +1019,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![TPA](../assets/screens/051-reports-tpa.jpg)
 
-#### 5.13 Inventory
+#### Screen 5.13 — Inventory
 
 - **Menu path:** Reports & Setup → Reports › Inventory · **URL:** `/admin/report/inventory`
 - **Purpose:** Reports › Inventory
@@ -1029,7 +1029,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Inventory](../assets/screens/052-reports-inventory.jpg)
 
-#### 5.14 Live Consultation
+#### Screen 5.14 — Live Consultation
 
 - **Menu path:** Reports & Setup → Reports › Live Consultation · **URL:** `/admin/report/live_consultation`
 - **Purpose:** Reports › Live Consultation
@@ -1039,7 +1039,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Live Consultation](../assets/screens/053-reports-live-consultation.jpg)
 
-#### 5.15 Log
+#### Screen 5.15 — Log
 
 - **Menu path:** Reports & Setup → Reports › Log · **URL:** `/admin/report/log`
 - **Purpose:** Reports › Log
@@ -1049,7 +1049,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Log](../assets/screens/054-reports-log.jpg)
 
-#### 5.16 OT
+#### Screen 5.16 — OT
 
 - **Menu path:** Reports & Setup → Reports › OT · **URL:** `/admin/report/ot`
 - **Purpose:** Reports › OT
@@ -1059,7 +1059,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![OT](../assets/screens/055-reports-ot.jpg)
 
-#### 5.17 Reports › Patient
+#### Screen 5.17 — Reports › Patient
 
 - **Menu path:** Reports & Setup → Reports › Patient · **URL:** `/admin/report/patient`
 - **Purpose:** Reports › Patient
@@ -1069,7 +1069,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Reports › Patient](../assets/screens/056-reports-patient.jpg)
 
-#### 5.18 Charges Details List
+#### Screen 5.18 — Charges Details List
 
 - **Menu path:** Reports & Setup → Setup › Hospital Charges · **URL:** `/admin/charges`
 - **Purpose:** The charge catalogue (consultation, procedures, room, investigations, services) reused by billing, OPD and IPD.
@@ -1081,7 +1081,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Charges Details List](../assets/screens/057-setup-hospital-charges.jpg)
 
-#### 5.19 Bed Status
+#### Screen 5.19 — Bed Status
 
 - **Menu path:** Reports & Setup → Setup › Bed · **URL:** `/admin/setup/bed/status`
 - **Purpose:** Bed/ward master with live occupancy status board.
@@ -1092,7 +1092,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Bed Status](../assets/screens/058-setup-bed.jpg)
 
-#### 5.20 Appointment Header Footer
+#### Screen 5.20 — Appointment Header Footer
 
 - **Menu path:** Reports & Setup → Setup › Print Header Footer · **URL:** `/admin/printing`
 - **Purpose:** Per-module print header/footer designer used by every printed bill, report, prescription, certificate and ID card.
@@ -1103,7 +1103,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Appointment Header Footer](../assets/screens/059-setup-print-header-footer.jpg)
 
-#### 5.21 Purpose List
+#### Screen 5.21 — Purpose List
 
 - **Menu path:** Reports & Setup → Setup › Front Office · **URL:** `/admin/visitorspurpose`
 - **Purpose:** Setup › Front Office
@@ -1117,7 +1117,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Purpose List](../assets/screens/060-setup-front-office.jpg)
 
-#### 5.22 Operation List
+#### Screen 5.22 — Operation List
 
 - **Menu path:** Reports & Setup → Setup › Operations · **URL:** `/admin/operationtheatre/index`
 - **Purpose:** Setup › Operations
@@ -1131,7 +1131,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Operation List](../assets/screens/061-setup-operations.jpg)
 
-#### 5.23 Medicine Category List
+#### Screen 5.23 — Medicine Category List
 
 - **Menu path:** Reports & Setup → Setup › Pharmacy · **URL:** `/admin/medicinecategory/medicine`
 - **Purpose:** Medicine categories, units, suppliers and the medicine master (batch, MRP, sale price, GST, reorder level).
@@ -1143,7 +1143,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Medicine Category List](../assets/screens/062-setup-pharmacy.jpg)
 
-#### 5.24 Pathology Category List
+#### Screen 5.24 — Pathology Category List
 
 - **Menu path:** Reports & Setup → Setup › Pathology · **URL:** `/admin/pathologycategory/addcategory`
 - **Purpose:** Pathology categories and tests with parameters, units and normal ranges.
@@ -1155,7 +1155,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Pathology Category List](../assets/screens/063-setup-pathology.jpg)
 
-#### 5.25 Radiology Category List
+#### Screen 5.25 — Radiology Category List
 
 - **Menu path:** Reports & Setup → Setup › Radiology · **URL:** `/admin/lab/addlab`
 - **Purpose:** Radiology categories and studies.
@@ -1167,7 +1167,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Radiology Category List](../assets/screens/064-setup-radiology.jpg)
 
-#### 5.26 Product List
+#### Screen 5.26 — Product List
 
 - **Menu path:** Reports & Setup → Setup › Blood Bank · **URL:** `/admin/bloodbank/products`
 - **Purpose:** Blood-bank components, bag types and product stock.
@@ -1179,7 +1179,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Product List](../assets/screens/065-setup-blood-bank.jpg)
 
-#### 5.27 Symptoms Head List
+#### Screen 5.27 — Symptoms Head List
 
 - **Menu path:** Reports & Setup → Setup › Symptoms · **URL:** `/admin/symptoms`
 - **Purpose:** Symptom library used by OPD/IPD clinical entry.
@@ -1191,7 +1191,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Symptoms Head List](../assets/screens/066-setup-symptoms.jpg)
 
-#### 5.28 ICD-10 Codes List
+#### Screen 5.28 — ICD-10 Codes List
 
 - **Menu path:** Reports & Setup → Setup › ICD-10 · **URL:** `/admin/icd10`
 - **Purpose:** ICD-10 code library used for diagnosis entry.
@@ -1203,7 +1203,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![ICD-10 Codes List](../assets/screens/067-setup-icd-10.jpg)
 
-#### 5.29 Finding List
+#### Screen 5.29 — Finding List
 
 - **Menu path:** Reports & Setup → Setup › Findings · **URL:** `/admin/finding`
 - **Purpose:** Finding library used by clinical encounters.
@@ -1215,7 +1215,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Finding List](../assets/screens/068-setup-findings.jpg)
 
-#### 5.30 Vital List
+#### Screen 5.30 — Vital List
 
 - **Menu path:** Reports & Setup → Setup › Vitals · **URL:** `/admin/vital`
 - **Purpose:** Vital-sign master (temperature, pulse, BP, respiration, SpO2, BMI) for IPD/OPD charts.
@@ -1227,7 +1227,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Vital List](../assets/screens/069-setup-vitals.jpg)
 
-#### 5.31 Settings
+#### Screen 5.31 — Settings
 
 - **Menu path:** Reports & Setup → Setup › Zoom Setting · **URL:** `/admin/zoom_conference`
 - **Purpose:** Zoom API keys/secret so live consultation and live meeting work.
@@ -1238,7 +1238,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Settings](../assets/screens/070-setup-zoom-setting.jpg)
 
-#### 5.32 Income Head List
+#### Screen 5.32 — Income Head List
 
 - **Menu path:** Reports & Setup → Setup › Finance · **URL:** `/admin/incomehead`
 - **Purpose:** Income and expense heads used by the finance ledger and reports.
@@ -1252,7 +1252,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Income Head List](../assets/screens/071-setup-finance.jpg)
 
-#### 5.33 Leave Type List
+#### Screen 5.33 — Leave Type List
 
 - **Menu path:** Reports & Setup → Setup › Human Resource · **URL:** `/admin/leavetypes`
 - **Purpose:** Leave types and standing HR configuration.
@@ -1264,7 +1264,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Leave Type List](../assets/screens/072-setup-human-resource.jpg)
 
-#### 5.34 Referral Commission List
+#### Screen 5.34 — Referral Commission List
 
 - **Menu path:** Reports & Setup → Setup › Referral · **URL:** `/admin/referral/commission`
 - **Purpose:** Referral commission percentages per referral person/service.
@@ -1277,7 +1277,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Referral Commission List](../assets/screens/073-setup-referral.jpg)
 
-#### 5.35 Slots
+#### Screen 5.35 — Slots
 
 - **Menu path:** Reports & Setup → Setup › Appointment · **URL:** `/admin/onlineappointment/index`
 - **Purpose:** Appointment slots and the online-appointment intake queue.
@@ -1288,7 +1288,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Slots](../assets/screens/074-setup-appointment.jpg)
 
-#### 5.36 Item Category List
+#### Screen 5.36 — Item Category List
 
 - **Menu path:** Reports & Setup → Setup › Inventory · **URL:** `/admin/itemcategory`
 - **Purpose:** Item categories and the item master for inventory.
@@ -1302,7 +1302,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Item Category List](../assets/screens/075-setup-inventory.jpg)
 
-#### 5.37 Add Custom Field
+#### Screen 5.37 — Add Custom Field
 
 - **Menu path:** Reports & Setup → Setup › Custom Fields · **URL:** `/admin/customfield`
 - **Purpose:** Add hospital-specific fields to core entities without changing the schema.
@@ -1313,7 +1313,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 ![Add Custom Field](../assets/screens/076-setup-custom-fields.jpg)
 
-#### 5.38 Data-entry dialogs captured in this module
+#### Module 5 — data-entry dialogs captured
 
 | Screen | Dialog | Fields | Screenshot |
 |---|---|---|---|
@@ -1351,9 +1351,101 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 These screens were reached by opening an actual record from a list, so they show the real clinical and financial layout, including every tab of the record.
 
-### 3.1 AANU (1234) Admitted
+### 3.1 Single-module billing screens (OPD / appointment)
+
+- **Opened from:** `//admin/bill/dashboard` → `/admin/bill/appointment`
+- **Screenshot:** `docs/assets/screens/detail-billing-screen.jpg`
+- **Record tabs:** Today Appointment · Upcoming Appointment · Old Appointment
+- **Table:** Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address
+- **Table:** Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address
+- **Table:** Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address
+- **Form** *(dialog)*: `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Status *` (select) — Pending, Approved, Cancel; `Discount Percentage` (text); `Live Consultant (On Video Conference)` (select) — No, Yes; `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Message` (textarea); `Cheque No` (text); `Cheque Date` (text); `document` (file); `Alternate Address` (textarea)
+- **Form** *(dialog)*: `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Discount Percentage` (text); `Status *` (select) — Pending, Approved, Cancel; `Live Consultant (On Video Conference)` (select) — No, Yes; `Message` (textarea)
+
+![Single-module billing screens (OPD / appointment)](../assets/screens/detail-billing-screen.jpg)
+
+**Tabs of this record**
+
+![Single-module billing screens (OPD / appointment) — 1 today appointment](../assets/screens/detail-billing-screen__1-today-appointment.jpg)
+
+![Single-module billing screens (OPD / appointment) — 2 upcoming appointment](../assets/screens/detail-billing-screen__2-upcoming-appointment.jpg)
+
+![Single-module billing screens (OPD / appointment) — 3 old appointment](../assets/screens/detail-billing-screen__3-old-appointment.jpg)
+
+### 3.2 IPD patient case — every tab of an admitted patient
+
+- **Opened from:** `//admin/patient/ipdsearch` → `/admin/patient/ipdprofile/138/1`
+- **Screenshot:** `docs/assets/screens/detail-ipd-profile.jpg`
+- **Record tabs:** Overview · Nurse Notes · Medication · Prescription · Consultant Register · Lab Investigation · Operations · Charges · Payments · Live Consultation · Bed History · Timeline · Treatment History · Vitals
+- **Table:** Date | Height (1 - 200 Centimeters) | Weight (0 - 150 Kilograms) | Pulse (70 - 100 Beats per) | Temperature (95.8 - 99.3 Fahrenheit ) | BP (90/60 - 140/90 mmHg)
+- **Table:** Applied Date | Consultant Doctor | Instruction | Consultant Date | Action
+- **Table:** Prescription No | Date | Finding | Action
+- **Form** *(dialog)*: `Select` (select) — Sonia Bush (9002), Sansa Gomez (9008), Amit Singh (9009); `field` (search)
+- **Form** *(dialog)*: `bed_group_id` (select) — VIP Ward - Ground Floor, Private Ward - 3rd Floor, General Ward Male - 3rd Floor, ICU - 2nd Floor, NICU - 2nd Floor, AC (Normal) - 1st Floor; `bed_no` (select); `discharge_revert_reason` (textarea)
+
+![IPD patient case — every tab of an admitted patient](../assets/screens/detail-ipd-profile.jpg)
+
+**Tabs of this record**
+
+![IPD patient case — every tab of an admitted patient — 1 overview](../assets/screens/detail-ipd-profile__1-overview.jpg)
+
+![IPD patient case — every tab of an admitted patient — 2 nurse notes](../assets/screens/detail-ipd-profile__2-nurse-notes.jpg)
+
+![IPD patient case — every tab of an admitted patient — 3 medication](../assets/screens/detail-ipd-profile__3-medication.jpg)
+
+![IPD patient case — every tab of an admitted patient — 4 prescription](../assets/screens/detail-ipd-profile__4-prescription.jpg)
+
+![IPD patient case — every tab of an admitted patient — 5 consultant register](../assets/screens/detail-ipd-profile__5-consultant-register.jpg)
+
+![IPD patient case — every tab of an admitted patient — 6 lab investigation](../assets/screens/detail-ipd-profile__6-lab-investigation.jpg)
+
+![IPD patient case — every tab of an admitted patient — 7 operations](../assets/screens/detail-ipd-profile__7-operations.jpg)
+
+![IPD patient case — every tab of an admitted patient — 8 charges](../assets/screens/detail-ipd-profile__8-charges.jpg)
+
+![IPD patient case — every tab of an admitted patient — 9 payments](../assets/screens/detail-ipd-profile__9-payments.jpg)
+
+![IPD patient case — every tab of an admitted patient — 10 live consultation](../assets/screens/detail-ipd-profile__10-live-consultation.jpg)
+
+![IPD patient case — every tab of an admitted patient — 11 bed history](../assets/screens/detail-ipd-profile__11-bed-history.jpg)
+
+![IPD patient case — every tab of an admitted patient — 12 timeline](../assets/screens/detail-ipd-profile__12-timeline.jpg)
+
+![IPD patient case — every tab of an admitted patient — 13 treatment history](../assets/screens/detail-ipd-profile__13-treatment-history.jpg)
+
+![IPD patient case — every tab of an admitted patient — 14 vitals](../assets/screens/detail-ipd-profile__14-vitals.jpg)
+
+### 3.3 OPD patient record — every tab of an out-patient
+
+- **Opened from:** `//admin/patient/search` → `/admin/patient/profile/1084/1`
+- **Screenshot:** `docs/assets/screens/detail-opd-profile-2.jpg`
+- **Record tabs:** Overview · Visits · Lab Investigation · Treatment History · Timeline · Vitals
+- **Table:** OPD NO | APPOINTMENT DATE | CONSULTANT | SYMPTOMS
+- **Table:** OPD No | Case ID | Appointment Date | Consultant | Reference | Symptoms | Previous Medical Issue | Action
+- **Table:** Test Name | Case ID | Lab | Sample Collected | Expected Date | Approved By | Action
+- **Form** *(dialog)*: `Symptoms Type` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `Symptoms Type` (search); `Select` (text); `Symptoms Description` (textarea); `ICD-10 Group` (select) — -- All Groups --, Infectious & Parasitic Diseases, Infectious Diseases, Mental & Behavioural Disorders, Neoplasms, Viral Diseases; `ICD-10 Diagnosis` (select) — [A09] Infectious Gastroenteritis, [A15.0] Pulmonary Tuberculosis, [B34.9] Viral Infection, Unspecified, [C50.9] Malignant Neoplasm of Breast, [F41.1] Generalized Anxiety Disorder; `ICD-10 Diagnosis` (search); `Note` (textarea); `Any Known Allergies` (textarea); `Appointment Date` (text); `Case` (text); `Casualty` (select) — No, Yes; `Old Patient` (select) — No, Yes; `TPA` (text); `Reference` (text); `Consultant Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Payment Date` (text); `Amount ($)` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Payment Note` (text); `Cheque No` (text); `Cheque Date` (text); … +2 more
+- **Form** *(dialog)*: `Title` (text); `Date` (text); `Description` (textarea); `timeline_doc` (file); `Visible to this person` (checkbox)
+
+![OPD patient record — every tab of an out-patient](../assets/screens/detail-opd-profile-2.jpg)
+
+**Tabs of this record**
+
+![OPD patient record — every tab of an out-patient — 1 overview](../assets/screens/detail-opd-profile-2__1-overview.jpg)
+
+![OPD patient record — every tab of an out-patient — 2 visits](../assets/screens/detail-opd-profile-2__2-visits.jpg)
+
+![OPD patient record — every tab of an out-patient — 3 lab investigation](../assets/screens/detail-opd-profile-2__3-lab-investigation.jpg)
+
+![OPD patient record — every tab of an out-patient — 4 treatment history](../assets/screens/detail-opd-profile-2__4-treatment-history.jpg)
+
+![OPD patient record — every tab of an out-patient — 5 timeline](../assets/screens/detail-opd-profile-2__5-timeline.jpg)
+
+![OPD patient record — every tab of an out-patient — 6 vitals](../assets/screens/detail-opd-profile-2__6-vitals.jpg)
+
+### 3.4 AANU (1234) Admitted
 
 - **Opened from:** `/admin/patient/ipdsearch` → `/admin/patient/ipdprofile/138/1`
+- **Screenshot:** `docs/assets/screens/detail-ipd-detail.jpg`
 - **Record tabs:** Overview · Nurse Notes · Medication · Prescription · Consultant Register · Lab Investigation · Operations · Charges · Payments · Live Consultation · Bed History · Timeline · Treatment History · Vitals
 - **Table:** Date | Height (1 - 200 Centimeters) | Weight (0 - 150 Kilograms) | Pulse (70 - 100 Beats per) | Temperature (95.8 - 99.3 Fahrenheit ) | BP (90/60 - 140/90 mmHg)
 - **Table:** Applied Date | Consultant Doctor | Instruction | Consultant Date | Action
@@ -1381,15 +1473,283 @@ These screens were reached by opening an actual record from a list, so they show
 
 ![AANU (1234) Admitted — 8 charges](../assets/screens/detail-ipd-detail__8-charges.jpg)
 
-### 3.2 Patient
+### 3.5 Patient
 
 - **Opened from:** `/admin/admin/search` → `/admin/patient/import`
+- **Screenshot:** `docs/assets/screens/detail-patient-master-detail.jpg`
 - **Table:** *Patient | Guardian | Gender | Age (Year) | Age (Month) | Age (Day) | Marital Status | Phone | Email | Address
 - **Form** (posts to `/admin/patient/import`): `blood_group` (select) — B+, A+, AB-, AB+, O-, A-; `file` (file)
 
 ![Patient](../assets/screens/detail-patient-master-detail.jpg)
 
-## 4. Roles and access model
+## 4. Sub-screens reachable from the modules
+
+These screens are not menu entries but are reachable from the modules above (per-module billing, master imports, return registers, status boards, payroll …). They are part of the product surface and are captured here for completeness.
+
+| # | Screen | Path | Purpose |
+|---|---|---|---|
+| 1 | **Billing - Appointment module** | `/admin/bill/appointment` | Grid: Patient Name | Appointment No | Date | Phone | Gender | Doctor |
+| 2 | **Billing - OPD module** | `/admin/bill/opd` | Grid: Name | Patient Id | Guardian Name | Gender | Phone | Generated By |
+| 3 | **Pathology Billing** | `/admin/bill/pathology` | Grid: Bill No | Case ID | Reporting Date | Patient Name | Generated By | Reference Doctor |
+| 4 | **Radiology Billing** | `/admin/bill/radiology` | Grid: Bill No | Case ID | Reporting Date | Patient Name | Generated By | Reference Doctor |
+| 5 | **Blood Issue Billing** | `/admin/bill/issueblood` | Grid: Bill No | Case ID | Issue Date | Received To | Blood Group | Gender |
+| 6 | **Blood Components Issue Billing** | `/admin/bill/issuecomponent` | Grid: Bill No | Case ID | Issue Date | Generated By | Received To | Blood Group |
+| 7 | **Single Module Billing** | `/admin/bill/dashboard` | Billing - Bill dashboard |
+| 8 | **Billing - OPD bill screen** | `/admin/bill/opd` | Grid: Name | Patient Id | Guardian Name | Gender | Phone | Generated By |
+| 9 | **Patient import** | `/admin/patient/import` | Grid: *Patient | Guardian | Gender | Age (Year) | Age (Month) | Age (Day) |
+| 10 | **IPD Discharged Patient** | `/admin/patient/discharged_patients` | Grid: Name | Patient Id | Case ID | Gender | Phone | Generated By |
+| 11 | **Patient import** | `/admin/patient/import` | Grid: *Patient | Guardian | Gender | Age (Year) | Age (Month) | Age (Day) |
+| 12 | **IPD Discharged Patient** | `/admin/patient/discharged_patients` | Grid: Name | Patient Id | Case ID | Gender | Phone | Generated By |
+| 13 | **Medicines Stock** | `/admin/pharmacy/search` | Grid: # | Medicine Name | Medicine Company | Medicine Composition | Medicine Category | Medicine Group |
+| 14 | **Sale Return Bills** | `/admin/pharmacy/salereturnbills` | Grid: Return No | Bill No | Date | Patient Name | Generated By | Total ($) |
+| 15 | **Medicines Stock** | `/admin/pharmacy/search` | Grid: # | Medicine Name | Medicine Company | Medicine Composition | Medicine Category | Medicine Group |
+| 16 | **Pathology Test** | `/admin/pathology/search` | Grid: Test Name | Short Name | Test Type | Category | Sub Category | Method |
+| 17 | **Sale Return Bills** | `/admin/pharmacy/salereturnbills` | Grid: Return No | Bill No | Date | Patient Name | Generated By | Total ($) |
+| 18 | **Pathology Test** | `/admin/pathology/search` | Grid: Test Name | Short Name | Test Type | Category | Sub Category | Method |
+| 19 | **Radiology Test** | `/admin/radio/search` | Grid: Test Name | Short Name | Test Type | Category Name | Sub Category | Report Days |
+| 20 | **Blood bank status board** | `/admin/bloodbankstatus` | Grid: BAGS | LOT | INSTITUTION | ACTION |
+| 21 | **Radiology Test** | `/admin/radio/search` | Grid: Test Name | Short Name | Test Type | Category Name | Sub Category | Report Days |
+| 22 | **Blood bank status board** | `/admin/bloodbankstatus` | Grid: BAGS | LOT | INSTITUTION | ACTION |
+| 23 | **QR Code Attendance** | `/admin/qrattendance/attendance/index` | Staff attendance register |
+| 24 | **Payroll** | `/admin/payroll` | Payroll |
+| 25 | **Appointment queue** | `/admin/appointment/index` | Grid: Patient Name | Appointment No | Date | Phone | Gender | Doctor |
+| 26 | **Payroll** | `/admin/payroll` | Payroll |
+| 27 | **Appointment queue** | `/admin/appointment/index` | Grid: Patient Name | Appointment No | Date | Phone | Gender | Doctor |
+| 28 | **OPD patient view** | `/admin/patient/search` | Grid: Name | Patient Id | Guardian Name | Gender | Phone | Generated By |
+| 29 | **OPD patient view** | `/admin/patient/search` | Grid: Name | Patient Id | Guardian Name | Gender | Phone | Generated By |
+
+### 4.1 Billing - Appointment module — `/admin/bill/appointment`
+
+- **Tabs:** Today Appointment · Upcoming Appointment · Old Appointment
+- **Grid (2 rows):** Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status
+- **Grid (25 rows):** Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status
+- **Grid (101 rows):** Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status
+- **Form** *(dialog)*: `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Status *` (select) — Pending, Approved, Cancel; `Discount Percentage` (text); `Live Consultant (On Video Conference)` (select) — No, Yes; `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Message` (textarea); `Cheque No` (text); `Cheque Date` (text); `document` (file); `Alternate Address` (textarea)
+- **Form** *(dialog)*: `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Discount Percentage` (text); `Status *` (select) — Pending, Approved, Cancel; `Live Consultant (On Video Conference)` (select) — No, Yes; `Message` (textarea)
+
+![Billing - Appointment module](../assets/screens/sub-01-billing-appointment-module.jpg)
+
+### 4.2 Billing - OPD module — `/admin/bill/opd`
+
+- **Tabs:** Today OPD · Upcoming OPD · Old OPD
+- **Grid (2 rows):** Name | Patient Id | Guardian Name | Gender | Phone | Generated By | Consultant Doctor | Last Visit | Previous Medical Issue | Total Visit | Is Antenatal | Action
+- **Form** (posts to `/admin/patient`) *(dialog)*: `symptoms_type` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `field` (search); `Select` (text); `Symptoms Description` (textarea); `Note` (textarea); `Any Known Allergies` (textarea); `Previous Medical Issue` (textarea); `Appointment Date` (text); `case` (text); `casualty` (select) — No, Yes; `old_patient` (select) — No, Yes; `refference` (text); `consultant_doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Apply TPA` (checkbox); `Charge Category` (select) — OPD Consultation Fees, OPD Service, OPD Insurance, Blood pressure check, Eye check, Cholesterol level check; `Charge` (select); `Standard Charge ($)` (text); `Applied Charge ($)` (text); `discount_percentage` (text); `percentage` (text); `Amount ($)` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; … +6 more
+- **Form** *(dialog)*: `Name` (text); `Guardian Name` (text); `Gender` (select); `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `file` (file); `Any Known Allergies` (text); `Phone` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Age` (text); `Month` (text)
+
+![Billing - OPD module](../assets/screens/sub-02-billing-opd-module.jpg)
+
+### 4.3 Pathology Billing — `/admin/bill/pathology`
+
+- **Grid (101 rows):** Bill No | Case ID | Reporting Date | Patient Name | Generated By | Reference Doctor | Previous Report Value | Amount ($) | Discount ($) | Tax ($) | Net Amount ($) | Paid Amount ($)
+- **Form** *(dialog)*: `Apply TPA` (select); `Prescription No` (text); `Apply TPA` (checkbox); `Bill No` (text); `Case ID` (text); `Date` (text)
+- **Form** (posts to `/admin/pathology/updatecollection`) *(dialog)*: `Sample Collected Person Name` (select) — Belina Turner (9005); `Collected Date` (text); `Pathology Center` (text)
+
+![Pathology Billing](../assets/screens/sub-03-billing-pathology-module.jpg)
+
+### 4.4 Radiology Billing — `/admin/bill/radiology`
+
+- **Grid (100 rows):** Bill No | Case ID | Reporting Date | Patient Name | Generated By | Reference Doctor | Previous Report Value | Amount ($) | Discount ($) | Tax ($) | Net Amount ($) | Paid Amount ($)
+- **Form** *(dialog)*: `Apply TPA` (select); `Prescription No` (text); `Apply TPA` (checkbox); `Bill No` (text); `Case ID` (text); `Date` (text)
+- **Form** *(dialog)*: `Sample Collected Person Name` (select) — John Hook (9006); `Collected Date` (text); `Radiology Center` (text)
+
+![Radiology Billing](../assets/screens/sub-04-billing-radiology-module.jpg)
+
+### 4.5 Blood Issue Billing — `/admin/bill/issueblood`
+
+- **Grid (74 rows):** Bill No | Case ID | Issue Date | Received To | Blood Group | Gender | Donor Name | Bags | Generated By | Blood Qty | Amount ($) | Discount
+- **Form** *(dialog)*: `Apply TPA` (select); `Case ID` (text); `Apply TPA` (checkbox)
+- **Form** *(dialog)*: `patient_id` (select) — Select Patient, AADI ( ), Aadi jain ( ), Aadish Mody ( ), AANU ( ), AANU ( ); `Issue Date *` (text); `Hospital Doctor` (select) — Amit Singh, Reyan Jain, Sansa Gomez, Sonia Bush; `Doctor Name *` (text); `Technician` (text); `Donor Name *` (select) — Select Donor; `Blood Group` (text); `Lot` (text); `Bag` (text); `Amount ($) *` (text); `Remarks` (textarea)
+
+![Blood Issue Billing](../assets/screens/sub-05-billing-issue-blood.jpg)
+
+### 4.6 Blood Components Issue Billing — `/admin/bill/issuecomponent`
+
+- **Grid (68 rows):** Bill No | Case ID | Issue Date | Generated By | Received To | Blood Group | Component | Gender | Donor Name | Bags | Blood Group | Amount ($)
+- **Form** *(dialog)*: `Apply TPA` (select); `Case ID` (text); `Apply TPA` (checkbox)
+- **Form** *(dialog)*: `patient_id` (select) — Select Patient, AADI ( ), Aadi jain ( ), Aadish Mody ( ), AANU ( ), AANU ( ); `Issue Date *` (text); `Hospital Doctor` (select) — Amit Singh, Reyan Jain, Sansa Gomez, Sonia Bush; `Doctor Name *` (text); `Technician` (text); `Donor Name *` (select) — Select Donor; `Blood Group` (text); `Lot` (text); `Bag` (text); `Amount ($) *` (text); `Remarks` (textarea)
+
+![Blood Components Issue Billing](../assets/screens/sub-06-billing-issue-component.jpg)
+
+### 4.7 Single Module Billing — `/admin/bill/dashboard`
+
+- **Form** (posts to `/admin/bill/dashboard`): `Case ID` (text)
+
+![Single Module Billing](../assets/screens/sub-07-billing-bill-dashboard.jpg)
+
+### 4.8 Billing - OPD bill screen — `/admin/bill/opd`
+
+- **Tabs:** Today OPD · Upcoming OPD · Old OPD
+- **Grid (2 rows):** Name | Patient Id | Guardian Name | Gender | Phone | Generated By | Consultant Doctor | Last Visit | Previous Medical Issue | Total Visit | Is Antenatal | Action
+- **Form** (posts to `/admin/patient`) *(dialog)*: `symptoms_type` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `field` (search); `Select` (text); `Symptoms Description` (textarea); `Note` (textarea); `Any Known Allergies` (textarea); `Previous Medical Issue` (textarea); `Appointment Date` (text); `case` (text); `casualty` (select) — No, Yes; `old_patient` (select) — No, Yes; `refference` (text); `consultant_doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Apply TPA` (checkbox); `Charge Category` (select) — OPD Consultation Fees, OPD Service, OPD Insurance, Blood pressure check, Eye check, Cholesterol level check; `Charge` (select); `Standard Charge ($)` (text); `Applied Charge ($)` (text); `discount_percentage` (text); `percentage` (text); `Amount ($)` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; … +6 more
+- **Form** *(dialog)*: `Name` (text); `Guardian Name` (text); `Gender` (select); `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `file` (file); `Any Known Allergies` (text); `Phone` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Age` (text); `Month` (text)
+
+![Billing - OPD bill screen](../assets/screens/sub-08-billing-opd-bill-screen.jpg)
+
+### 4.9 Patient import — `/admin/patient/import`
+
+- **Grid (2 rows):** *Patient | Guardian | Gender | Age (Year) | Age (Month) | Age (Day) | Marital Status | Phone | Email | Address | Remarks | Known Allergies
+- **Form** (posts to `/admin/patient/import`): `blood_group` (select) — B+, A+, AB-, AB+, O-, A-; `file` (file)
+
+![Patient import](../assets/screens/sub-09-patient-import.jpg)
+
+### 4.10 IPD Discharged Patient — `/admin/patient/discharged_patients`
+
+- **Grid (21 rows):** Name | Patient Id | Case ID | Gender | Phone | Generated By | Consultant Doctor | Admission Date | Discharged Date | Tax ($) | Net Amount ($) | Total ($)
+
+![IPD Discharged Patient](../assets/screens/sub-10-discharged-patients.jpg)
+
+### 4.11 Patient import — `/admin/patient/import`
+
+- **Grid (2 rows):** *Patient | Guardian | Gender | Age (Year) | Age (Month) | Age (Day) | Marital Status | Phone | Email | Address | Remarks | Known Allergies
+- **Form** (posts to `/admin/patient/import`): `blood_group` (select) — B+, A+, AB-, AB+, O-, A-; `file` (file)
+
+![Patient import](../assets/screens/sub-10-patient-import.jpg)
+
+### 4.12 IPD Discharged Patient — `/admin/patient/discharged_patients`
+
+- **Grid (21 rows):** Name | Patient Id | Case ID | Gender | Phone | Generated By | Consultant Doctor | Admission Date | Discharged Date | Tax ($) | Net Amount ($) | Total ($)
+
+![IPD Discharged Patient](../assets/screens/sub-11-discharged-patients.jpg)
+
+### 4.13 Medicines Stock — `/admin/pharmacy/search`
+
+- **Grid (99 rows):** # | Medicine Name | Medicine Company | Medicine Composition | Medicine Category | Medicine Group | Unit | Available Qty | Action
+- **Form** *(dialog)*: `Medicine Name *` (text); `Medicine Category *` (select) — Syrup, Capsule, Injection, Ointment, Cream, Surgical; `Medicine Company` (select) — Johnson & Johnson, Alkem Laboratories, Biocon Limited., Lupin Limited., medimax; `Medicine Composition` (text); `Medicine Group` (select) — Antibacterials, Antimycobacterials, Antiparasitics, Antigout agents, HIPERIN; `Unit *` (select) — mg/mL, mm, ml, mg, g/dl; `Min Level` (text); `Re-Order Level` (text); `vat` (text); `Box/Packing *` (text); `VAT A/C` (text); `Rack Number` (text); `Note` (textarea); `file` (file)
+- **Form** *(dialog)*: `Medicine Category` (select) — Syrup, Capsule, Injection, Ointment, Cream, Surgical; `medicine_image` (file)
+
+![Medicines Stock](../assets/screens/sub-11-pharmacy-search.jpg)
+
+### 4.14 Sale Return Bills — `/admin/pharmacy/salereturnbills`
+
+- **Grid (7 rows):** Return No | Bill No | Date | Patient Name | Generated By | Total ($) | Discount ($) | Tax ($) | Net Amount ($) | Action
+
+![Sale Return Bills](../assets/screens/sub-12-pharmacy-sale-return-bills.jpg)
+
+### 4.15 Medicines Stock — `/admin/pharmacy/search`
+
+- **Grid (99 rows):** # | Medicine Name | Medicine Company | Medicine Composition | Medicine Category | Medicine Group | Unit | Available Qty | Action
+- **Form** *(dialog)*: `Medicine Name *` (text); `Medicine Category *` (select) — Syrup, Capsule, Injection, Ointment, Cream, Surgical; `Medicine Company` (select) — Johnson & Johnson, Alkem Laboratories, Biocon Limited., Lupin Limited., medimax; `Medicine Composition` (text); `Medicine Group` (select) — Antibacterials, Antimycobacterials, Antiparasitics, Antigout agents, HIPERIN; `Unit *` (select) — mg/mL, mm, ml, mg, g/dl; `Min Level` (text); `Re-Order Level` (text); `vat` (text); `Box/Packing *` (text); `VAT A/C` (text); `Rack Number` (text); `Note` (textarea); `file` (file)
+- **Form** *(dialog)*: `Medicine Category` (select) — Syrup, Capsule, Injection, Ointment, Cream, Surgical; `medicine_image` (file)
+
+![Medicines Stock](../assets/screens/sub-12-pharmacy-search.jpg)
+
+### 4.16 Pathology Test — `/admin/pathology/search`
+
+- **Grid (20 rows):** Test Name | Short Name | Test Type | Category | Sub Category | Method | Report Days | Tax (%) | Charge ($) | Amount ($) | Action
+- **Form** *(dialog)*: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select); `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select); `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
+
+![Pathology Test](../assets/screens/sub-13-pathology-search.jpg)
+
+### 4.17 Sale Return Bills — `/admin/pharmacy/salereturnbills`
+
+- **Grid (7 rows):** Return No | Bill No | Date | Patient Name | Generated By | Total ($) | Discount ($) | Tax ($) | Net Amount ($) | Action
+
+![Sale Return Bills](../assets/screens/sub-13-pharmacy-sale-return-bills.jpg)
+
+### 4.18 Pathology Test — `/admin/pathology/search`
+
+- **Grid (20 rows):** Test Name | Short Name | Test Type | Category | Sub Category | Method | Report Days | Tax (%) | Charge ($) | Amount ($) | Action
+- **Form** *(dialog)*: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select); `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select); `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
+
+![Pathology Test](../assets/screens/sub-14-pathology-search.jpg)
+
+### 4.19 Radiology Test — `/admin/radio/search`
+
+- **Grid (15 rows):** Test Name | Short Name | Test Type | Category Name | Sub Category | Report Days | Tax (%) | Charge ($) | Amount ($) | Action
+- **Form** *(dialog)*: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select); `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select); `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
+
+![Radiology Test](../assets/screens/sub-14-radiology-search.jpg)
+
+### 4.20 Blood bank status board — `/admin/bloodbankstatus`
+
+- **Grid (2 rows):** BAGS | LOT | INSTITUTION | ACTION
+- **Grid (10 rows):** BAGS | LOT | COMPONENTS | ACTION
+- **Grid (7 rows):** Components Name * | Bag * | Volume | Unit | Lot * | Institution
+- **Form** (posts to `/admin/bloodbankstatus/status`) *(dialog)*: `Blood Group` (text); `status (in bags) *` (text)
+- **Form** *(dialog)*: `Blood Donor *` (select); `Donate Date *` (text); `Bag *` (text); `Volume` (text); `Unit Type` (select) — (ML), Litter, (nm), per day, Hour, Insurance; `Lot` (text); `Charge Category *` (select); `Charge Name *` (select); `Standard Charge ($) *` (text); `Institution` (text); `note` (textarea); `total` (text); `discount_percent` (text); `discount` (text); `tax_percentage` (text); `tax` (text); `net_amount` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Payment Amount ($) *` (text); `Cheque No *` (text); `Cheque Date *` (text); `document` (file)
+
+![Blood bank status board](../assets/screens/sub-15-blood-bank-status-board.jpg)
+
+### 4.21 Radiology Test — `/admin/radio/search`
+
+- **Grid (15 rows):** Test Name | Short Name | Test Type | Category Name | Sub Category | Report Days | Tax (%) | Charge ($) | Amount ($) | Action
+- **Form** *(dialog)*: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select); `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select); `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
+
+![Radiology Test](../assets/screens/sub-15-radiology-search.jpg)
+
+### 4.22 Blood bank status board — `/admin/bloodbankstatus`
+
+- **Grid (2 rows):** BAGS | LOT | INSTITUTION | ACTION
+- **Grid (10 rows):** BAGS | LOT | COMPONENTS | ACTION
+- **Grid (7 rows):** Components Name * | Bag * | Volume | Unit | Lot * | Institution
+- **Form** (posts to `/admin/bloodbankstatus/status`) *(dialog)*: `Blood Group` (text); `status (in bags) *` (text)
+- **Form** *(dialog)*: `Blood Donor *` (select); `Donate Date *` (text); `Bag *` (text); `Volume` (text); `Unit Type` (select) — (ML), Litter, (nm), per day, Hour, Insurance; `Lot` (text); `Charge Category *` (select); `Charge Name *` (select); `Standard Charge ($) *` (text); `Institution` (text); `note` (textarea); `total` (text); `discount_percent` (text); `discount` (text); `tax_percentage` (text); `tax` (text); `net_amount` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Payment Amount ($) *` (text); `Cheque No *` (text); `Cheque Date *` (text); `document` (file)
+
+![Blood bank status board](../assets/screens/sub-16-blood-bank-status-board.jpg)
+
+### 4.23 QR Code Attendance — `/admin/qrattendance/attendance/index`
+
+
+![QR Code Attendance](../assets/screens/sub-16-staff-attendance-register.jpg)
+
+### 4.24 Payroll — `/admin/payroll`
+
+- **Form** (posts to `/admin/payroll`): `Role` (select) — Admin, Accountant, Doctor, Pharmacist, Pathologist, Radiologist; `Month` (select) — January, February, March, April, May, June; `Year` (select) — 2025, 2026
+- **Form** (posts to `/admin/payroll/paymentSuccess`) *(dialog)*: `Name` (text); `Payment Amount ($)` (text); `Month Year` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Cheque No` (text); `Cheque Date` (text); `document` (file); `Payment Date` (text); `Note` (textarea)
+
+![Payroll](../assets/screens/sub-17-payroll.jpg)
+
+### 4.25 Appointment queue — `/admin/appointment/index`
+
+- **Tabs:** Today Appointment · Upcoming Appointment · Old Appointment
+- **Grid (2 rows):** Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status
+- **Grid (25 rows):** Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status
+- **Grid (101 rows):** Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status
+- **Form** *(dialog)*: `patient_id` (select); `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Status *` (select) — Pending, Approved, Cancel; `Discount Percentage` (text); `Live Consultant (On Video Conference)` (select) — No, Yes; `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Message` (textarea); `Cheque No` (text); `Cheque Date` (text); `document` (file); `Alternate Address` (textarea)
+- **Form** *(dialog)*: `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Discount Percentage` (text); `Status *` (select) — Pending, Approved, Cancel; `Live Consultant (On Video Conference)` (select) — No, Yes; `Message` (textarea)
+
+![Appointment queue](../assets/screens/sub-18-appointment-queue.jpg)
+
+### 4.26 Payroll — `/admin/payroll`
+
+- **Form** (posts to `/admin/payroll`): `Role` (select) — Admin, Accountant, Doctor, Pharmacist, Pathologist, Radiologist; `Month` (select) — January, February, March, April, May, June; `Year` (select) — 2025, 2026
+- **Form** (posts to `/admin/payroll/paymentSuccess`) *(dialog)*: `Name` (text); `Payment Amount ($)` (text); `Month Year` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Cheque No` (text); `Cheque Date` (text); `document` (file); `Payment Date` (text); `Note` (textarea)
+
+![Payroll](../assets/screens/sub-18-payroll.jpg)
+
+### 4.27 Appointment queue — `/admin/appointment/index`
+
+- **Tabs:** Today Appointment · Upcoming Appointment · Old Appointment
+- **Grid (2 rows):** Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status
+- **Grid (25 rows):** Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status
+- **Grid (101 rows):** Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status
+- **Form** *(dialog)*: `patient_id` (select); `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Status *` (select) — Pending, Approved, Cancel; `Discount Percentage` (text); `Live Consultant (On Video Conference)` (select) — No, Yes; `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Message` (textarea); `Cheque No` (text); `Cheque Date` (text); `document` (file); `Alternate Address` (textarea)
+- **Form** *(dialog)*: `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Discount Percentage` (text); `Status *` (select) — Pending, Approved, Cancel; `Live Consultant (On Video Conference)` (select) — No, Yes; `Message` (textarea)
+
+![Appointment queue](../assets/screens/sub-19-appointment-queue.jpg)
+
+### 4.28 OPD patient view — `/admin/patient/search`
+
+- **Tabs:** Today OPD · Upcoming OPD · Old OPD · Patient View
+- **Grid (96 rows):** Name | Patient Id | Guardian Name | Gender | Phone | Generated By | Consultant | Last Visit | Is Antenatal | Total Recheckup
+- **Grid (2 rows):** OPD No | Patient Name | Case ID | Appointment Date | Generated By | Consultant | Reference | Symptoms | Is Antenatal | Previous Medical Issue | Action
+- **Form** (posts to `/admin/patient`) *(dialog)*: `field` (select); `symptoms_type` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `field` (search); `field` (text); `Symptoms Description` (textarea); `ICD Group` (select) — Select Group, Infectious & Parasitic Diseases, Infectious Diseases, Mental & Behavioural Disorders, Neoplasms, Viral Diseases; `ICD-10 Diagnosis` (select) — [A09] Infectious Gastroenteritis, [A15.0] Pulmonary Tuberculosis, [B34.9] Viral Infection, Unspecified, [C50.9] Malignant Neoplasm of Breast, [F41.1] Generalized Anxiety Disorder; `ICD-10 Diagnosis` (search); `Note` (textarea); `Any Known Allergies` (textarea); `Previous Medical Issue` (textarea); `Appointment Date *` (text); `case` (text); `casualty` (select) — No, Yes; `old_patient` (select) — No, Yes; `refference` (text); `Apply TPA` (checkbox); `consultant_doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Charge Category` (select) — OPD Consultation Fees, OPD Service, OPD Insurance, Blood pressure check, Eye check, Cholesterol level check; `Charge *` (select); `Standard Charge ($)` (text); `Applied Charge ($) *` (text); … +10 more
+- **Form** *(dialog)*: `Name` (text); `Guardian Name` (text); `Gender` (select) — Male, Female; `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `file` (file); `Any Known Allergies` (text); `Phone` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Age` (text); `Month` (text)
+
+![OPD patient view](../assets/screens/sub-19-opd-patient-view.jpg)
+
+### 4.29 OPD patient view — `/admin/patient/search`
+
+- **Tabs:** Today OPD · Upcoming OPD · Old OPD · Patient View
+- **Grid (96 rows):** Name | Patient Id | Guardian Name | Gender | Phone | Generated By | Consultant | Last Visit | Is Antenatal | Total Recheckup
+- **Grid (2 rows):** OPD No | Patient Name | Case ID | Appointment Date | Generated By | Consultant | Reference | Symptoms | Is Antenatal | Previous Medical Issue | Action
+- **Form** (posts to `/admin/patient`) *(dialog)*: `field` (select); `symptoms_type` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `field` (search); `field` (text); `Symptoms Description` (textarea); `ICD Group` (select) — Select Group, Infectious & Parasitic Diseases, Infectious Diseases, Mental & Behavioural Disorders, Neoplasms, Viral Diseases; `ICD-10 Diagnosis` (select) — [A09] Infectious Gastroenteritis, [A15.0] Pulmonary Tuberculosis, [B34.9] Viral Infection, Unspecified, [C50.9] Malignant Neoplasm of Breast, [F41.1] Generalized Anxiety Disorder; `ICD-10 Diagnosis` (search); `Note` (textarea); `Any Known Allergies` (textarea); `Previous Medical Issue` (textarea); `Appointment Date *` (text); `case` (text); `casualty` (select) — No, Yes; `old_patient` (select) — No, Yes; `refference` (text); `Apply TPA` (checkbox); `consultant_doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Charge Category` (select) — OPD Consultation Fees, OPD Service, OPD Insurance, Blood pressure check, Eye check, Cholesterol level check; `Charge *` (select); `Standard Charge ($)` (text); `Applied Charge ($) *` (text); … +10 more
+- **Form** *(dialog)*: `Name` (text); `Guardian Name` (text); `Gender` (select) — Male, Female; `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `file` (file); `Any Known Allergies` (text); `Phone` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Age` (text); `Month` (text)
+
+![OPD patient view](../assets/screens/sub-20-opd-patient-view.jpg)
+
+
+## 5. Roles and access model
 
 Nine staff roles plus the patient portal. Each role gets its own dashboard and its own slice of the menu; the table below was produced by logging in as each role and reading the rendered sidebar.
 
@@ -1405,7 +1765,7 @@ Nine staff roles plus the patient portal. Each role gets its own dashboard and i
 | **Receptionist** | `maria@gmail.com` | Core Operations, Clinical, Administration, Tools & Content, Reports & Setup | 40 | `/admin/admin/dashboard` |
 | **Nurse** | `april@gmail.com` | Core Operations, Clinical, Administration, Tools & Content, Reports & Setup | 16 | `/admin/admin/dashboard` |
 
-### 4.1 Super Admin
+### 5.1 Super Admin
 
 Unrestricted access to every module, master and setting, plus the multi-branch console and vendor licence screens.
 
@@ -1419,7 +1779,7 @@ Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`
 
 ![Super Admin dashboard](../assets/screens/role-superadmin-dashboard.jpg)
 
-### 4.2 Admin
+### 5.2 Admin
 
 Hospital administrator: clinical, billing, hr, finance and reporting without the vendor/licence screens.
 
@@ -1433,7 +1793,7 @@ Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`
 
 ![Admin dashboard](../assets/screens/role-admin-dashboard.jpg)
 
-### 4.3 Doctor
+### 5.3 Doctor
 
 Clinical workspace: appointments, opd/ipd patients, prescriptions, investigations and own-patient reports.
 
@@ -1447,7 +1807,7 @@ Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`
 
 ![Doctor dashboard](../assets/screens/role-doctor-dashboard.jpg)
 
-### 4.4 Pharmacist
+### 5.4 Pharmacist
 
 Pharmacy only: sale/issue, stock, batch and expiry handling, pharmacy reports.
 
@@ -1461,7 +1821,7 @@ Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`
 
 ![Pharmacist dashboard](../assets/screens/role-pharmacist-dashboard.jpg)
 
-### 4.5 Pathologist
+### 5.5 Pathologist
 
 Laboratory only: test orders, sample collection, result entry and report generation.
 
@@ -1475,7 +1835,7 @@ Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`
 
 ![Pathologist dashboard](../assets/screens/role-pathologist-dashboard.jpg)
 
-### 4.6 Radiologist
+### 5.6 Radiologist
 
 Imaging only: study orders, scheduling and reporting.
 
@@ -1489,7 +1849,7 @@ Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`
 
 ![Radiologist dashboard](../assets/screens/role-radiologist-dashboard.jpg)
 
-### 4.7 Accountant
+### 5.7 Accountant
 
 Finance: billing, income/expense, payroll and financial reports.
 
@@ -1503,7 +1863,7 @@ Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`
 
 ![Accountant dashboard](../assets/screens/role-accountant-dashboard.jpg)
 
-### 4.8 Receptionist
+### 5.8 Receptionist
 
 Front desk: patient registration, appointments, opd visits, visitors and billing intake.
 
@@ -1517,7 +1877,7 @@ Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`
 
 ![Receptionist dashboard](../assets/screens/role-receptionist-dashboard.jpg)
 
-### 4.9 Nurse
+### 5.9 Nurse
 
 Ward work: ipd patients, vitals, nursing notes, duty roster and bed status.
 
@@ -1530,7 +1890,7 @@ Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`
 
 ![Nurse dashboard](../assets/screens/role-nurse-dashboard.jpg)
 
-## 5. Public website and patient portal
+## 6. Public website and patient portal
 
 The same installation serves the public hospital website (driven by Front CMS) and a patient self-service portal.
 
@@ -1561,7 +1921,7 @@ The same installation serves the public hospital website (driven by Front CMS) a
 
 ![Patient portal sign-in](../assets/screens/patient-portal-login.jpg)
 
-## 6. Cross-cutting platform features
+## 7. Cross-cutting platform features
 
 | Capability | What it does |
 |---|---|
@@ -1584,7 +1944,7 @@ The same installation serves the public hospital website (driven by Front CMS) a
 | **QR attendance** | QR-code based staff check-in with roster and holiday calendar. |
 | **Audit trail** | System log report plus the dashboard activity feed (who did what, in which module, when). |
 
-## 7. Complete screen inventory
+## 8. Complete screen inventory
 
 | # | Section | Menu item | Screen | URL | Screenshot |
 |---|---|---|---|---|---|

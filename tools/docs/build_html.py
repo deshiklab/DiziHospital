@@ -106,7 +106,7 @@ def main():
       <table>
         <tr><td>Product</td><td><b>Smart Hospital</b> — Hospital Management System (QDOCS)</td></tr>
         <tr><td>Explored instance</td><td>demo.smart-hospital.in — Smart Hospital &amp; Research Center</td></tr>
-        <tr><td>Screens documented</td><td>{counts.get('screens', 76)} application screens, {counts.get('forms', 0)} forms/dialogs, {counts.get('detail', 0)} record &amp; tab views</td></tr>
+        <tr><td>Screens documented</td><td>{counts.get('screens', 76)} application screens, {counts.get('forms', 0)} forms/dialogs, {counts.get('subs', 0)} sub-screens, {counts.get('detail', 0)} record &amp; tab views</td></tr>
         <tr><td>Roles covered</td><td>Super Admin, Admin, Doctor, Nurse, Pharmacist, Pathologist, Radiologist, Accountant, Receptionist + Patient portal</td></tr>
         <tr><td>Method</td><td>Automated browser exploration (login → every menu screen → every add/edit form → real records → all roles → public site)</td></tr>
         <tr><td>Generated</td><td>{today}</td></tr>

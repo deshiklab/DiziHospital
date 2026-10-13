@@ -3,8 +3,9 @@
  "counts": {
   "screens": 76,
   "forms": 96,
-  "detail": 2,
-  "roles": 9
+  "detail": 5,
+  "roles": 9,
+  "subs": 29
  },
  "screens": [
   {

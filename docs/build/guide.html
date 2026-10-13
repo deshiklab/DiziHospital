@@ -48,7 +48,7 @@ hr { border:none; border-top:1px solid var(--line); margin:18px 0; }
       <table>
         <tr><td>Product</td><td><b>Smart Hospital</b> — Hospital Management System (QDOCS)</td></tr>
         <tr><td>Explored instance</td><td>demo.smart-hospital.in — Smart Hospital &amp; Research Center</td></tr>
-        <tr><td>Screens documented</td><td>76 application screens, 96 forms/dialogs, 2 record &amp; tab views</td></tr>
+        <tr><td>Screens documented</td><td>76 application screens, 96 forms/dialogs, 29 sub-screens, 5 record &amp; tab views</td></tr>
         <tr><td>Roles covered</td><td>Super Admin, Admin, Doctor, Nurse, Pharmacist, Pathologist, Radiologist, Accountant, Receptionist + Patient portal</td></tr>
         <tr><td>Method</td><td>Automated browser exploration (login → every menu screen → every add/edit form → real records → all roles → public site)</td></tr>
         <tr><td>Generated</td><td>2026-10-13</td></tr>
@@ -93,25 +93,60 @@ hr { border:none; border-top:1px solid var(--line); margin:18px 0; }
 </ul>
 </li>
 <li><a href="#3-record-level-screens-opened-from-real-data">3. Record-level screens (opened from real data)</a><ul>
-<li><a href="#31-aanu-1234-admitted">3.1 AANU (1234) Admitted</a></li>
-<li><a href="#32-patient">3.2 Patient</a></li>
+<li><a href="#31-single-module-billing-screens-opd-appointment">3.1 Single-module billing screens (OPD / appointment)</a></li>
+<li><a href="#32-ipd-patient-case-every-tab-of-an-admitted-patient">3.2 IPD patient case — every tab of an admitted patient</a></li>
+<li><a href="#33-opd-patient-record-every-tab-of-an-out-patient">3.3 OPD patient record — every tab of an out-patient</a></li>
+<li><a href="#34-aanu-1234-admitted">3.4 AANU (1234) Admitted</a></li>
+<li><a href="#35-patient">3.5 Patient</a></li>
 </ul>
 </li>
-<li><a href="#4-roles-and-access-model">4. Roles and access model</a><ul>
-<li><a href="#41-super-admin">4.1 Super Admin</a></li>
-<li><a href="#42-admin">4.2 Admin</a></li>
-<li><a href="#43-doctor">4.3 Doctor</a></li>
-<li><a href="#44-pharmacist">4.4 Pharmacist</a></li>
-<li><a href="#45-pathologist">4.5 Pathologist</a></li>
-<li><a href="#46-radiologist">4.6 Radiologist</a></li>
-<li><a href="#47-accountant">4.7 Accountant</a></li>
-<li><a href="#48-receptionist">4.8 Receptionist</a></li>
-<li><a href="#49-nurse">4.9 Nurse</a></li>
+<li><a href="#4-sub-screens-reachable-from-the-modules">4. Sub-screens reachable from the modules</a><ul>
+<li><a href="#41-billing-appointment-module-adminbillappointment">4.1 Billing - Appointment module — /admin/bill/appointment</a></li>
+<li><a href="#42-billing-opd-module-adminbillopd">4.2 Billing - OPD module — /admin/bill/opd</a></li>
+<li><a href="#43-pathology-billing-adminbillpathology">4.3 Pathology Billing — /admin/bill/pathology</a></li>
+<li><a href="#44-radiology-billing-adminbillradiology">4.4 Radiology Billing — /admin/bill/radiology</a></li>
+<li><a href="#45-blood-issue-billing-adminbillissueblood">4.5 Blood Issue Billing — /admin/bill/issueblood</a></li>
+<li><a href="#46-blood-components-issue-billing-adminbillissuecomponent">4.6 Blood Components Issue Billing — /admin/bill/issuecomponent</a></li>
+<li><a href="#47-single-module-billing-adminbilldashboard">4.7 Single Module Billing — /admin/bill/dashboard</a></li>
+<li><a href="#48-billing-opd-bill-screen-adminbillopd">4.8 Billing - OPD bill screen — /admin/bill/opd</a></li>
+<li><a href="#49-patient-import-adminpatientimport">4.9 Patient import — /admin/patient/import</a></li>
+<li><a href="#410-ipd-discharged-patient-adminpatientdischarged_patients">4.10 IPD Discharged Patient — /admin/patient/discharged_patients</a></li>
+<li><a href="#411-patient-import-adminpatientimport">4.11 Patient import — /admin/patient/import</a></li>
+<li><a href="#412-ipd-discharged-patient-adminpatientdischarged_patients">4.12 IPD Discharged Patient — /admin/patient/discharged_patients</a></li>
+<li><a href="#413-medicines-stock-adminpharmacysearch">4.13 Medicines Stock — /admin/pharmacy/search</a></li>
+<li><a href="#414-sale-return-bills-adminpharmacysalereturnbills">4.14 Sale Return Bills — /admin/pharmacy/salereturnbills</a></li>
+<li><a href="#415-medicines-stock-adminpharmacysearch">4.15 Medicines Stock — /admin/pharmacy/search</a></li>
+<li><a href="#416-pathology-test-adminpathologysearch">4.16 Pathology Test — /admin/pathology/search</a></li>
+<li><a href="#417-sale-return-bills-adminpharmacysalereturnbills">4.17 Sale Return Bills — /admin/pharmacy/salereturnbills</a></li>
+<li><a href="#418-pathology-test-adminpathologysearch">4.18 Pathology Test — /admin/pathology/search</a></li>
+<li><a href="#419-radiology-test-adminradiosearch">4.19 Radiology Test — /admin/radio/search</a></li>
+<li><a href="#420-blood-bank-status-board-adminbloodbankstatus">4.20 Blood bank status board — /admin/bloodbankstatus</a></li>
+<li><a href="#421-radiology-test-adminradiosearch">4.21 Radiology Test — /admin/radio/search</a></li>
+<li><a href="#422-blood-bank-status-board-adminbloodbankstatus">4.22 Blood bank status board — /admin/bloodbankstatus</a></li>
+<li><a href="#423-qr-code-attendance-adminqrattendanceattendanceindex">4.23 QR Code Attendance — /admin/qrattendance/attendance/index</a></li>
+<li><a href="#424-payroll-adminpayroll">4.24 Payroll — /admin/payroll</a></li>
+<li><a href="#425-appointment-queue-adminappointmentindex">4.25 Appointment queue — /admin/appointment/index</a></li>
+<li><a href="#426-payroll-adminpayroll">4.26 Payroll — /admin/payroll</a></li>
+<li><a href="#427-appointment-queue-adminappointmentindex">4.27 Appointment queue — /admin/appointment/index</a></li>
+<li><a href="#428-opd-patient-view-adminpatientsearch">4.28 OPD patient view — /admin/patient/search</a></li>
+<li><a href="#429-opd-patient-view-adminpatientsearch">4.29 OPD patient view — /admin/patient/search</a></li>
 </ul>
 </li>
-<li><a href="#5-public-website-and-patient-portal">5. Public website and patient portal</a></li>
-<li><a href="#6-cross-cutting-platform-features">6. Cross-cutting platform features</a></li>
-<li><a href="#7-complete-screen-inventory">7. Complete screen inventory</a></li>
+<li><a href="#5-roles-and-access-model">5. Roles and access model</a><ul>
+<li><a href="#51-super-admin">5.1 Super Admin</a></li>
+<li><a href="#52-admin">5.2 Admin</a></li>
+<li><a href="#53-doctor">5.3 Doctor</a></li>
+<li><a href="#54-pharmacist">5.4 Pharmacist</a></li>
+<li><a href="#55-pathologist">5.5 Pathologist</a></li>
+<li><a href="#56-radiologist">5.6 Radiologist</a></li>
+<li><a href="#57-accountant">5.7 Accountant</a></li>
+<li><a href="#58-receptionist">5.8 Receptionist</a></li>
+<li><a href="#59-nurse">5.9 Nurse</a></li>
+</ul>
+</li>
+<li><a href="#6-public-website-and-patient-portal">6. Public website and patient portal</a></li>
+<li><a href="#7-cross-cutting-platform-features">7. Cross-cutting platform features</a></li>
+<li><a href="#8-complete-screen-inventory">8. Complete screen inventory</a></li>
 </ul>
 </div>
 
@@ -892,7 +927,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="11-dashboard">1.1 Dashboard</h4>
+<h4 id="screen-11-dashboard">Screen 1.1 — Dashboard</h4>
 <ul>
 <li><strong>Menu path:</strong> Core Operations → Dashboard · <strong>URL:</strong> <code>/admin/admin/dashboard</code></li>
 <li><strong>Purpose:</strong> Role-aware landing page: KPI tiles (revenue MTD, bed occupancy, appointments, outstanding bills, medicine stock, blood-bank stock), a 12-month income-vs-expense trend, a module-wise income donut, the latest activity feed, staff attendance and module income table.</li>
@@ -903,7 +938,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Dashboard" src="../assets/screens/001-dashboard.jpg" /></p>
-<h4 id="12-patient-list">1.2 Patient List</h4>
+<h4 id="screen-12-patient-list">Screen 1.2 — Patient List</h4>
 <ul>
 <li><strong>Menu path:</strong> Core Operations → Patient · <strong>URL:</strong> <code>/admin/admin/search</code></li>
 <li><strong>Purpose:</strong> Master patient index. Search, add or import patients, view disabled patients, open the full patient profile and jump straight into a bill.</li>
@@ -915,7 +950,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong>: <code>Name *</code> (text); <code>Guardian Name</code> (text); <code>Phone</code> (text); <code>Gender</code> (select) — Male, Female; <code>Date Of Birth</code> (text); <code>Year</code> (text); <code>Month</code> (text); <code>Day</code> (text); <code>Blood Group</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>Email</code> (text); <code>Address</code> (input); <code>National Identification Number</code> (input); <code>file</code> (file); <code>Remarks</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>TPA</code> (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; <code>TPA ID</code> (input); <code>TPA Validity</code> (input); <code>Alternate Number</code> (text)</li>
 </ul>
 <p><img alt="Patient List" src="../assets/screens/002-patient.jpg" /></p>
-<h4 id="13-single-module-billing">1.3 Single Module Billing</h4>
+<h4 id="screen-13-single-module-billing">Screen 1.3 — Single Module Billing</h4>
 <ul>
 <li><strong>Menu path:</strong> Core Operations → Billing · <strong>URL:</strong> <code>/admin/bill/dashboard</code></li>
 <li><strong>Purpose:</strong> Billing workbench: single-module billing and OPD/IPD billing through a case ID, part payments, payment modes, discounting and printable receipts.</li>
@@ -925,7 +960,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/bill/dashboard</code>): <code>Case ID</code> (text)</li>
 </ul>
 <p><img alt="Single Module Billing" src="../assets/screens/003-billing.jpg" /></p>
-<h4 id="14-appointment">1.4 Appointment</h4>
+<h4 id="screen-14-appointment">Screen 1.4 — Appointment</h4>
 <ul>
 <li><strong>Menu path:</strong> Core Operations → Appointment · <strong>URL:</strong> <code>/admin/appointment/index</code></li>
 <li><strong>Purpose:</strong> Appointment desk with Today / Upcoming / Old tabs, doctor-wise and queue views, slot validation and online-appointment handling.</li>
@@ -941,7 +976,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 3</strong>: <code>Name *</code> (text); <code>Guardian Name</code> (text); <code>Phone</code> (text); <code>Gender</code> (select) — Male, Female; <code>Date Of Birth</code> (text); <code>Year</code> (text); <code>Month</code> (text); <code>Day</code> (text); <code>Blood Group</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>Email</code> (text); <code>Address</code> (input); <code>National Identification Number</code> (input); <code>file</code> (file); <code>Remarks</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>TPA</code> (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; <code>TPA ID</code> (input); <code>TPA Validity</code> (input); <code>Alternate Number</code> (text)</li>
 </ul>
 <p><img alt="Appointment" src="../assets/screens/004-appointment.jpg" /></p>
-<h4 id="15-opd-out-patient">1.5 OPD - Out Patient</h4>
+<h4 id="screen-15-opd-out-patient">Screen 1.5 — OPD - Out Patient</h4>
 <ul>
 <li><strong>Menu path:</strong> Core Operations → OPD - Out Patient · <strong>URL:</strong> <code>/admin/patient/search</code></li>
 <li><strong>Purpose:</strong> OPD desk: Today / Upcoming / Old visit lists plus the "New Visit" workflow (symptoms, ICD-10, prescription, investigations, charges) and the patient view.</li>
@@ -956,7 +991,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 3</strong>: <code>Symptoms Type</code> (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; <code>field</code> (text); <code>Symptoms Description</code> (textarea); <code>Note</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>Appointment Date</code> (text); <code>Case</code> (text); <code>Casualty</code> (select) — No, Yes; <code>Old Patient</code> (select) — No, Yes; <code>Reference</code> (text); <code>Consultant Doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Payment Date</code> (text); <code>Amount ($)</code> (text); <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; <code>Payment Note</code> (text); <code>Cheque No</code> (text); <code>Cheque Date</code> (text); <code>document</code> (file); <code>is_for_antenatal</code> (checkbox)</li>
 </ul>
 <p><img alt="OPD - Out Patient" src="../assets/screens/005-opd-out-patient.jpg" /></p>
-<h4 id="16-ipd-patient">1.6 IPD Patient</h4>
+<h4 id="screen-16-ipd-patient">Screen 1.6 — IPD Patient</h4>
 <ul>
 <li><strong>Menu path:</strong> Core Operations → IPD - In Patient · <strong>URL:</strong> <code>/admin/patient/ipdsearch</code></li>
 <li><strong>Purpose:</strong> IPD desk: admission, bed/ward allocation, consultant assignment, daily notes, medication, investigations, charges and discharge.</li>
@@ -969,7 +1004,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 3</strong>: <code>Name</code> (text); <code>Guardian Name</code> (text); <code>Gender</code> (select) — Male, Female; <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>Phone</code> (text); <code>file</code> (file); <code>Symptoms</code> (text); <code>Blood Group</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>Year</code> (text); <code>Month</code> (text); <code>Height</code> (text); <code>Weight</code> (text); <code>organisation</code> (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; <code>credit_limit</code> (text)</li>
 </ul>
 <p><img alt="IPD Patient" src="../assets/screens/006-ipd-in-patient.jpg" /></p>
-<h4 id="17-data-entry-dialogs-captured-in-this-module">1.7 Data-entry dialogs captured in this module</h4>
+<h4 id="module-1-data-entry-dialogs-captured">Module 1 — data-entry dialogs captured</h4>
 <table>
 <thead>
 <tr>
@@ -1073,7 +1108,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="21-pharmacy-bill">2.1 Pharmacy Bill</h4>
+<h4 id="screen-21-pharmacy-bill">Screen 2.1 — Pharmacy Bill</h4>
 <ul>
 <li><strong>Menu path:</strong> Clinical → Pharmacy · <strong>URL:</strong> <code>/admin/pharmacy/bill</code></li>
 <li><strong>Purpose:</strong> Pharmacy point of sale: batch-wise issue, GST, discounts, stock deduction and printable bill.</li>
@@ -1086,7 +1121,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 3</strong>: <code>Name *</code> (text); <code>Guardian Name</code> (text); <code>Phone</code> (text); <code>Gender</code> (select) — Male, Female; <code>Date Of Birth</code> (text); <code>Year</code> (text); <code>Month</code> (text); <code>Day</code> (text); <code>Blood Group</code> (select) — O+, A+, B+, AB+, O-, A-; <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>Email</code> (text); <code>Address</code> (input); <code>National Identification Number</code> (input); <code>file</code> (file); <code>Remarks</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>TPA</code> (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; <code>TPA ID</code> (input); <code>TPA Validity</code> (input); <code>Alternate Number</code> (text)</li>
 </ul>
 <p><img alt="Pharmacy Bill" src="../assets/screens/007-pharmacy.jpg" /></p>
-<h4 id="22-pathology-bill">2.2 Pathology Bill</h4>
+<h4 id="screen-22-pathology-bill">Screen 2.2 — Pathology Bill</h4>
 <ul>
 <li><strong>Menu path:</strong> Clinical → Pathology · <strong>URL:</strong> <code>/admin/pathology/gettestreportbatch</code></li>
 <li><strong>Purpose:</strong> Laboratory worklist: order intake, sample collection, result entry/approval and single or batch report generation.</li>
@@ -1099,7 +1134,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 3</strong>: <code>Name *</code> (text); <code>Guardian Name</code> (text); <code>Phone</code> (text); <code>Gender</code> (select) — Male, Female; <code>Date Of Birth</code> (text); <code>Year</code> (text); <code>Month</code> (text); <code>Day</code> (text); <code>Blood Group</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>Email</code> (text); <code>Address</code> (input); <code>National Identification Number</code> (input); <code>file</code> (file); <code>Remarks</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>TPA</code> (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; <code>TPA ID</code> (input); <code>TPA Validity</code> (input); <code>Alternate Number</code> (text)</li>
 </ul>
 <p><img alt="Pathology Bill" src="../assets/screens/008-pathology.jpg" /></p>
-<h4 id="23-radiology-bill">2.3 Radiology Bill</h4>
+<h4 id="screen-23-radiology-bill">Screen 2.3 — Radiology Bill</h4>
 <ul>
 <li><strong>Menu path:</strong> Clinical → Radiology · <strong>URL:</strong> <code>/admin/radio/gettestreportbatch</code></li>
 <li><strong>Purpose:</strong> Imaging worklist: order intake, scheduling, findings entry and batch report generation.</li>
@@ -1112,7 +1147,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 3</strong>: <code>Name *</code> (text); <code>Guardian Name</code> (text); <code>Phone</code> (text); <code>Gender</code> (select) — Male, Female; <code>Date Of Birth</code> (text); <code>Year</code> (text); <code>Month</code> (text); <code>Day</code> (text); <code>Blood Group</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>Email</code> (text); <code>Address</code> (input); <code>National Identification Number</code> (input); <code>file</code> (file); <code>Remarks</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>TPA</code> (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; <code>TPA ID</code> (input); <code>TPA Validity</code> (input); <code>Alternate Number</code> (text)</li>
 </ul>
 <p><img alt="Radiology Bill" src="../assets/screens/009-radiology.jpg" /></p>
-<h4 id="24-blood-bank">2.4 Blood Bank</h4>
+<h4 id="screen-24-blood-bank">Screen 2.4 — Blood Bank</h4>
 <ul>
 <li><strong>Menu path:</strong> Clinical → Blood Bank · <strong>URL:</strong> <code>/admin/bloodbankstatus/</code></li>
 <li><strong>Purpose:</strong> Blood bank: component stock by group, donor registry, issue to patient and status board.</li>
@@ -1126,7 +1161,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 3</strong>: <code>Blood Group *</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>Bag *</code> (select); <code>Platelets</code> (checkbox); <code>bag_no_9</code> (text); <code>volume_9</code> (text); <code>unit_9</code> (select) — (ML), Litter, (nm), per day, Hour, Insurance; <code>lot_9</code> (text); <code>institution_9</code> (text); <code>Plasma</code> (checkbox); <code>bag_no_10</code> (text); <code>volume_10</code> (text); <code>unit_10</code> (select) — (ML), Litter, (nm), per day, Hour, Insurance; <code>lot_10</code> (text); <code>institution_10</code> (text); <code>Cryo.</code> (checkbox); <code>bag_no_11</code> (text); <code>volume_11</code> (text); <code>unit_11</code> (select) — (ML), Litter, (nm), per day, Hour, Insurance; <code>lot_11</code> (text); <code>institution_11</code> (text); <code>White Cells &amp; Granulocytes</code> (checkbox); <code>bag_no_12</code> (text); … +16 more</li>
 </ul>
 <p><img alt="Blood Bank" src="../assets/screens/010-blood-bank.jpg" /></p>
-<h4 id="25-ambulance-call-list">2.5 Ambulance Call List</h4>
+<h4 id="screen-25-ambulance-call-list">Screen 2.5 — Ambulance Call List</h4>
 <ul>
 <li><strong>Menu path:</strong> Clinical → Ambulance · <strong>URL:</strong> <code>/admin/vehicle/getcallambulance</code></li>
 <li><strong>Purpose:</strong> Ambulance call register with vehicle/driver, trip details and charges.</li>
@@ -1139,7 +1174,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 3</strong>: <code>Name *</code> (text); <code>Guardian Name</code> (text); <code>Phone</code> (text); <code>Gender</code> (select) — Male, Female; <code>Date Of Birth</code> (text); <code>Year</code> (text); <code>Month</code> (text); <code>Day</code> (text); <code>Blood Group</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>Email</code> (text); <code>Address</code> (input); <code>National Identification Number</code> (input); <code>file</code> (file); <code>Remarks</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>TPA</code> (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; <code>TPA ID</code> (input); <code>TPA Validity</code> (input); <code>Alternate Number</code> (text)</li>
 </ul>
 <p><img alt="Ambulance Call List" src="../assets/screens/011-ambulance.jpg" /></p>
-<h4 id="26-visitor-list">2.6 Visitor List</h4>
+<h4 id="screen-26-visitor-list">Screen 2.6 — Visitor List</h4>
 <ul>
 <li><strong>Menu path:</strong> Clinical → Front Office · <strong>URL:</strong> <code>/admin/visitors</code></li>
 <li><strong>Purpose:</strong> Reception toolkit: visitor pass, phone call log, postal register and complaints.</li>
@@ -1150,7 +1185,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/visitors/edit</code>): <code>Purpose *</code> (select) — Visit, Inquiry, Seminar; <code>Name *</code> (text); <code>Phone</code> (text); <code>ID Card</code> (text); <code>Visit To</code> (select) — Staff, OPD Patient, IPD Patient; <code>IPD/OPD/Staff</code> (select); <code>Related To</code> (text); <code>Number Of Person</code> (text); <code>Date *</code> (text); <code>time</code> (text); <code>out_time</code> (text); <code>Note</code> (textarea); <code>file</code> (file)</li>
 </ul>
 <p><img alt="Visitor List" src="../assets/screens/012-front-office.jpg" /></p>
-<h4 id="27-data-entry-dialogs-captured-in-this-module">2.7 Data-entry dialogs captured in this module</h4>
+<h4 id="module-2-data-entry-dialogs-captured">Module 2 — data-entry dialogs captured</h4>
 <table>
 <thead>
 <tr>
@@ -1291,7 +1326,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="31-birth-record">3.1 Birth Record</h4>
+<h4 id="screen-31-birth-record">Screen 3.1 — Birth Record</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → Birth &amp; Death Record › Birth Record · <strong>URL:</strong> <code>/admin/birthordeath</code></li>
 <li><strong>Purpose:</strong> Birth &amp; Death Record › Birth Record</li>
@@ -1303,7 +1338,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong>: <code>Child Name</code> (text); <code>Gender</code> (select) — Male, Female; <code>Weight</code> (text); <code>Birth Date</code> (text); <code>Phone</code> (text); <code>Case ID</code> (text); <code>Mother Name</code> (text); <code>Father Name</code> (text); <code>Address</code> (text); <code>Report</code> (textarea); <code>child_img</code> (file); <code>mother_pic</code> (file); <code>father_pic</code> (file); <code>document</code> (file)</li>
 </ul>
 <p><img alt="Birth Record" src="../assets/screens/013-birth-death-record-birth-record.jpg" /></p>
-<h4 id="32-death-record">3.2 Death Record</h4>
+<h4 id="screen-32-death-record">Screen 3.2 — Death Record</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → Birth &amp; Death Record › Death Record · <strong>URL:</strong> <code>/admin/birthordeath/death</code></li>
 <li><strong>Purpose:</strong> Birth &amp; Death Record › Death Record</li>
@@ -1315,7 +1350,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong>: <code>Case ID *</code> (text); <code>Patient Name *</code> (text); <code>Death Date *</code> (text); <code>Guardian Name *</code> (text); <code>document</code> (file); <code>Report</code> (textarea)</li>
 </ul>
 <p><img alt="Death Record" src="../assets/screens/014-birth-death-record-death-record.jpg" /></p>
-<h4 id="33-overview">3.3 Overview</h4>
+<h4 id="screen-33-overview">Screen 3.3 — Overview</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → Multi Branch › Overview · <strong>URL:</strong> <code>/admin/multibranch/branch/overview</code></li>
 <li><strong>Purpose:</strong> Group console comparing branches on patients, collections and occupancy.</li>
@@ -1329,7 +1364,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/multibranch/branch/overview</code>): <code>Time Duration</code> (select) — Today, This Week, Last Week, This Month, Last Month, Last 3 Months; <code>Date From</code> (text); <code>Date To</code> (text)</li>
 </ul>
 <p><img alt="Overview" src="../assets/screens/015-multi-branch-overview.jpg" /></p>
-<h4 id="34-report">3.4 Report</h4>
+<h4 id="screen-34-report">Screen 3.4 — Report</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → Multi Branch › Report · <strong>URL:</strong> <code>/admin/multibranch/branch/report</code></li>
 <li><strong>Purpose:</strong> Cross-branch comparative reporting with date range and module filters.</li>
@@ -1338,7 +1373,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Report" src="../assets/screens/016-multi-branch-report.jpg" /></p>
-<h4 id="35-setting">3.5 Setting</h4>
+<h4 id="screen-35-setting">Screen 3.5 — Setting</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → Multi Branch › Settings · <strong>URL:</strong> <code>/admin/multibranch/branch</code></li>
 <li><strong>Purpose:</strong> Branch master: create/edit branches, assign the branch admin and switch the active branch.</li>
@@ -1349,7 +1384,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/multibranch/branch/add</code>): <code>Envato Purchase Code *</code> (text); <code>Branch name *</code> (text); <code>Host Name *</code> (text); <code>Database Name *</code> (text); <code>Username *</code> (text); <code>Password *</code> (password)</li>
 </ul>
 <p><img alt="Setting" src="../assets/screens/017-multi-branch-settings.jpg" /></p>
-<h4 id="36-staff-directory">3.6 Staff Directory</h4>
+<h4 id="screen-36-staff-directory">Screen 3.6 — Staff Directory</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → Human Resource · <strong>URL:</strong> <code>/admin/staff</code></li>
 <li><strong>Purpose:</strong> Staff directory with role, designation and department, plus entry points to attendance, payroll and leaves.</li>
@@ -1360,7 +1395,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/staff</code>): <code>Role</code> (select) — Admin, Accountant, Doctor, Pharmacist, Pathologist, Radiologist; <code>Search By Keyword</code> (text)</li>
 </ul>
 <p><img alt="Staff Directory" src="../assets/screens/018-human-resource.jpg" /></p>
-<h4 id="37-qr-code-attendance">3.7 QR Code Attendance</h4>
+<h4 id="screen-37-qr-code-attendance">Screen 3.7 — QR Code Attendance</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → QR Code Attendance › Attendance · <strong>URL:</strong> <code>/admin/qrattendance/attendance/index</code></li>
 <li><strong>Purpose:</strong> Scan-based staff attendance register with a monthly view and in/out times.</li>
@@ -1369,7 +1404,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="QR Code Attendance" src="../assets/screens/019-qr-code-attendance-attendance.jpg" /></p>
-<h4 id="38-settings">3.8 Settings</h4>
+<h4 id="screen-38-settings">Screen 3.8 — Settings</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → QR Code Attendance › Settings · <strong>URL:</strong> <code>/admin/qrattendance/setting/index</code></li>
 <li><strong>Purpose:</strong> QR attendance rules: check-in window, working hours and device/QR configuration.</li>
@@ -1379,7 +1414,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/qrattendance/setting</code>): <code>Disabled</code> (radio); <code>Auto Attendance *</code> (radio); <code>Scanner Device Type *</code> (checkbox); <code>Camera-based device, like a mobile phone or webcam</code> (checkbox); <code>Select Camera *</code> (radio); <code>Secondary (Front)</code> (radio)</li>
 </ul>
 <p><img alt="Settings" src="../assets/screens/020-qr-code-attendance-settings.jpg" /></p>
-<h4 id="39-duty-roster">3.9 Duty Roster</h4>
+<h4 id="screen-39-duty-roster">Screen 3.9 — Duty Roster</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → Duty Roster · <strong>URL:</strong> <code>/admin/dutyroster/roster_report</code></li>
 <li><strong>Purpose:</strong> Shift roster per staff/department with print and export.</li>
@@ -1390,7 +1425,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/dutyroster/roster_report</code>): <code>Time Duration *</code> (select) — Today, This Week, Last Week, This Month, Last Month, Last 3 Months; <code>Date From</code> (text); <code>Date To</code> (text); <code>staff</code> (select) — Super Admin (9001), Sonia Bush (9002), Sansa Gomez (9008), Belina Turner (9005), John Hook (9006), Brad Frost (9003)</li>
 </ul>
 <p><img alt="Duty Roster" src="../assets/screens/021-duty-roster.jpg" /></p>
-<h4 id="310-annual-calendar">3.10 Annual Calendar</h4>
+<h4 id="screen-310-annual-calendar">Screen 3.10 — Annual Calendar</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → Annual Calendar · <strong>URL:</strong> <code>/admin/holiday/index</code></li>
 <li><strong>Purpose:</strong> Holiday and event calendar, plus to-dos per the vendor help articles.</li>
@@ -1402,7 +1437,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong>: <code>Type *</code> (radio); <code>Type *</code> (radio); <code>Type *</code> (radio); <code>From Date *</code> (text); <code>To Date *</code> (text); <code>Description *</code> (textarea); <code>front_site</code> (checkbox)</li>
 </ul>
 <p><img alt="Annual Calendar" src="../assets/screens/022-annual-calendar.jpg" /></p>
-<h4 id="311-referral-payment-list">3.11 Referral Payment List</h4>
+<h4 id="screen-311-referral-payment-list">Screen 3.11 — Referral Payment List</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → Referral · <strong>URL:</strong> <code>/admin/referral/payment</code></li>
 <li><strong>Purpose:</strong> Referral commission ledger: payouts against referred cases with filters by referral person and period.</li>
@@ -1415,7 +1450,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 3</strong>: <code>Name *</code> (text); <code>Guardian Name</code> (text); <code>Phone</code> (text); <code>Gender</code> (select) — Male, Female; <code>Date Of Birth</code> (text); <code>Year</code> (text); <code>Month</code> (text); <code>Day</code> (text); <code>Blood Group</code> (select); <code>Marital Status</code> (select); <code>Email</code> (text); <code>Address</code> (input); <code>National Identification Number</code> (input); <code>file</code> (file); <code>Remarks</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>TPA</code> (select); <code>TPA ID</code> (input); <code>TPA Validity</code> (input); <code>Alternate Number</code> (text)</li>
 </ul>
 <p><img alt="Referral Payment List" src="../assets/screens/023-referral.jpg" /></p>
-<h4 id="312-tpa-management">3.12 TPA Management</h4>
+<h4 id="screen-312-tpa-management">Screen 3.12 — TPA Management</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → TPA Management · <strong>URL:</strong> <code>/admin/tpamanagement</code></li>
 <li><strong>Purpose:</strong> Insurance/TPA register: companies, policies and claim status per patient.</li>
@@ -1427,7 +1462,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong>: <code>Name *</code> (text); <code>Code *</code> (text); <code>Contact No *</code> (text); <code>Address</code> (textarea); <code>Contact Person Name</code> (text); <code>Contact Person Phone</code> (text)</li>
 </ul>
 <p><img alt="TPA Management" src="../assets/screens/024-tpa-management.jpg" /></p>
-<h4 id="313-income-list">3.13 Income List</h4>
+<h4 id="screen-313-income-list">Screen 3.13 — Income List</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → Finance › Income · <strong>URL:</strong> <code>/admin/income</code></li>
 <li><strong>Purpose:</strong> Income ledger: head-wise entries that feed the finance reports and the dashboard trend.</li>
@@ -1438,7 +1473,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong>: <code>Income Head *</code> (select) — Hospital charges, Special campaign, Canteen Rent, Vehicle Stand Charges; <code>Name *</code> (text); <code>Invoice Number</code> (text); <code>Date *</code> (text); <code>Amount ($) *</code> (text); <code>documents</code> (file); <code>Description</code> (textarea)</li>
 </ul>
 <p><img alt="Income List" src="../assets/screens/025-finance-income.jpg" /></p>
-<h4 id="314-expense-list">3.14 Expense List</h4>
+<h4 id="screen-314-expense-list">Screen 3.14 — Expense List</h4>
 <ul>
 <li><strong>Menu path:</strong> Administration → Finance › Expenses · <strong>URL:</strong> <code>/admin/expense</code></li>
 <li><strong>Purpose:</strong> Expense ledger: head-wise entries with reference, invoice and remarks.</li>
@@ -1449,7 +1484,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong>: <code>Expense Head *</code> (select) — Building rent, Equipements, Electricity Bill, Telephone Bill, Power Generator Fuel Charge, Tea Expense; <code>Name *</code> (text); <code>Invoice Number</code> (text); <code>Date *</code> (text); <code>Amount ($) *</code> (text); <code>documents</code> (file); <code>Description</code> (textarea)</li>
 </ul>
 <p><img alt="Expense List" src="../assets/screens/026-finance-expenses.jpg" /></p>
-<h4 id="315-data-entry-dialogs-captured-in-this-module">3.15 Data-entry dialogs captured in this module</h4>
+<h4 id="module-3-data-entry-dialogs-captured">Module 3 — data-entry dialogs captured</h4>
 <table>
 <thead>
 <tr>
@@ -1618,7 +1653,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="41-survey-forms">4.1 Survey Forms</h4>
+<h4 id="screen-41-survey-forms">Screen 4.1 — Survey Forms</h4>
 <ul>
 <li><strong>Menu path:</strong> Tools &amp; Content → Survey Forms › Survey Forms · <strong>URL:</strong> <code>/admin/survey</code></li>
 <li><strong>Purpose:</strong> Survey builder: create questionnaires, assign them to roles/departments and read responses.</li>
@@ -1629,7 +1664,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> tbl_published_length, tbl_closed_length, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Survey Forms" src="../assets/screens/027-survey-forms-survey-forms.jpg" /></p>
-<h4 id="42-survey-forms-my-survey-forms">4.2 Survey Forms › My Survey Forms</h4>
+<h4 id="screen-42-survey-forms-my-survey-forms">Screen 4.2 — Survey Forms › My Survey Forms</h4>
 <ul>
 <li><strong>Menu path:</strong> Tools &amp; Content → Survey Forms › My Survey Forms · <strong>URL:</strong> <code>/admin/survey/staff_forms</code></li>
 <li><strong>Purpose:</strong> The signed-in staff member's own survey forms.</li>
@@ -1639,7 +1674,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Survey Forms › My Survey Forms" src="../assets/screens/028-survey-forms-my-survey-forms.jpg" /></p>
-<h4 id="43-notice-board">4.3 Notice Board</h4>
+<h4 id="screen-43-notice-board">Screen 4.3 — Notice Board</h4>
 <ul>
 <li><strong>Menu path:</strong> Tools &amp; Content → Messaging · <strong>URL:</strong> <code>/admin/notification</code></li>
 <li><strong>Purpose:</strong> Notice board for staff/patients with audience targeting and attachments.</li>
@@ -1648,7 +1683,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Notice Board" src="../assets/screens/029-messaging.jpg" /></p>
-<h4 id="44-item-stock-list">4.4 Item Stock List</h4>
+<h4 id="screen-44-item-stock-list">Screen 4.4 — Item Stock List</h4>
 <ul>
 <li><strong>Menu path:</strong> Tools &amp; Content → Inventory · <strong>URL:</strong> <code>/admin/itemstock</code></li>
 <li><strong>Purpose:</strong> Item stock control: categories, suppliers, issue and return, stock ledger and reorder levels.</li>
@@ -1659,7 +1694,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/itemstock/add</code>): <code>Item Category *</code> (select) — Syringe Packs, Cotton Packs, Medical Equipment, Bed Sheets, Uniforms, Surgical blades; <code>Item *</code> (select); <code>Supplier *</code> (select) — VK Supplier, Quick Service; <code>Store</code> (select) — SK Pharma, Vinay Pharmacy, Vardaan; <code>quantity</code> (text); <code>Purchase Price *</code> (text); <code>Date</code> (text); <code>Description</code> (textarea); <code>item_photo</code> (file)</li>
 </ul>
 <p><img alt="Item Stock List" src="../assets/screens/030-inventory.jpg" /></p>
-<h4 id="45-upload-share-content">4.5 Upload /Share Content</h4>
+<h4 id="screen-45-upload-share-content">Screen 4.5 — Upload /Share Content</h4>
 <ul>
 <li><strong>Menu path:</strong> Tools &amp; Content → Download Center › Upload /Share Content · <strong>URL:</strong> <code>/admin/content/upload</code></li>
 <li><strong>Purpose:</strong> Upload/share documents with staff, patients or the public site, with content type and audience.</li>
@@ -1672,7 +1707,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 3</strong> (posts to <code>/admin/content/ajaxupload</code>): <code>Content Type *</code> (select) — Medical Report, medical Equipment, Medicine Stock List, Hospital Service; <code>upload[]</code> (file); <code>Upload Youtube Video Link</code> (text)</li>
 </ul>
 <p><img alt="Upload /Share Content" src="../assets/screens/031-download-center-upload-share-content.jpg" /></p>
-<h4 id="46-content-share-list">4.6 Content Share List</h4>
+<h4 id="screen-46-content-share-list">Screen 4.6 — Content Share List</h4>
 <ul>
 <li><strong>Menu path:</strong> Tools &amp; Content → Download Center › Content Share List · <strong>URL:</strong> <code>/admin/content/list</code></li>
 <li><strong>Purpose:</strong> Everything shared so far, with filters and download counters.</li>
@@ -1682,7 +1717,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Content Share List" src="../assets/screens/032-download-center-content-share-list.jpg" /></p>
-<h4 id="47-content-type">4.7 Content Type</h4>
+<h4 id="screen-47-content-type">Screen 4.7 — Content Type</h4>
 <ul>
 <li><strong>Menu path:</strong> Tools &amp; Content → Download Center › Content Type · <strong>URL:</strong> <code>/admin/contenttype/</code></li>
 <li><strong>Purpose:</strong> Content type master used when uploading shared content.</li>
@@ -1693,7 +1728,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/contenttype/add</code>): <code>Name</code> (text); <code>Description</code> (textarea)</li>
 </ul>
 <p><img alt="Content Type" src="../assets/screens/033-download-center-content-type.jpg" /></p>
-<h4 id="48-generate-certificate">4.8 Generate Certificate</h4>
+<h4 id="screen-48-generate-certificate">Screen 4.8 — Generate Certificate</h4>
 <ul>
 <li><strong>Menu path:</strong> Tools &amp; Content → Certificate › Certificate · <strong>URL:</strong> <code>/admin/generatecertificate</code></li>
 <li><strong>Purpose:</strong> Certificate generator: pick module and discharged patients, choose a template and generate single or bulk certificates.</li>
@@ -1705,7 +1740,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong> (posts to <code>/admin/generatecertificate/generatemultiple</code>): <code>field</code> (checkbox)</li>
 </ul>
 <p><img alt="Generate Certificate" src="../assets/screens/034-certificate-certificate.jpg" /></p>
-<h4 id="49-generate-patient-id-card">4.9 Generate Patient ID Card</h4>
+<h4 id="screen-49-generate-patient-id-card">Screen 4.9 — Generate Patient ID Card</h4>
 <ul>
 <li><strong>Menu path:</strong> Tools &amp; Content → Certificate › Patient ID Card · <strong>URL:</strong> <code>/admin/generatepatientidcard/</code></li>
 <li><strong>Purpose:</strong> Patient ID-card generation from templates with photo and MR number.</li>
@@ -1717,7 +1752,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong> (posts to <code>/admin/Generatepatientidcard/generatemultiple</code>): <code>field</code> (checkbox)</li>
 </ul>
 <p><img alt="Generate Patient ID Card" src="../assets/screens/035-certificate-patient-id-card.jpg" /></p>
-<h4 id="410-generate-staff-id-card">4.10 Generate Staff ID Card</h4>
+<h4 id="screen-410-generate-staff-id-card">Screen 4.10 — Generate Staff ID Card</h4>
 <ul>
 <li><strong>Menu path:</strong> Tools &amp; Content → Certificate › Staff ID Card · <strong>URL:</strong> <code>/admin/generatestaffidcard/</code></li>
 <li><strong>Purpose:</strong> Staff ID-card generation from templates.</li>
@@ -1729,7 +1764,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong> (posts to <code>/admin/generatestaffidcard/generatemultiple</code>): <code>field</code> (checkbox)</li>
 </ul>
 <p><img alt="Generate Staff ID Card" src="../assets/screens/036-certificate-staff-id-card.jpg" /></p>
-<h4 id="411-page-list">4.11 Page List</h4>
+<h4 id="screen-411-page-list">Screen 4.11 — Page List</h4>
 <ul>
 <li><strong>Menu path:</strong> Tools &amp; Content → Front CMS · <strong>URL:</strong> <code>/admin/front/page</code></li>
 <li><strong>Purpose:</strong> Website content management: pages, banners, news, gallery, contact and SEO for the public site.</li>
@@ -1739,7 +1774,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Page List" src="../assets/screens/037-front-cms.jpg" /></p>
-<h4 id="412-live-consultation">4.12 Live Consultation</h4>
+<h4 id="screen-412-live-consultation">Screen 4.12 — Live Consultation</h4>
 <ul>
 <li><strong>Menu path:</strong> Tools &amp; Content → Live Consultation › Live Consultation · <strong>URL:</strong> <code>/admin/zoom_conference/consult</code></li>
 <li><strong>Purpose:</strong> Zoom teleconsultation: schedule a session for a patient, share the link, start/end and log the call.</li>
@@ -1752,7 +1787,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 3</strong> (posts to <code>/admin/zoom_conference/addByOther</code>): <code>Consultation Title</code> (text); <code>Consultation Date *</code> (text); <code>Consultation Duration Minutes *</code> (number); <code>OPD/IPD</code> (select) — None, OPD, IPD; <code>OPD/IPD No</code> (select); <code>OPD Checkup ID *</code> (select); <code>Consultant Doctor *</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Enabled</code> (radio); <code>Enabled</code> (radio); <code>Enabled</code> (radio); <code>Enabled</code> (radio); <code>Description</code> (textarea)</li>
 </ul>
 <p><img alt="Live Consultation" src="../assets/screens/038-live-consultation-live-consultation.jpg" /></p>
-<h4 id="413-live-meeting">4.13 Live Meeting</h4>
+<h4 id="screen-413-live-meeting">Screen 4.13 — Live Meeting</h4>
 <ul>
 <li><strong>Menu path:</strong> Tools &amp; Content → Live Consultation › Live Meeting · <strong>URL:</strong> <code>/admin/zoom_conference/meeting</code></li>
 <li><strong>Purpose:</strong> Internal staff video meetings with scheduling and participants.</li>
@@ -1764,7 +1799,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong> (posts to <code>/admin/zoom_conference/addMeeting</code>): <code>Meeting Title *</code> (text); <code>date</code> (text); <code>Meeting Duration Minutes *</code> (number); <code>Enabled</code> (radio); <code>Enabled</code> (radio); <code>Enabled</code> (radio); <code>Enabled</code> (radio); <code>Description</code> (textarea); <code>Sonia Bush (Doctor : 9002)</code> (checkbox); <code>Sansa Gomez (Doctor : 9008)</code> (checkbox); <code>Belina Turner (Pathologist : 9005)</code> (checkbox); <code>John Hook (Radiologist : 9006)</code> (checkbox); <code>Brad Frost (Accountant : 9003)</code> (checkbox); <code>Natasha Romanoff (Nurse : 9010)</code> (checkbox); <code>Amit Singh (Doctor : 9009)</code> (checkbox); <code>Reyan Jain (Doctor : 9011)</code> (checkbox); <code>Harry Grant (Pharmacist : 9012)</code> (checkbox); <code>Jason Abbot (Admin : 9017)</code> (checkbox); <code>Maria Ford (Receptionist : 9018)</code> (checkbox); <code>April Clinton (Nurse : 9020)</code> (checkbox)</li>
 </ul>
 <p><img alt="Live Meeting" src="../assets/screens/039-live-consultation-live-meeting.jpg" /></p>
-<h4 id="414-data-entry-dialogs-captured-in-this-module">4.14 Data-entry dialogs captured in this module</h4>
+<h4 id="module-4-data-entry-dialogs-captured">Module 4 — data-entry dialogs captured</h4>
 <table>
 <thead>
 <tr>
@@ -2062,7 +2097,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="51-finance">5.1 Finance</h4>
+<h4 id="screen-51-finance">Screen 5.1 — Finance</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › Finance · <strong>URL:</strong> <code>/admin/report/finance</code></li>
 <li><strong>Purpose:</strong> Reports › Finance</li>
@@ -2071,7 +2106,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Finance" src="../assets/screens/040-reports-finance.jpg" /></p>
-<h4 id="52-appointment">5.2 Appointment</h4>
+<h4 id="screen-52-appointment">Screen 5.2 — Appointment</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › Appointment · <strong>URL:</strong> <code>/admin/report/appointment</code></li>
 <li><strong>Purpose:</strong> Reports › Appointment</li>
@@ -2080,7 +2115,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Appointment" src="../assets/screens/041-reports-appointment.jpg" /></p>
-<h4 id="53-opd">5.3 OPD</h4>
+<h4 id="screen-53-opd">Screen 5.3 — OPD</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › OPD · <strong>URL:</strong> <code>/admin/report/opd</code></li>
 <li><strong>Purpose:</strong> Reports › OPD</li>
@@ -2089,7 +2124,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="OPD" src="../assets/screens/042-reports-opd.jpg" /></p>
-<h4 id="54-ipd">5.4 IPD</h4>
+<h4 id="screen-54-ipd">Screen 5.4 — IPD</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › IPD · <strong>URL:</strong> <code>/admin/report/ipd</code></li>
 <li><strong>Purpose:</strong> Reports › IPD</li>
@@ -2098,7 +2133,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="IPD" src="../assets/screens/043-reports-ipd.jpg" /></p>
-<h4 id="55-pharmacy">5.5 Pharmacy</h4>
+<h4 id="screen-55-pharmacy">Screen 5.5 — Pharmacy</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › Pharmacy · <strong>URL:</strong> <code>/admin/report/pharmacy</code></li>
 <li><strong>Purpose:</strong> Reports › Pharmacy</li>
@@ -2107,7 +2142,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Pharmacy" src="../assets/screens/044-reports-pharmacy.jpg" /></p>
-<h4 id="56-pathology">5.6 Pathology</h4>
+<h4 id="screen-56-pathology">Screen 5.6 — Pathology</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › Pathology · <strong>URL:</strong> <code>/admin/report/pathology</code></li>
 <li><strong>Purpose:</strong> Reports › Pathology</li>
@@ -2116,7 +2151,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Pathology" src="../assets/screens/045-reports-pathology.jpg" /></p>
-<h4 id="57-radiology">5.7 Radiology</h4>
+<h4 id="screen-57-radiology">Screen 5.7 — Radiology</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › Radiology · <strong>URL:</strong> <code>/admin/report/radiology</code></li>
 <li><strong>Purpose:</strong> Reports › Radiology</li>
@@ -2125,7 +2160,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Radiology" src="../assets/screens/046-reports-radiology.jpg" /></p>
-<h4 id="58-blood-bank">5.8 Blood Bank</h4>
+<h4 id="screen-58-blood-bank">Screen 5.8 — Blood Bank</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › Blood Bank · <strong>URL:</strong> <code>/admin/report/blood_bank</code></li>
 <li><strong>Purpose:</strong> Reports › Blood Bank</li>
@@ -2134,7 +2169,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Blood Bank" src="../assets/screens/047-reports-blood-bank.jpg" /></p>
-<h4 id="59-ambulance">5.9 Ambulance</h4>
+<h4 id="screen-59-ambulance">Screen 5.9 — Ambulance</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › Ambulance · <strong>URL:</strong> <code>/admin/report/ambulance</code></li>
 <li><strong>Purpose:</strong> Reports › Ambulance</li>
@@ -2143,7 +2178,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Ambulance" src="../assets/screens/048-reports-ambulance.jpg" /></p>
-<h4 id="510-birth-death-report">5.10 Birth Death Report</h4>
+<h4 id="screen-510-birth-death-report">Screen 5.10 — Birth Death Report</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › Birth Death · <strong>URL:</strong> <code>/admin/report/birth_death</code></li>
 <li><strong>Purpose:</strong> Reports › Birth Death</li>
@@ -2152,7 +2187,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Birth Death Report" src="../assets/screens/049-reports-birth-death.jpg" /></p>
-<h4 id="511-human-resource">5.11 Human Resource</h4>
+<h4 id="screen-511-human-resource">Screen 5.11 — Human Resource</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › Human Resource · <strong>URL:</strong> <code>/admin/report/human_resource</code></li>
 <li><strong>Purpose:</strong> Reports › Human Resource</li>
@@ -2161,7 +2196,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Human Resource" src="../assets/screens/050-reports-human-resource.jpg" /></p>
-<h4 id="512-tpa">5.12 TPA</h4>
+<h4 id="screen-512-tpa">Screen 5.12 — TPA</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › TPA · <strong>URL:</strong> <code>/admin/report/tpa</code></li>
 <li><strong>Purpose:</strong> Reports › TPA</li>
@@ -2170,7 +2205,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="TPA" src="../assets/screens/051-reports-tpa.jpg" /></p>
-<h4 id="513-inventory">5.13 Inventory</h4>
+<h4 id="screen-513-inventory">Screen 5.13 — Inventory</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › Inventory · <strong>URL:</strong> <code>/admin/report/inventory</code></li>
 <li><strong>Purpose:</strong> Reports › Inventory</li>
@@ -2179,7 +2214,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Inventory" src="../assets/screens/052-reports-inventory.jpg" /></p>
-<h4 id="514-live-consultation">5.14 Live Consultation</h4>
+<h4 id="screen-514-live-consultation">Screen 5.14 — Live Consultation</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › Live Consultation · <strong>URL:</strong> <code>/admin/report/live_consultation</code></li>
 <li><strong>Purpose:</strong> Reports › Live Consultation</li>
@@ -2188,7 +2223,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Live Consultation" src="../assets/screens/053-reports-live-consultation.jpg" /></p>
-<h4 id="515-log">5.15 Log</h4>
+<h4 id="screen-515-log">Screen 5.15 — Log</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › Log · <strong>URL:</strong> <code>/admin/report/log</code></li>
 <li><strong>Purpose:</strong> Reports › Log</li>
@@ -2197,7 +2232,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Log" src="../assets/screens/054-reports-log.jpg" /></p>
-<h4 id="516-ot">5.16 OT</h4>
+<h4 id="screen-516-ot">Screen 5.16 — OT</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › OT · <strong>URL:</strong> <code>/admin/report/ot</code></li>
 <li><strong>Purpose:</strong> Reports › OT</li>
@@ -2206,7 +2241,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="OT" src="../assets/screens/055-reports-ot.jpg" /></p>
-<h4 id="517-reports-patient">5.17 Reports › Patient</h4>
+<h4 id="screen-517-reports-patient">Screen 5.17 — Reports › Patient</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Reports › Patient · <strong>URL:</strong> <code>/admin/report/patient</code></li>
 <li><strong>Purpose:</strong> Reports › Patient</li>
@@ -2215,7 +2250,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Reports › Patient" src="../assets/screens/056-reports-patient.jpg" /></p>
-<h4 id="518-charges-details-list">5.18 Charges Details List</h4>
+<h4 id="screen-518-charges-details-list">Screen 5.18 — Charges Details List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Hospital Charges · <strong>URL:</strong> <code>/admin/charges</code></li>
 <li><strong>Purpose:</strong> The charge catalogue (consultation, procedures, room, investigations, services) reused by billing, OPD and IPD.</li>
@@ -2226,7 +2261,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong>: <code>Charge Name</code> (text); <code>Charge Type</code> (select) — Appointment, OPD, IPD, Pathology, Radiology, Blood Bank; <code>Charge Category</code> (select); <code>Unit Type</code> (select) — (ML), Litter, (nm), per day, Hour, Insurance; <code>Tax Category</code> (select) — Blood Module, OPD Tax, IPD Tax, Operation Charges, Pathology Tax, Radiology Tax; <code>tax_percentage</code> (text); <code>Standard Charge ($)</code> (text); <code>Description</code> (textarea); <code>schedule_charge_14</code> (text); <code>schedule_charge_13</code> (text); <code>schedule_charge_12</code> (text); <code>schedule_charge_8</code> (text); <code>schedule_charge_7</code> (text); <code>schedule_charge_6</code> (text); <code>schedule_charge_5</code> (text); <code>schedule_charge_4</code> (text); <code>schedule_charge_3</code> (text); <code>schedule_charge_2</code> (text); <code>schedule_charge_1</code> (text)</li>
 </ul>
 <p><img alt="Charges Details List" src="../assets/screens/057-setup-hospital-charges.jpg" /></p>
-<h4 id="519-bed-status">5.19 Bed Status</h4>
+<h4 id="screen-519-bed-status">Screen 5.19 — Bed Status</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Bed · <strong>URL:</strong> <code>/admin/setup/bed/status</code></li>
 <li><strong>Purpose:</strong> Bed/ward master with live occupancy status board.</li>
@@ -2236,7 +2271,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Search / filters:</strong> envato_market_purchase_code, email, app-envato_market_purchase_code, app-email</li>
 </ul>
 <p><img alt="Bed Status" src="../assets/screens/058-setup-bed.jpg" /></p>
-<h4 id="520-appointment-header-footer">5.20 Appointment Header Footer</h4>
+<h4 id="screen-520-appointment-header-footer">Screen 5.20 — Appointment Header Footer</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Print Header Footer · <strong>URL:</strong> <code>/admin/printing</code></li>
 <li><strong>Purpose:</strong> Per-module print header/footer designer used by every printed bill, report, prescription, certificate and ID card.</li>
@@ -2246,7 +2281,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/printing/update</code>): <code>(2230px × 300px)</code> (file); <code>footer_content</code> (textarea)</li>
 </ul>
 <p><img alt="Appointment Header Footer" src="../assets/screens/059-setup-print-header-footer.jpg" /></p>
-<h4 id="521-purpose-list">5.21 Purpose List</h4>
+<h4 id="screen-521-purpose-list">Screen 5.21 — Purpose List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Front Office · <strong>URL:</strong> <code>/admin/visitorspurpose</code></li>
 <li><strong>Purpose:</strong> Setup › Front Office</li>
@@ -2259,7 +2294,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong> (posts to <code>/admin/visitorspurpose/edit</code>): <code>Purpose</code> (input); <code>Description</code> (textarea)</li>
 </ul>
 <p><img alt="Purpose List" src="../assets/screens/060-setup-front-office.jpg" /></p>
-<h4 id="522-operation-list">5.22 Operation List</h4>
+<h4 id="screen-522-operation-list">Screen 5.22 — Operation List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Operations · <strong>URL:</strong> <code>/admin/operationtheatre/index</code></li>
 <li><strong>Purpose:</strong> Setup › Operations</li>
@@ -2272,7 +2307,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong> (posts to <code>/admin/operationtheatre/edit</code>): <code>Operation Name</code> (input); <code>Category</code> (select) — ENT and Oral Surgery, Gynaecology, Ophthalmology, Orthopedic Surgery, Plastic Surgery, Thoracic Surgery</li>
 </ul>
 <p><img alt="Operation List" src="../assets/screens/061-setup-operations.jpg" /></p>
-<h4 id="523-medicine-category-list">5.23 Medicine Category List</h4>
+<h4 id="screen-523-medicine-category-list">Screen 5.23 — Medicine Category List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Pharmacy · <strong>URL:</strong> <code>/admin/medicinecategory/medicine</code></li>
 <li><strong>Purpose:</strong> Medicine categories, units, suppliers and the medicine master (batch, MRP, sale price, GST, reorder level).</li>
@@ -2283,7 +2318,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/medicinecategory/add</code>): <code>Category Name</code> (text)</li>
 </ul>
 <p><img alt="Medicine Category List" src="../assets/screens/062-setup-pharmacy.jpg" /></p>
-<h4 id="524-pathology-category-list">5.24 Pathology Category List</h4>
+<h4 id="screen-524-pathology-category-list">Screen 5.24 — Pathology Category List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Pathology · <strong>URL:</strong> <code>/admin/pathologycategory/addcategory</code></li>
 <li><strong>Purpose:</strong> Pathology categories and tests with parameters, units and normal ranges.</li>
@@ -2294,7 +2329,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/pathologycategory/add</code>): <code>Category Name</code> (text)</li>
 </ul>
 <p><img alt="Pathology Category List" src="../assets/screens/063-setup-pathology.jpg" /></p>
-<h4 id="525-radiology-category-list">5.25 Radiology Category List</h4>
+<h4 id="screen-525-radiology-category-list">Screen 5.25 — Radiology Category List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Radiology · <strong>URL:</strong> <code>/admin/lab/addlab</code></li>
 <li><strong>Purpose:</strong> Radiology categories and studies.</li>
@@ -2305,7 +2340,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/lab/add</code>): <code>Category Name</code> (text)</li>
 </ul>
 <p><img alt="Radiology Category List" src="../assets/screens/064-setup-radiology.jpg" /></p>
-<h4 id="526-product-list">5.26 Product List</h4>
+<h4 id="screen-526-product-list">Screen 5.26 — Product List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Blood Bank · <strong>URL:</strong> <code>/admin/bloodbank/products</code></li>
 <li><strong>Purpose:</strong> Blood-bank components, bag types and product stock.</li>
@@ -2316,7 +2351,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/bloodbank/add_product</code>): <code>Type</code> (select) — Blood Group, Component; <code>Name</code> (text)</li>
 </ul>
 <p><img alt="Product List" src="../assets/screens/065-setup-blood-bank.jpg" /></p>
-<h4 id="527-symptoms-head-list">5.27 Symptoms Head List</h4>
+<h4 id="screen-527-symptoms-head-list">Screen 5.27 — Symptoms Head List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Symptoms · <strong>URL:</strong> <code>/admin/symptoms</code></li>
 <li><strong>Purpose:</strong> Symptom library used by OPD/IPD clinical entry.</li>
@@ -2327,7 +2362,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/symptoms/add</code>): <code>Symptoms Head *</code> (text); <code>Symptoms Type *</code> (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; <code>Description</code> (textarea)</li>
 </ul>
 <p><img alt="Symptoms Head List" src="../assets/screens/066-setup-symptoms.jpg" /></p>
-<h4 id="528-icd-10-codes-list">5.28 ICD-10 Codes List</h4>
+<h4 id="screen-528-icd-10-codes-list">Screen 5.28 — ICD-10 Codes List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › ICD-10 · <strong>URL:</strong> <code>/admin/icd10</code></li>
 <li><strong>Purpose:</strong> ICD-10 code library used for diagnosis entry.</li>
@@ -2338,7 +2373,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/icd10/add</code>): <code>Group *</code> (select) — Select Group, Infectious &amp; Parasitic Diseases, Infectious Diseases, Mental &amp; Behavioural Disorders, Neoplasms, Viral Diseases; <code>ICD Code *</code> (text); <code>Description *</code> (text)</li>
 </ul>
 <p><img alt="ICD-10 Codes List" src="../assets/screens/067-setup-icd-10.jpg" /></p>
-<h4 id="529-finding-list">5.29 Finding List</h4>
+<h4 id="screen-529-finding-list">Screen 5.29 — Finding List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Findings · <strong>URL:</strong> <code>/admin/finding</code></li>
 <li><strong>Purpose:</strong> Finding library used by clinical encounters.</li>
@@ -2349,7 +2384,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/finding/add</code>): <code>Finding</code> (text); <code>Category</code> (select) — Fever, Typhidot (or Widal Test), Skin Problem, Bone Density Problems, Hair Problems, Eye Diseases; <code>Description</code> (textarea)</li>
 </ul>
 <p><img alt="Finding List" src="../assets/screens/068-setup-findings.jpg" /></p>
-<h4 id="530-vital-list">5.30 Vital List</h4>
+<h4 id="screen-530-vital-list">Screen 5.30 — Vital List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Vitals · <strong>URL:</strong> <code>/admin/vital</code></li>
 <li><strong>Purpose:</strong> Vital-sign master (temperature, pulse, BP, respiration, SpO2, BMI) for IPD/OPD charts.</li>
@@ -2360,7 +2395,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong>: <code>Vital Name</code> (text); <code>From</code> (text); <code>To</code> (text); <code>Unit</code> (text)</li>
 </ul>
 <p><img alt="Vital List" src="../assets/screens/069-setup-vitals.jpg" /></p>
-<h4 id="531-settings">5.31 Settings</h4>
+<h4 id="screen-531-settings">Screen 5.31 — Settings</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Zoom Setting · <strong>URL:</strong> <code>/admin/zoom_conference</code></li>
 <li><strong>Purpose:</strong> Zoom API keys/secret so live consultation and live meeting work.</li>
@@ -2370,7 +2405,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/zoom_conference</code>): <code>Zoom Api Key</code> (text); <code>Zoom Api Secret</code> (text); <code>Disabled</code> (radio); <code>Disabled</code> (radio); <code>Disabled</code> (radio); <code>Disabled</code> (radio); <code>Default OPD Duration (In Minutes)</code> (number); <code>Default IPD Duration (In Minutes)</code> (number)</li>
 </ul>
 <p><img alt="Settings" src="../assets/screens/070-setup-zoom-setting.jpg" /></p>
-<h4 id="532-income-head-list">5.32 Income Head List</h4>
+<h4 id="screen-532-income-head-list">Screen 5.32 — Income Head List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Finance · <strong>URL:</strong> <code>/admin/incomehead</code></li>
 <li><strong>Purpose:</strong> Income and expense heads used by the finance ledger and reports.</li>
@@ -2383,7 +2418,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong> (posts to <code>/admin/incomehead/edit</code>): <code>Income Head</code> (text); <code>Description</code> (textarea)</li>
 </ul>
 <p><img alt="Income Head List" src="../assets/screens/071-setup-finance.jpg" /></p>
-<h4 id="533-leave-type-list">5.33 Leave Type List</h4>
+<h4 id="screen-533-leave-type-list">Screen 5.33 — Leave Type List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Human Resource · <strong>URL:</strong> <code>/admin/leavetypes</code></li>
 <li><strong>Purpose:</strong> Leave types and standing HR configuration.</li>
@@ -2394,7 +2429,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/leavetypes/createLeaveType</code>): <code>Name</code> (text)</li>
 </ul>
 <p><img alt="Leave Type List" src="../assets/screens/072-setup-human-resource.jpg" /></p>
-<h4 id="534-referral-commission-list">5.34 Referral Commission List</h4>
+<h4 id="screen-534-referral-commission-list">Screen 5.34 — Referral Commission List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Referral · <strong>URL:</strong> <code>/admin/referral/commission</code></li>
 <li><strong>Purpose:</strong> Referral commission percentages per referral person/service.</li>
@@ -2406,7 +2441,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong>: <code>Category</code> (select) — District Hospital (DH), OPD Department, IPD Department, Clinical Services within the Community, Valuing the Benefit of Clinical Services; <code>Standard Commission (%)</code> (text); <code>module_commission[]</code> (text); <code>module_commission[]</code> (text); <code>module_commission[]</code> (text); <code>module_commission[]</code> (text); <code>module_commission[]</code> (text); <code>module_commission[]</code> (text); <code>module_commission[]</code> (text)</li>
 </ul>
 <p><img alt="Referral Commission List" src="../assets/screens/073-setup-referral.jpg" /></p>
-<h4 id="535-slots">5.35 Slots</h4>
+<h4 id="screen-535-slots">Screen 5.35 — Slots</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Appointment · <strong>URL:</strong> <code>/admin/onlineappointment/index</code></li>
 <li><strong>Purpose:</strong> Appointment slots and the online-appointment intake queue.</li>
@@ -2416,7 +2451,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/onlineappointment/</code>): <code>Doctor *</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Shift *</code> (select); <code>Consultation Duration Minutes *</code> (number); <code>Charge Category</code> (select) — Appointment Charges, Other Charges, OPD Consultation Fees, OPD Service, OPD Insurance, Intensive Care Units; <code>Charge</code> (select); <code>Amount ($)</code> (text)</li>
 </ul>
 <p><img alt="Slots" src="../assets/screens/074-setup-appointment.jpg" /></p>
-<h4 id="536-item-category-list">5.36 Item Category List</h4>
+<h4 id="screen-536-item-category-list">Screen 5.36 — Item Category List</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Inventory · <strong>URL:</strong> <code>/admin/itemcategory</code></li>
 <li><strong>Purpose:</strong> Item categories and the item master for inventory.</li>
@@ -2429,7 +2464,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 2</strong> (posts to <code>/admin/itemcategory/edit</code>): <code>Item Category *</code> (text); <code>Description</code> (textarea)</li>
 </ul>
 <p><img alt="Item Category List" src="../assets/screens/075-setup-inventory.jpg" /></p>
-<h4 id="537-add-custom-field">5.37 Add Custom Field</h4>
+<h4 id="screen-537-add-custom-field">Screen 5.37 — Add Custom Field</h4>
 <ul>
 <li><strong>Menu path:</strong> Reports &amp; Setup → Setup › Custom Fields · <strong>URL:</strong> <code>/admin/customfield</code></li>
 <li><strong>Purpose:</strong> Add hospital-specific fields to core entities without changing the schema.</li>
@@ -2439,7 +2474,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <li><strong>Form 1</strong> (posts to <code>/admin/customfield</code>): <code>Field Belongs To</code> (select) — Ambulance Call, Antenatal, Appointment, Birth Record, Blood Issue, Component Issue; <code>Field Type</code> (select) — Checkbox, Color Picker, Date Picker, Datetime Picker, Input, Hyperlink; <code>Field Name</code> (text); <code>column</code> (number); <code>Field Values (Separate By Comma)</code> (textarea); <code>Required</code> (checkbox); <code>On Table</code> (checkbox); <code>On Print</code> (checkbox); <code>On Report</code> (checkbox); <code>On Patient Panel</code> (checkbox)</li>
 </ul>
 <p><img alt="Add Custom Field" src="../assets/screens/076-setup-custom-fields.jpg" /></p>
-<h4 id="538-data-entry-dialogs-captured-in-this-module">5.38 Data-entry dialogs captured in this module</h4>
+<h4 id="module-5-data-entry-dialogs-captured">Module 5 — data-entry dialogs captured</h4>
 <table>
 <thead>
 <tr>
@@ -2498,9 +2533,72 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <p><img alt="Add Finding" src="../assets/screens/068-setup-findings__add-finding.jpg" /></p>
 <h2 id="3-record-level-screens-opened-from-real-data">3. Record-level screens (opened from real data)</h2>
 <p>These screens were reached by opening an actual record from a list, so they show the real clinical and financial layout, including every tab of the record.</p>
-<h3 id="31-aanu-1234-admitted">3.1 AANU (1234) Admitted</h3>
+<h3 id="31-single-module-billing-screens-opd-appointment">3.1 Single-module billing screens (OPD / appointment)</h3>
+<ul>
+<li><strong>Opened from:</strong> <code>//admin/bill/dashboard</code> → <code>/admin/bill/appointment</code></li>
+<li><strong>Screenshot:</strong> <code>docs/assets/screens/detail-billing-screen.jpg</code></li>
+<li><strong>Record tabs:</strong> Today Appointment · Upcoming Appointment · Old Appointment</li>
+<li><strong>Table:</strong> Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address</li>
+<li><strong>Table:</strong> Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address</li>
+<li><strong>Table:</strong> Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Doctor Fees ($)</code> (text); <code>Shift</code> (select); <code>Appointment Date</code> (text); <code>Slot</code> (select); <code>Appointment Priority</code> (select) — Normal, Urgent, Very Urgent, Low; <code>Status *</code> (select) — Pending, Approved, Cancel; <code>Discount Percentage</code> (text); <code>Live Consultant (On Video Conference)</code> (select) — No, Yes; <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; <code>Message</code> (textarea); <code>Cheque No</code> (text); <code>Cheque Date</code> (text); <code>document</code> (file); <code>Alternate Address</code> (textarea)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Doctor Fees ($)</code> (text); <code>Shift</code> (select); <code>Appointment Date</code> (text); <code>Slot</code> (select); <code>Appointment Priority</code> (select) — Normal, Urgent, Very Urgent, Low; <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; <code>Discount Percentage</code> (text); <code>Status *</code> (select) — Pending, Approved, Cancel; <code>Live Consultant (On Video Conference)</code> (select) — No, Yes; <code>Message</code> (textarea)</li>
+</ul>
+<p><img alt="Single-module billing screens (OPD / appointment)" src="../assets/screens/detail-billing-screen.jpg" /></p>
+<p><strong>Tabs of this record</strong></p>
+<p><img alt="Single-module billing screens (OPD / appointment) — 1 today appointment" src="../assets/screens/detail-billing-screen__1-today-appointment.jpg" /></p>
+<p><img alt="Single-module billing screens (OPD / appointment) — 2 upcoming appointment" src="../assets/screens/detail-billing-screen__2-upcoming-appointment.jpg" /></p>
+<p><img alt="Single-module billing screens (OPD / appointment) — 3 old appointment" src="../assets/screens/detail-billing-screen__3-old-appointment.jpg" /></p>
+<h3 id="32-ipd-patient-case-every-tab-of-an-admitted-patient">3.2 IPD patient case — every tab of an admitted patient</h3>
+<ul>
+<li><strong>Opened from:</strong> <code>//admin/patient/ipdsearch</code> → <code>/admin/patient/ipdprofile/138/1</code></li>
+<li><strong>Screenshot:</strong> <code>docs/assets/screens/detail-ipd-profile.jpg</code></li>
+<li><strong>Record tabs:</strong> Overview · Nurse Notes · Medication · Prescription · Consultant Register · Lab Investigation · Operations · Charges · Payments · Live Consultation · Bed History · Timeline · Treatment History · Vitals</li>
+<li><strong>Table:</strong> Date | Height (1 - 200 Centimeters) | Weight (0 - 150 Kilograms) | Pulse (70 - 100 Beats per) | Temperature (95.8 - 99.3 Fahrenheit ) | BP (90/60 - 140/90 mmHg)</li>
+<li><strong>Table:</strong> Applied Date | Consultant Doctor | Instruction | Consultant Date | Action</li>
+<li><strong>Table:</strong> Prescription No | Date | Finding | Action</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Select</code> (select) — Sonia Bush (9002), Sansa Gomez (9008), Amit Singh (9009); <code>field</code> (search)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>bed_group_id</code> (select) — VIP Ward - Ground Floor, Private Ward - 3rd Floor, General Ward Male - 3rd Floor, ICU - 2nd Floor, NICU - 2nd Floor, AC (Normal) - 1st Floor; <code>bed_no</code> (select); <code>discharge_revert_reason</code> (textarea)</li>
+</ul>
+<p><img alt="IPD patient case — every tab of an admitted patient" src="../assets/screens/detail-ipd-profile.jpg" /></p>
+<p><strong>Tabs of this record</strong></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 1 overview" src="../assets/screens/detail-ipd-profile__1-overview.jpg" /></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 2 nurse notes" src="../assets/screens/detail-ipd-profile__2-nurse-notes.jpg" /></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 3 medication" src="../assets/screens/detail-ipd-profile__3-medication.jpg" /></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 4 prescription" src="../assets/screens/detail-ipd-profile__4-prescription.jpg" /></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 5 consultant register" src="../assets/screens/detail-ipd-profile__5-consultant-register.jpg" /></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 6 lab investigation" src="../assets/screens/detail-ipd-profile__6-lab-investigation.jpg" /></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 7 operations" src="../assets/screens/detail-ipd-profile__7-operations.jpg" /></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 8 charges" src="../assets/screens/detail-ipd-profile__8-charges.jpg" /></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 9 payments" src="../assets/screens/detail-ipd-profile__9-payments.jpg" /></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 10 live consultation" src="../assets/screens/detail-ipd-profile__10-live-consultation.jpg" /></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 11 bed history" src="../assets/screens/detail-ipd-profile__11-bed-history.jpg" /></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 12 timeline" src="../assets/screens/detail-ipd-profile__12-timeline.jpg" /></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 13 treatment history" src="../assets/screens/detail-ipd-profile__13-treatment-history.jpg" /></p>
+<p><img alt="IPD patient case — every tab of an admitted patient — 14 vitals" src="../assets/screens/detail-ipd-profile__14-vitals.jpg" /></p>
+<h3 id="33-opd-patient-record-every-tab-of-an-out-patient">3.3 OPD patient record — every tab of an out-patient</h3>
+<ul>
+<li><strong>Opened from:</strong> <code>//admin/patient/search</code> → <code>/admin/patient/profile/1084/1</code></li>
+<li><strong>Screenshot:</strong> <code>docs/assets/screens/detail-opd-profile-2.jpg</code></li>
+<li><strong>Record tabs:</strong> Overview · Visits · Lab Investigation · Treatment History · Timeline · Vitals</li>
+<li><strong>Table:</strong> OPD NO | APPOINTMENT DATE | CONSULTANT | SYMPTOMS</li>
+<li><strong>Table:</strong> OPD No | Case ID | Appointment Date | Consultant | Reference | Symptoms | Previous Medical Issue | Action</li>
+<li><strong>Table:</strong> Test Name | Case ID | Lab | Sample Collected | Expected Date | Approved By | Action</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Symptoms Type</code> (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; <code>Symptoms Type</code> (search); <code>Select</code> (text); <code>Symptoms Description</code> (textarea); <code>ICD-10 Group</code> (select) — -- All Groups --, Infectious &amp; Parasitic Diseases, Infectious Diseases, Mental &amp; Behavioural Disorders, Neoplasms, Viral Diseases; <code>ICD-10 Diagnosis</code> (select) — [A09] Infectious Gastroenteritis, [A15.0] Pulmonary Tuberculosis, [B34.9] Viral Infection, Unspecified, [C50.9] Malignant Neoplasm of Breast, [F41.1] Generalized Anxiety Disorder; <code>ICD-10 Diagnosis</code> (search); <code>Note</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>Appointment Date</code> (text); <code>Case</code> (text); <code>Casualty</code> (select) — No, Yes; <code>Old Patient</code> (select) — No, Yes; <code>TPA</code> (text); <code>Reference</code> (text); <code>Consultant Doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Payment Date</code> (text); <code>Amount ($)</code> (text); <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; <code>Payment Note</code> (text); <code>Cheque No</code> (text); <code>Cheque Date</code> (text); … +2 more</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Title</code> (text); <code>Date</code> (text); <code>Description</code> (textarea); <code>timeline_doc</code> (file); <code>Visible to this person</code> (checkbox)</li>
+</ul>
+<p><img alt="OPD patient record — every tab of an out-patient" src="../assets/screens/detail-opd-profile-2.jpg" /></p>
+<p><strong>Tabs of this record</strong></p>
+<p><img alt="OPD patient record — every tab of an out-patient — 1 overview" src="../assets/screens/detail-opd-profile-2__1-overview.jpg" /></p>
+<p><img alt="OPD patient record — every tab of an out-patient — 2 visits" src="../assets/screens/detail-opd-profile-2__2-visits.jpg" /></p>
+<p><img alt="OPD patient record — every tab of an out-patient — 3 lab investigation" src="../assets/screens/detail-opd-profile-2__3-lab-investigation.jpg" /></p>
+<p><img alt="OPD patient record — every tab of an out-patient — 4 treatment history" src="../assets/screens/detail-opd-profile-2__4-treatment-history.jpg" /></p>
+<p><img alt="OPD patient record — every tab of an out-patient — 5 timeline" src="../assets/screens/detail-opd-profile-2__5-timeline.jpg" /></p>
+<p><img alt="OPD patient record — every tab of an out-patient — 6 vitals" src="../assets/screens/detail-opd-profile-2__6-vitals.jpg" /></p>
+<h3 id="34-aanu-1234-admitted">3.4 AANU (1234) Admitted</h3>
 <ul>
 <li><strong>Opened from:</strong> <code>/admin/patient/ipdsearch</code> → <code>/admin/patient/ipdprofile/138/1</code></li>
+<li><strong>Screenshot:</strong> <code>docs/assets/screens/detail-ipd-detail.jpg</code></li>
 <li><strong>Record tabs:</strong> Overview · Nurse Notes · Medication · Prescription · Consultant Register · Lab Investigation · Operations · Charges · Payments · Live Consultation · Bed History · Timeline · Treatment History · Vitals</li>
 <li><strong>Table:</strong> Date | Height (1 - 200 Centimeters) | Weight (0 - 150 Kilograms) | Pulse (70 - 100 Beats per) | Temperature (95.8 - 99.3 Fahrenheit ) | BP (90/60 - 140/90 mmHg)</li>
 <li><strong>Table:</strong> Applied Date | Consultant Doctor | Instruction | Consultant Date | Action</li>
@@ -2518,14 +2616,402 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <p><img alt="AANU (1234) Admitted — 6 lab investigation" src="../assets/screens/detail-ipd-detail__6-lab-investigation.jpg" /></p>
 <p><img alt="AANU (1234) Admitted — 7 operations" src="../assets/screens/detail-ipd-detail__7-operations.jpg" /></p>
 <p><img alt="AANU (1234) Admitted — 8 charges" src="../assets/screens/detail-ipd-detail__8-charges.jpg" /></p>
-<h3 id="32-patient">3.2 Patient</h3>
+<h3 id="35-patient">3.5 Patient</h3>
 <ul>
 <li><strong>Opened from:</strong> <code>/admin/admin/search</code> → <code>/admin/patient/import</code></li>
+<li><strong>Screenshot:</strong> <code>docs/assets/screens/detail-patient-master-detail.jpg</code></li>
 <li><strong>Table:</strong> *Patient | Guardian | Gender | Age (Year) | Age (Month) | Age (Day) | Marital Status | Phone | Email | Address</li>
 <li><strong>Form</strong> (posts to <code>/admin/patient/import</code>): <code>blood_group</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>file</code> (file)</li>
 </ul>
 <p><img alt="Patient" src="../assets/screens/detail-patient-master-detail.jpg" /></p>
-<h2 id="4-roles-and-access-model">4. Roles and access model</h2>
+<h2 id="4-sub-screens-reachable-from-the-modules">4. Sub-screens reachable from the modules</h2>
+<p>These screens are not menu entries but are reachable from the modules above (per-module billing, master imports, return registers, status boards, payroll …). They are part of the product surface and are captured here for completeness.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Screen</th>
+<th>Path</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Billing - Appointment module</strong></td>
+<td><code>/admin/bill/appointment</code></td>
+<td>Grid: Patient Name</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Billing - OPD module</strong></td>
+<td><code>/admin/bill/opd</code></td>
+<td>Grid: Name</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Pathology Billing</strong></td>
+<td><code>/admin/bill/pathology</code></td>
+<td>Grid: Bill No</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Radiology Billing</strong></td>
+<td><code>/admin/bill/radiology</code></td>
+<td>Grid: Bill No</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Blood Issue Billing</strong></td>
+<td><code>/admin/bill/issueblood</code></td>
+<td>Grid: Bill No</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Blood Components Issue Billing</strong></td>
+<td><code>/admin/bill/issuecomponent</code></td>
+<td>Grid: Bill No</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Single Module Billing</strong></td>
+<td><code>/admin/bill/dashboard</code></td>
+<td>Billing - Bill dashboard</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Billing - OPD bill screen</strong></td>
+<td><code>/admin/bill/opd</code></td>
+<td>Grid: Name</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Patient import</strong></td>
+<td><code>/admin/patient/import</code></td>
+<td>Grid: *Patient</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>IPD Discharged Patient</strong></td>
+<td><code>/admin/patient/discharged_patients</code></td>
+<td>Grid: Name</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Patient import</strong></td>
+<td><code>/admin/patient/import</code></td>
+<td>Grid: *Patient</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>IPD Discharged Patient</strong></td>
+<td><code>/admin/patient/discharged_patients</code></td>
+<td>Grid: Name</td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>Medicines Stock</strong></td>
+<td><code>/admin/pharmacy/search</code></td>
+<td>Grid: #</td>
+</tr>
+<tr>
+<td>14</td>
+<td><strong>Sale Return Bills</strong></td>
+<td><code>/admin/pharmacy/salereturnbills</code></td>
+<td>Grid: Return No</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Medicines Stock</strong></td>
+<td><code>/admin/pharmacy/search</code></td>
+<td>Grid: #</td>
+</tr>
+<tr>
+<td>16</td>
+<td><strong>Pathology Test</strong></td>
+<td><code>/admin/pathology/search</code></td>
+<td>Grid: Test Name</td>
+</tr>
+<tr>
+<td>17</td>
+<td><strong>Sale Return Bills</strong></td>
+<td><code>/admin/pharmacy/salereturnbills</code></td>
+<td>Grid: Return No</td>
+</tr>
+<tr>
+<td>18</td>
+<td><strong>Pathology Test</strong></td>
+<td><code>/admin/pathology/search</code></td>
+<td>Grid: Test Name</td>
+</tr>
+<tr>
+<td>19</td>
+<td><strong>Radiology Test</strong></td>
+<td><code>/admin/radio/search</code></td>
+<td>Grid: Test Name</td>
+</tr>
+<tr>
+<td>20</td>
+<td><strong>Blood bank status board</strong></td>
+<td><code>/admin/bloodbankstatus</code></td>
+<td>Grid: BAGS</td>
+</tr>
+<tr>
+<td>21</td>
+<td><strong>Radiology Test</strong></td>
+<td><code>/admin/radio/search</code></td>
+<td>Grid: Test Name</td>
+</tr>
+<tr>
+<td>22</td>
+<td><strong>Blood bank status board</strong></td>
+<td><code>/admin/bloodbankstatus</code></td>
+<td>Grid: BAGS</td>
+</tr>
+<tr>
+<td>23</td>
+<td><strong>QR Code Attendance</strong></td>
+<td><code>/admin/qrattendance/attendance/index</code></td>
+<td>Staff attendance register</td>
+</tr>
+<tr>
+<td>24</td>
+<td><strong>Payroll</strong></td>
+<td><code>/admin/payroll</code></td>
+<td>Payroll</td>
+</tr>
+<tr>
+<td>25</td>
+<td><strong>Appointment queue</strong></td>
+<td><code>/admin/appointment/index</code></td>
+<td>Grid: Patient Name</td>
+</tr>
+<tr>
+<td>26</td>
+<td><strong>Payroll</strong></td>
+<td><code>/admin/payroll</code></td>
+<td>Payroll</td>
+</tr>
+<tr>
+<td>27</td>
+<td><strong>Appointment queue</strong></td>
+<td><code>/admin/appointment/index</code></td>
+<td>Grid: Patient Name</td>
+</tr>
+<tr>
+<td>28</td>
+<td><strong>OPD patient view</strong></td>
+<td><code>/admin/patient/search</code></td>
+<td>Grid: Name</td>
+</tr>
+<tr>
+<td>29</td>
+<td><strong>OPD patient view</strong></td>
+<td><code>/admin/patient/search</code></td>
+<td>Grid: Name</td>
+</tr>
+</tbody>
+</table>
+<h3 id="41-billing-appointment-module-adminbillappointment">4.1 Billing - Appointment module — <code>/admin/bill/appointment</code></h3>
+<ul>
+<li><strong>Tabs:</strong> Today Appointment · Upcoming Appointment · Old Appointment</li>
+<li><strong>Grid (2 rows):</strong> Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status</li>
+<li><strong>Grid (25 rows):</strong> Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status</li>
+<li><strong>Grid (101 rows):</strong> Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Doctor Fees ($)</code> (text); <code>Shift</code> (select); <code>Appointment Date</code> (text); <code>Slot</code> (select); <code>Appointment Priority</code> (select) — Normal, Urgent, Very Urgent, Low; <code>Status *</code> (select) — Pending, Approved, Cancel; <code>Discount Percentage</code> (text); <code>Live Consultant (On Video Conference)</code> (select) — No, Yes; <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; <code>Message</code> (textarea); <code>Cheque No</code> (text); <code>Cheque Date</code> (text); <code>document</code> (file); <code>Alternate Address</code> (textarea)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Doctor Fees ($)</code> (text); <code>Shift</code> (select); <code>Appointment Date</code> (text); <code>Slot</code> (select); <code>Appointment Priority</code> (select) — Normal, Urgent, Very Urgent, Low; <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; <code>Discount Percentage</code> (text); <code>Status *</code> (select) — Pending, Approved, Cancel; <code>Live Consultant (On Video Conference)</code> (select) — No, Yes; <code>Message</code> (textarea)</li>
+</ul>
+<p><img alt="Billing - Appointment module" src="../assets/screens/sub-01-billing-appointment-module.jpg" /></p>
+<h3 id="42-billing-opd-module-adminbillopd">4.2 Billing - OPD module — <code>/admin/bill/opd</code></h3>
+<ul>
+<li><strong>Tabs:</strong> Today OPD · Upcoming OPD · Old OPD</li>
+<li><strong>Grid (2 rows):</strong> Name | Patient Id | Guardian Name | Gender | Phone | Generated By | Consultant Doctor | Last Visit | Previous Medical Issue | Total Visit | Is Antenatal | Action</li>
+<li><strong>Form</strong> (posts to <code>/admin/patient</code>) <em>(dialog)</em>: <code>symptoms_type</code> (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; <code>field</code> (search); <code>Select</code> (text); <code>Symptoms Description</code> (textarea); <code>Note</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>Previous Medical Issue</code> (textarea); <code>Appointment Date</code> (text); <code>case</code> (text); <code>casualty</code> (select) — No, Yes; <code>old_patient</code> (select) — No, Yes; <code>refference</code> (text); <code>consultant_doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Apply TPA</code> (checkbox); <code>Charge Category</code> (select) — OPD Consultation Fees, OPD Service, OPD Insurance, Blood pressure check, Eye check, Cholesterol level check; <code>Charge</code> (select); <code>Standard Charge ($)</code> (text); <code>Applied Charge ($)</code> (text); <code>discount_percentage</code> (text); <code>percentage</code> (text); <code>Amount ($)</code> (text); <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; … +6 more</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Name</code> (text); <code>Guardian Name</code> (text); <code>Gender</code> (select); <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>file</code> (file); <code>Any Known Allergies</code> (text); <code>Phone</code> (text); <code>Blood Group</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>Age</code> (text); <code>Month</code> (text)</li>
+</ul>
+<p><img alt="Billing - OPD module" src="../assets/screens/sub-02-billing-opd-module.jpg" /></p>
+<h3 id="43-pathology-billing-adminbillpathology">4.3 Pathology Billing — <code>/admin/bill/pathology</code></h3>
+<ul>
+<li><strong>Grid (101 rows):</strong> Bill No | Case ID | Reporting Date | Patient Name | Generated By | Reference Doctor | Previous Report Value | Amount ($) | Discount ($) | Tax ($) | Net Amount ($) | Paid Amount ($)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Apply TPA</code> (select); <code>Prescription No</code> (text); <code>Apply TPA</code> (checkbox); <code>Bill No</code> (text); <code>Case ID</code> (text); <code>Date</code> (text)</li>
+<li><strong>Form</strong> (posts to <code>/admin/pathology/updatecollection</code>) <em>(dialog)</em>: <code>Sample Collected Person Name</code> (select) — Belina Turner (9005); <code>Collected Date</code> (text); <code>Pathology Center</code> (text)</li>
+</ul>
+<p><img alt="Pathology Billing" src="../assets/screens/sub-03-billing-pathology-module.jpg" /></p>
+<h3 id="44-radiology-billing-adminbillradiology">4.4 Radiology Billing — <code>/admin/bill/radiology</code></h3>
+<ul>
+<li><strong>Grid (100 rows):</strong> Bill No | Case ID | Reporting Date | Patient Name | Generated By | Reference Doctor | Previous Report Value | Amount ($) | Discount ($) | Tax ($) | Net Amount ($) | Paid Amount ($)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Apply TPA</code> (select); <code>Prescription No</code> (text); <code>Apply TPA</code> (checkbox); <code>Bill No</code> (text); <code>Case ID</code> (text); <code>Date</code> (text)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Sample Collected Person Name</code> (select) — John Hook (9006); <code>Collected Date</code> (text); <code>Radiology Center</code> (text)</li>
+</ul>
+<p><img alt="Radiology Billing" src="../assets/screens/sub-04-billing-radiology-module.jpg" /></p>
+<h3 id="45-blood-issue-billing-adminbillissueblood">4.5 Blood Issue Billing — <code>/admin/bill/issueblood</code></h3>
+<ul>
+<li><strong>Grid (74 rows):</strong> Bill No | Case ID | Issue Date | Received To | Blood Group | Gender | Donor Name | Bags | Generated By | Blood Qty | Amount ($) | Discount</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Apply TPA</code> (select); <code>Case ID</code> (text); <code>Apply TPA</code> (checkbox)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>patient_id</code> (select) — Select Patient, AADI ( ), Aadi jain ( ), Aadish Mody ( ), AANU ( ), AANU ( ); <code>Issue Date *</code> (text); <code>Hospital Doctor</code> (select) — Amit Singh, Reyan Jain, Sansa Gomez, Sonia Bush; <code>Doctor Name *</code> (text); <code>Technician</code> (text); <code>Donor Name *</code> (select) — Select Donor; <code>Blood Group</code> (text); <code>Lot</code> (text); <code>Bag</code> (text); <code>Amount ($) *</code> (text); <code>Remarks</code> (textarea)</li>
+</ul>
+<p><img alt="Blood Issue Billing" src="../assets/screens/sub-05-billing-issue-blood.jpg" /></p>
+<h3 id="46-blood-components-issue-billing-adminbillissuecomponent">4.6 Blood Components Issue Billing — <code>/admin/bill/issuecomponent</code></h3>
+<ul>
+<li><strong>Grid (68 rows):</strong> Bill No | Case ID | Issue Date | Generated By | Received To | Blood Group | Component | Gender | Donor Name | Bags | Blood Group | Amount ($)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Apply TPA</code> (select); <code>Case ID</code> (text); <code>Apply TPA</code> (checkbox)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>patient_id</code> (select) — Select Patient, AADI ( ), Aadi jain ( ), Aadish Mody ( ), AANU ( ), AANU ( ); <code>Issue Date *</code> (text); <code>Hospital Doctor</code> (select) — Amit Singh, Reyan Jain, Sansa Gomez, Sonia Bush; <code>Doctor Name *</code> (text); <code>Technician</code> (text); <code>Donor Name *</code> (select) — Select Donor; <code>Blood Group</code> (text); <code>Lot</code> (text); <code>Bag</code> (text); <code>Amount ($) *</code> (text); <code>Remarks</code> (textarea)</li>
+</ul>
+<p><img alt="Blood Components Issue Billing" src="../assets/screens/sub-06-billing-issue-component.jpg" /></p>
+<h3 id="47-single-module-billing-adminbilldashboard">4.7 Single Module Billing — <code>/admin/bill/dashboard</code></h3>
+<ul>
+<li><strong>Form</strong> (posts to <code>/admin/bill/dashboard</code>): <code>Case ID</code> (text)</li>
+</ul>
+<p><img alt="Single Module Billing" src="../assets/screens/sub-07-billing-bill-dashboard.jpg" /></p>
+<h3 id="48-billing-opd-bill-screen-adminbillopd">4.8 Billing - OPD bill screen — <code>/admin/bill/opd</code></h3>
+<ul>
+<li><strong>Tabs:</strong> Today OPD · Upcoming OPD · Old OPD</li>
+<li><strong>Grid (2 rows):</strong> Name | Patient Id | Guardian Name | Gender | Phone | Generated By | Consultant Doctor | Last Visit | Previous Medical Issue | Total Visit | Is Antenatal | Action</li>
+<li><strong>Form</strong> (posts to <code>/admin/patient</code>) <em>(dialog)</em>: <code>symptoms_type</code> (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; <code>field</code> (search); <code>Select</code> (text); <code>Symptoms Description</code> (textarea); <code>Note</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>Previous Medical Issue</code> (textarea); <code>Appointment Date</code> (text); <code>case</code> (text); <code>casualty</code> (select) — No, Yes; <code>old_patient</code> (select) — No, Yes; <code>refference</code> (text); <code>consultant_doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Apply TPA</code> (checkbox); <code>Charge Category</code> (select) — OPD Consultation Fees, OPD Service, OPD Insurance, Blood pressure check, Eye check, Cholesterol level check; <code>Charge</code> (select); <code>Standard Charge ($)</code> (text); <code>Applied Charge ($)</code> (text); <code>discount_percentage</code> (text); <code>percentage</code> (text); <code>Amount ($)</code> (text); <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; … +6 more</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Name</code> (text); <code>Guardian Name</code> (text); <code>Gender</code> (select); <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>file</code> (file); <code>Any Known Allergies</code> (text); <code>Phone</code> (text); <code>Blood Group</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>Age</code> (text); <code>Month</code> (text)</li>
+</ul>
+<p><img alt="Billing - OPD bill screen" src="../assets/screens/sub-08-billing-opd-bill-screen.jpg" /></p>
+<h3 id="49-patient-import-adminpatientimport">4.9 Patient import — <code>/admin/patient/import</code></h3>
+<ul>
+<li><strong>Grid (2 rows):</strong> *Patient | Guardian | Gender | Age (Year) | Age (Month) | Age (Day) | Marital Status | Phone | Email | Address | Remarks | Known Allergies</li>
+<li><strong>Form</strong> (posts to <code>/admin/patient/import</code>): <code>blood_group</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>file</code> (file)</li>
+</ul>
+<p><img alt="Patient import" src="../assets/screens/sub-09-patient-import.jpg" /></p>
+<h3 id="410-ipd-discharged-patient-adminpatientdischarged_patients">4.10 IPD Discharged Patient — <code>/admin/patient/discharged_patients</code></h3>
+<ul>
+<li><strong>Grid (21 rows):</strong> Name | Patient Id | Case ID | Gender | Phone | Generated By | Consultant Doctor | Admission Date | Discharged Date | Tax ($) | Net Amount ($) | Total ($)</li>
+</ul>
+<p><img alt="IPD Discharged Patient" src="../assets/screens/sub-10-discharged-patients.jpg" /></p>
+<h3 id="411-patient-import-adminpatientimport">4.11 Patient import — <code>/admin/patient/import</code></h3>
+<ul>
+<li><strong>Grid (2 rows):</strong> *Patient | Guardian | Gender | Age (Year) | Age (Month) | Age (Day) | Marital Status | Phone | Email | Address | Remarks | Known Allergies</li>
+<li><strong>Form</strong> (posts to <code>/admin/patient/import</code>): <code>blood_group</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>file</code> (file)</li>
+</ul>
+<p><img alt="Patient import" src="../assets/screens/sub-10-patient-import.jpg" /></p>
+<h3 id="412-ipd-discharged-patient-adminpatientdischarged_patients">4.12 IPD Discharged Patient — <code>/admin/patient/discharged_patients</code></h3>
+<ul>
+<li><strong>Grid (21 rows):</strong> Name | Patient Id | Case ID | Gender | Phone | Generated By | Consultant Doctor | Admission Date | Discharged Date | Tax ($) | Net Amount ($) | Total ($)</li>
+</ul>
+<p><img alt="IPD Discharged Patient" src="../assets/screens/sub-11-discharged-patients.jpg" /></p>
+<h3 id="413-medicines-stock-adminpharmacysearch">4.13 Medicines Stock — <code>/admin/pharmacy/search</code></h3>
+<ul>
+<li><strong>Grid (99 rows):</strong> # | Medicine Name | Medicine Company | Medicine Composition | Medicine Category | Medicine Group | Unit | Available Qty | Action</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Medicine Name *</code> (text); <code>Medicine Category *</code> (select) — Syrup, Capsule, Injection, Ointment, Cream, Surgical; <code>Medicine Company</code> (select) — Johnson &amp; Johnson, Alkem Laboratories, Biocon Limited., Lupin Limited., medimax; <code>Medicine Composition</code> (text); <code>Medicine Group</code> (select) — Antibacterials, Antimycobacterials, Antiparasitics, Antigout agents, HIPERIN; <code>Unit *</code> (select) — mg/mL, mm, ml, mg, g/dl; <code>Min Level</code> (text); <code>Re-Order Level</code> (text); <code>vat</code> (text); <code>Box/Packing *</code> (text); <code>VAT A/C</code> (text); <code>Rack Number</code> (text); <code>Note</code> (textarea); <code>file</code> (file)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Medicine Category</code> (select) — Syrup, Capsule, Injection, Ointment, Cream, Surgical; <code>medicine_image</code> (file)</li>
+</ul>
+<p><img alt="Medicines Stock" src="../assets/screens/sub-11-pharmacy-search.jpg" /></p>
+<h3 id="414-sale-return-bills-adminpharmacysalereturnbills">4.14 Sale Return Bills — <code>/admin/pharmacy/salereturnbills</code></h3>
+<ul>
+<li><strong>Grid (7 rows):</strong> Return No | Bill No | Date | Patient Name | Generated By | Total ($) | Discount ($) | Tax ($) | Net Amount ($) | Action</li>
+</ul>
+<p><img alt="Sale Return Bills" src="../assets/screens/sub-12-pharmacy-sale-return-bills.jpg" /></p>
+<h3 id="415-medicines-stock-adminpharmacysearch">4.15 Medicines Stock — <code>/admin/pharmacy/search</code></h3>
+<ul>
+<li><strong>Grid (99 rows):</strong> # | Medicine Name | Medicine Company | Medicine Composition | Medicine Category | Medicine Group | Unit | Available Qty | Action</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Medicine Name *</code> (text); <code>Medicine Category *</code> (select) — Syrup, Capsule, Injection, Ointment, Cream, Surgical; <code>Medicine Company</code> (select) — Johnson &amp; Johnson, Alkem Laboratories, Biocon Limited., Lupin Limited., medimax; <code>Medicine Composition</code> (text); <code>Medicine Group</code> (select) — Antibacterials, Antimycobacterials, Antiparasitics, Antigout agents, HIPERIN; <code>Unit *</code> (select) — mg/mL, mm, ml, mg, g/dl; <code>Min Level</code> (text); <code>Re-Order Level</code> (text); <code>vat</code> (text); <code>Box/Packing *</code> (text); <code>VAT A/C</code> (text); <code>Rack Number</code> (text); <code>Note</code> (textarea); <code>file</code> (file)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Medicine Category</code> (select) — Syrup, Capsule, Injection, Ointment, Cream, Surgical; <code>medicine_image</code> (file)</li>
+</ul>
+<p><img alt="Medicines Stock" src="../assets/screens/sub-12-pharmacy-search.jpg" /></p>
+<h3 id="416-pathology-test-adminpathologysearch">4.16 Pathology Test — <code>/admin/pathology/search</code></h3>
+<ul>
+<li><strong>Grid (20 rows):</strong> Test Name | Short Name | Test Type | Category | Sub Category | Method | Report Days | Tax (%) | Charge ($) | Amount ($) | Action</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Name *</code> (text); <code>Guardian Name</code> (text); <code>Phone</code> (text); <code>Gender</code> (select) — Male, Female; <code>Date Of Birth</code> (text); <code>Year</code> (text); <code>Month</code> (text); <code>Day</code> (text); <code>Blood Group</code> (select); <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>Email</code> (text); <code>Address</code> (input); <code>National Identification Number</code> (input); <code>file</code> (file); <code>Remarks</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>TPA</code> (select); <code>TPA ID</code> (input); <code>TPA Validity</code> (input); <code>Alternate Number</code> (text)</li>
+</ul>
+<p><img alt="Pathology Test" src="../assets/screens/sub-13-pathology-search.jpg" /></p>
+<h3 id="417-sale-return-bills-adminpharmacysalereturnbills">4.17 Sale Return Bills — <code>/admin/pharmacy/salereturnbills</code></h3>
+<ul>
+<li><strong>Grid (7 rows):</strong> Return No | Bill No | Date | Patient Name | Generated By | Total ($) | Discount ($) | Tax ($) | Net Amount ($) | Action</li>
+</ul>
+<p><img alt="Sale Return Bills" src="../assets/screens/sub-13-pharmacy-sale-return-bills.jpg" /></p>
+<h3 id="418-pathology-test-adminpathologysearch">4.18 Pathology Test — <code>/admin/pathology/search</code></h3>
+<ul>
+<li><strong>Grid (20 rows):</strong> Test Name | Short Name | Test Type | Category | Sub Category | Method | Report Days | Tax (%) | Charge ($) | Amount ($) | Action</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Name *</code> (text); <code>Guardian Name</code> (text); <code>Phone</code> (text); <code>Gender</code> (select) — Male, Female; <code>Date Of Birth</code> (text); <code>Year</code> (text); <code>Month</code> (text); <code>Day</code> (text); <code>Blood Group</code> (select); <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>Email</code> (text); <code>Address</code> (input); <code>National Identification Number</code> (input); <code>file</code> (file); <code>Remarks</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>TPA</code> (select); <code>TPA ID</code> (input); <code>TPA Validity</code> (input); <code>Alternate Number</code> (text)</li>
+</ul>
+<p><img alt="Pathology Test" src="../assets/screens/sub-14-pathology-search.jpg" /></p>
+<h3 id="419-radiology-test-adminradiosearch">4.19 Radiology Test — <code>/admin/radio/search</code></h3>
+<ul>
+<li><strong>Grid (15 rows):</strong> Test Name | Short Name | Test Type | Category Name | Sub Category | Report Days | Tax (%) | Charge ($) | Amount ($) | Action</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Name *</code> (text); <code>Guardian Name</code> (text); <code>Phone</code> (text); <code>Gender</code> (select) — Male, Female; <code>Date Of Birth</code> (text); <code>Year</code> (text); <code>Month</code> (text); <code>Day</code> (text); <code>Blood Group</code> (select); <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>Email</code> (text); <code>Address</code> (input); <code>National Identification Number</code> (input); <code>file</code> (file); <code>Remarks</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>TPA</code> (select); <code>TPA ID</code> (input); <code>TPA Validity</code> (input); <code>Alternate Number</code> (text)</li>
+</ul>
+<p><img alt="Radiology Test" src="../assets/screens/sub-14-radiology-search.jpg" /></p>
+<h3 id="420-blood-bank-status-board-adminbloodbankstatus">4.20 Blood bank status board — <code>/admin/bloodbankstatus</code></h3>
+<ul>
+<li><strong>Grid (2 rows):</strong> BAGS | LOT | INSTITUTION | ACTION</li>
+<li><strong>Grid (10 rows):</strong> BAGS | LOT | COMPONENTS | ACTION</li>
+<li><strong>Grid (7 rows):</strong> Components Name * | Bag * | Volume | Unit | Lot * | Institution</li>
+<li><strong>Form</strong> (posts to <code>/admin/bloodbankstatus/status</code>) <em>(dialog)</em>: <code>Blood Group</code> (text); <code>status (in bags) *</code> (text)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Blood Donor *</code> (select); <code>Donate Date *</code> (text); <code>Bag *</code> (text); <code>Volume</code> (text); <code>Unit Type</code> (select) — (ML), Litter, (nm), per day, Hour, Insurance; <code>Lot</code> (text); <code>Charge Category *</code> (select); <code>Charge Name *</code> (select); <code>Standard Charge ($) *</code> (text); <code>Institution</code> (text); <code>note</code> (textarea); <code>total</code> (text); <code>discount_percent</code> (text); <code>discount</code> (text); <code>tax_percentage</code> (text); <code>tax</code> (text); <code>net_amount</code> (text); <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; <code>Payment Amount ($) *</code> (text); <code>Cheque No *</code> (text); <code>Cheque Date *</code> (text); <code>document</code> (file)</li>
+</ul>
+<p><img alt="Blood bank status board" src="../assets/screens/sub-15-blood-bank-status-board.jpg" /></p>
+<h3 id="421-radiology-test-adminradiosearch">4.21 Radiology Test — <code>/admin/radio/search</code></h3>
+<ul>
+<li><strong>Grid (15 rows):</strong> Test Name | Short Name | Test Type | Category Name | Sub Category | Report Days | Tax (%) | Charge ($) | Amount ($) | Action</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Name *</code> (text); <code>Guardian Name</code> (text); <code>Phone</code> (text); <code>Gender</code> (select) — Male, Female; <code>Date Of Birth</code> (text); <code>Year</code> (text); <code>Month</code> (text); <code>Day</code> (text); <code>Blood Group</code> (select); <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>Email</code> (text); <code>Address</code> (input); <code>National Identification Number</code> (input); <code>file</code> (file); <code>Remarks</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>TPA</code> (select); <code>TPA ID</code> (input); <code>TPA Validity</code> (input); <code>Alternate Number</code> (text)</li>
+</ul>
+<p><img alt="Radiology Test" src="../assets/screens/sub-15-radiology-search.jpg" /></p>
+<h3 id="422-blood-bank-status-board-adminbloodbankstatus">4.22 Blood bank status board — <code>/admin/bloodbankstatus</code></h3>
+<ul>
+<li><strong>Grid (2 rows):</strong> BAGS | LOT | INSTITUTION | ACTION</li>
+<li><strong>Grid (10 rows):</strong> BAGS | LOT | COMPONENTS | ACTION</li>
+<li><strong>Grid (7 rows):</strong> Components Name * | Bag * | Volume | Unit | Lot * | Institution</li>
+<li><strong>Form</strong> (posts to <code>/admin/bloodbankstatus/status</code>) <em>(dialog)</em>: <code>Blood Group</code> (text); <code>status (in bags) *</code> (text)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Blood Donor *</code> (select); <code>Donate Date *</code> (text); <code>Bag *</code> (text); <code>Volume</code> (text); <code>Unit Type</code> (select) — (ML), Litter, (nm), per day, Hour, Insurance; <code>Lot</code> (text); <code>Charge Category *</code> (select); <code>Charge Name *</code> (select); <code>Standard Charge ($) *</code> (text); <code>Institution</code> (text); <code>note</code> (textarea); <code>total</code> (text); <code>discount_percent</code> (text); <code>discount</code> (text); <code>tax_percentage</code> (text); <code>tax</code> (text); <code>net_amount</code> (text); <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; <code>Payment Amount ($) *</code> (text); <code>Cheque No *</code> (text); <code>Cheque Date *</code> (text); <code>document</code> (file)</li>
+</ul>
+<p><img alt="Blood bank status board" src="../assets/screens/sub-16-blood-bank-status-board.jpg" /></p>
+<h3 id="423-qr-code-attendance-adminqrattendanceattendanceindex">4.23 QR Code Attendance — <code>/admin/qrattendance/attendance/index</code></h3>
+<p><img alt="QR Code Attendance" src="../assets/screens/sub-16-staff-attendance-register.jpg" /></p>
+<h3 id="424-payroll-adminpayroll">4.24 Payroll — <code>/admin/payroll</code></h3>
+<ul>
+<li><strong>Form</strong> (posts to <code>/admin/payroll</code>): <code>Role</code> (select) — Admin, Accountant, Doctor, Pharmacist, Pathologist, Radiologist; <code>Month</code> (select) — January, February, March, April, May, June; <code>Year</code> (select) — 2025, 2026</li>
+<li><strong>Form</strong> (posts to <code>/admin/payroll/paymentSuccess</code>) <em>(dialog)</em>: <code>Name</code> (text); <code>Payment Amount ($)</code> (text); <code>Month Year</code> (text); <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; <code>Cheque No</code> (text); <code>Cheque Date</code> (text); <code>document</code> (file); <code>Payment Date</code> (text); <code>Note</code> (textarea)</li>
+</ul>
+<p><img alt="Payroll" src="../assets/screens/sub-17-payroll.jpg" /></p>
+<h3 id="425-appointment-queue-adminappointmentindex">4.25 Appointment queue — <code>/admin/appointment/index</code></h3>
+<ul>
+<li><strong>Tabs:</strong> Today Appointment · Upcoming Appointment · Old Appointment</li>
+<li><strong>Grid (2 rows):</strong> Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status</li>
+<li><strong>Grid (25 rows):</strong> Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status</li>
+<li><strong>Grid (101 rows):</strong> Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>patient_id</code> (select); <code>Doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Doctor Fees ($)</code> (text); <code>Shift</code> (select); <code>Appointment Date</code> (text); <code>Slot</code> (select); <code>Appointment Priority</code> (select) — Normal, Urgent, Very Urgent, Low; <code>Status *</code> (select) — Pending, Approved, Cancel; <code>Discount Percentage</code> (text); <code>Live Consultant (On Video Conference)</code> (select) — No, Yes; <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; <code>Message</code> (textarea); <code>Cheque No</code> (text); <code>Cheque Date</code> (text); <code>document</code> (file); <code>Alternate Address</code> (textarea)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Doctor Fees ($)</code> (text); <code>Shift</code> (select); <code>Appointment Date</code> (text); <code>Slot</code> (select); <code>Appointment Priority</code> (select) — Normal, Urgent, Very Urgent, Low; <code>Discount Percentage</code> (text); <code>Status *</code> (select) — Pending, Approved, Cancel; <code>Live Consultant (On Video Conference)</code> (select) — No, Yes; <code>Message</code> (textarea)</li>
+</ul>
+<p><img alt="Appointment queue" src="../assets/screens/sub-18-appointment-queue.jpg" /></p>
+<h3 id="426-payroll-adminpayroll">4.26 Payroll — <code>/admin/payroll</code></h3>
+<ul>
+<li><strong>Form</strong> (posts to <code>/admin/payroll</code>): <code>Role</code> (select) — Admin, Accountant, Doctor, Pharmacist, Pathologist, Radiologist; <code>Month</code> (select) — January, February, March, April, May, June; <code>Year</code> (select) — 2025, 2026</li>
+<li><strong>Form</strong> (posts to <code>/admin/payroll/paymentSuccess</code>) <em>(dialog)</em>: <code>Name</code> (text); <code>Payment Amount ($)</code> (text); <code>Month Year</code> (text); <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; <code>Cheque No</code> (text); <code>Cheque Date</code> (text); <code>document</code> (file); <code>Payment Date</code> (text); <code>Note</code> (textarea)</li>
+</ul>
+<p><img alt="Payroll" src="../assets/screens/sub-18-payroll.jpg" /></p>
+<h3 id="427-appointment-queue-adminappointmentindex">4.27 Appointment queue — <code>/admin/appointment/index</code></h3>
+<ul>
+<li><strong>Tabs:</strong> Today Appointment · Upcoming Appointment · Old Appointment</li>
+<li><strong>Grid (2 rows):</strong> Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status</li>
+<li><strong>Grid (25 rows):</strong> Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status</li>
+<li><strong>Grid (101 rows):</strong> Patient Name | Appointment No | Date | Phone | Gender | Doctor | Source | Priority | Live Consultant | Alternate Address | Created By | Status</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>patient_id</code> (select); <code>Doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Doctor Fees ($)</code> (text); <code>Shift</code> (select); <code>Appointment Date</code> (text); <code>Slot</code> (select); <code>Appointment Priority</code> (select) — Normal, Urgent, Very Urgent, Low; <code>Status *</code> (select) — Pending, Approved, Cancel; <code>Discount Percentage</code> (text); <code>Live Consultant (On Video Conference)</code> (select) — No, Yes; <code>Payment Mode</code> (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; <code>Message</code> (textarea); <code>Cheque No</code> (text); <code>Cheque Date</code> (text); <code>document</code> (file); <code>Alternate Address</code> (textarea)</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Doctor Fees ($)</code> (text); <code>Shift</code> (select); <code>Appointment Date</code> (text); <code>Slot</code> (select); <code>Appointment Priority</code> (select) — Normal, Urgent, Very Urgent, Low; <code>Discount Percentage</code> (text); <code>Status *</code> (select) — Pending, Approved, Cancel; <code>Live Consultant (On Video Conference)</code> (select) — No, Yes; <code>Message</code> (textarea)</li>
+</ul>
+<p><img alt="Appointment queue" src="../assets/screens/sub-19-appointment-queue.jpg" /></p>
+<h3 id="428-opd-patient-view-adminpatientsearch">4.28 OPD patient view — <code>/admin/patient/search</code></h3>
+<ul>
+<li><strong>Tabs:</strong> Today OPD · Upcoming OPD · Old OPD · Patient View</li>
+<li><strong>Grid (96 rows):</strong> Name | Patient Id | Guardian Name | Gender | Phone | Generated By | Consultant | Last Visit | Is Antenatal | Total Recheckup</li>
+<li><strong>Grid (2 rows):</strong> OPD No | Patient Name | Case ID | Appointment Date | Generated By | Consultant | Reference | Symptoms | Is Antenatal | Previous Medical Issue | Action</li>
+<li><strong>Form</strong> (posts to <code>/admin/patient</code>) <em>(dialog)</em>: <code>field</code> (select); <code>symptoms_type</code> (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; <code>field</code> (search); <code>field</code> (text); <code>Symptoms Description</code> (textarea); <code>ICD Group</code> (select) — Select Group, Infectious &amp; Parasitic Diseases, Infectious Diseases, Mental &amp; Behavioural Disorders, Neoplasms, Viral Diseases; <code>ICD-10 Diagnosis</code> (select) — [A09] Infectious Gastroenteritis, [A15.0] Pulmonary Tuberculosis, [B34.9] Viral Infection, Unspecified, [C50.9] Malignant Neoplasm of Breast, [F41.1] Generalized Anxiety Disorder; <code>ICD-10 Diagnosis</code> (search); <code>Note</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>Previous Medical Issue</code> (textarea); <code>Appointment Date *</code> (text); <code>case</code> (text); <code>casualty</code> (select) — No, Yes; <code>old_patient</code> (select) — No, Yes; <code>refference</code> (text); <code>Apply TPA</code> (checkbox); <code>consultant_doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Charge Category</code> (select) — OPD Consultation Fees, OPD Service, OPD Insurance, Blood pressure check, Eye check, Cholesterol level check; <code>Charge *</code> (select); <code>Standard Charge ($)</code> (text); <code>Applied Charge ($) *</code> (text); … +10 more</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Name</code> (text); <code>Guardian Name</code> (text); <code>Gender</code> (select) — Male, Female; <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>file</code> (file); <code>Any Known Allergies</code> (text); <code>Phone</code> (text); <code>Blood Group</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>Age</code> (text); <code>Month</code> (text)</li>
+</ul>
+<p><img alt="OPD patient view" src="../assets/screens/sub-19-opd-patient-view.jpg" /></p>
+<h3 id="429-opd-patient-view-adminpatientsearch">4.29 OPD patient view — <code>/admin/patient/search</code></h3>
+<ul>
+<li><strong>Tabs:</strong> Today OPD · Upcoming OPD · Old OPD · Patient View</li>
+<li><strong>Grid (96 rows):</strong> Name | Patient Id | Guardian Name | Gender | Phone | Generated By | Consultant | Last Visit | Is Antenatal | Total Recheckup</li>
+<li><strong>Grid (2 rows):</strong> OPD No | Patient Name | Case ID | Appointment Date | Generated By | Consultant | Reference | Symptoms | Is Antenatal | Previous Medical Issue | Action</li>
+<li><strong>Form</strong> (posts to <code>/admin/patient</code>) <em>(dialog)</em>: <code>field</code> (select); <code>symptoms_type</code> (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; <code>field</code> (search); <code>field</code> (text); <code>Symptoms Description</code> (textarea); <code>ICD Group</code> (select) — Select Group, Infectious &amp; Parasitic Diseases, Infectious Diseases, Mental &amp; Behavioural Disorders, Neoplasms, Viral Diseases; <code>ICD-10 Diagnosis</code> (select) — [A09] Infectious Gastroenteritis, [A15.0] Pulmonary Tuberculosis, [B34.9] Viral Infection, Unspecified, [C50.9] Malignant Neoplasm of Breast, [F41.1] Generalized Anxiety Disorder; <code>ICD-10 Diagnosis</code> (search); <code>Note</code> (textarea); <code>Any Known Allergies</code> (textarea); <code>Previous Medical Issue</code> (textarea); <code>Appointment Date *</code> (text); <code>case</code> (text); <code>casualty</code> (select) — No, Yes; <code>old_patient</code> (select) — No, Yes; <code>refference</code> (text); <code>Apply TPA</code> (checkbox); <code>consultant_doctor</code> (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); <code>Charge Category</code> (select) — OPD Consultation Fees, OPD Service, OPD Insurance, Blood pressure check, Eye check, Cholesterol level check; <code>Charge *</code> (select); <code>Standard Charge ($)</code> (text); <code>Applied Charge ($) *</code> (text); … +10 more</li>
+<li><strong>Form</strong> <em>(dialog)</em>: <code>Name</code> (text); <code>Guardian Name</code> (text); <code>Gender</code> (select) — Male, Female; <code>Marital Status</code> (select) — Single, Married, Widowed, Separated, Not Specified; <code>file</code> (file); <code>Any Known Allergies</code> (text); <code>Phone</code> (text); <code>Blood Group</code> (select) — B+, A+, AB-, AB+, O-, A-; <code>Age</code> (text); <code>Month</code> (text)</li>
+</ul>
+<p><img alt="OPD patient view" src="../assets/screens/sub-20-opd-patient-view.jpg" /></p>
+<h2 id="5-roles-and-access-model">5. Roles and access model</h2>
 <p>Nine staff roles plus the patient portal. Each role gets its own dashboard and its own slice of the menu; the table below was produced by logging in as each role and reading the rendered sidebar.</p>
 <table>
 <thead>
@@ -2603,7 +3089,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="41-super-admin">4.1 Super Admin</h3>
+<h3 id="51-super-admin">5.1 Super Admin</h3>
 <p>Unrestricted access to every module, master and setting, plus the multi-branch console and vendor licence screens.</p>
 <ul>
 <li><strong>Core Operations:</strong> Dashboard, Patient, Billing, Appointment, OPD - Out Patient, IPD - In Patient</li>
@@ -2614,7 +3100,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </ul>
 <p>Screens captured for this role: Dashboard (<code>/admin/admin/dashboard</code>), Patient (<code>/admin/admin/search</code>), Billing (<code>/admin/bill/dashboard</code>), Appointment (<code>/admin/appointment/index</code>), OPD - Out Patient (<code>/admin/patient/search</code>), IPD - In Patient (<code>/admin/patient/ipdsearch</code>)</p>
 <p><img alt="Super Admin dashboard" src="../assets/screens/role-superadmin-dashboard.jpg" /></p>
-<h3 id="42-admin">4.2 Admin</h3>
+<h3 id="52-admin">5.2 Admin</h3>
 <p>Hospital administrator: clinical, billing, hr, finance and reporting without the vendor/licence screens.</p>
 <ul>
 <li><strong>Core Operations:</strong> Dashboard, Patient, Billing, Appointment, OPD - Out Patient, IPD - In Patient</li>
@@ -2625,7 +3111,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </ul>
 <p>Screens captured for this role: Dashboard (<code>/admin/admin/dashboard</code>), Patient (<code>/admin/admin/search</code>), Billing (<code>/admin/bill/dashboard</code>), Appointment (<code>/admin/appointment/index</code>), OPD - Out Patient (<code>/admin/patient/search</code>), IPD - In Patient (<code>/admin/patient/ipdsearch</code>)</p>
 <p><img alt="Admin dashboard" src="../assets/screens/role-admin-dashboard.jpg" /></p>
-<h3 id="43-doctor">4.3 Doctor</h3>
+<h3 id="53-doctor">5.3 Doctor</h3>
 <p>Clinical workspace: appointments, opd/ipd patients, prescriptions, investigations and own-patient reports.</p>
 <ul>
 <li><strong>Core Operations:</strong> Dashboard, Patient, Billing, Appointment, OPD - Out Patient, IPD - In Patient</li>
@@ -2636,7 +3122,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </ul>
 <p>Screens captured for this role: Dashboard (<code>/admin/admin/dashboard</code>), Patient (<code>/admin/admin/search</code>), Billing (<code>/admin/bill/dashboard</code>), Appointment (<code>/admin/appointment/index</code>), OPD - Out Patient (<code>/admin/patient/search</code>), IPD - In Patient (<code>/admin/patient/ipdsearch</code>)</p>
 <p><img alt="Doctor dashboard" src="../assets/screens/role-doctor-dashboard.jpg" /></p>
-<h3 id="44-pharmacist">4.4 Pharmacist</h3>
+<h3 id="54-pharmacist">5.4 Pharmacist</h3>
 <p>Pharmacy only: sale/issue, stock, batch and expiry handling, pharmacy reports.</p>
 <ul>
 <li><strong>Core Operations:</strong> Dashboard, Patient, Billing, OPD - Out Patient, IPD - In Patient</li>
@@ -2647,7 +3133,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </ul>
 <p>Screens captured for this role: Dashboard (<code>/admin/admin/dashboard</code>), Patient (<code>/admin/admin/search</code>), Billing (<code>/admin/bill/dashboard</code>), OPD - Out Patient (<code>/admin/patient/search</code>), IPD - In Patient (<code>/admin/patient/ipdsearch</code>), Pharmacy (<code>/admin/pharmacy/bill</code>)</p>
 <p><img alt="Pharmacist dashboard" src="../assets/screens/role-pharmacist-dashboard.jpg" /></p>
-<h3 id="45-pathologist">4.5 Pathologist</h3>
+<h3 id="55-pathologist">5.5 Pathologist</h3>
 <p>Laboratory only: test orders, sample collection, result entry and report generation.</p>
 <ul>
 <li><strong>Core Operations:</strong> Dashboard, Patient, Billing, OPD - Out Patient, IPD - In Patient</li>
@@ -2658,7 +3144,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </ul>
 <p>Screens captured for this role: Dashboard (<code>/admin/admin/dashboard</code>), Patient (<code>/admin/admin/search</code>), Billing (<code>/admin/bill/dashboard</code>), OPD - Out Patient (<code>/admin/patient/search</code>), IPD - In Patient (<code>/admin/patient/ipdsearch</code>), Pathology (<code>/admin/pathology/gettestreportbatch</code>)</p>
 <p><img alt="Pathologist dashboard" src="../assets/screens/role-pathologist-dashboard.jpg" /></p>
-<h3 id="46-radiologist">4.6 Radiologist</h3>
+<h3 id="56-radiologist">5.6 Radiologist</h3>
 <p>Imaging only: study orders, scheduling and reporting.</p>
 <ul>
 <li><strong>Core Operations:</strong> Dashboard, Patient, Billing, OPD - Out Patient, IPD - In Patient</li>
@@ -2669,7 +3155,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </ul>
 <p>Screens captured for this role: Dashboard (<code>/admin/admin/dashboard</code>), Patient (<code>/admin/admin/search</code>), Billing (<code>/admin/bill/dashboard</code>), OPD - Out Patient (<code>/admin/patient/search</code>), IPD - In Patient (<code>/admin/patient/ipdsearch</code>), Radiology (<code>/admin/radio/gettestreportbatch</code>)</p>
 <p><img alt="Radiologist dashboard" src="../assets/screens/role-radiologist-dashboard.jpg" /></p>
-<h3 id="47-accountant">4.7 Accountant</h3>
+<h3 id="57-accountant">5.7 Accountant</h3>
 <p>Finance: billing, income/expense, payroll and financial reports.</p>
 <ul>
 <li><strong>Core Operations:</strong> Dashboard, Patient, Billing, Appointment, OPD - Out Patient, IPD - In Patient</li>
@@ -2680,7 +3166,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </ul>
 <p>Screens captured for this role: Dashboard (<code>/admin/admin/dashboard</code>), Patient (<code>/admin/admin/search</code>), Billing (<code>/admin/bill/dashboard</code>), Appointment (<code>/admin/appointment/index</code>), OPD - Out Patient (<code>/admin/patient/search</code>), IPD - In Patient (<code>/admin/patient/ipdsearch</code>)</p>
 <p><img alt="Accountant dashboard" src="../assets/screens/role-accountant-dashboard.jpg" /></p>
-<h3 id="48-receptionist">4.8 Receptionist</h3>
+<h3 id="58-receptionist">5.8 Receptionist</h3>
 <p>Front desk: patient registration, appointments, opd visits, visitors and billing intake.</p>
 <ul>
 <li><strong>Core Operations:</strong> Dashboard, Patient, Billing, Appointment, OPD - Out Patient, IPD - In Patient</li>
@@ -2691,7 +3177,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </ul>
 <p>Screens captured for this role: Dashboard (<code>/admin/admin/dashboard</code>), Patient (<code>/admin/admin/search</code>), Billing (<code>/admin/bill/dashboard</code>), Appointment (<code>/admin/appointment/index</code>), OPD - Out Patient (<code>/admin/patient/search</code>), IPD - In Patient (<code>/admin/patient/ipdsearch</code>)</p>
 <p><img alt="Receptionist dashboard" src="../assets/screens/role-receptionist-dashboard.jpg" /></p>
-<h3 id="49-nurse">4.9 Nurse</h3>
+<h3 id="59-nurse">5.9 Nurse</h3>
 <p>Ward work: ipd patients, vitals, nursing notes, duty roster and bed status.</p>
 <ul>
 <li><strong>Core Operations:</strong> Dashboard, Patient, OPD - Out Patient, IPD - In Patient</li>
@@ -2701,7 +3187,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </ul>
 <p>Screens captured for this role: Dashboard (<code>/admin/admin/dashboard</code>), Patient (<code>/admin/admin/search</code>), OPD - Out Patient (<code>/admin/patient/search</code>), IPD - In Patient (<code>/admin/patient/ipdsearch</code>), Human Resource (<code>/admin/staff</code>), Messaging (<code>/admin/notification</code>)</p>
 <p><img alt="Nurse dashboard" src="../assets/screens/role-nurse-dashboard.jpg" /></p>
-<h2 id="5-public-website-and-patient-portal">5. Public website and patient portal</h2>
+<h2 id="6-public-website-and-patient-portal">6. Public website and patient portal</h2>
 <p>The same installation serves the public hospital website (driven by Front CMS) and a patient self-service portal.</p>
 <ul>
 <li><strong>Home page blocks:</strong> World-class care, close to home · Our Specialties · Our Doctors · Sonia Bush · Sansa Gomez · Amit Singh · Reyan Jain · Three steps. No paperwork. · Pick a slot · Meet the specialist · Get reports &amp; care · Trusted care, measurable results</li>
@@ -2719,7 +3205,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 <p><img alt="https://demo.smart-hospital.in/page/faq" src="../assets/screens/front-10-https-demo-smart-hospital-in-page-faq.jpg" /></p>
 <p><strong>Patient portal sign-in</strong> (<code>/site/userlogin</code>) — patients use the e-mail captured at registration to see appointments, prescriptions, investigations and bills.</p>
 <p><img alt="Patient portal sign-in" src="../assets/screens/patient-portal-login.jpg" /></p>
-<h2 id="6-cross-cutting-platform-features">6. Cross-cutting platform features</h2>
+<h2 id="7-cross-cutting-platform-features">7. Cross-cutting platform features</h2>
 <table>
 <thead>
 <tr>
@@ -2802,7 +3288,7 @@ is in <a href="FEATURE-CATALOG.md"><code>FEATURE-CATALOG.md</code></a>.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="7-complete-screen-inventory">7. Complete screen inventory</h2>
+<h2 id="8-complete-screen-inventory">8. Complete screen inventory</h2>
 <table>
 <thead>
 <tr>
