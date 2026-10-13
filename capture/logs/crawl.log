@@ -1,101 +1,18 @@
-2026-10-13T21:22:53.385Z logged in -> https://demo.smart-hospital.in/admin/admin/dashboard
-2026-10-13T21:22:53.399Z nav read
-2026-10-13T21:22:53.400Z queue size 76
-2026-10-13T21:22:55.494Z [1/76] 001-dashboard status=200
-2026-10-13T21:22:57.803Z [2/76] 002-patient status=200
-2026-10-13T21:22:59.722Z [3/76] 003-billing status=200
-2026-10-13T21:23:02.400Z [4/76] 004-appointment status=200
-2026-10-13T21:23:04.652Z [5/76] 005-opd-out-patient status=200
-2026-10-13T21:23:06.784Z [6/76] 006-ipd-in-patient status=200
-2026-10-13T21:23:08.947Z [7/76] 007-pharmacy status=200
-2026-10-13T21:23:11.079Z [8/76] 008-pathology status=200
-2026-10-13T21:23:13.196Z [9/76] 009-radiology status=200
-2026-10-13T21:23:15.216Z [10/76] 010-blood-bank status=200
-2026-10-13T21:23:17.350Z [11/76] 011-ambulance status=200
-2026-10-13T21:23:19.462Z [12/76] 012-front-office status=200
-2026-10-13T21:23:21.645Z [13/76] 013-birth-death-record-birth-record status=200
-2026-10-13T21:23:23.958Z [14/76] 014-birth-death-record-death-record status=200
-2026-10-13T21:23:26.476Z [15/76] 015-multi-branch-overview status=200
-2026-10-13T21:23:27.780Z autocommit pushed: crawl 15/76
-2026-10-13T21:23:29.702Z [16/76] 016-multi-branch-report status=200
-2026-10-13T21:23:31.770Z [17/76] 017-multi-branch-settings status=200
-2026-10-13T21:23:34.425Z [18/76] 018-human-resource status=200
-2026-10-13T21:23:36.986Z [19/76] 019-qr-code-attendance-attendance status=200
-2026-10-13T21:23:38.901Z [20/76] 020-qr-code-attendance-settings status=200
-2026-10-13T21:23:40.819Z [21/76] 021-duty-roster status=200
-2026-10-13T21:23:42.807Z [22/76] 022-annual-calendar status=200
-2026-10-13T21:23:44.774Z [23/76] 023-referral status=200
-2026-10-13T21:23:46.856Z [24/76] 024-tpa-management status=200
-2026-10-13T21:23:48.923Z [25/76] 025-finance-income status=200
-2026-10-13T21:23:51.007Z [26/76] 026-finance-expenses status=200
-2026-10-13T21:23:53.069Z [27/76] 027-survey-forms-survey-forms status=200
-2026-10-13T21:23:54.985Z [28/76] 028-survey-forms-my-survey-forms status=200
-2026-10-13T21:23:56.920Z [29/76] 029-messaging status=200
-2026-10-13T21:23:59.010Z [30/76] 030-inventory status=200
-2026-10-13T21:24:00.386Z autocommit pushed: crawl 30/76
-2026-10-13T21:24:02.791Z [31/76] 031-download-center-upload-share-content status=200
-2026-10-13T21:24:04.887Z [32/76] 032-download-center-content-share-list status=200
-2026-10-13T21:24:06.800Z [33/76] 033-download-center-content-type status=200
-2026-10-13T21:24:08.870Z [34/76] 034-certificate-certificate status=200
-2026-10-13T21:24:10.934Z [35/76] 035-certificate-patient-id-card status=200
-2026-10-13T21:24:13.002Z [36/76] 036-certificate-staff-id-card status=200
-2026-10-13T21:24:14.936Z [37/76] 037-front-cms status=200
-2026-10-13T21:24:17.046Z [38/76] 038-live-consultation-live-consultation status=200
-2026-10-13T21:24:19.145Z [39/76] 039-live-consultation-live-meeting status=200
-2026-10-13T21:24:21.066Z [40/76] 040-reports-finance status=200
-2026-10-13T21:24:22.981Z [41/76] 041-reports-appointment status=200
-2026-10-13T21:24:24.898Z [42/76] 042-reports-opd status=200
-2026-10-13T21:24:26.815Z [43/76] 043-reports-ipd status=200
-2026-10-13T21:24:28.732Z [44/76] 044-reports-pharmacy status=200
-2026-10-13T21:24:30.650Z [45/76] 045-reports-pathology status=200
-2026-10-13T21:24:32.089Z autocommit pushed: crawl 45/76
-2026-10-13T21:24:34.047Z [46/76] 046-reports-radiology status=200
-2026-10-13T21:24:35.982Z [47/76] 047-reports-blood-bank status=200
-2026-10-13T21:24:37.914Z [48/76] 048-reports-ambulance status=200
-2026-10-13T21:24:39.863Z [49/76] 049-reports-birth-death status=200
-2026-10-13T21:24:41.807Z [50/76] 050-reports-human-resource status=200
-2026-10-13T21:24:43.730Z [51/76] 051-reports-tpa status=200
-2026-10-13T21:24:45.663Z [52/76] 052-reports-inventory status=200
-2026-10-13T21:24:47.580Z [53/76] 053-reports-live-consultation status=200
-2026-10-13T21:24:49.514Z [54/76] 054-reports-log status=200
-2026-10-13T21:24:51.430Z [55/76] 055-reports-ot status=200
-2026-10-13T21:24:53.346Z [56/76] 056-reports-patient status=200
-2026-10-13T21:24:55.437Z [57/76] 057-setup-hospital-charges status=200
-2026-10-13T21:24:57.384Z [58/76] 058-setup-bed status=200
-2026-10-13T21:25:00.150Z [59/76] 059-setup-print-header-footer status=200
-2026-10-13T21:25:07.151Z [60/76] 060-setup-front-office status=200
-2026-10-13T21:25:08.511Z autocommit pushed: crawl 60/76
-2026-10-13T21:25:10.449Z [61/76] 061-setup-operations status=200
-2026-10-13T21:25:12.416Z [62/76] 062-setup-pharmacy status=200
-2026-10-13T21:25:14.348Z [63/76] 063-setup-pathology status=200
-2026-10-13T21:25:16.269Z [64/76] 064-setup-radiology status=200
-2026-10-13T21:25:18.348Z [65/76] 065-setup-blood-bank status=200
-2026-10-13T21:25:20.288Z [66/76] 066-setup-symptoms status=200
-2026-10-13T21:25:22.199Z [67/76] 067-setup-icd-10 status=200
-2026-10-13T21:25:24.138Z [68/76] 068-setup-findings status=200
-2026-10-13T21:25:26.197Z [69/76] 069-setup-vitals status=200
-2026-10-13T21:25:28.282Z [70/76] 070-setup-zoom-setting status=200
-2026-10-13T21:25:30.198Z [71/76] 071-setup-finance status=200
-2026-10-13T21:25:32.264Z [72/76] 072-setup-human-resource status=200
-2026-10-13T21:25:34.183Z [73/76] 073-setup-referral status=200
-2026-10-13T21:25:36.114Z [74/76] 074-setup-appointment status=200
-2026-10-13T21:25:38.069Z [75/76] 075-setup-inventory status=200
-2026-10-13T21:25:39.295Z autocommit pushed: crawl 75/76
-2026-10-13T21:25:41.218Z [76/76] 076-setup-custom-fields status=200
-2026-10-13T21:25:42.481Z autocommit pushed: final crawl state
-2026-10-13T21:25:42.481Z crawl finished; pages captured: 76 / 76
-crawl_exit=0
-total 652
-drwxr-xr-x 5 runner runner   4096 Oct 13 21:22 .
-drwxr-xr-x 6 runner runner   4096 Oct 13 21:22 ..
--rw-r--r-- 1 runner runner 618833 Oct 13 21:25 index.json
-drwxr-xr-x 2 runner runner   4096 Oct 13 21:22 logs
--rw-r--r-- 1 runner runner  12899 Oct 13 21:22 nav.json
-drwxr-xr-x 2 runner runner  12288 Oct 13 21:22 pages
-drwxr-xr-x 2 runner runner   4096 Oct 13 21:22 recon
-001-dashboard.jpg
-001-dashboard.json
-002-patient.jpg
-002-patient.json
-003-billing.jpg
-crawl step outcome: success
+2026-10-13T21:37:02.212Z logged in -> https://demo.smart-hospital.in/admin/admin/dashboard
+2026-10-13T21:37:02.225Z nav read
+2026-10-13T21:37:02.225Z queue size 76
+2026-10-13T21:37:04.340Z [1/76] 001-dashboard status=200
+2026-10-13T21:37:06.600Z [2/76] 002-patient status=200
+2026-10-13T21:37:08.467Z [3/76] 003-billing status=200
+2026-10-13T21:37:11.033Z [4/76] 004-appointment status=200
+2026-10-13T21:37:13.116Z [5/76] 005-opd-out-patient status=200
+2026-10-13T21:37:15.179Z [6/76] 006-ipd-in-patient status=200
+2026-10-13T21:37:17.315Z [7/76] 007-pharmacy status=200
+2026-10-13T21:37:19.362Z [8/76] 008-pathology status=200
+2026-10-13T21:37:21.409Z [9/76] 009-radiology status=200
+2026-10-13T21:37:23.492Z [10/76] 010-blood-bank status=200
+2026-10-13T21:37:25.664Z [11/76] 011-ambulance status=200
+2026-10-13T21:37:27.717Z [12/76] 012-front-office status=200
+2026-10-13T21:37:29.741Z [13/76] 013-birth-death-record-birth-record status=200
+2026-10-13T21:37:31.755Z [14/76] 014-birth-death-record-death-record status=200
+2026-10-13T21:37:34.274Z [15/76] 015-multi-branch-overview status=200
