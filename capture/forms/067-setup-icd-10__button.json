@@ -1,0 +1,259 @@
+{
+ "pageId": "067-setup-icd-10",
+ "pageLabel": "Setup › ICD-10",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/icd10",
+ "from": "https://demo.smart-hospital.in/admin/icd10",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/icd10",
+  "title": "ICD-10 Codes · Smart Hospital",
+  "pageTitle": "ICD-10 Codes List",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "ICD-10 Codes List",
+   "Add ICD Code",
+   "Edit ICD Code",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/icd10/add",
+    "method": "get",
+    "name": "form_addcode",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Group *",
+      "name": "group_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select Group",
+       "Infectious & Parasitic Diseases",
+       "Infectious Diseases",
+       "Mental & Behavioural Disorders",
+       "Neoplasms",
+       "Viral Diseases"
+      ]
+     },
+     {
+      "label": "ICD Code *",
+      "name": "icd_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Description *",
+      "name": "icd_description",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/icd10/add",
+    "method": "get",
+    "name": "form_editcode",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Group *",
+      "name": "group_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select Group",
+       "Infectious & Parasitic Diseases",
+       "Infectious Diseases",
+       "Mental & Behavioural Disorders",
+       "Neoplasms",
+       "Viral Diseases"
+      ]
+     },
+     {
+      "label": "ICD Code *",
+      "name": "icd_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Description *",
+      "name": "icd_description",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 6,
+    "columns": [
+     "ICD Code",
+     "Description",
+     "Group",
+     "Action"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "ICD-10 Codes List Add ICD Code"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Add ICD Code",
+    "href": "",
+    "target": "#addModal"
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "ICD-10 Groups",
+    "h": "https://demo.smart-hospital.in/admin/icd10/icd10group"
+   },
+   {
+    "t": "ICD Code",
+    "h": "https://demo.smart-hospital.in/admin/icd10"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "067-setup-icd-10__button.jpg"
+}
