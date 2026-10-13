@@ -1,0 +1,1153 @@
+{
+ "id": "038-live-consultation-live-consultation",
+ "label": "Live Consultation › Live Consultation",
+ "url": "https://demo.smart-hospital.in/admin/zoom_conference/consult",
+ "section": "TOOLS & CONTENT",
+ "parent": "Live Consultation",
+ "ok": true,
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/zoom_conference/consult",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Live Consultation",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Live Consultation",
+   "Zoom Credential",
+   "Live Consult",
+   "Add Patient",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/chgstatus",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "chg_status",
+      "name": "chg_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Awaited",
+       "Cancelled",
+       "Finished"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/addcredential",
+    "method": "post",
+    "name": "form-addcredential",
+    "fields": [
+     {
+      "label": "Zoom Api Key *",
+      "name": "zoom_api_key",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Zoom Api Secret *",
+      "name": "zoom_api_secret",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference/addByOther",
+    "method": "post",
+    "name": "form-addconference",
+    "fields": [
+     {
+      "label": "Consultation Title",
+      "name": "title",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Consultation Date *",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Consultation Duration Minutes *",
+      "name": "duration",
+      "type": "number",
+      "required": false
+     },
+     {
+      "label": "OPD/IPD",
+      "name": "select_group",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "None",
+       "OPD",
+       "IPD"
+      ]
+     },
+     {
+      "label": "OPD/IPD No",
+      "name": "opdipd_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "OPD Checkup ID *",
+      "name": "visit_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Consultant Doctor *",
+      "name": "staff_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Sansa Gomez (9008)",
+       "Sonia Bush (9002)"
+      ]
+     },
+     {
+      "label": "Enabled",
+      "name": "host_video",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Enabled",
+      "name": "host_video",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Enabled",
+      "name": "client_video",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Enabled",
+      "name": "client_video",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formaddpa",
+    "fields": [
+     {
+      "label": "Name *",
+      "name": "name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Guardian Name",
+      "name": "guardian_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Phone",
+      "name": "mobileno",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Gender",
+      "name": "gender",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Male",
+       "Female"
+      ]
+     },
+     {
+      "label": "Date Of Birth",
+      "name": "dob",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Year",
+      "name": "age[year]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Month",
+      "name": "age[month]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Day",
+      "name": "age[day]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Blood Group",
+      "name": "blood_group",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "B+",
+       "A+",
+       "AB-",
+       "AB+",
+       "O-",
+       "A-",
+       "B-",
+       "O+"
+      ]
+     },
+     {
+      "label": "Marital Status",
+      "name": "marital_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Single",
+       "Married",
+       "Widowed",
+       "Separated",
+       "Not Specified"
+      ]
+     },
+     {
+      "label": "Email",
+      "name": "email",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Address",
+      "name": "address",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "National Identification Number",
+      "name": "identification_number",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "file",
+      "name": "file",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Remarks",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Any Known Allergies",
+      "name": "known_allergies",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "TPA",
+      "name": "organisation_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "TPA ID",
+      "name": "insurance_id",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "TPA Validity",
+      "name": "validity",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "Alternate Number",
+      "name": "custom_fields[patient][3]",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "cls": "table table-hover table-striped table-bordered ajaxlistconsult dataTable no-foot",
+    "rows": 26,
+    "columns": [
+     "Consultation Title",
+     "Description",
+     "Date",
+     "Api Used",
+     "Created By",
+     "Created For",
+     "Patient",
+     "Status",
+     "Action"
+    ],
+    "sample": [
+     [
+      "Online consult for OPDN7617 Checkup ID C",
+      "",
+      "26/02/2026 03:55 PM",
+      "Global",
+      "Self",
+      "Reyan Jain (Doctor: 9011)",
+      "Nidhu varma (1169)",
+      "Awaited Cancelled Finished",
+      "Start"
+     ],
+     [
+      "Online consult for IPDN117",
+      "",
+      "06/02/2026 04:08 PM",
+      "Global",
+      "Self",
+      "Amit Singh (Doctor: 9009)",
+      "Kamal Thakur (1170)",
+      "Awaited Cancelled Finished",
+      "Start"
+     ]
+    ]
+   }
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Add",
+    "href": "",
+    "target": "#modal-online-timetable",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Start",
+    "href": "#",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Reset",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "New Patient",
+    "href": "",
+    "target": "",
+    "onclick": "holdModal('myModalpa')"
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   }
+  ],
+  "tabs": [],
+  "filters": [
+   "Filter Menu",
+   "Search By Patient Name",
+   "Type to searchâ€¦",
+   "DataTables_Table_0_length",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status",
+   "chg_status"
+  ],
+  "sections": [
+   "Live Consultation Add"
+  ],
+  "stats": [],
+  "addLinks": [
+   {
+    "text": "Add Patient Patient List",
+    "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+   },
+   {
+    "text": "New OPD Patient OPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+   },
+   {
+    "text": "New IPD Patient IPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+   },
+   {
+    "text": "New Appointment Appointment",
+    "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+   },
+   {
+    "text": "New Bill Bill",
+    "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+   },
+   {
+    "text": "New Pharmacy Bill Pharmacy Bill",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+   },
+   {
+    "text": "New Pathology Test Pathology Test",
+    "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Radiology Test Radiology Test",
+    "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Blood Issue Blood Issue",
+    "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+   },
+   {
+    "text": "New Ambulance Call Ambulance Call",
+    "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+   },
+   {
+    "text": "New Visitor Visitor",
+    "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+   },
+   {
+    "text": "New Income Income",
+    "href": "https://demo.smart-hospital.in/admin/income?action=add"
+   },
+   {
+    "text": "New Expense Expense",
+    "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+   }
+  ],
+  "hasChart": false
+ }
+}
