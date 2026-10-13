@@ -1,10 +1,33 @@
 categories: 39
 [1/39] bug_report Known Issues: 10 articles
+[2/39] Getting Started (3): 13 articles
+[3/39] Installation(7): 17 articles
+[4/39] System Update(1): 11 articles
+[5/39] Common Issues & Troubleshooting (13): 23 articles
+[6/39] FAQ (17): 27 articles
+[7/39] Miscellaneous (6): 16 articles
+[8/39] System Settings (16): 26 articles
+[9/39] Setup & Configuration (22): 32 articles
+[10/39] Billing (3): 13 articles
+[11/39] Appointment (8): 18 articles
+[12/39] OPD - Out Patient (9): 19 articles
+[13/39] IPD - In Patient (19): 29 articles
+[14/39] Pharmacy (6): 16 articles
+[15/39] Pathology (4): 14 articles
+[16/39] Radiology (4): 14 articles
+[17/39] Blood Bank (6): 16 articles
+[18/39] Ambulance (3): 13 articles
+[19/39] Front Office (7): 17 articles
+[20/39] Birth & Death Record (2): 12 articles
+[21/39] Human Resource (13): 23 articles
+[22/39] QR Code Attendance (3): 13 articles
+[23/39] Survey Form (6): 16 articles
+[24/39] WhatsApp Messaging (4): 10 articles
 Traceback (most recent call last):
-  File "/home/runner/work/DiziHospital/DiziHospital/tools/docs/fetch_help.py", line 370, in <module>
+  File "/home/runner/work/DiziHospital/DiziHospital/tools/docs/fetch_help.py", line 368, in <module>
     sys.exit(main())
              ^^^^^^
-  File "/home/runner/work/DiziHospital/DiziHospital/tools/docs/fetch_help.py", line 336, in main
-    cat_entry['articles'].append({'title': art['title'], 'slug': art['slug'], 'url': u,
-                                           ~~~^^^^^^^^^
-TypeError: 'NoneType' object is not subscriptable
+  File "/home/runner/work/DiziHospital/DiziHospital/tools/docs/fetch_help.py", line 340, in main
+    with open(os.path.join(OUT, cat_entry['slug'], '_index.md'), 'w') as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/DiziHospital/DiziHospital/docs/help-library/whatsapp-messaging/_index.md'
