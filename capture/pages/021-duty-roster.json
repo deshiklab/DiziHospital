@@ -1,0 +1,294 @@
+{
+ "id": "021-duty-roster",
+ "label": "Duty Roster",
+ "url": "https://demo.smart-hospital.in/admin/dutyroster/roster_report",
+ "section": "ADMINISTRATION",
+ "parent": "",
+ "ok": true,
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/dutyroster/roster_report",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Duty Roster",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Duty Roster",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/dutyroster/roster_report",
+    "method": "post",
+    "name": "form111",
+    "fields": [
+     {
+      "label": "Time Duration *",
+      "name": "search_type",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Today",
+       "This Week",
+       "Last Week",
+       "This Month",
+       "Last Month",
+       "Last 3 Months",
+       "Last 6 Months",
+       "Last 12 Months",
+       "This Year",
+       "Last Year",
+       "Period"
+      ]
+     },
+     {
+      "label": "Date From",
+      "name": "date_from",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Date To",
+      "name": "date_to",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "staff",
+      "name": "staff",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Super Admin (9001)",
+       "Sonia Bush (9002)",
+       "Sansa Gomez (9008)",
+       "Belina Turner (9005)",
+       "John Hook (9006)",
+       "Brad Frost (9003)",
+       "Natasha Romanoff (9010)",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Harry Grant (9012)",
+       "Jason Abbot (9017)",
+       "Maria Ford (9018)",
+       "April Clinton (9020)"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "headerTable",
+    "cls": "table table-striped table-bordered table-hover allajaxlist",
+    "rows": 2,
+    "columns": [
+     "Staff",
+     "Date",
+     "Shift Start",
+     "Shift End",
+     "Shift Hour",
+     "Shift",
+     "Department",
+     "Floor"
+    ],
+    "sample": [
+     [
+      "No Record Found"
+     ]
+    ]
+   }
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Shift",
+    "href": "https://demo.smart-hospital.in/admin/dutyroster/shift",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Roster",
+    "href": "https://demo.smart-hospital.in/admin/dutyroster/rosterlist",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Assign Roster",
+    "href": "https://demo.smart-hospital.in/admin/dutyroster/rosterassign",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Search",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   }
+  ],
+  "tabs": [],
+  "filters": [
+   "Filter Menu",
+   "Search By Patient Name",
+   "Type to searchâ€¦",
+   "search_type",
+   "date_from",
+   "date_to",
+   "staff",
+   "envato_market_purchase_code",
+   "email",
+   "app-envato_market_purchase_code",
+   "app-email"
+  ],
+  "sections": [
+   "Duty Roster Shift Roster Assign Roster"
+  ],
+  "stats": [],
+  "addLinks": [
+   {
+    "text": "Add Patient Patient List",
+    "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+   },
+   {
+    "text": "New OPD Patient OPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+   },
+   {
+    "text": "New IPD Patient IPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+   },
+   {
+    "text": "New Appointment Appointment",
+    "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+   },
+   {
+    "text": "New Bill Bill",
+    "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+   },
+   {
+    "text": "New Pharmacy Bill Pharmacy Bill",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+   },
+   {
+    "text": "New Pathology Test Pathology Test",
+    "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Radiology Test Radiology Test",
+    "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Blood Issue Blood Issue",
+    "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+   },
+   {
+    "text": "New Ambulance Call Ambulance Call",
+    "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+   },
+   {
+    "text": "New Visitor Visitor",
+    "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+   },
+   {
+    "text": "New Income Income",
+    "href": "https://demo.smart-hospital.in/admin/income?action=add"
+   },
+   {
+    "text": "New Expense Expense",
+    "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+   }
+  ],
+  "hasChart": false
+ }
+}
