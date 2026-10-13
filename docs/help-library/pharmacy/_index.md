@@ -1,6 +1,6 @@
 # Pharmacy (6)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+To import medicines click on Import Medicine button. Here select Medicine Category from dropdown and select CSV file, then click on Import Medicine button.Note: Your CSV data should be in the format below. The first line of your CSV file should be the column headers as in the table example. Also make sure that your file is UTF-8 to avoid unnecessary encoding problems.
 
 - [About Pharmacy.](about-pharmacy.md) — Thu, 11 Nov, 2021
 - [How to add new Medicine?](how-to-add-new-medicine.md) — Mon, 10 Jun, 2024

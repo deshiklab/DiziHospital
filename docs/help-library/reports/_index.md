@@ -1,6 +1,6 @@
 # Reports (44)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+Stock Report To check Stock Report report, go to Reports > Stock Report.Here select Medicine Category, Stock Type then click on Search button.Here you can see Expiry Medicine Report details like Medicine Name, Medicine Company, Medicine Category, Medicine Composition,Medicine Category, Medicine Group, Unit and Available Qty (Quantity). Also you can download this report as PDF. Read More
 
 - [Stock Report](stock-report.md) — Sat, 16 Aug, 2025
 - [How to check Pathology Balance Report?](how-to-check-pathology-balance-report.md) — Sat, 16 Aug, 2025

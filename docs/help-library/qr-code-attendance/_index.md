@@ -1,6 +1,6 @@
 # QR Code Attendance (3)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging
 
 - [About QR Code Attendance](about-qr-code-attendance.md) — Sat, 16 Aug, 2025
 - [How to disable the auto attendance and mark the attendance of hospital staff using QR Code / Barcode?](how-to-disable-the-auto-attendance-and-mark-the-attendance-of-hospital-staff-using-qr-code-barcode.md) — Sat, 16 Aug, 2025

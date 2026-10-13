@@ -1,6 +1,6 @@
 # Blood Bank (6)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+The hospital blood bank is responsible for management of the hospital's blood stock. This includes maintaining an inventory for each blood group. The main goal of the Blood Bank is to monitor Blood Bank data, Blood cells (component), Blood stock, Donor List. Blood Bank module is for managing blood bank status, component status, donor details and blood and component issue details.
 
 - [About Blood Bank](about-blood-bank.md) — Mon, 01 Nov, 2021
 - [Setup for Blood Bank](setup-for-blood-bank.md) — Thu, 21 Oct, 2021

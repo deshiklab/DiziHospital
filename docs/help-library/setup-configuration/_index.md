@@ -1,6 +1,6 @@
 # Setup & Configuration (22)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+Blood Bank To setup Blood Bank go to Setup > Blood Bank.To add Product for Blood Group click on + Add Product button now enter Product Type as Blood Group or Component, enter Name and click on Save button.You can check added Product record at Product List page.To edit Product click on edit and to delete Product click on delete icon present at Action column. Read More
 
 - [Patient](patient.md) — Sat, 30 Oct, 2021
 - [Hospital Charges](hospital-charges.md) — Tue, 09 Nov, 2021

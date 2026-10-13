@@ -1,6 +1,6 @@
 # Inventory (4)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+About Inventory. Inventory Module is used to maintain entire Inventory record including hospital uniforms, bill book and many more. The main purpose of this module is to make hospital equipment tracking easy.Inventory Module Workflow: First we will add items then add item stocks then we will manage issue and return of items to different staff members. Read More
 
 - [About Inventory.](about-inventory.md) — Tue, 02 Nov, 2021
 - [How to add Item Stock?](how-to-add-item-stock.md) — Sun, 31 Oct, 2021

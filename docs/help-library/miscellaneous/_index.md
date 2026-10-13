@@ -1,6 +1,6 @@
 # Miscellaneous (6)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+About Calendar The primary reason for having a calendar is to organize the days, weeks, months and years.Calendar & To Do List Workflow- first we will add personal and public event and then we will add to do list personal task. Read More
 
 - [About Calendar](about-calendar.md) — Tue, 02 Nov, 2021
 - [How to add new event in calendar?](how-to-add-new-event-in-calendar.md) — Tue, 02 Nov, 2021

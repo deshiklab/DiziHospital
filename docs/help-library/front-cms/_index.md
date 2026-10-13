@@ -1,6 +1,6 @@
 # Front CMS (8)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+About Front CMS In Smart Hospital, we have provided a option to design your Hospital front site page. To design your hospital front page go to Front CMS, here you can add or edit Pages, upload images and videos at Media Manager which can be used for Smart Hospital, add Menus like Main Menu and Bottom Menu and Banner Images.For Front CMS setup please click here to see Front CMS Setting. Read More
 
 - [About Front CMS](about-front-cms.md) — Thu, 11 Nov, 2021
 - [How Media Manager works in Smart Hospital.](how-media-manager-works-in-smart-hospital.md) — Thu, 11 Nov, 2021

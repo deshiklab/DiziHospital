@@ -1,6 +1,6 @@
 # bug_report Known Issues
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging
 
 - [Version 1.0](version-1-0-6.md) — Thu, 30 Jul, 2026
 - [Version 1.0](version-1-0-5.md) — Thu, 30 Jul, 2026

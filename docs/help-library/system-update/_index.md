@@ -1,6 +1,6 @@
 # System Update(1)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+To check Smart Hospital current version or available new version login from superadmin panel and then go to Setup > Settings > System Update link. Here you can see your current Smart Hospital Version and if here any new version available for Smart Hospital then you can update your Smart Hospital through one click auto update feature (which will show only when new version available).
 
 - [System Update](system-update.md) — Sat, 30 Oct, 2021
 - [Version 1.0](../known-issues/version-1-0-6.md) — Thu, 30 Jul, 2026

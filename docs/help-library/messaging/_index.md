@@ -1,6 +1,6 @@
 # Messaging (4)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging
 
 - [How Notice Board works?](how-notice-board-works.md) — Mon, 01 Nov, 2021
 - [How send SMS in Smart Hospital?](how-send-sms-in-smart-hospital.md) — Mon, 01 Nov, 2021

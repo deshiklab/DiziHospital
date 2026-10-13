@@ -4,7 +4,7 @@
  "failed": [],
  "images": 909,
  "warnings": [
-  "image https://prnt.sc/1xilq7o: cannot identify image file <_io.BytesIO object at 0x7fb1b9472160>",
+  "image https://prnt.sc/1xilq7o: cannot identify image file <_io.BytesIO object at 0x7f8f8b04cf40>",
   "https://dev.webfeb.com/shkbr/assets/article-media/stafflist1.png: HTTP 404",
   "https://dev.webfeb.com/shkbr/assets/article-media/add_dept.png: HTTP 404",
   "https://dev.webfeb.com/shkbr/assets/article-media/deptlist.png: HTTP 404",

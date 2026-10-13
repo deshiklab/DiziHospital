@@ -1,6 +1,6 @@
 # Certificate (7)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging
 
 - [About Certificate.](about-certificate.md) — Tue, 02 Nov, 2021
 - [How to add Certificate in Smart Hospital?](how-to-add-certificate-in-smart-hospital.md) — Tue, 02 Nov, 2021

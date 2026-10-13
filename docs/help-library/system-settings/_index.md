@@ -1,6 +1,6 @@
 # System Settings (16)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+SMS Setting To manage SMS setting, go to Setup > Settings > SMS Setting then select any SMS gateway from top of the page which you want to enable on your Smart Hospital then enter Auth Key, Sender Id and select Status and then click on Save button.Here we are providing 8 SMS Gateway namely Clickatell SMS Gateway, Twilio SMS Gateway, MSG91, Text Local, SMS Country, Bulk SMS, Mobi Read More
 
 - [Notification Setting](notification-setting.md) — Mon, 01 Nov, 2021
 - [System Notification Setting](system-notification-setting.md) — Mon, 01 Nov, 2021

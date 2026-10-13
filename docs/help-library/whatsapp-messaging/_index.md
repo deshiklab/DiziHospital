@@ -1,6 +1,6 @@
 # WhatsApp Messaging (4)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+Go to Setup → Settings → WhatsApp Setting from the sidebar. The Twilio WhatsApp tab is selected by default.Enter the following, taken from your Twilio Console:Twilio Account SID — required.Authentication Token — required. Once saved, this is masked and shown only as a hint on later visits.Registered Phone Number — the WhatsApp-enabled sender number linked to your Twilio account,
 
 - [About WhatsApp Messaging](../known-issues/about-whatsapp-messaging.md) — Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Meta (Cloud API)?](../known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md) — Sat, 25 Jul, 2026

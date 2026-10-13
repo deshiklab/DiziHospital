@@ -1,6 +1,6 @@
 # Multi Branch (7)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+About Multi Branch The Multibranch feature in Smart Hospital enables organizations to manage multiple hospital branches under a single system, allowing centralized control of data, seamless inter-branch operations, and branch-specific configurations for enhanced efficiency and reporting. Read More
 
 - [About Multi Branch](about-multi-branch.md) — Sat, 16 Aug, 2025
 - [How to add the new branch in smart hospital home branch?](how-to-add-the-new-branch-in-smart-hospital-home-branch.md) — Sat, 16 Aug, 2025

@@ -1,6 +1,6 @@
 # Ambulance (3)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+About Ambulance. Ambulance module is for managing ambulance vehicles and ambulance calls for patient travelling. Read More
 
 - [About Ambulance.](about-ambulance.md) — Mon, 01 Nov, 2021
 - [How to add Ambulance?](how-to-add-ambulance.md) — Mon, 01 Nov, 2021

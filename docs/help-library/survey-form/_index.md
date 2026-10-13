@@ -1,6 +1,6 @@
 # Survey Form (6)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+From the Survey Forms list, click the View Submissions action on any form to open its Submissions dashboard. The top of the page shows four quick summary tiles: Total Responses, Form Fields, Status and Schedule, followed by three tabs.Response StatisticsEvery Radio, Checkbox and Yes/No field gets a breakdown of votes and percentage per option, with a bar and a donut chart. Free-text fields
 
 - [About Survey Form](about-survey-form.md) — Sat, 25 Jul, 2026
 - [How to add Fields to a Survey Form?](how-to-add-fields-to-a-survey-form.md) — Sat, 25 Jul, 2026

@@ -1,6 +1,6 @@
 # OPD - Out Patient (9)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+BMI For OPD - Out Patient In the OPD - Out Patient for BMI, you need to go to the OPD - Out Patient. Here, select the patient whose BMI details you want to see. Click on the OPD number of the patient. The patient's overview page will open, where you can see the BMI details Read More
 
 - [About OPD - Out Patient](about-opd-out-patient.md) — Tue, 22 Jul, 2025
 - [How to add patient in OPD - Out Patient?](how-to-add-patient-in-opd-out-patient.md) — Tue, 22 Jul, 2025

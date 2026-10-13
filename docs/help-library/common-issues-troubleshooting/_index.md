@@ -1,6 +1,6 @@
 # Common Issues & Troubleshooting (13)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+Enabling SSL In Smart Hospital After installing ssl on your Smart Hospital hosting you need to edit your base url in following file -Open file \application\config\config.php and find the line $config['base_url'] = 'http://yourdomain.com/'; change it to $config['base_url'] = 'https://yourdomain.com/'; that's it. Read More
 
 - [404 Or Page Not Found Error In Installation](404-or-page-not-found-error-in-installation.md) — Mon, 18 Oct, 2021
 - [Enabling SSL In Smart Hospital](enabling-ssl-in-smart-hospital.md) — Tue, 09 Nov, 2021

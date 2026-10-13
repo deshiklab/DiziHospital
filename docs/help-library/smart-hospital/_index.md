@@ -1,6 +1,6 @@
 # Smart Hospital(10)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+Version 2.1 Released Date: 27th November, 2019Bug FixesFixed permissions issuesFixed Report issuesFixed Appointment issuesFixed OPD Bill issuesFixed Pathology issuesFixed Radiology issuesFixed Supplier issuesFixed Dashboard count issuesFixed Bill print issuesFixed some design issuesFixed some UI/UX issues Read More
 
 - [Version 7.0](../known-issues/version-7-0.md) — Mon, 27 Jul, 2026
 - [Version 6.0](version-6-0.md) — Thu, 21 Aug, 2025

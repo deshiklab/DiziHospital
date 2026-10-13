@@ -1,6 +1,6 @@
 # Front Office (7)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+How to setup Front Office? Please click here to see how to do setup for Front Office. Read More
 
 - [How to add Postal Dispatch in Smart Hospital?](how-to-add-postal-dispatch-in-smart-hospital.md) — Wed, 17 Nov, 2021
 - [About Front Office](about-front-office.md) — Thu, 28 Oct, 2021

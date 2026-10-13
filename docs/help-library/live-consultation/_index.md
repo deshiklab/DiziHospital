@@ -1,6 +1,6 @@
 # Live Consultation (3)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+About Live Consultation In Smart Hospital Live Consultation feature Patients can consult to doctor through zoom video call.Please click here to see settings for Live Consultation. Read More
 
 - [About Live Consultation](about-live-consultation.md) — Thu, 11 Nov, 2021
 - [How to add Live Consultation in Smart Hospital?](how-to-add-live-consultation-in-smart-hospital.md) — Mon, 08 Sep, 2025

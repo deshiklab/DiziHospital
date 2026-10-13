@@ -1,6 +1,6 @@
 # Referral (3)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+About Referral. Most often, patients get referral to see a specialist from their primary care physician or from a doctor at a hospital. Doctors refer patients based on what they feel is necessary for them, and this is how many specialists get the bulk of their patient base.Note- Please click here to see setup for referral. Read More
 
 - [About Referral.](about-referral.md) — Thu, 11 Nov, 2021
 - [How to add Referral Person?](how-to-add-referral-person.md) — Sun, 31 Oct, 2021

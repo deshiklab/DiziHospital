@@ -1,6 +1,6 @@
 # Annual Calendar (4)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+To display annual calendar on the front site of the Smart Hospital, go to Front CMS > Menus. Here, you can see the 'Add Menu' form and the Menu List, which displays the Main Menu and the Bottom Menu. Click on the '+' icon in the Main Menu to go to the 'Add Menu Item' page. When you click on + icon, this will redirect you to the Add Menu Item page.Here you can view Menu Item, External URL toggle
 
 - [How to add holiday in annual calendar on smart hospital?](how-to-add-holiday-in-annual-calendar-on-smart-hospital.md) — Thu, 05 Sep, 2024
 - [How to add activity in annual calendar?](how-to-add-activity-in-annual-calendar.md) — Thu, 05 Sep, 2024

@@ -1,6 +1,6 @@
 # Getting Started (3)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging
 
 - [How to register a Webfeb.com purchased License Code in Smart Hospital?](how-to-register-a-webfeb-com-purchased-license-code-in-smart-hospital.md) — Thu, 30 Jul, 2026
 - [General Overview](general-overview.md) — Wed, 29 May, 2024

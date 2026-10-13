@@ -1,6 +1,6 @@
 # Installation(7)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+Installation Issue During installation while Smart Hospital installer importing database there is any issue occurred so may be database import has not completed so installer was stuck and unable to proceed at last step. In this case you should check your database and if there is any tables present then remove all tables and again start Smart Hospital installer from first step. Read More
 
 - [NGINX Installation](nginx-installation-1.md) — Sat, 11 Mar, 2023
 - [Server Requirements](server-requirements-1.md) — Mon, 23 Sep, 2024

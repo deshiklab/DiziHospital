@@ -1,6 +1,6 @@
 # Human Resource (13)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+How to add Department? To add department, go to Setup > Human Resource > Department then enter Name and then click on Save button.You can view this added record in the Department List on the right side of the page.To edit department click on Edit icon and to delete department click on Delete icon present in the Department list. Read More
 
 - [About Human Resource.](about-human-resource.md) — Tue, 26 Oct, 2021
 - [How to add Department?](how-to-add-department.md) — Tue, 26 Oct, 2021

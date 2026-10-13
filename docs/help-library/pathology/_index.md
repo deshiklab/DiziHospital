@@ -1,6 +1,6 @@
 # Pathology (4)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+How to add/view Pathology Test payment? To Add/View patient payment of Pathology Test go to Pathology > Add/View Payments. Here enter payment details like payment Date, Amount, Payment Mode, Note and then click on Save button.Here at Transaction History section you can check all patient payment done for Pathology Test. Read More
 
 - [About Pathology](about-pathology.md) — Thu, 11 Nov, 2021
 - [How to add Pathology Test in Smart Hospital?](how-to-add-pathology-test-in-smart-hospital.md) — Wed, 10 Nov, 2021

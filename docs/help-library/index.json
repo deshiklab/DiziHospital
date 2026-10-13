@@ -4,7 +4,7 @@
    "name": "bug_report Known Issues",
    "slug": "known-issues",
    "url": "https://smart-hospital.in/category/known-issues",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "Version 1.0",
@@ -92,7 +92,7 @@
    "name": "Getting Started",
    "slug": "getting-started",
    "url": "https://smart-hospital.in/category/getting-started",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "How to register a Webfeb.com purchased License Code in Smart Hospital?",
@@ -214,7 +214,7 @@
    "name": "Installation",
    "slug": "installation",
    "url": "https://smart-hospital.in/category/getting-started/installation",
-   "description": "",
+   "description": "Installation Issue During installation while Smart Hospital installer importing database there is any issue occurred so may be database import has not completed so installer was stuck and unable to proceed at last step. In this case you should check your database and if there is any tables present then remove all tables and again start Smart Hospital installer from first step. Read More",
    "articles": [
     {
      "title": "NGINX Installation",
@@ -368,7 +368,7 @@
    "name": "System Update",
    "slug": "system-update",
    "url": "https://smart-hospital.in/category/getting-started/system-update",
-   "description": "",
+   "description": "To check Smart Hospital current version or available new version login from superadmin panel and then go to Setup > Settings > System Update link. Here you can see your current Smart Hospital Version and if here any new version available for Smart Hospital then you can update your Smart Hospital through one click auto update feature (which will show only when new version available).",
    "articles": [
     {
      "title": "System Update",
@@ -474,7 +474,7 @@
    "name": "Common Issues & Troubleshooting",
    "slug": "common-issues-troubleshooting",
    "url": "https://smart-hospital.in/category/common-issues-troubleshooting",
-   "description": "",
+   "description": "Enabling SSL In Smart Hospital After installing ssl on your Smart Hospital hosting you need to edit your base url in following file -Open file \\application\\config\\config.php and find the line $config['base_url'] = 'http://yourdomain.com/'; change it to $config['base_url'] = 'https://yourdomain.com/'; that's it. Read More",
    "articles": [
     {
      "title": "404 Or Page Not Found Error In Installation",
@@ -676,7 +676,7 @@
    "name": "FAQ",
    "slug": "faq",
    "url": "https://smart-hospital.in/category/faq",
-   "description": "",
+   "description": "Can I use special character in Smart Hospital? In Smart Hospital avoid to enter or using special character (special character is non-alphabetic and non-numeric like @, #, $, <, %, ^, &, *, !) for any field like Patient, Staff, Income, Expense, Transport, Custom Field etc, otherwise it may fail PHP or JavaScript processing. Read More",
    "articles": [
     {
      "title": "Can I use special character in Smart Hospital?",
@@ -910,7 +910,7 @@
    "name": "Miscellaneous",
    "slug": "miscellaneous",
    "url": "https://smart-hospital.in/category/miscellaneous",
-   "description": "",
+   "description": "About Calendar The primary reason for having a calendar is to organize the days, weeks, months and years.Calendar & To Do List Workflow- first we will add personal and public event and then we will add to do list personal task. Read More",
    "articles": [
     {
      "title": "About Calendar",
@@ -1056,7 +1056,7 @@
    "name": "System Settings",
    "slug": "system-settings",
    "url": "https://smart-hospital.in/category/system-settings",
-   "description": "",
+   "description": "SMS Setting To manage SMS setting, go to Setup > Settings > SMS Setting then select any SMS gateway from top of the page which you want to enable on your Smart Hospital then enter Auth Key, Sender Id and select Status and then click on Save button.Here we are providing 8 SMS Gateway namely Clickatell SMS Gateway, Twilio SMS Gateway, MSG91, Text Local, SMS Country, Bulk SMS, Mobi Read More",
    "articles": [
     {
      "title": "Notification Setting",
@@ -1282,7 +1282,7 @@
    "name": "Setup & Configuration",
    "slug": "setup-configuration",
    "url": "https://smart-hospital.in/category/setup-configuration",
-   "description": "",
+   "description": "Blood Bank To setup Blood Bank go to Setup > Blood Bank.To add Product for Blood Group click on + Add Product button now enter Product Type as Blood Group or Component, enter Name and click on Save button.You can check added Product record at Product List page.To edit Product click on edit and to delete Product click on delete icon present at Action column. Read More",
    "articles": [
     {
      "title": "Patient",
@@ -1556,7 +1556,7 @@
    "name": "Billing",
    "slug": "billing",
    "url": "https://smart-hospital.in/category/billing",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "About Billing",
@@ -1678,7 +1678,7 @@
    "name": "Appointment",
    "slug": "appointment",
    "url": "https://smart-hospital.in/category/appointment",
-   "description": "",
+   "description": "Setup for Appointment. To setup appointment priority, go to Setup > Front Office. You can add Appointment Priority data which will be use in add appointment. Here enter priority value and then click on Save button. You can view this added record in the Priority List on Add Appointment page.To edit Priority click on edit and for delete click on delete icon present at Action column. Read More",
    "articles": [
     {
      "title": "How to direct open the patient details in Appointment?",
@@ -1840,7 +1840,7 @@
    "name": "OPD - Out Patient",
    "slug": "opd-out-patient",
    "url": "https://smart-hospital.in/category/opd-out-patient",
-   "description": "",
+   "description": "BMI For OPD - Out Patient In the OPD - Out Patient for BMI, you need to go to the OPD - Out Patient. Here, select the patient whose BMI details you want to see. Click on the OPD number of the patient. The patient's overview page will open, where you can see the BMI details Read More",
    "articles": [
     {
      "title": "About OPD - Out Patient",
@@ -2010,7 +2010,7 @@
    "name": "IPD - In Patient",
    "slug": "ipd-in-patient",
    "url": "https://smart-hospital.in/category/ipd-in-patient",
-   "description": "",
+   "description": "BMI For IPD - In Patient In the IPD - In Patient for BMI, you need to go to the IPD - In Patient. Here, select the patient whose BMI details you want to see. Click on the IPD number of the patient. The patient's overview page will open, where you can see the BMI details Read More",
    "articles": [
     {
      "title": "How to add the vitals details of the patient in IPD - In Patient ?",
@@ -2260,7 +2260,7 @@
    "name": "Pharmacy",
    "slug": "pharmacy",
    "url": "https://smart-hospital.in/category/pharmacy",
-   "description": "",
+   "description": "To import medicines click on Import Medicine button. Here select Medicine Category from dropdown and select CSV file, then click on Import Medicine button.Note: Your CSV data should be in the format below. The first line of your CSV file should be the column headers as in the table example. Also make sure that your file is UTF-8 to avoid unnecessary encoding problems.",
    "articles": [
     {
      "title": "About Pharmacy.",
@@ -2406,7 +2406,7 @@
    "name": "Pathology",
    "slug": "pathology",
    "url": "https://smart-hospital.in/category/pathology",
-   "description": "",
+   "description": "How to add/view Pathology Test payment? To Add/View patient payment of Pathology Test go to Pathology > Add/View Payments. Here enter payment details like payment Date, Amount, Payment Mode, Note and then click on Save button.Here at Transaction History section you can check all patient payment done for Pathology Test. Read More",
    "articles": [
     {
      "title": "About Pathology",
@@ -2536,7 +2536,7 @@
    "name": "Radiology",
    "slug": "radiology",
    "url": "https://smart-hospital.in/category/radiology",
-   "description": "",
+   "description": "How to add/view radiology test payment? To Add/View patient payment of Radiology Test go to Radiology > Add/View Payments. Here enter payment details like payment Date, Amount, Payment Mode, Note and then click on Save button.Here at Transaction History section you can check all patient payment done for Radiology Test. Read More",
    "articles": [
     {
      "title": "About Radiology",
@@ -2666,7 +2666,7 @@
    "name": "Blood Bank",
    "slug": "blood-bank",
    "url": "https://smart-hospital.in/category/blood-bank",
-   "description": "",
+   "description": "The hospital blood bank is responsible for management of the hospital's blood stock. This includes maintaining an inventory for each blood group. The main goal of the Blood Bank is to monitor Blood Bank data, Blood cells (component), Blood stock, Donor List. Blood Bank module is for managing blood bank status, component status, donor details and blood and component issue details.",
    "articles": [
     {
      "title": "About Blood Bank",
@@ -2812,7 +2812,7 @@
    "name": "Ambulance",
    "slug": "ambulance",
    "url": "https://smart-hospital.in/category/ambulance",
-   "description": "",
+   "description": "About Ambulance. Ambulance module is for managing ambulance vehicles and ambulance calls for patient travelling. Read More",
    "articles": [
     {
      "title": "About Ambulance.",
@@ -2934,7 +2934,7 @@
    "name": "Front Office",
    "slug": "front-office",
    "url": "https://smart-hospital.in/category/front-office",
-   "description": "",
+   "description": "How to setup Front Office? Please click here to see how to do setup for Front Office. Read More",
    "articles": [
     {
      "title": "How to add Postal Dispatch in Smart Hospital?",
@@ -3088,7 +3088,7 @@
    "name": "Birth & Death Record",
    "slug": "birth-death-record",
    "url": "https://smart-hospital.in/category/birth-death-record",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "How to add Birth Records?",
@@ -3202,7 +3202,7 @@
    "name": "Human Resource",
    "slug": "human-resource",
    "url": "https://smart-hospital.in/category/human-resource",
-   "description": "",
+   "description": "How to add Department? To add department, go to Setup > Human Resource > Department then enter Name and then click on Save button.You can view this added record in the Department List on the right side of the page.To edit department click on Edit icon and to delete department click on Delete icon present in the Department list. Read More",
    "articles": [
     {
      "title": "About Human Resource.",
@@ -3404,7 +3404,7 @@
    "name": "QR Code Attendance",
    "slug": "qr-code-attendance",
    "url": "https://smart-hospital.in/category/qr-code-attendance",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "About QR Code Attendance",
@@ -3526,7 +3526,7 @@
    "name": "Survey Form",
    "slug": "survey-form",
    "url": "https://smart-hospital.in/category/survey-form",
-   "description": "",
+   "description": "From the Survey Forms list, click the View Submissions action on any form to open its Submissions dashboard. The top of the page shows four quick summary tiles: Total Responses, Form Fields, Status and Schedule, followed by three tabs.Response StatisticsEvery Radio, Checkbox and Yes/No field gets a breakdown of votes and percentage per option, with a bar and a donut chart. Free-text fields",
    "articles": [
     {
      "title": "About Survey Form",
@@ -3672,7 +3672,7 @@
    "name": "WhatsApp Messaging",
    "slug": "whatsapp-messaging",
    "url": "https://smart-hospital.in/category/whatsapp-messaging",
-   "description": "",
+   "description": "Go to Setup \u2192 Settings \u2192 WhatsApp Setting from the sidebar. The Twilio WhatsApp tab is selected by default.Enter the following, taken from your Twilio Console:Twilio Account SID \u2014 required.Authentication Token \u2014 required. Once saved, this is masked and shown only as a hint on later visits.Registered Phone Number \u2014 the WhatsApp-enabled sender number linked to your Twilio account,",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -3770,7 +3770,7 @@
    "name": "Duty Roster",
    "slug": "duty-roster",
    "url": "https://smart-hospital.in/category/duty-roster",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "How to search the duty roster?",
@@ -3900,7 +3900,7 @@
    "name": "Annual Calendar",
    "slug": "annual-calendar",
    "url": "https://smart-hospital.in/category/annual-calendar",
-   "description": "",
+   "description": "To display annual calendar on the front site of the Smart Hospital, go to Front CMS > Menus. Here, you can see the 'Add Menu' form and the Menu List, which displays the Main Menu and the Bottom Menu. Click on the '+' icon in the Main Menu to go to the 'Add Menu Item' page. When you click on + icon, this will redirect you to the Add Menu Item page.Here you can view Menu Item, External URL toggle",
    "articles": [
     {
      "title": "How to add holiday in annual calendar on smart hospital?",
@@ -4030,7 +4030,7 @@
    "name": "Multi Branch",
    "slug": "multi-branch",
    "url": "https://smart-hospital.in/category/multi-branch",
-   "description": "",
+   "description": "About Multi Branch The Multibranch feature in Smart Hospital enables organizations to manage multiple hospital branches under a single system, allowing centralized control of data, seamless inter-branch operations, and branch-specific configurations for enhanced efficiency and reporting. Read More",
    "articles": [
     {
      "title": "About Multi Branch",
@@ -4184,7 +4184,7 @@
    "name": "Referral",
    "slug": "referral",
    "url": "https://smart-hospital.in/category/referral",
-   "description": "",
+   "description": "About Referral. Most often, patients get referral to see a specialist from their primary care physician or from a doctor at a hospital. Doctors refer patients based on what they feel is necessary for them, and this is how many specialists get the bulk of their patient base.Note- Please click here to see setup for referral. Read More",
    "articles": [
     {
      "title": "About Referral.",
@@ -4306,7 +4306,7 @@
    "name": "TPA Management",
    "slug": "tpa-management",
    "url": "https://smart-hospital.in/category/tpa-management",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "About TPA",
@@ -4420,7 +4420,7 @@
    "name": "Messaging",
    "slug": "messaging",
    "url": "https://smart-hospital.in/category/messaging",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "How Notice Board works?",
@@ -4550,7 +4550,7 @@
    "name": "Two Factor Authentication",
    "slug": "two-factor-authentication",
    "url": "https://smart-hospital.in/category/two-factor-authentication",
-   "description": "",
+   "description": "How to Setup 2FA? Go to the your Smart Hospital to configure 2FA of Two Factor Authentication, two-step verification. For setup 2FA, go to the Two Factor Authentication module, which is shown in the left side bar. Now click on Setup 2FA, the Setup 2FA page will open.Note: For further processing, you need to set up Google Authenticator on your mobile device. Read More",
    "articles": [
     {
      "title": "About Two Factor Authentication",
@@ -4696,7 +4696,7 @@
    "name": "Inventory",
    "slug": "inventory",
    "url": "https://smart-hospital.in/category/inventory",
-   "description": "",
+   "description": "About Inventory. Inventory Module is used to maintain entire Inventory record including hospital uniforms, bill book and many more. The main purpose of this module is to make hospital equipment tracking easy.Inventory Module Workflow: First we will add items then add item stocks then we will manage issue and return of items to different staff members. Read More",
    "articles": [
     {
      "title": "About Inventory.",
@@ -4826,7 +4826,7 @@
    "name": "Download Center",
    "slug": "download-center",
    "url": "https://smart-hospital.in/category/download-center",
-   "description": "",
+   "description": "About Download Center. The download center module is used to download the documents content like Medical Equipment List, Guideline note etc. Read More",
    "articles": [
     {
      "title": "Overall working of download center module in smart hospital",
@@ -4948,7 +4948,7 @@
    "name": "Certificate",
    "slug": "certificate",
    "url": "https://smart-hospital.in/category/certificate",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "About Certificate.",
@@ -5102,7 +5102,7 @@
    "name": "Front CMS",
    "slug": "front-cms",
    "url": "https://smart-hospital.in/category/front-cms",
-   "description": "",
+   "description": "About Front CMS In Smart Hospital, we have provided a option to design your Hospital front site page. To design your hospital front page go to Front CMS, here you can add or edit Pages, upload images and videos at Media Manager which can be used for Smart Hospital, add Menus like Main Menu and Bottom Menu and Banner Images.For Front CMS setup please click here to see Front CMS Setting. Read More",
    "articles": [
     {
      "title": "About Front CMS",
@@ -5264,7 +5264,7 @@
    "name": "Live Consultation",
    "slug": "live-consultation",
    "url": "https://smart-hospital.in/category/live-consultation",
-   "description": "",
+   "description": "About Live Consultation In Smart Hospital Live Consultation feature Patients can consult to doctor through zoom video call.Please click here to see settings for Live Consultation. Read More",
    "articles": [
     {
      "title": "About Live Consultation",
@@ -5386,7 +5386,7 @@
    "name": "Reports",
    "slug": "reports",
    "url": "https://smart-hospital.in/category/reports",
-   "description": "",
+   "description": "Stock Report To check Stock Report report, go to Reports > Stock Report.Here select Medicine Category, Stock Type then click on Search button.Here you can see Expiry Medicine Report details like Medicine Name, Medicine Company, Medicine Category, Medicine Composition,Medicine Category, Medicine Group, Unit and Available Qty (Quantity). Also you can download this report as PDF. Read More",
    "articles": [
     {
      "title": "Stock Report",
@@ -5836,7 +5836,7 @@
    "name": "Patient Panel",
    "slug": "patient-panel",
    "url": "https://smart-hospital.in/category/patient-panel",
-   "description": "",
+   "description": "Live Consultation Using Live Consultation Patients can consult to doctor through zoom video call.Here all the Live Consultation like from Appointment, OPD and IPD modules for patients will be listed. Read More",
    "articles": [
     {
      "title": "Patient Dashboard",
@@ -6014,7 +6014,7 @@
    "name": "Smart Hospital",
    "slug": "smart-hospital",
    "url": "https://smart-hospital.in/category/changelog/smart-hospital",
-   "description": "",
+   "description": "Version 2.1 Released Date: 27th November, 2019Bug FixesFixed permissions issuesFixed Report issuesFixed Appointment issuesFixed OPD Bill issuesFixed Pathology issuesFixed Radiology issuesFixed Supplier issuesFixed Dashboard count issuesFixed Bill print issuesFixed some design issuesFixed some UI/UX issues Read More",
    "articles": [
     {
      "title": "Version 7.0",

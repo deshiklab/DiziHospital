@@ -1,6 +1,6 @@
 # Two Factor Authentication (6)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+How to Setup 2FA? Go to the your Smart Hospital to configure 2FA of Two Factor Authentication, two-step verification. For setup 2FA, go to the Two Factor Authentication module, which is shown in the left side bar. Now click on Setup 2FA, the Setup 2FA page will open.Note: For further processing, you need to set up Google Authenticator on your mobile device. Read More
 
 - [About Two Factor Authentication](about-two-factor-authentication.md) — Sat, 16 Aug, 2025
 - [How to Setup 2FA?](how-to-setup-2fa.md) — Sat, 16 Aug, 2025

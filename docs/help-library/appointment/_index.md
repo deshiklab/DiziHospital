@@ -1,6 +1,6 @@
 # Appointment (8)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+Setup for Appointment. To setup appointment priority, go to Setup > Front Office. You can add Appointment Priority data which will be use in add appointment. Here enter priority value and then click on Save button. You can view this added record in the Priority List on Add Appointment page.To edit Priority click on edit and for delete click on delete icon present at Action column. Read More
 
 - [How to direct open the patient details in Appointment?](how-to-direct-open-the-patient-details-in-appointment.md) — Tue, 22 Jul, 2025
 - [How to add appointment in smart hospital?](how-to-add-appointment-in-smart-hospital.md) — Tue, 22 Jul, 2025

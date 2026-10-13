@@ -1,6 +1,6 @@
 # Radiology (4)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+How to add/view radiology test payment? To Add/View patient payment of Radiology Test go to Radiology > Add/View Payments. Here enter payment details like payment Date, Amount, Payment Mode, Note and then click on Save button.Here at Transaction History section you can check all patient payment done for Radiology Test. Read More
 
 - [About Radiology](about-radiology.md) — Thu, 11 Nov, 2021
 - [How to add radiology test in Smart Hospital?](how-to-add-radiology-test-in-smart-hospital.md) — Wed, 10 Nov, 2021

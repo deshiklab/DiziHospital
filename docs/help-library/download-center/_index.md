@@ -1,6 +1,6 @@
 # Download Center (3)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+About Download Center. The download center module is used to download the documents content like Medical Equipment List, Guideline note etc. Read More
 
 - [Overall working of download center module in smart hospital](overall-working-of-download-center-module-in-smart-hospital.md) — Sat, 31 Aug, 2024
 - [About Download Center.](about-download-center.md) — Wed, 17 Nov, 2021

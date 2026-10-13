@@ -1,6 +1,6 @@
 # IPD - In Patient (19)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+BMI For IPD - In Patient In the IPD - In Patient for BMI, you need to go to the IPD - In Patient. Here, select the patient whose BMI details you want to see. Click on the IPD number of the patient. The patient's overview page will open, where you can see the BMI details Read More
 
 - [How to add the vitals details of the patient in IPD - In Patient ?](how-to-add-the-vitals-details-of-the-patient-in-ipd-in-patient.md) — Fri, 30 Aug, 2024
 - [How to see the details for Previous Obstetric History, Postnatal History, and Antenatal History in IPD - In Patient?](how-to-see-the-details-for-previous-obstetric-history-postnatal-history-and-antenatal-history-in-ipd-in-patient.md) — Fri, 30 Aug, 2024

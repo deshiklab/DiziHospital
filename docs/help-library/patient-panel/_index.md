@@ -1,6 +1,6 @@
 # Patient Panel (10)
 
-Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+Live Consultation Using Live Consultation Patients can consult to doctor through zoom video call.Here all the Live Consultation like from Appointment, OPD and IPD modules for patients will be listed. Read More
 
 - [Patient Dashboard](patient-dashboard.md) — Fri, 01 Aug, 2025
 - [How to add appointment from Patient panel?](how-to-add-appointment-from-patient-panel.md) — Sat, 02 Aug, 2025
