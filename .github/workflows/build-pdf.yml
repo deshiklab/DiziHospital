@@ -29,7 +29,7 @@ jobs:
 
       - name: Install playwright + python markdown
         run: |
-          pip3 install --quiet markdown || pip3 install --quiet --break-system-packages markdown
+          pip3 install --quiet markdown pillow pypdf || pip3 install --quiet --break-system-packages markdown pillow pypdf
           cd tools/capture && npm install --no-audit --no-fund >/dev/null 2>&1
           cd ../.. && npm install playwright --no-audit --no-fund >/dev/null 2>&1 || true
           npx playwright install chromium >/dev/null 2>&1
@@ -59,6 +59,12 @@ jobs:
           echo "pdf_exit=${PIPESTATUS[0]}" >> docs/build/pdf.log
           ls -la docs/*.pdf >> docs/build/pdf.log
 
+      - name: Verify screenshots (paths, decoding, PDF embedding)
+        if: always()
+        run: |
+          pip install --quiet pypdf || true
+          python3 tools/docs/assert_images.py 2>&1 | tee docs/build/assert.log
+
       - name: Commit artefacts
         if: always()
         run: |
@@ -75,9 +81,3 @@ jobs:
             git rebase -q -X theirs origin/arena/ac321db7-dizihospital || { git rebase --abort; git pull -q --no-rebase -X theirs origin arena/ac321db7-dizihospital; }
           done
           ls -la docs/*.pdf docs/*.md
-
-      - name: Verify screenshots (paths, decoding, PDF embedding)
-        if: always()
-        run: |
-          pip install --quiet pypdf || true
-          python3 tools/docs/assert_images.py 2>&1 | tee docs/build/assert.log
