@@ -72,3 +72,31 @@ hint: Updates were rejected be
 2026-10-13T21:38:31.046Z [43/76] 043-reports-ipd status=200
 2026-10-13T21:38:32.912Z [44/76] 044-reports-pharmacy status=200
 2026-10-13T21:38:34.779Z [45/76] 045-reports-pathology status=200
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:38:35.116Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected be
+2026-10-13T21:38:36.979Z [46/76] 046-reports-radiology status=200
+2026-10-13T21:38:38.845Z [47/76] 047-reports-blood-bank status=200
+2026-10-13T21:38:40.711Z [48/76] 048-reports-ambulance status=200
+2026-10-13T21:38:42.578Z [49/76] 049-reports-birth-death status=200
+2026-10-13T21:38:44.445Z [50/76] 050-reports-human-resource status=200
+2026-10-13T21:38:46.311Z [51/76] 051-reports-tpa status=200
+2026-10-13T21:38:48.177Z [52/76] 052-reports-inventory status=200
+2026-10-13T21:38:50.045Z [53/76] 053-reports-live-consultation status=200
+2026-10-13T21:38:51.911Z [54/76] 054-reports-log status=200
+2026-10-13T21:38:53.777Z [55/76] 055-reports-ot status=200
+2026-10-13T21:38:55.646Z [56/76] 056-reports-patient status=200
+2026-10-13T21:38:57.668Z [57/76] 057-setup-hospital-charges status=200
+2026-10-13T21:38:59.573Z [58/76] 058-setup-bed status=200
+2026-10-13T21:39:02.231Z [59/76] 059-setup-print-header-footer status=200
+2026-10-13T21:39:04.132Z [60/76] 060-setup-front-office status=200
