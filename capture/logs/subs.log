@@ -1,0 +1,105 @@
+2026-10-13T21:37:08.608Z login -> https://demo.smart-hospital.in/admin/admin/dashboard
+2026-10-13T21:37:11.748Z [1/20] 01-billing-appointment-module status=200 title=Smart Hospital & Research Center · Smart
+2026-10-13T21:37:14.551Z [2/20] 02-billing-opd-module status=200 title=OPD Patient · Smart Hospital
+2026-10-13T21:37:16.987Z [3/20] 03-billing-pathology-module status=200 title=Pathology Billing
+2026-10-13T21:37:19.407Z [4/20] 04-billing-radiology-module status=200 title=Radiology Billing
+2026-10-13T21:37:21.838Z [5/20] 05-billing-issue-blood status=200 title=Blood Issue Billing
+2026-10-13T21:37:24.283Z [6/20] 06-billing-issue-component status=200 title=Blood Components Issue Billing
+2026-10-13T21:37:25.996Z autocommit pushed: subs 06-billing-issue-component
+2026-10-13T21:37:28.224Z [7/20] 07-billing-pharmacy-module status=200 title=Page Not Found
+2026-10-13T21:37:30.173Z [8/20] 08-billing-ambulance-module status=200 title=Page Not Found
+2026-10-13T21:37:32.123Z [9/20] 09-billing-blood-bank-module status=200 title=Page Not Found
+2026-10-13T21:37:34.343Z [10/20] 10-patient-import status=200 title=Patient
+2026-10-13T21:37:36.732Z [11/20] 11-discharged-patients status=200 title=IPD Discharged Patient
+2026-10-13T21:37:39.190Z [12/20] 12-pharmacy-search status=200 title=Medicines Stock
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:37:39.617Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:37:41.843Z [13/20] 13-pharmacy-sale-return-bills status=200 title=Sale Return Bills
+2026-10-13T21:37:44.229Z [14/20] 14-pathology-search status=200 title=Pathology Test
+2026-10-13T21:37:46.595Z [15/20] 15-radiology-search status=200 title=Radiology Test
+2026-10-13T21:37:48.851Z [16/20] 16-blood-bank-status-board status=200 title=Blood Bank · Smart Hospital
+2026-10-13T21:37:50.806Z [17/20] 17-staff-attendance status=200 title=Page Not Found
+2026-10-13T21:37:53.023Z [18/20] 18-payroll status=200 title=Payroll
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:37:53.469Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:37:56.189Z [19/20] 19-appointment-queue status=200 title=Smart Hospital & Research Center · Smart
+2026-10-13T21:37:58.644Z [20/20] 20-opd-patient-view status=200 title=OPD Patient · Smart Hospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:37:59.090Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:38:02.269Z no link for opd-profile /admin/patient/profile/\d+
+2026-10-13T21:38:05.496Z record: ipd-profile https://demo.smart-hospital.in/admin/patient/ipdprofile/138/1
+2026-10-13T21:38:11.511Z   tab: Overview
+2026-10-13T21:38:13.044Z   tab: Nurse Notes
+2026-10-13T21:38:14.593Z   tab: Medication
+2026-10-13T21:38:16.144Z   tab: Prescription
+2026-10-13T21:38:17.700Z   tab: Consultant Register
+2026-10-13T21:38:19.241Z   tab: Lab Investigation
+2026-10-13T21:38:20.792Z   tab: Operations
+2026-10-13T21:38:22.342Z   tab: Charges
+2026-10-13T21:38:23.911Z   tab: Payments
+2026-10-13T21:38:25.458Z   tab: Live Consultation
+2026-10-13T21:38:27.006Z   tab: Bed History
+2026-10-13T21:38:28.539Z   tab: Timeline
+2026-10-13T21:38:30.090Z   tab: Treatment History
+2026-10-13T21:38:31.641Z   tab: Vitals
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:38:32.095Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:38:35.725Z no link for patient-profile /admin/patient/profile/\d+
+2026-10-13T21:38:38.679Z record: billing-screen https://demo.smart-hospital.in/admin/bill/appointment
+2026-10-13T21:38:44.018Z   tab: Today Appointment
+2026-10-13T21:38:45.554Z   tab: Upcoming Appointment
+2026-10-13T21:38:47.189Z   tab: Old Appointment
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:38:47.599Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:38:47.599Z stage 4 finished
+subs_exit=0
