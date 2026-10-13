@@ -10,6 +10,7 @@ agenda for the next phase.
 
 | Document | What it is |
 |---|---|
+| **[docs/plan/](docs/plan/README.md)** | **Development plan & process** for rebuilding the app with a modern UI/UX — strategy, target architecture, design system, screen-by-phase map, roadmap, engineering process, data migration and a 30-day kickoff |
 | **[docs/Smart-Hospital-Complete-Guide.pdf](docs/Smart-Hospital-Complete-Guide.pdf)** | The full PDF guide — cover, contents, operator wiki/help handbook, screen-by-screen feature catalogue with screenshots, the improvement backlog, the vendor help-library index and a selection of help articles in full |
 | [docs/FEATURE-CATALOG.md](docs/FEATURE-CATALOG.md) | Markdown feature catalogue: 76 screens, 96 data-entry dialogs, 29 sub-screens, 5 record views (with every tab), all 9 role dashboards — each screen documented with its purpose, grids, filters, actions and form fields, plus a screenshot |
 | [docs/WIKI.md](docs/WIKI.md) | Operator handbook / help wiki — how to run each module day to day (registration, appointment, OPD, IPD, billing, pharmacy, lab, imaging, blood bank, HR, finance, reports, CMS, telemedicine), troubleshooting and glossary |

@@ -123,6 +123,24 @@ E1 API layer + E2 webhooks · E10 ABDM/FHIR · E6 observability · E8 CI/test ha
 
 ---
 
+## 3b. Where these items land in the modernization plan
+
+The rebuild in [`docs/plan/`](plan/README.md) absorbs most of this backlog. Mapping so nothing is lost:
+
+| Backlog items | Handled by | When |
+|---|---|---|
+| A1 KPI correctness, A2 currency/locale, A3 empty states, A4 terminology, A6 encoding, A7 stray label | Rebuilt dashboard + design-system content rules | Quick fixes on legacy in **week 1–2**; fully resolved in **P1/P2** |
+| A5 safe delete, A8 field naming | New API write policies + audit ledger + DataGrid bulk-action design | **P1** |
+| B1 queue board, B2 bed board, B6 reminders/no-shows, B9 referral letters | Boards component + notification engine | **P1/P5**, reminders **P2** |
+| B3 lab barcode/analyzer, B5 allergy checks, B7 cross-match | Order composer, safety surfaces, lab adapter | **P3/P4** |
+| B4 discharge/OT templates, B8 ambulance dispatch | Template engine, worklists | **P5** |
+| C1 online payments, C2 collections ageing, C3 TPA pipeline, C4 GST/e-invoice, C5 period close | Revenue-cycle modules | **P2/P6** |
+| D1 DOM/modals, D3 filter persistence, D4 accessibility, D5 command palette, D6 dark mode, D8 responsive/PWA | Design system + AppShell + DataGrid | **P0–P2** |
+| D2 smarter patient search | Patient module with MRN/phone/fuzzy search | **P1** |
+| E1 API, E2 webhooks, E4 security baseline (MFA enforcement), E5 licensing replacement, E6 observability, E7 backups, E8 CI/tests, E9 server-side data | Platform workstream | **P0–P2** |
+| E10 ABDM/FHIR, E11 delivery log, E12 two-way WhatsApp, E13 mobile parity | Interoperability and integration roadmap | **P4 onward / post-programme** |
+| F1 portal depth, F2 feedback surveys, F3 read receipts, F4 SEO, F5 estimates/packages | Patient experience phase | **P8** |
+
 ## 4. Definition of done (shared)
 
 Every item above ships with: acceptance criteria written first, automated test where the layer allows it,

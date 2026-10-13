@@ -226,7 +226,9 @@ def main():
             A('')
         for a in sorted(c['articles'], key=lambda x: x['title'].lower()):
             date = f" · {a['date']}" if a.get('date') else ''
-            A(f"- [{a['title']}](help-library/{c['slug']}/{a['slug']}.md){date}")
+            # an article listed under several categories is only mirrored once - link to that copy
+            target = a.get('file') or f"{c['slug']}/{a['slug']}.md"
+            A(f"- [{a['title']}](help-library/{target}){date}")
         A('')
     A('---')
     A('')

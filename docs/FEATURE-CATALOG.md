@@ -163,7 +163,7 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Dashboard](../assets/screens/001-dashboard.jpg)
+![Dashboard](assets/screens/001-dashboard.jpg)
 
 #### Screen 1.2 — Patient List
 
@@ -176,7 +176,7 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 - **Form 1**: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; `TPA ID` (input); `TPA Validity` (input)
 - **Form 2**: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
 
-![Patient List](../assets/screens/002-patient.jpg)
+![Patient List](assets/screens/002-patient.jpg)
 
 #### Screen 1.3 — Single Module Billing
 
@@ -187,7 +187,7 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 - **Search / filters:** Enter Case ID, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/bill/dashboard`): `Case ID` (text)
 
-![Single Module Billing](../assets/screens/003-billing.jpg)
+![Single Module Billing](assets/screens/003-billing.jpg)
 
 #### Screen 1.4 — Appointment
 
@@ -204,7 +204,7 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 - **Form 2**: `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Discount Percentage` (text); `Status *` (select) — Pending, Approved, Cancel; `Live Consultant (On Video Conference)` (select) — No, Yes; `Message` (textarea)
 - **Form 3**: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
 
-![Appointment](../assets/screens/004-appointment.jpg)
+![Appointment](assets/screens/004-appointment.jpg)
 
 #### Screen 1.5 — OPD - Out Patient
 
@@ -220,7 +220,7 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 - **Form 2**: `Name` (text); `Guardian Name` (text); `Gender` (select) — Male, Female; `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `file` (file); `Any Known Allergies` (text); `Phone` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Age` (text); `Month` (text)
 - **Form 3**: `Symptoms Type` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `field` (text); `Symptoms Description` (textarea); `Note` (textarea); `Any Known Allergies` (textarea); `Appointment Date` (text); `Case` (text); `Casualty` (select) — No, Yes; `Old Patient` (select) — No, Yes; `Reference` (text); `Consultant Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Payment Date` (text); `Amount ($)` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Payment Note` (text); `Cheque No` (text); `Cheque Date` (text); `document` (file); `is_for_antenatal` (checkbox)
 
-![OPD - Out Patient](../assets/screens/005-opd-out-patient.jpg)
+![OPD - Out Patient](assets/screens/005-opd-out-patient.jpg)
 
 #### Screen 1.6 — IPD Patient
 
@@ -234,7 +234,7 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 - **Form 2**: `Patient ID` (text); `Name` (text); `Phone` (text); `Appointment Date` (text); `revisit_case` (text); `casualty` (select) — Yes, No; `old_patient` (select) — Yes, No; `Symptoms` (textarea); `Any Known Allergies` (textarea); `Address` (textarea); `Note` (textarea); `refference` (text); `consultant_doctor` (select) — Amit Singh, Reyan Jain, Sansa Gomez, Sonia Bush; `Amount` (text); `Tax` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other
 - **Form 3**: `Name` (text); `Guardian Name` (text); `Gender` (select) — Male, Female; `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Phone` (text); `file` (file); `Symptoms` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Year` (text); `Month` (text); `Height` (text); `Weight` (text); `organisation` (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; `credit_limit` (text)
 
-![IPD Patient](../assets/screens/006-ipd-in-patient.jpg)
+![IPD Patient](assets/screens/006-ipd-in-patient.jpg)
 
 #### Module 1 — data-entry dialogs captured
 
@@ -248,19 +248,19 @@ Day-to-day desk work: the dashboard, the master patient index, billing, appointm
 
 - **Form** *(dialog)*: `patient_id` (select); `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Status *` (select) — Pending, Approved, Cancel; `Discount Percentage` (text); `Live Consultant (On Video Conference)` (select) — No, Yes; `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Message` (textarea); `Cheque No` (text); `Cheque Date` (text); `document` (file); `Alternate Address` (textarea)
 
-![Add Appointment New Patient](../assets/screens/004-appointment__add-appointment-new-patient.jpg)
+![Add Appointment New Patient](assets/screens/004-appointment__add-appointment-new-patient.jpg)
 
 **New Visit New Patient** — opened from *OPD - Out Patient*
 
 - **Form** (posts to `/admin/patient`) *(dialog)*: `field` (select); `symptoms_type` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `field` (search); `field` (text); `Symptoms Description` (textarea); `ICD Group` (select) — Select Group, Infectious & Parasitic Diseases, Infectious Diseases, Mental & Behavioural Disorders, Neoplasms, Viral Diseases; `ICD-10 Diagnosis` (select) — [A09] Infectious Gastroenteritis, [A15.0] Pulmonary Tuberculosis, [B34.9] Viral Infection, Unspecified, [C50.9] Malignant Neoplasm of Breast, [F41.1] Generalized Anxiety Disorder; `ICD-10 Diagnosis` (search); `Note` (textarea); `Any Known Allergies` (textarea); `Previous Medical Issue` (textarea); `Appointment Date *` (text); `case` (text); `casualty` (select) — No, Yes; `old_patient` (select) — No, Yes; `refference` (text); `Apply TPA` (checkbox); `consultant_doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Charge Category` (select) — OPD Consultation Fees, OPD Service, OPD Insurance, Blood pressure check, Eye check, Cholesterol level check; `Charge *` (select); `Standard Charge ($)` (text); `Applied Charge ($) *` (text); … +10 more
 
-![New Visit New Patient](../assets/screens/005-opd-out-patient__new-visit-new-patient.jpg)
+![New Visit New Patient](assets/screens/005-opd-out-patient__new-visit-new-patient.jpg)
 
 **Add Patient New Patient** — opened from *IPD Patient*
 
 - **Form** (posts to `/admin/patient/add_inpatient`): `field` (select); `Symptoms Type` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `Symptoms Type` (search); `Select` (text); `Symptoms Description` (textarea); `ICD-10 Groups` (select) — Select Group, Infectious & Parasitic Diseases, Infectious Diseases, Mental & Behavioural Disorders, Neoplasms, Viral Diseases; `ICD-10 Diagnosis` (select) — [A09] Infectious Gastroenteritis, [A15.0] Pulmonary Tuberculosis, [B34.9] Viral Infection, Unspecified, [C50.9] Malignant Neoplasm of Breast, [F41.1] Generalized Anxiety Disorder; `ICD-10 Diagnosis` (search); `Note` (textarea); `Previous Medical Issue` (text); `Admission Date *` (text); `Case` (text); `TPA` (text); `Casualty` (select) — Yes, No; `Old Patient` (select) — Yes, No; `Credit Limit ($) *` (text); `Reference` (text); `Consultant Doctor *` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Bed Group` (select) — VIP Ward - Ground Floor, Private Ward - 3rd Floor, General Ward Male - 3rd Floor, ICU - 2nd Floor, NICU - 2nd Floor, AC (Normal) - 1st Floor; `Bed Number *` (select); `Live Consultation` (select) — No, Yes; `Is For Antenatal` (checkbox)
 
-![Add Patient New Patient](../assets/screens/006-ipd-in-patient__add-patient-new-patient.jpg)
+![Add Patient New Patient](assets/screens/006-ipd-in-patient__add-patient-new-patient.jpg)
 
 
 ### 2.2 Clinical & Ancillary Services
@@ -296,7 +296,7 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 - **Form 2**: `sr_patient_id_display` (select); `Bill No / Sale Bill No` (text); `Bill No` (text); `Date` (text)
 - **Form 3**: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select) — O+, A+, B+, AB+, O-, A-; `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
 
-![Pharmacy Bill](../assets/screens/007-pharmacy.jpg)
+![Pharmacy Bill](assets/screens/007-pharmacy.jpg)
 
 #### Screen 2.2 — Pathology Bill
 
@@ -310,7 +310,7 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 - **Form 2** (posts to `/admin/pathology/updatecollection`): `Sample Collected Person Name` (select) — Belina Turner (9005); `Collected Date` (text); `Pathology Center` (text)
 - **Form 3**: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
 
-![Pathology Bill](../assets/screens/008-pathology.jpg)
+![Pathology Bill](assets/screens/008-pathology.jpg)
 
 #### Screen 2.3 — Radiology Bill
 
@@ -324,7 +324,7 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 - **Form 2**: `Sample Collected Person Name` (select) — John Hook (9006); `Collected Date` (text); `Radiology Center` (text)
 - **Form 3**: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
 
-![Radiology Bill](../assets/screens/009-radiology.jpg)
+![Radiology Bill](assets/screens/009-radiology.jpg)
 
 #### Screen 2.4 — Blood Bank
 
@@ -339,7 +339,7 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 - **Form 2**: `Blood Donor *` (select); `Donate Date *` (text); `Bag *` (text); `Volume` (text); `Unit Type` (select) — (ML), Litter, (nm), per day, Hour, Insurance; `Lot` (text); `Charge Category *` (select); `Charge Name *` (select); `Standard Charge ($) *` (text); `Institution` (text); `note` (textarea); `total` (text); `discount_percent` (text); `discount` (text); `tax_percentage` (text); `tax` (text); `net_amount` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Payment Amount ($) *` (text); `Cheque No *` (text); `Cheque Date *` (text); `document` (file)
 - **Form 3**: `Blood Group *` (select) — B+, A+, AB-, AB+, O-, A-; `Bag *` (select); `Platelets` (checkbox); `bag_no_9` (text); `volume_9` (text); `unit_9` (select) — (ML), Litter, (nm), per day, Hour, Insurance; `lot_9` (text); `institution_9` (text); `Plasma` (checkbox); `bag_no_10` (text); `volume_10` (text); `unit_10` (select) — (ML), Litter, (nm), per day, Hour, Insurance; `lot_10` (text); `institution_10` (text); `Cryo.` (checkbox); `bag_no_11` (text); `volume_11` (text); `unit_11` (select) — (ML), Litter, (nm), per day, Hour, Insurance; `lot_11` (text); `institution_11` (text); `White Cells & Granulocytes` (checkbox); `bag_no_12` (text); … +16 more
 
-![Blood Bank](../assets/screens/010-blood-bank.jpg)
+![Blood Bank](assets/screens/010-blood-bank.jpg)
 
 #### Screen 2.5 — Ambulance Call List
 
@@ -353,7 +353,7 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 - **Form 2**: `patient_id` (select) — Select Patient; `Case ID` (text); `Vehicle Number` (select) — Force Traveller Ambulance - MP04 AB 1234, Tata Winger - MP21 CD 4587, Force Traveller - MP21 AB 1023, BS4 - MP20CD2105, BS4FGD - MP20SD4323, Tata Winge - UP14 AB 1234; `Driver Name` (text); `Date` (text); `Charge Category` (select) — Private Ambulance, ERS/Patient Transport Service, Other Charges, Operation Services, Oxygen cylinder, Fire extinguisher; `Charge Name` (select); `Standard Charge` (input); `note` (textarea); `total` (text); `discount_percent_edit` (text); `discount_edit` (text); `tax_percentage` (text); `tax` (text); `net_amount` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Payment Amount ($) *` (text); `Cheque No *` (text); `Cheque Date *` (text); `document` (file)
 - **Form 3**: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select) — Medi life2, Medicare TPA Services (India), Family Health Plan (FHPL), Raksha Health Insurance, Paramount Health Services, LIFE MEDICAL INSURANCE; `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
 
-![Ambulance Call List](../assets/screens/011-ambulance.jpg)
+![Ambulance Call List](assets/screens/011-ambulance.jpg)
 
 #### Screen 2.6 — Visitor List
 
@@ -365,7 +365,7 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 - **Search / filters:** visitorTable_length, purpose, name, contact, id_proof, visit_to, ipd_opd_staff, related_to, pepples, date
 - **Form 1** (posts to `/admin/visitors/edit`): `Purpose *` (select) — Visit, Inquiry, Seminar; `Name *` (text); `Phone` (text); `ID Card` (text); `Visit To` (select) — Staff, OPD Patient, IPD Patient; `IPD/OPD/Staff` (select); `Related To` (text); `Number Of Person` (text); `Date *` (text); `time` (text); `out_time` (text); `Note` (textarea); `file` (file)
 
-![Visitor List](../assets/screens/012-front-office.jpg)
+![Visitor List](assets/screens/012-front-office.jpg)
 
 #### Module 2 — data-entry dialogs captured
 
@@ -378,13 +378,13 @@ The departments that raise bills and reports against a patient: pharmacy, labora
 
 - **Form**: `patient_id` (select); `Case ID` (text); `Vehicle Model` (select) — Force Traveller Ambulance - MP04 AB 1234, Tata Winger - MP21 CD 4587, Force Traveller - MP21 AB 1023, BS4 - MP20CD2105, BS4FGD - MP20SD4323, Tata Winge - UP14 AB 1234; `Driver Name` (text); `Date` (text); `Charge Category` (select) — Private Ambulance, ERS/Patient Transport Service, Other Charges, Operation Services, Oxygen cylinder, Fire extinguisher; `Charge Name` (select); `Standard Charge` (input); `Emergency Level` (textarea); `Emergency Level` (text); `total` (text); `discount_percent` (text); `discount` (text); `tax_percentage` (text); `tax` (text); `net_amount` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Payment Amount ($) *` (text); `Cheque No *` (text); `Cheque Date *` (text); `document` (file)
 
-![Add Ambulance Call New Patient](../assets/screens/011-ambulance__add-ambulance-call-new-patient.jpg)
+![Add Ambulance Call New Patient](assets/screens/011-ambulance__add-ambulance-call-new-patient.jpg)
 
 **Add Visitor** — opened from *Visitor List*
 
 - **Form** (posts to `/admin/visitors/edit`) *(dialog)*: `Purpose *` (select) — Visit, Inquiry, Seminar; `Name *` (text); `Phone` (text); `ID Card` (text); `Visit To` (select) — Staff, OPD Patient, IPD Patient; `IPD/OPD/Staff` (select); `Related To` (text); `Number Of Person` (text); `Date *` (text); `time` (text); `out_time` (text); `Note` (textarea); `file` (file)
 
-![Add Visitor](../assets/screens/012-front-office__add-visitor.jpg)
+![Add Visitor](assets/screens/012-front-office__add-visitor.jpg)
 
 
 ### 2.3 Administration & HR
@@ -427,7 +427,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Form 1**: `Child Name` (text); `Gender` (select) — Male, Female; `Weight` (text); `Birth Date` (text); `Phone` (text); `Case ID` (text); `Mother Name` (text); `Father Name` (text); `Address` (text); `Report` (textarea); `Blood Group` (select) — 1, 2; `child_img` (file); `first_img` (file); `second_img` (file); `document` (file)
 - **Form 2**: `Child Name` (text); `Gender` (select) — Male, Female; `Weight` (text); `Birth Date` (text); `Phone` (text); `Case ID` (text); `Mother Name` (text); `Father Name` (text); `Address` (text); `Report` (textarea); `child_img` (file); `mother_pic` (file); `father_pic` (file); `document` (file)
 
-![Birth Record](../assets/screens/013-birth-death-record-birth-record.jpg)
+![Birth Record](assets/screens/013-birth-death-record-birth-record.jpg)
 
 #### Screen 3.2 — Death Record
 
@@ -440,7 +440,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Form 1**: `Case ID *` (text); `Patient Name *` (text); `Death Date *` (text); `Guardian Name *` (text); `document` (file); `Report` (textarea); `Blood Group` (select) — 1, 2
 - **Form 2**: `Case ID *` (text); `Patient Name *` (text); `Death Date *` (text); `Guardian Name *` (text); `document` (file); `Report` (textarea)
 
-![Death Record](../assets/screens/014-birth-death-record-death-record.jpg)
+![Death Record](assets/screens/014-birth-death-record-death-record.jpg)
 
 #### Screen 3.3 — Overview
 
@@ -455,7 +455,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Search / filters:** search_type, date_from, date_to, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/multibranch/branch/overview`): `Time Duration` (select) — Today, This Week, Last Week, This Month, Last Month, Last 3 Months; `Date From` (text); `Date To` (text)
 
-![Overview](../assets/screens/015-multi-branch-overview.jpg)
+![Overview](assets/screens/015-multi-branch-overview.jpg)
 
 #### Screen 3.4 — Report
 
@@ -465,7 +465,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Report](../assets/screens/016-multi-branch-report.jpg)
+![Report](assets/screens/016-multi-branch-report.jpg)
 
 #### Screen 3.5 — Setting
 
@@ -477,7 +477,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Search / filters:** purchase_code, branch_name, host_name, database, username, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/multibranch/branch/add`): `Envato Purchase Code *` (text); `Branch name *` (text); `Host Name *` (text); `Database Name *` (text); `Username *` (text); `Password *` (password)
 
-![Setting](../assets/screens/017-multi-branch-settings.jpg)
+![Setting](assets/screens/017-multi-branch-settings.jpg)
 
 #### Screen 3.6 — Staff Directory
 
@@ -489,7 +489,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Search / filters:** role, Search By Staff ID, Name, Role etc..., envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/staff`): `Role` (select) — Admin, Accountant, Doctor, Pharmacist, Pathologist, Radiologist; `Search By Keyword` (text)
 
-![Staff Directory](../assets/screens/018-human-resource.jpg)
+![Staff Directory](assets/screens/018-human-resource.jpg)
 
 #### Screen 3.7 — QR Code Attendance
 
@@ -499,7 +499,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Actions:** 2, Rescan QR Code / Barcode, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![QR Code Attendance](../assets/screens/019-qr-code-attendance-attendance.jpg)
+![QR Code Attendance](assets/screens/019-qr-code-attendance-attendance.jpg)
 
 #### Screen 3.8 — Settings
 
@@ -510,7 +510,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/qrattendance/setting`): `Disabled` (radio); `Auto Attendance *` (radio); `Scanner Device Type *` (checkbox); `Camera-based device, like a mobile phone or webcam` (checkbox); `Select Camera *` (radio); `Secondary (Front)` (radio)
 
-![Settings](../assets/screens/020-qr-code-attendance-settings.jpg)
+![Settings](assets/screens/020-qr-code-attendance-settings.jpg)
 
 #### Screen 3.9 — Duty Roster
 
@@ -522,7 +522,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Search / filters:** search_type, date_from, date_to, staff, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/dutyroster/roster_report`): `Time Duration *` (select) — Today, This Week, Last Week, This Month, Last Month, Last 3 Months; `Date From` (text); `Date To` (text); `staff` (select) — Super Admin (9001), Sonia Bush (9002), Sansa Gomez (9008), Belina Turner (9005), John Hook (9006), Brad Frost (9003)
 
-![Duty Roster](../assets/screens/021-duty-roster.jpg)
+![Duty Roster](assets/screens/021-duty-roster.jpg)
 
 #### Screen 3.10 — Annual Calendar
 
@@ -535,7 +535,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Form 1** (posts to `/admin/holiday`): `Type *` (select) — Holiday, Activity, Vacation
 - **Form 2**: `Type *` (radio); `Type *` (radio); `Type *` (radio); `From Date *` (text); `To Date *` (text); `Description *` (textarea); `front_site` (checkbox)
 
-![Annual Calendar](../assets/screens/022-annual-calendar.jpg)
+![Annual Calendar](assets/screens/022-annual-calendar.jpg)
 
 #### Screen 3.11 — Referral Payment List
 
@@ -549,7 +549,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Form 2**: `Commission Percentage (%) *` (text); `Commission Amount ($) *` (text)
 - **Form 3**: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select); `Marital Status` (select); `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select); `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
 
-![Referral Payment List](../assets/screens/023-referral.jpg)
+![Referral Payment List](assets/screens/023-referral.jpg)
 
 #### Screen 3.12 — TPA Management
 
@@ -562,7 +562,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Form 1**: `Name *` (text); `Code *` (text); `Contact No *` (text); `Address` (textarea); `Contact Person Name` (text); `Contact Person Phone` (text)
 - **Form 2**: `Name *` (text); `Code *` (text); `Contact No *` (text); `Address` (textarea); `Contact Person Name` (text); `Contact Person Phone` (text)
 
-![TPA Management](../assets/screens/024-tpa-management.jpg)
+![TPA Management](assets/screens/024-tpa-management.jpg)
 
 #### Screen 3.13 — Income List
 
@@ -574,7 +574,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Search / filters:** inc_head_id, name, invoice_no, date, amount, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1**: `Income Head *` (select) — Hospital charges, Special campaign, Canteen Rent, Vehicle Stand Charges; `Name *` (text); `Invoice Number` (text); `Date *` (text); `Amount ($) *` (text); `documents` (file); `Description` (textarea)
 
-![Income List](../assets/screens/025-finance-income.jpg)
+![Income List](assets/screens/025-finance-income.jpg)
 
 #### Screen 3.14 — Expense List
 
@@ -586,7 +586,7 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 - **Search / filters:** exp_head_id, name, invoice_no, exdate, amount, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1**: `Expense Head *` (select) — Building rent, Equipements, Electricity Bill, Telephone Bill, Power Generator Fuel Charge, Tea Expense; `Name *` (text); `Invoice Number` (text); `Date *` (text); `Amount ($) *` (text); `documents` (file); `Description` (textarea)
 
-![Expense List](../assets/screens/026-finance-expenses.jpg)
+![Expense List](assets/screens/026-finance-expenses.jpg)
 
 #### Module 3 — data-entry dialogs captured
 
@@ -602,31 +602,31 @@ Back office: legal registers, multi-branch operation, staff HR, attendance, rost
 
 - **Form** (posts to `/admin/multibranch/branch/add`): `Envato Purchase Code *` (text); `Branch name *` (text); `Host Name *` (text); `Database Name *` (text); `Username *` (text); `Password *` (password)
 
-![Add New Branch](../assets/screens/017-multi-branch-settings__add-new-branch.jpg)
+![Add New Branch](assets/screens/017-multi-branch-settings__add-new-branch.jpg)
 
 **Add Referral Payment Select Patient** — opened from *Referral Payment List*
 
 - **Form**: `Patient Type *` (select) — Select Type, OPD, IPD, Pharmacy, Pathology, Radiology; `Bill No/Case Id *` (select); `Patient Bill Amount ($) *` (text); `Payee *` (select) — Select Payee, ABHI, Aarav, Laxmi Sahu, Amol, Ankita; `Commission Percentage (%) *` (text); `Commission Amount ($) *` (text)
 
-![Add Referral Payment Select Patient](../assets/screens/023-referral__add-referral-payment-select-patient.jpg)
+![Add Referral Payment Select Patient](assets/screens/023-referral__add-referral-payment-select-patient.jpg)
 
 **Add TPA** — opened from *TPA Management*
 
 - **Form**: `Name *` (text); `Code *` (text); `Contact No *` (text); `Address` (textarea); `Contact Person Name` (text); `Contact Person Phone` (text)
 
-![Add TPA](../assets/screens/024-tpa-management__add-tpa.jpg)
+![Add TPA](assets/screens/024-tpa-management__add-tpa.jpg)
 
 **Add Income** — opened from *Income List*
 
 - **Form**: `Income Head *` (select) — Hospital charges, Special campaign, Canteen Rent, Vehicle Stand Charges; `Name *` (text); `Invoice Number` (text); `Date *` (text); `Amount ($) *` (text); `documents` (file); `Description` (textarea)
 
-![Add Income](../assets/screens/025-finance-income__add-income.jpg)
+![Add Income](assets/screens/025-finance-income__add-income.jpg)
 
 **Add Expense** — opened from *Expense List*
 
 - **Form**: `Expense Head *` (select) — Building rent, Equipements, Electricity Bill, Telephone Bill, Power Generator Fuel Charge, Tea Expense; `Name *` (text); `Invoice Number` (text); `Date *` (text); `Amount ($) *` (text); `documents` (file); `Description` (textarea)
 
-![Add Expense](../assets/screens/026-finance-expenses__add-expense.jpg)
+![Add Expense](assets/screens/026-finance-expenses__add-expense.jpg)
 
 
 ### 2.4 Communication, Content & Certificates
@@ -668,7 +668,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 - **Actions:** 2, Save, Update
 - **Search / filters:** tbl_published_length, tbl_closed_length, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Survey Forms](../assets/screens/027-survey-forms-survey-forms.jpg)
+![Survey Forms](assets/screens/027-survey-forms-survey-forms.jpg)
 
 #### Screen 4.2 — Survey Forms › My Survey Forms
 
@@ -679,7 +679,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 - **Actions:** 2, Card, Table, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Survey Forms › My Survey Forms](../assets/screens/028-survey-forms-my-survey-forms.jpg)
+![Survey Forms › My Survey Forms](assets/screens/028-survey-forms-my-survey-forms.jpg)
 
 #### Screen 4.3 — Notice Board
 
@@ -689,7 +689,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 - **Actions:** 2, Post New Message, Send SMS, Send Email, Send Credential, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Notice Board](../assets/screens/029-messaging.jpg)
+![Notice Board](assets/screens/029-messaging.jpg)
 
 #### Screen 4.4 — Item Stock List
 
@@ -701,7 +701,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 - **Search / filters:** item_category_id, item_id, supplier_id, store_id, quantity, purchase_price, date, item_category_id, item_id, supplier_id
 - **Form 1** (posts to `/admin/itemstock/add`): `Item Category *` (select) — Syringe Packs, Cotton Packs, Medical Equipment, Bed Sheets, Uniforms, Surgical blades; `Item *` (select); `Supplier *` (select) — VK Supplier, Quick Service; `Store` (select) — SK Pharma, Vinay Pharmacy, Vardaan; `quantity` (text); `Purchase Price *` (text); `Date` (text); `Description` (textarea); `item_photo` (file)
 
-![Item Stock List](../assets/screens/030-inventory.jpg)
+![Item Stock List](assets/screens/030-inventory.jpg)
 
 #### Screen 4.5 — Upload /Share Content
 
@@ -715,7 +715,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 - **Form 2** (posts to `/admin/content/ajaxupdate`): `File Name *` (text); `Content Type *` (select) — Medical Report, medical Equipment, Medicine Stock List, Hospital Service
 - **Form 3** (posts to `/admin/content/ajaxupload`): `Content Type *` (select) — Medical Report, medical Equipment, Medicine Stock List, Hospital Service; `upload[]` (file); `Upload Youtube Video Link` (text)
 
-![Upload /Share Content](../assets/screens/031-download-center-upload-share-content.jpg)
+![Upload /Share Content](assets/screens/031-download-center-upload-share-content.jpg)
 
 #### Screen 4.6 — Content Share List
 
@@ -726,7 +726,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Content Share List](../assets/screens/032-download-center-content-share-list.jpg)
+![Content Share List](assets/screens/032-download-center-content-share-list.jpg)
 
 #### Screen 4.7 — Content Type
 
@@ -738,7 +738,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 - **Search / filters:** name, name, description, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/contenttype/add`): `Name` (text); `Description` (textarea)
 
-![Content Type](../assets/screens/033-download-center-content-type.jpg)
+![Content Type](assets/screens/033-download-center-content-type.jpg)
 
 #### Screen 4.8 — Generate Certificate
 
@@ -751,7 +751,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 - **Form 1** (posts to `/admin/generatecertificate/search`): `Module` (select) — OPD, IPD; `Patient Status` (select) — Not Discharged, Discharged; `Certificate Template` (select) — Sample Patient File Cover, Certificate Template
 - **Form 2** (posts to `/admin/generatecertificate/generatemultiple`): `field` (checkbox)
 
-![Generate Certificate](../assets/screens/034-certificate-certificate.jpg)
+![Generate Certificate](assets/screens/034-certificate-certificate.jpg)
 
 #### Screen 4.9 — Generate Patient ID Card
 
@@ -764,7 +764,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 - **Form 1**: `Patient` (select) — All, AADI(1171), Aadi jain(1179), Aadish Mody(1072), AANU(1233), AANU(1234); `ID Card Template` (select) — Sample Patient Id Card, Patient Id Card
 - **Form 2** (posts to `/admin/Generatepatientidcard/generatemultiple`): `field` (checkbox)
 
-![Generate Patient ID Card](../assets/screens/035-certificate-patient-id-card.jpg)
+![Generate Patient ID Card](assets/screens/035-certificate-patient-id-card.jpg)
 
 #### Screen 4.10 — Generate Staff ID Card
 
@@ -777,7 +777,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 - **Form 1**: `Role` (select) — Admin, Accountant, Doctor, Pharmacist, Pathologist, Radiologist; `ID Card Template` (select) — Sample Staff Id Card, Staff Id Card
 - **Form 2** (posts to `/admin/generatestaffidcard/generatemultiple`): `field` (checkbox)
 
-![Generate Staff ID Card](../assets/screens/036-certificate-staff-id-card.jpg)
+![Generate Staff ID Card](assets/screens/036-certificate-staff-id-card.jpg)
 
 #### Screen 4.11 — Page List
 
@@ -788,7 +788,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 - **Actions:** 2, Add Page, Media Manager, Menus, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Page List](../assets/screens/037-front-cms.jpg)
+![Page List](assets/screens/037-front-cms.jpg)
 
 #### Screen 4.12 — Live Consultation
 
@@ -802,7 +802,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 - **Form 2** (posts to `/admin/zoom_conference/addcredential`): `Zoom Api Key *` (text); `Zoom Api Secret *` (text)
 - **Form 3** (posts to `/admin/zoom_conference/addByOther`): `Consultation Title` (text); `Consultation Date *` (text); `Consultation Duration Minutes *` (number); `OPD/IPD` (select) — None, OPD, IPD; `OPD/IPD No` (select); `OPD Checkup ID *` (select); `Consultant Doctor *` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Enabled` (radio); `Enabled` (radio); `Enabled` (radio); `Enabled` (radio); `Description` (textarea)
 
-![Live Consultation](../assets/screens/038-live-consultation-live-consultation.jpg)
+![Live Consultation](assets/screens/038-live-consultation-live-consultation.jpg)
 
 #### Screen 4.13 — Live Meeting
 
@@ -815,7 +815,7 @@ Everything that talks to people or produces a document: surveys, notice board, d
 - **Form 1** (posts to `/admin/zoom_conference/chgstatusmeeting`): `chg_status` (select) — Awaited, Cancelled, Finished
 - **Form 2** (posts to `/admin/zoom_conference/addMeeting`): `Meeting Title *` (text); `date` (text); `Meeting Duration Minutes *` (number); `Enabled` (radio); `Enabled` (radio); `Enabled` (radio); `Enabled` (radio); `Description` (textarea); `Sonia Bush (Doctor : 9002)` (checkbox); `Sansa Gomez (Doctor : 9008)` (checkbox); `Belina Turner (Pathologist : 9005)` (checkbox); `John Hook (Radiologist : 9006)` (checkbox); `Brad Frost (Accountant : 9003)` (checkbox); `Natasha Romanoff (Nurse : 9010)` (checkbox); `Amit Singh (Doctor : 9009)` (checkbox); `Reyan Jain (Doctor : 9011)` (checkbox); `Harry Grant (Pharmacist : 9012)` (checkbox); `Jason Abbot (Admin : 9017)` (checkbox); `Maria Ford (Receptionist : 9018)` (checkbox); `April Clinton (Nurse : 9020)` (checkbox)
 
-![Live Meeting](../assets/screens/039-live-consultation-live-meeting.jpg)
+![Live Meeting](assets/screens/039-live-consultation-live-meeting.jpg)
 
 #### Module 4 — data-entry dialogs captured
 
@@ -830,25 +830,25 @@ Everything that talks to people or produces a document: surveys, notice board, d
 
 - **Form** (posts to `/admin/itemstock/add`): `Item Category *` (select) — Syringe Packs, Cotton Packs, Medical Equipment, Bed Sheets, Uniforms, Surgical blades; `Item *` (select); `Supplier *` (select) — VK Supplier, Quick Service; `Store` (select) — SK Pharma, Vinay Pharmacy, Vardaan; `quantity` (text); `Purchase Price *` (text); `Date` (text); `Description` (textarea); `item_photo` (file)
 
-![Add Item Stock](../assets/screens/030-inventory__add-item-stock.jpg)
+![Add Item Stock](assets/screens/030-inventory__add-item-stock.jpg)
 
 **Upload** — opened from *Upload /Share Content*
 
 - **Form** (posts to `/#`) *(dialog)*: `Search…` (text)
 
-![Upload](../assets/screens/031-download-center-upload-share-content__upload.jpg)
+![Upload](assets/screens/031-download-center-upload-share-content__upload.jpg)
 
 **Live Consult Select Patient New Patient** — opened from *Live Consultation*
 
 - **Form** (posts to `/admin/zoom_conference/chgstatus`): `chg_status` (select) — Awaited, Cancelled, Finished
 
-![Live Consult Select Patient New Patient](../assets/screens/038-live-consultation-live-consultation__live-consult-select-patient-new-patient.jpg)
+![Live Consult Select Patient New Patient](assets/screens/038-live-consultation-live-consultation__live-consult-select-patient-new-patient.jpg)
 
 **Add Live Meeting** — opened from *Live Meeting*
 
 - **Form** (posts to `/admin/zoom_conference/chgstatusmeeting`): `chg_status` (select) — Awaited, Cancelled, Finished
 
-![Add Live Meeting](../assets/screens/039-live-consultation-live-meeting__add-live-meeting.jpg)
+![Add Live Meeting](assets/screens/039-live-consultation-live-meeting__add-live-meeting.jpg)
 
 
 ### 2.5 Reports, Masters & Configuration
@@ -908,7 +908,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Finance](../assets/screens/040-reports-finance.jpg)
+![Finance](assets/screens/040-reports-finance.jpg)
 
 #### Screen 5.2 — Appointment
 
@@ -918,7 +918,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Appointment](../assets/screens/041-reports-appointment.jpg)
+![Appointment](assets/screens/041-reports-appointment.jpg)
 
 #### Screen 5.3 — OPD
 
@@ -928,7 +928,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![OPD](../assets/screens/042-reports-opd.jpg)
+![OPD](assets/screens/042-reports-opd.jpg)
 
 #### Screen 5.4 — IPD
 
@@ -938,7 +938,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![IPD](../assets/screens/043-reports-ipd.jpg)
+![IPD](assets/screens/043-reports-ipd.jpg)
 
 #### Screen 5.5 — Pharmacy
 
@@ -948,7 +948,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Pharmacy](../assets/screens/044-reports-pharmacy.jpg)
+![Pharmacy](assets/screens/044-reports-pharmacy.jpg)
 
 #### Screen 5.6 — Pathology
 
@@ -958,7 +958,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Pathology](../assets/screens/045-reports-pathology.jpg)
+![Pathology](assets/screens/045-reports-pathology.jpg)
 
 #### Screen 5.7 — Radiology
 
@@ -968,7 +968,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Radiology](../assets/screens/046-reports-radiology.jpg)
+![Radiology](assets/screens/046-reports-radiology.jpg)
 
 #### Screen 5.8 — Blood Bank
 
@@ -978,7 +978,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Blood Bank](../assets/screens/047-reports-blood-bank.jpg)
+![Blood Bank](assets/screens/047-reports-blood-bank.jpg)
 
 #### Screen 5.9 — Ambulance
 
@@ -988,7 +988,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Ambulance](../assets/screens/048-reports-ambulance.jpg)
+![Ambulance](assets/screens/048-reports-ambulance.jpg)
 
 #### Screen 5.10 — Birth Death Report
 
@@ -998,7 +998,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Birth Death Report](../assets/screens/049-reports-birth-death.jpg)
+![Birth Death Report](assets/screens/049-reports-birth-death.jpg)
 
 #### Screen 5.11 — Human Resource
 
@@ -1008,7 +1008,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Human Resource](../assets/screens/050-reports-human-resource.jpg)
+![Human Resource](assets/screens/050-reports-human-resource.jpg)
 
 #### Screen 5.12 — TPA
 
@@ -1018,7 +1018,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![TPA](../assets/screens/051-reports-tpa.jpg)
+![TPA](assets/screens/051-reports-tpa.jpg)
 
 #### Screen 5.13 — Inventory
 
@@ -1028,7 +1028,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Inventory](../assets/screens/052-reports-inventory.jpg)
+![Inventory](assets/screens/052-reports-inventory.jpg)
 
 #### Screen 5.14 — Live Consultation
 
@@ -1038,7 +1038,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Live Consultation](../assets/screens/053-reports-live-consultation.jpg)
+![Live Consultation](assets/screens/053-reports-live-consultation.jpg)
 
 #### Screen 5.15 — Log
 
@@ -1048,7 +1048,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Log](../assets/screens/054-reports-log.jpg)
+![Log](assets/screens/054-reports-log.jpg)
 
 #### Screen 5.16 — OT
 
@@ -1058,7 +1058,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![OT](../assets/screens/055-reports-ot.jpg)
+![OT](assets/screens/055-reports-ot.jpg)
 
 #### Screen 5.17 — Reports › Patient
 
@@ -1068,7 +1068,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Reports › Patient](../assets/screens/056-reports-patient.jpg)
+![Reports › Patient](assets/screens/056-reports-patient.jpg)
 
 #### Screen 5.18 — Charges Details List
 
@@ -1080,7 +1080,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** charge_name, charge_type, charge_category, unit_type, taxcategory, tax_percentage, standard_charge, schedule_charge_14, schedule_charge_13, schedule_charge_12
 - **Form 1**: `Charge Name` (text); `Charge Type` (select) — Appointment, OPD, IPD, Pathology, Radiology, Blood Bank; `Charge Category` (select); `Unit Type` (select) — (ML), Litter, (nm), per day, Hour, Insurance; `Tax Category` (select) — Blood Module, OPD Tax, IPD Tax, Operation Charges, Pathology Tax, Radiology Tax; `tax_percentage` (text); `Standard Charge ($)` (text); `Description` (textarea); `schedule_charge_14` (text); `schedule_charge_13` (text); `schedule_charge_12` (text); `schedule_charge_8` (text); `schedule_charge_7` (text); `schedule_charge_6` (text); `schedule_charge_5` (text); `schedule_charge_4` (text); `schedule_charge_3` (text); `schedule_charge_2` (text); `schedule_charge_1` (text)
 
-![Charges Details List](../assets/screens/057-setup-hospital-charges.jpg)
+![Charges Details List](assets/screens/057-setup-hospital-charges.jpg)
 
 #### Screen 5.19 — Bed Status
 
@@ -1091,7 +1091,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Actions:** 2, Save, Update
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 
-![Bed Status](../assets/screens/058-setup-bed.jpg)
+![Bed Status](assets/screens/058-setup-bed.jpg)
 
 #### Screen 5.20 — Appointment Header Footer
 
@@ -1102,7 +1102,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/printing/update`): `(2230px × 300px)` (file); `footer_content` (textarea)
 
-![Appointment Header Footer](../assets/screens/059-setup-print-header-footer.jpg)
+![Appointment Header Footer](assets/screens/059-setup-print-header-footer.jpg)
 
 #### Screen 5.21 — Purpose List
 
@@ -1116,7 +1116,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Form 1** (posts to `/admin/visitorspurpose/add_multiple_purpose`): `visitors_purpose_1` (text); `description_1` (text)
 - **Form 2** (posts to `/admin/visitorspurpose/edit`): `Purpose` (input); `Description` (textarea)
 
-![Purpose List](../assets/screens/060-setup-front-office.jpg)
+![Purpose List](assets/screens/060-setup-front-office.jpg)
 
 #### Screen 5.22 — Operation List
 
@@ -1130,7 +1130,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Form 1** (posts to `/admin/operationtheatre/add_multiple_addoperation`): `Operation Name` (text); `category_1` (select) — ENT and Oral Surgery, Gynaecology, Ophthalmology, Orthopedic Surgery, Plastic Surgery, Thoracic Surgery
 - **Form 2** (posts to `/admin/operationtheatre/edit`): `Operation Name` (input); `Category` (select) — ENT and Oral Surgery, Gynaecology, Ophthalmology, Orthopedic Surgery, Plastic Surgery, Thoracic Surgery
 
-![Operation List](../assets/screens/061-setup-operations.jpg)
+![Operation List](assets/screens/061-setup-operations.jpg)
 
 #### Screen 5.23 — Medicine Category List
 
@@ -1142,7 +1142,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** medicine_category, medicine_category, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/medicinecategory/add`): `Category Name` (text)
 
-![Medicine Category List](../assets/screens/062-setup-pharmacy.jpg)
+![Medicine Category List](assets/screens/062-setup-pharmacy.jpg)
 
 #### Screen 5.24 — Pathology Category List
 
@@ -1154,7 +1154,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** category_name, category_name, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/pathologycategory/add`): `Category Name` (text)
 
-![Pathology Category List](../assets/screens/063-setup-pathology.jpg)
+![Pathology Category List](assets/screens/063-setup-pathology.jpg)
 
 #### Screen 5.25 — Radiology Category List
 
@@ -1166,7 +1166,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** lab_name, lab_name, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/lab/add`): `Category Name` (text)
 
-![Radiology Category List](../assets/screens/064-setup-radiology.jpg)
+![Radiology Category List](assets/screens/064-setup-radiology.jpg)
 
 #### Screen 5.26 — Product List
 
@@ -1178,7 +1178,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** type, name, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/bloodbank/add_product`): `Type` (select) — Blood Group, Component; `Name` (text)
 
-![Product List](../assets/screens/065-setup-blood-bank.jpg)
+![Product List](assets/screens/065-setup-blood-bank.jpg)
 
 #### Screen 5.27 — Symptoms Head List
 
@@ -1190,7 +1190,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** symptoms_title, type, symptoms_title, type, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/symptoms/add`): `Symptoms Head *` (text); `Symptoms Type *` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `Description` (textarea)
 
-![Symptoms Head List](../assets/screens/066-setup-symptoms.jpg)
+![Symptoms Head List](assets/screens/066-setup-symptoms.jpg)
 
 #### Screen 5.28 — ICD-10 Codes List
 
@@ -1202,7 +1202,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** group_id, icd_code, icd_description, group_id, icd_code, icd_description, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/icd10/add`): `Group *` (select) — Select Group, Infectious & Parasitic Diseases, Infectious Diseases, Mental & Behavioural Disorders, Neoplasms, Viral Diseases; `ICD Code *` (text); `Description *` (text)
 
-![ICD-10 Codes List](../assets/screens/067-setup-icd-10.jpg)
+![ICD-10 Codes List](assets/screens/067-setup-icd-10.jpg)
 
 #### Screen 5.29 — Finding List
 
@@ -1214,7 +1214,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** name, type, name, type, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/finding/add`): `Finding` (text); `Category` (select) — Fever, Typhidot (or Widal Test), Skin Problem, Bone Density Problems, Hair Problems, Eye Diseases; `Description` (textarea)
 
-![Finding List](../assets/screens/068-setup-findings.jpg)
+![Finding List](assets/screens/068-setup-findings.jpg)
 
 #### Screen 5.30 — Vital List
 
@@ -1226,7 +1226,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** vital_name, From, To, unit, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1**: `Vital Name` (text); `From` (text); `To` (text); `Unit` (text)
 
-![Vital List](../assets/screens/069-setup-vitals.jpg)
+![Vital List](assets/screens/069-setup-vitals.jpg)
 
 #### Screen 5.31 — Settings
 
@@ -1237,7 +1237,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** zoom_api_key, zoom_api_secret, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/zoom_conference`): `Zoom Api Key` (text); `Zoom Api Secret` (text); `Disabled` (radio); `Disabled` (radio); `Disabled` (radio); `Disabled` (radio); `Default OPD Duration (In Minutes)` (number); `Default IPD Duration (In Minutes)` (number)
 
-![Settings](../assets/screens/070-setup-zoom-setting.jpg)
+![Settings](assets/screens/070-setup-zoom-setting.jpg)
 
 #### Screen 5.32 — Income Head List
 
@@ -1251,7 +1251,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Form 1** (posts to `/admin/incomehead/add_multiple_income_head`): `incomehead_1` (text); `description_1` (text)
 - **Form 2** (posts to `/admin/incomehead/edit`): `Income Head` (text); `Description` (textarea)
 
-![Income Head List](../assets/screens/071-setup-finance.jpg)
+![Income Head List](assets/screens/071-setup-finance.jpg)
 
 #### Screen 5.33 — Leave Type List
 
@@ -1263,7 +1263,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** type, type, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/leavetypes/createLeaveType`): `Name` (text)
 
-![Leave Type List](../assets/screens/072-setup-human-resource.jpg)
+![Leave Type List](assets/screens/072-setup-human-resource.jpg)
 
 #### Screen 5.34 — Referral Commission List
 
@@ -1276,7 +1276,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Form 1**: `Category` (select) — Select Category, District Hospital (DH), OPD Department, IPD Department, Clinical Services within the Community, Valuing the Benefit of Clinical Services; `Standard Commission (%)` (text); `module_commission[]` (text); `module_commission[]` (text); `module_commission[]` (text); `module_commission[]` (text); `module_commission[]` (text); `module_commission[]` (text); `module_commission[]` (text)
 - **Form 2**: `Category` (select) — District Hospital (DH), OPD Department, IPD Department, Clinical Services within the Community, Valuing the Benefit of Clinical Services; `Standard Commission (%)` (text); `module_commission[]` (text); `module_commission[]` (text); `module_commission[]` (text); `module_commission[]` (text); `module_commission[]` (text); `module_commission[]` (text); `module_commission[]` (text)
 
-![Referral Commission List](../assets/screens/073-setup-referral.jpg)
+![Referral Commission List](assets/screens/073-setup-referral.jpg)
 
 #### Screen 5.35 — Slots
 
@@ -1287,7 +1287,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** doctor, shift, charge_category, charge_id, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/onlineappointment/`): `Doctor *` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Shift *` (select); `Consultation Duration Minutes *` (number); `Charge Category` (select) — Appointment Charges, Other Charges, OPD Consultation Fees, OPD Service, OPD Insurance, Intensive Care Units; `Charge` (select); `Amount ($)` (text)
 
-![Slots](../assets/screens/074-setup-appointment.jpg)
+![Slots](assets/screens/074-setup-appointment.jpg)
 
 #### Screen 5.36 — Item Category List
 
@@ -1301,7 +1301,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Form 1** (posts to `/admin/itemcategory/add_multiple_itemcategory`): `itemcategory_1` (text); `description_1` (text)
 - **Form 2** (posts to `/admin/itemcategory/edit`): `Item Category *` (text); `Description` (textarea)
 
-![Item Category List](../assets/screens/075-setup-inventory.jpg)
+![Item Category List](assets/screens/075-setup-inventory.jpg)
 
 #### Screen 5.37 — Add Custom Field
 
@@ -1312,7 +1312,7 @@ The 17 management reports plus the master data and lookups that make the rest of
 - **Search / filters:** belong_to, type, name, envato_market_purchase_code, email, app-envato_market_purchase_code, app-email
 - **Form 1** (posts to `/admin/customfield`): `Field Belongs To` (select) — Ambulance Call, Antenatal, Appointment, Birth Record, Blood Issue, Component Issue; `Field Type` (select) — Checkbox, Color Picker, Date Picker, Datetime Picker, Input, Hyperlink; `Field Name` (text); `column` (number); `Field Values (Separate By Comma)` (textarea); `Required` (checkbox); `On Table` (checkbox); `On Print` (checkbox); `On Report` (checkbox); `On Patient Panel` (checkbox)
 
-![Add Custom Field](../assets/screens/076-setup-custom-fields.jpg)
+![Add Custom Field](assets/screens/076-setup-custom-fields.jpg)
 
 #### Module 5 — data-entry dialogs captured
 
@@ -1327,25 +1327,25 @@ The 17 management reports plus the master data and lookups that make the rest of
 
 - **Form**: `Charge Name` (text); `Charge Type` (select) — Appointment, OPD, IPD, Pathology, Radiology, Blood Bank; `Charge Category` (select); `Unit Type` (select) — (ML), Litter, (nm), per day, Hour, Insurance; `Tax Category` (select) — Blood Module, OPD Tax, IPD Tax, Operation Charges, Pathology Tax, Radiology Tax; `tax_percentage` (text); `Standard Charge ($)` (text); `Description` (textarea); `schedule_charge_14` (text); `schedule_charge_13` (text); `schedule_charge_12` (text); `schedule_charge_8` (text); `schedule_charge_7` (text); `schedule_charge_6` (text); `schedule_charge_5` (text); `schedule_charge_4` (text); `schedule_charge_3` (text); `schedule_charge_2` (text); `schedule_charge_1` (text)
 
-![Add Charges](../assets/screens/057-setup-hospital-charges__add-charges.jpg)
+![Add Charges](assets/screens/057-setup-hospital-charges__add-charges.jpg)
 
 **Add Symptoms Head** — opened from *Symptoms Head List*
 
 - **Form** (posts to `/admin/symptoms/add`): `Symptoms Head *` (text); `Symptoms Type *` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `Description` (textarea)
 
-![Add Symptoms Head](../assets/screens/066-setup-symptoms__add-symptoms-head.jpg)
+![Add Symptoms Head](assets/screens/066-setup-symptoms__add-symptoms-head.jpg)
 
 **Add ICD Code** — opened from *ICD-10 Codes List*
 
 - **Form** (posts to `/admin/icd10/add`): `Group *` (select) — Select Group, Infectious & Parasitic Diseases, Infectious Diseases, Mental & Behavioural Disorders, Neoplasms, Viral Diseases; `ICD Code *` (text); `Description *` (text)
 
-![Add ICD Code](../assets/screens/067-setup-icd-10__add-icd-code.jpg)
+![Add ICD Code](assets/screens/067-setup-icd-10__add-icd-code.jpg)
 
 **Add Finding** — opened from *Finding List*
 
 - **Form** (posts to `/admin/finding/add`): `Finding` (text); `Category` (select) — Fever, Typhidot (or Widal Test), Skin Problem, Bone Density Problems, Hair Problems, Eye Diseases; `Description` (textarea)
 
-![Add Finding](../assets/screens/068-setup-findings__add-finding.jpg)
+![Add Finding](assets/screens/068-setup-findings__add-finding.jpg)
 
 
 ## 3. Record-level screens (opened from real data)
@@ -1363,15 +1363,15 @@ These screens were reached by opening an actual record from a list, so they show
 - **Form** *(dialog)*: `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Status *` (select) — Pending, Approved, Cancel; `Discount Percentage` (text); `Live Consultant (On Video Conference)` (select) — No, Yes; `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Message` (textarea); `Cheque No` (text); `Cheque Date` (text); `document` (file); `Alternate Address` (textarea)
 - **Form** *(dialog)*: `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Discount Percentage` (text); `Status *` (select) — Pending, Approved, Cancel; `Live Consultant (On Video Conference)` (select) — No, Yes; `Message` (textarea)
 
-![Single-module billing screens (OPD / appointment)](../assets/screens/detail-billing-screen.jpg)
+![Single-module billing screens (OPD / appointment)](assets/screens/detail-billing-screen.jpg)
 
 **Tabs of this record**
 
-![Single-module billing screens (OPD / appointment) — 1 today appointment](../assets/screens/detail-billing-screen__1-today-appointment.jpg)
+![Single-module billing screens (OPD / appointment) — 1 today appointment](assets/screens/detail-billing-screen__1-today-appointment.jpg)
 
-![Single-module billing screens (OPD / appointment) — 2 upcoming appointment](../assets/screens/detail-billing-screen__2-upcoming-appointment.jpg)
+![Single-module billing screens (OPD / appointment) — 2 upcoming appointment](assets/screens/detail-billing-screen__2-upcoming-appointment.jpg)
 
-![Single-module billing screens (OPD / appointment) — 3 old appointment](../assets/screens/detail-billing-screen__3-old-appointment.jpg)
+![Single-module billing screens (OPD / appointment) — 3 old appointment](assets/screens/detail-billing-screen__3-old-appointment.jpg)
 
 ### 3.2 IPD patient case — every tab of an admitted patient
 
@@ -1384,37 +1384,37 @@ These screens were reached by opening an actual record from a list, so they show
 - **Form** *(dialog)*: `Select` (select) — Sonia Bush (9002), Sansa Gomez (9008), Amit Singh (9009); `field` (search)
 - **Form** *(dialog)*: `bed_group_id` (select) — VIP Ward - Ground Floor, Private Ward - 3rd Floor, General Ward Male - 3rd Floor, ICU - 2nd Floor, NICU - 2nd Floor, AC (Normal) - 1st Floor; `bed_no` (select); `discharge_revert_reason` (textarea)
 
-![IPD patient case — every tab of an admitted patient](../assets/screens/detail-ipd-profile.jpg)
+![IPD patient case — every tab of an admitted patient](assets/screens/detail-ipd-profile.jpg)
 
 **Tabs of this record**
 
-![IPD patient case — every tab of an admitted patient — 1 overview](../assets/screens/detail-ipd-profile__1-overview.jpg)
+![IPD patient case — every tab of an admitted patient — 1 overview](assets/screens/detail-ipd-profile__1-overview.jpg)
 
-![IPD patient case — every tab of an admitted patient — 2 nurse notes](../assets/screens/detail-ipd-profile__2-nurse-notes.jpg)
+![IPD patient case — every tab of an admitted patient — 2 nurse notes](assets/screens/detail-ipd-profile__2-nurse-notes.jpg)
 
-![IPD patient case — every tab of an admitted patient — 3 medication](../assets/screens/detail-ipd-profile__3-medication.jpg)
+![IPD patient case — every tab of an admitted patient — 3 medication](assets/screens/detail-ipd-profile__3-medication.jpg)
 
-![IPD patient case — every tab of an admitted patient — 4 prescription](../assets/screens/detail-ipd-profile__4-prescription.jpg)
+![IPD patient case — every tab of an admitted patient — 4 prescription](assets/screens/detail-ipd-profile__4-prescription.jpg)
 
-![IPD patient case — every tab of an admitted patient — 5 consultant register](../assets/screens/detail-ipd-profile__5-consultant-register.jpg)
+![IPD patient case — every tab of an admitted patient — 5 consultant register](assets/screens/detail-ipd-profile__5-consultant-register.jpg)
 
-![IPD patient case — every tab of an admitted patient — 6 lab investigation](../assets/screens/detail-ipd-profile__6-lab-investigation.jpg)
+![IPD patient case — every tab of an admitted patient — 6 lab investigation](assets/screens/detail-ipd-profile__6-lab-investigation.jpg)
 
-![IPD patient case — every tab of an admitted patient — 7 operations](../assets/screens/detail-ipd-profile__7-operations.jpg)
+![IPD patient case — every tab of an admitted patient — 7 operations](assets/screens/detail-ipd-profile__7-operations.jpg)
 
-![IPD patient case — every tab of an admitted patient — 8 charges](../assets/screens/detail-ipd-profile__8-charges.jpg)
+![IPD patient case — every tab of an admitted patient — 8 charges](assets/screens/detail-ipd-profile__8-charges.jpg)
 
-![IPD patient case — every tab of an admitted patient — 9 payments](../assets/screens/detail-ipd-profile__9-payments.jpg)
+![IPD patient case — every tab of an admitted patient — 9 payments](assets/screens/detail-ipd-profile__9-payments.jpg)
 
-![IPD patient case — every tab of an admitted patient — 10 live consultation](../assets/screens/detail-ipd-profile__10-live-consultation.jpg)
+![IPD patient case — every tab of an admitted patient — 10 live consultation](assets/screens/detail-ipd-profile__10-live-consultation.jpg)
 
-![IPD patient case — every tab of an admitted patient — 11 bed history](../assets/screens/detail-ipd-profile__11-bed-history.jpg)
+![IPD patient case — every tab of an admitted patient — 11 bed history](assets/screens/detail-ipd-profile__11-bed-history.jpg)
 
-![IPD patient case — every tab of an admitted patient — 12 timeline](../assets/screens/detail-ipd-profile__12-timeline.jpg)
+![IPD patient case — every tab of an admitted patient — 12 timeline](assets/screens/detail-ipd-profile__12-timeline.jpg)
 
-![IPD patient case — every tab of an admitted patient — 13 treatment history](../assets/screens/detail-ipd-profile__13-treatment-history.jpg)
+![IPD patient case — every tab of an admitted patient — 13 treatment history](assets/screens/detail-ipd-profile__13-treatment-history.jpg)
 
-![IPD patient case — every tab of an admitted patient — 14 vitals](../assets/screens/detail-ipd-profile__14-vitals.jpg)
+![IPD patient case — every tab of an admitted patient — 14 vitals](assets/screens/detail-ipd-profile__14-vitals.jpg)
 
 ### 3.3 OPD patient record — every tab of an out-patient
 
@@ -1427,21 +1427,21 @@ These screens were reached by opening an actual record from a list, so they show
 - **Form** *(dialog)*: `Symptoms Type` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `Symptoms Type` (search); `Select` (text); `Symptoms Description` (textarea); `ICD-10 Group` (select) — -- All Groups --, Infectious & Parasitic Diseases, Infectious Diseases, Mental & Behavioural Disorders, Neoplasms, Viral Diseases; `ICD-10 Diagnosis` (select) — [A09] Infectious Gastroenteritis, [A15.0] Pulmonary Tuberculosis, [B34.9] Viral Infection, Unspecified, [C50.9] Malignant Neoplasm of Breast, [F41.1] Generalized Anxiety Disorder; `ICD-10 Diagnosis` (search); `Note` (textarea); `Any Known Allergies` (textarea); `Appointment Date` (text); `Case` (text); `Casualty` (select) — No, Yes; `Old Patient` (select) — No, Yes; `TPA` (text); `Reference` (text); `Consultant Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Payment Date` (text); `Amount ($)` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Payment Note` (text); `Cheque No` (text); `Cheque Date` (text); … +2 more
 - **Form** *(dialog)*: `Title` (text); `Date` (text); `Description` (textarea); `timeline_doc` (file); `Visible to this person` (checkbox)
 
-![OPD patient record — every tab of an out-patient](../assets/screens/detail-opd-profile-2.jpg)
+![OPD patient record — every tab of an out-patient](assets/screens/detail-opd-profile-2.jpg)
 
 **Tabs of this record**
 
-![OPD patient record — every tab of an out-patient — 1 overview](../assets/screens/detail-opd-profile-2__1-overview.jpg)
+![OPD patient record — every tab of an out-patient — 1 overview](assets/screens/detail-opd-profile-2__1-overview.jpg)
 
-![OPD patient record — every tab of an out-patient — 2 visits](../assets/screens/detail-opd-profile-2__2-visits.jpg)
+![OPD patient record — every tab of an out-patient — 2 visits](assets/screens/detail-opd-profile-2__2-visits.jpg)
 
-![OPD patient record — every tab of an out-patient — 3 lab investigation](../assets/screens/detail-opd-profile-2__3-lab-investigation.jpg)
+![OPD patient record — every tab of an out-patient — 3 lab investigation](assets/screens/detail-opd-profile-2__3-lab-investigation.jpg)
 
-![OPD patient record — every tab of an out-patient — 4 treatment history](../assets/screens/detail-opd-profile-2__4-treatment-history.jpg)
+![OPD patient record — every tab of an out-patient — 4 treatment history](assets/screens/detail-opd-profile-2__4-treatment-history.jpg)
 
-![OPD patient record — every tab of an out-patient — 5 timeline](../assets/screens/detail-opd-profile-2__5-timeline.jpg)
+![OPD patient record — every tab of an out-patient — 5 timeline](assets/screens/detail-opd-profile-2__5-timeline.jpg)
 
-![OPD patient record — every tab of an out-patient — 6 vitals](../assets/screens/detail-opd-profile-2__6-vitals.jpg)
+![OPD patient record — every tab of an out-patient — 6 vitals](assets/screens/detail-opd-profile-2__6-vitals.jpg)
 
 ### 3.4 AANU (1234) Admitted
 
@@ -1454,25 +1454,25 @@ These screens were reached by opening an actual record from a list, so they show
 - **Form** *(dialog)*: `Select` (select) — Sonia Bush (9002), Sansa Gomez (9008), Amit Singh (9009); `field` (search)
 - **Form** *(dialog)*: `bed_group_id` (select) — VIP Ward - Ground Floor, Private Ward - 3rd Floor, General Ward Male - 3rd Floor, ICU - 2nd Floor, NICU - 2nd Floor, AC (Normal) - 1st Floor; `bed_no` (select); `discharge_revert_reason` (textarea)
 
-![AANU (1234) Admitted](../assets/screens/detail-ipd-detail.jpg)
+![AANU (1234) Admitted](assets/screens/detail-ipd-detail.jpg)
 
 **Tabs of this record**
 
-![AANU (1234) Admitted — 1 overview](../assets/screens/detail-ipd-detail__1-overview.jpg)
+![AANU (1234) Admitted — 1 overview](assets/screens/detail-ipd-detail__1-overview.jpg)
 
-![AANU (1234) Admitted — 2 nurse notes](../assets/screens/detail-ipd-detail__2-nurse-notes.jpg)
+![AANU (1234) Admitted — 2 nurse notes](assets/screens/detail-ipd-detail__2-nurse-notes.jpg)
 
-![AANU (1234) Admitted — 3 medication](../assets/screens/detail-ipd-detail__3-medication.jpg)
+![AANU (1234) Admitted — 3 medication](assets/screens/detail-ipd-detail__3-medication.jpg)
 
-![AANU (1234) Admitted — 4 prescription](../assets/screens/detail-ipd-detail__4-prescription.jpg)
+![AANU (1234) Admitted — 4 prescription](assets/screens/detail-ipd-detail__4-prescription.jpg)
 
-![AANU (1234) Admitted — 5 consultant register](../assets/screens/detail-ipd-detail__5-consultant-register.jpg)
+![AANU (1234) Admitted — 5 consultant register](assets/screens/detail-ipd-detail__5-consultant-register.jpg)
 
-![AANU (1234) Admitted — 6 lab investigation](../assets/screens/detail-ipd-detail__6-lab-investigation.jpg)
+![AANU (1234) Admitted — 6 lab investigation](assets/screens/detail-ipd-detail__6-lab-investigation.jpg)
 
-![AANU (1234) Admitted — 7 operations](../assets/screens/detail-ipd-detail__7-operations.jpg)
+![AANU (1234) Admitted — 7 operations](assets/screens/detail-ipd-detail__7-operations.jpg)
 
-![AANU (1234) Admitted — 8 charges](../assets/screens/detail-ipd-detail__8-charges.jpg)
+![AANU (1234) Admitted — 8 charges](assets/screens/detail-ipd-detail__8-charges.jpg)
 
 ### 3.5 Patient
 
@@ -1481,7 +1481,7 @@ These screens were reached by opening an actual record from a list, so they show
 - **Table:** *Patient | Guardian | Gender | Age (Year) | Age (Month) | Age (Day) | Marital Status | Phone | Email | Address
 - **Form** (posts to `/admin/patient/import`): `blood_group` (select) — B+, A+, AB-, AB+, O-, A-; `file` (file)
 
-![Patient](../assets/screens/detail-patient-master-detail.jpg)
+![Patient](assets/screens/detail-patient-master-detail.jpg)
 
 ## 4. Sub-screens reachable from the modules
 
@@ -1528,7 +1528,7 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** *(dialog)*: `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Status *` (select) — Pending, Approved, Cancel; `Discount Percentage` (text); `Live Consultant (On Video Conference)` (select) — No, Yes; `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Message` (textarea); `Cheque No` (text); `Cheque Date` (text); `document` (file); `Alternate Address` (textarea)
 - **Form** *(dialog)*: `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Discount Percentage` (text); `Status *` (select) — Pending, Approved, Cancel; `Live Consultant (On Video Conference)` (select) — No, Yes; `Message` (textarea)
 
-![Billing - Appointment module](../assets/screens/sub-01-billing-appointment-module.jpg)
+![Billing - Appointment module](assets/screens/sub-01-billing-appointment-module.jpg)
 
 ### 4.2 Billing - OPD module — `/admin/bill/opd`
 
@@ -1537,7 +1537,7 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** (posts to `/admin/patient`) *(dialog)*: `symptoms_type` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `field` (search); `Select` (text); `Symptoms Description` (textarea); `Note` (textarea); `Any Known Allergies` (textarea); `Previous Medical Issue` (textarea); `Appointment Date` (text); `case` (text); `casualty` (select) — No, Yes; `old_patient` (select) — No, Yes; `refference` (text); `consultant_doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Apply TPA` (checkbox); `Charge Category` (select) — OPD Consultation Fees, OPD Service, OPD Insurance, Blood pressure check, Eye check, Cholesterol level check; `Charge` (select); `Standard Charge ($)` (text); `Applied Charge ($)` (text); `discount_percentage` (text); `percentage` (text); `Amount ($)` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; … +6 more
 - **Form** *(dialog)*: `Name` (text); `Guardian Name` (text); `Gender` (select); `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `file` (file); `Any Known Allergies` (text); `Phone` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Age` (text); `Month` (text)
 
-![Billing - OPD module](../assets/screens/sub-02-billing-opd-module.jpg)
+![Billing - OPD module](assets/screens/sub-02-billing-opd-module.jpg)
 
 ### 4.3 Pathology Billing — `/admin/bill/pathology`
 
@@ -1545,7 +1545,7 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** *(dialog)*: `Apply TPA` (select); `Prescription No` (text); `Apply TPA` (checkbox); `Bill No` (text); `Case ID` (text); `Date` (text)
 - **Form** (posts to `/admin/pathology/updatecollection`) *(dialog)*: `Sample Collected Person Name` (select) — Belina Turner (9005); `Collected Date` (text); `Pathology Center` (text)
 
-![Pathology Billing](../assets/screens/sub-03-billing-pathology-module.jpg)
+![Pathology Billing](assets/screens/sub-03-billing-pathology-module.jpg)
 
 ### 4.4 Radiology Billing — `/admin/bill/radiology`
 
@@ -1553,7 +1553,7 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** *(dialog)*: `Apply TPA` (select); `Prescription No` (text); `Apply TPA` (checkbox); `Bill No` (text); `Case ID` (text); `Date` (text)
 - **Form** *(dialog)*: `Sample Collected Person Name` (select) — John Hook (9006); `Collected Date` (text); `Radiology Center` (text)
 
-![Radiology Billing](../assets/screens/sub-04-billing-radiology-module.jpg)
+![Radiology Billing](assets/screens/sub-04-billing-radiology-module.jpg)
 
 ### 4.5 Blood Issue Billing — `/admin/bill/issueblood`
 
@@ -1561,7 +1561,7 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** *(dialog)*: `Apply TPA` (select); `Case ID` (text); `Apply TPA` (checkbox)
 - **Form** *(dialog)*: `patient_id` (select) — Select Patient, AADI ( ), Aadi jain ( ), Aadish Mody ( ), AANU ( ), AANU ( ); `Issue Date *` (text); `Hospital Doctor` (select) — Amit Singh, Reyan Jain, Sansa Gomez, Sonia Bush; `Doctor Name *` (text); `Technician` (text); `Donor Name *` (select) — Select Donor; `Blood Group` (text); `Lot` (text); `Bag` (text); `Amount ($) *` (text); `Remarks` (textarea)
 
-![Blood Issue Billing](../assets/screens/sub-05-billing-issue-blood.jpg)
+![Blood Issue Billing](assets/screens/sub-05-billing-issue-blood.jpg)
 
 ### 4.6 Blood Components Issue Billing — `/admin/bill/issuecomponent`
 
@@ -1569,13 +1569,13 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** *(dialog)*: `Apply TPA` (select); `Case ID` (text); `Apply TPA` (checkbox)
 - **Form** *(dialog)*: `patient_id` (select) — Select Patient, AADI ( ), Aadi jain ( ), Aadish Mody ( ), AANU ( ), AANU ( ); `Issue Date *` (text); `Hospital Doctor` (select) — Amit Singh, Reyan Jain, Sansa Gomez, Sonia Bush; `Doctor Name *` (text); `Technician` (text); `Donor Name *` (select) — Select Donor; `Blood Group` (text); `Lot` (text); `Bag` (text); `Amount ($) *` (text); `Remarks` (textarea)
 
-![Blood Components Issue Billing](../assets/screens/sub-06-billing-issue-component.jpg)
+![Blood Components Issue Billing](assets/screens/sub-06-billing-issue-component.jpg)
 
 ### 4.7 Single Module Billing — `/admin/bill/dashboard`
 
 - **Form** (posts to `/admin/bill/dashboard`): `Case ID` (text)
 
-![Single Module Billing](../assets/screens/sub-07-billing-bill-dashboard.jpg)
+![Single Module Billing](assets/screens/sub-07-billing-bill-dashboard.jpg)
 
 ### 4.8 Billing - OPD bill screen — `/admin/bill/opd`
 
@@ -1584,33 +1584,33 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** (posts to `/admin/patient`) *(dialog)*: `symptoms_type` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `field` (search); `Select` (text); `Symptoms Description` (textarea); `Note` (textarea); `Any Known Allergies` (textarea); `Previous Medical Issue` (textarea); `Appointment Date` (text); `case` (text); `casualty` (select) — No, Yes; `old_patient` (select) — No, Yes; `refference` (text); `consultant_doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Apply TPA` (checkbox); `Charge Category` (select) — OPD Consultation Fees, OPD Service, OPD Insurance, Blood pressure check, Eye check, Cholesterol level check; `Charge` (select); `Standard Charge ($)` (text); `Applied Charge ($)` (text); `discount_percentage` (text); `percentage` (text); `Amount ($)` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; … +6 more
 - **Form** *(dialog)*: `Name` (text); `Guardian Name` (text); `Gender` (select); `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `file` (file); `Any Known Allergies` (text); `Phone` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Age` (text); `Month` (text)
 
-![Billing - OPD bill screen](../assets/screens/sub-08-billing-opd-bill-screen.jpg)
+![Billing - OPD bill screen](assets/screens/sub-08-billing-opd-bill-screen.jpg)
 
 ### 4.9 Patient import — `/admin/patient/import`
 
 - **Grid (2 rows):** *Patient | Guardian | Gender | Age (Year) | Age (Month) | Age (Day) | Marital Status | Phone | Email | Address | Remarks | Known Allergies
 - **Form** (posts to `/admin/patient/import`): `blood_group` (select) — B+, A+, AB-, AB+, O-, A-; `file` (file)
 
-![Patient import](../assets/screens/sub-09-patient-import.jpg)
+![Patient import](assets/screens/sub-09-patient-import.jpg)
 
 ### 4.10 IPD Discharged Patient — `/admin/patient/discharged_patients`
 
 - **Grid (21 rows):** Name | Patient Id | Case ID | Gender | Phone | Generated By | Consultant Doctor | Admission Date | Discharged Date | Tax ($) | Net Amount ($) | Total ($)
 
-![IPD Discharged Patient](../assets/screens/sub-10-discharged-patients.jpg)
+![IPD Discharged Patient](assets/screens/sub-10-discharged-patients.jpg)
 
 ### 4.11 Patient import — `/admin/patient/import`
 
 - **Grid (2 rows):** *Patient | Guardian | Gender | Age (Year) | Age (Month) | Age (Day) | Marital Status | Phone | Email | Address | Remarks | Known Allergies
 - **Form** (posts to `/admin/patient/import`): `blood_group` (select) — B+, A+, AB-, AB+, O-, A-; `file` (file)
 
-![Patient import](../assets/screens/sub-10-patient-import.jpg)
+![Patient import](assets/screens/sub-10-patient-import.jpg)
 
 ### 4.12 IPD Discharged Patient — `/admin/patient/discharged_patients`
 
 - **Grid (21 rows):** Name | Patient Id | Case ID | Gender | Phone | Generated By | Consultant Doctor | Admission Date | Discharged Date | Tax ($) | Net Amount ($) | Total ($)
 
-![IPD Discharged Patient](../assets/screens/sub-11-discharged-patients.jpg)
+![IPD Discharged Patient](assets/screens/sub-11-discharged-patients.jpg)
 
 ### 4.13 Medicines Stock — `/admin/pharmacy/search`
 
@@ -1618,13 +1618,13 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** *(dialog)*: `Medicine Name *` (text); `Medicine Category *` (select) — Syrup, Capsule, Injection, Ointment, Cream, Surgical; `Medicine Company` (select) — Johnson & Johnson, Alkem Laboratories, Biocon Limited., Lupin Limited., medimax; `Medicine Composition` (text); `Medicine Group` (select) — Antibacterials, Antimycobacterials, Antiparasitics, Antigout agents, HIPERIN; `Unit *` (select) — mg/mL, mm, ml, mg, g/dl; `Min Level` (text); `Re-Order Level` (text); `vat` (text); `Box/Packing *` (text); `VAT A/C` (text); `Rack Number` (text); `Note` (textarea); `file` (file)
 - **Form** *(dialog)*: `Medicine Category` (select) — Syrup, Capsule, Injection, Ointment, Cream, Surgical; `medicine_image` (file)
 
-![Medicines Stock](../assets/screens/sub-11-pharmacy-search.jpg)
+![Medicines Stock](assets/screens/sub-11-pharmacy-search.jpg)
 
 ### 4.14 Sale Return Bills — `/admin/pharmacy/salereturnbills`
 
 - **Grid (7 rows):** Return No | Bill No | Date | Patient Name | Generated By | Total ($) | Discount ($) | Tax ($) | Net Amount ($) | Action
 
-![Sale Return Bills](../assets/screens/sub-12-pharmacy-sale-return-bills.jpg)
+![Sale Return Bills](assets/screens/sub-12-pharmacy-sale-return-bills.jpg)
 
 ### 4.15 Medicines Stock — `/admin/pharmacy/search`
 
@@ -1632,34 +1632,34 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** *(dialog)*: `Medicine Name *` (text); `Medicine Category *` (select) — Syrup, Capsule, Injection, Ointment, Cream, Surgical; `Medicine Company` (select) — Johnson & Johnson, Alkem Laboratories, Biocon Limited., Lupin Limited., medimax; `Medicine Composition` (text); `Medicine Group` (select) — Antibacterials, Antimycobacterials, Antiparasitics, Antigout agents, HIPERIN; `Unit *` (select) — mg/mL, mm, ml, mg, g/dl; `Min Level` (text); `Re-Order Level` (text); `vat` (text); `Box/Packing *` (text); `VAT A/C` (text); `Rack Number` (text); `Note` (textarea); `file` (file)
 - **Form** *(dialog)*: `Medicine Category` (select) — Syrup, Capsule, Injection, Ointment, Cream, Surgical; `medicine_image` (file)
 
-![Medicines Stock](../assets/screens/sub-12-pharmacy-search.jpg)
+![Medicines Stock](assets/screens/sub-12-pharmacy-search.jpg)
 
 ### 4.16 Pathology Test — `/admin/pathology/search`
 
 - **Grid (20 rows):** Test Name | Short Name | Test Type | Category | Sub Category | Method | Report Days | Tax (%) | Charge ($) | Amount ($) | Action
 - **Form** *(dialog)*: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select); `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select); `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
 
-![Pathology Test](../assets/screens/sub-13-pathology-search.jpg)
+![Pathology Test](assets/screens/sub-13-pathology-search.jpg)
 
 ### 4.17 Sale Return Bills — `/admin/pharmacy/salereturnbills`
 
 - **Grid (7 rows):** Return No | Bill No | Date | Patient Name | Generated By | Total ($) | Discount ($) | Tax ($) | Net Amount ($) | Action
 
-![Sale Return Bills](../assets/screens/sub-13-pharmacy-sale-return-bills.jpg)
+![Sale Return Bills](assets/screens/sub-13-pharmacy-sale-return-bills.jpg)
 
 ### 4.18 Pathology Test — `/admin/pathology/search`
 
 - **Grid (20 rows):** Test Name | Short Name | Test Type | Category | Sub Category | Method | Report Days | Tax (%) | Charge ($) | Amount ($) | Action
 - **Form** *(dialog)*: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select); `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select); `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
 
-![Pathology Test](../assets/screens/sub-14-pathology-search.jpg)
+![Pathology Test](assets/screens/sub-14-pathology-search.jpg)
 
 ### 4.19 Radiology Test — `/admin/radio/search`
 
 - **Grid (15 rows):** Test Name | Short Name | Test Type | Category Name | Sub Category | Report Days | Tax (%) | Charge ($) | Amount ($) | Action
 - **Form** *(dialog)*: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select); `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select); `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
 
-![Radiology Test](../assets/screens/sub-14-radiology-search.jpg)
+![Radiology Test](assets/screens/sub-14-radiology-search.jpg)
 
 ### 4.20 Blood bank status board — `/admin/bloodbankstatus`
 
@@ -1669,14 +1669,14 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** (posts to `/admin/bloodbankstatus/status`) *(dialog)*: `Blood Group` (text); `status (in bags) *` (text)
 - **Form** *(dialog)*: `Blood Donor *` (select); `Donate Date *` (text); `Bag *` (text); `Volume` (text); `Unit Type` (select) — (ML), Litter, (nm), per day, Hour, Insurance; `Lot` (text); `Charge Category *` (select); `Charge Name *` (select); `Standard Charge ($) *` (text); `Institution` (text); `note` (textarea); `total` (text); `discount_percent` (text); `discount` (text); `tax_percentage` (text); `tax` (text); `net_amount` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Payment Amount ($) *` (text); `Cheque No *` (text); `Cheque Date *` (text); `document` (file)
 
-![Blood bank status board](../assets/screens/sub-15-blood-bank-status-board.jpg)
+![Blood bank status board](assets/screens/sub-15-blood-bank-status-board.jpg)
 
 ### 4.21 Radiology Test — `/admin/radio/search`
 
 - **Grid (15 rows):** Test Name | Short Name | Test Type | Category Name | Sub Category | Report Days | Tax (%) | Charge ($) | Amount ($) | Action
 - **Form** *(dialog)*: `Name *` (text); `Guardian Name` (text); `Phone` (text); `Gender` (select) — Male, Female; `Date Of Birth` (text); `Year` (text); `Month` (text); `Day` (text); `Blood Group` (select); `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `Email` (text); `Address` (input); `National Identification Number` (input); `file` (file); `Remarks` (textarea); `Any Known Allergies` (textarea); `TPA` (select); `TPA ID` (input); `TPA Validity` (input); `Alternate Number` (text)
 
-![Radiology Test](../assets/screens/sub-15-radiology-search.jpg)
+![Radiology Test](assets/screens/sub-15-radiology-search.jpg)
 
 ### 4.22 Blood bank status board — `/admin/bloodbankstatus`
 
@@ -1686,19 +1686,19 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** (posts to `/admin/bloodbankstatus/status`) *(dialog)*: `Blood Group` (text); `status (in bags) *` (text)
 - **Form** *(dialog)*: `Blood Donor *` (select); `Donate Date *` (text); `Bag *` (text); `Volume` (text); `Unit Type` (select) — (ML), Litter, (nm), per day, Hour, Insurance; `Lot` (text); `Charge Category *` (select); `Charge Name *` (select); `Standard Charge ($) *` (text); `Institution` (text); `note` (textarea); `total` (text); `discount_percent` (text); `discount` (text); `tax_percentage` (text); `tax` (text); `net_amount` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Payment Amount ($) *` (text); `Cheque No *` (text); `Cheque Date *` (text); `document` (file)
 
-![Blood bank status board](../assets/screens/sub-16-blood-bank-status-board.jpg)
+![Blood bank status board](assets/screens/sub-16-blood-bank-status-board.jpg)
 
 ### 4.23 QR Code Attendance — `/admin/qrattendance/attendance/index`
 
 
-![QR Code Attendance](../assets/screens/sub-16-staff-attendance-register.jpg)
+![QR Code Attendance](assets/screens/sub-16-staff-attendance-register.jpg)
 
 ### 4.24 Payroll — `/admin/payroll`
 
 - **Form** (posts to `/admin/payroll`): `Role` (select) — Admin, Accountant, Doctor, Pharmacist, Pathologist, Radiologist; `Month` (select) — January, February, March, April, May, June; `Year` (select) — 2025, 2026
 - **Form** (posts to `/admin/payroll/paymentSuccess`) *(dialog)*: `Name` (text); `Payment Amount ($)` (text); `Month Year` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Cheque No` (text); `Cheque Date` (text); `document` (file); `Payment Date` (text); `Note` (textarea)
 
-![Payroll](../assets/screens/sub-17-payroll.jpg)
+![Payroll](assets/screens/sub-17-payroll.jpg)
 
 ### 4.25 Appointment queue — `/admin/appointment/index`
 
@@ -1709,14 +1709,14 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** *(dialog)*: `patient_id` (select); `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Status *` (select) — Pending, Approved, Cancel; `Discount Percentage` (text); `Live Consultant (On Video Conference)` (select) — No, Yes; `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Message` (textarea); `Cheque No` (text); `Cheque Date` (text); `document` (file); `Alternate Address` (textarea)
 - **Form** *(dialog)*: `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Discount Percentage` (text); `Status *` (select) — Pending, Approved, Cancel; `Live Consultant (On Video Conference)` (select) — No, Yes; `Message` (textarea)
 
-![Appointment queue](../assets/screens/sub-18-appointment-queue.jpg)
+![Appointment queue](assets/screens/sub-18-appointment-queue.jpg)
 
 ### 4.26 Payroll — `/admin/payroll`
 
 - **Form** (posts to `/admin/payroll`): `Role` (select) — Admin, Accountant, Doctor, Pharmacist, Pathologist, Radiologist; `Month` (select) — January, February, March, April, May, June; `Year` (select) — 2025, 2026
 - **Form** (posts to `/admin/payroll/paymentSuccess`) *(dialog)*: `Name` (text); `Payment Amount ($)` (text); `Month Year` (text); `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Cheque No` (text); `Cheque Date` (text); `document` (file); `Payment Date` (text); `Note` (textarea)
 
-![Payroll](../assets/screens/sub-18-payroll.jpg)
+![Payroll](assets/screens/sub-18-payroll.jpg)
 
 ### 4.27 Appointment queue — `/admin/appointment/index`
 
@@ -1727,7 +1727,7 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** *(dialog)*: `patient_id` (select); `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Status *` (select) — Pending, Approved, Cancel; `Discount Percentage` (text); `Live Consultant (On Video Conference)` (select) — No, Yes; `Payment Mode` (select) — Cash, Cheque, Transfer to Bank Account, UPI, Online, Other; `Message` (textarea); `Cheque No` (text); `Cheque Date` (text); `document` (file); `Alternate Address` (textarea)
 - **Form** *(dialog)*: `Doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Doctor Fees ($)` (text); `Shift` (select); `Appointment Date` (text); `Slot` (select); `Appointment Priority` (select) — Normal, Urgent, Very Urgent, Low; `Discount Percentage` (text); `Status *` (select) — Pending, Approved, Cancel; `Live Consultant (On Video Conference)` (select) — No, Yes; `Message` (textarea)
 
-![Appointment queue](../assets/screens/sub-19-appointment-queue.jpg)
+![Appointment queue](assets/screens/sub-19-appointment-queue.jpg)
 
 ### 4.28 OPD patient view — `/admin/patient/search`
 
@@ -1737,7 +1737,7 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** (posts to `/admin/patient`) *(dialog)*: `field` (select); `symptoms_type` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `field` (search); `field` (text); `Symptoms Description` (textarea); `ICD Group` (select) — Select Group, Infectious & Parasitic Diseases, Infectious Diseases, Mental & Behavioural Disorders, Neoplasms, Viral Diseases; `ICD-10 Diagnosis` (select) — [A09] Infectious Gastroenteritis, [A15.0] Pulmonary Tuberculosis, [B34.9] Viral Infection, Unspecified, [C50.9] Malignant Neoplasm of Breast, [F41.1] Generalized Anxiety Disorder; `ICD-10 Diagnosis` (search); `Note` (textarea); `Any Known Allergies` (textarea); `Previous Medical Issue` (textarea); `Appointment Date *` (text); `case` (text); `casualty` (select) — No, Yes; `old_patient` (select) — No, Yes; `refference` (text); `Apply TPA` (checkbox); `consultant_doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Charge Category` (select) — OPD Consultation Fees, OPD Service, OPD Insurance, Blood pressure check, Eye check, Cholesterol level check; `Charge *` (select); `Standard Charge ($)` (text); `Applied Charge ($) *` (text); … +10 more
 - **Form** *(dialog)*: `Name` (text); `Guardian Name` (text); `Gender` (select) — Male, Female; `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `file` (file); `Any Known Allergies` (text); `Phone` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Age` (text); `Month` (text)
 
-![OPD patient view](../assets/screens/sub-19-opd-patient-view.jpg)
+![OPD patient view](assets/screens/sub-19-opd-patient-view.jpg)
 
 ### 4.29 OPD patient view — `/admin/patient/search`
 
@@ -1747,7 +1747,7 @@ These screens are not menu entries but are reachable from the modules above (per
 - **Form** (posts to `/admin/patient`) *(dialog)*: `field` (select); `symptoms_type` (select) — Eating or weight problems, Emotional problems, Muscle or joint problems, Skin problems, Bladder problems, Stomach problems; `field` (search); `field` (text); `Symptoms Description` (textarea); `ICD Group` (select) — Select Group, Infectious & Parasitic Diseases, Infectious Diseases, Mental & Behavioural Disorders, Neoplasms, Viral Diseases; `ICD-10 Diagnosis` (select) — [A09] Infectious Gastroenteritis, [A15.0] Pulmonary Tuberculosis, [B34.9] Viral Infection, Unspecified, [C50.9] Malignant Neoplasm of Breast, [F41.1] Generalized Anxiety Disorder; `ICD-10 Diagnosis` (search); `Note` (textarea); `Any Known Allergies` (textarea); `Previous Medical Issue` (textarea); `Appointment Date *` (text); `case` (text); `casualty` (select) — No, Yes; `old_patient` (select) — No, Yes; `refference` (text); `Apply TPA` (checkbox); `consultant_doctor` (select) — Amit Singh (9009), Reyan Jain (9011), Sansa Gomez (9008), Sonia Bush (9002); `Charge Category` (select) — OPD Consultation Fees, OPD Service, OPD Insurance, Blood pressure check, Eye check, Cholesterol level check; `Charge *` (select); `Standard Charge ($)` (text); `Applied Charge ($) *` (text); … +10 more
 - **Form** *(dialog)*: `Name` (text); `Guardian Name` (text); `Gender` (select) — Male, Female; `Marital Status` (select) — Single, Married, Widowed, Separated, Not Specified; `file` (file); `Any Known Allergies` (text); `Phone` (text); `Blood Group` (select) — B+, A+, AB-, AB+, O-, A-; `Age` (text); `Month` (text)
 
-![OPD patient view](../assets/screens/sub-20-opd-patient-view.jpg)
+![OPD patient view](assets/screens/sub-20-opd-patient-view.jpg)
 
 
 ## 5. Roles and access model
@@ -1778,7 +1778,7 @@ Unrestricted access to every module, master and setting, plus the multi-branch c
 
 Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`/admin/admin/search`), Billing (`/admin/bill/dashboard`), Appointment (`/admin/appointment/index`), OPD - Out Patient (`/admin/patient/search`), IPD - In Patient (`/admin/patient/ipdsearch`)
 
-![Super Admin dashboard](../assets/screens/role-superadmin-dashboard.jpg)
+![Super Admin dashboard](assets/screens/role-superadmin-dashboard.jpg)
 
 ### 5.2 Admin
 
@@ -1792,7 +1792,7 @@ Hospital administrator: clinical, billing, hr, finance and reporting without the
 
 Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`/admin/admin/search`), Billing (`/admin/bill/dashboard`), Appointment (`/admin/appointment/index`), OPD - Out Patient (`/admin/patient/search`), IPD - In Patient (`/admin/patient/ipdsearch`)
 
-![Admin dashboard](../assets/screens/role-admin-dashboard.jpg)
+![Admin dashboard](assets/screens/role-admin-dashboard.jpg)
 
 ### 5.3 Doctor
 
@@ -1806,7 +1806,7 @@ Clinical workspace: appointments, opd/ipd patients, prescriptions, investigation
 
 Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`/admin/admin/search`), Billing (`/admin/bill/dashboard`), Appointment (`/admin/appointment/index`), OPD - Out Patient (`/admin/patient/search`), IPD - In Patient (`/admin/patient/ipdsearch`)
 
-![Doctor dashboard](../assets/screens/role-doctor-dashboard.jpg)
+![Doctor dashboard](assets/screens/role-doctor-dashboard.jpg)
 
 ### 5.4 Pharmacist
 
@@ -1820,7 +1820,7 @@ Pharmacy only: sale/issue, stock, batch and expiry handling, pharmacy reports.
 
 Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`/admin/admin/search`), Billing (`/admin/bill/dashboard`), OPD - Out Patient (`/admin/patient/search`), IPD - In Patient (`/admin/patient/ipdsearch`), Pharmacy (`/admin/pharmacy/bill`)
 
-![Pharmacist dashboard](../assets/screens/role-pharmacist-dashboard.jpg)
+![Pharmacist dashboard](assets/screens/role-pharmacist-dashboard.jpg)
 
 ### 5.5 Pathologist
 
@@ -1834,7 +1834,7 @@ Laboratory only: test orders, sample collection, result entry and report generat
 
 Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`/admin/admin/search`), Billing (`/admin/bill/dashboard`), OPD - Out Patient (`/admin/patient/search`), IPD - In Patient (`/admin/patient/ipdsearch`), Pathology (`/admin/pathology/gettestreportbatch`)
 
-![Pathologist dashboard](../assets/screens/role-pathologist-dashboard.jpg)
+![Pathologist dashboard](assets/screens/role-pathologist-dashboard.jpg)
 
 ### 5.6 Radiologist
 
@@ -1848,7 +1848,7 @@ Imaging only: study orders, scheduling and reporting.
 
 Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`/admin/admin/search`), Billing (`/admin/bill/dashboard`), OPD - Out Patient (`/admin/patient/search`), IPD - In Patient (`/admin/patient/ipdsearch`), Radiology (`/admin/radio/gettestreportbatch`)
 
-![Radiologist dashboard](../assets/screens/role-radiologist-dashboard.jpg)
+![Radiologist dashboard](assets/screens/role-radiologist-dashboard.jpg)
 
 ### 5.7 Accountant
 
@@ -1862,7 +1862,7 @@ Finance: billing, income/expense, payroll and financial reports.
 
 Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`/admin/admin/search`), Billing (`/admin/bill/dashboard`), Appointment (`/admin/appointment/index`), OPD - Out Patient (`/admin/patient/search`), IPD - In Patient (`/admin/patient/ipdsearch`)
 
-![Accountant dashboard](../assets/screens/role-accountant-dashboard.jpg)
+![Accountant dashboard](assets/screens/role-accountant-dashboard.jpg)
 
 ### 5.8 Receptionist
 
@@ -1876,7 +1876,7 @@ Front desk: patient registration, appointments, opd visits, visitors and billing
 
 Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`/admin/admin/search`), Billing (`/admin/bill/dashboard`), Appointment (`/admin/appointment/index`), OPD - Out Patient (`/admin/patient/search`), IPD - In Patient (`/admin/patient/ipdsearch`)
 
-![Receptionist dashboard](../assets/screens/role-receptionist-dashboard.jpg)
+![Receptionist dashboard](assets/screens/role-receptionist-dashboard.jpg)
 
 ### 5.9 Nurse
 
@@ -1889,38 +1889,38 @@ Ward work: ipd patients, vitals, nursing notes, duty roster and bed status.
 
 Screens captured for this role: Dashboard (`/admin/admin/dashboard`), Patient (`/admin/admin/search`), OPD - Out Patient (`/admin/patient/search`), IPD - In Patient (`/admin/patient/ipdsearch`), Human Resource (`/admin/staff`), Messaging (`/admin/notification`)
 
-![Nurse dashboard](../assets/screens/role-nurse-dashboard.jpg)
+![Nurse dashboard](assets/screens/role-nurse-dashboard.jpg)
 
 ## 6. Public website and patient portal
 
 The same installation serves the public hospital website (driven by Front CMS) and a patient self-service portal.
 
 - **Home page blocks:** World-class care, close to home · Our Specialties · Our Doctors · Sonia Bush · Sansa Gomez · Amit Singh · Reyan Jain · Three steps. No paperwork. · Pick a slot · Meet the specialist · Get reports & care · Trusted care, measurable results
-- **Public pages discovered:** [Appointment](/form/appointment), [https://demo.smart-hospital.in/frontend](/frontend), [Home](/page/home), [Annual Calendar](/page/annual_calendar), [Events](/page/events), [About Us](/), [https://demo.smart-hospital.in/page/about-hospitals](/page/about-hospitals), [https://demo.smart-hospital.in/page/vision-and-mission](/page/vision-and-mission), [https://demo.smart-hospital.in/page/meet-our-doctors](/page/meet-our-doctors), [https://demo.smart-hospital.in/page/faq](/page/faq), [https://demo.smart-hospital.in/page/departments](/page/departments), [https://demo.smart-hospital.in/page/testimonials](/page/testimonials), [Survey Form](/surveys), [Gallery](/page/gallery)
+- **Public pages discovered:** Appointment (`/form/appointment`), https://demo.smart-hospital.in/frontend (`/frontend`), Home (`/page/home`), Annual Calendar (`/page/annual_calendar`), Events (`/page/events`), About Us (`/`), https://demo.smart-hospital.in/page/about-hospitals (`/page/about-hospitals`), https://demo.smart-hospital.in/page/vision-and-mission (`/page/vision-and-mission`), https://demo.smart-hospital.in/page/meet-our-doctors (`/page/meet-our-doctors`), https://demo.smart-hospital.in/page/faq (`/page/faq`), https://demo.smart-hospital.in/page/departments (`/page/departments`), https://demo.smart-hospital.in/page/testimonials (`/page/testimonials`), Survey Form (`/surveys`), Gallery (`/page/gallery`)
 
-![Appointment](../assets/screens/front-01-appointment.jpg)
+![Appointment](assets/screens/front-01-appointment.jpg)
 
-![https://demo.smart-hospital.in/frontend](../assets/screens/front-02-https-demo-smart-hospital-in-frontend.jpg)
+![https://demo.smart-hospital.in/frontend](assets/screens/front-02-https-demo-smart-hospital-in-frontend.jpg)
 
-![Home](../assets/screens/front-03-home.jpg)
+![Home](assets/screens/front-03-home.jpg)
 
-![Annual Calendar](../assets/screens/front-04-annual-calendar.jpg)
+![Annual Calendar](assets/screens/front-04-annual-calendar.jpg)
 
-![Events](../assets/screens/front-05-events.jpg)
+![Events](assets/screens/front-05-events.jpg)
 
-![About Us](../assets/screens/front-06-about-us.jpg)
+![About Us](assets/screens/front-06-about-us.jpg)
 
-![https://demo.smart-hospital.in/page/about-hospitals](../assets/screens/front-07-https-demo-smart-hospital-in-page-about-hospi.jpg)
+![https://demo.smart-hospital.in/page/about-hospitals](assets/screens/front-07-https-demo-smart-hospital-in-page-about-hospi.jpg)
 
-![https://demo.smart-hospital.in/page/vision-and-mission](../assets/screens/front-08-https-demo-smart-hospital-in-page-vision-and-.jpg)
+![https://demo.smart-hospital.in/page/vision-and-mission](assets/screens/front-08-https-demo-smart-hospital-in-page-vision-and-.jpg)
 
-![https://demo.smart-hospital.in/page/meet-our-doctors](../assets/screens/front-09-https-demo-smart-hospital-in-page-meet-our-do.jpg)
+![https://demo.smart-hospital.in/page/meet-our-doctors](assets/screens/front-09-https-demo-smart-hospital-in-page-meet-our-do.jpg)
 
-![https://demo.smart-hospital.in/page/faq](../assets/screens/front-10-https-demo-smart-hospital-in-page-faq.jpg)
+![https://demo.smart-hospital.in/page/faq](assets/screens/front-10-https-demo-smart-hospital-in-page-faq.jpg)
 
 **Patient portal sign-in** (`/site/userlogin`) — patients use the e-mail captured at registration to see appointments, prescriptions, investigations and bills.
 
-![Patient portal sign-in](../assets/screens/patient-portal-login.jpg)
+![Patient portal sign-in](assets/screens/patient-portal-login.jpg)
 
 ## 7. Cross-cutting platform features
 

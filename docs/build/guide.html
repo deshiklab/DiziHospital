@@ -3277,7 +3277,7 @@ how patients get access to the patient panel (see §8).</p>
 <p>The same installation serves the public hospital website (driven by Front CMS) and a patient self-service portal.</p>
 <ul>
 <li><strong>Home page blocks:</strong> World-class care, close to home · Our Specialties · Our Doctors · Sonia Bush · Sansa Gomez · Amit Singh · Reyan Jain · Three steps. No paperwork. · Pick a slot · Meet the specialist · Get reports &amp; care · Trusted care, measurable results</li>
-<li><strong>Public pages discovered:</strong> <a href="/form/appointment">Appointment</a>, <a href="/frontend">https://demo.smart-hospital.in/frontend</a>, <a href="/page/home">Home</a>, <a href="/page/annual_calendar">Annual Calendar</a>, <a href="/page/events">Events</a>, <a href="/">About Us</a>, <a href="/page/about-hospitals">https://demo.smart-hospital.in/page/about-hospitals</a>, <a href="/page/vision-and-mission">https://demo.smart-hospital.in/page/vision-and-mission</a>, <a href="/page/meet-our-doctors">https://demo.smart-hospital.in/page/meet-our-doctors</a>, <a href="/page/faq">https://demo.smart-hospital.in/page/faq</a>, <a href="/page/departments">https://demo.smart-hospital.in/page/departments</a>, <a href="/page/testimonials">https://demo.smart-hospital.in/page/testimonials</a>, <a href="/surveys">Survey Form</a>, <a href="/page/gallery">Gallery</a></li>
+<li><strong>Public pages discovered:</strong> Appointment (<code>/form/appointment</code>), https://demo.smart-hospital.in/frontend (<code>/frontend</code>), Home (<code>/page/home</code>), Annual Calendar (<code>/page/annual_calendar</code>), Events (<code>/page/events</code>), About Us (<code>/</code>), https://demo.smart-hospital.in/page/about-hospitals (<code>/page/about-hospitals</code>), https://demo.smart-hospital.in/page/vision-and-mission (<code>/page/vision-and-mission</code>), https://demo.smart-hospital.in/page/meet-our-doctors (<code>/page/meet-our-doctors</code>), https://demo.smart-hospital.in/page/faq (<code>/page/faq</code>), https://demo.smart-hospital.in/page/departments (<code>/page/departments</code>), https://demo.smart-hospital.in/page/testimonials (<code>/page/testimonials</code>), Survey Form (<code>/surveys</code>), Gallery (<code>/page/gallery</code>)</li>
 </ul>
 <p><img alt="Appointment" src="../assets/screens/front-01-appointment.jpg" /></p>
 <p><img alt="https://demo.smart-hospital.in/frontend" src="../assets/screens/front-02-https-demo-smart-hospital-in-frontend.jpg" /></p>
@@ -4554,6 +4554,74 @@ C1 online payments.</p>
 <p><strong>Phase 4 — Platform (ongoing)</strong>
 E1 API layer + E2 webhooks · E10 ABDM/FHIR · E6 observability · E8 CI/test harness · D8 responsive/PWA.</p>
 <hr />
+<h2 id="3b-where-these-items-land-in-the-modernization-plan">3b. Where these items land in the modernization plan</h2>
+<p>The rebuild in <a href="plan/README.md"><code>docs/plan/</code></a> absorbs most of this backlog. Mapping so nothing is lost:</p>
+<table>
+<thead>
+<tr>
+<th>Backlog items</th>
+<th>Handled by</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1 KPI correctness, A2 currency/locale, A3 empty states, A4 terminology, A6 encoding, A7 stray label</td>
+<td>Rebuilt dashboard + design-system content rules</td>
+<td>Quick fixes on legacy in <strong>week 1–2</strong>; fully resolved in <strong>P1/P2</strong></td>
+</tr>
+<tr>
+<td>A5 safe delete, A8 field naming</td>
+<td>New API write policies + audit ledger + DataGrid bulk-action design</td>
+<td><strong>P1</strong></td>
+</tr>
+<tr>
+<td>B1 queue board, B2 bed board, B6 reminders/no-shows, B9 referral letters</td>
+<td>Boards component + notification engine</td>
+<td><strong>P1/P5</strong>, reminders <strong>P2</strong></td>
+</tr>
+<tr>
+<td>B3 lab barcode/analyzer, B5 allergy checks, B7 cross-match</td>
+<td>Order composer, safety surfaces, lab adapter</td>
+<td><strong>P3/P4</strong></td>
+</tr>
+<tr>
+<td>B4 discharge/OT templates, B8 ambulance dispatch</td>
+<td>Template engine, worklists</td>
+<td><strong>P5</strong></td>
+</tr>
+<tr>
+<td>C1 online payments, C2 collections ageing, C3 TPA pipeline, C4 GST/e-invoice, C5 period close</td>
+<td>Revenue-cycle modules</td>
+<td><strong>P2/P6</strong></td>
+</tr>
+<tr>
+<td>D1 DOM/modals, D3 filter persistence, D4 accessibility, D5 command palette, D6 dark mode, D8 responsive/PWA</td>
+<td>Design system + AppShell + DataGrid</td>
+<td><strong>P0–P2</strong></td>
+</tr>
+<tr>
+<td>D2 smarter patient search</td>
+<td>Patient module with MRN/phone/fuzzy search</td>
+<td><strong>P1</strong></td>
+</tr>
+<tr>
+<td>E1 API, E2 webhooks, E4 security baseline (MFA enforcement), E5 licensing replacement, E6 observability, E7 backups, E8 CI/tests, E9 server-side data</td>
+<td>Platform workstream</td>
+<td><strong>P0–P2</strong></td>
+</tr>
+<tr>
+<td>E10 ABDM/FHIR, E11 delivery log, E12 two-way WhatsApp, E13 mobile parity</td>
+<td>Interoperability and integration roadmap</td>
+<td><strong>P4 onward / post-programme</strong></td>
+</tr>
+<tr>
+<td>F1 portal depth, F2 feedback surveys, F3 read receipts, F4 SEO, F5 estimates/packages</td>
+<td>Patient experience phase</td>
+<td><strong>P8</strong></td>
+</tr>
+</tbody>
+</table>
 <h2 id="4-definition-of-done-shared">4. Definition of done (shared)</h2>
 <p>Every item above ships with: acceptance criteria written first, automated test where the layer allows it,
 documentation updated in this repo (<code>docs/</code>), a screenshot of the new state replacing the old one in <code>docs/assets/screens/</code>,

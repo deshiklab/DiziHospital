@@ -468,7 +468,7 @@ def main():
             A('')
             shot = copy_shot(os.path.join(CAP, 'pages', r['id'] + '.jpg'), r['id'] + '.jpg')
             if shot:
-                A(f"![{pretty_title(rec)}](../assets/screens/{shot})")
+                A(f"![{pretty_title(rec)}](assets/screens/{shot})")
                 A('')
 
         # dialogs gallery for this module
@@ -511,7 +511,7 @@ def main():
                 if forms_in:
                     A(form_block(forms_in[0]))
                     A('')
-                A(f"![{g['title']}](../assets/screens/{shot})")
+                A(f"![{g['title']}](assets/screens/{shot})")
                 A('')
         A('')
 
@@ -549,7 +549,7 @@ def main():
                 A(form_block(form))
             A('')
             if shot:
-                A(f"![{title}](../assets/screens/{shot})")
+                A(f"![{title}](assets/screens/{shot})")
                 A('')
             tabs = [f for f in sorted(os.listdir(os.path.join(CAP, srcdir))) if f.startswith(base + '__tab-') and f.endswith('.jpg')]
             tabs.sort(key=lambda x: int(re.search(r'__tab-(\d+)', x).group(1)) if re.search(r'__tab-(\d+)', x) else 99)
@@ -561,7 +561,7 @@ def main():
                     tshot = copy_shot(os.path.join(CAP, srcdir, tf), f"detail-{base}__{tslug}.jpg")
                     label = tf.replace('.jpg', '').split('__tab-', 1)[-1].replace('-', ' ')
                     if tshot:
-                        A(f"![{title} — {label}](../assets/screens/{tshot})")
+                        A(f"![{title} — {label}](assets/screens/{tshot})")
                         A('')
 
     # -------------------------------------------------------- sub-screens ---
@@ -604,7 +604,7 @@ def main():
                 A(form_block(form))
             A('')
             if shot:
-                A(f"![{tt}](../assets/screens/{shot})")
+                A(f"![{tt}](assets/screens/{shot})")
                 A('')
         A('')
 
@@ -643,7 +643,7 @@ def main():
                 for p in r['pages'][:6]))
         A('')
         if shot:
-            A(f"![{label} dashboard](../assets/screens/{shot})")
+            A(f"![{label} dashboard](assets/screens/{shot})")
             A('')
 
     # ------------------------------------------------------------ portal ---
@@ -656,19 +656,19 @@ def main():
         if home.get('headings'):
             A('- **Home page blocks:** ' + ' · '.join(home['headings'][:12]))
         if front.get('links'):
-            A('- **Public pages discovered:** ' + ', '.join(f"[{l.get('label', '')}](/{str(l.get('url', '')).split('.in/', 1)[-1]})" for l in front['links'][:14]))
+            A('- **Public pages discovered:** ' + ', '.join(f"{l.get('label', '')} (`/{str(l.get('url', '')).split('.in/', 1)[-1]}`)" for l in front['links'][:14]))
         A('')
         for p in front.get('pages', [])[:10]:
             shot = copy_shot(os.path.join(CAP, 'frontsite', p.get('file', '')), 'front-' + str(p.get('file', '')))
             if shot:
-                A(f"![{p.get('label', '')}](../assets/screens/{shot})")
+                A(f"![{p.get('label', '')}](assets/screens/{shot})")
                 A('')
         portal = copy_shot(os.path.join(CAP, 'frontsite', 'patient-portal-login.jpg'), 'patient-portal-login.jpg')
         if portal:
             A('**Patient portal sign-in** (`/site/userlogin`) — patients use the e-mail captured at registration to see appointments, '
               'prescriptions, investigations and bills.')
             A('')
-            A(f"![Patient portal sign-in](../assets/screens/{portal})")
+            A(f"![Patient portal sign-in](assets/screens/{portal})")
             A('')
 
     # ------------------------------------------------------- cross cutting ---

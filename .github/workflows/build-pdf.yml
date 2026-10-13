@@ -51,6 +51,12 @@ jobs:
           mkdir -p docs/build
           python3 tools/docs/validate_guide.py 2>&1 | tee docs/build/validation.log
 
+      - name: Check every relative link in docs/
+        continue-on-error: true
+        run: |
+          mkdir -p docs/build
+          python3 tools/docs/check_links.py 2>&1 | tee docs/build/links.log
+
       - name: Render PDF
         id: render
         continue-on-error: true
