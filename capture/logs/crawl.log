@@ -100,3 +100,31 @@ hint: Updates were rejected be
 2026-10-13T21:38:59.573Z [58/76] 058-setup-bed status=200
 2026-10-13T21:39:02.231Z [59/76] 059-setup-print-header-footer status=200
 2026-10-13T21:39:04.132Z [60/76] 060-setup-front-office status=200
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:39:04.444Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected be
+2026-10-13T21:39:06.333Z [61/76] 061-setup-operations status=200
+2026-10-13T21:39:08.214Z [62/76] 062-setup-pharmacy status=200
+2026-10-13T21:39:10.129Z [63/76] 063-setup-pathology status=200
+2026-10-13T21:39:12.013Z [64/76] 064-setup-radiology status=200
+2026-10-13T21:39:14.029Z [65/76] 065-setup-blood-bank status=200
+2026-10-13T21:39:15.915Z [66/76] 066-setup-symptoms status=200
+2026-10-13T21:39:17.796Z [67/76] 067-setup-icd-10 status=200
+2026-10-13T21:39:19.700Z [68/76] 068-setup-findings status=200
+2026-10-13T21:39:21.716Z [69/76] 069-setup-vitals status=200
+2026-10-13T21:39:23.700Z [70/76] 070-setup-zoom-setting status=200
+2026-10-13T21:39:25.582Z [71/76] 071-setup-finance status=200
+2026-10-13T21:39:27.596Z [72/76] 072-setup-human-resource status=200
+2026-10-13T21:39:29.503Z [73/76] 073-setup-referral status=200
+2026-10-13T21:39:31.367Z [74/76] 074-setup-appointment status=200
+2026-10-13T21:39:33.263Z [75/76] 075-setup-inventory status=200
