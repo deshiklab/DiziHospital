@@ -128,6 +128,33 @@ CATEGORY_BLURB = {
 }
 
 
+HEADER_PATTERNS = (
+    r'^#{1,5}\s+',                                  # article title (PDF prints its own heading)
+    r'^_?\s*[A-Z][a-z]{2},\s+\d{1,2}\s+[A-Z][a-z]{2},\s+\d{4}',  # publication date
+    r'^(\[[^\]]*\]\([^)]*\))+\s*$',            # bare link line (Articles / category)
+    r'^_[^_]*_\s*·',                                # generated meta line
+    r'^-{3,}\s*$',
+    r'^\s*$',
+)
+
+
+def strip_header(md):
+    """Drop the generated front-matter/navigation block and demote inner headings."""
+    lines = md.split('\n')
+    i = 0
+    while i < len(lines):
+        ln = lines[i].strip()
+        if any(re.match(p, ln) for p in HEADER_PATTERNS) or 'vendor article:' in ln:
+            i += 1
+            continue
+        break
+    body = '\n'.join(lines[i:])
+    body = re.sub(r'\n{3,}', '\n\n', body).strip()
+    # inner headings are one level below the article heading printed by the PDF
+    body = re.sub(r'(?m)^###\s+', '#### ', body)
+    return body
+
+
 def find_article(cats, cat_slug, art_slug):
     for c in cats:
         if c['slug'] != cat_slug:
@@ -205,10 +232,7 @@ def main():
         if not os.path.exists(md_path):
             continue
         md = open(md_path).read()
-        # strip the generated front-matter block (title/date/category line)
-        md = re.sub(r'^# .*?\n\n_[^\n]*\n\n', '', md, count=1, flags=re.S)
-        md = re.sub(r'^# .*?\n\n', '', md, count=1)
-        md = md.strip()
+        md = strip_header(md)
         if len(md) < 60:
             continue
         selected.append({'category': c['name'], 'category_slug': c['slug'], 'title': a['title'],

@@ -1,33 +1,49 @@
 # Smart Hospital — Vendor Help Library (mirrored)
 
-> Complete offline mirror of the vendor knowledge base at **smart-hospital.in/articles** — **408 articles across 23 categories**, downloaded with their screenshots and converted to Markdown.
+> Complete offline mirror of the vendor knowledge base at **smart-hospital.in/articles** — **686 articles across 39 categories**, downloaded with their screenshots and converted to Markdown.
 >
 > Source: QDOCS help articles · downloaded for offline use and diffing. Original text and images remain © QDOCS; they are reproduced here as product documentation for internal use.
 
 | Category | Articles | What it covers |
 |---|---|---|
+| [Reports (44)](help-library/reports/_index.md) | 54 | The report library — how to read and filter each report. |
 | [Setup & Configuration (22)](help-library/setup-configuration/_index.md) | 32 | Master data: patient fields, charges, beds, print header/footer, front office. |
 | [IPD - In Patient (19)](help-library/ipd-in-patient/_index.md) | 29 | Admissions, vitals, obstetric history, BMI, overview and discharge. |
 | [FAQ (17)](help-library/faq/_index.md) | 27 | Frequently asked questions about deployment, characters, LAN use and multi-hospital operation. |
 | [System Settings (16)](help-library/system-settings/_index.md) | 26 | Notification, SMS, e-mail, payment-method and general system configuration. |
 | [Common Issues & Troubleshooting (13)](help-library/common-issues-troubleshooting/_index.md) | 23 | Known problems and fixes (404s, login URLs, SQL modes, SSL, hosting moves). |
 | [Human Resource (13)](help-library/human-resource/_index.md) | 23 | Departments, designations, leave types, specialists, payroll and leaves. |
+| [Patient Panel (10)](help-library/patient-panel/_index.md) | 20 | The patient self-service portal (dashboard, appointments, OPD/IPD, bills, reports). |
 | [OPD - Out Patient (9)](help-library/opd-out-patient/_index.md) | 19 | Out-patient visits, profiles and discharge. |
+| [Smart Hospital(10)](help-library/smart-hospital/_index.md) | 19 | Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assig |
 | [Appointment (8)](help-library/appointment/_index.md) | 18 | Booking, slot setup and online appointments. |
+| [Front CMS (8)](help-library/front-cms/_index.md) | 18 | Website pages, banners, events, gallery and media manager. |
+| [Certificate (7)](help-library/certificate/_index.md) | 17 | Certificates, patient and staff ID cards. |
 | [Front Office (7)](help-library/front-office/_index.md) | 17 | Visitors, calls, postal dispatch and complaints. |
 | [Installation(7)](help-library/installation/_index.md) | 17 | Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assig |
+| [Multi Branch (7)](help-library/multi-branch/_index.md) | 17 | Adding, editing, switching and reporting across branches. |
 | [Blood Bank (6)](help-library/blood-bank/_index.md) | 16 | Components, donors, issue and stock. |
 | [Miscellaneous (6)](help-library/miscellaneous/_index.md) | 16 | Calendar, to-dos, chat and other utilities. |
 | [Pharmacy (6)](help-library/pharmacy/_index.md) | 16 | Medicines, stock, bad stock, import and sale. |
 | [Survey Form (6)](help-library/survey-form/_index.md) | 16 | Building, publishing and filling survey forms. |
+| [Two Factor Authentication (6)](help-library/two-factor-authentication/_index.md) | 16 | Google Authenticator based 2FA setup for superadmin and staff. |
+| [Annual Calendar (4)](help-library/annual-calendar/_index.md) | 14 | Holidays, activities, vacations and the front-site calendar tab. |
+| [Duty Roster (4)](help-library/duty-roster/_index.md) | 14 | Shifts, rosters and staff assignment. |
+| [Inventory (4)](help-library/inventory/_index.md) | 14 | Items, stock, issue and return. |
+| [Messaging (4)](help-library/messaging/_index.md) | 14 | Notice board, SMS, e-mail and patient credentials. |
 | [Pathology (4)](help-library/pathology/_index.md) | 14 | Test setup, reports and payment. |
 | [Radiology (4)](help-library/radiology/_index.md) | 14 | Study setup, reports and payment. |
 | [Ambulance (3)](help-library/ambulance/_index.md) | 13 | Vehicles, drivers and calls. |
 | [Billing (3)](help-library/billing/_index.md) | 13 | Billing concepts, single-module billing and case-based billing. |
+| [Download Center (3)](help-library/download-center/_index.md) | 13 | Sharing documents and media. |
 | [Getting Started (3)](help-library/getting-started/_index.md) | 13 | Installation, updates, licensing and first-run setup. |
+| [Live Consultation (3)](help-library/live-consultation/_index.md) | 13 | Zoom live consultations and live meetings. |
 | [QR Code Attendance (3)](help-library/qr-code-attendance/_index.md) | 13 | QR/barcode attendance with auto-attendance options. |
+| [Referral (3)](help-library/referral/_index.md) | 13 | Referral persons and commission payments. |
 | [Birth & Death Record (2)](help-library/birth-death-record/_index.md) | 12 | Statutory birth and death registers. |
+| [TPA Management (2)](help-library/tpa-management/_index.md) | 12 | Insurance/TPA handling. |
 | [System Update(1)](help-library/system-update/_index.md) | 11 | Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assig |
+| [WhatsApp Messaging (4)](help-library/whatsapp-messaging/_index.md) | 10 | WhatsApp Cloud API (Meta) and Twilio configuration, per-event enablement. |
 | [bug_report Known Issues](help-library/known-issues/_index.md) | 10 | Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assig |
 
 ---
@@ -51,6 +67,27 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/ambulance/version-2-0-2.md) · Thu, 30 Jul, 2026
 - [Version 2.0](help-library/ambulance/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/ambulance/version-7-0.md) · Mon, 27 Jul, 2026
+
+## Annual Calendar (4) (14)
+
+Holidays, activities, vacations and the front-site calendar tab.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About WhatsApp Messaging](help-library/annual-calendar/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How to add activity in annual calendar?](help-library/annual-calendar/how-to-add-activity-in-annual-calendar.md) · Thu, 05 Sep, 2024
+- [How to add holiday in annual calendar on smart hospital?](help-library/annual-calendar/how-to-add-holiday-in-annual-calendar-on-smart-hospital.md) · Thu, 05 Sep, 2024
+- [How to add vacation in annual calendar?](help-library/annual-calendar/how-to-add-vacation-in-annual-calendar.md) · Tue, 03 Sep, 2024
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/annual-calendar/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/annual-calendar/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/annual-calendar/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [How to show annual calendar tab on front site of smart hospital?](help-library/annual-calendar/how-to-show-annual-calendar-tab-on-front-site-of-smart-hospital.md) · Mon, 02 Sep, 2024
+- [Version 1.0](help-library/annual-calendar/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/annual-calendar/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/annual-calendar/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/annual-calendar/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/annual-calendar/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/annual-calendar/version-7-0.md) · Mon, 27 Jul, 2026
 
 ## Appointment (8) (18)
 
@@ -154,6 +191,30 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/known-issues/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/known-issues/version-7-0.md) · Mon, 27 Jul, 2026
 
+## Certificate (7) (17)
+
+Certificates, patient and staff ID cards.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About Certificate.](help-library/certificate/about-certificate.md) · Tue, 02 Nov, 2021
+- [About WhatsApp Messaging](help-library/certificate/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How to add Certificate in Smart Hospital?](help-library/certificate/how-to-add-certificate-in-smart-hospital.md) · Tue, 02 Nov, 2021
+- [How to add Patient ID Card?](help-library/certificate/how-to-add-patient-id-card.md) · Tue, 02 Nov, 2021
+- [How to add Staff ID card?](help-library/certificate/how-to-add-staff-id-card.md) · Tue, 02 Nov, 2021
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/certificate/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/certificate/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/certificate/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [How to generate certificate?](help-library/certificate/how-to-generate-certificate.md) · Tue, 02 Nov, 2021
+- [How to generate patient ID card?](help-library/certificate/how-to-generate-patient-id-card.md) · Wed, 03 Nov, 2021
+- [How to generate Staff ID Card?](help-library/certificate/how-to-generate-staff-id-card.md) · Wed, 03 Nov, 2021
+- [Version 1.0](help-library/certificate/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/certificate/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/certificate/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/certificate/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/certificate/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/certificate/version-7-0.md) · Mon, 27 Jul, 2026
+
 ## Common Issues & Troubleshooting (13) (23)
 
 Known problems and fixes (404s, login URLs, SQL modes, SSL, hosting moves).
@@ -183,6 +244,47 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/common-issues-troubleshooting/version-2-0-2.md) · Thu, 30 Jul, 2026
 - [Version 2.0](help-library/common-issues-troubleshooting/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/common-issues-troubleshooting/version-7-0.md) · Mon, 27 Jul, 2026
+
+## Download Center (3) (13)
+
+Sharing documents and media.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About Download Center.](help-library/download-center/about-download-center.md) · Wed, 17 Nov, 2021
+- [About WhatsApp Messaging](help-library/download-center/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How Download Center works in Smart Hospital?](help-library/download-center/how-download-center-works-in-smart-hospital.md) · Thu, 30 May, 2024
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/download-center/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/download-center/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/download-center/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [Overall working of download center module in smart hospital](help-library/download-center/overall-working-of-download-center-module-in-smart-hospital.md) · Sat, 31 Aug, 2024
+- [Version 1.0](help-library/download-center/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/download-center/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/download-center/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/download-center/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/download-center/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/download-center/version-7-0.md) · Mon, 27 Jul, 2026
+
+## Duty Roster (4) (14)
+
+Shifts, rosters and staff assignment.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About WhatsApp Messaging](help-library/duty-roster/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How to add the roster in duty roster module?](help-library/duty-roster/how-to-add-the-roster-in-duty-roster-module.md) · Thu, 05 Sep, 2024
+- [How to add the shift in duty roster?](help-library/duty-roster/how-to-add-the-shift-in-duty-roster.md) · Thu, 05 Sep, 2024
+- [How to assign the roster to the staff?](help-library/duty-roster/how-to-assign-the-roster-to-the-staff.md) · Thu, 05 Sep, 2024
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/duty-roster/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/duty-roster/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/duty-roster/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [How to search the duty roster?](help-library/duty-roster/how-to-search-the-duty-roster.md) · Thu, 05 Sep, 2024
+- [Version 1.0](help-library/duty-roster/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/duty-roster/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/duty-roster/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/duty-roster/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/duty-roster/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/duty-roster/version-7-0.md) · Mon, 27 Jul, 2026
 
 ## FAQ (17) (27)
 
@@ -217,6 +319,31 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 7.0](help-library/faq/version-7-0.md) · Mon, 27 Jul, 2026
 - [Want to know about Smart Hospital Biometric Attendance App?](help-library/faq/want-to-know-about-smart-hospital-biometric-attendance-app.md) · Fri, 13 Sep, 2024
 - [What are the server requirements for installing or running Smart Hospital?](help-library/faq/what-are-the-server-requirements-for-installing-or-running-smart-hospital.md) · Mon, 18 Oct, 2021
+
+## Front CMS (8) (18)
+
+Website pages, banners, events, gallery and media manager.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About Front CMS](help-library/front-cms/about-front-cms.md) · Thu, 11 Nov, 2021
+- [About WhatsApp Messaging](help-library/front-cms/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How Media Manager works in Smart Hospital.](help-library/front-cms/how-media-manager-works-in-smart-hospital.md) · Thu, 11 Nov, 2021
+- [How to add an Event?](help-library/front-cms/how-to-add-an-event.md) · Thu, 11 Nov, 2021
+- [How to add banner image in Smart Hospital?](help-library/front-cms/how-to-add-banner-image-in-smart-hospital.md) · Thu, 11 Nov, 2021
+- [How to add Gallery in Smart Hospital?](help-library/front-cms/how-to-add-gallery-in-smart-hospital.md) · Thu, 11 Nov, 2021
+- [How to add menus in Smart Hospital?](help-library/front-cms/how-to-add-menus-in-smart-hospital.md) · Thu, 11 Nov, 2021
+- [How to add News in Smart Hospital?](help-library/front-cms/how-to-add-news-in-smart-hospital.md) · Thu, 11 Nov, 2021
+- [How to add Pages in Smart Hospital?](help-library/front-cms/how-to-add-pages-in-smart-hospital.md) · Thu, 11 Nov, 2021
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/front-cms/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/front-cms/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/front-cms/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [Version 1.0](help-library/front-cms/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/front-cms/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/front-cms/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/front-cms/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/front-cms/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/front-cms/version-7-0.md) · Mon, 27 Jul, 2026
 
 ## Front Office (7) (17)
 
@@ -314,6 +441,27 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/installation/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/installation/version-7-0.md) · Mon, 27 Jul, 2026
 
+## Inventory (4) (14)
+
+Items, stock, issue and return.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About Inventory.](help-library/inventory/about-inventory.md) · Tue, 02 Nov, 2021
+- [About WhatsApp Messaging](help-library/inventory/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How to add Item Stock?](help-library/inventory/how-to-add-item-stock.md) · Sun, 31 Oct, 2021
+- [How to add Item?](help-library/inventory/how-to-add-item.md) · Sun, 31 Oct, 2021
+- [How to check issue and return item?](help-library/inventory/how-to-check-issue-and-return-item.md) · Sun, 31 Oct, 2021
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/inventory/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/inventory/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/inventory/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [Version 1.0](help-library/inventory/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/inventory/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/inventory/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/inventory/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/inventory/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/inventory/version-7-0.md) · Mon, 27 Jul, 2026
+
 ## IPD - In Patient (19) (29)
 
 Admissions, vitals, obstetric history, BMI, overview and discharge.
@@ -350,6 +498,47 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/ipd-in-patient/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/ipd-in-patient/version-7-0.md) · Mon, 27 Jul, 2026
 
+## Live Consultation (3) (13)
+
+Zoom live consultations and live meetings.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About Live Consultation](help-library/live-consultation/about-live-consultation.md) · Thu, 11 Nov, 2021
+- [About WhatsApp Messaging](help-library/live-consultation/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How to add Live Consultation in Smart Hospital?](help-library/live-consultation/how-to-add-live-consultation-in-smart-hospital.md) · Mon, 08 Sep, 2025
+- [How to add Live Meetings in Smart Hospital?](help-library/live-consultation/how-to-add-live-meetings-in-smart-hospital.md) · Thu, 11 Nov, 2021
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/live-consultation/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/live-consultation/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/live-consultation/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [Version 1.0](help-library/live-consultation/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/live-consultation/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/live-consultation/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/live-consultation/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/live-consultation/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/live-consultation/version-7-0.md) · Mon, 27 Jul, 2026
+
+## Messaging (4) (14)
+
+Notice board, SMS, e-mail and patient credentials.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About WhatsApp Messaging](help-library/messaging/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How Notice Board works?](help-library/messaging/how-notice-board-works.md) · Mon, 01 Nov, 2021
+- [How send patient credential in Smart Hospital?](help-library/messaging/how-send-patient-credential-in-smart-hospital.md) · Fri, 30 Aug, 2024
+- [How send SMS in Smart Hospital?](help-library/messaging/how-send-sms-in-smart-hospital.md) · Mon, 01 Nov, 2021
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/messaging/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/messaging/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/messaging/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [How to send Email in Smart Hospital?](help-library/messaging/how-to-send-email-in-smart-hospital.md) · Mon, 01 Nov, 2021
+- [Version 1.0](help-library/messaging/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/messaging/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/messaging/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/messaging/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/messaging/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/messaging/version-7-0.md) · Mon, 27 Jul, 2026
+
 ## Miscellaneous (6) (16)
 
 Calendar, to-dos, chat and other utilities.
@@ -372,6 +561,30 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/miscellaneous/version-2-0-2.md) · Thu, 30 Jul, 2026
 - [Version 2.0](help-library/miscellaneous/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/miscellaneous/version-7-0.md) · Mon, 27 Jul, 2026
+
+## Multi Branch (7) (17)
+
+Adding, editing, switching and reporting across branches.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About Multi Branch](help-library/multi-branch/about-multi-branch.md) · Sat, 16 Aug, 2025
+- [About WhatsApp Messaging](help-library/multi-branch/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How to add the new branch in smart hospital home branch?](help-library/multi-branch/how-to-add-the-new-branch-in-smart-hospital-home-branch.md) · Sat, 16 Aug, 2025
+- [How to check Multi Branch overview?](help-library/multi-branch/how-to-check-multi-branch-overview.md) · Sat, 16 Aug, 2025
+- [How to check multi branch report in smart Hospital?](help-library/multi-branch/how-to-check-multi-branch-report-in-smart-hospital.md) · Sat, 16 Aug, 2025
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/multi-branch/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/multi-branch/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to delete the branch?](help-library/multi-branch/how-to-delete-the-branch.md) · Sat, 16 Aug, 2025
+- [How to edit a branch?](help-library/multi-branch/how-to-edit-a-branch.md) · Sat, 16 Aug, 2025
+- [How to enable WhatsApp for a Notification Event?](help-library/multi-branch/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [How to switch the branch?](help-library/multi-branch/how-to-switch-the-branch.md) · Sat, 16 Aug, 2025
+- [Version 1.0](help-library/multi-branch/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/multi-branch/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/multi-branch/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/multi-branch/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/multi-branch/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/multi-branch/version-7-0.md) · Mon, 27 Jul, 2026
 
 ## OPD - Out Patient (9) (19)
 
@@ -419,6 +632,33 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/pathology/version-2-0-2.md) · Thu, 30 Jul, 2026
 - [Version 2.0](help-library/pathology/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/pathology/version-7-0.md) · Mon, 27 Jul, 2026
+
+## Patient Panel (10) (20)
+
+The patient self-service portal (dashboard, appointments, OPD/IPD, bills, reports).
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About WhatsApp Messaging](help-library/patient-panel/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [Ambulance](help-library/patient-panel/ambulance.md) · Thu, 18 Nov, 2021
+- [Blood Bank](help-library/patient-panel/blood-bank-1.md) · Thu, 18 Nov, 2021
+- [How to add appointment from Patient panel?](help-library/patient-panel/how-to-add-appointment-from-patient-panel.md) · Sat, 02 Aug, 2025
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/patient-panel/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/patient-panel/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/patient-panel/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [IPD](help-library/patient-panel/ipd.md) · Thu, 18 Nov, 2021
+- [Live Consultation](help-library/patient-panel/live-consultation.md) · Thu, 18 Nov, 2021
+- [OPD](help-library/patient-panel/opd.md) · Thu, 18 Nov, 2021
+- [Pathology](help-library/patient-panel/pathology-1.md) · Thu, 18 Nov, 2021
+- [Patient Dashboard](help-library/patient-panel/patient-dashboard.md) · Fri, 01 Aug, 2025
+- [Pharmacy](help-library/patient-panel/pharmacy-1.md) · Fri, 01 Aug, 2025
+- [Radiology](help-library/patient-panel/radiology-1.md) · Thu, 18 Nov, 2021
+- [Version 1.0](help-library/patient-panel/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/patient-panel/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/patient-panel/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/patient-panel/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/patient-panel/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/patient-panel/version-7-0.md) · Mon, 27 Jul, 2026
 
 ## Pharmacy (6) (16)
 
@@ -484,6 +724,87 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/radiology/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/radiology/version-7-0.md) · Mon, 27 Jul, 2026
 
+## Referral (3) (13)
+
+Referral persons and commission payments.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About Referral.](help-library/referral/about-referral.md) · Thu, 11 Nov, 2021
+- [About WhatsApp Messaging](help-library/referral/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How to add Referral Payment?](help-library/referral/how-to-add-referral-payment.md) · Sun, 31 Oct, 2021
+- [How to add Referral Person?](help-library/referral/how-to-add-referral-person.md) · Sun, 31 Oct, 2021
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/referral/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/referral/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/referral/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [Version 1.0](help-library/referral/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/referral/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/referral/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/referral/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/referral/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/referral/version-7-0.md) · Mon, 27 Jul, 2026
+
+## Reports (44) (54)
+
+The report library — how to read and filter each report.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About WhatsApp Messaging](help-library/reports/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [All Transaction Report.](help-library/reports/all-transaction-report.md) · Fri, 01 Aug, 2025
+- [Ambulance Call Report.](help-library/reports/ambulance-call-report.md) · Fri, 29 Oct, 2021
+- [Appointment Report](help-library/reports/appointment-report.md) · Fri, 29 Oct, 2021
+- [Audit Trail Report](help-library/reports/audit-trail-report.md) · Fri, 24 May, 2024
+- [Birth Report](help-library/reports/birth-report.md) · Sat, 30 Oct, 2021
+- [Blood Donor Report](help-library/reports/blood-donor-report.md) · Sat, 30 Oct, 2021
+- [Blood Issue Report](help-library/reports/blood-issue-report.md) · Sat, 30 Oct, 2021
+- [Component Issue Report](help-library/reports/component-issue-report.md) · Sat, 30 Oct, 2021
+- [Daily Transaction Report](help-library/reports/daily-transaction-report.md) · Sat, 30 Oct, 2021
+- [Death Report](help-library/reports/death-report.md) · Sat, 30 Oct, 2021
+- [Email / SMS Log Report](help-library/reports/email-sms-log-report.md) · Sat, 30 Oct, 2021
+- [Expense Group Report](help-library/reports/expense-group-report.md) · Sat, 30 Oct, 2021
+- [Expense Report](help-library/reports/expense-report.md) · Sat, 30 Oct, 2021
+- [Expiry Medicine Report](help-library/reports/expiry-medicine-report.md) · Sat, 30 Oct, 2021
+- [How to check Pathology Balance Report?](help-library/reports/how-to-check-pathology-balance-report.md) · Sat, 16 Aug, 2025
+- [How to check Radiology Balance Report?](help-library/reports/how-to-check-radiology-balance-report.md) · Sat, 16 Aug, 2025
+- [How to checkBalance Amount Report?](help-library/reports/how-to-checkbalance-amount-report.md) · Sat, 16 Aug, 2025
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/reports/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/reports/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/reports/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [Income Group Report](help-library/reports/income-group-report.md) · Sat, 30 Oct, 2021
+- [Income Report](help-library/reports/income-report.md) · Sat, 30 Oct, 2021
+- [Inventory Issue Report](help-library/reports/inventory-issue-report.md) · Sat, 30 Oct, 2021
+- [Inventory Item report](help-library/reports/inventory-item-report.md) · Fri, 24 May, 2024
+- [Inventory Stock Report](help-library/reports/inventory-stock-report.md) · Sat, 30 Oct, 2021
+- [IPD Balance Report](help-library/reports/ipd-balance-report.md) · Sat, 30 Oct, 2021
+- [IPD Discharge Patient Report](help-library/reports/ipd-discharge-patient-report.md) · Thu, 23 May, 2024
+- [IPD Report](help-library/reports/ipd-report.md) · Sat, 30 Oct, 2021
+- [Live Consultation Report](help-library/reports/live-consultation-report.md) · Sat, 30 Oct, 2021
+- [Live Meeting Report](help-library/reports/live-meeting-report.md) · Sat, 30 Oct, 2021
+- [OPD Balance Report](help-library/reports/opd-balance-report.md) · Sat, 30 Oct, 2021
+- [OPD Discharge Patient Report](help-library/reports/opd-discharge-patient-report.md) · Sat, 30 Oct, 2021
+- [OPD Report](help-library/reports/opd-report.md) · Sat, 30 Oct, 2021
+- [OT Report](help-library/reports/ot-report.md) · Sat, 30 Oct, 2021
+- [Pathology Patient Report](help-library/reports/pathology-patient-report.md) · Sat, 30 Oct, 2021
+- [Patient Bill Report](help-library/reports/patient-bill-report.md) · Sat, 30 Oct, 2021
+- [Patient Login Credential Report](help-library/reports/patient-login-credential-report.md) · Fri, 24 May, 2024
+- [Patient Visit Report](help-library/reports/patient-visit-report.md) · Sat, 30 Oct, 2021
+- [Payroll Month Report](help-library/reports/payroll-month-report.md) · Sat, 30 Oct, 2021
+- [Payroll Report](help-library/reports/payroll-report.md) · Sat, 30 Oct, 2021
+- [Pharmacy Bill Report](help-library/reports/pharmacy-bill-report.md) · Thu, 23 May, 2024
+- [Radiology Patient Report](help-library/reports/radiology-patient-report.md) · Sat, 30 Oct, 2021
+- [Referral Report](help-library/reports/referral-report.md) · Thu, 23 May, 2024
+- [Staff Attendance Report](help-library/reports/staff-attendance-report.md) · Sat, 30 Oct, 2021
+- [Stock Report](help-library/reports/stock-report.md) · Sat, 16 Aug, 2025
+- [TPA Report](help-library/reports/tpa-report.md) · Fri, 01 Aug, 2025
+- [User Log Report](help-library/reports/user-log-report.md) · Sat, 30 Oct, 2021
+- [Version 1.0](help-library/reports/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/reports/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/reports/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/reports/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/reports/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/reports/version-7-0.md) · Mon, 27 Jul, 2026
+
 ## Setup & Configuration (22) (32)
 
 Master data: patient fields, charges, beds, print header/footer, front office.
@@ -522,6 +843,30 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 7.0](help-library/setup-configuration/version-7-0.md) · Mon, 27 Jul, 2026
 - [Zoom Setting](help-library/setup-configuration/zoom-setting.md) · Sat, 30 Oct, 2021
 - [Zoom Setup](help-library/setup-configuration/zoom-setup-smart-hospital.md) · Thu, 21 Nov, 2024
+
+## Smart Hospital(10) (19)
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About WhatsApp Messaging](help-library/smart-hospital/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/smart-hospital/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/smart-hospital/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/smart-hospital/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [Version 1.0](help-library/smart-hospital/version-1-0.md) · Thu, 21 Aug, 2025
+- [Version 1.0](help-library/smart-hospital/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/smart-hospital/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 1.1](help-library/smart-hospital/version-1-1.md) · Thu, 21 Aug, 2025
+- [Version 2.0](help-library/smart-hospital/version-2-0.md) · Thu, 21 Aug, 2025
+- [Version 2.0](help-library/smart-hospital/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/smart-hospital/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/smart-hospital/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 2.1](help-library/smart-hospital/version-2-1.md) · Thu, 21 Aug, 2025
+- [Version 3.0](help-library/smart-hospital/version-3-0.md) · Thu, 21 Aug, 2025
+- [Version 3.1](help-library/smart-hospital/version-3-1.md) · Thu, 21 Aug, 2025
+- [Version 4.0](help-library/smart-hospital/version-4-0.md) · Thu, 21 Aug, 2025
+- [Version 5.0](help-library/smart-hospital/version-5-0.md) · Thu, 21 Aug, 2025
+- [Version 6.0](help-library/smart-hospital/version-6-0.md) · Thu, 21 Aug, 2025
+- [Version 7.0](help-library/smart-hospital/version-7-0.md) · Mon, 27 Jul, 2026
 
 ## Survey Form (6) (16)
 
@@ -594,6 +939,65 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/system-update/version-2-0-2.md) · Thu, 30 Jul, 2026
 - [Version 2.0](help-library/system-update/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/system-update/version-7-0.md) · Mon, 27 Jul, 2026
+
+## TPA Management (2) (12)
+
+Insurance/TPA handling.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About TPA](help-library/tpa-management/about-tpa.md) · Wed, 10 Nov, 2021
+- [About WhatsApp Messaging](help-library/tpa-management/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/tpa-management/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/tpa-management/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/tpa-management/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [TPA Management](help-library/tpa-management/tpa-management.md) · Wed, 10 Nov, 2021
+- [Version 1.0](help-library/tpa-management/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/tpa-management/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/tpa-management/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/tpa-management/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/tpa-management/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/tpa-management/version-7-0.md) · Mon, 27 Jul, 2026
+
+## Two Factor Authentication (6) (16)
+
+Google Authenticator based 2FA setup for superadmin and staff.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About Two Factor Authentication](help-library/two-factor-authentication/about-two-factor-authentication.md) · Sat, 16 Aug, 2025
+- [About WhatsApp Messaging](help-library/two-factor-authentication/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How to check Two Factor Authentication working for superadmin in your smart Hospital?](help-library/two-factor-authentication/how-to-check-two-factor-authentication-working-for-superadmin-in-your-smart-hospital.md) · Sat, 16 Aug, 2025
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/two-factor-authentication/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/two-factor-authentication/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to delete the 2FA account for superadmin or staff?](help-library/two-factor-authentication/how-to-delete-the-2fa-account-for-superadmin-or-staff.md) · Sat, 16 Aug, 2025
+- [How to enable WhatsApp for a Notification Event?](help-library/two-factor-authentication/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [How to Install the Google Authenticator app on a mobile device?](help-library/two-factor-authentication/how-to-install-the-google-authenticator-app-on-a-mobile-device.md) · Sat, 16 Aug, 2025
+- [How to manually configure the key for superadmin and staff?](help-library/two-factor-authentication/how-to-manually-configure-the-key-for-superadmin-and-staff.md) · Sat, 16 Aug, 2025
+- [How to Setup 2FA?](help-library/two-factor-authentication/how-to-setup-2fa.md) · Sat, 16 Aug, 2025
+- [Version 1.0](help-library/two-factor-authentication/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/two-factor-authentication/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/two-factor-authentication/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/two-factor-authentication/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/two-factor-authentication/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/two-factor-authentication/version-7-0.md) · Mon, 27 Jul, 2026
+
+## WhatsApp Messaging (4) (10)
+
+WhatsApp Cloud API (Meta) and Twilio configuration, per-event enablement.
+
+_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+
+- [About WhatsApp Messaging](help-library/whatsapp-messaging/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Meta (Cloud API)?](help-library/whatsapp-messaging/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](help-library/whatsapp-messaging/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](help-library/whatsapp-messaging/how-to-enable-whatsapp-for-a-notification-event.md) · Sat, 25 Jul, 2026
+- [Version 1.0](help-library/whatsapp-messaging/version-1-0-6.md) · Thu, 30 Jul, 2026
+- [Version 1.0](help-library/whatsapp-messaging/version-1-0-5.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/whatsapp-messaging/version-2-0-3.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/whatsapp-messaging/version-2-0-2.md) · Thu, 30 Jul, 2026
+- [Version 2.0](help-library/whatsapp-messaging/version-2-0-1.md) · Thu, 30 Jul, 2026
+- [Version 7.0](help-library/whatsapp-messaging/version-7-0.md) · Mon, 27 Jul, 2026
 
 ---
 
