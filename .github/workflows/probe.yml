@@ -1,0 +1,22 @@
+name: probe
+on:
+  push:
+    branches: [ arena/ac321db7-dizihospital ]
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show environment
+        run: |
+          echo "runner online"; node -v; python3 -V
+          curl -sS -o /dev/null -w "demo-site-http:%{http_code}\n" https://demo.smart-hospital.in/site/login || true
+          date -u > .probe-stamp
+      - name: Commit stamp
+        run: |
+          git config user.name "capture-bot"; git config user.email "capture-bot@users.noreply.github.com"
+          git add .probe-stamp && git commit -m "chore: probe stamp" || echo "nothing to commit"
+          git push
