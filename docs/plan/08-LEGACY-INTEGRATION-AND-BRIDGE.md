@@ -34,6 +34,14 @@ ownership registry**.
 
 **A1 is the goal; A2 is the realistic default; A4 is a backfill tool, never a live feed.**
 
+**Vendor-cloud reality (O2 answered).** The instance is hosted by the vendor, so a "read replica" is not ours to
+configure. The request therefore asks for the practical form of A1:
+a **nightly logical dump** (`mysqldump --single-transaction --routines --triggers`, gzipped and encrypted) pushed
+to storage we control, with a **tunnelled read-only replica** as the preferred option if the vendor will support
+it. If each branch runs its own instance or its own tenant, the same mechanism is requested **per branch** and the
+extraction layer treats branch as a first-class dimension. Scheduled exports (A2) remain the fallback and the
+extract interface is written so the level can improve without touching a single mapping.
+
 ### Data-access addendum — the checklist to settle in week 1 (written, signed)
 
 1. **What**: exact tables/views/objects, and whether history (archived years) is included.
@@ -112,16 +120,19 @@ The single most important operational artefact during the transition. Kept at `d
 
 | Field | Meaning |
 |---|---|
-| Module | e.g. "OPD registration", "Pharmacy dispensing", "Lab results" |
-| Owning system | `legacy` / `new` (never both) |
+| Module × branch | the registry is a matrix: `OPD registration` × `Branch A / B / C`. Shared master data has a single hospital-wide row; everything clinical and financial has one row **per branch** |
+| Owning system | `legacy` / `new` (never both) — per matrix cell, so branch A can be on the new system while branch C is still legacy, on purpose |
 | Write-back | none / rung 2 / rung 3 / rung 4 / rung 5 — with the flow name |
-| Cutover date | the date ownership moved to the new system |
+| Cutover date | the date ownership moved to the new system *for that branch* |
+| Branch scope | which branches this cell covers (all branches for master data) |
 | Read source for the other side | extract + validation run ID, or "not visible" |
 | Retirement criteria | what must be true before the legacy module can be frozen (see `06` §6) |
 | Owner | named person accountable for parity and support |
 
-**Staff-facing rule:** a module is only "new" when its ownership row says `new` **and** the training for that
-module is complete. Anything else opens in the legacy system.
+**Staff-facing rule:** a module is only "new" for a branch when that branch's cell says `new` **and** that
+branch's training is complete. The launcher page is branch-aware, so a clerk in branch B never sees branch A's
+new-module link before their own wave — the fastest way to lose trust is to show people a screen their branch
+has not been trained on.
 
 ## 6. Reconciliation between two live systems
 
@@ -144,7 +155,8 @@ with the affected records enumerated before anyone reports a number upwards).
 2. **Freeze, then read-only** — at P9 the legacy instance stops accepting writes, runs read-only for two
    weeks, then is retained in an archive instance (vendor-hosted or a hospital VM, whichever the licence and
    the contract allow) for the retention period.
-3. **Take our own copy regardless of contract** — a complete, documented export: relational data as CSV +
+3. **Take our own copy regardless of contract** — with a vendor-hosted instance, this is not a precaution but
+   the only guarantee of access after the relationship ends. A complete, documented export: relational data as CSV +
    Parquet, documents/scans as original files with checksums, plus a rendered PDF of every printable record
    (bills, reports, certificates) because PDFs remain readable without any vendor software.
 4. **Prove the archive works** — an annual restore-and-read drill on a machine with no vendor software

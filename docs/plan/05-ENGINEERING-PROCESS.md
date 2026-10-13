@@ -86,6 +86,8 @@ script, reviewed by the privacy owner).
 
 * **Weekly release train** to production (Tuesday), hotfixes any day.
 * **Edge nodes are released, not deployed**: signed bundles published to the cloud tier, nodes pull and stage them, then apply in a maintenance window they choose (or on operator approval). A canary node in `edge-lab` takes every release first, and a node can roll back to the previous bundle on its own.
+* **Branches are provisioned, not installed by hand.** One scripted runbook covers node bootstrap, certificate issuance, node registration, master-data pull, printer/scanner configuration and smoke tests; it is rehearsed in `edge-lab` before every new branch and timed ("new branch in a day" is the goal). A branch rollout follows the same wave discipline as a module rollout, canary branch first.
+* **Schema and sync changes carry a version gate** so branches on different application versions during a staggered rollout still converge (`01` §5.2).
 * Standard flow: flag off in production → enable for internal → pilot wave → department → hospital-wide.
 * **Blue-green for the API**, rolling for the web. **Module rollback is an ownership action, not a routing trick**: the ownership registry row reverts to `legacy`, the module is hidden or shown read-only in the new UI, and staff are redirected (training cheat sheet includes this as "what to do if we go back").
 * **Freeze windows**: never during month-end billing close, audit periods, or major festivals without hospital approval.

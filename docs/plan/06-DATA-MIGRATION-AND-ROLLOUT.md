@@ -20,16 +20,21 @@ provably matches, and no module is ever irreversibly switched.
 6. **Freeze windows are short and scheduled** (typically 60–90 minutes at night, announced a week ahead) and are
    enforced **operationally**, because we cannot set a vendor-hosted module read-only at the database level:
    staff instructions, a supervisor at the desk, and a post-window delta sweep that catches stragglers.
-7. **The first question is always access.** What the vendor will actually give us (replica, exports, API, or
-   nothing) determines the extraction method, so the data-access addendum is a Phase 0 exit criterion.
+7. **The first question is always access.** What the vendor will actually give us (dump, replica, exports, API
+   or nothing) determines the extraction method, so the data-access addendum is a Phase 0 exit criterion
+   (O1 answered: nighttime logical dump requested; O2: the instance is vendor-hosted, so it must be contractually
+   delivered — we cannot take it).
+8. **Migration is per branch as well as per module.** Each (module × branch) cell has its own cutover, its own
+   reconciliation and its own sign-off, staggered 2–4 weeks apart. A branch that is not ready keeps legacy
+   ownership without blocking the others (`04` §1).
 
 ## 2. Data profiling (weeks 1–3, before any migration)
 
 | Activity | Output |
 |---|---|
 | **Access level confirmed in writing** (O1): replica, exports, API or none — with cadence, scope and change notice | signed data-access addendum (`08` §2) |
-| Row counts, growth rates and per-table quality profile for the whole schema | `docs/migration/01-profile.md` |
-| Duplicate patient analysis (same name + phone + DOB, blank MRNs, merged records) | duplicate list + merge plan |
+| Row counts, growth rates and per-table quality profile for the whole schema, **split by branch** (the legacy product is multi-branch, so branch attribution is a real column to verify rather than assume) | `docs/migration/01-profile.md` |
+| Duplicate patient analysis (same name + phone + DOB, blank MRNs, merged records) — **including the same person registered at more than one branch**, which multi-branch hospitals always have | duplicate list + merge plan, with a cross-branch section |
 | Referential integrity audit (orphan visits, bills without cases, results without orders) | fix plan for the hospital to run in legacy |
 | Free-text field audit (`known_allergies`, symptoms, notes) → structuring plan | mapping of free text to coded values |
 | Identifier audit — MRN numbering, invoice numbers, sample IDs, receipt numbers | rule book for continuity (numbers must never be reused) |
@@ -77,6 +82,11 @@ capture and the vendor's published documentation — never from vendor source co
 | IPD / ward | New module per ward; legacy stays for other wards; the bed board reads both during transition | none | per-ward ownership revert |
 | Reports | Rebuilt on new data; run side-by-side with legacy numbers for a month | none | n/a (read-only) |
 
+**Branches are independent cells.** Migrating branch B never re-opens a completed cell in branch A. The one
+exception is shared master data (charge master, catalogues, ICD-10), which is migrated once for the whole
+hospital and distributed to every branch through the cloud tier, because two divergent price lists would be a
+finance problem for years.
+
 **Read path for the other system.** While a module's ownership is transitioning, the system that does *not* own
 it shows a read-only projection fed by the bridge — so a clerk can always find the patient, the visit or the
 invoice, even when the record was created in the other system. Write actions on that projection are disabled and
@@ -85,6 +95,7 @@ labelled with where to go instead.
 ## 6. Cutover runbook (template, per module)
 
 ```
+scope     branch ___ · module ___ · window ___ (one cell of the module x branch matrix)
 T-7 days  freeze agreed; communications sent; rollback rehearsed on staging
 T-2 days  final dry run on a fresh production copy; reconciliation must be clean
 T-1 day   backups verified (legacy DB + files); restore drill evidence attached
@@ -94,9 +105,11 @@ T-0 22:05 legacy module instruction broadcast: stop creating records in this mod
 T-0 22:05 final delta extraction runs; extraction completeness proven by row counts + checksums
 T-0 22:30 delta apply + reconciliation; any record created after the freeze is captured by a second sweep
 T-0 22:45 smoke tests on real data: register → book → bill → print → result → look up a legacy record
-T-0 23:00 window closes; ownership registry row flips to `new`; legacy module becomes read-only for staff
+T-0 23:00 window closes; the matrix cell flips to `new` for this branch only; the legacy module becomes
+          read-only for this branch's staff (other branches are untouched)
 T+1 day   on-floor hypercare; hourly reconciliation; defect triage twice daily
-T+7 days  reconciliation clean 7 days running → declare the module migrated; legacy module hidden
+T+7 days  reconciliation clean 7 days running → declare the cell migrated; the legacy module is hidden for this
+          branch, and the next branch's cell is scheduled 2-4 weeks later
 ```
 
 **Rollback trigger**: any data loss, ledger mismatch, clinical error, unexplainable sync conflict, or

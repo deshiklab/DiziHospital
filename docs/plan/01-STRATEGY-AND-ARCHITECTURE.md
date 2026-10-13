@@ -85,8 +85,13 @@ is the only option that delivers a modern UI without requiring anyone's permissi
         │ Staff desktops · ward tablets · PWA with offline write queue (≤ 4 h)     │
         └──────────────────────────────────────────────────────────────────────────┘
 
-        Legacy Smart Hospital instance (vendor) — read by the bridge, shrinks module by module
+        Legacy Smart Hospital instance (vendor cloud) — read by the bridge, shrinks module by module
 ```
+
+**Multi-site (O3 = 2–3 branch hospitals).** The topologies above repeat per branch: every branch has its own
+edge node (authoritative for that branch's clinical work, working with its own WAN down), and the cloud tier is
+the single authority for master data, cross-branch visibility, consolidated reporting and off-site backup. See
+§5.7 for the rules that make that safe.
 
 **Which tier owns what**
 
@@ -182,12 +187,27 @@ times so nobody has to guess which system is authoritative.
 | External adapters | Lab analysers (HL7 v2 / ASTM), PACS (DICOMweb), payments (gateway + UPI), messaging (Meta WhatsApp Cloud API, Twilio, SMS gateway, SMTP), Zoom, biometric/QR attendance, e-signature |
 | Interoperability roadmap | FHIR R4 façade for Patient/Encounter/Observation/DiagnosticReport/Invoice; ABDM (ABHA) linking where the hospital operates in India |
 
-### 5.6 Non-functional requirements (enforced in CI or by drill)
+### 5.7 Multi-site rules (O3 answered: 2–3 branches)
+
+| Concern | Rule |
+|---|---|
+| **Patient identity** | One hospital-wide patient master, held in the cloud and replicated read-only to every branch. Registration happens locally; the cloud assigns the permanent MRN from the branch's pre-allocated block, and duplicates across branches are detected and queued for merge review (they exist today — profiling must quantify them, `06` §2) |
+| **Branch-scoped access** | Staff see their own branch by default. Cross-branch access requires an explicit role and a stated reason, is logged, and is reviewable; Postgres row-level security backs the API policy |
+| **Number blocks** | Invoice, receipt, sample, accession and admission numbers are pre-allocated **per branch**, so no two branches can mint the same number while offline |
+| **Cross-branch reads** | Search can find a patient, visit or invoice from another branch, with staleness visible ("as of 14:05") because the read comes from a replica, not the branch's live node |
+| **Clinical flows across branches** | Referrals, shared consultants (one schedule across branches), inter-branch stock transfers (explicit transfer records with in-transit state) and patient transfers are first-class features, not workarounds |
+| **Charge masters** | One hospital-wide catalogue with per-branch overrides — never two divergent price lists that finance has to reconcile by hand |
+| **Reporting** | Consolidated across branches in the cloud warehouse, plus per-branch P&L; a branch reports from its own data even when the cloud is unreachable (local view), and the cloud numbers win after sync |
+| **Provisioning** | Adding or rebuilding a branch is a scripted process: node bootstrap, certificate issuance, node registration, master-data pull, hardware and printer configuration, smoke tests — documented as a runbook and rehearsed in `edge-lab` (`05` §6) |
+| **Rollout order** | Module cutovers run **per branch**: a module is migrated branch A → B → C, 2–4 weeks apart, with its own reconciliation and sign-off. One branch can lag without blocking the others, and the ownership registry tracks each cell (`08` §5) |
+
+### 5.8 Non-functional requirements (enforced in CI or by drill)
 
 | Area | Requirement |
 |---|---|
 | Performance | p95 API < 300 ms server time on the LAN; LCP < 2 s; grids first page < 1 s for 100 k rows; reports < 5 s (materialised beyond) |
-| Availability | 99.5 % during OPD hours; **clinical functions keep working with the WAN uplink down** |
+| Availability | 99.5 % during OPD hours; **clinical functions keep working with the WAN uplink down** at every branch |
+| Multi-site | A branch keeps operating when the cloud or another branch is unreachable; cross-branch reads are labelled with their age; no cross-branch write ever silently overwrites a local record |
 | Offline | Ward PWA queues writes for ≤ 4 h and reconciles without loss; every queued write is visible to the user with its state |
 | Sync | Lag p95 < 60 s while online; drained within 15 min of connectivity returning; zero unreconciled records; conflict queue cleared within one shift |
 | Durability | RPO 15 min (WAL shipping locally + off-site), RTO 1 h; quarterly restore drill **and** annual archive-readiness drill, evidence stored in the repo |

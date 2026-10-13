@@ -52,3 +52,25 @@ reporting. Ward tablets lose Wi-Fi intermittently even when the LAN is fine.
   and a documented node-rebuild runbook; sync metrics on the same dashboard as uptime.
 * **Explicitly rejected:** cloud-only (fails the internet-outage requirement) and LAN-only (no remote access,
   portal or off-site backup).
+
+## Revision 2026-10-14 — multi-site (O3 = 2–3 branch hospitals)
+
+The decision above stands; the topology is repeated **per branch** rather than assumed single-site.
+
+* **Every branch runs its own edge node** and is authoritative for that branch's clinical work, so a branch
+  keeps operating when the cloud or another branch is unreachable (its own WAN included).
+* **The cloud is the master-data and identity authority** for the whole hospital: patient master, charge
+  catalogue, users/roles, branches and cross-branch reporting. Master data is distributed to branches as signed
+  read-only packages; master-data writes are cloud-authoritative (as already decided for master data).
+* **Numbering is per branch** (invoice, receipt, sample, accession, admission), so offline creation at two
+  branches can never collide.
+* **Cross-branch reads are replica reads** and are labelled with their age; a cross-branch write is never a
+  silent local edit — it goes through the owning branch's node or the cloud, whichever owns the entity.
+* **Branch-scoped access** is enforced in the API and backed by Postgres row-level security; cross-branch access
+  needs an explicit role and a stated reason, and is audited.
+* **Rollout is per branch** (staggered 2–4 weeks), which also means the sync and conflict rules must tolerate
+  branches running *different application versions* during a rollout window — hence the change-feed version gate
+  already required above.
+* **Provisioning is code**: bootstrap, certificates, registration, master-data pull, printer/hardware config and
+  smoke tests are one documented, rehearsed runbook (`05` §6), because with three branches a manual install is
+  three different installations.

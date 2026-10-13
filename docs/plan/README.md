@@ -27,7 +27,8 @@ module's parity is proven and the module is signed off as migrated.
 | 7 | [`07-FIRST-30-DAYS.md`](07-FIRST-30-DAYS.md) | start tomorrow: week-by-week kickoff with concrete tickets |
 | 8 | [`08-LEGACY-INTEGRATION-AND-BRIDGE.md`](08-LEGACY-INTEGRATION-AND-BRIDGE.md) | get data out of a system we cannot modify: access options, read/write bridges, single-writer rule, archival and vendor exit |
 | 9 | [`adr/`](adr/) | see the architecture decision records (0001, 0005, 0006 and 0007 revised for D1/D4) |
-| 10 | [`design-tokens.json`](design-tokens.json) | wire the design tokens into code generation |
+| 10 | [`09-EXECUTION-BACKLOG-P0.md`](09-EXECUTION-BACKLOG-P0.md) | start work today: P0 broken into issue-ready tickets with owners, estimates and acceptance tests |
+| 11 | [`design-tokens.json`](design-tokens.json) | wire the design tokens into code generation |
 
 ## The plan in one page
 
@@ -94,14 +95,22 @@ legacy system.
 | **D4** Hosting | **Hybrid: PWA + hospital LAN + cloud** | New hub-and-edge topology, a **sync engine** with per-entity conflict policy, pre-allocated ID blocks so offline numbers never collide, LAN-authoritative clinical operation, cloud for remote access/portal/analytics/off-site backup. New ADR 0007. Postgres becomes the primary OLTP engine because the sync and reporting paths need it (ADR 0006 supersedes ADR 0004). Budget and calendar revised. |
 | **D5** Team shape | **Ok** | Team topology confirmed in `05`; start date still open (see O4). |
 
-## Still open — these block the Phase 0 exit criteria
+## Confirmed with the sponsor (2026-10-14)
 
-| # | Question | Why it matters | Default if unanswered |
+| # | Question | Answer | What it changed |
 |---|---|---|---|
-| **O1** | What data access will the vendor grant on the legacy instance — read replica/dump, scheduled exports, an API, or nothing? | Determines whether we get history at all, and whether the bridge is a real ETL or repeated report exports. **Highest-risk item in the programme.** | Assume scheduled exports; build the extract layer so a better access level plugs in later |
-| **O2** | Where does the legacy instance actually run today, and who holds its database credentials? | A hospital server we control makes extraction trivial; a vendor cloud makes it a commercial negotiation | Assume vendor-hosted, treat access as a contract item |
-| **O3** | How many locations and concurrent users must the new system serve? | Sizes the edge appliance, the sync topology (one edge vs many) and the pilot waves | Assume one hospital site, ≤ 150 concurrent staff, one edge node + cloud |
-| **O4** | Start date for Phase 0, and when does hiring open? | Converts the relative calendar into dates | Assume start as soon as O1 and the hardware lead time allow |
+| **O1** | Data access on the legacy instance | **Read-only replica or dump requested** | The bridge is designed for full-fidelity extraction. Because the legacy instance is vendor-hosted (O2), the request specifies the practical form of A1: a **nightly logical dump delivered to storage we control**, with a tunnelled read-only replica as the better alternative if the vendor offers it |
+| **O2** | Where the legacy system runs | **Vendor-hosted cloud** | We cannot lock their database, so cutover freezes are **operational and supervised** (`06` §6); the legacy instance's availability is outside our control, so our own archive copy and the contractual exit clause carry more weight (`08` §7) |
+| **O3** | Locations and load | **2–3 branch hospitals** | The platform is designed multi-site from day one: cloud tier holds master data and cross-branch visibility, **each branch gets its own edge node** (authoritative for that branch's clinical work), number blocks are per branch, access is branch-scoped with audited cross-branch reads, and the ownership registry becomes a **module × branch matrix**. Rollout goes **branch by branch** — our best de-risking lever. Budget and calendar revised (`04` §6) |
+| **O4** | Start date | **Immediately** | The 30-day kickoff in `07` starts at week 0, and the P0 work is broken into issue-ready tickets in [`09-EXECUTION-BACKLOG-P0.md`](09-EXECUTION-BACKLOG-P0.md) |
+
+### Still open (smaller, none of them block week 1)
+
+| # | Question | Owner | Default |
+|---|---|---|---|
+| **O5** | Delivery mechanism and first date for the extract (dump location, cadence, encryption, credentials) | sponsor + vendor | nightly dump to our S3-compatible bucket, 02:00 hospital time |
+| **O6** | Exact number of branches and which one pilots first | sponsor + clinical owner | smallest branch with an enthusiastic team, week 2 |
+| **O7** | Per-branch vendor inventory: lab analysers, PACS, payment providers, printers, biometric devices | hospital IT survey | assume the branch pilot needs the same list as the main site |
 
 ## The rule that keeps this safe
 

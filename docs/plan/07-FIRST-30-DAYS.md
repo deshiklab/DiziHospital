@@ -12,7 +12,7 @@ Two things start in week 1 because they cannot be fixed later by working harder:
 | # | Task | Owner | Artefact |
 |---|---|---|---|
 | 1 | Confirm decisions D1–D5 and the four open questions O1–O4 | sponsor + tech lead | updated `docs/plan/README.md` |
-| 2 | **Send the vendor data-access request** (scope, transport, cadence, checksums, change notice, exit clause) and open the commercial conversation | sponsor | draft addendum per `08` §2 |
+| 2 | **Send the vendor data-access request** (scope, transport, cadence, checksums, change notice, exit clause) — for a vendor-hosted instance this asks for a nightly encrypted dump per branch to storage we control | sponsor | draft addendum per `08` §2 |
 | 3 | **Agree the edge node hardware standard** and place the order (CPU, RAM, NVMe RAID1, redundant PSU, UPS, NICs, IPMI) | tech lead + hospital IT | `docs/research/edge-node-spec.md` + purchase order |
 | 4 | Team formed, roles named, access granted (repo, vendor demo, hospital network, printer room) | tech lead | `docs/plan/team.md` |
 | 5 | Buy reference hardware: 1 thermal receipt printer, 1 A4 laser, 1 label printer, 1 barcode scanner, 2 tablets | hospital IT | inventory in `docs/research/hardware.md` |
@@ -30,7 +30,8 @@ Two things start in week 1 because they cannot be fixed later by working harder:
 | 6 | Monorepo scaffolding: `apps/web`, `apps/api`, `apps/worker`, `apps/edge`, `packages/{ui,tokens,contracts}`, `services/{sync,bridge,adapters}`, `infra`, `tools` — **no `legacy/` directory** | platform | PR merged |
 | 7 | Docker Compose dev environment (PostgreSQL 18, Redis, Keycloak, MinIO, MailHog) with one-command `make up` | platform | `infra/README.md` |
 | 8 | CI pipeline: lint, typecheck, test, build, preview deployment, clean-room scan, link and image checks | platform | green CI badge |
-| 9 | **Module ownership registry v0** — every module, current owner, planned phase | tech lead + BA | `docs/migration/ownership.md` |
+| 9 | **Branch inventory and pilot branch selection** (O6): sites, headcount, systems in use, internet quality per site, which branch pilots first and why | sponsor + clinical lead | `docs/research/branches.md` |
+| 10 | **Ownership matrix v0** — module × branch, current owner and planned phase per cell | tech lead + BA | `docs/migration/ownership.md` |
 
 **Day-7 demo:** `make up` boots the whole stack; a preview URL shows an empty AppShell deployed automatically;
 the vendor access request is sent and the edge node is on order.
@@ -62,6 +63,7 @@ watch two nodes sync a change and resolve an injected conflict, and see a nightl
 | 4 | **Read-only projection of legacy-owned modules** in the patient profile (visits, invoices) with "edit in the legacy system" affordances | web | design review passed |
 | 5 | Legacy launcher page driven by the ownership registry, so staff always know which system to open | web | deployed in staging |
 | 6 | Print: registration slip + ID card, tested on the reference A4 and thermal printers, **including offline printing** | web | printed samples photographed |
+| 6b | Branch-aware launcher page: each staff member sees only their branch's current ownership state | web | deployed in staging |
 | 7 | Edge node arrives → install the bundle, run the health checks, register it in the cloud tier | platform + ops | `docs/runbooks/edge-install.md` |
 | 8 | Accessibility pass on the above (axe 0 critical, keyboard-only journey) | QA | report in PR |
 
@@ -78,7 +80,7 @@ the new profile — then unplug the network and do it again with the writes queu
 | 4 | **Outage drill #1** in `edge-lab`: pull the uplink for one hour, confirm nothing is lost, queue drains, conflicts clear, then rehearse a node rebuild from backup | platform + QA | `docs/runbooks/outage-drill-01.md` |
 | 5 | Reconciliation harness: nightly counts, sums, per-status diffs across both systems | data engineer | first nightly report |
 | 6 | Pilot pack: cheat sheet (bn/en), 30-minute training, rollback runbook, hypercare rota, ownership registry published to staff | BA + designer | `docs/releases/p1-pilot.md` |
-| 7 | Usability test #1 (5 users per role) against the baseline; publish findings | designer | `docs/research/usability-01.md` |
+| 7 | Usability test #1 (5 users per role, in the pilot branch) against the baseline; publish findings | designer | `docs/research/usability-01.md` |
 
 **Day-30 demo:** a receptionist books an appointment end-to-end, the patient gets a WhatsApp confirmation, the
 nightly reconciliation is clean, the outage drill passed, and the pilot date for P1 is agreed with the clinical
@@ -102,7 +104,8 @@ owner.
 | Risk | Checkpoint | If it fails |
 |---|---|---|
 | **Vendor will not grant usable data access** | Week 1 — written answer or escalation path agreed | Escalate to the sponsor; fall back to exports/UI extraction for key entities; make an explicit written decision on going forward without full history before P0 exits |
-| **Edge node hardware lead time** | Week 3 — node on site | Continue on the virtual edge in `edge-lab`; pilot on a temporary server with the same bundle; do not start P1 without a real node |
+| **Edge node hardware lead time** | Week 3 — first branch's node on site | Continue on the virtual edge in `edge-lab`; pilot on a temporary server with the same bundle; do not start P1 without a real node |
+| Second/third branch diverge in process or hardware | Week 4 — branch inventory complete (O6) | Treat branch differences as configuration, not code; if a branch needs a genuinely different workflow, it becomes a documented requirement in that branch's wave |
 | Legacy data does not restore or export cleanly | Week 2 — extraction POC green | Narrow the initial scope to master data + patients; document the gap; agree the archive approach with legal |
 | No clinician available for sign-off | Day 3 — clinical owner named and calendared weekly | Escalate to the sponsor for a named deputy; block P1 pilot date until resolved |
 | Keycloak vs legacy password hashes | Day 11 — migration path decided | Default: dual-read for 30 days then assisted reset at the pilot desk |
