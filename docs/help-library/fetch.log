@@ -23,11 +23,21 @@ categories: 39
 [22/39] QR Code Attendance (3): 13 articles
 [23/39] Survey Form (6): 16 articles
 [24/39] WhatsApp Messaging (4): 10 articles
-Traceback (most recent call last):
-  File "/home/runner/work/DiziHospital/DiziHospital/tools/docs/fetch_help.py", line 368, in <module>
-    sys.exit(main())
-             ^^^^^^
-  File "/home/runner/work/DiziHospital/DiziHospital/tools/docs/fetch_help.py", line 340, in main
-    with open(os.path.join(OUT, cat_entry['slug'], '_index.md'), 'w') as f:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/DiziHospital/DiziHospital/docs/help-library/whatsapp-messaging/_index.md'
+[25/39] Duty Roster (4): 14 articles
+[26/39] Annual Calendar (4): 14 articles
+[27/39] Multi Branch (7): 17 articles
+[28/39] Referral (3): 13 articles
+[29/39] TPA Management (2): 12 articles
+[30/39] Messaging (4): 14 articles
+[31/39] Two Factor Authentication (6): 16 articles
+[32/39] Inventory (4): 14 articles
+[33/39] Download Center (3): 13 articles
+[34/39] Certificate (7): 17 articles
+[35/39] Front CMS (8): 18 articles
+[36/39] Live Consultation (3): 13 articles
+[37/39] Reports (44): 54 articles
+[38/39] Patient Panel (10): 20 articles
+[39/39] Smart Hospital(10): 19 articles
+
+DONE categories=39 articles=686 images=909 failed=0
+unique failures: 0

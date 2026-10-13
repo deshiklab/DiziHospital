@@ -1,0 +1,58 @@
+# Reports (44)
+
+Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support
+
+- [Stock Report](stock-report.md) — Sat, 16 Aug, 2025
+- [How to check Pathology Balance Report?](how-to-check-pathology-balance-report.md) — Sat, 16 Aug, 2025
+- [How to check Radiology Balance Report?](how-to-check-radiology-balance-report.md) — Sat, 16 Aug, 2025
+- [How to checkBalance Amount Report?](how-to-checkbalance-amount-report.md) — Sat, 16 Aug, 2025
+- [Daily Transaction Report](daily-transaction-report.md) — Sat, 30 Oct, 2021
+- [All Transaction Report.](all-transaction-report.md) — Fri, 01 Aug, 2025
+- [Appointment Report](appointment-report.md) — Fri, 29 Oct, 2021
+- [OPD Report](opd-report.md) — Sat, 30 Oct, 2021
+- [IPD Report](ipd-report.md) — Sat, 30 Oct, 2021
+- [OPD Balance Report](opd-balance-report.md) — Sat, 30 Oct, 2021
+- [IPD Balance Report](ipd-balance-report.md) — Sat, 30 Oct, 2021
+- [OPD Discharge Patient Report](opd-discharge-patient-report.md) — Sat, 30 Oct, 2021
+- [IPD Discharge Patient Report](ipd-discharge-patient-report.md) — Thu, 23 May, 2024
+- [Pharmacy Bill Report](pharmacy-bill-report.md) — Thu, 23 May, 2024
+- [Expiry Medicine Report](expiry-medicine-report.md) — Sat, 30 Oct, 2021
+- [Pathology Patient Report](pathology-patient-report.md) — Sat, 30 Oct, 2021
+- [Radiology Patient Report](radiology-patient-report.md) — Sat, 30 Oct, 2021
+- [OT Report](ot-report.md) — Sat, 30 Oct, 2021
+- [Blood Issue Report](blood-issue-report.md) — Sat, 30 Oct, 2021
+- [Component Issue Report](component-issue-report.md) — Sat, 30 Oct, 2021
+- [Blood Donor Report](blood-donor-report.md) — Sat, 30 Oct, 2021
+- [Live Consultation Report](live-consultation-report.md) — Sat, 30 Oct, 2021
+- [Live Meeting Report](live-meeting-report.md) — Sat, 30 Oct, 2021
+- [TPA Report](tpa-report.md) — Fri, 01 Aug, 2025
+- [Income Report](income-report.md) — Sat, 30 Oct, 2021
+- [Income Group Report](income-group-report.md) — Sat, 30 Oct, 2021
+- [Expense Report](expense-report.md) — Sat, 30 Oct, 2021
+- [Expense Group Report](expense-group-report.md) — Sat, 30 Oct, 2021
+- [Ambulance Call Report.](ambulance-call-report.md) — Fri, 29 Oct, 2021
+- [Birth Report](birth-report.md) — Sat, 30 Oct, 2021
+- [Death Report](death-report.md) — Sat, 30 Oct, 2021
+- [Payroll Month Report](payroll-month-report.md) — Sat, 30 Oct, 2021
+- [Payroll Report](payroll-report.md) — Sat, 30 Oct, 2021
+- [Staff Attendance Report](staff-attendance-report.md) — Sat, 30 Oct, 2021
+- [User Log Report](user-log-report.md) — Sat, 30 Oct, 2021
+- [Patient Login Credential Report](patient-login-credential-report.md) — Fri, 24 May, 2024
+- [Email / SMS Log Report](email-sms-log-report.md) — Sat, 30 Oct, 2021
+- [Inventory Stock Report](inventory-stock-report.md) — Sat, 30 Oct, 2021
+- [Inventory Item report](inventory-item-report.md) — Fri, 24 May, 2024
+- [Inventory Issue Report](inventory-issue-report.md) — Sat, 30 Oct, 2021
+- [Audit Trail Report](audit-trail-report.md) — Fri, 24 May, 2024
+- [Patient Visit Report](patient-visit-report.md) — Sat, 30 Oct, 2021
+- [Patient Bill Report](patient-bill-report.md) — Sat, 30 Oct, 2021
+- [Referral Report](referral-report.md) — Thu, 23 May, 2024
+- [Version 1.0](../known-issues/version-1-0-6.md) — Thu, 30 Jul, 2026
+- [Version 1.0](../known-issues/version-1-0-5.md) — Thu, 30 Jul, 2026
+- [Version 2.0](../known-issues/version-2-0-3.md) — Thu, 30 Jul, 2026
+- [Version 2.0](../known-issues/version-2-0-2.md) — Thu, 30 Jul, 2026
+- [Version 2.0](../known-issues/version-2-0-1.md) — Thu, 30 Jul, 2026
+- [Version 7.0](../known-issues/version-7-0.md) — Mon, 27 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](../known-issues/how-to-enable-whatsapp-for-a-notification-event.md) — Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](../known-issues/how-to-configure-whatsapp-using-twilio.md) — Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Meta (Cloud API)?](../known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md) — Sat, 25 Jul, 2026
+- [About WhatsApp Messaging](../known-issues/about-whatsapp-messaging.md) — Sat, 25 Jul, 2026
