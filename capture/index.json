@@ -23202,5 +23202,4394 @@
    ],
    "hasChart": false
   }
+ },
+ {
+  "id": "061-setup-operations",
+  "label": "Setup › Operations",
+  "url": "https://demo.smart-hospital.in/admin/operationtheatre/index",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/operationtheatre/index",
+   "title": "Smart Hospital & Research Center · Smart Hospital",
+   "pageTitle": "Operation List",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Operation List",
+    "Add Operation",
+    "Edit Operation",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/operationtheatre/add_multiple_addoperation",
+     "method": "post",
+     "name": "form_add_multiple",
+     "fields": [
+      {
+       "label": "Operation Name",
+       "name": "operation_name_1",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "category_1",
+       "name": "category_1",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select",
+        "ENT and Oral Surgery",
+        "Gynaecology",
+        "Ophthalmology",
+        "Orthopedic Surgery",
+        "Plastic Surgery",
+        "Thoracic Surgery",
+        "Thoracic Surgery",
+        "Urology"
+       ]
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/operationtheatre/edit",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Operation Name",
+       "name": "edit_operation_name",
+       "type": "input",
+       "required": false
+      },
+      {
+       "label": "Category",
+       "name": "edit_category",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select",
+        "ENT and Oral Surgery",
+        "Gynaecology",
+        "Ophthalmology",
+        "Orthopedic Surgery",
+        "Plastic Surgery",
+        "Thoracic Surgery",
+        "Thoracic Surgery",
+        "Urology"
+       ]
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [
+    {
+     "id": "DataTables_Table_0",
+     "cls": "table table-hover table-striped table-bordered example setup-operation-fixed dat",
+     "rows": 9,
+     "columns": [
+      "Name",
+      "Category",
+      "Action"
+     ],
+     "sample": [
+      [
+       "Facelift Surgery",
+       "Plastic Surgery",
+       ""
+      ],
+      [
+       "Tooth extraction",
+       "ENT and Oral Surgery",
+       ""
+      ]
+     ]
+    },
+    {
+     "id": "tableID_vitals",
+     "cls": "table table-striped table-bordered table-hover mb-0",
+     "rows": 2,
+     "columns": [
+      "Operation Name *",
+      "Category *",
+      ""
+     ],
+     "sample": [
+      [
+       "",
+       "SelectENT and Oral SurgeryGynaecologyOph",
+       ""
+      ]
+     ]
+    }
+   ],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Add Operation",
+     "href": "",
+     "target": "",
+     "onclick": "addModal()"
+    },
+    {
+     "text": "Add",
+     "href": "",
+     "target": "",
+     "onclick": "addrow()"
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "DataTables_Table_0_length",
+    "Operation Name",
+    "category_1",
+    "edit_category",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Operation List Add Operation"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "062-setup-pharmacy",
+  "label": "Setup › Pharmacy",
+  "url": "https://demo.smart-hospital.in/admin/medicinecategory/medicine",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/medicinecategory/medicine",
+   "title": "Add Medicine Category · Smart Hospital",
+   "pageTitle": "Medicine Category List",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Medicine Category List",
+    "Add Medicine Category",
+    "Edit Medicine Category",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/medicinecategory/add",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Category Name",
+       "name": "medicine_category",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/medicinecategory/add",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Category Name",
+       "name": "medicine_category",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [
+    {
+     "id": "DataTables_Table_0",
+     "cls": "table table-striped table-bordered table-hover example dataTable no-footer",
+     "rows": 14,
+     "columns": [
+      "Category Name",
+      "Action"
+     ],
+     "sample": [
+      [
+       "Syrup",
+       ""
+      ],
+      [
+       "Capsule",
+       ""
+      ]
+     ]
+    }
+   ],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Add Medicine Category",
+     "href": "",
+     "target": "#myModal",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "DataTables_Table_0_length",
+    "medicine_category",
+    "medicine_category",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Medicine Category List Add Medicine Category"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "063-setup-pathology",
+  "label": "Setup › Pathology",
+  "url": "https://demo.smart-hospital.in/admin/pathologycategory/addcategory",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/pathologycategory/addcategory",
+   "title": "Add Pathology Categories · Smart Hospital",
+   "pageTitle": "Pathology Category List",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Pathology Category List",
+    "Add Pathology Category",
+    "Edit Pathology Category",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/pathologycategory/add",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Category Name",
+       "name": "category_name",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/pathologycategory/add",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Category Name",
+       "name": "category_name",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [
+    {
+     "id": "DataTables_Table_0",
+     "cls": "table table-striped table-bordered table-hover example setup-patho-category-fixe",
+     "rows": 7,
+     "columns": [
+      "Category Name",
+      "Action"
+     ],
+     "sample": [
+      [
+       "Clinical Microbiology",
+       ""
+      ],
+      [
+       "Clinical Chemistry",
+       ""
+      ]
+     ]
+    }
+   ],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Add Pathology Category",
+     "href": "",
+     "target": "#myModal",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "DataTables_Table_0_length",
+    "category_name",
+    "category_name",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Pathology Category List Add Pathology Category"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "064-setup-radiology",
+  "label": "Setup › Radiology",
+  "url": "https://demo.smart-hospital.in/admin/lab/addlab",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/lab/addlab",
+   "title": "Add Lab · Smart Hospital",
+   "pageTitle": "Radiology Category List",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Radiology Category List",
+    "Add Radiology Category",
+    "Edit Radiology Category",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/lab/add",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Category Name",
+       "name": "lab_name",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/lab/add",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Category Name",
+       "name": "lab_name",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [
+    {
+     "id": "DataTables_Table_0",
+     "cls": "table table-striped table-bordered table-hover example setup-radio-category-fixe",
+     "rows": 11,
+     "columns": [
+      "Category Name",
+      "Action"
+     ],
+     "sample": [
+      [
+       "X-RAY CHEST PA VIEW",
+       ""
+      ],
+      [
+       "X-RAY PNS (WATER'S VIEW)",
+       ""
+      ]
+     ]
+    }
+   ],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Add Radiology Category",
+     "href": "",
+     "target": "#myModal",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "DataTables_Table_0_length",
+    "lab_name",
+    "lab_name",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Radiology Category List Add Radiology Category"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "065-setup-blood-bank",
+  "label": "Setup › Blood Bank",
+  "url": "https://demo.smart-hospital.in/admin/bloodbank/products",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/bloodbank/products",
+   "title": "Smart Hospital & Research Center · Smart Hospital",
+   "pageTitle": "Product List",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Product List",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/bloodbank/add_product",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Type",
+       "name": "type",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select",
+        "Blood Group",
+        "Component"
+       ]
+      },
+      {
+       "label": "Name",
+       "name": "name",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [
+    {
+     "id": "DataTables_Table_0",
+     "cls": "table table-striped table-bordered table-hover ajaxlist dataTable no-footer",
+     "rows": 15,
+     "columns": [
+      "Name",
+      "Type",
+      "Action"
+     ],
+     "sample": [
+      [
+       "Cryo",
+       "Component",
+       ""
+      ],
+      [
+       "Red Cells",
+       "Component",
+       ""
+      ]
+     ]
+    }
+   ],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Add Products",
+     "href": "",
+     "target": "",
+     "onclick": "add()"
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "DataTables_Table_0_length",
+    "type",
+    "name",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Product List Add Products"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "066-setup-symptoms",
+  "label": "Setup › Symptoms",
+  "url": "https://demo.smart-hospital.in/admin/symptoms",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/symptoms",
+   "title": "Symptoms Head List · Smart Hospital",
+   "pageTitle": "Symptoms Head List",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Symptoms Head List",
+    "Add Symptoms Head",
+    "Edit Symptoms Head",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/symptoms/add",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Symptoms Head *",
+       "name": "symptoms_title",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Symptoms Type *",
+       "name": "type",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select",
+        "Eating or weight problems",
+        "Emotional problems",
+        "Muscle or joint problems",
+        "Skin problems",
+        "Bladder problems",
+        "Stomach problems",
+        "Lung problems"
+       ]
+      },
+      {
+       "label": "Description",
+       "name": "description",
+       "type": "textarea",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/symptoms/edit",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Symptoms Head *",
+       "name": "symptoms_title",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Symptoms Type *",
+       "name": "type",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select",
+        "Eating or weight problems",
+        "Emotional problems",
+        "Muscle or joint problems",
+        "Skin problems",
+        "Bladder problems",
+        "Stomach problems",
+        "Lung problems"
+       ]
+      },
+      {
+       "label": "Description",
+       "name": "description",
+       "type": "textarea",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [
+    {
+     "id": "DataTables_Table_0",
+     "cls": "table table-striped table-bordered table-hover example setup-symptoms-head-fixed",
+     "rows": 8,
+     "columns": [
+      "Symptoms Head",
+      "Symptoms Type",
+      "Symptoms Description",
+      "Action"
+     ],
+     "sample": [
+      [
+       "Thirst",
+       "Eating or weight problems",
+       "Thirst is the feeling of needing to drin",
+       ""
+      ],
+      [
+       "Feeling sad or down",
+       "Emotional problems",
+       "Personality change in a way that seems d",
+       ""
+      ]
+     ]
+    }
+   ],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Add Symptoms Head",
+     "href": "",
+     "target": "#myModal",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "DataTables_Table_0_length",
+    "symptoms_title",
+    "type",
+    "symptoms_title",
+    "type",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Symptoms Head List Add Symptoms Head"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "067-setup-icd-10",
+  "label": "Setup › ICD-10",
+  "url": "https://demo.smart-hospital.in/admin/icd10",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/icd10",
+   "title": "ICD-10 Codes · Smart Hospital",
+   "pageTitle": "ICD-10 Codes List",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "ICD-10 Codes List",
+    "Add ICD Code",
+    "Edit ICD Code",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/icd10/add",
+     "method": "get",
+     "name": "form_addcode",
+     "fields": [
+      {
+       "label": "Group *",
+       "name": "group_id",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select Group",
+        "Infectious & Parasitic Diseases",
+        "Infectious Diseases",
+        "Mental & Behavioural Disorders",
+        "Neoplasms",
+        "Viral Diseases"
+       ]
+      },
+      {
+       "label": "ICD Code *",
+       "name": "icd_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Description *",
+       "name": "icd_description",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/icd10/add",
+     "method": "get",
+     "name": "form_editcode",
+     "fields": [
+      {
+       "label": "Group *",
+       "name": "group_id",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select Group",
+        "Infectious & Parasitic Diseases",
+        "Infectious Diseases",
+        "Mental & Behavioural Disorders",
+        "Neoplasms",
+        "Viral Diseases"
+       ]
+      },
+      {
+       "label": "ICD Code *",
+       "name": "icd_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Description *",
+       "name": "icd_description",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [
+    {
+     "id": "DataTables_Table_0",
+     "cls": "table table-striped table-bordered table-hover example setup-icd10-codes-fixed d",
+     "rows": 6,
+     "columns": [
+      "ICD Code",
+      "Description",
+      "Group",
+      "Action"
+     ],
+     "sample": [
+      [
+       "A09",
+       "Infectious Gastroenteritis",
+       "Infectious Diseases",
+       ""
+      ],
+      [
+       "A15.0",
+       "Pulmonary Tuberculosis",
+       "Infectious & Parasitic Diseases",
+       ""
+      ]
+     ]
+    }
+   ],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Add ICD Code",
+     "href": "",
+     "target": "#addModal",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "DataTables_Table_0_length",
+    "group_id",
+    "icd_code",
+    "icd_description",
+    "group_id",
+    "icd_code",
+    "icd_description",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "ICD-10 Codes List Add ICD Code"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "068-setup-findings",
+  "label": "Setup › Findings",
+  "url": "https://demo.smart-hospital.in/admin/finding",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/finding",
+   "title": "Finding Head List · Smart Hospital",
+   "pageTitle": "Finding List",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Finding List",
+    "Add Finding",
+    "Edit Finding",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/finding/add",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Finding",
+       "name": "name",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Category",
+       "name": "type",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select",
+        "Fever",
+        "Typhidot (or Widal Test)",
+        "Skin Problem",
+        "Bone Density Problems",
+        "Hair Problems",
+        "Eye Diseases",
+        "Nose Diseases"
+       ]
+      },
+      {
+       "label": "Description",
+       "name": "description",
+       "type": "textarea",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/finding/edit",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Finding",
+       "name": "name",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Category",
+       "name": "type",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select",
+        "Fever",
+        "Typhidot (or Widal Test)",
+        "Skin Problem",
+        "Bone Density Problems",
+        "Hair Problems",
+        "Eye Diseases",
+        "Nose Diseases"
+       ]
+      },
+      {
+       "label": "Description",
+       "name": "description",
+       "type": "textarea",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [
+    {
+     "id": "DataTables_Table_0",
+     "cls": "table table-striped table-bordered table-hover example sh-ex-cols-25-20-40-15 da",
+     "rows": 13,
+     "columns": [
+      "Finding",
+      "Category",
+      "Finding Description",
+      "Action"
+     ],
+     "sample": [
+      [
+       "Stomach pain",
+       "Typhidot (or Widal Test)",
+       "Typhoid fever and paratyphoid fever have",
+       ""
+      ],
+      [
+       "Diarrhea or constipation",
+       "Typhidot (or Widal Test)",
+       "Some people with typhoid fever or paraty",
+       ""
+      ]
+     ]
+    }
+   ],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Add Finding",
+     "href": "",
+     "target": "#myModal",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "DataTables_Table_0_length",
+    "name",
+    "type",
+    "name",
+    "type",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Finding List Add Finding"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "069-setup-vitals",
+  "label": "Setup › Vitals",
+  "url": "https://demo.smart-hospital.in/admin/vital",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/vital",
+   "title": "Smart Hospital & Research Center · Smart Hospital",
+   "pageTitle": "Vital List",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Vital List",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "",
+     "method": "post",
+     "name": "formadd",
+     "fields": [
+      {
+       "label": "Vital Name",
+       "name": "vital_name",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "From",
+       "name": "from_reference_range",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "To",
+       "name": "to_reference_range",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Unit",
+       "name": "unit",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [
+    {
+     "id": "DataTables_Table_0",
+     "cls": "table table-striped table-bordered table-hover ajaxlist dataTable no-footer",
+     "rows": 6,
+     "columns": [
+      "Name",
+      "Reference Range",
+      "Unit",
+      "Action"
+     ],
+     "sample": [
+      [
+       "Height",
+       "1 - 200",
+       "Centimeters",
+       ""
+      ],
+      [
+       "Weight",
+       "0 - 150",
+       "Kilograms",
+       ""
+      ]
+     ]
+    }
+   ],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Add Vital",
+     "href": "",
+     "target": "",
+     "onclick": "openAddVital()"
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "DataTables_Table_0_length",
+    "vital_name",
+    "From",
+    "To",
+    "unit",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Vital List Add Vital"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "070-setup-zoom-setting",
+  "label": "Setup › Zoom Setting",
+  "url": "https://demo.smart-hospital.in/admin/zoom_conference",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/zoom_conference",
+   "title": "Email Config List · Smart Hospital",
+   "pageTitle": "Settings",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Settings",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/zoom_conference",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Zoom Api Key",
+       "name": "zoom_api_key",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Zoom Api Secret",
+       "name": "zoom_api_secret",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Disabled",
+       "name": "use_doctor_api",
+       "type": "radio",
+       "required": false
+      },
+      {
+       "label": "Disabled",
+       "name": "use_doctor_api",
+       "type": "radio",
+       "required": false
+      },
+      {
+       "label": "Disabled",
+       "name": "use_zoom_app",
+       "type": "radio",
+       "required": false
+      },
+      {
+       "label": "Disabled",
+       "name": "use_zoom_app",
+       "type": "radio",
+       "required": false
+      },
+      {
+       "label": "Default OPD Duration (In Minutes)",
+       "name": "opd_duration",
+       "type": "number",
+       "required": false
+      },
+      {
+       "label": "Default IPD Duration (In Minutes)",
+       "name": "ipd_duration",
+       "type": "number",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Get Access Token",
+     "href": "https://zoom.us/oauth/authorize?response_type=code&client_id=XLOY2Kg_QyWgyhzxbT4Zig&redirect_uri=https://demo.smart-hospital.in/admin/zoom_conference/generatetoken",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "zoom_api_key",
+    "zoom_api_secret",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Settings"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "071-setup-finance",
+  "label": "Setup › Finance",
+  "url": "https://demo.smart-hospital.in/admin/incomehead",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/incomehead",
+   "title": "Income Head List · Smart Hospital",
+   "pageTitle": "Income Head List",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Income Head List",
+    "Add Income Head",
+    "Edit Income Head",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/incomehead/add_multiple_income_head",
+     "method": "post",
+     "name": "form_add_multiple",
+     "fields": [
+      {
+       "label": "incomehead_1",
+       "name": "incomehead_1",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "description_1",
+       "name": "description_1",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/incomehead/edit",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Income Head",
+       "name": "incomehead",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Description",
+       "name": "description",
+       "type": "textarea",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [
+    {
+     "id": "DataTables_Table_0",
+     "cls": "table table-striped table-bordered table-hover example setup-incomehead-fixed da",
+     "rows": 5,
+     "columns": [
+      "Income Head",
+      "Action"
+     ],
+     "sample": [
+      [
+       "Hospital charges",
+       ""
+      ],
+      [
+       "Special campaign",
+       ""
+      ]
+     ]
+    },
+    {
+     "id": "tableID_vitals",
+     "cls": "table mb0 tblProducts sh-tbl-transparent",
+     "rows": 2,
+     "columns": [
+      "Income Head *",
+      "Description",
+      ""
+     ],
+     "sample": [
+      [
+       "",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Add Income Head",
+     "href": "",
+     "target": "",
+     "onclick": "addModal()"
+    },
+    {
+     "text": "Add",
+     "href": "",
+     "target": "",
+     "onclick": "addrow()"
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "DataTables_Table_0_length",
+    "incomehead_1",
+    "description_1",
+    "incomehead",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Income Head List Add Income Head"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "072-setup-human-resource",
+  "label": "Setup › Human Resource",
+  "url": "https://demo.smart-hospital.in/admin/leavetypes",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/leavetypes",
+   "title": "Add Leave Type · Smart Hospital",
+   "pageTitle": "Leave Type List",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Leave Type List",
+    "Add Leave Type",
+    "Edit Leave Type",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/leavetypes/createLeaveType",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Name",
+       "name": "type",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/leavetypes/leaveedit",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Name",
+       "name": "type",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [
+    {
+     "id": "DataTables_Table_0",
+     "cls": "table table-striped table-bordered table-hover ajaxlist dataTable no-footer",
+     "rows": 7,
+     "columns": [
+      "Name",
+      "Action"
+     ],
+     "sample": [
+      [
+       "Fever Leave",
+       ""
+      ],
+      [
+       "Paternity Leave.",
+       ""
+      ]
+     ]
+    }
+   ],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Add Leave Type",
+     "href": "",
+     "target": "#myModal",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "DataTables_Table_0_length",
+    "type",
+    "type",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Leave Type List Add Leave Type"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "073-setup-referral",
+  "label": "Setup › Referral",
+  "url": "https://demo.smart-hospital.in/admin/referral/commission",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/referral/commission",
+   "title": "Smart Hospital & Research Center · Smart Hospital",
+   "pageTitle": "Referral Commission List",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Referral Commission List",
+    "Add Commission",
+    "Edit Commission",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "",
+     "method": "post",
+     "name": "addcommission",
+     "fields": [
+      {
+       "label": "Category",
+       "name": "category",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select Category",
+        "District Hospital (DH)",
+        "OPD Department",
+        "IPD Department",
+        "Clinical Services within the Community",
+        "Valuing the Benefit of Clinical Services"
+       ]
+      },
+      {
+       "label": "Standard Commission (%)",
+       "name": "commission",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "",
+     "method": "post",
+     "name": "editcommission",
+     "fields": [
+      {
+       "label": "Category",
+       "name": "",
+       "type": "select",
+       "required": false,
+       "options": [
+        "District Hospital (DH)",
+        "OPD Department",
+        "IPD Department",
+        "Clinical Services within the Community",
+        "Valuing the Benefit of Clinical Services"
+       ]
+      },
+      {
+       "label": "Standard Commission (%)",
+       "name": "commission",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "module_commission[]",
+       "name": "module_commission[]",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [
+    {
+     "id": "DataTables_Table_0",
+     "cls": "table table-hover table-striped table-bordered example setup-referral-commission",
+     "rows": 5,
+     "columns": [
+      "Category",
+      "Module - Commission",
+      "Action"
+     ],
+     "sample": [
+      [
+       "District Hospital (DH)",
+       "OPD - 25% IPD - 15% Pharmacy - 25% Patho",
+       ""
+      ],
+      [
+       "OPD Department",
+       "OPD - 30% IPD - 20% Pharmacy - 30% Patho",
+       ""
+      ]
+     ]
+    }
+   ],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Add Referral Commission",
+     "href": "",
+     "target": "",
+     "onclick": "addCommissionModal()"
+    },
+    {
+     "text": "Apply To All",
+     "href": "",
+     "target": "",
+     "onclick": "apply_to_all()"
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Apply To All",
+     "href": "",
+     "target": "",
+     "onclick": "apply_to_all_edit()"
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "DataTables_Table_0_length",
+    "category",
+    "commission",
+    "module_commission[]",
+    "module_commission[]",
+    "module_commission[]",
+    "module_commission[]",
+    "module_commission[]",
+    "module_commission[]",
+    "module_commission[]",
+    "commission",
+    "module_commission[]",
+    "module_commission[]",
+    "module_commission[]",
+    "module_commission[]",
+    "module_commission[]",
+    "module_commission[]",
+    "module_commission[]",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Referral Commission List Add Referral Commission"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "074-setup-appointment",
+  "label": "Setup › Appointment",
+  "url": "https://demo.smart-hospital.in/admin/onlineappointment/index",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/onlineappointment/index",
+   "title": "Smart Hospital & Research Center · Smart Hospital",
+   "pageTitle": "Slots",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Slots",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/onlineappointment/",
+     "method": "post",
+     "name": "doctor_form",
+     "fields": [
+      {
+       "label": "Doctor *",
+       "name": "doctor",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select",
+        "Amit Singh (9009)",
+        "Reyan Jain (9011)",
+        "Sansa Gomez (9008)",
+        "Sonia Bush (9002)"
+       ]
+      },
+      {
+       "label": "Shift *",
+       "name": "shift",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select"
+       ]
+      },
+      {
+       "label": "Consultation Duration Minutes *",
+       "name": "consult_time",
+       "type": "number",
+       "required": false
+      },
+      {
+       "label": "Charge Category",
+       "name": "charge_category",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select",
+        "Appointment Charges",
+        "Other Charges",
+        "OPD Consultation Fees",
+        "OPD Service",
+        "OPD Insurance",
+        "Intensive Care Units",
+        "Admission and Discharge.",
+        "Maternity patient admissions",
+        "Nursing Services",
+        "Laundry",
+        "Surgical pathology",
+        "Histopathology",
+        "Cytopathology",
+        "Forensic pathology",
+        "Dermatopathology",
+        "CAD-AI Research Laboratory.",
+        "Digital Image Processing",
+        "Mammographic Tomosynthesis",
+        "Packed Blood Cells",
+        "Fresh Frozen Plasma",
+        "Platelet Concentrate",
+        "Cryoprecipitate",
+        "Blood sugar test",
+        "Private Ambulance"
+       ]
+      },
+      {
+       "label": "Charge",
+       "name": "charge_id",
+       "type": "select",
+       "required": false,
+       "options": [
+        "Select"
+       ]
+      },
+      {
+       "label": "Amount ($)",
+       "name": "",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Search",
+     "href": "",
+     "target": "",
+     "onclick": "search()"
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "doctor",
+    "shift",
+    "charge_category",
+    "charge_id",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Slots"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
+ },
+ {
+  "id": "075-setup-inventory",
+  "label": "Setup › Inventory",
+  "url": "https://demo.smart-hospital.in/admin/itemcategory",
+  "section": "REPORTS & SETUP",
+  "parent": "Setup",
+  "ok": true,
+  "status": 200,
+  "profile": {
+   "url": "https://demo.smart-hospital.in/admin/itemcategory",
+   "title": "Item Category List · Smart Hospital",
+   "pageTitle": "Item Category List",
+   "breadcrumb": "",
+   "headings": [
+    "Quick Add",
+    "Item Category List",
+    "Add Item Category",
+    "Edit Item Category",
+    "Bed Status",
+    "Register your purchase code",
+    "Register your Addon",
+    "Switch Branch"
+   ],
+   "forms": [
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/search",
+     "method": "post",
+     "name": "",
+     "fields": [
+      {
+       "label": "Search By Patient Name",
+       "name": "search_text",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/itemcategory/add_multiple_itemcategory",
+     "method": "post",
+     "name": "form_add_multiple",
+     "fields": [
+      {
+       "label": "itemcategory_1",
+       "name": "itemcategory_1",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "description_1",
+       "name": "description_1",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/itemcategory/edit",
+     "method": "post",
+     "name": "employeeform",
+     "fields": [
+      {
+       "label": "Item Category *",
+       "name": "itemcategory",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Description",
+       "name": "description",
+       "type": "textarea",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+     "method": "post",
+     "name": "purchase_code",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+       "name": "envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    },
+    {
+     "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+     "method": "post",
+     "name": "addon_verify",
+     "fields": [
+      {
+       "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+       "name": "app-envato_market_purchase_code",
+       "type": "text",
+       "required": false
+      },
+      {
+       "label": "Your Email Registered With Envato",
+       "name": "app-email",
+       "type": "text",
+       "required": false
+      }
+     ]
+    }
+   ],
+   "tables": [
+    {
+     "id": "DataTables_Table_0",
+     "cls": "table table-striped table-bordered table-hover example setup-itemcategory-fixed ",
+     "rows": 13,
+     "columns": [
+      "Item Category",
+      "Action"
+     ],
+     "sample": [
+      [
+       "Syringe Packs",
+       ""
+      ],
+      [
+       "Cotton Packs",
+       ""
+      ]
+     ]
+    },
+    {
+     "id": "tableID_vitals",
+     "cls": "table tblProducts align-middle mb-0 sh-tbl-transparent",
+     "rows": 2,
+     "columns": [
+      "Item Category *",
+      "Description",
+      ""
+     ],
+     "sample": [
+      [
+       "",
+       "",
+       ""
+      ]
+     ]
+    }
+   ],
+   "buttons": [
+    {
+     "text": "2",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Add Item Category",
+     "href": "",
+     "target": "",
+     "onclick": "addModal()"
+    },
+    {
+     "text": "Add",
+     "href": "",
+     "target": "",
+     "onclick": "addrow()"
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Cancel",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Save",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Close",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    },
+    {
+     "text": "Update",
+     "href": "",
+     "target": "",
+     "onclick": ""
+    }
+   ],
+   "tabs": [],
+   "filters": [
+    "Filter Menu",
+    "Search By Patient Name",
+    "Type to searchâ€¦",
+    "DataTables_Table_0_length",
+    "itemcategory_1",
+    "description_1",
+    "itemcategory",
+    "envato_market_purchase_code",
+    "email",
+    "app-envato_market_purchase_code",
+    "app-email"
+   ],
+   "sections": [
+    "Item Category List Add Item Category"
+   ],
+   "stats": [],
+   "addLinks": [
+    {
+     "text": "Add Patient Patient List",
+     "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+    },
+    {
+     "text": "New OPD Patient OPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+    },
+    {
+     "text": "New IPD Patient IPD Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+    },
+    {
+     "text": "New Appointment Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+    },
+    {
+     "text": "New Bill Bill",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+    },
+    {
+     "text": "New Pharmacy Bill Pharmacy Bill",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+    },
+    {
+     "text": "New Pathology Test Pathology Test",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Radiology Test Radiology Test",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+    },
+    {
+     "text": "New Blood Issue Blood Issue",
+     "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+    },
+    {
+     "text": "New Ambulance Call Ambulance Call",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+    },
+    {
+     "text": "New Visitor Visitor",
+     "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+    },
+    {
+     "text": "New Income Income",
+     "href": "https://demo.smart-hospital.in/admin/income?action=add"
+    },
+    {
+     "text": "New Expense Expense",
+     "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+    }
+   ],
+   "hasChart": false
+  }
  }
 ]
