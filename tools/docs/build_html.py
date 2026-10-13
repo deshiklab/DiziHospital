@@ -19,12 +19,18 @@ DOCS = os.path.join(ROOT, 'docs')
 BUILD = os.path.join(DOCS, 'build')
 
 
+def fix_image_paths(html):
+    """guide.html lives in docs/build/, so every screenshot has to be addressed as ../<...>."""
+    html = html.replace('src="assets/', 'src="../assets/')
+    return html
+
+
 def md_to_html(path):
     with open(path) as f:
         text = f.read()
     md = markdown.Markdown(extensions=['tables', 'attr_list', 'toc', 'sane_lists', 'fenced_code'],
                            extension_configs={'toc': {'permalink': False, 'toc_depth': '2-3'}})
-    html = md.convert(text)
+    html = fix_image_paths(md.convert(text))
     return html, md.toc
 
 
@@ -102,6 +108,7 @@ def help_parts():
            'operationally critical how-tos. Full text and vendor screenshots, mirrored for offline use.</p>']
     for i, a in enumerate(sel, start=1):
         body = a['body'].replace('](../assets/', '](../help-library/assets/')
+        body = fix_image_paths(body)
         md = markdown.Markdown(extensions=['tables', 'sane_lists', 'attr_list'])
         body_html = md.convert(body)
         art.append(f"<h2>5.{i} {a['title']}</h2>")

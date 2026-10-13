@@ -23,8 +23,20 @@ const OUT = path.join(ROOT, 'docs', 'Smart-Hospital-Complete-Guide.pdf');
     if (!imgs.length) return r();
     let n = imgs.length;
     imgs.forEach((i) => { i.onload = i.onerror = () => { if (--n === 0) r(); }; });
-    setTimeout(r, 8000);
+    setTimeout(r, 20000);
   }));
+
+  // confirm in the browser that every screenshot actually decoded
+  const browserCheck = await page.evaluate(() => {
+    const imgs = [...document.images];
+    const broken = imgs
+      .filter((i) => !i.complete || i.naturalWidth === 0)
+      .map((i) => ({ src: i.getAttribute('src'), w: i.naturalWidth }));
+    return { total: imgs.length, broken, ok: imgs.length - broken.length };
+  });
+  fs.writeFileSync(path.join(ROOT, 'docs', 'build', 'image-report-browser.json'), JSON.stringify(browserCheck, null, 1));
+  console.log('browser image check: ' + browserCheck.ok + '/' + browserCheck.total + ' decoded');
+  browserCheck.broken.slice(0, 25).forEach((x) => console.error('   BROKEN IMAGE:', x.src));
   await page.pdf({
     path: OUT,
     format: 'A4',
@@ -37,4 +49,5 @@ const OUT = path.join(ROOT, 'docs', 'Smart-Hospital-Complete-Guide.pdf');
   await browser.close();
   const kb = (fs.statSync(OUT).size / 1024 / 1024).toFixed(1);
   console.log('pdf written:', OUT, kb + ' MB');
+  process.exit(browserCheck.broken.length ? 2 : 0);
 })();

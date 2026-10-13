@@ -15,12 +15,12 @@
 | [Human Resource](help-library/human-resource/_index.md) | 23 | Departments, designations, leave types, specialists, payroll and leaves. |
 | [Patient Panel](help-library/patient-panel/_index.md) | 20 | The patient self-service portal (dashboard, appointments, OPD/IPD, bills, reports). |
 | [OPD - Out Patient](help-library/opd-out-patient/_index.md) | 19 | Out-patient visits, profiles and discharge. |
-| [Smart Hospital](help-library/smart-hospital/_index.md) | 19 |  |
+| [Smart Hospital](help-library/smart-hospital/_index.md) | 19 | Version 2.1 Released Date: 27th November, 2019Bug FixesFixed permissions issuesFixed Report issuesFixed Appoin |
 | [Appointment](help-library/appointment/_index.md) | 18 | Booking, slot setup and online appointments. |
 | [Front CMS](help-library/front-cms/_index.md) | 18 | Website pages, banners, events, gallery and media manager. |
 | [Certificate](help-library/certificate/_index.md) | 17 | Certificates, patient and staff ID cards. |
 | [Front Office](help-library/front-office/_index.md) | 17 | Visitors, calls, postal dispatch and complaints. |
-| [Installation](help-library/installation/_index.md) | 17 |  |
+| [Installation](help-library/installation/_index.md) | 17 | Installation Issue During installation while Smart Hospital installer importing database there is any issue oc |
 | [Multi Branch](help-library/multi-branch/_index.md) | 17 | Adding, editing, switching and reporting across branches. |
 | [Blood Bank](help-library/blood-bank/_index.md) | 16 | Components, donors, issue and stock. |
 | [Miscellaneous](help-library/miscellaneous/_index.md) | 16 | Calendar, to-dos, chat and other utilities. |
@@ -42,8 +42,8 @@
 | [Referral](help-library/referral/_index.md) | 13 | Referral persons and commission payments. |
 | [Birth & Death Record](help-library/birth-death-record/_index.md) | 12 | Statutory birth and death registers. |
 | [TPA Management](help-library/tpa-management/_index.md) | 12 | Insurance/TPA handling. |
-| [System Update](help-library/system-update/_index.md) | 11 |  |
-| [bug_report Known Issues](help-library/known-issues/_index.md) | 10 |  |
+| [System Update](help-library/system-update/_index.md) | 11 | To check Smart Hospital current version or available new version login from superadmin panel and then go to Se |
+| [bug_report Known Issues](help-library/known-issues/_index.md) | 10 | Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp |
 | [WhatsApp Messaging](help-library/whatsapp-messaging/_index.md) | 10 | WhatsApp Cloud API (Meta) and Twilio configuration, per-event enablement. |
 
 ---
@@ -51,6 +51,8 @@
 ## Ambulance (13)
 
 Vehicles, drivers and calls.
+
+_About Ambulance. Ambulance module is for managing ambulance vehicles and ambulance calls for patient travelling. Read More_
 
 - [About Ambulance.](help-library/ambulance/about-ambulance.md) · Mon, 01 Nov, 2021
 - [About WhatsApp Messaging](help-library/ambulance/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -70,6 +72,8 @@ Vehicles, drivers and calls.
 
 Holidays, activities, vacations and the front-site calendar tab.
 
+_To display annual calendar on the front site of the Smart Hospital, go to Front CMS > Menus. Here, you can see the 'Add Menu' form and the Menu List, which displays the Main Menu and the Bottom Menu. Click on the '+' icon in the Main Menu to go to the 'Add Menu Item' page. When you click on + icon, this will redirect you to the Add Menu Item page.Here you can view Menu Item, External URL toggle_
+
 - [About WhatsApp Messaging](help-library/annual-calendar/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add activity in annual calendar?](help-library/annual-calendar/how-to-add-activity-in-annual-calendar.md) · Thu, 05 Sep, 2024
 - [How to add holiday in annual calendar on smart hospital?](help-library/annual-calendar/how-to-add-holiday-in-annual-calendar-on-smart-hospital.md) · Thu, 05 Sep, 2024
@@ -88,6 +92,8 @@ Holidays, activities, vacations and the front-site calendar tab.
 ## Appointment (18)
 
 Booking, slot setup and online appointments.
+
+_Setup for Appointment. To setup appointment priority, go to Setup > Front Office. You can add Appointment Priority data which will be use in add appointment. Here enter priority value and then click on Save button. You can view this added record in the Priority List on Add Appointment page.To edit Priority click on edit and for delete click on delete icon present at Action column. Read More_
 
 - [About Appointment](help-library/appointment/about-appointment.md) · Tue, 02 Nov, 2021
 - [About WhatsApp Messaging](help-library/appointment/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -112,6 +118,8 @@ Booking, slot setup and online appointments.
 
 Billing concepts, single-module billing and case-based billing.
 
+_Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging_
+
 - [About Billing](help-library/billing/about-billing.md) · Mon, 01 Nov, 2021
 - [About WhatsApp Messaging](help-library/billing/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Meta (Cloud API)?](help-library/billing/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
@@ -130,6 +138,8 @@ Billing concepts, single-module billing and case-based billing.
 
 Statutory birth and death registers.
 
+_Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging_
+
 - [About WhatsApp Messaging](help-library/birth-death-record/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add Birth Records?](help-library/birth-death-record/how-to-add-birth-records.md) · Mon, 01 Nov, 2021
 - [How to add Death Records?](help-library/birth-death-record/how-to-add-death-records.md) · Mon, 01 Nov, 2021
@@ -146,6 +156,8 @@ Statutory birth and death registers.
 ## Blood Bank (16)
 
 Components, donors, issue and stock.
+
+_The hospital blood bank is responsible for management of the hospital's blood stock. This includes maintaining an inventory for each blood group. The main goal of the Blood Bank is to monitor Blood Bank data, Blood cells (component), Blood stock, Donor List. Blood Bank module is for managing blood bank status, component status, donor details and blood and component issue details._
 
 - [About Blood Bank](help-library/blood-bank/about-blood-bank.md) · Mon, 01 Nov, 2021
 - [About WhatsApp Messaging](help-library/blood-bank/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -166,6 +178,8 @@ Components, donors, issue and stock.
 
 ## bug_report Known Issues (10)
 
+_Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging_
+
 - [About WhatsApp Messaging](help-library/known-issues/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Meta (Cloud API)?](help-library/known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Twilio?](help-library/known-issues/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
@@ -180,6 +194,8 @@ Components, donors, issue and stock.
 ## Certificate (17)
 
 Certificates, patient and staff ID cards.
+
+_Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging_
 
 - [About Certificate.](help-library/certificate/about-certificate.md) · Tue, 02 Nov, 2021
 - [About WhatsApp Messaging](help-library/certificate/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -202,6 +218,8 @@ Certificates, patient and staff ID cards.
 ## Common Issues & Troubleshooting (23)
 
 Known problems and fixes (404s, login URLs, SQL modes, SSL, hosting moves).
+
+_Enabling SSL In Smart Hospital After installing ssl on your Smart Hospital hosting you need to edit your base url in following file -Open file \application\config\config.php and find the line $config['base_url'] = 'http://yourdomain.com/'; change it to $config['base_url'] = 'https://yourdomain.com/'; that's it. Read More_
 
 - [404 Or Page Not Found Error In Installation](help-library/common-issues-troubleshooting/404-or-page-not-found-error-in-installation.md) · Mon, 18 Oct, 2021
 - [About WhatsApp Messaging](help-library/common-issues-troubleshooting/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -231,6 +249,8 @@ Known problems and fixes (404s, login URLs, SQL modes, SSL, hosting moves).
 
 Sharing documents and media.
 
+_About Download Center. The download center module is used to download the documents content like Medical Equipment List, Guideline note etc. Read More_
+
 - [About Download Center.](help-library/download-center/about-download-center.md) · Wed, 17 Nov, 2021
 - [About WhatsApp Messaging](help-library/download-center/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How Download Center works in Smart Hospital?](help-library/download-center/how-download-center-works-in-smart-hospital.md) · Thu, 30 May, 2024
@@ -248,6 +268,8 @@ Sharing documents and media.
 ## Duty Roster (14)
 
 Shifts, rosters and staff assignment.
+
+_Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging_
 
 - [About WhatsApp Messaging](help-library/duty-roster/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add the roster in duty roster module?](help-library/duty-roster/how-to-add-the-roster-in-duty-roster-module.md) · Thu, 05 Sep, 2024
@@ -267,6 +289,8 @@ Shifts, rosters and staff assignment.
 ## FAQ (27)
 
 Frequently asked questions about deployment, characters, LAN use and multi-hospital operation.
+
+_Can I use special character in Smart Hospital? In Smart Hospital avoid to enter or using special character (special character is non-alphabetic and non-numeric like @, #, $, <, %, ^, &, *, !) for any field like Patient, Staff, Income, Expense, Transport, Custom Field etc, otherwise it may fail PHP or JavaScript processing. Read More_
 
 - [About WhatsApp Messaging](help-library/faq/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [Can I use Smart Hospital as SaaS or multi hospital application?](help-library/faq/can-i-use-smart-hospital-as-saas-or-multi-hospital-application.md) · Mon, 18 Oct, 2021
@@ -300,6 +324,8 @@ Frequently asked questions about deployment, characters, LAN use and multi-hospi
 
 Website pages, banners, events, gallery and media manager.
 
+_About Front CMS In Smart Hospital, we have provided a option to design your Hospital front site page. To design your hospital front page go to Front CMS, here you can add or edit Pages, upload images and videos at Media Manager which can be used for Smart Hospital, add Menus like Main Menu and Bottom Menu and Banner Images.For Front CMS setup please click here to see Front CMS Setting. Read More_
+
 - [About Front CMS](help-library/front-cms/about-front-cms.md) · Thu, 11 Nov, 2021
 - [About WhatsApp Messaging](help-library/front-cms/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How Media Manager works in Smart Hospital.](help-library/front-cms/how-media-manager-works-in-smart-hospital.md) · Thu, 11 Nov, 2021
@@ -323,6 +349,8 @@ Website pages, banners, events, gallery and media manager.
 
 Visitors, calls, postal dispatch and complaints.
 
+_How to setup Front Office? Please click here to see how to do setup for Front Office. Read More_
+
 - [About Front Office](help-library/front-office/about-front-office.md) · Thu, 28 Oct, 2021
 - [About WhatsApp Messaging](help-library/front-office/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add Complain in Smart Hospital?](help-library/front-office/how-to-add-complain-in-smart-hospital.md) · Thu, 28 Oct, 2021
@@ -345,6 +373,8 @@ Visitors, calls, postal dispatch and complaints.
 
 Installation, updates, licensing and first-run setup.
 
+_Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging_
+
 - [About WhatsApp Messaging](help-library/getting-started/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [Configure Smart Hospital To Use In Local LAN Network](help-library/getting-started/configure-smart-hospital-to-use-in-local-lan-network.md) · Mon, 07 Feb, 2022
 - [General Overview](help-library/getting-started/general-overview.md) · Wed, 29 May, 2024
@@ -362,6 +392,8 @@ Installation, updates, licensing and first-run setup.
 ## Human Resource (23)
 
 Departments, designations, leave types, specialists, payroll and leaves.
+
+_How to add Department? To add department, go to Setup > Human Resource > Department then enter Name and then click on Save button.You can view this added record in the Department List on the right side of the page.To edit department click on Edit icon and to delete department click on Delete icon present in the Department list. Read More_
 
 - [About Human Resource.](help-library/human-resource/about-human-resource.md) · Tue, 26 Oct, 2021
 - [About WhatsApp Messaging](help-library/human-resource/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -389,6 +421,8 @@ Departments, designations, leave types, specialists, payroll and leaves.
 
 ## Installation (17)
 
+_Installation Issue During installation while Smart Hospital installer importing database there is any issue occurred so may be database import has not completed so installer was stuck and unable to proceed at last step. In this case you should check your database and if there is any tables present then remove all tables and again start Smart Hospital installer from first step. Read More_
+
 - [404 Or Page Not Found Error During Installation](help-library/installation/404-or-page-not-found-error-during-installation-1.md) · Sat, 23 Apr, 2022
 - [About WhatsApp Messaging](help-library/installation/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [General Installation](help-library/installation/general-installation.md) · Mon, 18 Oct, 2021
@@ -411,6 +445,8 @@ Departments, designations, leave types, specialists, payroll and leaves.
 
 Items, stock, issue and return.
 
+_About Inventory. Inventory Module is used to maintain entire Inventory record including hospital uniforms, bill book and many more. The main purpose of this module is to make hospital equipment tracking easy.Inventory Module Workflow: First we will add items then add item stocks then we will manage issue and return of items to different staff members. Read More_
+
 - [About Inventory.](help-library/inventory/about-inventory.md) · Tue, 02 Nov, 2021
 - [About WhatsApp Messaging](help-library/inventory/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add Item Stock?](help-library/inventory/how-to-add-item-stock.md) · Sun, 31 Oct, 2021
@@ -429,6 +465,8 @@ Items, stock, issue and return.
 ## IPD - In Patient (29)
 
 Admissions, vitals, obstetric history, BMI, overview and discharge.
+
+_BMI For IPD - In Patient In the IPD - In Patient for BMI, you need to go to the IPD - In Patient. Here, select the patient whose BMI details you want to see. Click on the IPD number of the patient. The patient's overview page will open, where you can see the BMI details Read More_
 
 - [About IPD - In Patient](help-library/ipd-in-patient/about-ipd-in-patient.md) · Mon, 01 Nov, 2021
 - [About WhatsApp Messaging](help-library/ipd-in-patient/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -464,6 +502,8 @@ Admissions, vitals, obstetric history, BMI, overview and discharge.
 
 Zoom live consultations and live meetings.
 
+_About Live Consultation In Smart Hospital Live Consultation feature Patients can consult to doctor through zoom video call.Please click here to see settings for Live Consultation. Read More_
+
 - [About Live Consultation](help-library/live-consultation/about-live-consultation.md) · Thu, 11 Nov, 2021
 - [About WhatsApp Messaging](help-library/live-consultation/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add Live Consultation in Smart Hospital?](help-library/live-consultation/how-to-add-live-consultation-in-smart-hospital.md) · Mon, 08 Sep, 2025
@@ -481,6 +521,8 @@ Zoom live consultations and live meetings.
 ## Messaging (14)
 
 Notice board, SMS, e-mail and patient credentials.
+
+_Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging_
 
 - [About WhatsApp Messaging](help-library/messaging/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How Notice Board works?](help-library/messaging/how-notice-board-works.md) · Mon, 01 Nov, 2021
@@ -500,6 +542,8 @@ Notice board, SMS, e-mail and patient credentials.
 ## Miscellaneous (16)
 
 Calendar, to-dos, chat and other utilities.
+
+_About Calendar The primary reason for having a calendar is to organize the days, weeks, months and years.Calendar & To Do List Workflow- first we will add personal and public event and then we will add to do list personal task. Read More_
 
 - [About Calendar](help-library/miscellaneous/about-calendar.md) · Tue, 02 Nov, 2021
 - [About Chat](help-library/miscellaneous/about-chat.md) · Tue, 02 Nov, 2021
@@ -522,6 +566,8 @@ Calendar, to-dos, chat and other utilities.
 
 Adding, editing, switching and reporting across branches.
 
+_About Multi Branch The Multibranch feature in Smart Hospital enables organizations to manage multiple hospital branches under a single system, allowing centralized control of data, seamless inter-branch operations, and branch-specific configurations for enhanced efficiency and reporting. Read More_
+
 - [About Multi Branch](help-library/multi-branch/about-multi-branch.md) · Sat, 16 Aug, 2025
 - [About WhatsApp Messaging](help-library/multi-branch/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add the new branch in smart hospital home branch?](help-library/multi-branch/how-to-add-the-new-branch-in-smart-hospital-home-branch.md) · Sat, 16 Aug, 2025
@@ -543,6 +589,8 @@ Adding, editing, switching and reporting across branches.
 ## OPD - Out Patient (19)
 
 Out-patient visits, profiles and discharge.
+
+_BMI For OPD - Out Patient In the OPD - Out Patient for BMI, you need to go to the OPD - Out Patient. Here, select the patient whose BMI details you want to see. Click on the OPD number of the patient. The patient's overview page will open, where you can see the BMI details Read More_
 
 - [About OPD - Out Patient](help-library/opd-out-patient/about-opd-out-patient.md) · Tue, 22 Jul, 2025
 - [About WhatsApp Messaging](help-library/opd-out-patient/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -568,6 +616,8 @@ Out-patient visits, profiles and discharge.
 
 Test setup, reports and payment.
 
+_How to add/view Pathology Test payment? To Add/View patient payment of Pathology Test go to Pathology > Add/View Payments. Here enter payment details like payment Date, Amount, Payment Mode, Note and then click on Save button.Here at Transaction History section you can check all patient payment done for Pathology Test. Read More_
+
 - [About Pathology](help-library/pathology/about-pathology.md) · Thu, 11 Nov, 2021
 - [About WhatsApp Messaging](help-library/pathology/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add Pathology Test in Smart Hospital?](help-library/pathology/how-to-add-pathology-test-in-smart-hospital.md) · Wed, 10 Nov, 2021
@@ -586,6 +636,8 @@ Test setup, reports and payment.
 ## Patient Panel (20)
 
 The patient self-service portal (dashboard, appointments, OPD/IPD, bills, reports).
+
+_Live Consultation Using Live Consultation Patients can consult to doctor through zoom video call.Here all the Live Consultation like from Appointment, OPD and IPD modules for patients will be listed. Read More_
 
 - [About WhatsApp Messaging](help-library/patient-panel/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [Ambulance](help-library/patient-panel/ambulance.md) · Thu, 18 Nov, 2021
@@ -612,6 +664,8 @@ The patient self-service portal (dashboard, appointments, OPD/IPD, bills, report
 
 Medicines, stock, bad stock, import and sale.
 
+_To import medicines click on Import Medicine button. Here select Medicine Category from dropdown and select CSV file, then click on Import Medicine button.Note: Your CSV data should be in the format below. The first line of your CSV file should be the column headers as in the table example. Also make sure that your file is UTF-8 to avoid unnecessary encoding problems._
+
 - [About Pharmacy.](help-library/pharmacy/about-pharmacy.md) · Thu, 11 Nov, 2021
 - [About WhatsApp Messaging](help-library/pharmacy/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add Medicine Bad Stock?](help-library/pharmacy/how-to-add-medicine-bad-stock.md) · Mon, 15 Nov, 2021
@@ -633,6 +687,8 @@ Medicines, stock, bad stock, import and sale.
 
 QR/barcode attendance with auto-attendance options.
 
+_Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging_
+
 - [About QR Code Attendance](help-library/qr-code-attendance/about-qr-code-attendance.md) · Sat, 16 Aug, 2025
 - [About WhatsApp Messaging](help-library/qr-code-attendance/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Meta (Cloud API)?](help-library/qr-code-attendance/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
@@ -650,6 +706,8 @@ QR/barcode attendance with auto-attendance options.
 ## Radiology (14)
 
 Study setup, reports and payment.
+
+_How to add/view radiology test payment? To Add/View patient payment of Radiology Test go to Radiology > Add/View Payments. Here enter payment details like payment Date, Amount, Payment Mode, Note and then click on Save button.Here at Transaction History section you can check all patient payment done for Radiology Test. Read More_
 
 - [About Radiology](help-library/radiology/about-radiology.md) · Thu, 11 Nov, 2021
 - [About WhatsApp Messaging](help-library/radiology/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -670,6 +728,8 @@ Study setup, reports and payment.
 
 Referral persons and commission payments.
 
+_About Referral. Most often, patients get referral to see a specialist from their primary care physician or from a doctor at a hospital. Doctors refer patients based on what they feel is necessary for them, and this is how many specialists get the bulk of their patient base.Note- Please click here to see setup for referral. Read More_
+
 - [About Referral.](help-library/referral/about-referral.md) · Thu, 11 Nov, 2021
 - [About WhatsApp Messaging](help-library/referral/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add Referral Payment?](help-library/referral/how-to-add-referral-payment.md) · Sun, 31 Oct, 2021
@@ -687,6 +747,8 @@ Referral persons and commission payments.
 ## Reports (54)
 
 The report library — how to read and filter each report.
+
+_Stock Report To check Stock Report report, go to Reports > Stock Report.Here select Medicine Category, Stock Type then click on Search button.Here you can see Expiry Medicine Report details like Medicine Name, Medicine Company, Medicine Category, Medicine Composition,Medicine Category, Medicine Group, Unit and Available Qty (Quantity). Also you can download this report as PDF. Read More_
 
 - [About WhatsApp Messaging](help-library/reports/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [All Transaction Report.](help-library/reports/all-transaction-report.md) · Fri, 01 Aug, 2025
@@ -747,6 +809,8 @@ The report library — how to read and filter each report.
 
 Master data: patient fields, charges, beds, print header/footer, front office.
 
+_Blood Bank To setup Blood Bank go to Setup > Blood Bank.To add Product for Blood Group click on + Add Product button now enter Product Type as Blood Group or Component, enter Name and click on Save button.You can check added Product record at Product List page.To edit Product click on edit and to delete Product click on delete icon present at Action column. Read More_
+
 - [About WhatsApp Messaging](help-library/setup-configuration/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [Appointment](help-library/setup-configuration/appointment.md) · Sun, 31 Oct, 2021
 - [Bed](help-library/setup-configuration/bed.md) · Sun, 31 Oct, 2021
@@ -782,6 +846,8 @@ Master data: patient fields, charges, beds, print header/footer, front office.
 
 ## Smart Hospital (19)
 
+_Version 2.1 Released Date: 27th November, 2019Bug FixesFixed permissions issuesFixed Report issuesFixed Appointment issuesFixed OPD Bill issuesFixed Pathology issuesFixed Radiology issuesFixed Supplier issuesFixed Dashboard count issuesFixed Bill print issuesFixed some design issuesFixed some UI/UX issues Read More_
+
 - [About WhatsApp Messaging](help-library/smart-hospital/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Meta (Cloud API)?](help-library/smart-hospital/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Twilio?](help-library/smart-hospital/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
@@ -806,6 +872,8 @@ Master data: patient fields, charges, beds, print header/footer, front office.
 
 Building, publishing and filling survey forms.
 
+_From the Survey Forms list, click the View Submissions action on any form to open its Submissions dashboard. The top of the page shows four quick summary tiles: Total Responses, Form Fields, Status and Schedule, followed by three tabs.Response StatisticsEvery Radio, Checkbox and Yes/No field gets a breakdown of votes and percentage per option, with a bar and a donut chart. Free-text fields_
+
 - [About Survey Form](help-library/survey-form/about-survey-form.md) · Sat, 25 Jul, 2026
 - [About WhatsApp Messaging](help-library/survey-form/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add Fields to a Survey Form?](help-library/survey-form/how-to-add-fields-to-a-survey-form.md) · Sat, 25 Jul, 2026
@@ -826,6 +894,8 @@ Building, publishing and filling survey forms.
 ## System Settings (26)
 
 Notification, SMS, e-mail, payment-method and general system configuration.
+
+_SMS Setting To manage SMS setting, go to Setup > Settings > SMS Setting then select any SMS gateway from top of the page which you want to enable on your Smart Hospital then enter Auth Key, Sender Id and select Status and then click on Save button.Here we are providing 8 SMS Gateway namely Clickatell SMS Gateway, Twilio SMS Gateway, MSG91, Text Local, SMS Country, Bulk SMS, Mobi Read More_
 
 - [About Settings](help-library/system-settings/about-settings.md) · Sun, 31 Oct, 2021
 - [About WhatsApp Messaging](help-library/system-settings/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -856,6 +926,8 @@ Notification, SMS, e-mail, payment-method and general system configuration.
 
 ## System Update (11)
 
+_To check Smart Hospital current version or available new version login from superadmin panel and then go to Setup > Settings > System Update link. Here you can see your current Smart Hospital Version and if here any new version available for Smart Hospital then you can update your Smart Hospital through one click auto update feature (which will show only when new version available)._
+
 - [About WhatsApp Messaging](help-library/system-update/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Meta (Cloud API)?](help-library/system-update/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Twilio?](help-library/system-update/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
@@ -871,6 +943,8 @@ Notification, SMS, e-mail, payment-method and general system configuration.
 ## TPA Management (12)
 
 Insurance/TPA handling.
+
+_Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging_
 
 - [About TPA](help-library/tpa-management/about-tpa.md) · Wed, 10 Nov, 2021
 - [About WhatsApp Messaging](help-library/tpa-management/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -888,6 +962,8 @@ Insurance/TPA handling.
 ## Two Factor Authentication (16)
 
 Google Authenticator based 2FA setup for superadmin and staff.
+
+_How to Setup 2FA? Go to the your Smart Hospital to configure 2FA of Two Factor Authentication, two-step verification. For setup 2FA, go to the Two Factor Authentication module, which is shown in the left side bar. Now click on Setup 2FA, the Setup 2FA page will open.Note: For further processing, you need to set up Google Authenticator on your mobile device. Read More_
 
 - [About Two Factor Authentication](help-library/two-factor-authentication/about-two-factor-authentication.md) · Sat, 16 Aug, 2025
 - [About WhatsApp Messaging](help-library/two-factor-authentication/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -909,6 +985,8 @@ Google Authenticator based 2FA setup for superadmin and staff.
 ## WhatsApp Messaging (10)
 
 WhatsApp Cloud API (Meta) and Twilio configuration, per-event enablement.
+
+_Go to Setup → Settings → WhatsApp Setting from the sidebar. The Twilio WhatsApp tab is selected by default.Enter the following, taken from your Twilio Console:Twilio Account SID — required.Authentication Token — required. Once saved, this is masked and shown only as a hint on later visits.Registered Phone Number — the WhatsApp-enabled sender number linked to your Twilio account,_
 
 - [About WhatsApp Messaging](help-library/whatsapp-messaging/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Meta (Cloud API)?](help-library/whatsapp-messaging/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026

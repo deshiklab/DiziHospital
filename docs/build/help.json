@@ -5,7 +5,7 @@
    "slug": "ambulance",
    "count": 13,
    "blurb": "Vehicles, drivers and calls.",
-   "description": "",
+   "description": "About Ambulance. Ambulance module is for managing ambulance vehicles and ambulance calls for patient travelling. Read More",
    "articles": [
     {
      "title": "About Ambulance.",
@@ -92,7 +92,7 @@
    "slug": "annual-calendar",
    "count": 14,
    "blurb": "Holidays, activities, vacations and the front-site calendar tab.",
-   "description": "",
+   "description": "To display annual calendar on the front site of the Smart Hospital, go to Front CMS > Menus. Here, you can see the 'Add Menu' form and the Menu List, which displays the Main Menu and the Bottom Menu. Click on the '+' icon in the Main Menu to go to the 'Add Menu Item' page. When you click on + icon, this will redirect you to the Add Menu Item page.Here you can view Menu Item, External URL toggle",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -185,7 +185,7 @@
    "slug": "appointment",
    "count": 18,
    "blurb": "Booking, slot setup and online appointments.",
-   "description": "",
+   "description": "Setup for Appointment. To setup appointment priority, go to Setup > Front Office. You can add Appointment Priority data which will be use in add appointment. Here enter priority value and then click on Save button. You can view this added record in the Priority List on Add Appointment page.To edit Priority click on edit and for delete click on delete icon present at Action column. Read More",
    "articles": [
     {
      "title": "About Appointment",
@@ -302,7 +302,7 @@
    "slug": "billing",
    "count": 13,
    "blurb": "Billing concepts, single-module billing and case-based billing.",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "About Billing",
@@ -389,7 +389,7 @@
    "slug": "birth-death-record",
    "count": 12,
    "blurb": "Statutory birth and death registers.",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -470,7 +470,7 @@
    "slug": "blood-bank",
    "count": 16,
    "blurb": "Components, donors, issue and stock.",
-   "description": "",
+   "description": "The hospital blood bank is responsible for management of the hospital's blood stock. This includes maintaining an inventory for each blood group. The main goal of the Blood Bank is to monitor Blood Bank data, Blood cells (component), Blood stock, Donor List. Blood Bank module is for managing blood bank status, component status, donor details and blood and component issue details.",
    "articles": [
     {
      "title": "About Blood Bank",
@@ -575,7 +575,7 @@
    "slug": "known-issues",
    "count": 10,
    "blurb": "",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -644,7 +644,7 @@
    "slug": "certificate",
    "count": 17,
    "blurb": "Certificates, patient and staff ID cards.",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "About Certificate.",
@@ -755,7 +755,7 @@
    "slug": "common-issues-troubleshooting",
    "count": 23,
    "blurb": "Known problems and fixes (404s, login URLs, SQL modes, SSL, hosting moves).",
-   "description": "",
+   "description": "Enabling SSL In Smart Hospital After installing ssl on your Smart Hospital hosting you need to edit your base url in following file -Open file \\application\\config\\config.php and find the line $config['base_url'] = 'http://yourdomain.com/'; change it to $config['base_url'] = 'https://yourdomain.com/'; that's it. Read More",
    "articles": [
     {
      "title": "404 Or Page Not Found Error In Installation",
@@ -902,7 +902,7 @@
    "slug": "download-center",
    "count": 13,
    "blurb": "Sharing documents and media.",
-   "description": "",
+   "description": "About Download Center. The download center module is used to download the documents content like Medical Equipment List, Guideline note etc. Read More",
    "articles": [
     {
      "title": "About Download Center.",
@@ -989,7 +989,7 @@
    "slug": "duty-roster",
    "count": 14,
    "blurb": "Shifts, rosters and staff assignment.",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -1082,7 +1082,7 @@
    "slug": "faq",
    "count": 27,
    "blurb": "Frequently asked questions about deployment, characters, LAN use and multi-hospital operation.",
-   "description": "",
+   "description": "Can I use special character in Smart Hospital? In Smart Hospital avoid to enter or using special character (special character is non-alphabetic and non-numeric like @, #, $, <, %, ^, &, *, !) for any field like Patient, Staff, Income, Expense, Transport, Custom Field etc, otherwise it may fail PHP or JavaScript processing. Read More",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -1253,7 +1253,7 @@
    "slug": "front-cms",
    "count": 18,
    "blurb": "Website pages, banners, events, gallery and media manager.",
-   "description": "",
+   "description": "About Front CMS In Smart Hospital, we have provided a option to design your Hospital front site page. To design your hospital front page go to Front CMS, here you can add or edit Pages, upload images and videos at Media Manager which can be used for Smart Hospital, add Menus like Main Menu and Bottom Menu and Banner Images.For Front CMS setup please click here to see Front CMS Setting. Read More",
    "articles": [
     {
      "title": "About Front CMS",
@@ -1370,7 +1370,7 @@
    "slug": "front-office",
    "count": 17,
    "blurb": "Visitors, calls, postal dispatch and complaints.",
-   "description": "",
+   "description": "How to setup Front Office? Please click here to see how to do setup for Front Office. Read More",
    "articles": [
     {
      "title": "About Front Office",
@@ -1481,7 +1481,7 @@
    "slug": "getting-started",
    "count": 13,
    "blurb": "Installation, updates, licensing and first-run setup.",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -1568,7 +1568,7 @@
    "slug": "human-resource",
    "count": 23,
    "blurb": "Departments, designations, leave types, specialists, payroll and leaves.",
-   "description": "",
+   "description": "How to add Department? To add department, go to Setup > Human Resource > Department then enter Name and then click on Save button.You can view this added record in the Department List on the right side of the page.To edit department click on Edit icon and to delete department click on Delete icon present in the Department list. Read More",
    "articles": [
     {
      "title": "About Human Resource.",
@@ -1715,7 +1715,7 @@
    "slug": "installation",
    "count": 17,
    "blurb": "",
-   "description": "",
+   "description": "Installation Issue During installation while Smart Hospital installer importing database there is any issue occurred so may be database import has not completed so installer was stuck and unable to proceed at last step. In this case you should check your database and if there is any tables present then remove all tables and again start Smart Hospital installer from first step. Read More",
    "articles": [
     {
      "title": "404 Or Page Not Found Error During Installation",
@@ -1826,7 +1826,7 @@
    "slug": "inventory",
    "count": 14,
    "blurb": "Items, stock, issue and return.",
-   "description": "",
+   "description": "About Inventory. Inventory Module is used to maintain entire Inventory record including hospital uniforms, bill book and many more. The main purpose of this module is to make hospital equipment tracking easy.Inventory Module Workflow: First we will add items then add item stocks then we will manage issue and return of items to different staff members. Read More",
    "articles": [
     {
      "title": "About Inventory.",
@@ -1919,7 +1919,7 @@
    "slug": "ipd-in-patient",
    "count": 29,
    "blurb": "Admissions, vitals, obstetric history, BMI, overview and discharge.",
-   "description": "",
+   "description": "BMI For IPD - In Patient In the IPD - In Patient for BMI, you need to go to the IPD - In Patient. Here, select the patient whose BMI details you want to see. Click on the IPD number of the patient. The patient's overview page will open, where you can see the BMI details Read More",
    "articles": [
     {
      "title": "About IPD - In Patient",
@@ -2102,7 +2102,7 @@
    "slug": "live-consultation",
    "count": 13,
    "blurb": "Zoom live consultations and live meetings.",
-   "description": "",
+   "description": "About Live Consultation In Smart Hospital Live Consultation feature Patients can consult to doctor through zoom video call.Please click here to see settings for Live Consultation. Read More",
    "articles": [
     {
      "title": "About Live Consultation",
@@ -2189,7 +2189,7 @@
    "slug": "messaging",
    "count": 14,
    "blurb": "Notice board, SMS, e-mail and patient credentials.",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -2282,7 +2282,7 @@
    "slug": "miscellaneous",
    "count": 16,
    "blurb": "Calendar, to-dos, chat and other utilities.",
-   "description": "",
+   "description": "About Calendar The primary reason for having a calendar is to organize the days, weeks, months and years.Calendar & To Do List Workflow- first we will add personal and public event and then we will add to do list personal task. Read More",
    "articles": [
     {
      "title": "About Calendar",
@@ -2387,7 +2387,7 @@
    "slug": "multi-branch",
    "count": 17,
    "blurb": "Adding, editing, switching and reporting across branches.",
-   "description": "",
+   "description": "About Multi Branch The Multibranch feature in Smart Hospital enables organizations to manage multiple hospital branches under a single system, allowing centralized control of data, seamless inter-branch operations, and branch-specific configurations for enhanced efficiency and reporting. Read More",
    "articles": [
     {
      "title": "About Multi Branch",
@@ -2498,7 +2498,7 @@
    "slug": "opd-out-patient",
    "count": 19,
    "blurb": "Out-patient visits, profiles and discharge.",
-   "description": "",
+   "description": "BMI For OPD - Out Patient In the OPD - Out Patient for BMI, you need to go to the OPD - Out Patient. Here, select the patient whose BMI details you want to see. Click on the OPD number of the patient. The patient's overview page will open, where you can see the BMI details Read More",
    "articles": [
     {
      "title": "About OPD - Out Patient",
@@ -2621,7 +2621,7 @@
    "slug": "pathology",
    "count": 14,
    "blurb": "Test setup, reports and payment.",
-   "description": "",
+   "description": "How to add/view Pathology Test payment? To Add/View patient payment of Pathology Test go to Pathology > Add/View Payments. Here enter payment details like payment Date, Amount, Payment Mode, Note and then click on Save button.Here at Transaction History section you can check all patient payment done for Pathology Test. Read More",
    "articles": [
     {
      "title": "About Pathology",
@@ -2714,7 +2714,7 @@
    "slug": "patient-panel",
    "count": 20,
    "blurb": "The patient self-service portal (dashboard, appointments, OPD/IPD, bills, reports).",
-   "description": "",
+   "description": "Live Consultation Using Live Consultation Patients can consult to doctor through zoom video call.Here all the Live Consultation like from Appointment, OPD and IPD modules for patients will be listed. Read More",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -2843,7 +2843,7 @@
    "slug": "pharmacy",
    "count": 16,
    "blurb": "Medicines, stock, bad stock, import and sale.",
-   "description": "",
+   "description": "To import medicines click on Import Medicine button. Here select Medicine Category from dropdown and select CSV file, then click on Import Medicine button.Note: Your CSV data should be in the format below. The first line of your CSV file should be the column headers as in the table example. Also make sure that your file is UTF-8 to avoid unnecessary encoding problems.",
    "articles": [
     {
      "title": "About Pharmacy.",
@@ -2948,7 +2948,7 @@
    "slug": "qr-code-attendance",
    "count": 13,
    "blurb": "QR/barcode attendance with auto-attendance options.",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "About QR Code Attendance",
@@ -3035,7 +3035,7 @@
    "slug": "radiology",
    "count": 14,
    "blurb": "Study setup, reports and payment.",
-   "description": "",
+   "description": "How to add/view radiology test payment? To Add/View patient payment of Radiology Test go to Radiology > Add/View Payments. Here enter payment details like payment Date, Amount, Payment Mode, Note and then click on Save button.Here at Transaction History section you can check all patient payment done for Radiology Test. Read More",
    "articles": [
     {
      "title": "About Radiology",
@@ -3128,7 +3128,7 @@
    "slug": "referral",
    "count": 13,
    "blurb": "Referral persons and commission payments.",
-   "description": "",
+   "description": "About Referral. Most often, patients get referral to see a specialist from their primary care physician or from a doctor at a hospital. Doctors refer patients based on what they feel is necessary for them, and this is how many specialists get the bulk of their patient base.Note- Please click here to see setup for referral. Read More",
    "articles": [
     {
      "title": "About Referral.",
@@ -3215,7 +3215,7 @@
    "slug": "reports",
    "count": 54,
    "blurb": "The report library \u2014 how to read and filter each report.",
-   "description": "",
+   "description": "Stock Report To check Stock Report report, go to Reports > Stock Report.Here select Medicine Category, Stock Type then click on Search button.Here you can see Expiry Medicine Report details like Medicine Name, Medicine Company, Medicine Category, Medicine Composition,Medicine Category, Medicine Group, Unit and Available Qty (Quantity). Also you can download this report as PDF. Read More",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -3548,7 +3548,7 @@
    "slug": "setup-configuration",
    "count": 32,
    "blurb": "Master data: patient fields, charges, beds, print header/footer, front office.",
-   "description": "",
+   "description": "Blood Bank To setup Blood Bank go to Setup > Blood Bank.To add Product for Blood Group click on + Add Product button now enter Product Type as Blood Group or Component, enter Name and click on Save button.You can check added Product record at Product List page.To edit Product click on edit and to delete Product click on delete icon present at Action column. Read More",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -3749,7 +3749,7 @@
    "slug": "smart-hospital",
    "count": 19,
    "blurb": "",
-   "description": "",
+   "description": "Version 2.1 Released Date: 27th November, 2019Bug FixesFixed permissions issuesFixed Report issuesFixed Appointment issuesFixed OPD Bill issuesFixed Pathology issuesFixed Radiology issuesFixed Supplier issuesFixed Dashboard count issuesFixed Bill print issuesFixed some design issuesFixed some UI/UX issues Read More",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -3872,7 +3872,7 @@
    "slug": "survey-form",
    "count": 16,
    "blurb": "Building, publishing and filling survey forms.",
-   "description": "",
+   "description": "From the Survey Forms list, click the View Submissions action on any form to open its Submissions dashboard. The top of the page shows four quick summary tiles: Total Responses, Form Fields, Status and Schedule, followed by three tabs.Response StatisticsEvery Radio, Checkbox and Yes/No field gets a breakdown of votes and percentage per option, with a bar and a donut chart. Free-text fields",
    "articles": [
     {
      "title": "About Survey Form",
@@ -3977,7 +3977,7 @@
    "slug": "system-settings",
    "count": 26,
    "blurb": "Notification, SMS, e-mail, payment-method and general system configuration.",
-   "description": "",
+   "description": "SMS Setting To manage SMS setting, go to Setup > Settings > SMS Setting then select any SMS gateway from top of the page which you want to enable on your Smart Hospital then enter Auth Key, Sender Id and select Status and then click on Save button.Here we are providing 8 SMS Gateway namely Clickatell SMS Gateway, Twilio SMS Gateway, MSG91, Text Local, SMS Country, Bulk SMS, Mobi Read More",
    "articles": [
     {
      "title": "About Settings",
@@ -4142,7 +4142,7 @@
    "slug": "system-update",
    "count": 11,
    "blurb": "",
-   "description": "",
+   "description": "To check Smart Hospital current version or available new version login from superadmin panel and then go to Setup > Settings > System Update link. Here you can see your current Smart Hospital Version and if here any new version available for Smart Hospital then you can update your Smart Hospital through one click auto update feature (which will show only when new version available).",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -4217,7 +4217,7 @@
    "slug": "tpa-management",
    "count": 12,
    "blurb": "Insurance/TPA handling.",
-   "description": "",
+   "description": "Latest Articles Version 1.0 Version 1.0 Version 2.0 Version 2.0 Version 2.0 Version 7.0 How to enable WhatsApp for a Notification Event? How to configure WhatsApp using Twilio? How to configure WhatsApp using Meta (Cloud API)? About WhatsApp Messaging",
    "articles": [
     {
      "title": "About TPA",
@@ -4298,7 +4298,7 @@
    "slug": "two-factor-authentication",
    "count": 16,
    "blurb": "Google Authenticator based 2FA setup for superadmin and staff.",
-   "description": "",
+   "description": "How to Setup 2FA? Go to the your Smart Hospital to configure 2FA of Two Factor Authentication, two-step verification. For setup 2FA, go to the Two Factor Authentication module, which is shown in the left side bar. Now click on Setup 2FA, the Setup 2FA page will open.Note: For further processing, you need to set up Google Authenticator on your mobile device. Read More",
    "articles": [
     {
      "title": "About Two Factor Authentication",
@@ -4403,7 +4403,7 @@
    "slug": "whatsapp-messaging",
    "count": 10,
    "blurb": "WhatsApp Cloud API (Meta) and Twilio configuration, per-event enablement.",
-   "description": "",
+   "description": "Go to Setup \u2192 Settings \u2192 WhatsApp Setting from the sidebar. The Twilio WhatsApp tab is selected by default.Enter the following, taken from your Twilio Console:Twilio Account SID \u2014 required.Authentication Token \u2014 required. Once saved, this is masked and shown only as a hint on later visits.Registered Phone Number \u2014 the WhatsApp-enabled sender number linked to your Twilio account,",
    "articles": [
     {
      "title": "About WhatsApp Messaging",

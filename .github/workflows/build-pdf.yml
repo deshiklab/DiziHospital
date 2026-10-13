@@ -45,9 +45,18 @@ jobs:
           mkdir -p docs/build
           python3 tools/docs/build_html.py 2>&1 | tee docs/build/html.log
 
+      - name: Validate every screenshot reference
+        continue-on-error: true
+        run: |
+          mkdir -p docs/build
+          python3 tools/docs/validate_guide.py 2>&1 | tee docs/build/validation.log
+
       - name: Render PDF
+        id: render
+        continue-on-error: true
         run: |
           node tools/docs/pdf.js 2>&1 | tee docs/build/pdf.log
+          echo "pdf_exit=${PIPESTATUS[0]}" >> docs/build/pdf.log
           ls -la docs/*.pdf >> docs/build/pdf.log
 
       - name: Commit artefacts
@@ -66,3 +75,9 @@ jobs:
             git rebase -q -X theirs origin/arena/ac321db7-dizihospital || { git rebase --abort; git pull -q --no-rebase -X theirs origin arena/ac321db7-dizihospital; }
           done
           ls -la docs/*.pdf docs/*.md
+
+      - name: Verify screenshots (paths, decoding, PDF embedding)
+        if: always()
+        run: |
+          pip install --quiet pypdf || true
+          python3 tools/docs/assert_images.py 2>&1 | tee docs/build/assert.log
