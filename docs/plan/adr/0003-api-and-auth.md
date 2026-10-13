@@ -1,6 +1,6 @@
 # ADR 0003 — API style and authentication
 
-* Status: **Proposed** (pending decisions D2/D4)
+* Status: **Accepted** — decisions **D2 = Laravel (latest)** and **D4 = hybrid** (2026-10-14)
 * Date: 2026-10-14
 * Deciders: tech lead, security owner, clinical owner
 
@@ -14,11 +14,16 @@ optional TOTP 2FA, and privileged accounts are not forced to enrol.
 1. **API**: REST/JSON, OpenAPI 3.1 as the contract, generated clients in `packages/contracts`, `/api/v1` with
    additive-only evolution, RFC 9457 problem responses, `Idempotency-Key` required on money and clinical writes,
    transactional outbox for domain events.
-2. **Backend runtime**: Laravel 11 by default (PHP continuity with the existing codebase and team skills;
-   first-class queues, events, Eloquent, and easy coexistence with CodeIgniter during transition).
-   Alternative recorded: NestJS/TypeScript if the team prefers one language end-to-end.
-3. **Identity**: Keycloak (self-hostable, on-prem friendly) with OIDC; short-lived access tokens; rotating
-   refresh; **MFA mandatory** for Super Admin, Admin, Doctor, Pharmacist, Accountant and any role that can
+2. **Backend runtime**: **Laravel 13 on PHP 8.4** (D2 = latest; Laravel 13 supports PHP 8.3–8.5 and is
+   security-supported to March 2028). Production runtime: Octane on FrankenPHP for concurrency; Horizon for
+   queues; Reverb for live updates; Sanctum for first-party tokens; Pulse/Telescope for local observability.
+   Note that the legacy application is a black box (D1), so Laravel's advantage here is team continuity and
+   delivery speed, **not** code sharing with the legacy system — there is no shared code and no shared schema.
+   Alternative recorded and rejected for now: NestJS/TypeScript (one language end-to-end, but a second
+   runtime and a second hiring profile).
+3. **Identity**: Keycloak, self-hosted **on the edge node** so staff login works with the uplink down, with a
+   cloud Keycloak for the patient portal and remote staff federated one-way from the edge; OIDC; short-lived
+   access tokens; rotating refresh; **MFA mandatory** for Super Admin, Admin, Doctor, Pharmacist, Accountant and any role that can
    access clinical or financial records; WebAuthn supported for admins; password policy and lockout enforced.
 4. **Authorisation**: policy layer in the API (`can(action, resource)`), role + attribute based; every endpoint
    has a test asserting behaviour for all nine roles; UI hides what the API forbids, never the reverse.

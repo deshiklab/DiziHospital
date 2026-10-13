@@ -1,6 +1,6 @@
 # ADR 0002 — Frontend stack
 
-* Status: **Proposed** (pending decision D3)
+* Status: **Accepted** — decision **D3 = approved** (2026-10-14)
 * Date: 2026-10-14
 * Deciders: tech lead, designer, product owner
 
@@ -21,6 +21,11 @@ bilingual (Bangla/English) content. Team size is small; hiring in Dhaka favours 
 Next.js (App Router) + TypeScript + Tailwind + Radix/shadcn primitives, TanStack Query/Table/Virtual for data,
 React Hook Form + Zod for forms, next-intl for i18n, Storybook + Chromatic for the component contract, Playwright
 for E2E. PWA with an offline write queue for ward workflows.
+
+## Decision confirmed
+D3 approved on 2026-10-14. Implementation notes added: the offline write queue and its
+conflict classes are generated from the API's offline metadata (`01` §5.5), and every screen must be designed
+for three states — fresh, LAN-authoritative and offline-queued (`02` §11).
 
 ## Consequences
 * The design system (`packages/ui`) ships as a versioned package so both the new app and any future portal consume it.

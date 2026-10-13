@@ -1,30 +1,50 @@
-# ADR 0005 — Licensing, forking and vendor updates
+# ADR 0005 — No fork: clean-room rebuild, vendor relationship and exit policy
 
-* Status: **Accepted** (legal position to be confirmed by the sponsor)
-* Date: 2026-10-14
+* Status: **Accepted** (supersedes the fork/vendor-merge policy — decision **D1 = no vendor source code**)
+* Date: 2026-10-14 (revised)
 * Deciders: sponsor, legal, tech lead
 
 ## Context
-The product is commercially licensed (CodeCanyon, QDOCS Smart Hospital). The vendor ships frequently — v7.0
-introduced a new theme system, WhatsApp messaging, survey forms, a SaaS addon, message queue and ICD-10.
-Our modernization forks the product and adds substantial new code; if we simply "upgrade" via vendor packages
-we will overwrite our work, and if we fork blindly we lose vendor bug fixes and security patches.
+The product is commercially licensed (CodeCanyon / vendor distribution). Under decision D1 we **do not hold
+the source code**, so the fork-and-merge policy in the original version of this ADR is void: there is nothing
+to fork, no vendor branch to track, and no merge debt. What remains, and matters more than before, is:
+
+1. the legacy instance keeps running (and must stay licensed and supported) until the last module is migrated;
+2. our new platform must be provably **our own work** — no vendor code, assets, fonts, CSS, SQL or templates
+   copied into it;
+3. we must be able to **leave the vendor deliberately** — with our data, in readable formats, on our terms.
 
 ## Decision
-1. Our fork is **private**; the licence permits modification for one end product but not redistribution.
-   If DiziHospital is to be offered to other hospitals or as a hosted service, an extended/SaaS licence must be
-   purchased **before** Phase 0 ends.
-2. The vendor source lives in `legacy/` with a permanent `vendor/upstream` branch tracking vendor releases.
-3. Vendor updates are **merged, never copied**: a monthly sync merge into a `vendor/updates` branch, run through
-   the regression suite, then merged into the fork; **security fixes are cherry-picked immediately**.
-4. All local modifications to vendor files are recorded in `docs/vendor-modifications.md` (file, reason, date) so
-   a future merge can be reasoned about; new features are written in our own packages/modules, not patched into
-   vendor files.
-5. We track vendor licences and third-party dependencies (SBOM generated in CI) and review them quarterly.
+
+1. **Clean-room rule.** The new platform is written from (a) our own capture of observable behaviour,
+   (b) the vendor's published documentation (mirrored in `docs/help-library/`), and (c) requirements agreed with
+   the hospital. No vendor source, CSS, images, fonts, icons, SQL or templates are copied into this repository.
+   A CI check scans for vendor asset paths and known vendor file markers; the pull-request checklist asks the
+   question explicitly.
+2. **Two-team wall if source is ever obtained.** If the source is purchased later (for example to accelerate
+   the bridge), anyone who reads it may not write new-platform code, and vice versa. This protects the
+   clean-room position that lets us license or sell our platform later.
+3. **Request, don't patch.** Legacy defects and improvements go to the vendor as a ranked, evidenced list
+   (screenshots and reproduction steps from the capture). The subscription stays paid and documented. We do not
+   modify the vendor instance.
+4. **Change control during transition.** No vendor upgrade is installed within ±14 days of a module cutover
+   without the tech lead's written approval; upgrades are regression-tested against the bridge contract tests
+   before and after.
+5. **Data access is contractual.** The data-access addendum (`08` §2) — scope, transport, cadence, checksums,
+   change notice, credential custody, retention and exit clause — is signed before Phase 0 exits.
+6. **Exit is planned from day one.** Complete machine-readable export (CSV + Parquet), documents with checksums,
+   rendered PDFs of printable records, archive instance retention, credentials revoked and licences terminated
+   in writing at P9 (`08` §7, `06` §7).
+7. **Third-party inventory.** An SBOM is generated in CI; all dependencies (including the vendor's own
+   third-party components) are reviewed quarterly with legal.
 
 ## Consequences
-* Merge debt becomes visible and managed rather than discovered during an emergency upgrade.
-* Rebasing our own changes onto vendor releases has a recurring cost (estimated ~1 engineer-day per month plus
-  the regression run) — accepted deliberately.
-* Because the vendor's own roadmap overlaps ours (theme, WhatsApp, surveys), features are re-evaluated at each
-  phase gate: adopt the vendor's implementation, or build ours, but never both.
+* We can license, sell or open-source our platform without worrying about derivative-work claims; the cost is
+  the discipline of never copying — which is cheap now and expensive later if ignored.
+* Vendor defects that hurt safety (bulk delete without confirmation, hard-coded currency, mojibake headers)
+  remain until the module is replaced or the vendor fixes them → mitigated by leading the request list with
+  the safety-critical items and by replacing those modules early where practical.
+* Bridge work is larger than it would have been with a fork (~115 engineer-days; see `04` §6) — accepted as the
+  price of not depending on code we do not own.
+* Any future vendor upgrade carries a regression risk for rung-3/rung-4 bridge flows (`08` §4) → contract tests
+  plus volume caps plus kill switches.

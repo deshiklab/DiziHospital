@@ -1,6 +1,8 @@
 # ADR 0004 — Database engine strategy
 
-* Status: **Accepted**
+* Status: **Superseded by [ADR 0006](0006-primary-database.md)** (2026-10-14) — the shared-MySQL premise no
+  longer holds now that the legacy source is unavailable (D1) and the platform is hybrid (D4). Kept for the
+  record; do not implement.
 * Date: 2026-10-14
 * Deciders: tech lead, data engineer, DBA
 

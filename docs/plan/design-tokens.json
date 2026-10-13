@@ -2,130 +2,504 @@
   "$schema": "https://design-tokens.org/schema.json",
   "meta": {
     "name": "DiziHospital design tokens",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "note": "Source of truth for the new UI. Consumed by Style Dictionary into CSS variables and the Tailwind theme. Contrast for every text/surface pair is verified in CI (>= 4.5:1). The safety palette is reserved for clinical meaning and must never be used for decoration or brand."
   },
   "color": {
     "brand": {
-      "50":  { "value": "#E6F4F6" },
-      "100": { "value": "#C2E4E9" },
-      "300": { "value": "#5FB3BF" },
-      "500": { "value": "#0E6E7A", "comment": "primary" },
-      "600": { "value": "#0B5C66" },
-      "700": { "value": "#0A4F58", "comment": "pressed" },
-      "900": { "value": "#062F35" }
+      "50": {
+        "value": "#E6F4F6"
+      },
+      "100": {
+        "value": "#C2E4E9"
+      },
+      "300": {
+        "value": "#5FB3BF"
+      },
+      "500": {
+        "value": "#0E6E7A",
+        "comment": "primary"
+      },
+      "600": {
+        "value": "#0B5C66"
+      },
+      "700": {
+        "value": "#0A4F58",
+        "comment": "pressed"
+      },
+      "900": {
+        "value": "#062F35"
+      }
     },
     "surface": {
-      "canvas":  { "value": "#F7F9FB" },
-      "default": { "value": "#FFFFFF" },
-      "sunken":  { "value": "#EEF2F6" },
-      "raised":  { "value": "#FFFFFF" },
-      "inverse": { "value": "#101828" },
-      "overlay": { "value": "rgba(16, 24, 40, 0.40)" }
+      "canvas": {
+        "value": "#F7F9FB"
+      },
+      "default": {
+        "value": "#FFFFFF"
+      },
+      "sunken": {
+        "value": "#EEF2F6"
+      },
+      "raised": {
+        "value": "#FFFFFF"
+      },
+      "inverse": {
+        "value": "#101828"
+      },
+      "overlay": {
+        "value": "rgba(16, 24, 40, 0.40)"
+      }
     },
     "border": {
-      "subtle":  { "value": "#E4E9F0" },
-      "default": { "value": "#D7DEE7" },
-      "strong":  { "value": "#98A2B3" },
-      "focus":   { "value": "#0E6E7A" }
+      "subtle": {
+        "value": "#E4E9F0"
+      },
+      "default": {
+        "value": "#D7DEE7"
+      },
+      "strong": {
+        "value": "#98A2B3"
+      },
+      "focus": {
+        "value": "#0E6E7A"
+      }
     },
     "text": {
-      "primary":   { "value": "#101828" },
-      "secondary": { "value": "#475467" },
-      "tertiary":  { "value": "#667085" },
-      "disabled":  { "value": "#98A2B3" },
-      "inverse":   { "value": "#FFFFFF" },
-      "link":      { "value": "#0B5C66" }
+      "primary": {
+        "value": "#101828"
+      },
+      "secondary": {
+        "value": "#475467"
+      },
+      "tertiary": {
+        "value": "#667085"
+      },
+      "disabled": {
+        "value": "#98A2B3"
+      },
+      "inverse": {
+        "value": "#FFFFFF"
+      },
+      "link": {
+        "value": "#0B5C66"
+      }
     },
     "safety": {
-      "critical": { "value": "#B3261E", "bg": { "value": "#FDECEA" }, "border": { "value": "#F3B7B1" }, "text": { "value": "#7A1A15" } },
-      "warning":  { "value": "#B26B00", "bg": { "value": "#FFF6E5" }, "border": { "value": "#F2D396" }, "text": { "value": "#7A4A00" } },
-      "success":  { "value": "#1B7F4B", "bg": { "value": "#E8F6EE" }, "border": { "value": "#A9DCBF" }, "text": { "value": "#125B35" } },
-      "info":     { "value": "#1D4ED8", "bg": { "value": "#EAF0FF" }, "border": { "value": "#B9C8F7" }, "text": { "value": "#16389B" } }
+      "critical": {
+        "value": "#B3261E",
+        "bg": {
+          "value": "#FDECEA"
+        },
+        "border": {
+          "value": "#F3B7B1"
+        },
+        "text": {
+          "value": "#7A1A15"
+        }
+      },
+      "warning": {
+        "value": "#B26B00",
+        "bg": {
+          "value": "#FFF6E5"
+        },
+        "border": {
+          "value": "#F2D396"
+        },
+        "text": {
+          "value": "#7A4A00"
+        }
+      },
+      "success": {
+        "value": "#1B7F4B",
+        "bg": {
+          "value": "#E8F6EE"
+        },
+        "border": {
+          "value": "#A9DCBF"
+        },
+        "text": {
+          "value": "#125B35"
+        }
+      },
+      "info": {
+        "value": "#1D4ED8",
+        "bg": {
+          "value": "#EAF0FF"
+        },
+        "border": {
+          "value": "#B9C8F7"
+        },
+        "text": {
+          "value": "#16389B"
+        }
+      }
     },
     "clinical": {
-      "status-neutral":     { "value": "#667085" },
-      "status-admitted":    { "value": "#1D4ED8" },
-      "status-discharged":  { "value": "#1B7F4B" },
-      "status-in-progress": { "value": "#B26B00" },
-      "status-awaiting":    { "value": "#7C3AED" },
-      "status-cancelled":   { "value": "#667085" },
-      "status-no-show":     { "value": "#B26B00" },
-      "critical-value":     { "value": "#B3261E" },
-      "allergy":            { "value": "#B3261E" },
-      "interaction":        { "value": "#B26B00" }
+      "status-neutral": {
+        "value": "#667085"
+      },
+      "status-admitted": {
+        "value": "#1D4ED8"
+      },
+      "status-discharged": {
+        "value": "#1B7F4B"
+      },
+      "status-in-progress": {
+        "value": "#B26B00"
+      },
+      "status-awaiting": {
+        "value": "#7C3AED"
+      },
+      "status-cancelled": {
+        "value": "#667085"
+      },
+      "status-no-show": {
+        "value": "#B26B00"
+      },
+      "critical-value": {
+        "value": "#B3261E"
+      },
+      "allergy": {
+        "value": "#B3261E"
+      },
+      "interaction": {
+        "value": "#B26B00"
+      }
     },
     "chart": {
-      "series-1": { "value": "#0E6E7A" },
-      "series-2": { "value": "#1D4ED8" },
-      "series-3": { "value": "#7C3AED" },
-      "series-4": { "value": "#B26B00" },
-      "series-5": { "value": "#1B7F4B" },
-      "series-6": { "value": "#0F766E" },
-      "series-7": { "value": "#B3261E" },
-      "series-8": { "value": "#475467" }
+      "series-1": {
+        "value": "#0E6E7A"
+      },
+      "series-2": {
+        "value": "#1D4ED8"
+      },
+      "series-3": {
+        "value": "#7C3AED"
+      },
+      "series-4": {
+        "value": "#B26B00"
+      },
+      "series-5": {
+        "value": "#1B7F4B"
+      },
+      "series-6": {
+        "value": "#0F766E"
+      },
+      "series-7": {
+        "value": "#B3261E"
+      },
+      "series-8": {
+        "value": "#475467"
+      }
     }
   },
   "typography": {
     "family": {
-      "ui":      { "value": "'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif" },
-      "bengali": { "value": "'Noto Sans Bengali', 'Inter', sans-serif" },
-      "numeric": { "value": "'Inter', ui-monospace, monospace", "comment": "tabular numerals for money and clinical values" }
+      "ui": {
+        "value": "'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif"
+      },
+      "bengali": {
+        "value": "'Noto Sans Bengali', 'Inter', sans-serif"
+      },
+      "numeric": {
+        "value": "'Inter', ui-monospace, monospace",
+        "comment": "tabular numerals for money and clinical values"
+      }
     },
     "size": {
-      "xs":   { "value": "12px" },
-      "sm":   { "value": "13px" },
-      "base": { "value": "14px" },
-      "md":   { "value": "16px" },
-      "lg":   { "value": "18px" },
-      "xl":   { "value": "20px" },
-      "2xl":  { "value": "24px" },
-      "3xl":  { "value": "30px" },
-      "4xl":  { "value": "38px" }
+      "xs": {
+        "value": "12px"
+      },
+      "sm": {
+        "value": "13px"
+      },
+      "base": {
+        "value": "14px"
+      },
+      "md": {
+        "value": "16px"
+      },
+      "lg": {
+        "value": "18px"
+      },
+      "xl": {
+        "value": "20px"
+      },
+      "2xl": {
+        "value": "24px"
+      },
+      "3xl": {
+        "value": "30px"
+      },
+      "4xl": {
+        "value": "38px"
+      }
     },
-    "weight": { "regular": { "value": "400" }, "medium": { "value": "500" }, "semibold": { "value": "600" }, "bold": { "value": "700" } },
-    "lineHeight": { "tight": { "value": "1.25" }, "normal": { "value": "1.5" }, "relaxed": { "value": "1.65" } }
+    "weight": {
+      "regular": {
+        "value": "400"
+      },
+      "medium": {
+        "value": "500"
+      },
+      "semibold": {
+        "value": "600"
+      },
+      "bold": {
+        "value": "700"
+      }
+    },
+    "lineHeight": {
+      "tight": {
+        "value": "1.25"
+      },
+      "normal": {
+        "value": "1.5"
+      },
+      "relaxed": {
+        "value": "1.65"
+      }
+    }
   },
   "space": {
-    "0": { "value": "0px" }, "1": { "value": "4px" }, "2": { "value": "8px" }, "3": { "value": "12px" },
-    "4": { "value": "16px" }, "5": { "value": "20px" }, "6": { "value": "24px" }, "8": { "value": "32px" },
-    "10": { "value": "40px" }, "12": { "value": "48px" }, "16": { "value": "64px" }
+    "0": {
+      "value": "0px"
+    },
+    "1": {
+      "value": "4px"
+    },
+    "2": {
+      "value": "8px"
+    },
+    "3": {
+      "value": "12px"
+    },
+    "4": {
+      "value": "16px"
+    },
+    "5": {
+      "value": "20px"
+    },
+    "6": {
+      "value": "24px"
+    },
+    "8": {
+      "value": "32px"
+    },
+    "10": {
+      "value": "40px"
+    },
+    "12": {
+      "value": "48px"
+    },
+    "16": {
+      "value": "64px"
+    }
   },
-  "radius": { "sm": { "value": "6px" }, "md": { "value": "10px" }, "lg": { "value": "14px" }, "full": { "value": "9999px" } },
+  "radius": {
+    "sm": {
+      "value": "6px"
+    },
+    "md": {
+      "value": "10px"
+    },
+    "lg": {
+      "value": "14px"
+    },
+    "full": {
+      "value": "9999px"
+    }
+  },
   "elevation": {
-    "none": { "value": "none" },
-    "sm":   { "value": "0 1px 2px rgba(16,24,40,0.06)" },
-    "md":   { "value": "0 4px 12px rgba(16,24,40,0.10)" },
-    "lg":   { "value": "0 12px 32px rgba(16,24,40,0.16)" }
+    "none": {
+      "value": "none"
+    },
+    "sm": {
+      "value": "0 1px 2px rgba(16,24,40,0.06)"
+    },
+    "md": {
+      "value": "0 4px 12px rgba(16,24,40,0.10)"
+    },
+    "lg": {
+      "value": "0 12px 32px rgba(16,24,40,0.16)"
+    }
   },
   "motion": {
-    "duration": { "fast": { "value": "120ms" }, "base": { "value": "180ms" }, "slow": { "value": "240ms" } },
-    "easing": { "standard": { "value": "cubic-bezier(0.2, 0, 0, 1)" }, "entrance": { "value": "cubic-bezier(0, 0, 0.2, 1)" }, "exit": { "value": "cubic-bezier(0.4, 0, 1, 1)" } },
-    "reduced": { "value": "all durations collapse to 1ms when prefers-reduced-motion is set" }
+    "duration": {
+      "fast": {
+        "value": "120ms"
+      },
+      "base": {
+        "value": "180ms"
+      },
+      "slow": {
+        "value": "240ms"
+      }
+    },
+    "easing": {
+      "standard": {
+        "value": "cubic-bezier(0.2, 0, 0, 1)"
+      },
+      "entrance": {
+        "value": "cubic-bezier(0, 0, 0.2, 1)"
+      },
+      "exit": {
+        "value": "cubic-bezier(0.4, 0, 1, 1)"
+      }
+    },
+    "reduced": {
+      "value": "all durations collapse to 1ms when prefers-reduced-motion is set"
+    }
   },
   "density": {
-    "comfortable": { "rowHeight": { "value": "40px" }, "fieldHeight": { "value": "36px" }, "cellPaddingX": { "value": "12px" } },
-    "compact":     { "rowHeight": { "value": "32px" }, "fieldHeight": { "value": "30px" }, "cellPaddingX": { "value": "8px" } }
+    "comfortable": {
+      "rowHeight": {
+        "value": "40px"
+      },
+      "fieldHeight": {
+        "value": "36px"
+      },
+      "cellPaddingX": {
+        "value": "12px"
+      }
+    },
+    "compact": {
+      "rowHeight": {
+        "value": "32px"
+      },
+      "fieldHeight": {
+        "value": "30px"
+      },
+      "cellPaddingX": {
+        "value": "8px"
+      }
+    }
   },
   "breakpoint": {
-    "sm": { "value": "640px" }, "md": { "value": "768px" }, "lg": { "value": "1024px" },
-    "xl": { "value": "1280px", "comment": "minimum supported desktop width" }, "2xl": { "value": "1536px" }
+    "sm": {
+      "value": "640px"
+    },
+    "md": {
+      "value": "768px"
+    },
+    "lg": {
+      "value": "1024px"
+    },
+    "xl": {
+      "value": "1280px",
+      "comment": "minimum supported desktop width"
+    },
+    "2xl": {
+      "value": "1536px"
+    }
   },
   "target": {
-    "touch": { "value": "44px" },
-    "pointer": { "value": "28px" },
-    "focusRingWidth": { "value": "2px" },
-    "focusRingOffset": { "value": "2px" }
+    "touch": {
+      "value": "44px"
+    },
+    "pointer": {
+      "value": "28px"
+    },
+    "focusRingWidth": {
+      "value": "2px"
+    },
+    "focusRingOffset": {
+      "value": "2px"
+    }
   },
   "print": {
-    "a4": { "value": "210mm x 297mm" },
-    "a5": { "value": "148mm x 210mm" },
-    "thermal80": { "value": "80mm roll" },
-    "label": { "value": "50mm x 25mm specimen label" },
-    "margin": { "value": "12mm" }
+    "a4": {
+      "value": "210mm x 297mm"
+    },
+    "a5": {
+      "value": "148mm x 210mm"
+    },
+    "thermal80": {
+      "value": "80mm roll"
+    },
+    "label": {
+      "value": "50mm x 25mm specimen label"
+    },
+    "margin": {
+      "value": "12mm"
+    }
   },
   "zIndex": {
-    "base": { "value": "0" }, "sticky": { "value": "100" }, "drawer": { "value": "200" },
-    "dropdown": { "value": "300" }, "modal": { "value": "400" }, "toast": { "value": "500" }, "palette": { "value": "600" }
+    "base": {
+      "value": "0"
+    },
+    "sticky": {
+      "value": "100"
+    },
+    "drawer": {
+      "value": "200"
+    },
+    "dropdown": {
+      "value": "300"
+    },
+    "modal": {
+      "value": "400"
+    },
+    "toast": {
+      "value": "500"
+    },
+    "palette": {
+      "value": "600"
+    }
+  },
+  "sync": {
+    "note": "Connectivity and sync state. Colour is never the only signal - every state ships with an icon and a text label.",
+    "live": {
+      "value": "#1B7F4B",
+      "icon": "cloud-check",
+      "label": {
+        "en": "Synced",
+        "bn": "সিঙ্ক হয়েছে"
+      }
+    },
+    "lanOnly": {
+      "value": "#5A6B7B",
+      "icon": "lan",
+      "label": {
+        "en": "Local",
+        "bn": "লোকাল"
+      }
+    },
+    "queued": {
+      "value": "#B26B00",
+      "icon": "device-clock",
+      "label": {
+        "en": "Waiting to sync",
+        "bn": "সিঙ্কের অপেক্ষায়"
+      }
+    },
+    "syncing": {
+      "value": "#1D4ED8",
+      "icon": "cloud-arrow",
+      "label": {
+        "en": "Syncing",
+        "bn": "সিঙ্ক হচ্ছে"
+      }
+    },
+    "conflict": {
+      "value": "#B3261E",
+      "icon": "alert-triangle",
+      "label": {
+        "en": "Needs review",
+        "bn": "পর্যালোচনা প্রয়োজন"
+      }
+    },
+    "stale": {
+      "value": "#5A6B7B",
+      "icon": "clock-off",
+      "label": {
+        "en": "As of {time}",
+        "bn": "{time} অনুযায়ী"
+      }
+    },
+    "freshnessThresholdMinutes": {
+      "value": 5
+    }
   }
 }

@@ -160,14 +160,51 @@ next action.
 | Waiting room TV | Queue/token board in large-text mode, auto-refresh, Bangla/English toggle |
 | Printers | A4 reports/certificates, A5 prescriptions, thermal 80 mm receipts, label printers for specimens; every artifact has a PrintPreview and a print-CSS template; QR on printed items links back to the digital record |
 
-## 11. Design operations
+## 11. Offline, degraded-network and sync UX
+
+The platform runs on the hospital LAN and syncs to the cloud (D4), so **every screen exists in more than one
+network state**. Designing only the connected state is how offline systems lose nurses' trust.
+
+**Five states, always visible, never guessed** (tokens: `sync.*` in `design-tokens.json`):
+
+| State | What is true | What the UI shows | What is allowed |
+|---|---|---|---|
+| **Live** | Edge node reachable, sync lag < 60 s | nothing (no badge needed) | everything |
+| **LAN only** | Edge node reachable, uplink down | a quiet "Local · offline" pill in the header | everything, including writes; nothing is blocked |
+| **Queued** | Device offline, writes held in the PWA queue | per-record chip "Saved on this device · will sync" + a count in the header | reads from cache, writes to the queue, printing |
+| **Syncing** | Queue draining after reconnect | progress + "N of M synced", resolved by itself | everything |
+| **Conflict / stale** | Another node changed the same field, or cached data is older than the threshold | conflict chip + review inbox; stale data flagged with "as of HH:MM" | reads, and the review action |
+
+**Rules (all testable)**
+
+1. **Never say "saved" when only the device knows.** Two distinct confirmations: "Saved here" (queued) and
+   "Saved" (accepted by the edge node). Green ticks mean the server has it.
+2. **Never block clinical care on sync.** A conflict on a patient's phone number must not stop a nurse
+   documenting vitals; the conflict goes to a review queue with an owner and a deadline (one shift).
+3. **Every queued item is inspectable** — a staff-visible list of what has not yet been synced, per device,
+   with the ability to retry, and the reason when a write was rejected.
+4. **Print works offline** for the documents that matter at the counter: registration slip, prescription,
+   receipt, specimen label. Print templates are cached with the app.
+5. **Stale data is labelled, not hidden.** Any list older than the freshness threshold shows "as of 14:05"
+   and a refresh action; clinical decision screens show the age of the data they are displaying.
+6. **Degrade in a defined order**: writes queue → live updates stop (fall back to polling) → cross-node
+   features (portal, analytics) hide → print and local search keep working. Users never see a dead spinner.
+7. **Site mode is visible to staff** (`edge-authoritative` vs `cloud-direct`), because it changes which system
+   is authoritative and what they should do if something looks wrong.
+8. **One vocabulary, two languages.** Fixed strings, translated, not improvised: `Local`, `Synced`,
+   `Waiting to sync`, `Needs review`, `As of {time}`.
+
+**Test in CI:** every golden journey runs in three modes — connected, LAN-only with the uplink blocked, and
+offline-queued with a forced reconnect. A screen that has not been through the offline mode is not done.
+
+## 12. Design operations
 
 * **Figma library mirrors the code library 1:1** (same names, same tokens); tokens flow Figma → `design-tokens.json` → Style Dictionary → CSS/Tailwind, with a CI check that fails on drift.
 * **Storybook** is the contract: every component has stories, states (loading/empty/error/dense), a11y tests and visual-regression snapshots (Chromatic).
 * **Design review ritual** — weekly 45-minute critique; a screen is "design ready" only when it passes the checklist: patient context, keyboard path, error/empty/loading states, print behaviour, i18n length (+40 % text), a11y, and a task-time estimate.
 * **Design debt register** in `docs/plan/` — anything shipped with a compromise gets an entry with a removal trigger.
 
-## 12. Definition of a "modern" screen (checklist)
+## 13. Definition of a "modern" screen (checklist)
 
 - [ ] Reachable by URL, palette and sidebar; role-aware
 - [ ] Patient banner where clinical context applies
