@@ -1,0 +1,13 @@
+{
+ "title": "How to add an Event?",
+ "date": "Thu, 11 Nov, 2021",
+ "category": {
+  "name": "Front CMS",
+  "slug": "front-cms"
+ },
+ "url": "https://smart-hospital.in/article/how-to-add-an-event",
+ "slug": "how-to-add-an-event",
+ "body": "### How to add an Event?\n\nThu, 11 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Front CMS](https://smart-hospital.in/category/front-cms)\n\n---\n\nTo add event, go to\u00a0**Front CMS** **then click Down Arrow icon and then click on** **Add Event**\u00a0button present at top right corner in Page List page. Here you can add all events scheduled past/future in your hospital. To add new event click on **+ Add** button. Here enter **Event Title**, **Event Venue**, **Event Start Date**, **Event End Date**, **Description**, **SEO Detail Meta Title**, **Meta Keyword**, **Meta Description** then select Sidebar Setting, Featured Image then click on **Save** button.  \n  \n![add event link](../assets/how-to-add-an-event/1.jpg)\n\n![](../assets/how-to-add-an-event/2.jpg)  \n  \nYou can view this added event record at Event List page.  \n  \n![](../assets/how-to-add-an-event/3.jpg)\n\nTo edit event click on\u00a0**Edit**\u00a0icon and to delete page click on**Delete**\u00a0icon present in the Event list.",
+ "chars": 980,
+ "images": 3
+}

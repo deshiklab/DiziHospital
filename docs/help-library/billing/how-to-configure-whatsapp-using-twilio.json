@@ -1,0 +1,13 @@
+{
+ "title": "How to configure WhatsApp using Twilio?",
+ "date": "Sat, 25 Jul, 2026",
+ "category": {
+  "name": "WhatsApp Messaging",
+  "slug": "whatsapp-messaging"
+ },
+ "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+ "slug": "how-to-configure-whatsapp-using-twilio",
+ "body": "### How to configure WhatsApp using Twilio?\n\nSat, 25 Jul, 2026\n\n[Articles](https://smart-hospital.in/articles)[WhatsApp Messaging](https://smart-hospital.in/category/whatsapp-messaging)\n\n---\n\nGo to\u00a0**Setup \u2192 Settings \u2192 WhatsApp Setting**\u00a0from the sidebar. The\u00a0**Twilio WhatsApp**\u00a0tab is selected by default.  \n  \n![](../assets/how-to-configure-whatsapp-using-twilio/1.jpg)\n\nEnter the following, taken from your Twilio Console:\n\n* **Twilio Account SID**\u00a0\u2014 required.\n* **Authentication Token**\u00a0\u2014 required. Once saved, this is masked and shown only as a hint on later visits.\n* **Registered Phone Number**\u00a0\u2014 the WhatsApp-enabled sender number linked to your Twilio account, required.\n\nSet\u00a0**Status**\u00a0to\u00a0**Enabled**\u00a0and click\u00a0**Save**. Enabling Twilio here automatically disables the Meta WhatsApp provider, since only one can be active at a time.\n\n**Note:**\u00a0the phone number must already be approved for WhatsApp on your Twilio account (either the Twilio Sandbox for testing, or your own approved WhatsApp sender for production) before messages will actually deliver.",
+ "chars": 1064,
+ "images": 1
+}

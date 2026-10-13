@@ -1,0 +1,13 @@
+{
+ "title": "OPD Report",
+ "date": "Sat, 30 Oct, 2021",
+ "category": {
+  "name": "Reports",
+  "slug": "reports"
+ },
+ "url": "https://smart-hospital.in/article/opd-report",
+ "slug": "opd-report",
+ "body": "### OPD Report\n\nSat, 30 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Reports](https://smart-hospital.in/category/reports)\n\n---\n\nTo check patient OPD report, go to\u00a0**Reports > OPD Report**. Here select the\u00a0**Time Duration, Doctor, From Age, To Age, Gender,** **Symptoms**\u00a0 and **Findings** then click on**Search**\u00a0button. Here you can see patient OPD details like\u00a0**OPD No, Checkup ID, Patient Name, Doctor Name, Symptoms, Findings**\u00a0etc.  \n  \n![](../assets/opd-report/1.jpg)",
+ "chars": 487,
+ "images": 1
+}

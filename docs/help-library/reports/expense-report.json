@@ -1,0 +1,13 @@
+{
+ "title": "Expense Report",
+ "date": "Sat, 30 Oct, 2021",
+ "category": {
+  "name": "Reports",
+  "slug": "reports"
+ },
+ "url": "https://smart-hospital.in/article/expense-report",
+ "slug": "expense-report",
+ "body": "### Expense Report\n\nSat, 30 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Reports](https://smart-hospital.in/category/reports)\n\n---\n\nTo check Expense report, go to\u00a0**Reports > Expense** **Report**. Here select the\u00a0**Time Duration** then click on**Search**\u00a0button. Here you can see Expense details like\u00a0**Name, Invoice Number, Expense Head, Date, Amount** etc. Also you can download this report as PDF.  \n  \n![expense report](../assets/expense-report/1.jpg)",
+ "chars": 468,
+ "images": 1
+}

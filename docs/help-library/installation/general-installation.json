@@ -1,0 +1,13 @@
+{
+ "title": "General Installation",
+ "date": "Mon, 18 Oct, 2021",
+ "category": {
+  "name": "Getting Started",
+  "slug": "getting-started"
+ },
+ "url": "https://smart-hospital.in/article/general-installation",
+ "slug": "general-installation",
+ "body": "### General Installation\n\nMon, 18 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Getting Started](https://smart-hospital.in/category/getting-started)[Installation](https://smart-hospital.in/category/installation)\n\n---\n\nSmart Hospital comes with a simple automatic installer.\n\n#### - Configure database connection\n\nYou need to have previously setup database from the cPanel or your hosting provider.  \nHere is a good tutorial\u00a0[how to setup MySQL database in cPanel](https://www.namecheap.com/support/knowledgebase/article.aspx/9363/2180/how-to-create-and-maintain-mysql-databases-in-cpanel)\u00a0if you are not familiar with this.\n\n1. Login to cPanel by accessing www.yourdomain.com/cpanel and navigate go MySQL Databases.\n2. Create database first.\n3. Create user and setup your password.\n4. Add the user to database by selecting the database and the username.\n\n  \nMake sure you have checked All privileged when adding the user to database.\n\n#### - Install\n\nFind the folder\u00a0**smart\\_hospital\\_src**\u00a0in your downloaded package from Codecanyon. This folder contains complete source code files need to install Smart Hospital. Upload all the files under this folder to your hosting folder and navigate to your url\u00a0**http://yourdomain.com/**\u00a0. After hitting url\u00a0**http://yourdomain.com/**\u00a0system redirects to\u00a0**http://yourdomain.com/install/start**\u00a0to start installer.\n\nYou will need to pass the server requirements in order to install Smart Hospital.  \n  \n![](../assets/general-installation/1.jpg)\n\nClick\u00a0**Database Setup**\u00a0and populate the fields according to your database setup.\n\nIf any errors found while connecting you will be notified otherwise you should see the credentials screen.  \n  \n![](../assets/general-installation/2.jpg)\n\nEnter\u00a0**Super Admin Email and Password** for your Admin Panel Login.  \n  \n![](../assets/general-installation/3.jpg)  \n  \nGreat! You have successfully installed Smart Hospital. At last step click on\u00a0**Delete Install Directory and Login**\u00a0button to go to Admin Panel Login page.  \n  \n![](../assets/general-installation/4.jpg)\n\nIf you need help for installation, do not hesitate to open\u00a0[Support Ticket](http://support.qdocs.in/)\n\nAfter successful installation you need to setup few things about your hospital. Smart Hospital comes with some predefined data but you still need to configure them as per your hospital.",
+ "chars": 2352,
+ "images": 4
+}

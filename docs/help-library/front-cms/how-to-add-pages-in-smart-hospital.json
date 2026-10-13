@@ -1,0 +1,13 @@
+{
+ "title": "How to add Pages in Smart Hospital?",
+ "date": "Thu, 11 Nov, 2021",
+ "category": {
+  "name": "Front CMS",
+  "slug": "front-cms"
+ },
+ "url": "https://smart-hospital.in/article/how-to-add-pages-in-smart-hospital",
+ "slug": "how-to-add-pages-in-smart-hospital",
+ "body": "### How to add Pages in Smart Hospital?\n\nThu, 11 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Front CMS](https://smart-hospital.in/category/front-cms)\n\n---\n\nTo manage front website of Smart Hospital here by creating pages, menus, events, gallery, news.\n\nTo add pages, go to\u00a0**Front CMS** then click on **Add Page**\u00a0button present at top right corner in page list page, then enter the page\u00a0**Title,**\u00a0select\u00a0**Page Type**\u00a0(Standard, Events (page to show all Events), Notice (page to show all News/Notices) and Gallery (page to show all images/video Galleries) and\u00a0**Description, Add Media, SEO Detail**\u00a0click on\u00a0**Add (+)**\u00a0icon enter details here\u00a0**Meta Title, Meta Keyword, Meta Description**\u00a0and then select\u00a0**Sidebar Setting**\u00a0to show and hide sidebar and select\u00a0**Featured Image**\u00a0(featured image will be show only those themes or pages which have support for featured image) and then click on\u00a0**Save**\u00a0button.  \n  \n![add pages](../assets/how-to-add-pages-in-smart-hospital/1.jpg)\n\nYou can view this added record in the\u00a0**Page List**\u00a0page (Here you can see four by default page\u00a0**Home, Complain, Contact and 404 page**).  \n  \n![page list](../assets/how-to-add-pages-in-smart-hospital/2.jpg)\n\nTo edit page click on\u00a0**Edit**\u00a0icon and to delete page click on**Delete**\u00a0icon present in the page list.",
+ "chars": 1313,
+ "images": 2
+}

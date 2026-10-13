@@ -1,0 +1,4477 @@
+{
+ "categories": [
+  {
+   "name": "bug_report Known Issues",
+   "slug": "known-issues",
+   "url": "https://smart-hospital.in/category/known-issues",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "known-issues/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "known-issues/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "known-issues/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Getting Started (3)",
+   "slug": "getting-started",
+   "url": "https://smart-hospital.in/category/getting-started",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "How to register a Webfeb.com purchased License Code in Smart Hospital?",
+     "slug": "how-to-register-a-webfeb-com-purchased-license-code-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-register-a-webfeb-com-purchased-license-code-in-smart-hospital",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 1735,
+     "file": "getting-started/how-to-register-a-webfeb-com-purchased-license-code-in-smart-hospital.md"
+    },
+    {
+     "title": "General Overview",
+     "slug": "general-overview",
+     "url": "https://smart-hospital.in/article/general-overview",
+     "date": "Wed, 29 May, 2024",
+     "chars": 49250,
+     "file": "getting-started/general-overview.md"
+    },
+    {
+     "title": "Configure Smart Hospital To Use In Local LAN Network",
+     "slug": "configure-smart-hospital-to-use-in-local-lan-network",
+     "url": "https://smart-hospital.in/article/configure-smart-hospital-to-use-in-local-lan-network",
+     "date": "Mon, 07 Feb, 2022",
+     "chars": 1057,
+     "file": "getting-started/configure-smart-hospital-to-use-in-local-lan-network.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "getting-started/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "getting-started/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "getting-started/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "getting-started/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "getting-started/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "getting-started/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Installation(7)",
+   "slug": "installation",
+   "url": "https://smart-hospital.in/category/getting-started/installation",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "NGINX Installation",
+     "slug": "nginx-installation-1",
+     "url": "https://smart-hospital.in/article/nginx-installation-1",
+     "date": "Sat, 11 Mar, 2023",
+     "chars": 4394,
+     "file": "installation/nginx-installation-1.md"
+    },
+    {
+     "title": "Server Requirements",
+     "slug": "server-requirements-1",
+     "url": "https://smart-hospital.in/article/server-requirements-1",
+     "date": "Mon, 23 Sep, 2024",
+     "chars": 1684,
+     "file": "installation/server-requirements-1.md"
+    },
+    {
+     "title": "General Installation",
+     "slug": "general-installation",
+     "url": "https://smart-hospital.in/article/general-installation",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 2352,
+     "file": "installation/general-installation.md"
+    },
+    {
+     "title": "404 Or Page Not Found Error During Installation",
+     "slug": "404-or-page-not-found-error-during-installation-1",
+     "url": "https://smart-hospital.in/article/404-or-page-not-found-error-during-installation-1",
+     "date": "Sat, 23 Apr, 2022",
+     "chars": 724,
+     "file": "installation/404-or-page-not-found-error-during-installation-1.md"
+    },
+    {
+     "title": "IIS - Windows Server Installation",
+     "slug": "iis-windows-server-installation-1",
+     "url": "https://smart-hospital.in/article/iis-windows-server-installation-1",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 3189,
+     "file": "installation/iis-windows-server-installation-1.md"
+    },
+    {
+     "title": "Installation Issue",
+     "slug": "installation-issue-1",
+     "url": "https://smart-hospital.in/article/installation-issue-1",
+     "date": "Sat, 23 Apr, 2022",
+     "chars": 589,
+     "file": "installation/installation-issue-1.md"
+    },
+    {
+     "title": "Unable to connect my MySQL Database",
+     "slug": "unable-to-connect-my-mysql-database-1",
+     "url": "https://smart-hospital.in/article/unable-to-connect-my-mysql-database-1",
+     "date": "Sat, 23 Apr, 2022",
+     "chars": 708,
+     "file": "installation/unable-to-connect-my-mysql-database-1.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "installation/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "installation/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "installation/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "installation/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "installation/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "installation/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "System Update(1)",
+   "slug": "system-update",
+   "url": "https://smart-hospital.in/category/getting-started/system-update",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "System Update",
+     "slug": "system-update",
+     "url": "https://smart-hospital.in/article/system-update",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 658,
+     "file": "system-update/system-update.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "system-update/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "system-update/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "system-update/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "system-update/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "system-update/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "system-update/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Common Issues & Troubleshooting (13)",
+   "slug": "common-issues-troubleshooting",
+   "url": "https://smart-hospital.in/category/common-issues-troubleshooting",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "404 Or Page Not Found Error In Installation",
+     "slug": "404-or-page-not-found-error-in-installation",
+     "url": "https://smart-hospital.in/article/404-or-page-not-found-error-in-installation",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 687,
+     "file": "common-issues-troubleshooting/404-or-page-not-found-error-in-installation.md"
+    },
+    {
+     "title": "Enabling SSL In Smart Hospital",
+     "slug": "enabling-ssl-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/enabling-ssl-in-smart-hospital",
+     "date": "Tue, 09 Nov, 2021",
+     "chars": 502,
+     "file": "common-issues-troubleshooting/enabling-ssl-in-smart-hospital.md"
+    },
+    {
+     "title": "Unable To Login Or Missing Login URL",
+     "slug": "unable-to-login-or-missing-login-url",
+     "url": "https://smart-hospital.in/article/unable-to-login-or-missing-login-url",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 847,
+     "file": "common-issues-troubleshooting/unable-to-login-or-missing-login-url.md"
+    },
+    {
+     "title": "To Port Or Move Smart Hospital On New Server",
+     "slug": "to-port-or-move-smart-hospital-on-new-server",
+     "url": "https://smart-hospital.in/article/to-port-or-move-smart-hospital-on-new-server",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 725,
+     "file": "common-issues-troubleshooting/to-port-or-move-smart-hospital-on-new-server.md"
+    },
+    {
+     "title": "ONLY_FULL_GROUP_BY Issue On Server",
+     "slug": "only_full_group_by-issue-on-server",
+     "url": "https://smart-hospital.in/article/only_full_group_by-issue-on-server",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 1312,
+     "file": "common-issues-troubleshooting/only_full_group_by-issue-on-server.md"
+    },
+    {
+     "title": "LAN Access Networking Setup",
+     "slug": "lan-access-networking-setup",
+     "url": "https://smart-hospital.in/article/lan-access-networking-setup",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 1007,
+     "file": "common-issues-troubleshooting/lan-access-networking-setup.md"
+    },
+    {
+     "title": "Image Upload Not Working In Media Manager",
+     "slug": "image-upload-not-working-in-media-manager",
+     "url": "https://smart-hospital.in/article/image-upload-not-working-in-media-manager",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 925,
+     "file": "common-issues-troubleshooting/image-upload-not-working-in-media-manager.md"
+    },
+    {
+     "title": "Email Send Not Working",
+     "slug": "email-send-not-working",
+     "url": "https://smart-hospital.in/article/email-send-not-working",
+     "date": "Thu, 07 Aug, 2025",
+     "chars": 2995,
+     "file": "common-issues-troubleshooting/email-send-not-working.md"
+    },
+    {
+     "title": "Logo Is Not Updating",
+     "slug": "logo-is-not-updating",
+     "url": "https://smart-hospital.in/article/logo-is-not-updating",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 442,
+     "file": "common-issues-troubleshooting/logo-is-not-updating.md"
+    },
+    {
+     "title": "After adding staff or patient no email is receiving?",
+     "slug": "after-adding-staff-or-patient-no-email-is-receiving",
+     "url": "https://smart-hospital.in/article/after-adding-staff-or-patient-no-email-is-receiving",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 552,
+     "file": "common-issues-troubleshooting/after-adding-staff-or-patient-no-email-is-receiving.md"
+    },
+    {
+     "title": "Unable To Download Database SQL File",
+     "slug": "unable-to-download-database-sql-file",
+     "url": "https://smart-hospital.in/article/unable-to-download-database-sql-file",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 509,
+     "file": "common-issues-troubleshooting/unable-to-download-database-sql-file.md"
+    },
+    {
+     "title": "Avoid using special character",
+     "slug": "avoid-using-special-character",
+     "url": "https://smart-hospital.in/article/avoid-using-special-character",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 484,
+     "file": "common-issues-troubleshooting/avoid-using-special-character.md"
+    },
+    {
+     "title": "Does unicode character for languages supported in data export of table or datatable?",
+     "slug": "does-unicode-character-for-languages-supported-in-data-export-of-table-or-datatable",
+     "url": "https://smart-hospital.in/article/does-unicode-character-for-languages-supported-in-data-export-of-table-or-datatable",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 378,
+     "file": "common-issues-troubleshooting/does-unicode-character-for-languages-supported-in-data-export-of-table-or-datatable.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "common-issues-troubleshooting/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "common-issues-troubleshooting/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "common-issues-troubleshooting/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "common-issues-troubleshooting/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "common-issues-troubleshooting/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "common-issues-troubleshooting/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "FAQ (17)",
+   "slug": "faq",
+   "url": "https://smart-hospital.in/category/faq",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "Can I use special character in Smart Hospital?",
+     "slug": "can-i-use-special-character-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/can-i-use-special-character-in-smart-hospital",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 447,
+     "file": "faq/can-i-use-special-character-in-smart-hospital.md"
+    },
+    {
+     "title": "Can I use Smart Hospital for multi hospital or multi branch management?",
+     "slug": "can-i-use-smart-hospital-for-multi-hospital-or-multi-branch-management",
+     "url": "https://smart-hospital.in/article/can-i-use-smart-hospital-for-multi-hospital-or-multi-branch-management",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 502,
+     "file": "faq/can-i-use-smart-hospital-for-multi-hospital-or-multi-branch-management.md"
+    },
+    {
+     "title": "Can I use Smart Hospital without internet on localhost installation?",
+     "slug": "can-i-use-smart-hospital-without-internet-on-localhost-installation",
+     "url": "https://smart-hospital.in/article/can-i-use-smart-hospital-without-internet-on-localhost-installation",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 556,
+     "file": "faq/can-i-use-smart-hospital-without-internet-on-localhost-installation.md"
+    },
+    {
+     "title": "Can I use Smart Hospital on localhost or local LAN network?",
+     "slug": "can-i-use-smart-hospital-on-localhost-or-local-lan-network",
+     "url": "https://smart-hospital.in/article/can-i-use-smart-hospital-on-localhost-or-local-lan-network",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 565,
+     "file": "faq/can-i-use-smart-hospital-on-localhost-or-local-lan-network.md"
+    },
+    {
+     "title": "How to enable display error message?",
+     "slug": "how-to-enable-display-error-message",
+     "url": "https://smart-hospital.in/article/how-to-enable-display-error-message",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 1083,
+     "file": "faq/how-to-enable-display-error-message.md"
+    },
+    {
+     "title": "How to find my Envato Market Purchase Code for an item?",
+     "slug": "how-to-find-my-envato-market-purchase-code-for-an-item",
+     "url": "https://smart-hospital.in/article/how-to-find-my-envato-market-purchase-code-for-an-item",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 462,
+     "file": "faq/how-to-find-my-envato-market-purchase-code-for-an-item.md"
+    },
+    {
+     "title": "I have question, where should I ask?",
+     "slug": "i-have-question-where-should-i-ask",
+     "url": "https://smart-hospital.in/article/i-have-question-where-should-i-ask",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 384,
+     "file": "faq/i-have-question-where-should-i-ask.md"
+    },
+    {
+     "title": "How to check what version I am using?",
+     "slug": "how-to-check-what-version-i-am-using",
+     "url": "https://smart-hospital.in/article/how-to-check-what-version-i-am-using",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 336,
+     "file": "faq/how-to-check-what-version-i-am-using.md"
+    },
+    {
+     "title": "Does unicode character for languages supported in data export of table or datatable?",
+     "slug": "does-unicode-character-for-languages-supported-in-data-export-of-table-or-datatable-1",
+     "url": "https://smart-hospital.in/article/does-unicode-character-for-languages-supported-in-data-export-of-table-or-datatable-1",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 324,
+     "file": "faq/does-unicode-character-for-languages-supported-in-data-export-of-table-or-datatable-1.md"
+    },
+    {
+     "title": "Can I use Smart Hospital as SaaS or multi hospital application?",
+     "slug": "can-i-use-smart-hospital-as-saas-or-multi-hospital-application",
+     "url": "https://smart-hospital.in/article/can-i-use-smart-hospital-as-saas-or-multi-hospital-application",
+     "date": "Mon, 18 Oct, 2021",
+     "chars": 562,
+     "file": "faq/can-i-use-smart-hospital-as-saas-or-multi-hospital-application.md"
+    },
+    {
+     "title": "How to change text label in Smart Hospital.",
+     "slug": "how-to-change-text-label-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-change-text-label-in-smart-hospital",
+     "date": "Fri, 31 Dec, 2021",
+     "chars": 1256,
+     "file": "faq/how-to-change-text-label-in-smart-hospital.md"
+    },
+    {
+     "title": "Want to know about Smart Hospital Biometric Attendance App?",
+     "slug": "want-to-know-about-smart-hospital-biometric-attendance-app",
+     "url": "https://smart-hospital.in/article/want-to-know-about-smart-hospital-biometric-attendance-app",
+     "date": "Fri, 13 Sep, 2024",
+     "chars": 2145,
+     "file": "faq/want-to-know-about-smart-hospital-biometric-attendance-app.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "faq/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "faq/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "faq/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "faq/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "faq/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "faq/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Miscellaneous (6)",
+   "slug": "miscellaneous",
+   "url": "https://smart-hospital.in/category/miscellaneous",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Calendar",
+     "slug": "about-calendar",
+     "url": "https://smart-hospital.in/article/about-calendar",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 420,
+     "file": "miscellaneous/about-calendar.md"
+    },
+    {
+     "title": "How to add new event in calendar?",
+     "slug": "how-to-add-new-event-in-calendar",
+     "url": "https://smart-hospital.in/article/how-to-add-new-event-in-calendar",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 899,
+     "file": "miscellaneous/how-to-add-new-event-in-calendar.md"
+    },
+    {
+     "title": "How to add To Do List?",
+     "slug": "how-to-add-to-do-list",
+     "url": "https://smart-hospital.in/article/how-to-add-to-do-list",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 672,
+     "file": "miscellaneous/how-to-add-to-do-list.md"
+    },
+    {
+     "title": "About Chat",
+     "slug": "about-chat",
+     "url": "https://smart-hospital.in/article/about-chat",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 358,
+     "file": "miscellaneous/about-chat.md"
+    },
+    {
+     "title": "How to add contact in chat?",
+     "slug": "how-to-add-contact-in-chat",
+     "url": "https://smart-hospital.in/article/how-to-add-contact-in-chat",
+     "date": "Tue, 09 Nov, 2021",
+     "chars": 1038,
+     "file": "miscellaneous/how-to-add-contact-in-chat.md"
+    },
+    {
+     "title": "How to check Notification in Smart Hospital?",
+     "slug": "how-to-check-notification-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-check-notification-in-smart-hospital",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 849,
+     "file": "miscellaneous/how-to-check-notification-in-smart-hospital.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "miscellaneous/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "miscellaneous/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "miscellaneous/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "miscellaneous/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "miscellaneous/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "miscellaneous/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "System Settings (16)",
+   "slug": "system-settings",
+   "url": "https://smart-hospital.in/category/system-settings",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "Notification Setting",
+     "slug": "notification-setting",
+     "url": "https://smart-hospital.in/article/notification-setting",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 1575,
+     "file": "system-settings/notification-setting.md"
+    },
+    {
+     "title": "System Notification Setting",
+     "slug": "system-notification-setting",
+     "url": "https://smart-hospital.in/article/system-notification-setting",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 948,
+     "file": "system-settings/system-notification-setting.md"
+    },
+    {
+     "title": "SMS Setting",
+     "slug": "sms-setting",
+     "url": "https://smart-hospital.in/article/sms-setting",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 1165,
+     "file": "system-settings/sms-setting.md"
+    },
+    {
+     "title": "Email Setting",
+     "slug": "email-setting",
+     "url": "https://smart-hospital.in/article/email-setting",
+     "date": "Tue, 09 Nov, 2021",
+     "chars": 2748,
+     "file": "system-settings/email-setting.md"
+    },
+    {
+     "title": "Payment Methods",
+     "slug": "payment-methods",
+     "url": "https://smart-hospital.in/article/payment-methods",
+     "date": "Mon, 07 Jul, 2025",
+     "chars": 1603,
+     "file": "system-settings/payment-methods.md"
+    },
+    {
+     "title": "Front CMS Setting",
+     "slug": "front-cms-setting",
+     "url": "https://smart-hospital.in/article/front-cms-setting",
+     "date": "Thu, 23 May, 2024",
+     "chars": 861,
+     "file": "system-settings/front-cms-setting.md"
+    },
+    {
+     "title": "Prefix Setting",
+     "slug": "prefix-setting",
+     "url": "https://smart-hospital.in/article/prefix-setting",
+     "date": "Tue, 09 Nov, 2021",
+     "chars": 474,
+     "file": "system-settings/prefix-setting.md"
+    },
+    {
+     "title": "Roles Permission",
+     "slug": "roles-permission",
+     "url": "https://smart-hospital.in/article/roles-permission",
+     "date": "Thu, 02 Dec, 2021",
+     "chars": 1608,
+     "file": "system-settings/roles-permission.md"
+    },
+    {
+     "title": "Backup / Restore",
+     "slug": "backup-restore",
+     "url": "https://smart-hospital.in/article/backup-restore",
+     "date": "Wed, 11 Jan, 2023",
+     "chars": 1776,
+     "file": "system-settings/backup-restore.md"
+    },
+    {
+     "title": "About Settings",
+     "slug": "about-settings",
+     "url": "https://smart-hospital.in/article/about-settings",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 634,
+     "file": "system-settings/about-settings.md"
+    },
+    {
+     "title": "Language Setting",
+     "slug": "language-setting",
+     "url": "https://smart-hospital.in/article/language-setting",
+     "date": "Tue, 09 Nov, 2021",
+     "chars": 2217,
+     "file": "system-settings/language-setting.md"
+    },
+    {
+     "title": "Users",
+     "slug": "users",
+     "url": "https://smart-hospital.in/article/users",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 570,
+     "file": "system-settings/users.md"
+    },
+    {
+     "title": "Captcha Setting",
+     "slug": "captcha-setting",
+     "url": "https://smart-hospital.in/article/captcha-setting",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 1136,
+     "file": "system-settings/captcha-setting.md"
+    },
+    {
+     "title": "Modules",
+     "slug": "modules",
+     "url": "https://smart-hospital.in/article/modules",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 797,
+     "file": "system-settings/modules.md"
+    },
+    {
+     "title": "General Setting",
+     "slug": "general-setting-1",
+     "url": "https://smart-hospital.in/article/general-setting-1",
+     "date": "Wed, 06 Nov, 2024",
+     "chars": 1374,
+     "file": "system-settings/general-setting-1.md"
+    },
+    {
+     "title": "Attendance Setting",
+     "slug": "attendance-setting",
+     "url": "https://smart-hospital.in/article/attendance-setting",
+     "date": "Fri, 30 Aug, 2024",
+     "chars": 1430,
+     "file": "system-settings/attendance-setting.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "system-settings/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "system-settings/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "system-settings/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "system-settings/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "system-settings/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "system-settings/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Setup & Configuration (22)",
+   "slug": "setup-configuration",
+   "url": "https://smart-hospital.in/category/setup-configuration",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "Patient",
+     "slug": "patient",
+     "url": "https://smart-hospital.in/article/patient",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 1957,
+     "file": "setup-configuration/patient.md"
+    },
+    {
+     "title": "Hospital Charges",
+     "slug": "hospital-charges",
+     "url": "https://smart-hospital.in/article/hospital-charges",
+     "date": "Tue, 09 Nov, 2021",
+     "chars": 3124,
+     "file": "setup-configuration/hospital-charges.md"
+    },
+    {
+     "title": "Bed",
+     "slug": "bed",
+     "url": "https://smart-hospital.in/article/bed",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 2865,
+     "file": "setup-configuration/bed.md"
+    },
+    {
+     "title": "Print Header Footer",
+     "slug": "print-header-footer",
+     "url": "https://smart-hospital.in/article/print-header-footer",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 752,
+     "file": "setup-configuration/print-header-footer.md"
+    },
+    {
+     "title": "Front Office",
+     "slug": "front-office",
+     "url": "https://smart-hospital.in/article/front-office",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 1905,
+     "file": "setup-configuration/front-office.md"
+    },
+    {
+     "title": "Operations",
+     "slug": "operations",
+     "url": "https://smart-hospital.in/article/operations",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 1173,
+     "file": "setup-configuration/operations.md"
+    },
+    {
+     "title": "Pharmacy",
+     "slug": "pharmacy",
+     "url": "https://smart-hospital.in/article/pharmacy",
+     "date": "Sat, 25 May, 2024",
+     "chars": 3545,
+     "file": "setup-configuration/pharmacy.md"
+    },
+    {
+     "title": "Pathology",
+     "slug": "pathology",
+     "url": "https://smart-hospital.in/article/pathology",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 1531,
+     "file": "setup-configuration/pathology.md"
+    },
+    {
+     "title": "Radiology",
+     "slug": "radiology",
+     "url": "https://smart-hospital.in/article/radiology",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 1548,
+     "file": "setup-configuration/radiology.md"
+    },
+    {
+     "title": "Blood Bank",
+     "slug": "blood-bank",
+     "url": "https://smart-hospital.in/article/blood-bank",
+     "date": "Wed, 27 Oct, 2021",
+     "chars": 660,
+     "file": "setup-configuration/blood-bank.md"
+    },
+    {
+     "title": "Symptoms",
+     "slug": "symptoms",
+     "url": "https://smart-hospital.in/article/symptoms",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 1053,
+     "file": "setup-configuration/symptoms.md"
+    },
+    {
+     "title": "Findings",
+     "slug": "findings",
+     "url": "https://smart-hospital.in/article/findings",
+     "date": "Thu, 28 Oct, 2021",
+     "chars": 1267,
+     "file": "setup-configuration/findings.md"
+    },
+    {
+     "title": "Zoom Setting",
+     "slug": "zoom-setting",
+     "url": "https://smart-hospital.in/article/zoom-setting",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 1727,
+     "file": "setup-configuration/zoom-setting.md"
+    },
+    {
+     "title": "Finance",
+     "slug": "finance",
+     "url": "https://smart-hospital.in/article/finance",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 1012,
+     "file": "setup-configuration/finance.md"
+    },
+    {
+     "title": "Human Resource",
+     "slug": "human-resource",
+     "url": "https://smart-hospital.in/article/human-resource",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 1822,
+     "file": "setup-configuration/human-resource.md"
+    },
+    {
+     "title": "Referral",
+     "slug": "referral",
+     "url": "https://smart-hospital.in/article/referral",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 1263,
+     "file": "setup-configuration/referral.md"
+    },
+    {
+     "title": "Appointment",
+     "slug": "appointment",
+     "url": "https://smart-hospital.in/article/appointment",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 1365,
+     "file": "setup-configuration/appointment.md"
+    },
+    {
+     "title": "Inventory",
+     "slug": "inventory",
+     "url": "https://smart-hospital.in/article/inventory",
+     "date": "Wed, 20 Oct, 2021",
+     "chars": 995,
+     "file": "setup-configuration/inventory.md"
+    },
+    {
+     "title": "Custom Field",
+     "slug": "custom-field",
+     "url": "https://smart-hospital.in/article/custom-field",
+     "date": "Thu, 23 May, 2024",
+     "chars": 894,
+     "file": "setup-configuration/custom-field.md"
+    },
+    {
+     "title": "Setup Cron Job in cPanel",
+     "slug": "setup-cron-job-in-cpanel",
+     "url": "https://smart-hospital.in/article/setup-cron-job-in-cpanel",
+     "date": "Wed, 11 Jan, 2023",
+     "chars": 1134,
+     "file": "setup-configuration/setup-cron-job-in-cpanel.md"
+    },
+    {
+     "title": "How to create a master of vitals and their reference ranges?",
+     "slug": "how-to-create-a-master-of-vitals-and-their-reference-ranges",
+     "url": "https://smart-hospital.in/article/how-to-create-a-master-of-vitals-and-their-reference-ranges",
+     "date": "Fri, 30 Aug, 2024",
+     "chars": 1159,
+     "file": "setup-configuration/how-to-create-a-master-of-vitals-and-their-reference-ranges.md"
+    },
+    {
+     "title": "Zoom Setup",
+     "slug": "zoom-setup-smart-hospital",
+     "url": "https://smart-hospital.in/article/zoom-setup-smart-hospital",
+     "date": "Thu, 21 Nov, 2024",
+     "chars": 4632,
+     "file": "setup-configuration/zoom-setup-smart-hospital.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "setup-configuration/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "setup-configuration/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "setup-configuration/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "setup-configuration/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "setup-configuration/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "setup-configuration/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Billing (3)",
+   "slug": "billing",
+   "url": "https://smart-hospital.in/category/billing",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Billing",
+     "slug": "about-billing",
+     "url": "https://smart-hospital.in/article/about-billing",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 1669,
+     "file": "billing/about-billing.md"
+    },
+    {
+     "title": "Single Module Billing",
+     "slug": "single-module-billing",
+     "url": "https://smart-hospital.in/article/single-module-billing",
+     "date": "Mon, 27 May, 2024",
+     "chars": 8818,
+     "file": "billing/single-module-billing.md"
+    },
+    {
+     "title": "OPD/IPD Billing Through Case ID",
+     "slug": "opdipd-billing-through-case-id",
+     "url": "https://smart-hospital.in/article/opdipd-billing-through-case-id",
+     "date": "Sat, 25 May, 2024",
+     "chars": 7385,
+     "file": "billing/opdipd-billing-through-case-id.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "billing/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "billing/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "billing/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "billing/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "billing/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "billing/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Appointment (8)",
+   "slug": "appointment",
+   "url": "https://smart-hospital.in/category/appointment",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "How to direct open the patient details in Appointment?",
+     "slug": "how-to-direct-open-the-patient-details-in-appointment",
+     "url": "https://smart-hospital.in/article/how-to-direct-open-the-patient-details-in-appointment",
+     "date": "Tue, 22 Jul, 2025",
+     "chars": 782,
+     "file": "appointment/how-to-direct-open-the-patient-details-in-appointment.md"
+    },
+    {
+     "title": "How to add appointment in smart hospital?",
+     "slug": "how-to-add-appointment-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-appointment-in-smart-hospital",
+     "date": "Tue, 22 Jul, 2025",
+     "chars": 3201,
+     "file": "appointment/how-to-add-appointment-in-smart-hospital.md"
+    },
+    {
+     "title": "About Appointment",
+     "slug": "about-appointment",
+     "url": "https://smart-hospital.in/article/about-appointment",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 680,
+     "file": "appointment/about-appointment.md"
+    },
+    {
+     "title": "Setup for Appointment.",
+     "slug": "setup-for-appointment",
+     "url": "https://smart-hospital.in/article/setup-for-appointment",
+     "date": "Thu, 18 Nov, 2021",
+     "chars": 702,
+     "file": "appointment/setup-for-appointment.md"
+    },
+    {
+     "title": "How to enable Online Appointment for front site.",
+     "slug": "how-to-enable-online-appointment-for-front-site",
+     "url": "https://smart-hospital.in/article/how-to-enable-online-appointment-for-front-site",
+     "date": "Tue, 10 May, 2022",
+     "chars": 745,
+     "file": "appointment/how-to-enable-online-appointment-for-front-site.md"
+    },
+    {
+     "title": "How to book Appointment from front site?",
+     "slug": "how-to-book-appointment-from-front-site",
+     "url": "https://smart-hospital.in/article/how-to-book-appointment-from-front-site",
+     "date": "Wed, 29 Dec, 2021",
+     "chars": 2944,
+     "file": "appointment/how-to-book-appointment-from-front-site.md"
+    },
+    {
+     "title": "How to check Doctor wise Appointment.",
+     "slug": "how-to-check-doctor-wise-appointment",
+     "url": "https://smart-hospital.in/article/how-to-check-doctor-wise-appointment",
+     "date": "Wed, 29 Dec, 2021",
+     "chars": 895,
+     "file": "appointment/how-to-check-doctor-wise-appointment.md"
+    },
+    {
+     "title": "How to check appointment Queue?",
+     "slug": "how-to-check-appointment-queue",
+     "url": "https://smart-hospital.in/article/how-to-check-appointment-queue",
+     "date": "Wed, 29 Dec, 2021",
+     "chars": 1663,
+     "file": "appointment/how-to-check-appointment-queue.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "appointment/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "appointment/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "appointment/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "appointment/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "appointment/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "appointment/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "OPD - Out Patient (9)",
+   "slug": "opd-out-patient",
+   "url": "https://smart-hospital.in/category/opd-out-patient",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About OPD - Out Patient",
+     "slug": "about-opd-out-patient",
+     "url": "https://smart-hospital.in/article/about-opd-out-patient",
+     "date": "Tue, 22 Jul, 2025",
+     "chars": 840,
+     "file": "opd-out-patient/about-opd-out-patient.md"
+    },
+    {
+     "title": "How to add patient in OPD - Out Patient?",
+     "slug": "how-to-add-patient-in-opd-out-patient",
+     "url": "https://smart-hospital.in/article/how-to-add-patient-in-opd-out-patient",
+     "date": "Tue, 22 Jul, 2025",
+     "chars": 2473,
+     "file": "opd-out-patient/how-to-add-patient-in-opd-out-patient.md"
+    },
+    {
+     "title": "OPD Patient Visits",
+     "slug": "opd-patient-visits",
+     "url": "https://smart-hospital.in/article/opd-patient-visits",
+     "date": "Tue, 22 Jul, 2025",
+     "chars": 8138,
+     "file": "opd-out-patient/opd-patient-visits.md"
+    },
+    {
+     "title": "How to check OPD patient's profile?",
+     "slug": "how-to-check-opd-patients-profile",
+     "url": "https://smart-hospital.in/article/how-to-check-opd-patients-profile",
+     "date": "Fri, 12 Nov, 2021",
+     "chars": 1692,
+     "file": "opd-out-patient/how-to-check-opd-patients-profile.md"
+    },
+    {
+     "title": "How to Discharge patient from OPD?",
+     "slug": "how-to-discharge-patient-from-opd",
+     "url": "https://smart-hospital.in/article/how-to-discharge-patient-from-opd",
+     "date": "Sat, 02 Aug, 2025",
+     "chars": 2197,
+     "file": "opd-out-patient/how-to-discharge-patient-from-opd.md"
+    },
+    {
+     "title": "Overview of OPD View and Patient View page",
+     "slug": "overview-of-opd-view-and-patient-view-page",
+     "url": "https://smart-hospital.in/article/overview-of-opd-view-and-patient-view-page",
+     "date": "Fri, 30 Aug, 2024",
+     "chars": 4801,
+     "file": "opd-out-patient/overview-of-opd-view-and-patient-view-page.md"
+    },
+    {
+     "title": "How to add the vitals details of the patient in OPD - Out Patient ?",
+     "slug": "how-to-add-the-vitals-details-of-the-patient-in-opd-out-patient",
+     "url": "https://smart-hospital.in/article/how-to-add-the-vitals-details-of-the-patient-in-opd-out-patient",
+     "date": "Fri, 30 Aug, 2024",
+     "chars": 3270,
+     "file": "opd-out-patient/how-to-add-the-vitals-details-of-the-patient-in-opd-out-patient.md"
+    },
+    {
+     "title": "How to check the treatment history in OPD - Out Patient?",
+     "slug": "how-to-check-the-treatment-history-in-opd-out-patient",
+     "url": "https://smart-hospital.in/article/how-to-check-the-treatment-history-in-opd-out-patient",
+     "date": "Fri, 30 Aug, 2024",
+     "chars": 1604,
+     "file": "opd-out-patient/how-to-check-the-treatment-history-in-opd-out-patient.md"
+    },
+    {
+     "title": "BMI For OPD - Out Patient",
+     "slug": "bmi-for-opd-out-patient",
+     "url": "https://smart-hospital.in/article/bmi-for-opd-out-patient",
+     "date": "Fri, 30 Aug, 2024",
+     "chars": 483,
+     "file": "opd-out-patient/bmi-for-opd-out-patient.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "opd-out-patient/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "opd-out-patient/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "opd-out-patient/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "opd-out-patient/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "opd-out-patient/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "opd-out-patient/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "IPD - In Patient (19)",
+   "slug": "ipd-in-patient",
+   "url": "https://smart-hospital.in/category/ipd-in-patient",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "How to add the vitals details of the patient in IPD - In Patient ?",
+     "slug": "how-to-add-the-vitals-details-of-the-patient-in-ipd-in-patient",
+     "url": "https://smart-hospital.in/article/how-to-add-the-vitals-details-of-the-patient-in-ipd-in-patient",
+     "date": "Fri, 30 Aug, 2024",
+     "chars": 2599,
+     "file": "ipd-in-patient/how-to-add-the-vitals-details-of-the-patient-in-ipd-in-patient.md"
+    },
+    {
+     "title": "How to see the details for Previous Obstetric History, Postnatal History, and Antenatal History in IPD - In Patient?",
+     "slug": "how-to-see-the-details-for-previous-obstetric-history-postnatal-history-and-antenatal-history-in-ipd-in-patient",
+     "url": "https://smart-hospital.in/article/how-to-see-the-details-for-previous-obstetric-history-postnatal-history-and-antenatal-history-in-ipd-in-patient",
+     "date": "Fri, 30 Aug, 2024",
+     "chars": 1132,
+     "file": "ipd-in-patient/how-to-see-the-details-for-previous-obstetric-history-postnatal-history-and-antenatal-history-in-ipd-in-patient.md"
+    },
+    {
+     "title": "BMI For IPD - In Patient",
+     "slug": "bmi-for-ipd-in-patient",
+     "url": "https://smart-hospital.in/article/bmi-for-ipd-in-patient",
+     "date": "Fri, 30 Aug, 2024",
+     "chars": 477,
+     "file": "ipd-in-patient/bmi-for-ipd-in-patient.md"
+    },
+    {
+     "title": "About IPD - In Patient",
+     "slug": "about-ipd-in-patient",
+     "url": "https://smart-hospital.in/article/about-ipd-in-patient",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 544,
+     "file": "ipd-in-patient/about-ipd-in-patient.md"
+    },
+    {
+     "title": "IPD Overview",
+     "slug": "ipd-overview",
+     "url": "https://smart-hospital.in/article/ipd-overview",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 383,
+     "file": "ipd-in-patient/ipd-overview.md"
+    },
+    {
+     "title": "How to add IPD patient?",
+     "slug": "how-to-add-ipd-patient",
+     "url": "https://smart-hospital.in/article/how-to-add-ipd-patient",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 1218,
+     "file": "ipd-in-patient/how-to-add-ipd-patient.md"
+    },
+    {
+     "title": "IPD Nurse Notes",
+     "slug": "ipd-nurse-notes",
+     "url": "https://smart-hospital.in/article/ipd-nurse-notes",
+     "date": "Thu, 23 May, 2024",
+     "chars": 1347,
+     "file": "ipd-in-patient/ipd-nurse-notes.md"
+    },
+    {
+     "title": "IPD Medication",
+     "slug": "ipd-medication",
+     "url": "https://smart-hospital.in/article/ipd-medication",
+     "date": "Thu, 23 May, 2024",
+     "chars": 1275,
+     "file": "ipd-in-patient/ipd-medication.md"
+    },
+    {
+     "title": "IPD Prescription",
+     "slug": "ipd-prescription",
+     "url": "https://smart-hospital.in/article/ipd-prescription",
+     "date": "Wed, 15 May, 2024",
+     "chars": 1914,
+     "file": "ipd-in-patient/ipd-prescription.md"
+    },
+    {
+     "title": "Consultant Register",
+     "slug": "consultant-register",
+     "url": "https://smart-hospital.in/article/consultant-register",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 779,
+     "file": "ipd-in-patient/consultant-register.md"
+    },
+    {
+     "title": "IPD Lab Investigation",
+     "slug": "ipd-lab-investigation",
+     "url": "https://smart-hospital.in/article/ipd-lab-investigation",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 643,
+     "file": "ipd-in-patient/ipd-lab-investigation.md"
+    },
+    {
+     "title": "IPD Operations",
+     "slug": "ipd-operations",
+     "url": "https://smart-hospital.in/article/ipd-operations",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 1315,
+     "file": "ipd-in-patient/ipd-operations.md"
+    },
+    {
+     "title": "IPD Charges",
+     "slug": "ipd-charges",
+     "url": "https://smart-hospital.in/article/ipd-charges",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 756,
+     "file": "ipd-in-patient/ipd-charges.md"
+    },
+    {
+     "title": "IPD Payments",
+     "slug": "ipd-payments",
+     "url": "https://smart-hospital.in/article/ipd-payments",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 800,
+     "file": "ipd-in-patient/ipd-payments.md"
+    },
+    {
+     "title": "Live Consultation",
+     "slug": "live-consultation-1",
+     "url": "https://smart-hospital.in/article/live-consultation-1",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 375,
+     "file": "ipd-in-patient/live-consultation-1.md"
+    },
+    {
+     "title": "Bed History",
+     "slug": "bed-history",
+     "url": "https://smart-hospital.in/article/bed-history",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 491,
+     "file": "ipd-in-patient/bed-history.md"
+    },
+    {
+     "title": "Timeline -IPD In Patient",
+     "slug": "timeline-ipd-in-patient",
+     "url": "https://smart-hospital.in/article/timeline-ipd-in-patient",
+     "date": "Thu, 23 May, 2024",
+     "chars": 921,
+     "file": "ipd-in-patient/timeline-ipd-in-patient.md"
+    },
+    {
+     "title": "Treatment History",
+     "slug": "treatment-history",
+     "url": "https://smart-hospital.in/article/treatment-history",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 449,
+     "file": "ipd-in-patient/treatment-history.md"
+    },
+    {
+     "title": "How to Discharge patient from IPD?",
+     "slug": "how-to-discharge-patient-from-ipd",
+     "url": "https://smart-hospital.in/article/how-to-discharge-patient-from-ipd",
+     "date": "Tue, 30 Nov, 2021",
+     "chars": 1989,
+     "file": "ipd-in-patient/how-to-discharge-patient-from-ipd.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "ipd-in-patient/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "ipd-in-patient/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "ipd-in-patient/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "ipd-in-patient/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "ipd-in-patient/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "ipd-in-patient/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Pharmacy (6)",
+   "slug": "pharmacy",
+   "url": "https://smart-hospital.in/category/pharmacy",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Pharmacy.",
+     "slug": "about-pharmacy",
+     "url": "https://smart-hospital.in/article/about-pharmacy",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 762,
+     "file": "pharmacy/about-pharmacy.md"
+    },
+    {
+     "title": "How to add new Medicine?",
+     "slug": "how-to-add-new-medicine",
+     "url": "https://smart-hospital.in/article/how-to-add-new-medicine",
+     "date": "Mon, 10 Jun, 2024",
+     "chars": 724,
+     "file": "pharmacy/how-to-add-new-medicine.md"
+    },
+    {
+     "title": "How to Import Medicines?",
+     "slug": "how-to-import-medicines",
+     "url": "https://smart-hospital.in/article/how-to-import-medicines",
+     "date": "Mon, 15 Nov, 2021",
+     "chars": 587,
+     "file": "pharmacy/how-to-import-medicines.md"
+    },
+    {
+     "title": "How to add Medicine Stock?",
+     "slug": "how-to-add-medicine-stock",
+     "url": "https://smart-hospital.in/article/how-to-add-medicine-stock",
+     "date": "Wed, 27 Oct, 2021",
+     "chars": 850,
+     "file": "pharmacy/how-to-add-medicine-stock.md"
+    },
+    {
+     "title": "How to add Medicine Bad Stock?",
+     "slug": "how-to-add-medicine-bad-stock",
+     "url": "https://smart-hospital.in/article/how-to-add-medicine-bad-stock",
+     "date": "Mon, 15 Nov, 2021",
+     "chars": 756,
+     "file": "pharmacy/how-to-add-medicine-bad-stock.md"
+    },
+    {
+     "title": "How to generate Pharmacy Bill?",
+     "slug": "how-to-generate-pharmacy-bill",
+     "url": "https://smart-hospital.in/article/how-to-generate-pharmacy-bill",
+     "date": "Sun, 06 Jul, 2025",
+     "chars": 2261,
+     "file": "pharmacy/how-to-generate-pharmacy-bill.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "pharmacy/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "pharmacy/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "pharmacy/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "pharmacy/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "pharmacy/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "pharmacy/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Pathology (4)",
+   "slug": "pathology",
+   "url": "https://smart-hospital.in/category/pathology",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Pathology",
+     "slug": "about-pathology",
+     "url": "https://smart-hospital.in/article/about-pathology",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 809,
+     "file": "pathology/about-pathology.md"
+    },
+    {
+     "title": "How to add Pathology Test in Smart Hospital?",
+     "slug": "how-to-add-pathology-test-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-pathology-test-in-smart-hospital",
+     "date": "Wed, 10 Nov, 2021",
+     "chars": 716,
+     "file": "pathology/how-to-add-pathology-test-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add patient Pathology Test report in Smart Hospital?",
+     "slug": "how-to-add-patient-pathology-test-report-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-patient-pathology-test-report-in-smart-hospital",
+     "date": "Fri, 14 Jan, 2022",
+     "chars": 3322,
+     "file": "pathology/how-to-add-patient-pathology-test-report-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add/view Pathology Test payment?",
+     "slug": "how-to-addview-pathology-test-payment",
+     "url": "https://smart-hospital.in/article/how-to-addview-pathology-test-payment",
+     "date": "Wed, 10 Nov, 2021",
+     "chars": 541,
+     "file": "pathology/how-to-addview-pathology-test-payment.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "pathology/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "pathology/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "pathology/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "pathology/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "pathology/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "pathology/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Radiology (4)",
+   "slug": "radiology",
+   "url": "https://smart-hospital.in/category/radiology",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Radiology",
+     "slug": "about-radiology",
+     "url": "https://smart-hospital.in/article/about-radiology",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 791,
+     "file": "radiology/about-radiology.md"
+    },
+    {
+     "title": "How to add radiology test in Smart Hospital?",
+     "slug": "how-to-add-radiology-test-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-radiology-test-in-smart-hospital",
+     "date": "Wed, 10 Nov, 2021",
+     "chars": 948,
+     "file": "radiology/how-to-add-radiology-test-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add and generate patient Radiology test report in Smart Hospital?",
+     "slug": "how-to-add-and-generate-patient-radiology-test-report-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-and-generate-patient-radiology-test-report-in-smart-hospital",
+     "date": "Wed, 10 Nov, 2021",
+     "chars": 3611,
+     "file": "radiology/how-to-add-and-generate-patient-radiology-test-report-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add/view radiology test payment?",
+     "slug": "how-to-addview-radiology-test-payment",
+     "url": "https://smart-hospital.in/article/how-to-addview-radiology-test-payment",
+     "date": "Wed, 10 Nov, 2021",
+     "chars": 544,
+     "file": "radiology/how-to-addview-radiology-test-payment.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "radiology/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "radiology/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "radiology/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "radiology/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "radiology/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "radiology/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Blood Bank (6)",
+   "slug": "blood-bank",
+   "url": "https://smart-hospital.in/category/blood-bank",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Blood Bank",
+     "slug": "about-blood-bank",
+     "url": "https://smart-hospital.in/article/about-blood-bank",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 595,
+     "file": "blood-bank/about-blood-bank.md"
+    },
+    {
+     "title": "How to add Donor details in Blood Bank?",
+     "slug": "how-to-add-donor-details-in-blood-bank",
+     "url": "https://smart-hospital.in/article/how-to-add-donor-details-in-blood-bank",
+     "date": "Mon, 08 Nov, 2021",
+     "chars": 1675,
+     "file": "blood-bank/how-to-add-donor-details-in-blood-bank.md"
+    },
+    {
+     "title": "How to Issue Blood?",
+     "slug": "how-to-issue-blood",
+     "url": "https://smart-hospital.in/article/how-to-issue-blood",
+     "date": "Wed, 27 Oct, 2021",
+     "chars": 1390,
+     "file": "blood-bank/how-to-issue-blood.md"
+    },
+    {
+     "title": "How to add Component in Blood Bank?",
+     "slug": "how-to-add-component-in-blood-bank",
+     "url": "https://smart-hospital.in/article/how-to-add-component-in-blood-bank",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 860,
+     "file": "blood-bank/how-to-add-component-in-blood-bank.md"
+    },
+    {
+     "title": "How to issue Component in Blood Bank?",
+     "slug": "how-to-issue-component-in-blood-bank",
+     "url": "https://smart-hospital.in/article/how-to-issue-component-in-blood-bank",
+     "date": "Wed, 27 Oct, 2021",
+     "chars": 1523,
+     "file": "blood-bank/how-to-issue-component-in-blood-bank.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "blood-bank/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "blood-bank/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "blood-bank/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "blood-bank/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "blood-bank/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "blood-bank/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Ambulance (3)",
+   "slug": "ambulance",
+   "url": "https://smart-hospital.in/category/ambulance",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "How to add Ambulance?",
+     "slug": "how-to-add-ambulance",
+     "url": "https://smart-hospital.in/article/how-to-add-ambulance",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 679,
+     "file": "ambulance/how-to-add-ambulance.md"
+    },
+    {
+     "title": "How to add Ambulance Call?",
+     "slug": "how-to-add-ambulance-call",
+     "url": "https://smart-hospital.in/article/how-to-add-ambulance-call",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 830,
+     "file": "ambulance/how-to-add-ambulance-call.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "ambulance/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "ambulance/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "ambulance/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "ambulance/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "ambulance/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "ambulance/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Front Office (7)",
+   "slug": "front-office",
+   "url": "https://smart-hospital.in/category/front-office",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "How to add Postal Dispatch in Smart Hospital?",
+     "slug": "how-to-add-postal-dispatch-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-postal-dispatch-in-smart-hospital",
+     "date": "Wed, 17 Nov, 2021",
+     "chars": 924,
+     "file": "front-office/how-to-add-postal-dispatch-in-smart-hospital.md"
+    },
+    {
+     "title": "About Front Office",
+     "slug": "about-front-office",
+     "url": "https://smart-hospital.in/article/about-front-office",
+     "date": "Thu, 28 Oct, 2021",
+     "chars": 630,
+     "file": "front-office/about-front-office.md"
+    },
+    {
+     "title": "How to add Complain in Smart Hospital?",
+     "slug": "how-to-add-complain-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-complain-in-smart-hospital",
+     "date": "Thu, 28 Oct, 2021",
+     "chars": 898,
+     "file": "front-office/how-to-add-complain-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add Phone Call Log in Smart Hospital?",
+     "slug": "how-to-add-phone-call-log-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-phone-call-log-in-smart-hospital",
+     "date": "Thu, 28 Oct, 2021",
+     "chars": 971,
+     "file": "front-office/how-to-add-phone-call-log-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add postal receive in Smart Hospital?",
+     "slug": "how-to-add-postal-receive-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-postal-receive-in-smart-hospital",
+     "date": "Thu, 28 Oct, 2021",
+     "chars": 959,
+     "file": "front-office/how-to-add-postal-receive-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add visitor book?",
+     "slug": "how-to-add-visitor-book",
+     "url": "https://smart-hospital.in/article/how-to-add-visitor-book",
+     "date": "Thu, 28 Oct, 2021",
+     "chars": 901,
+     "file": "front-office/how-to-add-visitor-book.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "front-office/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "front-office/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "front-office/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "front-office/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "front-office/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "front-office/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Birth & Death Record (2)",
+   "slug": "birth-death-record",
+   "url": "https://smart-hospital.in/category/birth-death-record",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "How to add Birth Records?",
+     "slug": "how-to-add-birth-records",
+     "url": "https://smart-hospital.in/article/how-to-add-birth-records",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 950,
+     "file": "birth-death-record/how-to-add-birth-records.md"
+    },
+    {
+     "title": "How to add Death Records?",
+     "slug": "how-to-add-death-records",
+     "url": "https://smart-hospital.in/article/how-to-add-death-records",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 787,
+     "file": "birth-death-record/how-to-add-death-records.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "birth-death-record/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "birth-death-record/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "birth-death-record/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "birth-death-record/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "birth-death-record/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "birth-death-record/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Human Resource (13)",
+   "slug": "human-resource",
+   "url": "https://smart-hospital.in/category/human-resource",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Human Resource.",
+     "slug": "about-human-resource",
+     "url": "https://smart-hospital.in/article/about-human-resource",
+     "date": "Tue, 26 Oct, 2021",
+     "chars": 775,
+     "file": "human-resource/about-human-resource.md"
+    },
+    {
+     "title": "How to add Department?",
+     "slug": "how-to-add-department",
+     "url": "https://smart-hospital.in/article/how-to-add-department",
+     "date": "Tue, 26 Oct, 2021",
+     "chars": 503,
+     "file": "human-resource/how-to-add-department.md"
+    },
+    {
+     "title": "How to add Designation?",
+     "slug": "how-to-add-designation",
+     "url": "https://smart-hospital.in/article/how-to-add-designation",
+     "date": "Tue, 26 Oct, 2021",
+     "chars": 522,
+     "file": "human-resource/how-to-add-designation.md"
+    },
+    {
+     "title": "How to add Leave Type?",
+     "slug": "how-to-add-leave-type",
+     "url": "https://smart-hospital.in/article/how-to-add-leave-type",
+     "date": "Tue, 26 Oct, 2021",
+     "chars": 587,
+     "file": "human-resource/how-to-add-leave-type.md"
+    },
+    {
+     "title": "How to add Specialist?",
+     "slug": "how-to-add-specialist",
+     "url": "https://smart-hospital.in/article/how-to-add-specialist",
+     "date": "Tue, 26 Oct, 2021",
+     "chars": 741,
+     "file": "human-resource/how-to-add-specialist.md"
+    },
+    {
+     "title": "How to add Staff in Smart Hospital?",
+     "slug": "how-to-add-staff-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-staff-in-smart-hospital",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 1584,
+     "file": "human-resource/how-to-add-staff-in-smart-hospital.md"
+    },
+    {
+     "title": "How to apply Leave in Smart Hospital?",
+     "slug": "how-to-apply-leave-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-apply-leave-in-smart-hospital",
+     "date": "Thu, 02 Dec, 2021",
+     "chars": 1266,
+     "file": "human-resource/how-to-apply-leave-in-smart-hospital.md"
+    },
+    {
+     "title": "How to approve Leave Request?",
+     "slug": "how-to-approve-leave-request",
+     "url": "https://smart-hospital.in/article/how-to-approve-leave-request",
+     "date": "Tue, 26 Oct, 2021",
+     "chars": 871,
+     "file": "human-resource/how-to-approve-leave-request.md"
+    },
+    {
+     "title": "How to generate Payroll?",
+     "slug": "how-to-generate-payroll",
+     "url": "https://smart-hospital.in/article/how-to-generate-payroll",
+     "date": "Tue, 26 Oct, 2021",
+     "chars": 2436,
+     "file": "human-resource/how-to-generate-payroll.md"
+    },
+    {
+     "title": "How to import Staff?",
+     "slug": "how-to-import-staff",
+     "url": "https://smart-hospital.in/article/how-to-import-staff",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 1075,
+     "file": "human-resource/how-to-import-staff.md"
+    },
+    {
+     "title": "How to view disabled Staff?",
+     "slug": "how-to-view-disabled-staff",
+     "url": "https://smart-hospital.in/article/how-to-view-disabled-staff",
+     "date": "Tue, 26 Oct, 2021",
+     "chars": 1001,
+     "file": "human-resource/how-to-view-disabled-staff.md"
+    },
+    {
+     "title": "How to view Staff Attendance?",
+     "slug": "how-to-view-staff-attendance",
+     "url": "https://smart-hospital.in/article/how-to-view-staff-attendance",
+     "date": "Tue, 26 Oct, 2021",
+     "chars": 436,
+     "file": "human-resource/how-to-view-staff-attendance.md"
+    },
+    {
+     "title": "How to mark staff attendance?",
+     "slug": "how-to-mark-staff-attendance",
+     "url": "https://smart-hospital.in/article/how-to-mark-staff-attendance",
+     "date": "Sat, 02 Aug, 2025",
+     "chars": 1001,
+     "file": "human-resource/how-to-mark-staff-attendance.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "human-resource/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "human-resource/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "human-resource/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "human-resource/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "human-resource/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "human-resource/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "QR Code Attendance (3)",
+   "slug": "qr-code-attendance",
+   "url": "https://smart-hospital.in/category/qr-code-attendance",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About QR Code Attendance",
+     "slug": "about-qr-code-attendance",
+     "url": "https://smart-hospital.in/article/about-qr-code-attendance",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 1218,
+     "file": "qr-code-attendance/about-qr-code-attendance.md"
+    },
+    {
+     "title": "How to disable the auto attendance and mark the attendance of hospital staff using QR Code / Barcode?",
+     "slug": "how-to-disable-the-auto-attendance-and-mark-the-attendance-of-hospital-staff-using-qr-code-barcode",
+     "url": "https://smart-hospital.in/article/how-to-disable-the-auto-attendance-and-mark-the-attendance-of-hospital-staff-using-qr-code-barcode",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 3464,
+     "file": "qr-code-attendance/how-to-disable-the-auto-attendance-and-mark-the-attendance-of-hospital-staff-using-qr-code-barcode.md"
+    },
+    {
+     "title": "How to enable the auto attendance and mark the attendance of hospital staff using QR Code / Barcode",
+     "slug": "how-to-enable-the-auto-attendance-and-mark-the-attendance-of-hospital-staff-using-qr-code-barcode",
+     "url": "https://smart-hospital.in/article/how-to-enable-the-auto-attendance-and-mark-the-attendance-of-hospital-staff-using-qr-code-barcode",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 3185,
+     "file": "qr-code-attendance/how-to-enable-the-auto-attendance-and-mark-the-attendance-of-hospital-staff-using-qr-code-barcode.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "qr-code-attendance/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "qr-code-attendance/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "qr-code-attendance/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "qr-code-attendance/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "qr-code-attendance/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "qr-code-attendance/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Survey Form (6)",
+   "slug": "survey-form",
+   "url": "https://smart-hospital.in/category/survey-form",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Survey Form",
+     "slug": "about-survey-form",
+     "url": "https://smart-hospital.in/article/about-survey-form",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1519,
+     "file": "survey-form/about-survey-form.md"
+    },
+    {
+     "title": "How to add Fields to a Survey Form?",
+     "slug": "how-to-add-fields-to-a-survey-form",
+     "url": "https://smart-hospital.in/article/how-to-add-fields-to-a-survey-form",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1664,
+     "file": "survey-form/how-to-add-fields-to-a-survey-form.md"
+    },
+    {
+     "title": "How to create a Survey Form?",
+     "slug": "how-to-create-a-survey-form",
+     "url": "https://smart-hospital.in/article/how-to-create-a-survey-form",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1524,
+     "file": "survey-form/how-to-create-a-survey-form.md"
+    },
+    {
+     "title": "How to fill a Survey Form? (Staff / Patient / Public)",
+     "slug": "how-to-fill-a-survey-form-staff-patient-public",
+     "url": "https://smart-hospital.in/article/how-to-fill-a-survey-form-staff-patient-public",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 2003,
+     "file": "survey-form/how-to-fill-a-survey-form-staff-patient-public.md"
+    },
+    {
+     "title": "How to Publish and Share a Survey Form?",
+     "slug": "how-to-publish-and-share-a-survey-form",
+     "url": "https://smart-hospital.in/article/how-to-publish-and-share-a-survey-form",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1569,
+     "file": "survey-form/how-to-publish-and-share-a-survey-form.md"
+    },
+    {
+     "title": "How to view Survey Form Submissions?",
+     "slug": "how-to-view-survey-form-submissions",
+     "url": "https://smart-hospital.in/article/how-to-view-survey-form-submissions",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1298,
+     "file": "survey-form/how-to-view-survey-form-submissions.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "survey-form/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "survey-form/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "survey-form/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "survey-form/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "survey-form/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "survey-form/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "WhatsApp Messaging (4)",
+   "slug": "whatsapp-messaging",
+   "url": "https://smart-hospital.in/category/whatsapp-messaging",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "whatsapp-messaging/about-whatsapp-messaging.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "whatsapp-messaging/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "whatsapp-messaging/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "whatsapp-messaging/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "whatsapp-messaging/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "whatsapp-messaging/version-7-0.md"
+    }
+   ]
+  },
+  {
+   "name": "Duty Roster (4)",
+   "slug": "duty-roster",
+   "url": "https://smart-hospital.in/category/duty-roster",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "How to search the duty roster?",
+     "slug": "how-to-search-the-duty-roster",
+     "url": "https://smart-hospital.in/article/how-to-search-the-duty-roster",
+     "date": "Thu, 05 Sep, 2024",
+     "chars": 1155,
+     "file": "duty-roster/how-to-search-the-duty-roster.md"
+    },
+    {
+     "title": "How to add the shift in duty roster?",
+     "slug": "how-to-add-the-shift-in-duty-roster",
+     "url": "https://smart-hospital.in/article/how-to-add-the-shift-in-duty-roster",
+     "date": "Thu, 05 Sep, 2024",
+     "chars": 1521,
+     "file": "duty-roster/how-to-add-the-shift-in-duty-roster.md"
+    },
+    {
+     "title": "How to add the roster in duty roster module?",
+     "slug": "how-to-add-the-roster-in-duty-roster-module",
+     "url": "https://smart-hospital.in/article/how-to-add-the-roster-in-duty-roster-module",
+     "date": "Thu, 05 Sep, 2024",
+     "chars": 1730,
+     "file": "duty-roster/how-to-add-the-roster-in-duty-roster-module.md"
+    },
+    {
+     "title": "How to assign the roster to the staff?",
+     "slug": "how-to-assign-the-roster-to-the-staff",
+     "url": "https://smart-hospital.in/article/how-to-assign-the-roster-to-the-staff",
+     "date": "Thu, 05 Sep, 2024",
+     "chars": 1883,
+     "file": "duty-roster/how-to-assign-the-roster-to-the-staff.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "duty-roster/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "duty-roster/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "duty-roster/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "duty-roster/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "duty-roster/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "duty-roster/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Annual Calendar (4)",
+   "slug": "annual-calendar",
+   "url": "https://smart-hospital.in/category/annual-calendar",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "How to add holiday in annual calendar on smart hospital?",
+     "slug": "how-to-add-holiday-in-annual-calendar-on-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-holiday-in-annual-calendar-on-smart-hospital",
+     "date": "Thu, 05 Sep, 2024",
+     "chars": 3261,
+     "file": "annual-calendar/how-to-add-holiday-in-annual-calendar-on-smart-hospital.md"
+    },
+    {
+     "title": "How to add activity in annual calendar?",
+     "slug": "how-to-add-activity-in-annual-calendar",
+     "url": "https://smart-hospital.in/article/how-to-add-activity-in-annual-calendar",
+     "date": "Thu, 05 Sep, 2024",
+     "chars": 3096,
+     "file": "annual-calendar/how-to-add-activity-in-annual-calendar.md"
+    },
+    {
+     "title": "How to add vacation in annual calendar?",
+     "slug": "how-to-add-vacation-in-annual-calendar",
+     "url": "https://smart-hospital.in/article/how-to-add-vacation-in-annual-calendar",
+     "date": "Tue, 03 Sep, 2024",
+     "chars": 3003,
+     "file": "annual-calendar/how-to-add-vacation-in-annual-calendar.md"
+    },
+    {
+     "title": "How to show annual calendar tab on front site of smart hospital?",
+     "slug": "how-to-show-annual-calendar-tab-on-front-site-of-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-show-annual-calendar-tab-on-front-site-of-smart-hospital",
+     "date": "Mon, 02 Sep, 2024",
+     "chars": 3038,
+     "file": "annual-calendar/how-to-show-annual-calendar-tab-on-front-site-of-smart-hospital.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "annual-calendar/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "annual-calendar/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "annual-calendar/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "annual-calendar/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "annual-calendar/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "annual-calendar/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Multi Branch (7)",
+   "slug": "multi-branch",
+   "url": "https://smart-hospital.in/category/multi-branch",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Multi Branch",
+     "slug": "about-multi-branch",
+     "url": "https://smart-hospital.in/article/about-multi-branch",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 476,
+     "file": "multi-branch/about-multi-branch.md"
+    },
+    {
+     "title": "How to add the new branch in smart hospital home branch?",
+     "slug": "how-to-add-the-new-branch-in-smart-hospital-home-branch",
+     "url": "https://smart-hospital.in/article/how-to-add-the-new-branch-in-smart-hospital-home-branch",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 1710,
+     "file": "multi-branch/how-to-add-the-new-branch-in-smart-hospital-home-branch.md"
+    },
+    {
+     "title": "How to edit a branch?",
+     "slug": "how-to-edit-a-branch",
+     "url": "https://smart-hospital.in/article/how-to-edit-a-branch",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 522,
+     "file": "multi-branch/how-to-edit-a-branch.md"
+    },
+    {
+     "title": "How to delete the branch?",
+     "slug": "how-to-delete-the-branch",
+     "url": "https://smart-hospital.in/article/how-to-delete-the-branch",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 433,
+     "file": "multi-branch/how-to-delete-the-branch.md"
+    },
+    {
+     "title": "How to switch the branch?",
+     "slug": "how-to-switch-the-branch",
+     "url": "https://smart-hospital.in/article/how-to-switch-the-branch",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 542,
+     "file": "multi-branch/how-to-switch-the-branch.md"
+    },
+    {
+     "title": "How to check Multi Branch overview?",
+     "slug": "how-to-check-multi-branch-overview",
+     "url": "https://smart-hospital.in/article/how-to-check-multi-branch-overview",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 14784,
+     "file": "multi-branch/how-to-check-multi-branch-overview.md"
+    },
+    {
+     "title": "How to check multi branch report in smart Hospital?",
+     "slug": "how-to-check-multi-branch-report-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-check-multi-branch-report-in-smart-hospital",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 25954,
+     "file": "multi-branch/how-to-check-multi-branch-report-in-smart-hospital.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "multi-branch/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "multi-branch/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "multi-branch/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "multi-branch/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "multi-branch/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "multi-branch/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Referral (3)",
+   "slug": "referral",
+   "url": "https://smart-hospital.in/category/referral",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Referral.",
+     "slug": "about-referral",
+     "url": "https://smart-hospital.in/article/about-referral",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 557,
+     "file": "referral/about-referral.md"
+    },
+    {
+     "title": "How to add Referral Person?",
+     "slug": "how-to-add-referral-person",
+     "url": "https://smart-hospital.in/article/how-to-add-referral-person",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 956,
+     "file": "referral/how-to-add-referral-person.md"
+    },
+    {
+     "title": "How to add Referral Payment?",
+     "slug": "how-to-add-referral-payment",
+     "url": "https://smart-hospital.in/article/how-to-add-referral-payment",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 794,
+     "file": "referral/how-to-add-referral-payment.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "referral/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "referral/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "referral/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "referral/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "referral/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "referral/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "TPA Management (2)",
+   "slug": "tpa-management",
+   "url": "https://smart-hospital.in/category/tpa-management",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About TPA",
+     "slug": "about-tpa",
+     "url": "https://smart-hospital.in/article/about-tpa",
+     "date": "Wed, 10 Nov, 2021",
+     "chars": 599,
+     "file": "tpa-management/about-tpa.md"
+    },
+    {
+     "title": "TPA Management",
+     "slug": "tpa-management",
+     "url": "https://smart-hospital.in/article/tpa-management",
+     "date": "Wed, 10 Nov, 2021",
+     "chars": 2886,
+     "file": "tpa-management/tpa-management.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "tpa-management/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "tpa-management/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "tpa-management/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "tpa-management/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "tpa-management/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "tpa-management/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Messaging (4)",
+   "slug": "messaging",
+   "url": "https://smart-hospital.in/category/messaging",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "How Notice Board works?",
+     "slug": "how-notice-board-works",
+     "url": "https://smart-hospital.in/article/how-notice-board-works",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 705,
+     "file": "messaging/how-notice-board-works.md"
+    },
+    {
+     "title": "How send SMS in Smart Hospital?",
+     "slug": "how-send-sms-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-send-sms-in-smart-hospital",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 1376,
+     "file": "messaging/how-send-sms-in-smart-hospital.md"
+    },
+    {
+     "title": "How to send Email in Smart Hospital?",
+     "slug": "how-to-send-email-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-send-email-in-smart-hospital",
+     "date": "Mon, 01 Nov, 2021",
+     "chars": 1125,
+     "file": "messaging/how-to-send-email-in-smart-hospital.md"
+    },
+    {
+     "title": "How send patient credential in Smart Hospital?",
+     "slug": "how-send-patient-credential-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-send-patient-credential-in-smart-hospital",
+     "date": "Fri, 30 Aug, 2024",
+     "chars": 1329,
+     "file": "messaging/how-send-patient-credential-in-smart-hospital.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "messaging/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "messaging/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "messaging/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "messaging/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "messaging/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "messaging/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Two Factor Authentication (6)",
+   "slug": "two-factor-authentication",
+   "url": "https://smart-hospital.in/category/two-factor-authentication",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Two Factor Authentication",
+     "slug": "about-two-factor-authentication",
+     "url": "https://smart-hospital.in/article/about-two-factor-authentication",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 1462,
+     "file": "two-factor-authentication/about-two-factor-authentication.md"
+    },
+    {
+     "title": "How to Setup 2FA?",
+     "slug": "how-to-setup-2fa",
+     "url": "https://smart-hospital.in/article/how-to-setup-2fa",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 597,
+     "file": "two-factor-authentication/how-to-setup-2fa.md"
+    },
+    {
+     "title": "How to Install the Google Authenticator app on a mobile device?",
+     "slug": "how-to-install-the-google-authenticator-app-on-a-mobile-device",
+     "url": "https://smart-hospital.in/article/how-to-install-the-google-authenticator-app-on-a-mobile-device",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 1477,
+     "file": "two-factor-authentication/how-to-install-the-google-authenticator-app-on-a-mobile-device.md"
+    },
+    {
+     "title": "How to delete the 2FA account for superadmin or staff?",
+     "slug": "how-to-delete-the-2fa-account-for-superadmin-or-staff",
+     "url": "https://smart-hospital.in/article/how-to-delete-the-2fa-account-for-superadmin-or-staff",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 976,
+     "file": "two-factor-authentication/how-to-delete-the-2fa-account-for-superadmin-or-staff.md"
+    },
+    {
+     "title": "How to manually configure the key for superadmin and staff?",
+     "slug": "how-to-manually-configure-the-key-for-superadmin-and-staff",
+     "url": "https://smart-hospital.in/article/how-to-manually-configure-the-key-for-superadmin-and-staff",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 1693,
+     "file": "two-factor-authentication/how-to-manually-configure-the-key-for-superadmin-and-staff.md"
+    },
+    {
+     "title": "How to check Two Factor Authentication working for superadmin in your smart Hospital?",
+     "slug": "how-to-check-two-factor-authentication-working-for-superadmin-in-your-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-check-two-factor-authentication-working-for-superadmin-in-your-smart-hospital",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 1028,
+     "file": "two-factor-authentication/how-to-check-two-factor-authentication-working-for-superadmin-in-your-smart-hospital.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "two-factor-authentication/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "two-factor-authentication/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "two-factor-authentication/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "two-factor-authentication/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "two-factor-authentication/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "two-factor-authentication/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Inventory (4)",
+   "slug": "inventory",
+   "url": "https://smart-hospital.in/category/inventory",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Inventory.",
+     "slug": "about-inventory",
+     "url": "https://smart-hospital.in/article/about-inventory",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 554,
+     "file": "inventory/about-inventory.md"
+    },
+    {
+     "title": "How to add Item Stock?",
+     "slug": "how-to-add-item-stock",
+     "url": "https://smart-hospital.in/article/how-to-add-item-stock",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 712,
+     "file": "inventory/how-to-add-item-stock.md"
+    },
+    {
+     "title": "How to add Item?",
+     "slug": "how-to-add-item",
+     "url": "https://smart-hospital.in/article/how-to-add-item",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 631,
+     "file": "inventory/how-to-add-item.md"
+    },
+    {
+     "title": "How to check issue and return item?",
+     "slug": "how-to-check-issue-and-return-item",
+     "url": "https://smart-hospital.in/article/how-to-check-issue-and-return-item",
+     "date": "Sun, 31 Oct, 2021",
+     "chars": 822,
+     "file": "inventory/how-to-check-issue-and-return-item.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "inventory/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "inventory/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "inventory/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "inventory/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "inventory/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "inventory/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Download Center (3)",
+   "slug": "download-center",
+   "url": "https://smart-hospital.in/category/download-center",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "Overall working of download center module in smart hospital",
+     "slug": "overall-working-of-download-center-module-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/overall-working-of-download-center-module-in-smart-hospital",
+     "date": "Sat, 31 Aug, 2024",
+     "chars": 10907,
+     "file": "download-center/overall-working-of-download-center-module-in-smart-hospital.md"
+    },
+    {
+     "title": "How Download Center works in Smart Hospital?",
+     "slug": "how-download-center-works-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-download-center-works-in-smart-hospital",
+     "date": "Thu, 30 May, 2024",
+     "chars": 783,
+     "file": "download-center/how-download-center-works-in-smart-hospital.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "download-center/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "download-center/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "download-center/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "download-center/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "download-center/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "download-center/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Certificate (7)",
+   "slug": "certificate",
+   "url": "https://smart-hospital.in/category/certificate",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Certificate.",
+     "slug": "about-certificate",
+     "url": "https://smart-hospital.in/article/about-certificate",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 692,
+     "file": "certificate/about-certificate.md"
+    },
+    {
+     "title": "How to add Certificate in Smart Hospital?",
+     "slug": "how-to-add-certificate-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-certificate-in-smart-hospital",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 1331,
+     "file": "certificate/how-to-add-certificate-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add Patient ID Card?",
+     "slug": "how-to-add-patient-id-card",
+     "url": "https://smart-hospital.in/article/how-to-add-patient-id-card",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 1590,
+     "file": "certificate/how-to-add-patient-id-card.md"
+    },
+    {
+     "title": "How to add Staff ID card?",
+     "slug": "how-to-add-staff-id-card",
+     "url": "https://smart-hospital.in/article/how-to-add-staff-id-card",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 1577,
+     "file": "certificate/how-to-add-staff-id-card.md"
+    },
+    {
+     "title": "How to generate certificate?",
+     "slug": "how-to-generate-certificate",
+     "url": "https://smart-hospital.in/article/how-to-generate-certificate",
+     "date": "Tue, 02 Nov, 2021",
+     "chars": 881,
+     "file": "certificate/how-to-generate-certificate.md"
+    },
+    {
+     "title": "How to generate patient ID card?",
+     "slug": "how-to-generate-patient-id-card",
+     "url": "https://smart-hospital.in/article/how-to-generate-patient-id-card",
+     "date": "Wed, 03 Nov, 2021",
+     "chars": 875,
+     "file": "certificate/how-to-generate-patient-id-card.md"
+    },
+    {
+     "title": "How to generate Staff ID Card?",
+     "slug": "how-to-generate-staff-id-card",
+     "url": "https://smart-hospital.in/article/how-to-generate-staff-id-card",
+     "date": "Wed, 03 Nov, 2021",
+     "chars": 851,
+     "file": "certificate/how-to-generate-staff-id-card.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "certificate/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "certificate/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "certificate/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "certificate/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "certificate/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "certificate/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Front CMS (8)",
+   "slug": "front-cms",
+   "url": "https://smart-hospital.in/category/front-cms",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Front CMS",
+     "slug": "about-front-cms",
+     "url": "https://smart-hospital.in/article/about-front-cms",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 612,
+     "file": "front-cms/about-front-cms.md"
+    },
+    {
+     "title": "How Media Manager works in Smart Hospital.",
+     "slug": "how-media-manager-works-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-media-manager-works-in-smart-hospital",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 843,
+     "file": "front-cms/how-media-manager-works-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add banner image in Smart Hospital?",
+     "slug": "how-to-add-banner-image-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-banner-image-in-smart-hospital",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 790,
+     "file": "front-cms/how-to-add-banner-image-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add an Event?",
+     "slug": "how-to-add-an-event",
+     "url": "https://smart-hospital.in/article/how-to-add-an-event",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 980,
+     "file": "front-cms/how-to-add-an-event.md"
+    },
+    {
+     "title": "How to add Gallery in Smart Hospital?",
+     "slug": "how-to-add-gallery-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-gallery-in-smart-hospital",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 881,
+     "file": "front-cms/how-to-add-gallery-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add News in Smart Hospital?",
+     "slug": "how-to-add-news-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-news-in-smart-hospital",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 842,
+     "file": "front-cms/how-to-add-news-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add menus in Smart Hospital?",
+     "slug": "how-to-add-menus-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-menus-in-smart-hospital",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 1660,
+     "file": "front-cms/how-to-add-menus-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add Pages in Smart Hospital?",
+     "slug": "how-to-add-pages-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-pages-in-smart-hospital",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 1313,
+     "file": "front-cms/how-to-add-pages-in-smart-hospital.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "front-cms/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "front-cms/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "front-cms/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "front-cms/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "front-cms/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "front-cms/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Live Consultation (3)",
+   "slug": "live-consultation",
+   "url": "https://smart-hospital.in/category/live-consultation",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "About Live Consultation",
+     "slug": "about-live-consultation",
+     "url": "https://smart-hospital.in/article/about-live-consultation",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 389,
+     "file": "live-consultation/about-live-consultation.md"
+    },
+    {
+     "title": "How to add Live Consultation in Smart Hospital?",
+     "slug": "how-to-add-live-consultation-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-live-consultation-in-smart-hospital",
+     "date": "Mon, 08 Sep, 2025",
+     "chars": 821,
+     "file": "live-consultation/how-to-add-live-consultation-in-smart-hospital.md"
+    },
+    {
+     "title": "How to add Live Meetings in Smart Hospital?",
+     "slug": "how-to-add-live-meetings-in-smart-hospital",
+     "url": "https://smart-hospital.in/article/how-to-add-live-meetings-in-smart-hospital",
+     "date": "Thu, 11 Nov, 2021",
+     "chars": 670,
+     "file": "live-consultation/how-to-add-live-meetings-in-smart-hospital.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "live-consultation/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "live-consultation/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "live-consultation/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "live-consultation/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "live-consultation/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "live-consultation/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Reports (44)",
+   "slug": "reports",
+   "url": "https://smart-hospital.in/category/reports",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "Stock Report",
+     "slug": "stock-report",
+     "url": "https://smart-hospital.in/article/stock-report",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 621,
+     "file": "reports/stock-report.md"
+    },
+    {
+     "title": "How to check Pathology Balance Report?",
+     "slug": "how-to-check-pathology-balance-report",
+     "url": "https://smart-hospital.in/article/how-to-check-pathology-balance-report",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 646,
+     "file": "reports/how-to-check-pathology-balance-report.md"
+    },
+    {
+     "title": "How to check Radiology Balance Report?",
+     "slug": "how-to-check-radiology-balance-report",
+     "url": "https://smart-hospital.in/article/how-to-check-radiology-balance-report",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 779,
+     "file": "reports/how-to-check-radiology-balance-report.md"
+    },
+    {
+     "title": "How to checkBalance Amount Report?",
+     "slug": "how-to-checkbalance-amount-report",
+     "url": "https://smart-hospital.in/article/how-to-checkbalance-amount-report",
+     "date": "Sat, 16 Aug, 2025",
+     "chars": 681,
+     "file": "reports/how-to-checkbalance-amount-report.md"
+    },
+    {
+     "title": "Daily Transaction Report",
+     "slug": "daily-transaction-report",
+     "url": "https://smart-hospital.in/article/daily-transaction-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 817,
+     "file": "reports/daily-transaction-report.md"
+    },
+    {
+     "title": "All Transaction Report.",
+     "slug": "all-transaction-report",
+     "url": "https://smart-hospital.in/article/all-transaction-report",
+     "date": "Fri, 01 Aug, 2025",
+     "chars": 774,
+     "file": "reports/all-transaction-report.md"
+    },
+    {
+     "title": "Appointment Report",
+     "slug": "appointment-report",
+     "url": "https://smart-hospital.in/article/appointment-report",
+     "date": "Fri, 29 Oct, 2021",
+     "chars": 567,
+     "file": "reports/appointment-report.md"
+    },
+    {
+     "title": "OPD Report",
+     "slug": "opd-report",
+     "url": "https://smart-hospital.in/article/opd-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 487,
+     "file": "reports/opd-report.md"
+    },
+    {
+     "title": "IPD Report",
+     "slug": "ipd-report",
+     "url": "https://smart-hospital.in/article/ipd-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 518,
+     "file": "reports/ipd-report.md"
+    },
+    {
+     "title": "OPD Balance Report",
+     "slug": "opd-balance-report",
+     "url": "https://smart-hospital.in/article/opd-balance-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 551,
+     "file": "reports/opd-balance-report.md"
+    },
+    {
+     "title": "IPD Balance Report",
+     "slug": "ipd-balance-report",
+     "url": "https://smart-hospital.in/article/ipd-balance-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 607,
+     "file": "reports/ipd-balance-report.md"
+    },
+    {
+     "title": "OPD Discharge Patient Report",
+     "slug": "opd-discharge-patient-report",
+     "url": "https://smart-hospital.in/article/opd-discharge-patient-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 678,
+     "file": "reports/opd-discharge-patient-report.md"
+    },
+    {
+     "title": "IPD Discharge Patient Report",
+     "slug": "ipd-discharge-patient-report",
+     "url": "https://smart-hospital.in/article/ipd-discharge-patient-report",
+     "date": "Thu, 23 May, 2024",
+     "chars": 718,
+     "file": "reports/ipd-discharge-patient-report.md"
+    },
+    {
+     "title": "Pharmacy Bill Report",
+     "slug": "pharmacy-bill-report",
+     "url": "https://smart-hospital.in/article/pharmacy-bill-report",
+     "date": "Thu, 23 May, 2024",
+     "chars": 626,
+     "file": "reports/pharmacy-bill-report.md"
+    },
+    {
+     "title": "Expiry Medicine Report",
+     "slug": "expiry-medicine-report",
+     "url": "https://smart-hospital.in/article/expiry-medicine-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 615,
+     "file": "reports/expiry-medicine-report.md"
+    },
+    {
+     "title": "Pathology Patient Report",
+     "slug": "pathology-patient-report",
+     "url": "https://smart-hospital.in/article/pathology-patient-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 669,
+     "file": "reports/pathology-patient-report.md"
+    },
+    {
+     "title": "Radiology Patient Report",
+     "slug": "radiology-patient-report",
+     "url": "https://smart-hospital.in/article/radiology-patient-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 689,
+     "file": "reports/radiology-patient-report.md"
+    },
+    {
+     "title": "OT Report",
+     "slug": "ot-report",
+     "url": "https://smart-hospital.in/article/ot-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 558,
+     "file": "reports/ot-report.md"
+    },
+    {
+     "title": "Blood Issue Report",
+     "slug": "blood-issue-report",
+     "url": "https://smart-hospital.in/article/blood-issue-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 659,
+     "file": "reports/blood-issue-report.md"
+    },
+    {
+     "title": "Component Issue Report",
+     "slug": "component-issue-report",
+     "url": "https://smart-hospital.in/article/component-issue-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 627,
+     "file": "reports/component-issue-report.md"
+    },
+    {
+     "title": "Blood Donor Report",
+     "slug": "blood-donor-report",
+     "url": "https://smart-hospital.in/article/blood-donor-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 600,
+     "file": "reports/blood-donor-report.md"
+    },
+    {
+     "title": "Live Consultation Report",
+     "slug": "live-consultation-report",
+     "url": "https://smart-hospital.in/article/live-consultation-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 584,
+     "file": "reports/live-consultation-report.md"
+    },
+    {
+     "title": "Live Meeting Report",
+     "slug": "live-meeting-report",
+     "url": "https://smart-hospital.in/article/live-meeting-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 516,
+     "file": "reports/live-meeting-report.md"
+    },
+    {
+     "title": "TPA Report",
+     "slug": "tpa-report",
+     "url": "https://smart-hospital.in/article/tpa-report",
+     "date": "Fri, 01 Aug, 2025",
+     "chars": 627,
+     "file": "reports/tpa-report.md"
+    },
+    {
+     "title": "Income Report",
+     "slug": "income-report",
+     "url": "https://smart-hospital.in/article/income-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 461,
+     "file": "reports/income-report.md"
+    },
+    {
+     "title": "Income Group Report",
+     "slug": "income-group-report",
+     "url": "https://smart-hospital.in/article/income-group-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 543,
+     "file": "reports/income-group-report.md"
+    },
+    {
+     "title": "Expense Report",
+     "slug": "expense-report",
+     "url": "https://smart-hospital.in/article/expense-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 468,
+     "file": "reports/expense-report.md"
+    },
+    {
+     "title": "Expense Group Report",
+     "slug": "expense-group-report",
+     "url": "https://smart-hospital.in/article/expense-group-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 544,
+     "file": "reports/expense-group-report.md"
+    },
+    {
+     "title": "Ambulance Call Report.",
+     "slug": "ambulance-call-report",
+     "url": "https://smart-hospital.in/article/ambulance-call-report",
+     "date": "Fri, 29 Oct, 2021",
+     "chars": 628,
+     "file": "reports/ambulance-call-report.md"
+    },
+    {
+     "title": "Birth Report",
+     "slug": "birth-report",
+     "url": "https://smart-hospital.in/article/birth-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 518,
+     "file": "reports/birth-report.md"
+    },
+    {
+     "title": "Death Report",
+     "slug": "death-report",
+     "url": "https://smart-hospital.in/article/death-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 489,
+     "file": "reports/death-report.md"
+    },
+    {
+     "title": "Payroll Month Report",
+     "slug": "payroll-month-report",
+     "url": "https://smart-hospital.in/article/payroll-month-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 569,
+     "file": "reports/payroll-month-report.md"
+    },
+    {
+     "title": "Payroll Report",
+     "slug": "payroll-report",
+     "url": "https://smart-hospital.in/article/payroll-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 543,
+     "file": "reports/payroll-report.md"
+    },
+    {
+     "title": "Staff Attendance Report",
+     "slug": "staff-attendance-report",
+     "url": "https://smart-hospital.in/article/staff-attendance-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 471,
+     "file": "reports/staff-attendance-report.md"
+    },
+    {
+     "title": "User Log Report",
+     "slug": "user-log-report",
+     "url": "https://smart-hospital.in/article/user-log-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 488,
+     "file": "reports/user-log-report.md"
+    },
+    {
+     "title": "Patient Login Credential Report",
+     "slug": "patient-login-credential-report",
+     "url": "https://smart-hospital.in/article/patient-login-credential-report",
+     "date": "Fri, 24 May, 2024",
+     "chars": 956,
+     "file": "reports/patient-login-credential-report.md"
+    },
+    {
+     "title": "Email / SMS Log Report",
+     "slug": "email-sms-log-report",
+     "url": "https://smart-hospital.in/article/email-sms-log-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 511,
+     "file": "reports/email-sms-log-report.md"
+    },
+    {
+     "title": "Inventory Stock Report",
+     "slug": "inventory-stock-report",
+     "url": "https://smart-hospital.in/article/inventory-stock-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 476,
+     "file": "reports/inventory-stock-report.md"
+    },
+    {
+     "title": "Inventory Item report",
+     "slug": "inventory-item-report",
+     "url": "https://smart-hospital.in/article/inventory-item-report",
+     "date": "Fri, 24 May, 2024",
+     "chars": 702,
+     "file": "reports/inventory-item-report.md"
+    },
+    {
+     "title": "Inventory Issue Report",
+     "slug": "inventory-issue-report",
+     "url": "https://smart-hospital.in/article/inventory-issue-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 540,
+     "file": "reports/inventory-issue-report.md"
+    },
+    {
+     "title": "Audit Trail Report",
+     "slug": "audit-trail-report",
+     "url": "https://smart-hospital.in/article/audit-trail-report",
+     "date": "Fri, 24 May, 2024",
+     "chars": 891,
+     "file": "reports/audit-trail-report.md"
+    },
+    {
+     "title": "Patient Visit Report",
+     "slug": "patient-visit-report",
+     "url": "https://smart-hospital.in/article/patient-visit-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 526,
+     "file": "reports/patient-visit-report.md"
+    },
+    {
+     "title": "Patient Bill Report",
+     "slug": "patient-bill-report",
+     "url": "https://smart-hospital.in/article/patient-bill-report",
+     "date": "Sat, 30 Oct, 2021",
+     "chars": 573,
+     "file": "reports/patient-bill-report.md"
+    },
+    {
+     "title": "Referral Report",
+     "slug": "referral-report",
+     "url": "https://smart-hospital.in/article/referral-report",
+     "date": "Thu, 23 May, 2024",
+     "chars": 621,
+     "file": "reports/referral-report.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "reports/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "reports/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "reports/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "reports/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "reports/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "reports/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Patient Panel (10)",
+   "slug": "patient-panel",
+   "url": "https://smart-hospital.in/category/patient-panel",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "Patient Dashboard",
+     "slug": "patient-dashboard",
+     "url": "https://smart-hospital.in/article/patient-dashboard",
+     "date": "Fri, 01 Aug, 2025",
+     "chars": 660,
+     "file": "patient-panel/patient-dashboard.md"
+    },
+    {
+     "title": "How to add appointment from Patient panel?",
+     "slug": "how-to-add-appointment-from-patient-panel",
+     "url": "https://smart-hospital.in/article/how-to-add-appointment-from-patient-panel",
+     "date": "Sat, 02 Aug, 2025",
+     "chars": 1620,
+     "file": "patient-panel/how-to-add-appointment-from-patient-panel.md"
+    },
+    {
+     "title": "IPD",
+     "slug": "ipd",
+     "url": "https://smart-hospital.in/article/ipd",
+     "date": "Thu, 18 Nov, 2021",
+     "chars": 3656,
+     "file": "patient-panel/ipd.md"
+    },
+    {
+     "title": "OPD",
+     "slug": "opd",
+     "url": "https://smart-hospital.in/article/opd",
+     "date": "Thu, 18 Nov, 2021",
+     "chars": 2644,
+     "file": "patient-panel/opd.md"
+    },
+    {
+     "title": "Pharmacy",
+     "slug": "pharmacy-1",
+     "url": "https://smart-hospital.in/article/pharmacy-1",
+     "date": "Fri, 01 Aug, 2025",
+     "chars": 1058,
+     "file": "patient-panel/pharmacy-1.md"
+    },
+    {
+     "title": "Pathology",
+     "slug": "pathology-1",
+     "url": "https://smart-hospital.in/article/pathology-1",
+     "date": "Thu, 18 Nov, 2021",
+     "chars": 1083,
+     "file": "patient-panel/pathology-1.md"
+    },
+    {
+     "title": "Radiology",
+     "slug": "radiology-1",
+     "url": "https://smart-hospital.in/article/radiology-1",
+     "date": "Thu, 18 Nov, 2021",
+     "chars": 1088,
+     "file": "patient-panel/radiology-1.md"
+    },
+    {
+     "title": "Blood Bank",
+     "slug": "blood-bank-1",
+     "url": "https://smart-hospital.in/article/blood-bank-1",
+     "date": "Thu, 18 Nov, 2021",
+     "chars": 2046,
+     "file": "patient-panel/blood-bank-1.md"
+    },
+    {
+     "title": "Live Consultation",
+     "slug": "live-consultation",
+     "url": "https://smart-hospital.in/article/live-consultation",
+     "date": "Thu, 18 Nov, 2021",
+     "chars": 391,
+     "file": "patient-panel/live-consultation.md"
+    },
+    {
+     "title": "Ambulance",
+     "slug": "ambulance",
+     "url": "https://smart-hospital.in/article/ambulance",
+     "date": "Thu, 18 Nov, 2021",
+     "chars": 1051,
+     "file": "patient-panel/ambulance.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "patient-panel/version-2-0-1.md"
+    },
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "patient-panel/version-7-0.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "patient-panel/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "patient-panel/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "patient-panel/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "patient-panel/about-whatsapp-messaging.md"
+    }
+   ]
+  },
+  {
+   "name": "Smart Hospital(10)",
+   "slug": "smart-hospital",
+   "url": "https://smart-hospital.in/category/changelog/smart-hospital",
+   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "articles": [
+    {
+     "title": "Version 7.0",
+     "slug": "version-7-0",
+     "url": "https://smart-hospital.in/article/version-7-0",
+     "date": "Mon, 27 Jul, 2026",
+     "chars": 1576,
+     "file": "smart-hospital/version-7-0.md"
+    },
+    {
+     "title": "Version 6.0",
+     "slug": "version-6-0",
+     "url": "https://smart-hospital.in/article/version-6-0",
+     "date": "Thu, 21 Aug, 2025",
+     "chars": 2411,
+     "file": "smart-hospital/version-6-0.md"
+    },
+    {
+     "title": "Version 5.0",
+     "slug": "version-5-0",
+     "url": "https://smart-hospital.in/article/version-5-0",
+     "date": "Thu, 21 Aug, 2025",
+     "chars": 2725,
+     "file": "smart-hospital/version-5-0.md"
+    },
+    {
+     "title": "Version 4.0",
+     "slug": "version-4-0",
+     "url": "https://smart-hospital.in/article/version-4-0",
+     "date": "Thu, 21 Aug, 2025",
+     "chars": 3165,
+     "file": "smart-hospital/version-4-0.md"
+    },
+    {
+     "title": "Version 3.1",
+     "slug": "version-3-1",
+     "url": "https://smart-hospital.in/article/version-3-1",
+     "date": "Thu, 21 Aug, 2025",
+     "chars": 1136,
+     "file": "smart-hospital/version-3-1.md"
+    },
+    {
+     "title": "Version 3.0",
+     "slug": "version-3-0",
+     "url": "https://smart-hospital.in/article/version-3-0",
+     "date": "Thu, 21 Aug, 2025",
+     "chars": 1048,
+     "file": "smart-hospital/version-3-0.md"
+    },
+    {
+     "title": "Version 2.1",
+     "slug": "version-2-1",
+     "url": "https://smart-hospital.in/article/version-2-1",
+     "date": "Thu, 21 Aug, 2025",
+     "chars": 547,
+     "file": "smart-hospital/version-2-1.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0",
+     "url": "https://smart-hospital.in/article/version-2-0",
+     "date": "Thu, 21 Aug, 2025",
+     "chars": 1580,
+     "file": "smart-hospital/version-2-0.md"
+    },
+    {
+     "title": "Version 1.1",
+     "slug": "version-1-1",
+     "url": "https://smart-hospital.in/article/version-1-1",
+     "date": "Thu, 21 Aug, 2025",
+     "chars": 693,
+     "file": "smart-hospital/version-1-1.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-1",
+     "url": "https://smart-hospital.in/article/version-2-0-1",
+     "date": "Thu, 30 Jul, 2026",
+     "chars": 431,
+     "file": "smart-hospital/version-2-0-1.md"
+    },
+    {
+     "title": "How to enable WhatsApp for a Notification Event?",
+     "slug": "how-to-enable-whatsapp-for-a-notification-event",
+     "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1275,
+     "file": "smart-hospital/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Twilio?",
+     "slug": "how-to-configure-whatsapp-using-twilio",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1064,
+     "file": "smart-hospital/how-to-configure-whatsapp-using-twilio.md"
+    },
+    {
+     "title": "How to configure WhatsApp using Meta (Cloud API)?",
+     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
+     "url": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1206,
+     "file": "smart-hospital/how-to-configure-whatsapp-using-meta-cloud-api.md"
+    },
+    {
+     "title": "About WhatsApp Messaging",
+     "slug": "about-whatsapp-messaging",
+     "url": "https://smart-hospital.in/article/about-whatsapp-messaging",
+     "date": "Sat, 25 Jul, 2026",
+     "chars": 1359,
+     "file": "smart-hospital/about-whatsapp-messaging.md"
+    }
+   ]
+  }
+ ],
+ "generated": "2026-10-13"
+}

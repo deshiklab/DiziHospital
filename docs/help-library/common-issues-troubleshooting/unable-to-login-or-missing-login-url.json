@@ -1,0 +1,13 @@
+{
+ "title": "Unable To Login Or Missing Login URL",
+ "date": "Tue, 02 Nov, 2021",
+ "category": {
+  "name": "Common Issues & Troubleshooting",
+  "slug": "common-issues-troubleshooting"
+ },
+ "url": "https://smart-hospital.in/article/unable-to-login-or-missing-login-url",
+ "slug": "unable-to-login-or-missing-login-url",
+ "body": "### Unable To Login Or Missing Login URL\n\nTue, 02 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Common Issues & Troubleshooting](https://smart-hospital.in/category/common-issues-troubleshooting)\n\n---\n\nWhen you open Smart Hospital url then it will be open User Panel URL **http://yourdomain/site/userlogin** (if Front CMS is not enabled). By default Smart Hospital opens User Panel instead of Admin Panel (due to security reasons).\u00a0  \n  \nIn Smart Hospital your **Admin Panel**\u00a0login url is\u00a0**http://yourdomain/site/login**  \nHere superadmin, admin, doctor, accountant or any staff can be login through their email id and password.  \n  \nAnd\u00a0**User Panel**\u00a0login is\u00a0**http://yourdomain/site/userlogin**  \nHere only patient login through their username and password.  \n  \nPlease check you are login with right panel with right credentials.",
+ "chars": 847,
+ "images": 0
+}

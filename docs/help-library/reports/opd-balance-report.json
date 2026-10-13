@@ -1,0 +1,13 @@
+{
+ "title": "OPD Balance Report",
+ "date": "Sat, 30 Oct, 2021",
+ "category": {
+  "name": "Reports",
+  "slug": "reports"
+ },
+ "url": "https://smart-hospital.in/article/opd-balance-report",
+ "slug": "opd-balance-report",
+ "body": "### OPD Balance Report\n\nSat, 30 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Reports](https://smart-hospital.in/category/reports)\n\n---\n\nTo check patient OPD Balance report, go to\u00a0**Reports > OPD Balance Report**. Here select the\u00a0**Time Duration, From Age, To Age, Gender and** **Discharged** then click on**Search**\u00a0button. Here you can see patient\u2019s OPD Balance details like OPD No, Patient Name, Case ID, Age, Gender, Discharged Net Amount, Paid mount, Balance Amount etc.\u00a0  \n  \n![opd balance report](../assets/opd-balance-report/1.jpg)",
+ "chars": 551,
+ "images": 1
+}

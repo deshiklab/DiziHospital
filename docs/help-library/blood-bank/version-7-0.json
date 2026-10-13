@@ -1,0 +1,13 @@
+{
+ "title": "Version 7.0",
+ "date": "Mon, 27 Jul, 2026",
+ "category": {
+  "name": "Changelog",
+  "slug": "changelog"
+ },
+ "url": "https://smart-hospital.in/article/version-7-0",
+ "slug": "version-7-0",
+ "body": "### Version 7.0\n\nMon, 27 Jul, 2026\n\n[Articles](https://smart-hospital.in/articles)[Changelog](https://smart-hospital.in/category/changelog)[Smart Hospital](https://smart-hospital.in/category/smart-hospital)\n\n---\n\n**Released Date 25 July, 2026  \n  \nGeneral Changes**\n\n* Whole system updated for PHP version 8.4 and PHP 7.x is now not supported\n* Updated Expiry Medicine Report for expiry and near expiry searching\n\n**Feature Enhancement**\n\n* Added support for new WhatsApp Messaging addon\n* Added support for new Survey Form addon\n* Added support for Smart Hospital SaaS addon\n* Added whole new modern theme system for frontend and backend\n* Added Message Queue\n* Added ICD-10 support\n* Added Medicine Purchase Return, Edit, History\n* Added Patient list in sub sidebar for OPD and IPD\n* Added Medicine Purchase Report\n* Added Medicine Purchase Return Report\n* Added Medicine sale return Report\n* Added Delete Account feature for patient panel\n* Added Income Expense Balance Report\n* Added Medicine Sale Report\n* Added Medicine profit loss report\n* Added new language Portuguese (Brazil) - pt-BR - BR\n\n**Bug Fixes**\n\n* Fixed Cross-Site scripting bug detected at some places\n* Fixed Email password or AWS secret key exposed in HTML\n* Fixed Pharmacy Bill datatable error\n* Fixed patient import issue\n* Fixed the print issue in Mozilla Firefox.\n* Fixed the staff image upload issue during editing.\n* Fixed the ONLY\\_FULL\\_GROUP\\_BY SQL compatibility issue.\n* Fixed Radiology Test Report notification issues.\n* Fixed file upload validation to correctly allow PDF, CSV, and ZIP files",
+ "chars": 1576,
+ "images": 0
+}

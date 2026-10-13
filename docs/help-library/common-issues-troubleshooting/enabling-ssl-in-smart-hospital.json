@@ -1,0 +1,13 @@
+{
+ "title": "Enabling SSL In Smart Hospital",
+ "date": "Tue, 09 Nov, 2021",
+ "category": {
+  "name": "Common Issues & Troubleshooting",
+  "slug": "common-issues-troubleshooting"
+ },
+ "url": "https://smart-hospital.in/article/enabling-ssl-in-smart-hospital",
+ "slug": "enabling-ssl-in-smart-hospital",
+ "body": "### Enabling SSL In Smart Hospital\n\nTue, 09 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Common Issues & Troubleshooting](https://smart-hospital.in/category/common-issues-troubleshooting)\n\n---\n\nAfter installing ssl on your Smart Hospital hosting you need to edit your base url in following file -  \n  \nOpen file\u00a0**\\application\\config\\config.php**\u00a0and find the line\u00a0`$config['base_url'] = 'http://yourdomain.com/';`\u00a0change it to\u00a0`$config['base_url'] = 'https://yourdomain.com/';` that's it.",
+ "chars": 502,
+ "images": 0
+}

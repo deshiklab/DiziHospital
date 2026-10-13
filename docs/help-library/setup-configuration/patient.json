@@ -1,0 +1,13 @@
+{
+ "title": "Patient",
+ "date": "Sat, 30 Oct, 2021",
+ "category": {
+  "name": "Setup & Configuration",
+  "slug": "setup-configuration"
+ },
+ "url": "https://smart-hospital.in/article/patient",
+ "slug": "patient",
+ "body": "### Patient\n\nSat, 30 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Setup & Configuration](https://smart-hospital.in/category/setup-configuration)\n\n---\n\nHere you can manage patient's profile data like add, edit, import, enable, disable and delete patient. You can also delete multiple patients through Delete Selected button option.\u00a0  \n  \nTo add new patient **+Add New Patient** button, here enter patient Name, Guardian Name, Gendar, Date of Birth, Age, Phone etc details and click on **Save** button. You can see this added patient record in Patient List page.  \n  \n![](../assets/patient/1.jpg)\n\nFrom patient list you can also directly switch to other modules (like OPD, IPD) where patient record exist. For this at Action column there is show option available.  \n  \n![](../assets/patient/2.jpg)\n\n---\n\n### **Import Patient**\n\nTo import patient, go to**Setup > Patient** click on the\u00a0**Import Patient**\u00a0button present at top right corner on right side in the patient page, at click of this button page will be open.  \n  \nYou have to follow all the necessary instructions given here to create CSV file. Here you can also add multiple patients at the same time for this, you have to create a CSV file format. You can also download the sample file from top right corner by clicking on\u00a0**Download Sample Import**\u00a0**File**\u00a0button.  \n  \nYou shouldn\u2019t delete the first row of CSV file. It is necessary to fill the required field in this file.\n\nAfter completing the file editing, here select the\u00a0**Blood Group**\u00a0and then\u00a0you have to select this CSV file on\u00a0**Select CSV File**\u00a0option and then click on\u00a0**Import Patient**\u00a0button.  \n  \n![](../assets/patient/3.jpg)\n\n---\n\n### **Disabled Patient**\n\n  \nDisabled Patient is for seeing all disabled patient. To see disabled patient list go to **Setup > Patient > Disabled Patient List**.  \n  \n![](../assets/patient/4.jpg)  \n  \nTo check disabled patient detail click on show button present at **Action** column.",
+ "chars": 1957,
+ "images": 4
+}

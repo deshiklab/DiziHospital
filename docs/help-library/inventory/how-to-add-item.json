@@ -1,0 +1,13 @@
+{
+ "title": "How to add Item?",
+ "date": "Sun, 31 Oct, 2021",
+ "category": {
+  "name": "Inventory",
+  "slug": "inventory"
+ },
+ "url": "https://smart-hospital.in/article/how-to-add-item",
+ "slug": "how-to-add-item",
+ "body": "### How to add Item?\n\nSun, 31 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Inventory](https://smart-hospital.in/category/inventory)\n\n---\n\nTo see items click on Item button. At this page to add new items click on **+ Add Item** button here enter **Item Name, Item Category, Unit, Description** and then click on **Save** button.  \n  \n![](../assets/how-to-add-item/1.jpg)\n\nYou can view this added record in the Item List page.  \n  \n![](../assets/how-to-add-item/2.jpg)  \n  \nTo edit item click on the\u00a0**Edit**\u00a0icon and to delete the item click on the\u00a0**Delete**\u00a0icon present at Action column and will show on mouse hover.",
+ "chars": 631,
+ "images": 2
+}

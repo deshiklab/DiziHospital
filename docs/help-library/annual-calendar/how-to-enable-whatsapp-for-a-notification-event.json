@@ -1,0 +1,13 @@
+{
+ "title": "How to enable WhatsApp for a Notification Event?",
+ "date": "Sat, 25 Jul, 2026",
+ "category": {
+  "name": "WhatsApp Messaging",
+  "slug": "whatsapp-messaging"
+ },
+ "url": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
+ "slug": "how-to-enable-whatsapp-for-a-notification-event",
+ "body": "### How to enable WhatsApp for a Notification Event?\n\nSat, 25 Jul, 2026\n\n[Articles](https://smart-hospital.in/articles)[WhatsApp Messaging](https://smart-hospital.in/category/whatsapp-messaging)\n\n---\n\nOnce a WhatsApp provider is configured and enabled (see the Twilio or Meta setup articles), go to\u00a0**Setup \u2192 Settings \u2192 Notification Setting**. Every event the system can notify about \u2014\u00a0**OPD Patient Registration**,\u00a0**IPD Patient Registration**,\u00a0**IPD Patient Discharge**,\u00a0**Login Credential**,\u00a0**Appointment Approved**,\u00a0**Live Meeting**,\u00a0**Live Consult**,\u00a0**OPD Patient Discharged**,\u00a0**Forgot Password**, and more \u2014 is listed with a checkbox per delivery channel:\u00a0**Email**,\u00a0**SMS**,\u00a0**Mobile App**\u00a0and\u00a0**WhatsApp**.\n\nTick the\u00a0**WhatsApp**\u00a0checkbox next to any event to start sending that event over WhatsApp as well.  \n  \n![](../assets/how-to-enable-whatsapp-for-a-notification-event/1.jpg)  \n  \n  \nClick the small edit icon next to an event's sample message to open its\u00a0**Template**\u00a0dialog. Besides the message\u00a0**Subject**\u00a0and\u00a0**Template**\u00a0text (which can use placeholders such as\u00a0`{{patient_name}}`,\u00a0`{{appointment_date}}`,\u00a0`{{patient_id}}`), this dialog also has a\u00a0**WhatsApp Template ID**\u00a0field.  \n  \n![](../assets/how-to-enable-whatsapp-for-a-notification-event/2.jpg)",
+ "chars": 1275,
+ "images": 2
+}

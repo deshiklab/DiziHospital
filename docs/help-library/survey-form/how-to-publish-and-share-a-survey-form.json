@@ -1,0 +1,13 @@
+{
+ "title": "How to Publish and Share a Survey Form?",
+ "date": "Sat, 25 Jul, 2026",
+ "category": {
+  "name": "Survey Form",
+  "slug": "survey-form"
+ },
+ "url": "https://smart-hospital.in/article/how-to-publish-and-share-a-survey-form",
+ "slug": "how-to-publish-and-share-a-survey-form",
+ "body": "### How to Publish and Share a Survey Form?\n\nSat, 25 Jul, 2026\n\n[Articles](https://smart-hospital.in/articles)[Survey Form](https://smart-hospital.in/category/survey-form)\n\n---\n\nOnce your form has at least one field, click\u00a0**Save changes**\u00a0and then click the\u00a0**Publish**\u00a0button on the Edit page (shown as\u00a0**Close**\u00a0once already published, which is used to stop taking new responses later).\n\nIf\u00a0**Front Site**\u00a0was selected as a Target Audience, a\u00a0**Public Link**\u00a0and an\u00a0**Embed Code**\u00a0appear on the right side of the Edit page as soon as the form is saved \u2014 every form actually gets its own unique link the moment it is created, so this works even if you add the Front Site audience later.\n\n* **Public Link**\u00a0\u2014 a direct link that can be shared over email, WhatsApp, or SMS. Anyone with the link can open and fill the form without logging in.\n* **Embed Code**\u00a0\u2014 an\u00a0`<iframe>`\u00a0snippet you can paste into any external webpage to show the form directly on that page.\n\nBoth use the Copy button next to them to copy the link or code to your clipboard.  \n  \n![](../assets/how-to-publish-and-share-a-survey-form/1.jpg)\n\n## Adding it to your website menu\n\nTo show a proper \"Survey Form\" link in your website's navigation instead of only sharing the raw link, go to\u00a0**Front CMS \u2192 Menu Item List**, click\u00a0**Add Menu Item**, give it a name such as\u00a0**Survey Form**, turn on\u00a0**External URL**, and set the address to\u00a0`/surveys`\u00a0\u2014 this points to the public listing page that shows every form with the Front Site audience.  \n  \n![](../assets/how-to-publish-and-share-a-survey-form/2.jpg)",
+ "chars": 1569,
+ "images": 2
+}

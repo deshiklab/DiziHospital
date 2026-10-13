@@ -1,0 +1,13 @@
+{
+ "title": "How to add Ambulance Call?",
+ "date": "Mon, 01 Nov, 2021",
+ "category": {
+  "name": "Ambulance",
+  "slug": "ambulance"
+ },
+ "url": "https://smart-hospital.in/article/how-to-add-ambulance-call",
+ "slug": "how-to-add-ambulance-call",
+ "body": "### How to add Ambulance Call?\n\nMon, 01 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Ambulance](https://smart-hospital.in/category/ambulance)\n\n---\n\nTo add new ambulance call go to Ambulance module and\u00a0 click on **+ Add Ambulance Call** button. Here select **Patient Name** from dropdown ( or click on **+ New Patient** button to add new patient or Enter **Case ID** so patient details will auto fill here) then enter **Vehicle Model**, **Driver Name**, **Date**, and **Charge** **Category**, **Charge** **Name**, **Standard** **Charge**, **Note** and click on **Save & Print** or **Save** button.  \n  \n![add ambulance call](../assets/how-to-add-ambulance-call/1.jpg)\n\nYou can check Ambulance Call created record at Ambulance Call list page.  \n  \n![ambulance call list image](../assets/how-to-add-ambulance-call/2.jpg)",
+ "chars": 830,
+ "images": 2
+}

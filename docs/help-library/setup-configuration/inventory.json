@@ -1,0 +1,13 @@
+{
+ "title": "Inventory",
+ "date": "Wed, 20 Oct, 2021",
+ "category": {
+  "name": "Setup & Configuration",
+  "slug": "setup-configuration"
+ },
+ "url": "https://smart-hospital.in/article/inventory",
+ "slug": "inventory",
+ "body": "### Inventory\n\nWed, 20 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Setup & Configuration](https://smart-hospital.in/category/setup-configuration)\n\n---\n\nInventory Management has a vital role in the Healthcare Industry, especially when people's lives are at stake. The Inventory Management Software lets\u00a0**you know the detailed information on medicines batches & stock**. It is also very useful in maintaining the doctor's equipment.\n\nTo setup Inventory go to **Setup > Inventory**.  \n  \n\n### **Item Category**\n\nTo add Item Category click on **+ Add Item Category** now enter **Item Category and Description.**\n\n---\n\n### **Item Store**\n\nTo add Item Store click on **+ Add Item Store** button now enter **Item Store Name, Item Stock Code and Description**.\n\n---\n\n### **Item Supplier**\n\nTo add Item Supplier click on **+ Add Item Supplier** button now enter **Item Supplier Name, Phone, Email, Contact Person Name, Address, Contact Person Phone, Contact Person Email and Description**.",
+ "chars": 995,
+ "images": 0
+}

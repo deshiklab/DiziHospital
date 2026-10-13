@@ -1,0 +1,13 @@
+{
+ "title": "How to register a Webfeb.com purchased License Code in Smart Hospital?",
+ "date": "Thu, 30 Jul, 2026",
+ "category": {
+  "name": "Getting Started",
+  "slug": "getting-started"
+ },
+ "url": "https://smart-hospital.in/article/how-to-register-a-webfeb-com-purchased-license-code-in-smart-hospital",
+ "slug": "how-to-register-a-webfeb-com-purchased-license-code-in-smart-hospital",
+ "body": "### How to register a Webfeb.com purchased License Code in Smart Hospital?\n\nThu, 30 Jul, 2026\n\n[Articles](https://smart-hospital.in/articles)[Getting Started](https://smart-hospital.in/category/getting-started)\n\n---\n\n**Smart Hospital License Registration**  \n  \nAfter installing Smart Hospital, log in to the application. On your first login, you will see the following alert message at the top of the dashboard:  \n  \nAlert! You are using an unregistered version of Smart Hospital. Please click here to register your purchase code for Smart Hospital.  \n  \nClick \"**Click Here**\" to open the Register Your Purchase Code dialog.  \n  \nYou will be prompted to enter the following details:  \n\n* Smart Hospital License Key\n* Signing Key\n\n  \nHow to Obtain the License Key and Signing Key  \n  \nLog in to your Webfeb account.  \n  \n**Go to the Licenses page**: <https://webfeb.com/dashboard/licenses>\u00a0  \n  \nLocate your Smart Hospital license and click Manage Registered Domains.  \n  \nRegister the domain where Smart Hospital is installed.  \n  \nOnce the domain is registered successfully, the Signing Key will be generated. Copy the Signing Key.  \n  \nReturn to the Licenses page and click Download Certificate.  \n  \nOpen the downloaded certificate to find your License Key.  \n  \nCopy both the License Key and Signing Key.  \n  \nReturn to the Register Your Purchase Code dialog in Smart Hospital, paste both keys into their respective fields, and click Register Now.  \n  \nAfter successful registration, your Smart Hospital installation will be activated, and the registration alert will no longer appear.  \n  \nNote: Ensure that the registered domain matches the domain where Smart Hospital is installed. Otherwise, the activation process will fail.",
+ "chars": 1735,
+ "images": 0
+}

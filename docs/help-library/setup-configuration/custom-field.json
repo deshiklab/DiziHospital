@@ -1,0 +1,13 @@
+{
+ "title": "Custom Field",
+ "date": "Thu, 23 May, 2024",
+ "category": {
+  "name": "Setup & Configuration",
+  "slug": "setup-configuration"
+ },
+ "url": "https://smart-hospital.in/article/custom-field",
+ "slug": "custom-field",
+ "body": "### Custom Field\n\nThu, 23 May, 2024\n\n[Articles](https://smart-hospital.in/articles)[Setup & Configuration](https://smart-hospital.in/category/setup-configuration)\n\n---\n\nTo add custom field in Smart Hospital different modules, go to\u00a0**Setup > Custom Field. Here at right side you will get Custom Field List of those modules for which you can add custom fields, here** select\u00a0**Field Belongs To, Field Type, Field Name, Grid**\u00a0**(Bootstrap Column e.g. 6) - Max is 12, Field Values (Separate By Comma)**\u00a0and check\u00a0**Validation and Visibility** as per your choice and then click on\u00a0**Save**\u00a0button\n\nYou can view this added record in the\u00a0**Custom Field List**\u00a0on the right side of the page by click on +icon for respected module.  \n  \n![](../assets/custom-field/1.jpg)\n\nTo edit custom field click on\u00a0**Edit**\u00a0icon and to delete custom field click on\u00a0**Delete**\u00a0icon present in the custom field list.",
+ "chars": 894,
+ "images": 1
+}

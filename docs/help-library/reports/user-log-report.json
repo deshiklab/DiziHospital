@@ -1,0 +1,13 @@
+{
+ "title": "User Log Report",
+ "date": "Sat, 30 Oct, 2021",
+ "category": {
+  "name": "Reports",
+  "slug": "reports"
+ },
+ "url": "https://smart-hospital.in/article/user-log-report",
+ "slug": "user-log-report",
+ "body": "### User Log Report\n\nSat, 30 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Reports](https://smart-hospital.in/category/reports)\n\n---\n\nTo check User Log report, go to\u00a0**Reports > User Log Report**. Here select the **Time Duration**\u00a0**and User Role** then click on**Search**\u00a0button. Here you can see User Log details like\u00a0**User, Role, IP Address, Login Time and User Agent** etc. Also you can download this report as PDF.  \n  \n![userlog report](../assets/user-log-report/1.jpg)",
+ "chars": 488,
+ "images": 1
+}

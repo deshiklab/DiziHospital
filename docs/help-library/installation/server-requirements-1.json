@@ -1,0 +1,13 @@
+{
+ "title": "Server Requirements",
+ "date": "Mon, 23 Sep, 2024",
+ "category": {
+  "name": "Getting Started",
+  "slug": "getting-started"
+ },
+ "url": "https://smart-hospital.in/article/server-requirements-1",
+ "slug": "server-requirements-1",
+ "body": "### Server Requirements\n\nMon, 23 Sep, 2024\n\n[Articles](https://smart-hospital.in/articles)[Getting Started](https://smart-hospital.in/category/getting-started)[Installation](https://smart-hospital.in/category/installation)\n\n---\n\nTo installing\u00a0**Smart Hospital**, Your web server must be running\u00a0**PHP 7.0 or higher**\u00a0and\u00a0**Mysql 5.1 or higher**. We have tested it with Windows, Mac and Linux but for optimum performance we will recommend to use\u00a0**Linux with Apache webserver**. Below are a list of items you should ensure your host can comply with.\n\n* **PHP 8.1 to higher**\n* **MYSQL 5.5 or higher (MYSQL 8 supported)**\n* **MYSQL SQL\\_MODE must not contain ONLY\\_FULL\\_GROUP\\_BY**\n* **mod\\_rewrite Apache**\n* **MBString Extension**\n* **MYSQLi Extension**\n* **Zip Extension**\n* **CURL Extension (recommended)**\n* **PHP max\\_execution\\_time should be atleast 60 seconds for smoother installation**\n\\* In most hosting accounts, these extensions are enabled by default. But you should check with your hosting provider.\n\nBefore installation\u00a0**Smart Hospital**\u00a0to install and work properly, you must make few directories/files writable. Below are a list of directories/files you should ensure that have write permissions.\n\n* **installation\\_dir/application/config/config.php**\n* **installation\\_dir/application/config/database.php**\n* **installation\\_dir/application/config/autoload.php**\n* **installation\\_dir/application/config/license.php**\n* **installation\\_dir/temp**\n* **installation\\_dir/backup**\n* **installation\\_dir/backup/database\\_backup**\n* **installation\\_dir/backup/temp\\_uploaded**\n* **installation\\_dir/uploads**\n* **installation\\_dir/uploads/<all\\_its\\_sub\\_directories>**",
+ "chars": 1684,
+ "images": 0
+}

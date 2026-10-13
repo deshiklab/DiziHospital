@@ -1,0 +1,13 @@
+{
+ "title": "Ambulance",
+ "date": "Thu, 18 Nov, 2021",
+ "category": {
+  "name": "Patient Panel",
+  "slug": "patient-panel"
+ },
+ "url": "https://smart-hospital.in/article/ambulance",
+ "slug": "ambulance",
+ "body": "### Ambulance\n\nThu, 18 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Patient Panel](https://smart-hospital.in/category/patient-panel)\n\n---\n\nTo check Ambulance bill details at patient panel go to **Ambulance** module, here you can check patient Ambulance bill details like **Bill No, Vehicle Number, Vehicle Model, Driver Name, Driver Contact, Amount, Tax, Net Amount, Paid Amount, Balance Amount**.  \n  \n![](../assets/ambulance/1.jpg)\n\nTo view payment details click on View Payment button available on **Action** column.  \n  \n![](../assets/ambulance/2.jpg)\n\nTo view Ambulance bill details click on Show button present at Action column. To print bill click on print button present at top right side on the header.  \n  \n![](../assets/ambulance/3.jpg)\n\nTo make online payment for Ambulance call click on **Pay** button here you can edit payment and click on add button, this will redirect you to payment gateway from where you can make online payment for Ambulance call.  \n  \n![](../assets/ambulance/4.jpg)  \n  \n![](../assets/ambulance/5.jpg)",
+ "chars": 1051,
+ "images": 5
+}

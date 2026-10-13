@@ -1,0 +1,13 @@
+{
+ "title": "How to Issue Blood?",
+ "date": "Wed, 27 Oct, 2021",
+ "category": {
+  "name": "Blood Bank",
+  "slug": "blood-bank"
+ },
+ "url": "https://smart-hospital.in/article/how-to-issue-blood",
+ "slug": "how-to-issue-blood",
+ "body": "### How to Issue Blood?\n\nWed, 27 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Blood Bank](https://smart-hospital.in/category/blood-bank)\n\n---\n\nThere are two ways to issue Blood, first you can issue blood from Blood Bank Status page and other is go to **Blood Bank > Blood Issue Details > Issue Blood**.  \n  \n![](../assets/how-to-issue-blood/1.jpg)  \n  \nTo issue blood click on Issue Blood button, here enter **Patient** from Select Patient (search for available patient) or create new patient from **+ New Patient** Button or add patient by entering **Case ID** (you can find Case Id from OPD or IPD detail of Patient) now enter **Issue Date, Hospital Doctor, Reference Name, Technician, Blood Group, Bag, Charge Category, Charge Name, Standard Charge, Note, Discount, Tax, Payment Mode** and **Payment Amount** (Payment Amount will automatically calculate) then click on **Save & Print** or **Save** button.\u00a0  \n  \nYou can check this added record at **Blood Issues Details** list Page.  \n  \n![](../assets/how-to-issue-blood/2.jpg)  \n  \nTo check Blood Issue bill details click on show icon and to delete bill details click on delete icon present at **Action** column at **Blood Issues Details** list Page.  \n  \n![](../assets/how-to-issue-blood/3.jpg)  \n  \nTo add payment click on Add Payment button icon present at **Action** column.  \n  \n![](../assets/how-to-issue-blood/4.jpg)",
+ "chars": 1390,
+ "images": 4
+}

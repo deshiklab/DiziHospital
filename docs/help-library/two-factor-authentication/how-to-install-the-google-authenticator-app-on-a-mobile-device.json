@@ -1,0 +1,13 @@
+{
+ "title": "How to Install the Google Authenticator app on a mobile device?",
+ "date": "Sat, 16 Aug, 2025",
+ "category": {
+  "name": "Two Factor Authentication",
+  "slug": "two-factor-authentication"
+ },
+ "url": "https://smart-hospital.in/article/how-to-install-the-google-authenticator-app-on-a-mobile-device",
+ "slug": "how-to-install-the-google-authenticator-app-on-a-mobile-device",
+ "body": "### How to Install the Google Authenticator app on a mobile device?\n\nSat, 16 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Two Factor Authentication](https://smart-hospital.in/category/two-factor-authentication)\n\n---\n\n1. On your mobile device, go to Play Store / IOS.\n2. Download the **Google Authenticator** app.\n3. After downloading the app, install in your device.\n\n  \n![](../assets/how-to-install-the-google-authenticator-app-on-a-mobile-device/1.jpg)  \n  \n  \n\n4. Now open the **Google Authenticator** app and setup your first account.\n5. Use the QR code or setup key in your **2FA** settings (by Google or third-party service). If you\u2019re having trouble, go to g.co/2sv\n6. Now click on **Scan a** **QR code** from your mobile.\n\n  \n![](../assets/how-to-install-the-google-authenticator-app-on-a-mobile-device/2.jpg)  \n  \n  \n\n7. Now, scan the **QR code,** which is available on your Smart Hospital **Two Factor Authentication > Setup 2FA** page**.**\n\n  \n![](../assets/how-to-install-the-google-authenticator-app-on-a-mobile-device/3.jpg)  \n  \n  \n\n8. You will receive the **six-digit verification code**, which will show up in the **Google Authenticator**\n9. Now fill in the six-digit verification code below the QR code and click on \"**Verify and Activate.\"**\n10. You have successfully enabled the **2FA method** in your Smart Hospital, and a message will be shown on screen.\n\n  \n![](../assets/how-to-install-the-google-authenticator-app-on-a-mobile-device/4.jpg)",
+ "chars": 1477,
+ "images": 4
+}

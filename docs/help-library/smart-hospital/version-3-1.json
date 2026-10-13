@@ -1,0 +1,13 @@
+{
+ "title": "Version 3.1",
+ "date": "Thu, 21 Aug, 2025",
+ "category": {
+  "name": "Changelog",
+  "slug": "changelog"
+ },
+ "url": "https://smart-hospital.in/article/version-3-1",
+ "slug": "version-3-1",
+ "body": "### Version 3.1\n\nThu, 21 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Changelog](https://smart-hospital.in/category/changelog)[Smart Hospital](https://smart-hospital.in/category/smart-hospital)\n\n---\n\nReleased Date: 17 November, 2020\n\n**General Changes**\n\n* Send Email and SMS separated in different pages\n* Staff and patient gender separated in a different array\n\n**Features Enhancement**\n\n* Added specialist in front site patient appointment\n* Notification Setting using template\n* OPD discharged summary\n* Added two new payment gateways Pesapal and iPay Africa\n\n**Bug Fixes**\n\n* Hospital dashboard income and expenses using role permission\n* Patient can not delete time line\n* Appointment click on approve appointment icon then click on cancel button so still appointment getting approved\n* Payroll calculation\n* IPD Discharged summary print\n* Changed OPD billing format in patient panel\n* IPD billing summary correct for discharged patient list in patient panel\n* Some pages (radiology, pathology, patient list) take time to open\n* Live Consultation unnecessary Alert message\n* Fixed calendar issue\n* Fixed design issues",
+ "chars": 1136,
+ "images": 0
+}

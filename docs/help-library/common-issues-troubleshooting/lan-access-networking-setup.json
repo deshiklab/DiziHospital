@@ -1,0 +1,13 @@
+{
+ "title": "LAN Access Networking Setup",
+ "date": "Mon, 18 Oct, 2021",
+ "category": {
+  "name": "Common Issues & Troubleshooting",
+  "slug": "common-issues-troubleshooting"
+ },
+ "url": "https://smart-hospital.in/article/lan-access-networking-setup",
+ "slug": "lan-access-networking-setup",
+ "body": "### LAN Access Networking Setup\n\nMon, 18 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Common Issues & Troubleshooting](https://smart-hospital.in/category/common-issues-troubleshooting)\n\n---\n\nIf you have hosted Smart Hospital on your local server and want to use in local LAN network then your Smart Hospital hosting machine should have static ip address (not be dynamic assigned by your modem DHCP). Here suppose your server hosting machine have ip address **192.168.1.2** then when you are installing Smart Hospital then you should type\u00a0**192.168.1.2/myhospital/**\u00a0not\u00a0**localhost/myhospital/** other wise you can not access Smart Hospital from other computers in your LAN and will redirect to\u00a0**localhost/myhospital/** url. Now if you have installed Smart Hospital using\u00a0**localhost/myhospital/**\u00a0then you can correct this by editing base\\_url value in file\u00a0**/application/config/config.php**\u00a0. In this file change\u00a0**localhost**\u00a0to your hosting server static ip address like\u00a0**192.168.1.2**\u00a0.",
+ "chars": 1007,
+ "images": 0
+}

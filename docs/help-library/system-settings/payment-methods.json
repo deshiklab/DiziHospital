@@ -1,0 +1,13 @@
+{
+ "title": "Payment Methods",
+ "date": "Mon, 07 Jul, 2025",
+ "category": {
+  "name": "System Settings",
+  "slug": "system-settings"
+ },
+ "url": "https://smart-hospital.in/article/payment-methods",
+ "slug": "payment-methods",
+ "body": "### Payment Methods\n\nMon, 07 Jul, 2025\n\n[Articles](https://smart-hospital.in/articles)[System Settings](https://smart-hospital.in/category/system-settings)\n\n---\n\nFor allowing patient to pay their payment online then you must have to enable any one of payment gateway, for this go to\u00a0**Setup > Settings > Payment Methods**\u00a0then select any payment method from top of the page then enter your payment gateway account details in required fields then click on the\u00a0**Save**\u00a0button.  \n  \nIn below can also see the option to add the processing fee type. Suppose you want to charge a processing fee with the payment so you can select from two options which is displaying on below, one is a **Percentage based fee**, and the other is a **Fixed amn****ou****t fee**. When processing the payment, the processing fee amount will be displayed along with the payment amount and If you don't want to select either of the two options, you can choose the '**None**' option.\n\n![](../assets/payment-methods/1.jpg)  \n  \n  \nHere we are providing 16 payment method **Paypal**,\u00a0**Stripe**,\u00a0**PayU**,\u00a0**CCAvenue**,\u00a0**InstaMojo**,\u00a0**Paystack**,\u00a0**Razorpay**,\u00a0**Paytm**,\u00a0**Midtrans**,\u00a0**Pesapal**,\u00a0**Flutter**\u00a0**Wave**,\u00a0**IPay Africa**,\u00a0**JazzCash**,\u00a0**Billplz**,**SSLcommerz, Walkings.** Once you saved the record you have to\u00a0**Enable**\u00a0payment gateway from the right side of the page and then click on\u00a0\u00a0**Save**\u00a0button.\n\n**Note****-**\u00a0  \n\u00a0 1. You can add multiple payment gateways details but you can enable only one at a time.  \n\u00a0 2. Midtrans payment gateway currently supports only credit card method option in Smart Hospital.",
+ "chars": 1603,
+ "images": 1
+}

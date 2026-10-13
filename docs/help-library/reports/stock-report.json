@@ -1,0 +1,13 @@
+{
+ "title": "Stock Report",
+ "date": "Sat, 16 Aug, 2025",
+ "category": {
+  "name": "Reports",
+  "slug": "reports"
+ },
+ "url": "https://smart-hospital.in/article/stock-report",
+ "slug": "stock-report",
+ "body": "### Stock Report\n\nSat, 16 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Reports](https://smart-hospital.in/category/reports)\n\n---\n\nTo check Stock Report report, go to **Reports > Stock Report**.  \n  \n![](../assets/stock-report/1.jpg)  \n  \nHere select **Medicine Category, Stock Type** then click on\u00a0**Search**\u00a0button.  \n  \n![](../assets/stock-report/2.jpg)  \n  \n  \nHere you can see Expiry Medicine Report details like **Medicine Name, Medicine Company, Medicine Category, Medicine Composition,Medicine Category, Medicine Group, Unit** and **Available Qty (Quantity).**Also you can download this report as PDF.",
+ "chars": 621,
+ "images": 2
+}

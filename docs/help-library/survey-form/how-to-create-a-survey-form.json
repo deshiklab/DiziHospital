@@ -1,0 +1,13 @@
+{
+ "title": "How to create a Survey Form?",
+ "date": "Sat, 25 Jul, 2026",
+ "category": {
+  "name": "Survey Form",
+  "slug": "survey-form"
+ },
+ "url": "https://smart-hospital.in/article/how-to-create-a-survey-form",
+ "slug": "how-to-create-a-survey-form",
+ "body": "### How to create a Survey Form?\n\nSat, 25 Jul, 2026\n\n[Articles](https://smart-hospital.in/articles)[Survey Form](https://smart-hospital.in/category/survey-form)\n\n---\n\nGo to\u00a0**Survey Forms \u2192 Survey Forms**\u00a0from the sidebar and click on the\u00a0**+ Create Survey Form**\u00a0button on the top right of the list page.\n\n![](../assets/how-to-create-a-survey-form/1.jpg)  \n  \n\nOn the Create Survey Form page, enter the\u00a0**Form Title**, an optional\u00a0**Description**\u00a0shown above the form fields, and a\u00a0**Thank You Message**\u00a0shown to the user after they submit \u2014 leave the thank you message blank to show a default message instead.\n\nUnder\u00a0**Schedule**, you can optionally set a\u00a0**Start Date**\u00a0and\u00a0**End Date**\u00a0so the form is only open for a limited period. Under\u00a0**Target Audience**, select at least one of\u00a0**Staff**,\u00a0**Patient**\u00a0or\u00a0**Front Site**\u00a0\u2014 this decides who will see the form once it is published.\n\nTwo more settings are available under\u00a0**Settings**:\n\n* **Allow Edit Response**\u00a0\u2014 lets a user who already submitted the form resubmit it, overwriting their previous answers.\n* **Enable CAPTCHA**\u00a0\u2014 adds a security code verification step on public form submissions.\n\n  \n![](../assets/how-to-create-a-survey-form/2.jpg)  \n\nClick **Save as Draft**\u00a0once you are done. The form is created in\u00a0**Draft**\u00a0status and you are taken straight to the Edit page, where the\u00a0**Survey Builder**\u00a0unlocks so you can start adding fields.\n\n**Note:**\u00a0a form needs at least one Target Audience selected, and at least one field added, before it can be Published.",
+ "chars": 1524,
+ "images": 2
+}

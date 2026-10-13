@@ -1,0 +1,13 @@
+{
+ "title": "OPD Discharge Patient Report",
+ "date": "Sat, 30 Oct, 2021",
+ "category": {
+  "name": "Reports",
+  "slug": "reports"
+ },
+ "url": "https://smart-hospital.in/article/opd-discharge-patient-report",
+ "slug": "opd-discharge-patient-report",
+ "body": "### OPD Discharge Patient Report\n\nSat, 30 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Reports](https://smart-hospital.in/category/reports)\n\n---\n\nTo check OPD Discharge Patient Report, go to **Reports > OPD Discharge Patient Report**. Here select the\u00a0**Time Duration, Doctor, From Age, To Age, Gender, Discharge Status**\u00a0then click on**Search** button. Here you can see OPD Discharge Patient details like **Patient Name, OPD No, Case ID, Gendar, Phone, Consultant, Appointment Date, Discharge Date, Discharge Status, Total Admit Days etc**. Also you can download this report as PDF.  \n  \n![opd discharge patient report](../assets/opd-discharge-patient-report/1.jpg)",
+ "chars": 678,
+ "images": 1
+}

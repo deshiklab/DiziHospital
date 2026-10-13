@@ -1,0 +1,13 @@
+{
+ "title": "Installation Issue",
+ "date": "Sat, 23 Apr, 2022",
+ "category": {
+  "name": "Getting Started",
+  "slug": "getting-started"
+ },
+ "url": "https://smart-hospital.in/article/installation-issue-1",
+ "slug": "installation-issue-1",
+ "body": "### Installation Issue\n\nSat, 23 Apr, 2022\n\n[Articles](https://smart-hospital.in/articles)[Getting Started](https://smart-hospital.in/category/getting-started)[Installation](https://smart-hospital.in/category/installation)\n\n---\n\nDuring installation while Smart Hospital installer importing database there is any issue occurred so may be database import has not completed so installer was stuck and unable to proceed at last step. In this case you should check your database and if there is any tables present \u00a0then remove all tables and again start Smart Hospital installer from first step.",
+ "chars": 589,
+ "images": 0
+}

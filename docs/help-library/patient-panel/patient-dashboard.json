@@ -1,0 +1,13 @@
+{
+ "title": "Patient Dashboard",
+ "date": "Fri, 01 Aug, 2025",
+ "category": {
+  "name": "Patient Panel",
+  "slug": "patient-panel"
+ },
+ "url": "https://smart-hospital.in/article/patient-dashboard",
+ "slug": "patient-dashboard",
+ "body": "### Patient Dashboard\n\nFri, 01 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Patient Panel](https://smart-hospital.in/category/patient-panel)\n\n---\n\nAt patient panel you will see **Dashboard**, here patient can see all their treatment details in summarized form.  \n  \nAt the top you will see tabs like **OPD, IPD, Pharmacy, Pathology, Radiology, Blood Bank** and **Ambulance**, here you can see total count for patient treatment under these tabs.\u00a0  \n  \nIn below you will see graphic representation of quantitative information for Medical History, Findings and Symptoms through Pie Chart, Bar Chart etc.  \n  \n  \n![](../assets/patient-dashboard/1.jpg)",
+ "chars": 660,
+ "images": 1
+}

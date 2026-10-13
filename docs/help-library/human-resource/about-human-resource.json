@@ -1,0 +1,13 @@
+{
+ "title": "About Human Resource.",
+ "date": "Tue, 26 Oct, 2021",
+ "category": {
+  "name": "Human Resource",
+  "slug": "human-resource"
+ },
+ "url": "https://smart-hospital.in/article/about-human-resource",
+ "slug": "about-human-resource",
+ "body": "### About Human Resource.\n\nTue, 26 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Human Resource](https://smart-hospital.in/category/human-resource)\n\n---\n\nThe main function of the human resource is to make necessary staff arrangements, maintain staff attendance for the hospital.  \n  \n**Human Resource module workflow:**\u00a0First we will add Department, Designation, , Specialist, Leave Type then we can add staff member from Staff Directory. Also we can add Staff Attendance, Payroll, Apply Leave, Approve Leave Request, Disabled Staff. If you want to add additional fields in staff form then you can use\u00a0**Custom Fields**\u00a0feature, for this go to**Setup > Custom Fields**\u00a0and add your desired fields in Staff. You can also check staff attendance and payroll reports.",
+ "chars": 775,
+ "images": 1
+}

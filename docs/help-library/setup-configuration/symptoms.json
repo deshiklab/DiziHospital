@@ -1,0 +1,13 @@
+{
+ "title": "Symptoms",
+ "date": "Sat, 30 Oct, 2021",
+ "category": {
+  "name": "Setup & Configuration",
+  "slug": "setup-configuration"
+ },
+ "url": "https://smart-hospital.in/article/symptoms",
+ "slug": "symptoms",
+ "body": "### Symptoms\n\nSat, 30 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Setup & Configuration](https://smart-hospital.in/category/setup-configuration)\n\n---\n\nTo setup Symptoms go to **Setup > Symptoms**.  \n  \n\n### **Symptoms Head**\n\nTo add Symptoms Head click on **+ Add Symptoms Head** button now enter **Symptoms Head Symptoms Type, Description** and click on **Save** button.  \n  \n![](../assets/symptoms/1.jpg)\n\nYou can check added Symptoms Head record at **Symptoms Head List** page.  \n  \n![](../assets/symptoms/2.jpg)\n\nTo edit Symptoms Head click on edit and to delete Symptoms Head click on delete icon present at **Action** column.  \n  \n\n### **Symptoms Type**\n\nTo add Symptoms Type click on **+ Add Symptoms Type** button now enter **Symptoms Type** and click on **Save** button.  \n  \n![](../assets/symptoms/3.jpg)\n\nYou can check added Symptoms Type record at **Symptoms Type List** page.  \n  \n![](../assets/symptoms/4.jpg)\n\nTo edit Symptoms Type click on edit and to delete Symptoms Type click on delete icon present at **Action** column.",
+ "chars": 1053,
+ "images": 4
+}

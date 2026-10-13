@@ -1,0 +1,13 @@
+{
+ "title": "Version 2.0",
+ "date": "Thu, 21 Aug, 2025",
+ "category": {
+  "name": "Changelog",
+  "slug": "changelog"
+ },
+ "url": "https://smart-hospital.in/article/version-2-0",
+ "slug": "version-2-0",
+ "body": "### Version 2.0\n\nThu, 21 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Changelog](https://smart-hospital.in/category/changelog)[Smart Hospital](https://smart-hospital.in/category/smart-hospital)\n\n---\n\nReleased Date: 1st October, 2019\n\n**General Changes**\n\n* IPD Bill notification message\n* Diagnosis and Timeline is now editable\n\n**Features Enhancement**\n\n* Added Centralize Patient Management\n* Added Birth & Death Module\n* Added Notifications Module\n* Added Print Receipt in every module\n* Added Charges, Payment & Bill in OPD\n* Added Recheckup in OPD for Clinics\n* Added Prescription in IPD\n* Added Purchase Medicine in Pharmacy\n* Added Medicine Selection in OPD and IPD prescription\n* Added Manual Prescription in OPD\n* Added OPD Doctor charges\n* Added option to hide superadmin visibility to other users\n* Added medicine dosage for prescription\n* Added Move to OPD & IPD from Appointment\n* Added Move to IPD from OPD\n* Added Item Unit in Inventory\n* Added Purchase Price in Inventory\n* Added DOB (date of birth) in patient\n* Added %Discount & %Tax in IPD & Pharmacy Billing\n* Added Medicine Import in Pharmacy\n* Added Patient Import\n* Added Expiry Medicine Report\n* Added Income Group Report\n* Added Expense Group Report\n* Added Inventory Stock Report\n* Added Inventory Item Report\n* Added Inventory Issue Report\n\n**Bug Fixes**\n\n* Removed image option from minimal editor\n* Fixed PHP Mailer bug\n* Fixed title tag and static logo in many external pages\n* Fixed Calendar & Datepicker localization\n* Pharmacy Generate Bill issue\n* Fixed general designs and ui issues",
+ "chars": 1580,
+ "images": 0
+}

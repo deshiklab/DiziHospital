@@ -1,0 +1,13 @@
+{
+ "title": "ONLY_FULL_GROUP_BY Issue On Server",
+ "date": "Mon, 18 Oct, 2021",
+ "category": {
+  "name": "Common Issues & Troubleshooting",
+  "slug": "common-issues-troubleshooting"
+ },
+ "url": "https://smart-hospital.in/article/only_full_group_by-issue-on-server",
+ "slug": "only_full_group_by-issue-on-server",
+ "body": "### ONLY\\_FULL\\_GROUP\\_BY Issue On Server\n\nMon, 18 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Common Issues & Troubleshooting](https://smart-hospital.in/category/common-issues-troubleshooting)\n\n---\n\nIf Smart Hospital showing **ONLY\\_FULL\\_GROUP\\_BY**\u00a0error message on your server that means on your hosting\u00a0**ONLY\\_FULL\\_GROUP\\_BY**\u00a0is enabled in your mysql\u00a0**SQL\\_MODE**. This issue comes due to on some hosting server mysql is not configured properly. Please contact to your hosting provider to\u00a0**disable/remove**\u00a0**ONLY\\_FULL\\_GROUP\\_BY**\u00a0in your hosting mysql\u00a0**SQL\\_MODE**\u00a0or follow the below instruction to fix this issue (it will require full\u00a0**root access**\u00a0of your mysql server) -  \n  \nOpen\u00a0**phpMyadmin**\u00a0of your server then go to\u00a0**Variables**\u00a0tab then edit\u00a0**sql mode**\u00a0variable value and remove\u00a0**ONLY\\_FULL\\_GROUP\\_BY**.  \n  \n![](../assets/only_full_group_by-issue-on-server/1.jpg)  \n  \n\n*Note: This fix is temporary and if your mysql server will be restart or update it will comes on default state. So ask your hosting admin to make it permanently in mysql config file.*  \n  \nGenerally this issue occurred in cheap or non professional hosting. If you will go with hosting providers like\u00a0**godaddy**\u00a0or\u00a0**hostgator**\u00a0or any reputed hosting provider then you will not face this issue.",
+ "chars": 1312,
+ "images": 1
+}

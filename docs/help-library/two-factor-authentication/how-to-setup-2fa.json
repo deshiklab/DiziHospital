@@ -1,0 +1,13 @@
+{
+ "title": "How to Setup 2FA?",
+ "date": "Sat, 16 Aug, 2025",
+ "category": {
+  "name": "Two Factor Authentication",
+  "slug": "two-factor-authentication"
+ },
+ "url": "https://smart-hospital.in/article/how-to-setup-2fa",
+ "slug": "how-to-setup-2fa",
+ "body": "### How to Setup 2FA?\n\nSat, 16 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Two Factor Authentication](https://smart-hospital.in/category/two-factor-authentication)\n\n---\n\nGo to the your **Smart Hospital** to configure 2FA of Two Factor Authentication, two-step verification. For **setup 2FA**, go to the **Two Factor Authentication** module, which is shown in the left side bar. Now click on**Setup 2FA,**\u00a0the **Setup 2FA** page will open.  \n  \n![](../assets/how-to-setup-2fa/1.jpg)\n\n**Note:** For further processing, you need to set up **Google Authenticator** on your mobile device.",
+ "chars": 597,
+ "images": 1
+}

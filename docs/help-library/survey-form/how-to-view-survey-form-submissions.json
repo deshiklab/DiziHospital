@@ -1,0 +1,13 @@
+{
+ "title": "How to view Survey Form Submissions?",
+ "date": "Sat, 25 Jul, 2026",
+ "category": {
+  "name": "Survey Form",
+  "slug": "survey-form"
+ },
+ "url": "https://smart-hospital.in/article/how-to-view-survey-form-submissions",
+ "slug": "how-to-view-survey-form-submissions",
+ "body": "### How to view Survey Form Submissions?\n\nSat, 25 Jul, 2026\n\n[Articles](https://smart-hospital.in/articles)[Survey Form](https://smart-hospital.in/category/survey-form)\n\n---\n\nFrom the Survey Forms list, click the\u00a0**View Submissions**\u00a0action on any form to open its Submissions dashboard. The top of the page shows four quick summary tiles:\u00a0**Total Responses**,\u00a0**Form Fields**,\u00a0**Status**\u00a0and\u00a0**Schedule**, followed by three tabs.\n\n## Response Statistics\n\nEvery\u00a0**Radio**,\u00a0**Checkbox**\u00a0and\u00a0**Yes/No**\u00a0field gets a breakdown of votes and percentage per option, with a bar and a donut chart. Free-text fields (**Text**,\u00a0**Number**,\u00a0**Date**,\u00a0**Textarea**) instead list every answer that was submitted.  \n  \n![](../assets/how-to-view-survey-form-submissions/1.jpg)\n\n## Visual Chart\n\nA condensed, chart-only view of the same statistics \u2014 handy for a quick glance or for sharing a screenshot in a report.  \n  \n![](../assets/how-to-view-survey-form-submissions/2.jpg)\n\n## Submissions\n\nA full list of every response, with the submitter's name, an audience badge (**Staff**,\u00a0**Patient**\u00a0or\u00a0**Public**), and the submission date. Click the eye icon on any row to open its full detail.  \n  \n![](../assets/how-to-view-survey-form-submissions/3.jpg)  \n  \n![](../assets/how-to-view-survey-form-submissions/4.jpg)",
+ "chars": 1298,
+ "images": 4
+}

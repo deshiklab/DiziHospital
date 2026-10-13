@@ -1,0 +1,13 @@
+{
+ "title": "System Notification Setting",
+ "date": "Mon, 01 Nov, 2021",
+ "category": {
+  "name": "System Settings",
+  "slug": "system-settings"
+ },
+ "url": "https://smart-hospital.in/article/system-notification-setting",
+ "slug": "system-notification-setting",
+ "body": "### System Notification Setting\n\nMon, 01 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[System Settings](https://smart-hospital.in/category/system-settings)\n\n---\n\nTo manage system notification setting, go to\u00a0**Setup > Settings > System Notification Setting**. \u00a0There are 56 events \u00a0where system notification are sending to concerning user (staff or patient or both) Smart Hospital account. With the help of event option setting you can manage which notifications to send in which event to which person (staff or patient) and select the check box and then click on **Save**\u00a0button.\n\n![system notification setting](../assets/system-notification-setting/1.jpg)\n\nTo edit sample message click on\u00a0**Edit**\u00a0icon present in the sample message column, at click of this icon a modal will be open. Here enter\u00a0**Subject**,\u00a0**Staff message and Patient message**\u00a0and then click on\u00a0**Save**\u00a0button.  \n  \n![](../assets/system-notification-setting/2.jpg)",
+ "chars": 948,
+ "images": 2
+}

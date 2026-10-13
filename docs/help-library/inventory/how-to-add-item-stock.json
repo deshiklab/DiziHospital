@@ -1,0 +1,13 @@
+{
+ "title": "How to add Item Stock?",
+ "date": "Sun, 31 Oct, 2021",
+ "category": {
+  "name": "Inventory",
+  "slug": "inventory"
+ },
+ "url": "https://smart-hospital.in/article/how-to-add-item-stock",
+ "slug": "how-to-add-item-stock",
+ "body": "### How to add Item Stock?\n\nSun, 31 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Inventory](https://smart-hospital.in/category/inventory)\n\n---\n\nTo add item stock go to inventory click on **+ Add Item Stock** button, here enter **Item Category, Item Name, Supplier, Store, Quantity, Purchase Price, Date, Description** and **Attach Document** and then click on **Save** button.  \n  \n![](../assets/how-to-add-item-stock/1.jpg)  \n  \nYou can view this added record in the Item Stock List page.  \n  \n![](../assets/how-to-add-item-stock/2.jpg)  \n  \nTo edit Item Stock click on the\u00a0**Edit**\u00a0icon and to delete the Item Stock click on the\u00a0**Delete**\u00a0icon present at last column and will show on mouse hover.",
+ "chars": 712,
+ "images": 2
+}

@@ -1,0 +1,13 @@
+{
+ "title": "How to issue Component in Blood Bank?",
+ "date": "Wed, 27 Oct, 2021",
+ "category": {
+  "name": "Blood Bank",
+  "slug": "blood-bank"
+ },
+ "url": "https://smart-hospital.in/article/how-to-issue-component-in-blood-bank",
+ "slug": "how-to-issue-component-in-blood-bank",
+ "body": "### How to issue Component in Blood Bank?\n\nWed, 27 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Blood Bank](https://smart-hospital.in/category/blood-bank)\n\n---\n\nThere are two ways to issue Component, first you can issue component from Blood Bank Status page and other is go to **Blood Bank > Component Issue > Issue Component**.  \n  \nTo issue component click on **Issue Component** button, here enter **Patient**\u00a0from Select Patient (search for available patient) or create new patient from\u00a0**+ New Patient**\u00a0Button or add patient by entering\u00a0**Case ID**\u00a0(you can find Case Id from OPD or IPD detail of Patient) now enter\u00a0**Issue Date, Hospital Doctor, Reference Name, Technician, Blood Group, Components, Bag, Charge Category, Charge Name, Standard Charge, Note, Discount, Tax, Payment Mode** and\u00a0**Payment Amount**\u00a0(Payment Amount will automatically calculate) then click on\u00a0**Save & Print**or\u00a0**Save**\u00a0button.\u00a0  \n  \n![](../assets/how-to-issue-component-in-blood-bank/1.jpg)  \n  \nYou can check this added record at **Components Issue Details**\u00a0list Page.  \n  \n![](../assets/how-to-issue-component-in-blood-bank/2.jpg)  \n  \nTo check Component Issue bill details click on show icon and to delete bill details click on delete icon present at **Action**\u00a0column at\u00a0**Component Issues Details**\u00a0list Page.  \n  \n![](../assets/how-to-issue-component-in-blood-bank/3.jpg)  \n  \nTo add payment click on Add Payment button icon present at\u00a0**Action**\u00a0column.  \n  \n![](../assets/how-to-issue-component-in-blood-bank/4.jpg)",
+ "chars": 1523,
+ "images": 4
+}

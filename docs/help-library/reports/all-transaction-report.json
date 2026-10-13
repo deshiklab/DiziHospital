@@ -1,0 +1,13 @@
+{
+ "title": "All Transaction Report.",
+ "date": "Fri, 01 Aug, 2025",
+ "category": {
+  "name": "Reports",
+  "slug": "reports"
+ },
+ "url": "https://smart-hospital.in/article/all-transaction-report",
+ "slug": "all-transaction-report",
+ "body": "### All Transaction Report.\n\nFri, 01 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Reports](https://smart-hospital.in/category/reports)\n\n---\n\nTo check Transaction report of patient, go to\u00a0**Reports > All Transaction Report**. Here select the\u00a0**Time Duration, Collected By**\u00a0and **Select Head (Optional)** and then click on**Search**\u00a0button. Here you can see patients transaction details for different treatments like for OPD, IPD, Pharmacy Bill, Pathology Test, Radiology Test, Blood Issue, Ambulance Call, Income. Expenses, Payroll Report.  \n  \n**Note:** In the **All Transactions Report**, all **refunds** will be displayed with a **negative sign (-)** to indicate the reversal of payment.  \n  \n![all transaction report](../assets/all-transaction-report/1.jpg)",
+ "chars": 774,
+ "images": 1
+}

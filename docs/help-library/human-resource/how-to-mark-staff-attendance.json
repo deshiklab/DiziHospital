@@ -1,0 +1,13 @@
+{
+ "title": "How to mark staff attendance?",
+ "date": "Sat, 02 Aug, 2025",
+ "category": {
+  "name": "Human Resource",
+  "slug": "human-resource"
+ },
+ "url": "https://smart-hospital.in/article/how-to-mark-staff-attendance",
+ "slug": "how-to-mark-staff-attendance",
+ "body": "### How to mark staff attendance?\n\nSat, 02 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Human Resource](https://smart-hospital.in/category/human-resource)\n\n---\n\nTo mark staff attendance, go to**Human Resource > Staff Attendance** then select here **Role**\u00a0and\u00a0**Attendance Date**\u00a0and then click on\u00a0**Search**\u00a0button. The list of staff will be shown in the below of the page.  \n  \n![](../assets/how-to-mark-staff-attendance/1.jpg)  \n  \n  \n\nHere, you can select the **attendance status** for staff members\u2014**Present, Late, Absent, Half Day, Holiday, or Half Day (Second Shift)**.\n\nAdditionally, you will see a **\"Source\"** column, which indicates how the attendance was marked\u2014whether it was through **Biometric**, **Manual Entry**, or **QR/Barcode Attendance** and then click on the **Save Attendance**\u00a0button. (If attendance has been already submitted then you will get message of\u00a0**\"Attendance Already Submitted You Can Edit Record\"**\u00a0in this case you can still edit exiting attendance.)",
+ "chars": 1001,
+ "images": 1
+}

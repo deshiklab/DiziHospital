@@ -1,0 +1,13 @@
+{
+ "title": "Operations",
+ "date": "Sun, 31 Oct, 2021",
+ "category": {
+  "name": "Setup & Configuration",
+  "slug": "setup-configuration"
+ },
+ "url": "https://smart-hospital.in/article/operations",
+ "slug": "operations",
+ "body": "### Operations\n\nSun, 31 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Setup & Configuration](https://smart-hospital.in/category/setup-configuration)\n\n---\n\nTo setup Operation Theatre type and Categories go to **Setup > Operation Theatre**, here first we should add **Operation Theatre Category** then add **Type**.\n\n### **Operation Theater Category**\n\nTo add Operation Category click on **+ Add Category** button now enter **Operation Category** and click on **Save** button.  \n  \n![](../assets/operations/1.jpg)\n\nYou can check added Operation Category record at **Operation Category List** page.  \n  \n![](../assets/operations/2.jpg)\n\nTo edit Operation Category click on edit and to delete Operation Category click on delete icon present at **Action** column.\n\n---\n\n### **Operation**\n\nTo add Operation click on **+ Add Operation** button now enter **Operation Name** and **Category** then click on **Save** button.  \n  \n![](../assets/operations/3.jpg)\n\nYou can check added Operation record at **Operation List** page.  \n  \n![](../assets/operations/4.jpg)\n\nTo edit Operation click on edit and to delete Operation click on delete icon present at **Action** column.",
+ "chars": 1173,
+ "images": 4
+}

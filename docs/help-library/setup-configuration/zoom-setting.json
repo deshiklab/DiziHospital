@@ -1,0 +1,13 @@
+{
+ "title": "Zoom Setting",
+ "date": "Sat, 30 Oct, 2021",
+ "category": {
+  "name": "Setup & Configuration",
+  "slug": "setup-configuration"
+ },
+ "url": "https://smart-hospital.in/article/zoom-setting",
+ "slug": "zoom-setting",
+ "body": "### Zoom Setting\n\nSat, 30 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Setup & Configuration](https://smart-hospital.in/category/setup-configuration)\n\n---\n\nBefore creating **Zoom Live Consultation or Live Meeting** you must have\u00a0**Zoom account**\u00a0and\u00a0**Zoom API credentials**. If you don\u2019t have zoom account or API credentials then check this\u00a0<https://www.youtube.com/watch?v=voJOIavlKTk>\u00a0video tutorial.  \nTo configure\u00a0**Zoom Live** **Consultation**, go to\u00a0**Setup > Zoom Setting**, here enter\u00a0**Zoom API Key**\u00a0,\u00a0**Zoom API Secret**\u00a0details and check\u00a0**Doctor API Credential**\u00a0and\u00a0**Use** **Zoom Client App**\u00a0Enable/Disable. You can also set Default OPD Duration (In Minutes) and Default IPD Duration (In Minutes) and then click on\u00a0**Save**\u00a0button. Here, entered API credentials is known as Global API Key in Smart Hospital. If you disable\u00a0**Doctor \u00a0API Credential**\u00a0option then Doctor will have to use global API key and will not be able to create their own API Credential and if you enable Doctor API Credential option then doctor can add their own API credentials from their doctor account by clicking on\u00a0**Add Credential**\u00a0button to create Live consultation \u00a0by using self API Key.\n\nIf you enable\u00a0**Zoom Client App**\u00a0option then user will have to install Zoom Client App in their machine and if you disable Zoom Client App option then user does not have to install anything, Consultation and Meeting will start on\u00a0**Zoom Web SDK**. Zoom Web SDK is not as mature as Zoom Client App so may be some features will not work properly or missing in Zoom Web SDK so it is highly recommended to use Zoom Client App to avoid Zoom Web SDK issues and use full featured Zoom services.  \n  \n![](../assets/zoom-setting/1.jpg)",
+ "chars": 1727,
+ "images": 1
+}

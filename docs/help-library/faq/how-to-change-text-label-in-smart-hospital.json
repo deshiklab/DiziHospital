@@ -1,0 +1,13 @@
+{
+ "title": "How to change text label in Smart Hospital.",
+ "date": "Fri, 31 Dec, 2021",
+ "category": {
+  "name": "FAQ",
+  "slug": "faq"
+ },
+ "url": "https://smart-hospital.in/article/how-to-change-text-label-in-smart-hospital",
+ "slug": "how-to-change-text-label-in-smart-hospital",
+ "body": "### How to change text label in Smart Hospital.\n\nFri, 31 Dec, 2021\n\n[Articles](https://smart-hospital.in/articles)[FAQ](https://smart-hospital.in/category/faq)\n\n---\n\nIn Smart Hospital, if you want to change text labels like if you want to change text lebel of **\"Pathology\"** to **\"Pathology Lab\"** then for this you should go to the Language file location, here first you should select the Language file according to your country language and do changes in that language file.  \n  \nFor e.g. if you want to change text lebel of **\"Pathology\"** to **\"Pathology Lab\"** in English language then go to the file path location \\application\\language\\English\\app\\_files and open system\\_lang.php file then serach for the keyword **\"Pathology\"  \n  \n![](../assets/how-to-change-text-label-in-smart-hospital/1.jpg)**   \n  \n  \nNow replace it with **\"Pathology Lab\"**\u00a0then save it.  \n  \n![](../assets/how-to-change-text-label-in-smart-hospital/2.jpg)  \n  \n  \nAfter save changes it will look like below image at Smart Hospital site.  \n  \n![](../assets/how-to-change-text-label-in-smart-hospital/3.jpg)  \n  \n**Note-** Please make sure you have done changes in proper format (like **Pathology Lab**\u00a0must be under single inverted commas) otherwise code will cause an error.",
+ "chars": 1256,
+ "images": 3
+}

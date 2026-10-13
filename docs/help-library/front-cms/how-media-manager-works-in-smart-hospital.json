@@ -1,0 +1,13 @@
+{
+ "title": "How Media Manager works in Smart Hospital.",
+ "date": "Thu, 11 Nov, 2021",
+ "category": {
+  "name": "Front CMS",
+  "slug": "front-cms"
+ },
+ "url": "https://smart-hospital.in/article/how-media-manager-works-in-smart-hospital",
+ "slug": "how-media-manager-works-in-smart-hospital",
+ "body": "### How Media Manager works in Smart Hospital.\n\nThu, 11 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Front CMS](https://smart-hospital.in/category/front-cms)\n\n---\n\nTo upload file (like images)\u00a0 and YouTube videos , go to\u00a0**Front CMS > Media Manager**\u00a0then Choose or drag file in the\u00a0**Upload Your File**option so selected file will be upload in your Smart hospital on Media Manager. Also to**upload youtube video enter youtube url at** **Upload Youtube Video URL**\u00a0section and then click on\u00a0**Submit**\u00a0button. Uploaded file and youtube video will show at Media Manager list page.\n\n![add media manager](../assets/how-media-manager-works-in-smart-hospital/1.jpg)\n\nYou can search media by entering any keyword in\u00a0**Search By File Name**textbox and you can also search any file by selecting file type ( like video, text,zip,Rar etc.).",
+ "chars": 843,
+ "images": 1
+}

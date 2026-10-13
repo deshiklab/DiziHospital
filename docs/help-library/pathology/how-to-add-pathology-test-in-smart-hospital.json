@@ -1,0 +1,13 @@
+{
+ "title": "How to add Pathology Test in Smart Hospital?",
+ "date": "Wed, 10 Nov, 2021",
+ "category": {
+  "name": "Pathology",
+  "slug": "pathology"
+ },
+ "url": "https://smart-hospital.in/article/how-to-add-pathology-test-in-smart-hospital",
+ "slug": "how-to-add-pathology-test-in-smart-hospital",
+ "body": "### How to add Pathology Test in Smart Hospital?\n\nWed, 10 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Pathology](https://smart-hospital.in/category/pathology)\n\n---\n\nPathology module is for managing patient pathology test and reports.\n\nTo add pathology test click on **+ Add Pathology Test** button here enter **Test Name, Short Name, Test Type, Category Name, Sub Category, Method, Report Days, Charge Category, Charge Name, Tax (%), Standard Charge, Amount**. To add Test Parameter select **Test Parameter Name**. Click on **+ Add button** and add multiple Test Parameter.  \n  \n![](../assets/how-to-add-pathology-test-in-smart-hospital/1.jpg)\n\nAdded pathology test will be list on pathology test page.",
+ "chars": 716,
+ "images": 1
+}

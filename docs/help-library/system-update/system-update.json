@@ -1,0 +1,13 @@
+{
+ "title": "System Update",
+ "date": "Sat, 30 Oct, 2021",
+ "category": {
+  "name": "Getting Started",
+  "slug": "getting-started"
+ },
+ "url": "https://smart-hospital.in/article/system-update",
+ "slug": "system-update",
+ "body": "### System Update\n\nSat, 30 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Getting Started](https://smart-hospital.in/category/getting-started)[System Update](https://smart-hospital.in/category/system-update)\n\n---\n\nTo check Smart Hospital current version or available new version login from superadmin panel and then go to\u00a0**Setup > Settings > System Update**\u00a0link. Here you can see your current\u00a0**Smart Hospital Version** and if here any new version available for Smart Hospital then you can update your Smart Hospital through one click auto update feature (which will show only when new version available).  \n  \n![](../assets/system-update/1.jpg)",
+ "chars": 658,
+ "images": 1
+}

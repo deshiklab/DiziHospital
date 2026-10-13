@@ -1,0 +1,13 @@
+{
+ "title": "IPD Charges",
+ "date": "Mon, 01 Nov, 2021",
+ "category": {
+  "name": "IPD - In Patient",
+  "slug": "ipd-in-patient"
+ },
+ "url": "https://smart-hospital.in/article/ipd-charges",
+ "slug": "ipd-charges",
+ "body": "### IPD Charges\n\nMon, 01 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[IPD - In Patient](https://smart-hospital.in/category/ipd-in-patient)\n\n---\n\nTo add charges in for IPD patient, go to the **IPD \u2013 In Patient** click on Show button icon present at **Action** column or IPD No.\n\nNow click on **Charges** tab. Here to add charges for IPD patient click on **+Add Charges**\u00a0button, here you should add\u00a0**Charge Type, Charge Category, Charge Name**\u00a0and other details and click on\u00a0**Save**\u00a0button.  \n  \n  \n  \n![](../assets/ipd-charges/1.jpg)  \n  \n  \nYou can check these added charges at Charge list.  \n  \n  \n![](../assets/ipd-charges/2.jpg)  \n  \n  \nYou can also Print, Edit and Delete the applied charges from options available at\u00a0**Action**\u00a0column.",
+ "chars": 756,
+ "images": 2
+}

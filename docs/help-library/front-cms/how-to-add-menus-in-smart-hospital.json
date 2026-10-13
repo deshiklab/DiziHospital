@@ -1,0 +1,13 @@
+{
+ "title": "How to add menus in Smart Hospital?",
+ "date": "Thu, 11 Nov, 2021",
+ "category": {
+  "name": "Front CMS",
+  "slug": "front-cms"
+ },
+ "url": "https://smart-hospital.in/article/how-to-add-menus-in-smart-hospital",
+ "slug": "how-to-add-menus-in-smart-hospital",
+ "body": "### How to add menus in Smart Hospital?\n\nThu, 11 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Front CMS](https://smart-hospital.in/category/front-cms)\n\n---\n\nFront CMS module for managing hospital front website. First we will upload different images or files used in front website in Media Manager then we will create front website menu in Menus then we will add different Pages, Events, Galleries, News and Banner images.\n\nTo add menu, go to\u00a0**Front CMS > Menus**, Here by default you will get two menu\u00a0**Main Menu**\u00a0and\u00a0**Bottom Menu**. Here you can add more menu but these other menu will be only display in front site if you will add them in front site theme additionally. To add more menus enter\u00a0**Menu**\u00a0and\u00a0**Description**\u00a0and then click on\u00a0**Save**\u00a0button. You can view this added menu record in the**Menu List**\u00a0on the right of the page.  \n  \n![add menu](../assets/how-to-add-menus-in-smart-hospital/1.jpg)\n\nTo delete menu click on\u00a0**Delete**\u00a0icon present at\u00a0**Action**\u00a0column in the menu list.  \n  \nTo add menu item click on\u00a0**Add (+)**\u00a0icon present at\u00a0**Action**\u00a0column in the menu list, at click of this icon\u00a0**Add Menu Item**\u00a0page will be open.  \n  \n![add menu item page](../assets/how-to-add-menus-in-smart-hospital/2.jpg)\n\nHere enter\u00a0**Menu Item, External URL, Open In New Tab, External URL Address, Pages**\u00a0and then click on\u00a0**Save**\u00a0button. You can view this added record in the\u00a0**Menu Item List**\u00a0on the right side of the page. Here you can arrange menu order and add menu item up and down in menu item list.\n\nTo edit menu item click on\u00a0**Edit**\u00a0icon and to delete menu item click on\u00a0**Delete**\u00a0icon present in the menu item list.",
+ "chars": 1660,
+ "images": 2
+}

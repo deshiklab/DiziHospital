@@ -1,0 +1,13 @@
+{
+ "title": "404 Or Page Not Found Error During Installation",
+ "date": "Sat, 23 Apr, 2022",
+ "category": {
+  "name": "Getting Started",
+  "slug": "getting-started"
+ },
+ "url": "https://smart-hospital.in/article/404-or-page-not-found-error-during-installation-1",
+ "slug": "404-or-page-not-found-error-during-installation-1",
+ "body": "### 404 Or Page Not Found Error During Installation\n\nSat, 23 Apr, 2022\n\n[Articles](https://smart-hospital.in/articles)[Getting Started](https://smart-hospital.in/category/getting-started)[Installation](https://smart-hospital.in/category/installation)\n\n---\n\nDuring installation if you are getting 404 or Page not found error then following possible causes may be behind this -  \n  \n\n1. Check .htaccess file is present in your Smart Hospital hosting directory. By default .htaccess files are hidden in cpanel, you can enable visible .(dot) hidden files from cpanel file manager setting option. .htaccess file already present in your downloaded package in respective folder.\n2. url rewriting module is disabled in your hosting.",
+ "chars": 724,
+ "images": 0
+}

@@ -1,0 +1,13 @@
+{
+ "title": "How to check OPD patient's profile?",
+ "date": "Fri, 12 Nov, 2021",
+ "category": {
+  "name": "OPD - Out Patient",
+  "slug": "opd-out-patient"
+ },
+ "url": "https://smart-hospital.in/article/how-to-check-opd-patients-profile",
+ "slug": "how-to-check-opd-patients-profile",
+ "body": "### How to check OPD patient's profile?\n\nFri, 12 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[OPD - Out Patient](https://smart-hospital.in/category/opd-out-patient)\n\n---\n\nTo check opd patient's profile, click on the **OPD** **- Out Patient** link present at the sidebar this will redirect you in **OPD Patient** list page, then click on the **Show** icon present at the last column (icon will be show on mouseover) so you will be redirecte to the opd patient's profile page.  \n  \n  \nHere you will see 5 tabs are available **Overview**, **Visits**, **Lab** **Investigations**, **Treatment** **History** and **Timeline**.  \n  \n**Overview -** This tab describes patient's overview like patient's Allergies, Findings, Symptoms, Consultant Doctors, Timeline, Medical History (latest 5), Visit Details (latest 5), Lab investigation (latest 5) etc.  \n  \n  \n![opd profile page](../assets/how-to-check-opd-patients-profile/1.jpg)  \n\u00a0  \n**Visits -** This tab describes patient's all opd visits.  \n  \n![opd visits](../assets/how-to-check-opd-patients-profile/2.jpg)  \n  \n**Lab Investigations -**This tab describes patient's all pathology and radiology investigation.  \n  \n![opd lab investigation](../assets/how-to-check-opd-patients-profile/3.jpg)  \n  \n  \n**Treatment History -** This tab describes patients treatment history.  \n  \n![opd treatment history](../assets/how-to-check-opd-patients-profile/4.jpg)  \n  \n**Timeline -**This tab describes patients all timeline.  \n  \n![opd timeline ](../assets/how-to-check-opd-patients-profile/5.jpg)  \n  \nNote - Please [click here](https://smart-hospital.in/article/opd-patient-visits) to understand how you can check OPD patient all visit details.",
+ "chars": 1692,
+ "images": 5
+}

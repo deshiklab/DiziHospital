@@ -1,0 +1,13 @@
+{
+ "title": "About Settings",
+ "date": "Sun, 31 Oct, 2021",
+ "category": {
+  "name": "System Settings",
+  "slug": "system-settings"
+ },
+ "url": "https://smart-hospital.in/article/about-settings",
+ "slug": "about-settings",
+ "body": "### About Settings\n\nSun, 31 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[System Settings](https://smart-hospital.in/category/system-settings)\n\n---\n\nSettings is used to manage your website settings such as current themes, modules visibility, notifications etc. This module contain 15 sections \u2013\u00a0**General Setting, Notification Setting, System Notification Setting, SMS Setting, Email Setting, Payment Methods, Front CMS Setting, Prefix Setting, Roles Permissions, Backup/ Restore, Languages, Users, Captcha Settings, Modules, System Update**\u00a0to manage website.  \n  \n![about general setting](../assets/about-settings/1.jpg)",
+ "chars": 634,
+ "images": 1
+}

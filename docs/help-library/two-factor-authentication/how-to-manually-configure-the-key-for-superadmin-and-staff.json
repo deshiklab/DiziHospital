@@ -1,0 +1,13 @@
+{
+ "title": "How to manually configure the key for superadmin and staff?",
+ "date": "Sat, 16 Aug, 2025",
+ "category": {
+  "name": "Two Factor Authentication",
+  "slug": "two-factor-authentication"
+ },
+ "url": "https://smart-hospital.in/article/how-to-manually-configure-the-key-for-superadmin-and-staff",
+ "slug": "how-to-manually-configure-the-key-for-superadmin-and-staff",
+ "body": "### How to manually configure the key for superadmin and staff?\n\nSat, 16 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Two Factor Authentication](https://smart-hospital.in/category/two-factor-authentication)\n\n---\n\nTo setup the key manually, Superadmin, go to the login in your **Smart Hospital**. After login the superadmin, go to the **Two Factor Authentication**module which is showing in left side bar. Now click on **Two Factor Authentication****> Setup 2FA**, now page will open, here in left below setup key will be show.  \n  \n![](../assets/how-to-manually-configure-the-key-for-superadmin-and-staff/1.jpg)\n\nNow open the Google Authenticator app on your mobile device and setup your first account page by clicking on **Enter a setup key**.  \n  \n![](../assets/how-to-manually-configure-the-key-for-superadmin-and-staff/2.jpg)\n\nAfter clicking on **Enter setup key**, the account details form will open, and then enter **Account name**, **Your key** and **Type of key** and click on the **Add** button. Now click on **Add Account** in your mobile device, your account has been successfully added, and you will receive the six-digit verification code.\u00a0\n\nNow open the your Smart Hospital, go to **Two Factor Authentication****> Setup 2FA** and fill the six digit verification code which is showing in your mobile device in right below of QR code and click on **Verify & Activate.  \n  \n![](../assets/how-to-manually-configure-the-key-for-superadmin-and-staff/3.jpg)**Your 2FA account will be activated after you click the **Verify and Activate** button, and a message will appear on your screen.\u00a0  \n  \n![](../assets/how-to-manually-configure-the-key-for-superadmin-and-staff/4.jpg)",
+ "chars": 1693,
+ "images": 4
+}

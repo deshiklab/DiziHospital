@@ -1,0 +1,13 @@
+{
+ "title": "Image Upload Not Working In Media Manager",
+ "date": "Mon, 18 Oct, 2021",
+ "category": {
+  "name": "Common Issues & Troubleshooting",
+  "slug": "common-issues-troubleshooting"
+ },
+ "url": "https://smart-hospital.in/article/image-upload-not-working-in-media-manager",
+ "slug": "image-upload-not-working-in-media-manager",
+ "body": "### Image Upload Not Working In Media Manager\n\nMon, 18 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Common Issues & Troubleshooting](https://smart-hospital.in/category/common-issues-troubleshooting)\n\n---\n\nIf you are uploading image or any file in\u00a0**Front CMS > Media Manager**\u00a0and its not uploading and nothing happened then please check your hosting\u00a0**phpinfo**\u00a0details for\u00a0**fileinfo**\u00a0extension is enabled/installed on your hosting server. If\u00a0**fileinfo**extension missing on your server then contact your hosting provider for enabling/installing\u00a0**fileinfo**\u00a0extension on your server.  \n  \nDue to missing\u00a0**fileinfo** extension Smart Hospital media manager is unable to retrieve uploaded file extension hence images are not being uploaded. Fileinfo is very common extension and present almost all popular hosting.  \n  \n![fileinfo extension disabled](../assets/image-upload-not-working-in-media-manager/1.jpg)",
+ "chars": 925,
+ "images": 1
+}

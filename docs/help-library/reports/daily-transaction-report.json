@@ -1,0 +1,13 @@
+{
+ "title": "Daily Transaction Report",
+ "date": "Sat, 30 Oct, 2021",
+ "category": {
+  "name": "Reports",
+  "slug": "reports"
+ },
+ "url": "https://smart-hospital.in/article/daily-transaction-report",
+ "slug": "daily-transaction-report",
+ "body": "### Daily Transaction Report\n\nSat, 30 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Reports](https://smart-hospital.in/category/reports)\n\n---\n\nTo check User Log report, go to\u00a0**Reports > Daily Transaction Report**. Here select the **Date From and Date To**\u00a0then click on**Search** button. Here you can see Daily Transaction details like **Date, Total Transaction, Online, Offline, Amount** and **Collection List.**\u00a0Also you can download this report as PDF.  \n  \n![](../assets/daily-transaction-report/1.jpg)  \n  \n  \nTo view each Daily Transaction individually click on View Collection button present at Action column. Here you can see Daily Transaction details Like **Transaction ID, Date, Payment Mode, Collected By** of individual transaction.  \n  \n  \n  \n  \n![](../assets/daily-transaction-report/2.jpg)",
+ "chars": 817,
+ "images": 2
+}

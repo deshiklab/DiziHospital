@@ -1,0 +1,13 @@
+{
+ "title": "How to import Staff?",
+ "date": "Mon, 01 Nov, 2021",
+ "category": {
+  "name": "Human Resource",
+  "slug": "human-resource"
+ },
+ "url": "https://smart-hospital.in/article/how-to-import-staff",
+ "slug": "how-to-import-staff",
+ "body": "### How to import Staff?\n\nMon, 01 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Human Resource](https://smart-hospital.in/category/human-resource)\n\n---\n\nTo import staff, go to**Human Resource > Add Staff > Import Staff**\u00a0click on the\u00a0**Import Staff**\u00a0present at top right corner on the right side in the Basic Information page, at click of this button\u00a0**Staff Import**\u00a0page will be open.  \n  \n![](../assets/how-to-import-staff/1.jpg)  \n  \nYou have to follow all the necessary instructions given. Here you can also add multiple staff at the same time for this, you have to create a CSV file format. You can also download the sample file from top right corner by clicking on\u00a0**Download Sample Import File**\u00a0button.  \n  \n![](../assets/how-to-import-staff/2.jpg)  \n  \nYou should not delete the first row of CSV file. It is necessary to fill the required field in this file. After completing the file, here select**Role, Designation**\u00a0and\u00a0**Department**\u00a0and then you have to select this CSV file on\u00a0**Select CSV File**\u00a0option and then click on\u00a0**Staff Import**\u00a0button.",
+ "chars": 1075,
+ "images": 2
+}

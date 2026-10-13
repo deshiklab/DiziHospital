@@ -1,0 +1,13 @@
+{
+ "title": "Blood Bank",
+ "date": "Wed, 27 Oct, 2021",
+ "category": {
+  "name": "Setup & Configuration",
+  "slug": "setup-configuration"
+ },
+ "url": "https://smart-hospital.in/article/blood-bank",
+ "slug": "blood-bank",
+ "body": "### Blood Bank\n\nWed, 27 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Setup & Configuration](https://smart-hospital.in/category/setup-configuration)\n\n---\n\nTo setup Blood Bank go to **Setup > Blood Bank**.\n\nTo add Product for Blood Group click on **+ Add Product** button now enter **Product Type** as **Blood Group or Component**, enter Name and click on **Save** button.  \n  \n![](../assets/blood-bank/2.jpg)\n\nYou can check added Product record at **Product List** page.  \n  \n![](../assets/blood-bank/3.jpg)\n\nTo edit Product click on edit and to delete Product click on delete icon present at **Action** column.  \n  \n![](../assets/blood-bank/4.jpg)",
+ "chars": 660,
+ "images": 4
+}

@@ -1,0 +1,13 @@
+{
+ "title": "Can I use special character in Smart Hospital?",
+ "date": "Mon, 18 Oct, 2021",
+ "category": {
+  "name": "FAQ",
+  "slug": "faq"
+ },
+ "url": "https://smart-hospital.in/article/can-i-use-special-character-in-smart-hospital",
+ "slug": "can-i-use-special-character-in-smart-hospital",
+ "body": "### Can I use special character in Smart Hospital?\n\nMon, 18 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[FAQ](https://smart-hospital.in/category/faq)\n\n---\n\nIn Smart Hospital avoid to enter or using special character (special character is non-alphabetic and non-numeric like @, #, $, <, %, ^, &, \\*, !) for any field like Patient, Staff, Income, Expense, Transport, Custom Field etc, otherwise it may fail PHP or JavaScript processing.",
+ "chars": 447,
+ "images": 0
+}
