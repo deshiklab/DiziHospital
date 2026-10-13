@@ -290,10 +290,13 @@ def main():
         desc = ''
         for p in csoup.find_all(['p', 'div']):
             t = clean_text(p.get_text(' '))
-            if 60 < len(t) < 400 and 'select category' not in t.lower() and 'buy now' not in t.lower():
+            junk = ('select category', 'buy now', 'toggle navigation', 'home features', 'how it works',
+                    'all rights reserved', 'articles faq')
+            if 60 < len(t) < 400 and not any(j in t.lower() for j in junk):
                 desc = t
                 break
-        cat_entry = {'name': cat['name'], 'slug': slugify(cat['slug']), 'url': cat['url'],
+        cat_name = re.sub(r'\s*\(\d+\)\s*$', '', (cat['name'] or '').strip())
+        cat_entry = {'name': cat_name, 'slug': slugify(cat['slug']), 'url': cat['url'],
                      'description': desc, 'articles': []}
         catdir = os.path.join(OUT, cat_entry['slug'])
         os.makedirs(catdir, exist_ok=True)

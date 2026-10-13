@@ -4,7 +4,7 @@
    "name": "bug_report Known Issues",
    "slug": "known-issues",
    "url": "https://smart-hospital.in/category/known-issues",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "Version 1.0",
@@ -89,10 +89,10 @@
    ]
   },
   {
-   "name": "Getting Started (3)",
+   "name": "Getting Started",
    "slug": "getting-started",
    "url": "https://smart-hospital.in/category/getting-started",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "How to register a Webfeb.com purchased License Code in Smart Hospital?",
@@ -211,10 +211,10 @@
    ]
   },
   {
-   "name": "Installation(7)",
+   "name": "Installation",
    "slug": "installation",
    "url": "https://smart-hospital.in/category/getting-started/installation",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "NGINX Installation",
@@ -365,10 +365,10 @@
    ]
   },
   {
-   "name": "System Update(1)",
+   "name": "System Update",
    "slug": "system-update",
    "url": "https://smart-hospital.in/category/getting-started/system-update",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "System Update",
@@ -471,10 +471,10 @@
    ]
   },
   {
-   "name": "Common Issues & Troubleshooting (13)",
+   "name": "Common Issues & Troubleshooting",
    "slug": "common-issues-troubleshooting",
    "url": "https://smart-hospital.in/category/common-issues-troubleshooting",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "404 Or Page Not Found Error In Installation",
@@ -673,10 +673,10 @@
    ]
   },
   {
-   "name": "FAQ (17)",
+   "name": "FAQ",
    "slug": "faq",
    "url": "https://smart-hospital.in/category/faq",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "Can I use special character in Smart Hospital?",
@@ -907,10 +907,10 @@
    ]
   },
   {
-   "name": "Miscellaneous (6)",
+   "name": "Miscellaneous",
    "slug": "miscellaneous",
    "url": "https://smart-hospital.in/category/miscellaneous",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Calendar",
@@ -1053,10 +1053,10 @@
    ]
   },
   {
-   "name": "System Settings (16)",
+   "name": "System Settings",
    "slug": "system-settings",
    "url": "https://smart-hospital.in/category/system-settings",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "Notification Setting",
@@ -1279,10 +1279,10 @@
    ]
   },
   {
-   "name": "Setup & Configuration (22)",
+   "name": "Setup & Configuration",
    "slug": "setup-configuration",
    "url": "https://smart-hospital.in/category/setup-configuration",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "Patient",
@@ -1553,10 +1553,10 @@
    ]
   },
   {
-   "name": "Billing (3)",
+   "name": "Billing",
    "slug": "billing",
    "url": "https://smart-hospital.in/category/billing",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Billing",
@@ -1675,10 +1675,10 @@
    ]
   },
   {
-   "name": "Appointment (8)",
+   "name": "Appointment",
    "slug": "appointment",
    "url": "https://smart-hospital.in/category/appointment",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "How to direct open the patient details in Appointment?",
@@ -1837,10 +1837,10 @@
    ]
   },
   {
-   "name": "OPD - Out Patient (9)",
+   "name": "OPD - Out Patient",
    "slug": "opd-out-patient",
    "url": "https://smart-hospital.in/category/opd-out-patient",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About OPD - Out Patient",
@@ -2007,10 +2007,10 @@
    ]
   },
   {
-   "name": "IPD - In Patient (19)",
+   "name": "IPD - In Patient",
    "slug": "ipd-in-patient",
    "url": "https://smart-hospital.in/category/ipd-in-patient",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "How to add the vitals details of the patient in IPD - In Patient ?",
@@ -2257,10 +2257,10 @@
    ]
   },
   {
-   "name": "Pharmacy (6)",
+   "name": "Pharmacy",
    "slug": "pharmacy",
    "url": "https://smart-hospital.in/category/pharmacy",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Pharmacy.",
@@ -2403,10 +2403,10 @@
    ]
   },
   {
-   "name": "Pathology (4)",
+   "name": "Pathology",
    "slug": "pathology",
    "url": "https://smart-hospital.in/category/pathology",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Pathology",
@@ -2533,10 +2533,10 @@
    ]
   },
   {
-   "name": "Radiology (4)",
+   "name": "Radiology",
    "slug": "radiology",
    "url": "https://smart-hospital.in/category/radiology",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Radiology",
@@ -2663,10 +2663,10 @@
    ]
   },
   {
-   "name": "Blood Bank (6)",
+   "name": "Blood Bank",
    "slug": "blood-bank",
    "url": "https://smart-hospital.in/category/blood-bank",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Blood Bank",
@@ -2809,10 +2809,10 @@
    ]
   },
   {
-   "name": "Ambulance (3)",
+   "name": "Ambulance",
    "slug": "ambulance",
    "url": "https://smart-hospital.in/category/ambulance",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Ambulance.",
@@ -2931,10 +2931,10 @@
    ]
   },
   {
-   "name": "Front Office (7)",
+   "name": "Front Office",
    "slug": "front-office",
    "url": "https://smart-hospital.in/category/front-office",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "How to add Postal Dispatch in Smart Hospital?",
@@ -3085,10 +3085,10 @@
    ]
   },
   {
-   "name": "Birth & Death Record (2)",
+   "name": "Birth & Death Record",
    "slug": "birth-death-record",
    "url": "https://smart-hospital.in/category/birth-death-record",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "How to add Birth Records?",
@@ -3199,10 +3199,10 @@
    ]
   },
   {
-   "name": "Human Resource (13)",
+   "name": "Human Resource",
    "slug": "human-resource",
    "url": "https://smart-hospital.in/category/human-resource",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Human Resource.",
@@ -3401,10 +3401,10 @@
    ]
   },
   {
-   "name": "QR Code Attendance (3)",
+   "name": "QR Code Attendance",
    "slug": "qr-code-attendance",
    "url": "https://smart-hospital.in/category/qr-code-attendance",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About QR Code Attendance",
@@ -3523,10 +3523,10 @@
    ]
   },
   {
-   "name": "Survey Form (6)",
+   "name": "Survey Form",
    "slug": "survey-form",
    "url": "https://smart-hospital.in/category/survey-form",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Survey Form",
@@ -3669,10 +3669,10 @@
    ]
   },
   {
-   "name": "WhatsApp Messaging (4)",
+   "name": "WhatsApp Messaging",
    "slug": "whatsapp-messaging",
    "url": "https://smart-hospital.in/category/whatsapp-messaging",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -3767,10 +3767,10 @@
    ]
   },
   {
-   "name": "Duty Roster (4)",
+   "name": "Duty Roster",
    "slug": "duty-roster",
    "url": "https://smart-hospital.in/category/duty-roster",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "How to search the duty roster?",
@@ -3897,10 +3897,10 @@
    ]
   },
   {
-   "name": "Annual Calendar (4)",
+   "name": "Annual Calendar",
    "slug": "annual-calendar",
    "url": "https://smart-hospital.in/category/annual-calendar",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "How to add holiday in annual calendar on smart hospital?",
@@ -4027,10 +4027,10 @@
    ]
   },
   {
-   "name": "Multi Branch (7)",
+   "name": "Multi Branch",
    "slug": "multi-branch",
    "url": "https://smart-hospital.in/category/multi-branch",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Multi Branch",
@@ -4181,10 +4181,10 @@
    ]
   },
   {
-   "name": "Referral (3)",
+   "name": "Referral",
    "slug": "referral",
    "url": "https://smart-hospital.in/category/referral",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Referral.",
@@ -4303,10 +4303,10 @@
    ]
   },
   {
-   "name": "TPA Management (2)",
+   "name": "TPA Management",
    "slug": "tpa-management",
    "url": "https://smart-hospital.in/category/tpa-management",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About TPA",
@@ -4417,10 +4417,10 @@
    ]
   },
   {
-   "name": "Messaging (4)",
+   "name": "Messaging",
    "slug": "messaging",
    "url": "https://smart-hospital.in/category/messaging",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "How Notice Board works?",
@@ -4547,10 +4547,10 @@
    ]
   },
   {
-   "name": "Two Factor Authentication (6)",
+   "name": "Two Factor Authentication",
    "slug": "two-factor-authentication",
    "url": "https://smart-hospital.in/category/two-factor-authentication",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Two Factor Authentication",
@@ -4693,10 +4693,10 @@
    ]
   },
   {
-   "name": "Inventory (4)",
+   "name": "Inventory",
    "slug": "inventory",
    "url": "https://smart-hospital.in/category/inventory",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Inventory.",
@@ -4823,10 +4823,10 @@
    ]
   },
   {
-   "name": "Download Center (3)",
+   "name": "Download Center",
    "slug": "download-center",
    "url": "https://smart-hospital.in/category/download-center",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "Overall working of download center module in smart hospital",
@@ -4945,10 +4945,10 @@
    ]
   },
   {
-   "name": "Certificate (7)",
+   "name": "Certificate",
    "slug": "certificate",
    "url": "https://smart-hospital.in/category/certificate",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Certificate.",
@@ -5099,10 +5099,10 @@
    ]
   },
   {
-   "name": "Front CMS (8)",
+   "name": "Front CMS",
    "slug": "front-cms",
    "url": "https://smart-hospital.in/category/front-cms",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Front CMS",
@@ -5261,10 +5261,10 @@
    ]
   },
   {
-   "name": "Live Consultation (3)",
+   "name": "Live Consultation",
    "slug": "live-consultation",
    "url": "https://smart-hospital.in/category/live-consultation",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Live Consultation",
@@ -5383,10 +5383,10 @@
    ]
   },
   {
-   "name": "Reports (44)",
+   "name": "Reports",
    "slug": "reports",
    "url": "https://smart-hospital.in/category/reports",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "Stock Report",
@@ -5833,10 +5833,10 @@
    ]
   },
   {
-   "name": "Patient Panel (10)",
+   "name": "Patient Panel",
    "slug": "patient-panel",
    "url": "https://smart-hospital.in/category/patient-panel",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "Patient Dashboard",
@@ -6011,10 +6011,10 @@
    ]
   },
   {
-   "name": "Smart Hospital(10)",
+   "name": "Smart Hospital",
    "slug": "smart-hospital",
    "url": "https://smart-hospital.in/category/changelog/smart-hospital",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "Version 7.0",

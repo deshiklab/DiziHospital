@@ -155,6 +155,21 @@ def strip_header(md):
     return body
 
 
+NAV_JUNK = ('toggle navigation', 'home features', 'how it works', 'buy now', 'all rights reserved',
+            'select category', 'articles faq')
+
+
+def clean_cat_name(name):
+    return re.sub(r'\s*\(\d+\)\s*$', '', (name or '').strip())
+
+
+def clean_desc(desc):
+    d = re.sub(r'\s+', ' ', (desc or '')).strip()
+    if len(d) < 40 or any(j in d.lower() for j in NAV_JUNK):
+        return ''
+    return d
+
+
 def find_article(cats, cat_slug, art_slug):
     for c in cats:
         if c['slug'] != cat_slug:
@@ -192,20 +207,20 @@ def main():
     A('')
     A('| Category | Articles | What it covers |')
     A('|---|---|---|')
-    for c in sorted(cats, key=lambda x: (-len(x['articles']), x['name'])):
-        blurb = CATEGORY_BLURB.get(c['slug'], '')
-        A(f"| [{c['name']}](help-library/{c['slug']}/_index.md) | {len(c['articles'])} | {blurb or c.get('description', '')[:110]} |")
+    for c in sorted(cats, key=lambda x: (-len(x['articles']), clean_cat_name(x['name']).lower())):
+        blurb = CATEGORY_BLURB.get(c['slug'], '') or clean_desc(c.get('description', ''))[:110]
+        A(f"| [{clean_cat_name(c['name'])}](help-library/{c['slug']}/_index.md) | {len(c['articles'])} | {blurb} |")
     A('')
     A('---')
     A('')
-    for c in sorted(cats, key=lambda x: x['name'].lower()):
+    for c in sorted(cats, key=lambda x: clean_cat_name(x['name']).lower()):
         blurb = CATEGORY_BLURB.get(c['slug'], '')
-        A(f"## {c['name']} ({len(c['articles'])})")
+        A(f"## {clean_cat_name(c['name'])} ({len(c['articles'])})")
         A('')
         if blurb:
             A(blurb)
             A('')
-        desc = c.get('description', '')
+        desc = clean_desc(c.get('description', ''))
         if desc and desc != blurb and len(desc) < 400:
             A(f"_{desc}_")
             A('')
@@ -239,8 +254,8 @@ def main():
                          'date': a.get('date', ''), 'source': a['url'], 'body': md})
 
     with open(os.path.join(BUILD, 'help.json'), 'w') as f:
-        json.dump({'categories': [{'name': c['name'], 'slug': c['slug'], 'count': len(c['articles']),
-                                   'blurb': CATEGORY_BLURB.get(c['slug'], ''), 'description': c.get('description', ''),
+        json.dump({'categories': [{'name': clean_cat_name(c['name']), 'slug': c['slug'], 'count': len(c['articles']),
+                                   'blurb': CATEGORY_BLURB.get(c['slug'], ''), 'description': clean_desc(c.get('description', '')),
                                    'articles': [{'title': a['title'], 'slug': a['slug'], 'date': a.get('date', ''),
                                                  'file': a['file']} for a in sorted(c['articles'], key=lambda x: x['title'].lower())]}
                                   for c in sorted(cats, key=lambda x: x['name'].lower())],

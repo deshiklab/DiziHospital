@@ -6,53 +6,51 @@
 
 | Category | Articles | What it covers |
 |---|---|---|
-| [Reports (44)](help-library/reports/_index.md) | 54 | The report library — how to read and filter each report. |
-| [Setup & Configuration (22)](help-library/setup-configuration/_index.md) | 32 | Master data: patient fields, charges, beds, print header/footer, front office. |
-| [IPD - In Patient (19)](help-library/ipd-in-patient/_index.md) | 29 | Admissions, vitals, obstetric history, BMI, overview and discharge. |
-| [FAQ (17)](help-library/faq/_index.md) | 27 | Frequently asked questions about deployment, characters, LAN use and multi-hospital operation. |
-| [System Settings (16)](help-library/system-settings/_index.md) | 26 | Notification, SMS, e-mail, payment-method and general system configuration. |
-| [Common Issues & Troubleshooting (13)](help-library/common-issues-troubleshooting/_index.md) | 23 | Known problems and fixes (404s, login URLs, SQL modes, SSL, hosting moves). |
-| [Human Resource (13)](help-library/human-resource/_index.md) | 23 | Departments, designations, leave types, specialists, payroll and leaves. |
-| [Patient Panel (10)](help-library/patient-panel/_index.md) | 20 | The patient self-service portal (dashboard, appointments, OPD/IPD, bills, reports). |
-| [OPD - Out Patient (9)](help-library/opd-out-patient/_index.md) | 19 | Out-patient visits, profiles and discharge. |
-| [Smart Hospital(10)](help-library/smart-hospital/_index.md) | 19 | Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assig |
-| [Appointment (8)](help-library/appointment/_index.md) | 18 | Booking, slot setup and online appointments. |
-| [Front CMS (8)](help-library/front-cms/_index.md) | 18 | Website pages, banners, events, gallery and media manager. |
-| [Certificate (7)](help-library/certificate/_index.md) | 17 | Certificates, patient and staff ID cards. |
-| [Front Office (7)](help-library/front-office/_index.md) | 17 | Visitors, calls, postal dispatch and complaints. |
-| [Installation(7)](help-library/installation/_index.md) | 17 | Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assig |
-| [Multi Branch (7)](help-library/multi-branch/_index.md) | 17 | Adding, editing, switching and reporting across branches. |
-| [Blood Bank (6)](help-library/blood-bank/_index.md) | 16 | Components, donors, issue and stock. |
-| [Miscellaneous (6)](help-library/miscellaneous/_index.md) | 16 | Calendar, to-dos, chat and other utilities. |
-| [Pharmacy (6)](help-library/pharmacy/_index.md) | 16 | Medicines, stock, bad stock, import and sale. |
-| [Survey Form (6)](help-library/survey-form/_index.md) | 16 | Building, publishing and filling survey forms. |
-| [Two Factor Authentication (6)](help-library/two-factor-authentication/_index.md) | 16 | Google Authenticator based 2FA setup for superadmin and staff. |
-| [Annual Calendar (4)](help-library/annual-calendar/_index.md) | 14 | Holidays, activities, vacations and the front-site calendar tab. |
-| [Duty Roster (4)](help-library/duty-roster/_index.md) | 14 | Shifts, rosters and staff assignment. |
-| [Inventory (4)](help-library/inventory/_index.md) | 14 | Items, stock, issue and return. |
-| [Messaging (4)](help-library/messaging/_index.md) | 14 | Notice board, SMS, e-mail and patient credentials. |
-| [Pathology (4)](help-library/pathology/_index.md) | 14 | Test setup, reports and payment. |
-| [Radiology (4)](help-library/radiology/_index.md) | 14 | Study setup, reports and payment. |
-| [Ambulance (3)](help-library/ambulance/_index.md) | 13 | Vehicles, drivers and calls. |
-| [Billing (3)](help-library/billing/_index.md) | 13 | Billing concepts, single-module billing and case-based billing. |
-| [Download Center (3)](help-library/download-center/_index.md) | 13 | Sharing documents and media. |
-| [Getting Started (3)](help-library/getting-started/_index.md) | 13 | Installation, updates, licensing and first-run setup. |
-| [Live Consultation (3)](help-library/live-consultation/_index.md) | 13 | Zoom live consultations and live meetings. |
-| [QR Code Attendance (3)](help-library/qr-code-attendance/_index.md) | 13 | QR/barcode attendance with auto-attendance options. |
-| [Referral (3)](help-library/referral/_index.md) | 13 | Referral persons and commission payments. |
-| [Birth & Death Record (2)](help-library/birth-death-record/_index.md) | 12 | Statutory birth and death registers. |
-| [TPA Management (2)](help-library/tpa-management/_index.md) | 12 | Insurance/TPA handling. |
-| [System Update(1)](help-library/system-update/_index.md) | 11 | Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assig |
-| [WhatsApp Messaging (4)](help-library/whatsapp-messaging/_index.md) | 10 | WhatsApp Cloud API (Meta) and Twilio configuration, per-event enablement. |
-| [bug_report Known Issues](help-library/known-issues/_index.md) | 10 | Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assig |
+| [Reports](help-library/reports/_index.md) | 54 | The report library — how to read and filter each report. |
+| [Setup & Configuration](help-library/setup-configuration/_index.md) | 32 | Master data: patient fields, charges, beds, print header/footer, front office. |
+| [IPD - In Patient](help-library/ipd-in-patient/_index.md) | 29 | Admissions, vitals, obstetric history, BMI, overview and discharge. |
+| [FAQ](help-library/faq/_index.md) | 27 | Frequently asked questions about deployment, characters, LAN use and multi-hospital operation. |
+| [System Settings](help-library/system-settings/_index.md) | 26 | Notification, SMS, e-mail, payment-method and general system configuration. |
+| [Common Issues & Troubleshooting](help-library/common-issues-troubleshooting/_index.md) | 23 | Known problems and fixes (404s, login URLs, SQL modes, SSL, hosting moves). |
+| [Human Resource](help-library/human-resource/_index.md) | 23 | Departments, designations, leave types, specialists, payroll and leaves. |
+| [Patient Panel](help-library/patient-panel/_index.md) | 20 | The patient self-service portal (dashboard, appointments, OPD/IPD, bills, reports). |
+| [OPD - Out Patient](help-library/opd-out-patient/_index.md) | 19 | Out-patient visits, profiles and discharge. |
+| [Smart Hospital](help-library/smart-hospital/_index.md) | 19 |  |
+| [Appointment](help-library/appointment/_index.md) | 18 | Booking, slot setup and online appointments. |
+| [Front CMS](help-library/front-cms/_index.md) | 18 | Website pages, banners, events, gallery and media manager. |
+| [Certificate](help-library/certificate/_index.md) | 17 | Certificates, patient and staff ID cards. |
+| [Front Office](help-library/front-office/_index.md) | 17 | Visitors, calls, postal dispatch and complaints. |
+| [Installation](help-library/installation/_index.md) | 17 |  |
+| [Multi Branch](help-library/multi-branch/_index.md) | 17 | Adding, editing, switching and reporting across branches. |
+| [Blood Bank](help-library/blood-bank/_index.md) | 16 | Components, donors, issue and stock. |
+| [Miscellaneous](help-library/miscellaneous/_index.md) | 16 | Calendar, to-dos, chat and other utilities. |
+| [Pharmacy](help-library/pharmacy/_index.md) | 16 | Medicines, stock, bad stock, import and sale. |
+| [Survey Form](help-library/survey-form/_index.md) | 16 | Building, publishing and filling survey forms. |
+| [Two Factor Authentication](help-library/two-factor-authentication/_index.md) | 16 | Google Authenticator based 2FA setup for superadmin and staff. |
+| [Annual Calendar](help-library/annual-calendar/_index.md) | 14 | Holidays, activities, vacations and the front-site calendar tab. |
+| [Duty Roster](help-library/duty-roster/_index.md) | 14 | Shifts, rosters and staff assignment. |
+| [Inventory](help-library/inventory/_index.md) | 14 | Items, stock, issue and return. |
+| [Messaging](help-library/messaging/_index.md) | 14 | Notice board, SMS, e-mail and patient credentials. |
+| [Pathology](help-library/pathology/_index.md) | 14 | Test setup, reports and payment. |
+| [Radiology](help-library/radiology/_index.md) | 14 | Study setup, reports and payment. |
+| [Ambulance](help-library/ambulance/_index.md) | 13 | Vehicles, drivers and calls. |
+| [Billing](help-library/billing/_index.md) | 13 | Billing concepts, single-module billing and case-based billing. |
+| [Download Center](help-library/download-center/_index.md) | 13 | Sharing documents and media. |
+| [Getting Started](help-library/getting-started/_index.md) | 13 | Installation, updates, licensing and first-run setup. |
+| [Live Consultation](help-library/live-consultation/_index.md) | 13 | Zoom live consultations and live meetings. |
+| [QR Code Attendance](help-library/qr-code-attendance/_index.md) | 13 | QR/barcode attendance with auto-attendance options. |
+| [Referral](help-library/referral/_index.md) | 13 | Referral persons and commission payments. |
+| [Birth & Death Record](help-library/birth-death-record/_index.md) | 12 | Statutory birth and death registers. |
+| [TPA Management](help-library/tpa-management/_index.md) | 12 | Insurance/TPA handling. |
+| [System Update](help-library/system-update/_index.md) | 11 |  |
+| [bug_report Known Issues](help-library/known-issues/_index.md) | 10 |  |
+| [WhatsApp Messaging](help-library/whatsapp-messaging/_index.md) | 10 | WhatsApp Cloud API (Meta) and Twilio configuration, per-event enablement. |
 
 ---
 
-## Ambulance (3) (13)
+## Ambulance (13)
 
 Vehicles, drivers and calls.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Ambulance.](help-library/ambulance/about-ambulance.md) · Mon, 01 Nov, 2021
 - [About WhatsApp Messaging](help-library/ambulance/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -68,11 +66,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/ambulance/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/ambulance/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Annual Calendar (4) (14)
+## Annual Calendar (14)
 
 Holidays, activities, vacations and the front-site calendar tab.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About WhatsApp Messaging](help-library/annual-calendar/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add activity in annual calendar?](help-library/annual-calendar/how-to-add-activity-in-annual-calendar.md) · Thu, 05 Sep, 2024
@@ -89,11 +85,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/annual-calendar/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/annual-calendar/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Appointment (8) (18)
+## Appointment (18)
 
 Booking, slot setup and online appointments.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Appointment](help-library/appointment/about-appointment.md) · Tue, 02 Nov, 2021
 - [About WhatsApp Messaging](help-library/appointment/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -114,11 +108,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/appointment/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/appointment/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Billing (3) (13)
+## Billing (13)
 
 Billing concepts, single-module billing and case-based billing.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Billing](help-library/billing/about-billing.md) · Mon, 01 Nov, 2021
 - [About WhatsApp Messaging](help-library/billing/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -134,11 +126,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/billing/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/billing/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Birth & Death Record (2) (12)
+## Birth & Death Record (12)
 
 Statutory birth and death registers.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About WhatsApp Messaging](help-library/birth-death-record/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add Birth Records?](help-library/birth-death-record/how-to-add-birth-records.md) · Mon, 01 Nov, 2021
@@ -153,11 +143,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/birth-death-record/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/birth-death-record/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Blood Bank (6) (16)
+## Blood Bank (16)
 
 Components, donors, issue and stock.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Blood Bank](help-library/blood-bank/about-blood-bank.md) · Mon, 01 Nov, 2021
 - [About WhatsApp Messaging](help-library/blood-bank/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -178,8 +166,6 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 
 ## bug_report Known Issues (10)
 
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
-
 - [About WhatsApp Messaging](help-library/known-issues/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Meta (Cloud API)?](help-library/known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Twilio?](help-library/known-issues/how-to-configure-whatsapp-using-twilio.md) · Sat, 25 Jul, 2026
@@ -191,11 +177,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/known-issues/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/known-issues/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Certificate (7) (17)
+## Certificate (17)
 
 Certificates, patient and staff ID cards.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Certificate.](help-library/certificate/about-certificate.md) · Tue, 02 Nov, 2021
 - [About WhatsApp Messaging](help-library/certificate/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -215,11 +199,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/certificate/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/certificate/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Common Issues & Troubleshooting (13) (23)
+## Common Issues & Troubleshooting (23)
 
 Known problems and fixes (404s, login URLs, SQL modes, SSL, hosting moves).
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [404 Or Page Not Found Error In Installation](help-library/common-issues-troubleshooting/404-or-page-not-found-error-in-installation.md) · Mon, 18 Oct, 2021
 - [About WhatsApp Messaging](help-library/common-issues-troubleshooting/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -245,11 +227,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/common-issues-troubleshooting/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/common-issues-troubleshooting/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Download Center (3) (13)
+## Download Center (13)
 
 Sharing documents and media.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Download Center.](help-library/download-center/about-download-center.md) · Wed, 17 Nov, 2021
 - [About WhatsApp Messaging](help-library/download-center/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -265,11 +245,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/download-center/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/download-center/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Duty Roster (4) (14)
+## Duty Roster (14)
 
 Shifts, rosters and staff assignment.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About WhatsApp Messaging](help-library/duty-roster/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to add the roster in duty roster module?](help-library/duty-roster/how-to-add-the-roster-in-duty-roster-module.md) · Thu, 05 Sep, 2024
@@ -286,11 +264,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/duty-roster/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/duty-roster/version-7-0.md) · Mon, 27 Jul, 2026
 
-## FAQ (17) (27)
+## FAQ (27)
 
 Frequently asked questions about deployment, characters, LAN use and multi-hospital operation.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About WhatsApp Messaging](help-library/faq/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [Can I use Smart Hospital as SaaS or multi hospital application?](help-library/faq/can-i-use-smart-hospital-as-saas-or-multi-hospital-application.md) · Mon, 18 Oct, 2021
@@ -320,11 +296,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Want to know about Smart Hospital Biometric Attendance App?](help-library/faq/want-to-know-about-smart-hospital-biometric-attendance-app.md) · Fri, 13 Sep, 2024
 - [What are the server requirements for installing or running Smart Hospital?](help-library/faq/what-are-the-server-requirements-for-installing-or-running-smart-hospital.md) · Mon, 18 Oct, 2021
 
-## Front CMS (8) (18)
+## Front CMS (18)
 
 Website pages, banners, events, gallery and media manager.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Front CMS](help-library/front-cms/about-front-cms.md) · Thu, 11 Nov, 2021
 - [About WhatsApp Messaging](help-library/front-cms/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -345,11 +319,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/front-cms/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/front-cms/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Front Office (7) (17)
+## Front Office (17)
 
 Visitors, calls, postal dispatch and complaints.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Front Office](help-library/front-office/about-front-office.md) · Thu, 28 Oct, 2021
 - [About WhatsApp Messaging](help-library/front-office/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -369,11 +341,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/front-office/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/front-office/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Getting Started (3) (13)
+## Getting Started (13)
 
 Installation, updates, licensing and first-run setup.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About WhatsApp Messaging](help-library/getting-started/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [Configure Smart Hospital To Use In Local LAN Network](help-library/getting-started/configure-smart-hospital-to-use-in-local-lan-network.md) · Mon, 07 Feb, 2022
@@ -389,11 +359,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/getting-started/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/getting-started/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Human Resource (13) (23)
+## Human Resource (23)
 
 Departments, designations, leave types, specialists, payroll and leaves.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Human Resource.](help-library/human-resource/about-human-resource.md) · Tue, 26 Oct, 2021
 - [About WhatsApp Messaging](help-library/human-resource/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -419,9 +387,7 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/human-resource/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/human-resource/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Installation(7) (17)
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+## Installation (17)
 
 - [404 Or Page Not Found Error During Installation](help-library/installation/404-or-page-not-found-error-during-installation-1.md) · Sat, 23 Apr, 2022
 - [About WhatsApp Messaging](help-library/installation/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -441,11 +407,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/installation/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/installation/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Inventory (4) (14)
+## Inventory (14)
 
 Items, stock, issue and return.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Inventory.](help-library/inventory/about-inventory.md) · Tue, 02 Nov, 2021
 - [About WhatsApp Messaging](help-library/inventory/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -462,11 +426,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/inventory/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/inventory/version-7-0.md) · Mon, 27 Jul, 2026
 
-## IPD - In Patient (19) (29)
+## IPD - In Patient (29)
 
 Admissions, vitals, obstetric history, BMI, overview and discharge.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About IPD - In Patient](help-library/ipd-in-patient/about-ipd-in-patient.md) · Mon, 01 Nov, 2021
 - [About WhatsApp Messaging](help-library/ipd-in-patient/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -498,11 +460,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/ipd-in-patient/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/ipd-in-patient/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Live Consultation (3) (13)
+## Live Consultation (13)
 
 Zoom live consultations and live meetings.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Live Consultation](help-library/live-consultation/about-live-consultation.md) · Thu, 11 Nov, 2021
 - [About WhatsApp Messaging](help-library/live-consultation/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -518,11 +478,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/live-consultation/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/live-consultation/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Messaging (4) (14)
+## Messaging (14)
 
 Notice board, SMS, e-mail and patient credentials.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About WhatsApp Messaging](help-library/messaging/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How Notice Board works?](help-library/messaging/how-notice-board-works.md) · Mon, 01 Nov, 2021
@@ -539,11 +497,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/messaging/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/messaging/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Miscellaneous (6) (16)
+## Miscellaneous (16)
 
 Calendar, to-dos, chat and other utilities.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Calendar](help-library/miscellaneous/about-calendar.md) · Tue, 02 Nov, 2021
 - [About Chat](help-library/miscellaneous/about-chat.md) · Tue, 02 Nov, 2021
@@ -562,11 +518,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/miscellaneous/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/miscellaneous/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Multi Branch (7) (17)
+## Multi Branch (17)
 
 Adding, editing, switching and reporting across branches.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Multi Branch](help-library/multi-branch/about-multi-branch.md) · Sat, 16 Aug, 2025
 - [About WhatsApp Messaging](help-library/multi-branch/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -586,11 +540,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/multi-branch/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/multi-branch/version-7-0.md) · Mon, 27 Jul, 2026
 
-## OPD - Out Patient (9) (19)
+## OPD - Out Patient (19)
 
 Out-patient visits, profiles and discharge.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About OPD - Out Patient](help-library/opd-out-patient/about-opd-out-patient.md) · Tue, 22 Jul, 2025
 - [About WhatsApp Messaging](help-library/opd-out-patient/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -612,11 +564,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/opd-out-patient/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/opd-out-patient/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Pathology (4) (14)
+## Pathology (14)
 
 Test setup, reports and payment.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Pathology](help-library/pathology/about-pathology.md) · Thu, 11 Nov, 2021
 - [About WhatsApp Messaging](help-library/pathology/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -633,11 +583,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/pathology/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/pathology/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Patient Panel (10) (20)
+## Patient Panel (20)
 
 The patient self-service portal (dashboard, appointments, OPD/IPD, bills, reports).
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About WhatsApp Messaging](help-library/patient-panel/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [Ambulance](help-library/patient-panel/ambulance.md) · Thu, 18 Nov, 2021
@@ -660,11 +608,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/patient-panel/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/patient-panel/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Pharmacy (6) (16)
+## Pharmacy (16)
 
 Medicines, stock, bad stock, import and sale.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Pharmacy.](help-library/pharmacy/about-pharmacy.md) · Thu, 11 Nov, 2021
 - [About WhatsApp Messaging](help-library/pharmacy/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -683,11 +629,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/pharmacy/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/pharmacy/version-7-0.md) · Mon, 27 Jul, 2026
 
-## QR Code Attendance (3) (13)
+## QR Code Attendance (13)
 
 QR/barcode attendance with auto-attendance options.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About QR Code Attendance](help-library/qr-code-attendance/about-qr-code-attendance.md) · Sat, 16 Aug, 2025
 - [About WhatsApp Messaging](help-library/qr-code-attendance/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -703,11 +647,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/qr-code-attendance/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/qr-code-attendance/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Radiology (4) (14)
+## Radiology (14)
 
 Study setup, reports and payment.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Radiology](help-library/radiology/about-radiology.md) · Thu, 11 Nov, 2021
 - [About WhatsApp Messaging](help-library/radiology/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -724,11 +666,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/radiology/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/radiology/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Referral (3) (13)
+## Referral (13)
 
 Referral persons and commission payments.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Referral.](help-library/referral/about-referral.md) · Thu, 11 Nov, 2021
 - [About WhatsApp Messaging](help-library/referral/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -744,11 +684,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/referral/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/referral/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Reports (44) (54)
+## Reports (54)
 
 The report library — how to read and filter each report.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About WhatsApp Messaging](help-library/reports/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [All Transaction Report.](help-library/reports/all-transaction-report.md) · Fri, 01 Aug, 2025
@@ -805,11 +743,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/reports/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/reports/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Setup & Configuration (22) (32)
+## Setup & Configuration (32)
 
 Master data: patient fields, charges, beds, print header/footer, front office.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About WhatsApp Messaging](help-library/setup-configuration/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [Appointment](help-library/setup-configuration/appointment.md) · Sun, 31 Oct, 2021
@@ -844,9 +780,7 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Zoom Setting](help-library/setup-configuration/zoom-setting.md) · Sat, 30 Oct, 2021
 - [Zoom Setup](help-library/setup-configuration/zoom-setup-smart-hospital.md) · Thu, 21 Nov, 2024
 
-## Smart Hospital(10) (19)
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+## Smart Hospital (19)
 
 - [About WhatsApp Messaging](help-library/smart-hospital/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Meta (Cloud API)?](help-library/smart-hospital/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
@@ -868,11 +802,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 6.0](help-library/smart-hospital/version-6-0.md) · Thu, 21 Aug, 2025
 - [Version 7.0](help-library/smart-hospital/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Survey Form (6) (16)
+## Survey Form (16)
 
 Building, publishing and filling survey forms.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Survey Form](help-library/survey-form/about-survey-form.md) · Sat, 25 Jul, 2026
 - [About WhatsApp Messaging](help-library/survey-form/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -891,11 +823,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/survey-form/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/survey-form/version-7-0.md) · Mon, 27 Jul, 2026
 
-## System Settings (16) (26)
+## System Settings (26)
 
 Notification, SMS, e-mail, payment-method and general system configuration.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Settings](help-library/system-settings/about-settings.md) · Sun, 31 Oct, 2021
 - [About WhatsApp Messaging](help-library/system-settings/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -924,9 +854,7 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/system-settings/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/system-settings/version-7-0.md) · Mon, 27 Jul, 2026
 
-## System Update(1) (11)
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
+## System Update (11)
 
 - [About WhatsApp Messaging](help-library/system-update/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Meta (Cloud API)?](help-library/system-update/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026
@@ -940,11 +868,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/system-update/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/system-update/version-7-0.md) · Mon, 27 Jul, 2026
 
-## TPA Management (2) (12)
+## TPA Management (12)
 
 Insurance/TPA handling.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About TPA](help-library/tpa-management/about-tpa.md) · Wed, 10 Nov, 2021
 - [About WhatsApp Messaging](help-library/tpa-management/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -959,11 +885,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/tpa-management/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/tpa-management/version-7-0.md) · Mon, 27 Jul, 2026
 
-## Two Factor Authentication (6) (16)
+## Two Factor Authentication (16)
 
 Google Authenticator based 2FA setup for superadmin and staff.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About Two Factor Authentication](help-library/two-factor-authentication/about-two-factor-authentication.md) · Sat, 16 Aug, 2025
 - [About WhatsApp Messaging](help-library/two-factor-authentication/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
@@ -982,11 +906,9 @@ _Toggle navigation Home Features computer Demo How it Works description Help & D
 - [Version 2.0](help-library/two-factor-authentication/version-2-0-1.md) · Thu, 30 Jul, 2026
 - [Version 7.0](help-library/two-factor-authentication/version-7-0.md) · Mon, 27 Jul, 2026
 
-## WhatsApp Messaging (4) (10)
+## WhatsApp Messaging (10)
 
 WhatsApp Cloud API (Meta) and Twilio configuration, per-event enablement.
-
-_Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support_
 
 - [About WhatsApp Messaging](help-library/whatsapp-messaging/about-whatsapp-messaging.md) · Sat, 25 Jul, 2026
 - [How to configure WhatsApp using Meta (Cloud API)?](help-library/whatsapp-messaging/how-to-configure-whatsapp-using-meta-cloud-api.md) · Sat, 25 Jul, 2026

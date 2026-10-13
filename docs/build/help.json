@@ -1,11 +1,11 @@
 {
  "categories": [
   {
-   "name": "Ambulance (3)",
+   "name": "Ambulance",
    "slug": "ambulance",
    "count": 13,
    "blurb": "Vehicles, drivers and calls.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Ambulance.",
@@ -88,11 +88,11 @@
    ]
   },
   {
-   "name": "Annual Calendar (4)",
+   "name": "Annual Calendar",
    "slug": "annual-calendar",
    "count": 14,
    "blurb": "Holidays, activities, vacations and the front-site calendar tab.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -181,11 +181,11 @@
    ]
   },
   {
-   "name": "Appointment (8)",
+   "name": "Appointment",
    "slug": "appointment",
    "count": 18,
    "blurb": "Booking, slot setup and online appointments.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Appointment",
@@ -298,11 +298,11 @@
    ]
   },
   {
-   "name": "Billing (3)",
+   "name": "Billing",
    "slug": "billing",
    "count": 13,
    "blurb": "Billing concepts, single-module billing and case-based billing.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Billing",
@@ -385,11 +385,11 @@
    ]
   },
   {
-   "name": "Birth & Death Record (2)",
+   "name": "Birth & Death Record",
    "slug": "birth-death-record",
    "count": 12,
    "blurb": "Statutory birth and death registers.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -466,11 +466,11 @@
    ]
   },
   {
-   "name": "Blood Bank (6)",
+   "name": "Blood Bank",
    "slug": "blood-bank",
    "count": 16,
    "blurb": "Components, donors, issue and stock.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Blood Bank",
@@ -575,7 +575,7 @@
    "slug": "known-issues",
    "count": 10,
    "blurb": "",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -640,11 +640,11 @@
    ]
   },
   {
-   "name": "Certificate (7)",
+   "name": "Certificate",
    "slug": "certificate",
    "count": 17,
    "blurb": "Certificates, patient and staff ID cards.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Certificate.",
@@ -751,11 +751,11 @@
    ]
   },
   {
-   "name": "Common Issues & Troubleshooting (13)",
+   "name": "Common Issues & Troubleshooting",
    "slug": "common-issues-troubleshooting",
    "count": 23,
    "blurb": "Known problems and fixes (404s, login URLs, SQL modes, SSL, hosting moves).",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "404 Or Page Not Found Error In Installation",
@@ -898,11 +898,11 @@
    ]
   },
   {
-   "name": "Download Center (3)",
+   "name": "Download Center",
    "slug": "download-center",
    "count": 13,
    "blurb": "Sharing documents and media.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Download Center.",
@@ -985,11 +985,11 @@
    ]
   },
   {
-   "name": "Duty Roster (4)",
+   "name": "Duty Roster",
    "slug": "duty-roster",
    "count": 14,
    "blurb": "Shifts, rosters and staff assignment.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -1078,11 +1078,11 @@
    ]
   },
   {
-   "name": "FAQ (17)",
+   "name": "FAQ",
    "slug": "faq",
    "count": 27,
    "blurb": "Frequently asked questions about deployment, characters, LAN use and multi-hospital operation.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -1249,11 +1249,11 @@
    ]
   },
   {
-   "name": "Front CMS (8)",
+   "name": "Front CMS",
    "slug": "front-cms",
    "count": 18,
    "blurb": "Website pages, banners, events, gallery and media manager.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Front CMS",
@@ -1366,11 +1366,11 @@
    ]
   },
   {
-   "name": "Front Office (7)",
+   "name": "Front Office",
    "slug": "front-office",
    "count": 17,
    "blurb": "Visitors, calls, postal dispatch and complaints.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Front Office",
@@ -1477,11 +1477,11 @@
    ]
   },
   {
-   "name": "Getting Started (3)",
+   "name": "Getting Started",
    "slug": "getting-started",
    "count": 13,
    "blurb": "Installation, updates, licensing and first-run setup.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -1564,11 +1564,11 @@
    ]
   },
   {
-   "name": "Human Resource (13)",
+   "name": "Human Resource",
    "slug": "human-resource",
    "count": 23,
    "blurb": "Departments, designations, leave types, specialists, payroll and leaves.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Human Resource.",
@@ -1711,11 +1711,11 @@
    ]
   },
   {
-   "name": "Installation(7)",
+   "name": "Installation",
    "slug": "installation",
    "count": 17,
    "blurb": "",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "404 Or Page Not Found Error During Installation",
@@ -1822,11 +1822,11 @@
    ]
   },
   {
-   "name": "Inventory (4)",
+   "name": "Inventory",
    "slug": "inventory",
    "count": 14,
    "blurb": "Items, stock, issue and return.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Inventory.",
@@ -1915,11 +1915,11 @@
    ]
   },
   {
-   "name": "IPD - In Patient (19)",
+   "name": "IPD - In Patient",
    "slug": "ipd-in-patient",
    "count": 29,
    "blurb": "Admissions, vitals, obstetric history, BMI, overview and discharge.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About IPD - In Patient",
@@ -2098,11 +2098,11 @@
    ]
   },
   {
-   "name": "Live Consultation (3)",
+   "name": "Live Consultation",
    "slug": "live-consultation",
    "count": 13,
    "blurb": "Zoom live consultations and live meetings.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Live Consultation",
@@ -2185,11 +2185,11 @@
    ]
   },
   {
-   "name": "Messaging (4)",
+   "name": "Messaging",
    "slug": "messaging",
    "count": 14,
    "blurb": "Notice board, SMS, e-mail and patient credentials.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -2278,11 +2278,11 @@
    ]
   },
   {
-   "name": "Miscellaneous (6)",
+   "name": "Miscellaneous",
    "slug": "miscellaneous",
    "count": 16,
    "blurb": "Calendar, to-dos, chat and other utilities.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Calendar",
@@ -2383,11 +2383,11 @@
    ]
   },
   {
-   "name": "Multi Branch (7)",
+   "name": "Multi Branch",
    "slug": "multi-branch",
    "count": 17,
    "blurb": "Adding, editing, switching and reporting across branches.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Multi Branch",
@@ -2494,11 +2494,11 @@
    ]
   },
   {
-   "name": "OPD - Out Patient (9)",
+   "name": "OPD - Out Patient",
    "slug": "opd-out-patient",
    "count": 19,
    "blurb": "Out-patient visits, profiles and discharge.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About OPD - Out Patient",
@@ -2617,11 +2617,11 @@
    ]
   },
   {
-   "name": "Pathology (4)",
+   "name": "Pathology",
    "slug": "pathology",
    "count": 14,
    "blurb": "Test setup, reports and payment.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Pathology",
@@ -2710,11 +2710,11 @@
    ]
   },
   {
-   "name": "Patient Panel (10)",
+   "name": "Patient Panel",
    "slug": "patient-panel",
    "count": 20,
    "blurb": "The patient self-service portal (dashboard, appointments, OPD/IPD, bills, reports).",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -2839,11 +2839,11 @@
    ]
   },
   {
-   "name": "Pharmacy (6)",
+   "name": "Pharmacy",
    "slug": "pharmacy",
    "count": 16,
    "blurb": "Medicines, stock, bad stock, import and sale.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Pharmacy.",
@@ -2944,11 +2944,11 @@
    ]
   },
   {
-   "name": "QR Code Attendance (3)",
+   "name": "QR Code Attendance",
    "slug": "qr-code-attendance",
    "count": 13,
    "blurb": "QR/barcode attendance with auto-attendance options.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About QR Code Attendance",
@@ -3031,11 +3031,11 @@
    ]
   },
   {
-   "name": "Radiology (4)",
+   "name": "Radiology",
    "slug": "radiology",
    "count": 14,
    "blurb": "Study setup, reports and payment.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Radiology",
@@ -3124,11 +3124,11 @@
    ]
   },
   {
-   "name": "Referral (3)",
+   "name": "Referral",
    "slug": "referral",
    "count": 13,
    "blurb": "Referral persons and commission payments.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Referral.",
@@ -3211,11 +3211,11 @@
    ]
   },
   {
-   "name": "Reports (44)",
+   "name": "Reports",
    "slug": "reports",
    "count": 54,
    "blurb": "The report library \u2014 how to read and filter each report.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -3544,11 +3544,11 @@
    ]
   },
   {
-   "name": "Setup & Configuration (22)",
+   "name": "Setup & Configuration",
    "slug": "setup-configuration",
    "count": 32,
    "blurb": "Master data: patient fields, charges, beds, print header/footer, front office.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -3745,11 +3745,11 @@
    ]
   },
   {
-   "name": "Smart Hospital(10)",
+   "name": "Smart Hospital",
    "slug": "smart-hospital",
    "count": 19,
    "blurb": "",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -3868,11 +3868,11 @@
    ]
   },
   {
-   "name": "Survey Form (6)",
+   "name": "Survey Form",
    "slug": "survey-form",
    "count": 16,
    "blurb": "Building, publishing and filling survey forms.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Survey Form",
@@ -3973,11 +3973,11 @@
    ]
   },
   {
-   "name": "System Settings (16)",
+   "name": "System Settings",
    "slug": "system-settings",
    "count": 26,
    "blurb": "Notification, SMS, e-mail, payment-method and general system configuration.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Settings",
@@ -4138,11 +4138,11 @@
    ]
   },
   {
-   "name": "System Update(1)",
+   "name": "System Update",
    "slug": "system-update",
    "count": 11,
    "blurb": "",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -4213,11 +4213,11 @@
    ]
   },
   {
-   "name": "TPA Management (2)",
+   "name": "TPA Management",
    "slug": "tpa-management",
    "count": 12,
    "blurb": "Insurance/TPA handling.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About TPA",
@@ -4294,11 +4294,11 @@
    ]
   },
   {
-   "name": "Two Factor Authentication (6)",
+   "name": "Two Factor Authentication",
    "slug": "two-factor-authentication",
    "count": 16,
    "blurb": "Google Authenticator based 2FA setup for superadmin and staff.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About Two Factor Authentication",
@@ -4399,11 +4399,11 @@
    ]
   },
   {
-   "name": "WhatsApp Messaging (4)",
+   "name": "WhatsApp Messaging",
    "slug": "whatsapp-messaging",
    "count": 10,
    "blurb": "WhatsApp Cloud API (Meta) and Twilio configuration, per-event enablement.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
+   "description": "",
    "articles": [
     {
      "title": "About WhatsApp Messaging",
@@ -4471,7 +4471,7 @@
  "total": 686,
  "selected": [
   {
-   "category": "Two Factor Authentication (6)",
+   "category": "Two Factor Authentication",
    "category_slug": "two-factor-authentication",
    "title": "About Two Factor Authentication",
    "date": "Sat, 16 Aug, 2025",
@@ -4479,7 +4479,7 @@
    "body": "**2FA**, or **Two-Factor Authentication**, is a security process in which a user is required to provide two different forms of authentication in order to access an account or system. The goal of 2FA is to make it harder for unauthorized individuals to gain access to an account, even if they have obtained the user's password or other credentials.\n\nThe two factors of authentication typically used in 2FA are:\n\n1. Something the user knows, such as a password, PIN, or answer to a security question.\n2. Something the user has, such as a physical token, a one-time code generated by an authentication app, or an SMS code sent to their phone.\n\nWhen 2FA is enabled for an account, the user must provide both factors of authentication to gain access. For example, they might enter their password as the first factor, and then enter a one-time code generated by an authentication app as the second factor.\n\nBy requiring two different factors of authentication, 2FA makes it much more difficult for attackers to gain access to an account. Even if an attacker manages to obtain the user's password, they will still need the second factor of authentication to gain access. This makes it much less likely that an attacker will be able to successfully compromise the account."
   },
   {
-   "category": "Two Factor Authentication (6)",
+   "category": "Two Factor Authentication",
    "category_slug": "two-factor-authentication",
    "title": "How to Setup 2FA?",
    "date": "Sat, 16 Aug, 2025",
@@ -4487,7 +4487,7 @@
    "body": "Go to the your **Smart Hospital** to configure 2FA of Two Factor Authentication, two-step verification. For **setup 2FA**, go to the **Two Factor Authentication** module, which is shown in the left side bar. Now click on**Setup 2FA,**\u00a0the **Setup 2FA** page will open.  \n  \n![](../assets/how-to-setup-2fa/1.jpg)\n\n**Note:** For further processing, you need to set up **Google Authenticator** on your mobile device."
   },
   {
-   "category": "Two Factor Authentication (6)",
+   "category": "Two Factor Authentication",
    "category_slug": "two-factor-authentication",
    "title": "How to Install the Google Authenticator app on a mobile device?",
    "date": "Sat, 16 Aug, 2025",
@@ -4495,7 +4495,7 @@
    "body": "1. On your mobile device, go to Play Store / IOS.\n2. Download the **Google Authenticator** app.\n3. After downloading the app, install in your device.\n\n  \n![](../assets/how-to-install-the-google-authenticator-app-on-a-mobile-device/1.jpg)  \n  \n  \n\n4. Now open the **Google Authenticator** app and setup your first account.\n5. Use the QR code or setup key in your **2FA** settings (by Google or third-party service). If you\u2019re having trouble, go to g.co/2sv\n6. Now click on **Scan a** **QR code** from your mobile.\n\n  \n![](../assets/how-to-install-the-google-authenticator-app-on-a-mobile-device/2.jpg)  \n  \n  \n\n7. Now, scan the **QR code,** which is available on your Smart Hospital **Two Factor Authentication > Setup 2FA** page**.**\n\n  \n![](../assets/how-to-install-the-google-authenticator-app-on-a-mobile-device/3.jpg)  \n  \n  \n\n8. You will receive the **six-digit verification code**, which will show up in the **Google Authenticator**\n9. Now fill in the six-digit verification code below the QR code and click on \"**Verify and Activate.\"**\n10. You have successfully enabled the **2FA method** in your Smart Hospital, and a message will be shown on screen.\n\n  \n![](../assets/how-to-install-the-google-authenticator-app-on-a-mobile-device/4.jpg)"
   },
   {
-   "category": "Two Factor Authentication (6)",
+   "category": "Two Factor Authentication",
    "category_slug": "two-factor-authentication",
    "title": "How to delete the 2FA account for superadmin or staff?",
    "date": "Sat, 16 Aug, 2025",
@@ -4503,7 +4503,7 @@
    "body": "To delete the 2FA account, Super Admin or Staff, go to login in your **Smart Hospital**. After the login, go to the\u00a0 **Two Factor Authentication**module, which is shown in the left side bar. Now click on **Two Factor Authentication****> Setup 2FA**. A new page will open, and a message will show, \"You have enabled the 2FA method. If you want to remove your 2FA account, please \"**click here\".  \n  \n![](../assets/how-to-delete-the-2fa-account-for-superadmin-or-staff/1.jpg)**\n\nAfter **clicking here,** a delete confirmation message will appear on the screen. Now you can delete the account by clicking on the **Delete** button, which is showing in the right-bottom corner.  \n  \n  \n![](../assets/how-to-delete-the-2fa-account-for-superadmin-or-staff/2.jpg)"
   },
   {
-   "category": "System Settings (16)",
+   "category": "System Settings",
    "category_slug": "system-settings",
    "title": "Notification Setting",
    "date": "Mon, 01 Nov, 2021",
@@ -4511,7 +4511,7 @@
    "body": "To manage notification setting, go to\u00a0**Setup > Settings > Notification Setting.** There are 9 events OPD Patient Registration, IPD Patient Registration, IPD Patient Discharged, Login Credential, Appointment Approved, Live Meeting, Live Consult, OPD Patient Discharged and Forget Password where automated Email / SMS are sending to concerning person's email / mobile number. To control, when email / sms notifications will be send use Notification Setting.  \n  \n![notification setting image](../assets/notification-setting/1.jpg)\n\nCheck the following at which event, which person receive notification\n\n* OPD Patient Registration: OPD Patient\n* IPD Patient Registration: IPD Patient\n* IPD Patient Discharged: IPD Patient\n* Login Credential: Patient, Staff\n* Appointment Approved: Patient\n* Live Meeting: Staff\n* Live Consultation: Patient\n* OPD Patient Discharged: Patient\n* Forgot Password: Patient, Staff\n\n  \n\nTo edit sample message click on\u00a0**Edit**\u00a0icon present in the sample message column, at click of this icon a modal will be open. Here enter\u00a0**Subject**,\u00a0**Template ID**(here Template ID is your DLT template registration ID which is used only in Indian SMS gateway),\u00a0**Template**\u00a0and then click on\u00a0**Save**\u00a0button.  \n  \n![](../assets/notification-setting/2.jpg)\n\n**Note****-**If you are using any Indian SMS gateway then your template content must be match with your DLT registered template content."
   },
   {
-   "category": "System Settings (16)",
+   "category": "System Settings",
    "category_slug": "system-settings",
    "title": "System Notification Setting",
    "date": "Mon, 01 Nov, 2021",
@@ -4519,7 +4519,7 @@
    "body": "To manage system notification setting, go to\u00a0**Setup > Settings > System Notification Setting**. \u00a0There are 56 events \u00a0where system notification are sending to concerning user (staff or patient or both) Smart Hospital account. With the help of event option setting you can manage which notifications to send in which event to which person (staff or patient) and select the check box and then click on **Save**\u00a0button.\n\nTo edit sample message click on\u00a0**Edit**\u00a0icon present in the sample message column, at click of this icon a modal will be open. Here enter\u00a0**Subject**,\u00a0**Staff message and Patient message**\u00a0and then click on\u00a0**Save**\u00a0button.  \n  \n![](../assets/system-notification-setting/2.jpg)"
   },
   {
-   "category": "System Settings (16)",
+   "category": "System Settings",
    "category_slug": "system-settings",
    "title": "SMS Setting",
    "date": "Sat, 30 Oct, 2021",
@@ -4527,7 +4527,7 @@
    "body": "To manage SMS setting, go to\u00a0**Setup > Settings > SMS Setting**\u00a0then select any SMS gateway from top of the page which you want to enable on your Smart Hospital then enter\u00a0**Auth Key, Sender Id**\u00a0and select\u00a0**Status**\u00a0and then click on\u00a0**Save**\u00a0button.  \n  \n![](../assets/sms-setting/1.jpg)  \n  \nHere we are providing 8 SMS Gateway namely\u00a0**Clickatell SMS Gateway**,\u00a0**Twilio SMS Gateway**,\u00a0**MSG91**,\u00a0**Text Local**,\u00a0**SMS Country**,\u00a0**Bulk SMS**,\u00a0**Mobi Reach**,\u00a0**Nexmo**,\u00a0**AfricasTalking**\u00a0**Custom SMS Gateway**\u00a0in our Smart Hospital.\n\n**Custom SMS Gateway-**  \n  \nIn Smart Hospital you can integrate any http based SMS Gateway using our\u00a0**Custom SMS library**. Please contact to support to get\u00a0**Custom SMS Gateway**\u00a0integration guide. Here enter\u00a0**Gateway Name,**\u00a0select\u00a0**Status**\u00a0(Enabled/Disabled) and then click on\u00a0**Save**\u00a0button.  \n  \n![](../assets/sms-setting/2.jpg)  \n  \nFollow same procedure to SMS gateway for\u00a0**Clickatell SMS Gateway, Twilio SMS Gateway, Text Local**\u00a0and\u00a0**SMS Country**."
   },
   {
-   "category": "System Settings (16)",
+   "category": "System Settings",
    "category_slug": "system-settings",
    "title": "Email Setting",
    "date": "Tue, 09 Nov, 2021",
@@ -4535,7 +4535,7 @@
    "body": "After adding student or staff if you found there is no email is sending by system then there may be email configuration issue on your server / Smart Hospital.  \n  \nIn Smart Hospital we have used phpmailer\u00a0[**https://github.com/PHPMailer/PHPMailer**](https://github.com/PHPMailer/PHPMailer)library which is used by many popular php application like WordPress, Drupal, SugarCRM, Yii, Joomla etc.  \n  \nBy default\u00a0**SendMail**\u00a0is set as\u00a0**Email Engine**\u00a0in\u00a0**Setup > Settings > Email Setting**. SendMail can only work and send emails if you cpanel hosting supports it. If SendMail not sending email then contact to your hosting provider. Since SendMail is easiest but less reliable so check email recipient account\u00a0**Spam**\u00a0folder because sometimes SendMail sent emails detected as spams (if using SendMail). Another and best option is to use\u00a0**SMTP**\u00a0as email engine. You can use\u00a0**Gmail**\u00a0or any other free SMTP service provider to use SMTP email engine.  \n  \n![](../assets/email-setting/1.jpg)  \n  \n![](../assets/email-setting/2.jpg)  \nu200b  \nIf you are using your hosting smtp or any other provider smtp service then check their documentation for smtp settings.  \n  \n**Gmail SMTP configuration -**  \n  \nTo configure gmail account first you have to create app password for SMTP service, Please check following steps to generate app password-  \n  \n1. Go to your Google Account.  \n2. On the left navigation panel, choose Security.  \n3. On the 'Signing in to Google' panel, choose App passwords. If you don\u2019t see this option:\n\n* 2-Step Verification is not set up for your account\n* 2-Step Verification is set up for security keys only\n* Your account is through work, hospital or other organization\n* You\u2019ve turned on Advanced Protection for your account\n\n4. At the bottom, choose Select app and choose the app that you\u2019re using.  \n   5. Choose Select device and choose the device that you're using.  \n   6. Choose Generate.  \n   7. Follow the instructions to enter the app password. The app password is the 16-character code in the yellow bar on your device.  \n   8. Choose Done.  \n     \n     \n   After generating gmail app password for SMTP service enter credentials in Smart Hospital SMTP email configuration-\n\n**Email Engine = SendMail/SMTP**  \n**SMTP Username = your gmail email id**  \n**SMTP Password = Generated App Password**  \n**SMTP Server = smtp.gmail.com**  \n**SMTP Port = 587**  \n**SMTP Security = TLS  \nSMTP Auth = ON**  \n  \n  \n  \n***Note: After configuring email setting please check you have enabled email notification settings from Setup > Settings > Notification Setting.***"
   },
   {
-   "category": "Messaging (4)",
+   "category": "Messaging",
    "category_slug": "messaging",
    "title": "How Notice Board works?",
    "date": "Mon, 01 Nov, 2021",
@@ -4543,7 +4543,7 @@
    "body": "Notice board basically a messaging system for communication to patient and staff.\n\nNotice Board is for sending common messages to all staff members to add new notice board message click on **+Post New Message** button, here enter Message Title, Message Text, Notice Date, Publish On Date and Message To different types of staff users.  \n  \n![](../assets/how-notice-board-works/1.jpg)  \n  \n  \nYou can check this added Notice at Notice list page.  \n  \n![](../assets/how-notice-board-works/2.jpg)  \n  \nFrom here you can edit or delete created Notice."
   },
   {
-   "category": "Messaging (4)",
+   "category": "Messaging",
    "category_slug": "messaging",
    "title": "How send patient credential in Smart Hospital?",
    "date": "Fri, 30 Aug, 2024",
@@ -4551,7 +4551,7 @@
    "body": "To send the patient credential, simply go to the **Messaging** > **Send Credentials  \n  \n![](../assets/how-send-patient-credential-in-smart-hospital/1.jpg)**After click on Send Credential button, **Send Patient Credential** page will be open, here in this page multple patient with their login credentials are available  \n  \n![](../assets/how-send-patient-credential-in-smart-hospital/2.jpg)  \n  \nTo send the credentials to the patient, simply select the checkbox next to the patient's id . You can select multiple checkboxes to send credentials to multiple patients. Then click on the **Save** button, located at the bottom right corner  \n  \nYou can also send a '**Forgot Password**' to the patient by following the same process. Just click on the '**Credential Type**' dropdown and select '**Forgot Password**'  \n  \n![](../assets/how-send-patient-credential-in-smart-hospital/3.jpg)  \n  \n  \nAnd if you want to send both Credentials and Forgot Password, simply select **both** from the '**Credential Type'** dropdown and follow the same process as sending the credentials  \n  \n**![](../assets/how-send-patient-credential-in-smart-hospital/4.jpg)**"
   },
   {
-   "category": "Patient Panel (10)",
+   "category": "Patient Panel",
    "category_slug": "patient-panel",
    "title": "Patient Dashboard",
    "date": "Fri, 01 Aug, 2025",
@@ -4559,7 +4559,7 @@
    "body": "At patient panel you will see **Dashboard**, here patient can see all their treatment details in summarized form.  \n  \nAt the top you will see tabs like **OPD, IPD, Pharmacy, Pathology, Radiology, Blood Bank** and **Ambulance**, here you can see total count for patient treatment under these tabs.\u00a0  \n  \nIn below you will see graphic representation of quantitative information for Medical History, Findings and Symptoms through Pie Chart, Bar Chart etc.  \n  \n  \n![](../assets/patient-dashboard/1.jpg)"
   },
   {
-   "category": "Patient Panel (10)",
+   "category": "Patient Panel",
    "category_slug": "patient-panel",
    "title": "How to add appointment from Patient panel?",
    "date": "Sat, 02 Aug, 2025",
@@ -4567,7 +4567,7 @@
    "body": "To add an appointment from the patient account, go to **My Appointment**. Here you can see the patient profile along with all details.  \n  \n![](../assets/how-to-add-appointment-from-patient-panel/1.jpg)\n\nNow, click on the **+Add Appointment** button, then fill in the required details: **Date, Specialist, Doctor, Shift, Slot, Appointment Priority, Message, Live Consultation (Video Conference)**, and select a slot from the available options. Finally, click the **Save** button to complete the process.   \n  \n![](../assets/how-to-add-appointment-from-patient-panel/2.jpg)  \n  \n  \nYou can view added Appointment record at **Appointment List**. This Appointment record will how to patient as Pending until patient doesn't pay for it.  \n  \n![](../assets/how-to-add-appointment-from-patient-panel/3.jpg)\n\nTo make online payment for appointment click on Pay button present at Action column.  \n  \n![](../assets/how-to-add-appointment-from-patient-panel/4.jpg)  \n  \n**Note**:- Here after click on Pay button page will be redirect to your selected payment method. [Click here](https://smart-hospital.in/article/payment-methods) to understand how to enable payment method.  \n  \nAfter make online payment your appointment patient will see their appointment status as **Approved**.  \n  \nTo view appointment details click on show button icon and for delete appointment click on delete button icon present at **Action** column at Appointment list."
   },
   {
-   "category": "Patient Panel (10)",
+   "category": "Patient Panel",
    "category_slug": "patient-panel",
    "title": "OPD",
    "date": "Thu, 18 Nov, 2021",
@@ -4575,7 +4575,7 @@
    "body": "At patient account in OPD module, there are 4 tabs available **Visits, Lab Investigations, Treatment History and Timeline**.\n\nAt Visit tab patient can find their all visits and OPD records.\n\nTo check patient details click on show button icon present at Action column.\n\nTo check treatments under particular OPD click on OPD No, here you will find multiple tabs of Overview, Visits, Charges, Payment, Lab Investigation, Timeline, Medication, Operation Theatre, Live Consultation.\n\n#### **Overview**\n\nThis section describes patients all details like patient's Allergies, Findings Symptoms, Consultant Doctors, Timeline Medical History, Lab Investigation etc. of particular visit.\n\n**![opd overview](../assets/opd/1.jpg)**\n\n---\n\n#### **Visits**\n\nUnder visit section, patient can see all their Recheckups.  \n  \n![](../assets/opd/2.jpg)  \n  \n![](../assets/opd/3.jpg)\n\n---\n\n#### **Charges**\n\nAll the added charge of patient can be check from Charges tab. Patient can also print charges from print button icon present at **Action** column.  \n  \n![](../assets/opd/4.jpg)\n\n---\n\n#### **Payment**\n\nPatient can check all the payment details done from patient side. Patient can also print Payment from print button icon present at **Action** column.  \n  \n  \n![](../assets/opd/5.jpg)  \n  \nTo make online payment click on **+** **Make Payment** button. Here add Payment Amount and click on **Add** button.  \n  \n![](../assets/opd/6.jpg)\n\nThis will redirect to the payment page where patient can make online payment through selected payment method.  \n  \n\n---\n\n#### **Lab Investigation**\n\nAt this tab patient can check their reports of Pathology and Radiology tests.  \n  \n![](../assets/opd/7.jpg)  \n  \n![](../assets/opd/8.jpg)\n\n---\n\n#### **Timeline**\n\nIn Timeline section patient can see notes or quick access notes created from admin or staff panel.  \n  \n![](../assets/opd/9.jpg)\n\n---\n\n#### **Medication**\n\nMedication is for comparing a patient's medication orders to all of the medications that the patient has been taking.\n\nUnder Medication patient can check all their medication routine which was given to the patient.  \n  \n![](../assets/opd/10.jpg)  \n  \n\n---\n\n#### **Operation Theatre**\n\nUnder Operation Theatre tab patient can check details of their all operation done under OPD.\n\n---\n\n#### **Live Consultation**\n\nUsing Live Consultation Patients can consult to doctor through zoom video call. From Live Consultation tab patient can check all their upcoming and previous Live Consultation.\n\n**![](../assets/opd/11.jpg)**"
   },
   {
-   "category": "Patient Panel (10)",
+   "category": "Patient Panel",
    "category_slug": "patient-panel",
    "title": "IPD",
    "date": "Thu, 18 Nov, 2021",
@@ -4583,7 +4583,7 @@
    "body": "At patient account in IPD module patient can check following details like **Overview, Nurse Notes, Consultant Register, Lab Investigation, Timeline, Prescription, Charges, Payment, Treatment History, Medication, Operation Theatre, Live Consultation and Bed History.**\n\n#### **Overview-**\n\nThis section describes patients all details like patients Allergies, Findings Symptoms, Consultant Doctors, Timeline Medical History, Lab investigation, module wise payment billing details etc.  \n  \n![ipd overview](../assets/ipd/1.jpg)  \n\n---\n\n#### **Nurse Notes**\n\nA nursing note is a medical note into a medical or health record made by a nurse that\u00a0**can provide an accurate reflection of nursing assessments, changes in patient conditions, care provided and relevant information to support the clinical team to deliver excellent care**.\n\nPatient can check Nurse notes from **Nurse Notes** tab.  \n  \n![](../assets/ipd/2.jpg)\n\n---\n\n#### **Consultant Register**\n\nConsultant Register tab has all details about instructions given by doctors day to day for this patient's treatment. Patient can check these details from **Consultant Register** tab.  \n  \n![](../assets/ipd/3.jpg)\n\n---\n\n#### **Lab Investigation**\n\nIn IPD patient can also check patient all Pathology and Radiology test under **Lab Investigation** tab.  \n  \n![](../assets/ipd/4.jpg)\n\nHere in Lab Investigation List you can check all listed lab reports of. You can check lab test report details from show option available at **Action** column.  \n  \n![](../assets/ipd/5.jpg)\n\n---\n\n#### **Timeline**\n\nIn Timeline section patient can see notes or quick access notes created from admin or staff panel.  \n  \n![](../assets/ipd/6.jpg)\n\n---\n\n#### **Prescription**\n\nHere patient can check doctor\u2019s prescribed medicines and other details at prescription tab click on **Action** button to view prescription details.  \n  \n![](../assets/ipd/7.jpg)\n\n---\n\n#### **Charges**\n\nAll the added charge of patient can be check from **Charges** tab. Patient can also print charges from print button icon present at **Action** column.  \n  \n![](../assets/ipd/8.jpg)\n\n---\n\n#### **Payment**\n\nPatient can check all the payment details done from patient side. Patient can also print Payment from print button icon present at **Action** column.  \n  \n![](../assets/ipd/9.jpg)\n\n---\n\n#### **Treatment History**\n\nAt Treatment History tab under OPD patient list, you can check patients old visits and whatever treatment had been given to the patient.  \n  \n![](../assets/ipd/10.jpg)\n\n---\n\n#### **Medication**\n\nMedication is for comparing a patient's medication orders to all of the medications that the patient has been taking.  \n  \nUnder Medication patient can check all their medication routine which was given to the patient.  \n  \n![](../assets/ipd/11.jpg)\n\n---\n\n#### **Operation Theatre**\n\nUnder Operation Theatre tab patient can check details of their all operation done under OPD.  \n  \n![](../assets/ipd/12.jpg)  \n  \n![](../assets/ipd/13.jpg)\n\n---\n\n#### **Live Consultation**\n\nUsing Live Consultation Patients can consult to doctor through zoom video call. From Live Consultation tab patient can check all their upcoming and previous Live Consultation.\n\n---\n\n#### **Bed History**\n\nIn IPD \u2013In Patient you will find Bed History tab, The Bed History shows the assignment of beds to the patient under different categories like Bed history when patient was admitted at ICU.\n\nUnder Bed History tab you can see **Bed Group, Bed, From Date, To Date** and current status of **Bed**.  \n  \n![](../assets/ipd/14.jpg)"
   },
   {
-   "category": "Patient Panel (10)",
+   "category": "Patient Panel",
    "category_slug": "patient-panel",
    "title": "Pharmacy",
    "date": "Fri, 01 Aug, 2025",
@@ -4591,7 +4591,7 @@
    "body": "To check Pharmacy bill, go to Pharmacy here you can check Pharmacy bill details like **Bill No., Case Id, Date, Doctor Name, Note, Discount, Net Amount, Paid Amount Refund Amound and Balance Amount**.\u00a0  \n  \n![](../assets/pharmacy-1/1.jpg)\n\nTo view paid payment details, click on View Payment icon here you can check paid payments by patient and also print them from print button present at **Action** column.  \n  \n![](../assets/pharmacy-1/2.jpg)\n\nFrom **Show** icon you can check all medicine details and bill details. You can also print them from print icon present at top right side at header.  \n  \n![](../assets/pharmacy-1/3.jpg)\n\nFrom **Pay** button, patient can make online payment for their medicine bill. To pay online click on **Pay** button it will redirect you to payment gateway from where patient can make online payment.  \n  \n![](../assets/pharmacy-1/4.jpg)  \n  \n![](../assets/pharmacy-1/5.jpg)"
   },
   {
-   "category": "Patient Panel (10)",
+   "category": "Patient Panel",
    "category_slug": "patient-panel",
    "title": "Pathology",
    "date": "Thu, 18 Nov, 2021",
@@ -4599,7 +4599,7 @@
    "body": "To check Pathology test reports bill details at patient panel go to Pathology, here you can check patient pathology test report bill details like **Bill No, Case ID, Reporting Date, Reference Doctor, Note, Amount, Paid Amount and Balance Amount**.  \n  \n![](../assets/pathology-1/1.jpg)\n\nTo view payment details click on View Payment button available on **Action** column. To print this payment details you can print on print button icon.  \n  \n![](../assets/pathology-1/2.jpg)\n\nTo view Pathology report bill details click on Show button present at **Action** column. To print bill click on print button present at top right side on the header.  \n  \n![](../assets/pathology-1/3.jpg)\n\nTo make online payment for **Pathology** click on **Pay** button here you can edit payment and click on add button, this will redirect you to payment gateway from where you can make online payment for Pathology.  \n  \n![](../assets/pathology-1/4.jpg)"
   },
   {
-   "category": "Patient Panel (10)",
+   "category": "Patient Panel",
    "category_slug": "patient-panel",
    "title": "Radiology",
    "date": "Thu, 18 Nov, 2021",
@@ -4607,7 +4607,7 @@
    "body": "To check Radiology test reports bill details at patient panel go to Radiology, here you can check patient Radiology test report bill details like **Bill No, Case ID, Reporting Date, Reference Doctor, Note, Amount, Paid Amount\u00a0 and Balance Amount**.  \n  \n![](../assets/radiology-1/1.jpg)\n\nTo view payment details click on View Payment button available on **Action** column. To print this payment details you can print on print button icon.  \n  \n![](../assets/radiology-1/2.jpg)\n\nTo view **Radiology** report bill details click on Show button present at **Action** column. To print bill click on print button present at top right side on the header.  \n  \n![](../assets/radiology-1/3.jpg)\n\nTo make online payment for Radiology click on **Pay** button here you can edit payment and click on add button, this will redirect you to payment gateway from where you can make online payment for **Radiology**.  \n  \n![](../assets/radiology-1/4.jpg)"
   },
   {
-   "category": "Patient Panel (10)",
+   "category": "Patient Panel",
    "category_slug": "patient-panel",
    "title": "Blood Bank",
    "date": "Thu, 18 Nov, 2021",
@@ -4615,7 +4615,7 @@
    "body": "To check patient Blood Bank details like Blood Issue and Component Issue Details, go to **Blood Bank**. Here you will get two section one for **Blood Issue** and another for **Component Issue**.  \n  \n\n#### **Blood Issue**\n\nTo check Blood Issue details click on Blood issue tab, here you can check details like **Bill No., Issue Date, Received To, Blood Group, Gender, Donor Name, Bags, Amount, Paid Amount and Balance Amount**.  \n  \n![](../assets/blood-bank-1/1.jpg)\n\nTo view payment details click on View **Payment** button available on Action column. To print this payment details you can print on print button icon.  \n  \n![](../assets/blood-bank-1/2.jpg)\n\nTo print bill click on print button present at **Blood Issue List**.  \n  \n![](../assets/blood-bank-1/3.jpg)\n\nTo make online payment for blood issue click on **Pay** button here you can edit payment and click on add button, this will redirect you to payment gateway from where you can make online payment for Patient blood issue.  \n  \n![](../assets/blood-bank-1/4.jpg)  \n  \n\n---\n\n#### **Component Issue**\n\nTo check Component \u00a0Issue details click on Blood issue tab, here you can check details like **Bill No., Issue Date, Received To, Blood Group, Component, Gender, Donor Name, Bags, Amount, Paid Amount and Balance Amount**.  \n  \n![](../assets/blood-bank-1/5.jpg)\n\nTo view payment details click on View Payment button available on **Action** column. To print this payment details you can print on print button icon.  \n  \n![](../assets/blood-bank-1/6.jpg)\n\nTo print bill click on print button present at **Component Issue List**.  \n  \n![](../assets/blood-bank-1/7.jpg)\n\nTo make online payment for Component issue click on **Pay** button here you can edit payment and click on add button, this will redirect you to payment gateway from where you can make online payment for Patient Component issue.  \n  \n![](../assets/blood-bank-1/8.jpg)"
   },
   {
-   "category": "Patient Panel (10)",
+   "category": "Patient Panel",
    "category_slug": "patient-panel",
    "title": "Ambulance",
    "date": "Thu, 18 Nov, 2021",
@@ -4623,7 +4623,7 @@
    "body": "To check Ambulance bill details at patient panel go to **Ambulance** module, here you can check patient Ambulance bill details like **Bill No, Vehicle Number, Vehicle Model, Driver Name, Driver Contact, Amount, Tax, Net Amount, Paid Amount, Balance Amount**.  \n  \n![](../assets/ambulance/1.jpg)\n\nTo view payment details click on View Payment button available on **Action** column.  \n  \n![](../assets/ambulance/2.jpg)\n\nTo view Ambulance bill details click on Show button present at Action column. To print bill click on print button present at top right side on the header.  \n  \n![](../assets/ambulance/3.jpg)\n\nTo make online payment for Ambulance call click on **Pay** button here you can edit payment and click on add button, this will redirect you to payment gateway from where you can make online payment for Ambulance call.  \n  \n![](../assets/ambulance/4.jpg)  \n  \n![](../assets/ambulance/5.jpg)"
   },
   {
-   "category": "Patient Panel (10)",
+   "category": "Patient Panel",
    "category_slug": "patient-panel",
    "title": "Live Consultation",
    "date": "Thu, 18 Nov, 2021",
@@ -4631,7 +4631,7 @@
    "body": "Using Live Consultation Patients can consult to doctor through zoom video call.\n\nHere all the Live Consultation like from **Appointment, OPD and IPD** modules for patients will be listed.  \n  \n![](../assets/live-consultation/1.jpg)"
   },
   {
-   "category": "Billing (3)",
+   "category": "Billing",
    "category_slug": "billing",
    "title": "About Billing",
    "date": "Mon, 01 Nov, 2021",
@@ -4639,7 +4639,7 @@
    "body": "In Smart Hospital there is a feature of centralized billing so hospital staff not need to go to each module to generate patient bill individually for individual modules.   \n  \nIn centralized Billing module there are two ways to generate patient bill -  \n  \n\n* One is for single module (like Appointment, OPD, Pathology, Radiology etc) which purpose where patient comes for a particular treatment like patient had came for only blood test so in this case staff need to only generate their blood test bill which it can generate from Pathology tab.\n* Second one is for a billing of multiple treatments of patients under OPD / IPD which can be generate through a Case ID of patient.\n\n\u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0We will understand through an example, suppose a patient come to hospital for their treatment and referred to OPD. Here doctors do checkups and give prescription to patient in which doctor prescribed some medicine and pathology and radiology tests for patient. Now patient go through some radiology and pathology tests and purchased some medicine. Now after test reports doctor suggest patient to admit in the hospital for further treatments so here patient IPD record will be create and doctor will do further treatments which may include some more pathology, radiology tests, operations and medications. So for billing of all these treatments in one go OPD/IPD Billing Through Case Id feature is very useful, here staff only need a Patient Case ID so patient all treatments will reflect.  \n  \n  \n![](../assets/about-billing/1.jpg)"
   },
   {
-   "category": "Billing (3)",
+   "category": "Billing",
    "category_slug": "billing",
    "title": "Single Module Billing",
    "date": "Mon, 27 May, 2024",
@@ -4647,7 +4647,7 @@
    "body": "In a single module billing we have included total 6 module which are **Appointment, OPD, Pathology, Radiology, Blood issue and Blood Component Issue**.  \n  \n\n#### **Appointment**\n\nTo generate patient Appointment bill go to **Billing > Appointment**. Here click on **+ Add Appointment** so pop up window will be open here you should select patient from search patient field or you can add new patient from **+ New Patient** button then select **Doctor, Doctor Fees, Shift, Appointment Date, Slot, Appointment Priority, Payment Mode, Status, Message, Live Consultant, Full Details and Appointment Details** then click on **Save & Print** or **Save** button. You can share this bill receipt with patient after received bill amount.  \n  \n![](../assets/single-module-billing/1.jpg)  \n  \nYou can also print bill for patient previously created Appointment which are listed at Appointment Billing list page. To print it click on **Show** button present at last column on mouse hover then click on print bill button.  \n  \n![](../assets/single-module-billing/2.jpg)  \n  \n  \nTo edit billing click on edit and for delete click on delete present at bill details.  \n  \n\n---\n\n#### **OPD**\n\nTo generate patient OPD bill go to **Billing > OPD**. Here you can see all OPD patient visits\u00a0  \n  \n![](../assets/single-module-billing/3.jpg)  \n  \n  \nTo generate or print OPD bill for previously created OPD patient click on Show button available at last column on while you mouse hover\u00a0  \n  \n![](../assets/single-module-billing/4.jpg)  \n  \nthen click on print bill icon located at **Action** column.  \n  \n  \n![](../assets/single-module-billing/5.jpg)  \n  \n  \nTo add **New Visit** for patient click on **New Visit** button present at top right corner, here enter details and click on **Save & Print** or **Save** button.  \n  \n![](../assets/single-module-billing/6.jpg)  \n  \nYou can also create a new OPD patient and then print the patient\u2019s OPD bill. To do this, click on the **+ Add Patient** button. Enter the patient's information from the search field or by adding a new patient using the **+ New Patient** option. Then, enter the remaining details and click on the **Save & Print** or **Save button**  \n  \n![](../assets/single-module-billing/7.jpg)  \n  \n  \n\n---\n\n#### **Pathology**\n\nTo generate patient Pathology bill go to **Billing > Pathology**. Here you can see all patient pathology reports so to generate or print pathology test bill for previously created pathology patient records, click on View Reports button available at last column on mouseover.  \n  \n![pathology billing list image](../assets/single-module-billing/8.jpg)  \n  \nNow click on **Print Bill** icon present at top right corner at header, this will print all tests bill in a single bill.  \n  \n![](../assets/single-module-billing/9.jpg)  \n  \n  \n  \nOnce you click on this **Print Bill** icon, it will be shown like this-  \n  \n![](../assets/single-module-billing/10.jpg)  \n  \n  \n  \nIf you want to print individual tests bill then you should generate it from print icon present at **Action** column.  \n  \nTo create new patient pathology bill first create new pathology test record for this click on **+ Add Patient** button here enter Patient (patient can be added here in three ways 1. Search for patient at search area. 2. Add new patient through **+New Patient** and 3. Enter **Prescription No.** so patient details with prescribed test will auto fill at generate bill), 4. **Apply TPA** (**Third Party Administrator**) **Test Name, Reports Days, Report Date, Tax, Amount, Hospital Doctor and Doctor Name**, custom field details (if any) then after adding all pathology test details enter **Discount** and **Tax** if any to calculate final bill click on Calculate button then click on **Save** button. After this, \u00a0bill will be display on Pathology bill page.  \n  \n![](../assets/single-module-billing/11.jpg)  \n  \n  \nOnce patient is added in pathology billing list, you can add sample collected person for the particular test. For this click on the Show icon present in the pathology billing record list and then click on the notch icon present in Action column and then fill **Sample Collected Person Name**, **Collected Date** and **Pathology Center**and then finally click on the **Save** button.  \n  \n![](../assets/single-module-billing/12.jpg)  \n  \n  \nYou can edit and delete patient's pathology billing details, by clicking on **Edit** and **Delete** icon present on the to right corner of the modal.  \n\n---\n\n#### **Radiology**\n\nTo generate patient Radiology bill go to **Billing > Radiology**. Here you can see all patient radiology reports so to generate or print radiology test bill for previously created radiology patient records click on **View Reports** button available at last column on mouseover.  \n  \n![](../assets/single-module-billing/13.jpg)  \n  \n  \nNow click on **Print Bill** icon located at top right corner, this will print all tests bill in a single bill.  \n  \n![](../assets/single-module-billing/14.jpg)  \n  \nIf you want to print individual tests bill then you should generate it from print icon present at **Action** column.  \n  \nTo create new patient radiology bill first create new radiology test record for this click on **+ Add Patient** button here enter Patient (patient can be added here in three ways 1. Search for patient at search area. 2. Add new patient through **+New Patient** and 3. Enter **Prescription No, 4.** check the checkbox of **Apply TPA (Third Party Administrator).** so patient details with prescribed test will auto fill at generate bill), **Test Name, Reports Days, Report Date, Tax, Amount, Hospital Doctor and Doctor Name**, custom field details (if any) then after adding all radiology test details enter **Discount** and **Tax** if any to calculate final bill click on Calculate button then click on **Save** button. After this, \u00a0bill will be display on Radiology bill page.  \n  \n![](../assets/single-module-billing/15.jpg)  \n  \n\n---\n\n#### **Blood Issue**\n\nTo generate patient Blood Issue bill go to **Billing > Blood Issue**. Here you can see all patient blood issue record.  \n  \n![](../assets/single-module-billing/16.jpg)  \n  \nTo generate or print a Blood Issue bill for previously created records, click the **Show** button in the last column when you hover the mouse over it  \n  \n![](../assets/single-module-billing/17.jpg)  \n  \nNow click on **Print Bill** button located at top right corner.  \n  \n![](../assets/single-module-billing/18.jpg)  \n  \n  \nTo create patient new Blood Issue bill first create new Blood Issue record for this click on **+ Issue Blood** button here enter\u00a0**Patient**\u00a0from Select Patient (search for available patient) or create new patient from\u00a0**+ New Patient**\u00a0Button or add patient by entering\u00a0**Case ID** (you can find Case Id from OPD or IPD detail of Patient), and check the check box of **Apply TPA(Third Party Administrator),** now enter **Issue Date, Hospital Doctor, Reference Name, Technician, Blood Group, Bag, Charge Category, Charge Name, Standard Charge, Note, Discount, Tax, Payment Mode**and\u00a0**Payment Amount**\u00a0(Payment Amount will automatically calculate) then click on\u00a0**Save & Print**or\u00a0**Save** button. After this bill will be display on issue Blood bill page.  \n  \n![](../assets/single-module-billing/19.jpg)  \n  \n  \n\n---\n\n#### **Blood Component Issue**\n\nTo generate patient Blood component Issue bill go to **Billing > Blood Component Issue**. Here you can see all patient blood issue records  \n  \n![](../assets/single-module-billing/20.jpg)  \n  \n\u00a0To generate or print a Blood Component Issue bill for previously created records, click the **Show** button in the last column when you hover the mouse over it  \n  \n![](../assets/single-module-billing/21.jpg)  \n  \nNow click on **Print Bill** button present at top right corner at header.  \n  \n![](../assets/single-module-billing/22.jpg)  \n  \n  \nTo create patient new Blood Issue bill first create new Blood Issue record for this click on **+ Issue Blood** button \u00a0here enter\u00a0**Patient**\u00a0from Select Patient (search for available patient) or create new patient from\u00a0**+ New Patient**\u00a0Button or add patient by entering\u00a0**Case ID** (you can find Case Id from OPD or IPD detail of Patient), and check the check box of **Apply TPA (Third Party Administrator)** now enter **Issue Date, Hospital Doctor, Reference Name, Technician, Blood Group, Components, Bag, Charge Category, Charge Name, Standard Charge, Note, Discount, Tax, Payment Mode**and\u00a0**Payment Amount**\u00a0(Payment Amount will automatically calculate) then click on\u00a0**Save & Print**or\u00a0**Save** button. After this bill will be display on issue Blood bill page.  \n  \n![](../assets/single-module-billing/23.jpg)"
   },
   {
-   "category": "Billing (3)",
+   "category": "Billing",
    "category_slug": "billing",
    "title": "OPD/IPD Billing Through Case ID",
    "date": "Sat, 25 May, 2024",
@@ -4655,7 +4655,7 @@
    "body": "To generate OPD/IPD billing through Case ID, go to **Billing > OPD/IPD Billing Through Case ID** here enter patient case id (you can get case id from patient OPD or IPD record) then click on search button.  \n  \n![](../assets/opdipd-billing-through-case-id/1.jpg)  \n  \n  \nNow here you can see patient overall treatment details and charges from different modules OPD, IPD, Pharmacy, Pathology, Blood Bank and Ambulance which are linked through Case ID and Prescription No.  \n  \nTo generate or print overall treatment bill on one bill or you can say single bill print click on **Bill Summary** button. Here you can check all modules bill details. To print this bill click on **Print** button present at top right corner.  \n  \n![](../assets/opdipd-billing-through-case-id/2.jpg)  \n  \n  \n  \nYou can also print individual module bill from print option present at respective module list page under details option.  \n\n#### OPD Billing through Case ID\n\nTo add Payments and Generate all treatment bill under OPD, firts we should create a OPD patient from OPD module so here patient Case ID will be generate so if patient have multiple visits for their treatment and wants their bill so for this go to **Billing > OPD/IPD Billing Through Case ID**, now here enter Case ID of patient and all their charges will show under a OPD tab.  \n  \n![](../assets/opdipd-billing-through-case-id/3.jpg)  \n  \n  \n  \nNow to add payment click on **Add Payment** button present at right side under OPD tab, here enter **Date, Amount, Payment Mode and Note** then click on **Save** button.  \n  \n![](../assets/opdipd-billing-through-case-id/4.jpg)  \n  \n  \nNow to view all patient Payments done under OPD click on View Payments button present under OPD tab, here you can see payment details like **Date, Note, Payment Mode, Paid Amount** and also print bill of individually paid bill.  \n  \n![](../assets/opdipd-billing-through-case-id/5.jpg)  \n  \nTo generate bill click on **Generate Bill** button present under OPD tab. Here all charges under OPD and IPD will be shown.  \n  \n![](../assets/opdipd-billing-through-case-id/6.jpg)  \n  \n\n#### IPD Billing through Case ID\n\nTo add Payments and Generate all treatment bill under IPD, first we should create a IPD patient from IPD module so here patient Case ID will be generated so you can generate and print their IPD bill details using this case id, for this\u00a0 go to **Billing > OPD/IPD Billing Through Case ID**, now here enter Case ID of patient and all their charges will show under a IPD tab.  \n  \n![](../assets/opdipd-billing-through-case-id/7.jpg)  \n  \nNow to add payment click on **Add Payment** button present at right side under IPD tab, here enter **Date, Amount, Payment Mode and Note** then click on **Save** button.  \n  \n![](../assets/opdipd-billing-through-case-id/8.jpg)  \n  \nTo generate bill click on **Generate Bill** button present under IPD tab. Here all charges under OPD and IPD will be shown.  \n  \n![](../assets/opdipd-billing-through-case-id/9.jpg)  \n  \n\n#### **Pharmacy**\n\nTo make payment and generate pharmacy bill, first you need to add patient from pharmacy module by using their prescription number then you need to enter case id in billing dashboard, while you enter case id and click on Search button, patient's all pharmacy related details will be shown on pharmacy tab.  \n  \nTo check and pint pharmacy bill you can click on the **Show** icon which is present in the **Action** column (icon will be visible on mouseover of the column), by clicking this icon a pop-up window will be open, here you can see all bill information. To print bill information click on the **Print** icon present in the top of the modal.  \n  \nTo make partial payment of bill click on the **+ Make Payment**\u00a0 icon which is present in the **Action** column (icon will be visible on mouse over of the column only if bill payment balance amount will be greater than 0).  \n  \n![](../assets/opdipd-billing-through-case-id/10.jpg)  \n  \n  \n  \n\n#### **Pathology**\n\nTo collect Pathology Test bill first you should create a pathology test record for patient from Pathology module, here you can create Pathology Test record though a prescription id so all the prescribed test unde OPD or IPD will be fetch automatically now if there is any payment remaining for Pathology Test, you can pay it from Billing module through Patient Case ID at one shot.  \n  \n![](../assets/opdipd-billing-through-case-id/11.jpg)  \n  \n  \nTo print Pathology Test report and bill click on View Reports option present at last column (button icon will be show on mouse hover) here you can see patient test reports and can print at from print button present at top of the header.  \n  \n![](../assets/opdipd-billing-through-case-id/12.jpg)  \n  \nYou can also pay remaining pathology payment from here, for this click on **Add Payment** icon option present at last column (button will be show on mouse over only\u00a0 if payment amount is balance).  \n  \n![](../assets/opdipd-billing-through-case-id/13.jpg)  \n  \n\n#### Radiology\n\nTo collect Radiology Test bill first you should create a radiology test record for patient, here you can create Radiology Test record though a prescription id so all the prescribed test under OPD or IPD will be fetch automatically now if there is any payment remaining for Radiology Test so patient can pay it from Billing module through Patient Case ID at one shot.  \n![](../assets/opdipd-billing-through-case-id/14.jpg)  \n  \n  \nTo print Radiology Test report and bill click on View Reports option present at last column (button icon will be show on mouse hover) here you can see patient test reports and can print at from print button present at top of the header.  \n  \n![](../assets/opdipd-billing-through-case-id/15.jpg)  \n  \n\n#### Blood Bank\n\n  \nTo add Payments and Generate bill for Blood Bank through Case ID first we should create a Blood Bank record of patient from Blood Bank module so here patient Case ID will be generate now go to Billing > OPD/IPD Billing Through Case ID, now here enter Case ID of patient and all their charges will show under a Blood Bank tab.  \n  \n![](../assets/opdipd-billing-through-case-id/16.jpg)  \n  \n  \nYou can make partial payment from here, for this click on the + icon present on the action column, then fill mandatory details and then click on the Save button.  \n  \n![](../assets/opdipd-billing-through-case-id/17.jpg)  \n  \n\n#### Ambulance\n\nTo add Payments and Generate bill for Ambulance through Case ID first we should create a Ambulance call record record of patient from Ambulance module so here patient Case ID will be generate now go to Billing > OPD/IPD Billing Through Case ID, now here enter Case ID of patient and all their charges will show under a Ambulance tab.  \n  \n![](../assets/opdipd-billing-through-case-id/18.jpg)  \n  \n  \nYou can make partial payment from here, for this click on the + icon present on the Action column, then fill mandatory details and then click on the **Save** button.  \n  \n![](../assets/opdipd-billing-through-case-id/19.jpg)  \n  \nTo print payment details click on the **View Payment** icon present on the **Action** column, at click of this icon pop widow will be open then click on the **Print** icon present on the top right corner of the modal."
   },
   {
-   "category": "IPD - In Patient (19)",
+   "category": "IPD - In Patient",
    "category_slug": "ipd-in-patient",
    "title": "IPD Overview",
    "date": "Mon, 01 Nov, 2021",
@@ -4663,7 +4663,7 @@
    "body": "This section describes patients all details like patients Allergies, Findings Symptoms, Consultant Doctors, Timeline Medical History, Lab investigation, payment details etc.  \n  \n![ipd overview](../assets/ipd-overview/1.jpg)"
   },
   {
-   "category": "IPD - In Patient (19)",
+   "category": "IPD - In Patient",
    "category_slug": "ipd-in-patient",
    "title": "BMI For IPD - In Patient",
    "date": "Fri, 30 Aug, 2024",
@@ -4671,7 +4671,7 @@
    "body": "In the **IPD - In Patient** for **BMI**, you need to go to the IPD - In Patient. Here, select the patient whose BMI details you want to see. Click on the IPD number of the patient. The patient's overview page will open, where you can see the **BMI** details  \n  \n![](../assets/bmi-for-ipd-in-patient/1.jpg)"
   },
   {
-   "category": "OPD - Out Patient (9)",
+   "category": "OPD - Out Patient",
    "category_slug": "opd-out-patient",
    "title": "OPD Patient Visits",
    "date": "Tue, 22 Jul, 2025",
@@ -4679,7 +4679,7 @@
    "body": "In OPD, when you click on a patient's name or the **Show** icon, the **Overview** page will open. The **Overview** tab contains all the details of the patient's visit.\n\nTo view complete OPD patient information, click on the **Show** icon. You will see five tabs: **Overview**, **Visits**, **Lab Investigation**, **Treatment History**, **Timeline** and **Vital** \u2014 each providing specific details related to the patient\u2019s consultation and treatment history.\n\n![](../assets/opd-patient-visits/1.jpg)  \n  \n  \nUnder Visit tab we will get some more tabs which will show other details also for OPD patients those are **Medication, Operations, Charges** and **Payments**. Now let's have a look for these options in more details-\n\n---\n\n  \n\n#### **Overview**\n\nThis section provides complete details of the patient\u2019s visit, including allergies, symptoms and findings, consulting doctor, medical history timeline, lab investigations, and more.\n\n  \n![opd visit overview](../assets/opd-patient-visits/2.jpg)  \n  \n\n---\n\n#### **Add New Checkup**\n\nTo add new OPD Checkups click on **+New Checkup** button. Here enter **Any Known Allergies, Height, Weight, BP, Symptoms, Note, Appointment Date, Case, Casualty, Old Patient, TPA (Third Party Administrator), Reference, Consultant Doctor, Charge Category, Charge, Tax, Standard Charges, Applied Charges, Amount, Payment Mode, Paid Amount**and select**Live Consultation** (if yes than live consultation for the patient will create and it will list on patient profile Live Consultation tab) and click on **Save** button.\u00a0  \n  \n  \n![opd add new visit](../assets/opd-patient-visits/3.jpg)  \n  \n**Note** :\u00a0 While you add **New Checkup** for the Female patient so in this adding form at the bottom **Is Antenatal** option with checkbox will be show  \n  \n![](../assets/opd-patient-visits/4.jpg)  \n  \n  \n  \n\n---\n\n#### **Add Prescription**\n\nTo add prescription for OPD patient,\u00a0 go to OPD- out patient list click on OPD patient details (for this show details button icon will show when you mouse hover at Total Recheck up column) then click on **Visits** tab Now here you will find Add Prescription option at Visits tab.\n\nWhen you click on Add prescription button it will open add prescription page.\n\nHere in Add Prescription you can add **Header Notes, Findings details (Symptoms finding in patient), Attachment, Medicines, Footer Note**, also in add prescription page you can prescribed **Pathology** and **Radiology** tests to patient and send notification from **Notification** To option to staff members.  \n  \n![add prescription button](../assets/opd-patient-visits/5.jpg)  \n  \n  \n![](../assets/opd-patient-visits/6.jpg)  \n  \n  \n\n---\n\n#### **Medication**\n\nMedication is for comparing a patient's medication orders to all of the medications that the patient has been taking. This reconciliation is done to avoid medication errors such as omissions, duplications, dosing errors, or drug interactions.\n\nTo add medication for OPD patient go to **OPD \u2013 Out Patient** then click to detail option (show button icon will show for this at last column on mouse hover) then click on OPD no (under which OPD you want to create) here you will get **Medication** tab to add Medication for patient.\n\nTo add Medication click on **+ Add Medication** here enter **Date, Time, Medication Category, Medication Name, Dosage** and **Remarks** then **Save** button.  \n  \n![opd medicoze](../assets/opd-patient-visits/7.jpg)\n\nYou can view this added record in the\u00a0**Medication List**\u00a0under Medication tab.\n\nTo edit Medication click on**Edit**\u00a0icon and to delete Medication click on\u00a0**Delete**\u00a0icon present in the Medication list.  \n  \n\n---\n\n#### **Lab Investigation**\n\nIn OPD patient list you can also check patient all **Pathology** and **Radiology** test under **Lab Investigation** tab.\n\nHere in Lab Investigation List you can check all listed lab reports of. You can check lab test report details from show option available at **Action** column.  \n  \n![lab investigation](../assets/opd-patient-visits/8.jpg)\n\nAlso you can print Test Report from print icon present at show report details popup.\n\n---\n\n#### **Operations**\n\nYou can add operations done for OPD patients under Operation Theatre tab. These can be small operation like dental surgeries.\n\nTo add Operation for OPD patient go to **OPD \u2013 Out Patient** then click to detail option (show button icon will show for this at last column on mouse hover) then click on OPD no (under which OPD you want to create) here you will get Operation Theatre tab to add Operations for patient.  \n  \n![add operation](../assets/opd-patient-visits/9.jpg)\n\nAfter create Operation record you can view this added record at Operation Theatre.\n\nTo view added operation record click on view button icon present at **Action** column.\n\nTo edit Operation record click on**Edit**\u00a0icon and to delete Operation record click on\u00a0**Delete**\u00a0icon present in the Operation Theatre list.  \n  \n\n---\n\n#### **Charges**\n\nPlease [click here](https://smart-hospital.in/article/hospital-charges) to understand how to add Charges in Smart Hospital.  \n  \n\n---\n\n#### **How to add charges in OPD**\n\nTo add charges in for OPD patient, go to the **OPD \u2013 out patient** click on Show button present at **Action** column. After click on Show button here you will get 4 tabs that are **Overview, Visits, Lab Investigation, and Timeline**.\n\nNow click on **Visits** tab and then click on OPD No. (for which you want to add charges) then click on **Charges** tab.\n\n![](../assets/opd-patient-visits/10.jpg)\n\nTo add charges for OPD patient click on **+Add Charges** button, here you should add **Charge Type, Charge Category, Charge Name** and other details and click on **Save** button.\n\n![add charges](../assets/opd-patient-visits/11.jpg)\n\nYou can also Print, Edit and Delete the applied charges from options available at **Action** column.\n\n---\n\n#### **Add Payments in OPD**\n\nTo add payment for OPD patient go to OPD \u2013 Out Patient then click to detail option (show button icon will show for this at last column on mouse hover) then click on OPD no (under which OPD you want to create) here you will get **Payment** tab to add Payment for patient.\n\nTo add new payment click on **+ Add Payment** button here enter **Date, payment Amount, Payment Mode** and **Note** then click on **Save** button.\n\n![opd add payment](../assets/opd-patient-visits/12.jpg)  \n  \nTo see patient OPD Payment details click **Payment** tab. Here you can see all payments done by patient.  \n  \n\n#### Live Consultation\n\nUsing\u00a0**Live Consultation**\u00a0Patients can consult to doctor through zoom video call.  \n  \nFrom OPD Live Consultation doctor can give live consultation. For this click go to OPD Out Patient here click on Show button present at **Action** column. After click on Show button here you will get 4 tabs that are **Overview, Visits, Lab Investigation, and Timeline**.\n\nNow click on **Visits** tab and then click on OPD No. (for which you want to add charges) then click on **Live Consultation** tab.\n\n![](../assets/opd-patient-visits/13.jpg)  \n  \n  \nTo start video call click on **Start** button present at **Action** column, you can also change status for Live consultation as **Awaited, Finished** or **Cancelled**.  \n  \nNote - Please [click here](https://smart-hospital.in/article/zoom-setting) to see settings for **Live Consultation**.  \n\n---\n\n#### **OPD Timeline**\n\nFrom **Timeline** feature you can add any notes or quick access details regarding patient.\n\nTo add Timeline for OPD patient go to **OPD \u2013Out Patient** then go to detail page (click on show button which will show on mouse hover at last column in OPD list). Here you will find **Timeline** tab.\n\nTo add Timeline click on **+ Add Timeline** button then enter **Title, Date, Description, Attach Document** and check on **Visible** **to the Patient** (optional) then click on **Save** button.  \n  \n![opd add timeline](../assets/opd-patient-visits/14.jpg)\n\nYou can view this added Timeline at **Timeline** list page.\n\n---\n\n###"
   },
   {
-   "category": "Pharmacy (6)",
+   "category": "Pharmacy",
    "category_slug": "pharmacy",
    "title": "How to Import Medicines?",
    "date": "Mon, 15 Nov, 2021",
@@ -4687,7 +4687,7 @@
    "body": "To import medicines click on Import Medicine button. Here select Medicine Category from dropdown and select CSV file, then click on Import Medicine button.  \n  \n![](../assets/how-to-import-medicines/1.jpg)  \n  \n**Note:**\u00a0Your CSV data should be in the format below. The first line of your CSV file should be the column headers as in the table example. Also make sure that your file is UTF-8 to avoid unnecessary encoding problems."
   },
   {
-   "category": "Blood Bank (6)",
+   "category": "Blood Bank",
    "category_slug": "blood-bank",
    "title": "How to Issue Blood?",
    "date": "Wed, 27 Oct, 2021",
@@ -4695,7 +4695,7 @@
    "body": "There are two ways to issue Blood, first you can issue blood from Blood Bank Status page and other is go to **Blood Bank > Blood Issue Details > Issue Blood**.  \n  \n![](../assets/how-to-issue-blood/1.jpg)  \n  \nTo issue blood click on Issue Blood button, here enter **Patient** from Select Patient (search for available patient) or create new patient from **+ New Patient** Button or add patient by entering **Case ID** (you can find Case Id from OPD or IPD detail of Patient) now enter **Issue Date, Hospital Doctor, Reference Name, Technician, Blood Group, Bag, Charge Category, Charge Name, Standard Charge, Note, Discount, Tax, Payment Mode** and **Payment Amount** (Payment Amount will automatically calculate) then click on **Save & Print** or **Save** button.\u00a0  \n  \nYou can check this added record at **Blood Issues Details** list Page.  \n  \n![](../assets/how-to-issue-blood/2.jpg)  \n  \nTo check Blood Issue bill details click on show icon and to delete bill details click on delete icon present at **Action** column at **Blood Issues Details** list Page.  \n  \n![](../assets/how-to-issue-blood/3.jpg)  \n  \nTo add payment click on Add Payment button icon present at **Action** column.  \n  \n![](../assets/how-to-issue-blood/4.jpg)"
   },
   {
-   "category": "Ambulance (3)",
+   "category": "Ambulance",
    "category_slug": "ambulance",
    "title": "How to add Ambulance Call?",
    "date": "Mon, 01 Nov, 2021",
@@ -4703,7 +4703,7 @@
    "body": "To add new ambulance call go to Ambulance module and\u00a0 click on **+ Add Ambulance Call** button. Here select **Patient Name** from dropdown ( or click on **+ New Patient** button to add new patient or Enter **Case ID** so patient details will auto fill here) then enter **Vehicle Model**, **Driver Name**, **Date**, and **Charge** **Category**, **Charge** **Name**, **Standard** **Charge**, **Note** and click on **Save & Print** or **Save** button.  \n  \n![add ambulance call](../assets/how-to-add-ambulance-call/1.jpg)\n\nYou can check Ambulance Call created record at Ambulance Call list page.  \n  \n![ambulance call list image](../assets/how-to-add-ambulance-call/2.jpg)"
   },
   {
-   "category": "Front Office (7)",
+   "category": "Front Office",
    "category_slug": "front-office",
    "title": "How to add Phone Call Log in Smart Hospital?",
    "date": "Thu, 28 Oct, 2021",
@@ -4711,7 +4711,7 @@
    "body": "Phone Call Log is for managing incoming or outgoing call details for this click on Phone Call Log button. To add Phone Call Log click on **+ Add Call Log** button, now enter **Person Name, Phone, Date, Description, Next Follow Up Date, Call Duration, Note** and **Call Type Incoming or Outgoing**.  \n  \n  \n![](../assets/how-to-add-phone-call-log-in-smart-hospital/1.jpg)\n\nTo view phone call log click on\u00a0**View**\u00a0icon present at\u00a0**Action**\u00a0column in the phone call log list, at click of this icon\u00a0**Details**\u00a0modal will be open. Here you can see the details of the phone call log.  \n  \n![](../assets/how-to-add-phone-call-log-in-smart-hospital/2.jpg)\n\nTo edit phone call log click on\u00a0**Edit**\u00a0icon and to delete phone call log click on\u00a0**Delete**\u00a0icon present in the phone call log list"
   },
   {
-   "category": "Certificate (7)",
+   "category": "Certificate",
    "category_slug": "certificate",
    "title": "How to generate certificate?",
    "date": "Tue, 02 Nov, 2021",
@@ -4719,7 +4719,7 @@
    "body": "To generate certificate, go to\u00a0**Certificate > Generate Certificate**\u00a0then select\u00a0**Module,** **Patient Status** and**Certificate**\u00a0and then click on\u00a0**Search**\u00a0button. The list of patient will be shown in the below of the page.  \n  \n![certificate patient list](../assets/how-to-generate-certificate/1.jpg)\n\nNow select patient for generate certificate and click on\u00a0**Generate**\u00a0button present at right side in the patient list, at click of this button certificate will be generate.\n\n![generate certificate](../assets/how-to-generate-certificate/2.jpg)\n\n**Note -**\u00a0Do not print the certificate directly, here select the\u00a0**Destination**\u00a0(save as pdf) and save pdf file and then print certificate using this pdf file."
   },
   {
-   "category": "Inventory (4)",
+   "category": "Inventory",
    "category_slug": "inventory",
    "title": "How to check issue and return item?",
    "date": "Sun, 31 Oct, 2021",
@@ -4727,7 +4727,7 @@
    "body": "To see issue or return item click on Issue Item button.\n\nTo issue an item click on **+ Add Issue Item** button, here enter **User Type, Issued to, Issue By, Issue Date, Return Date, Note, Item Category, Item** and **Issue Quantity**.  \n  \n![](../assets/how-to-check-issue-and-return-item/1.jpg)   \n  \n  \nYou can view this added record in the Issue Item List page.  \n  \n![](../assets/how-to-check-issue-and-return-item/2.jpg)\n\nTo delete the issued item click on the\u00a0**Delete**\u00a0icon present at Action column and will show on mouse hover.\n\nTo return an item click on Click To **Return** button.  \n  \n![](../assets/how-to-check-issue-and-return-item/3.jpg)"
   },
   {
-   "category": "Front CMS (8)",
+   "category": "Front CMS",
    "category_slug": "front-cms",
    "title": "How Media Manager works in Smart Hospital.",
    "date": "Thu, 11 Nov, 2021",
@@ -4735,7 +4735,7 @@
    "body": "To upload file (like images)\u00a0 and YouTube videos , go to\u00a0**Front CMS > Media Manager**\u00a0then Choose or drag file in the\u00a0**Upload Your File**option so selected file will be upload in your Smart hospital on Media Manager. Also to**upload youtube video enter youtube url at** **Upload Youtube Video URL**\u00a0section and then click on\u00a0**Submit**\u00a0button. Uploaded file and youtube video will show at Media Manager list page.\n\n![add media manager](../assets/how-media-manager-works-in-smart-hospital/1.jpg)\n\nYou can search media by entering any keyword in\u00a0**Search By File Name**textbox and you can also search any file by selecting file type ( like video, text,zip,Rar etc.)."
   },
   {
-   "category": "Front CMS (8)",
+   "category": "Front CMS",
    "category_slug": "front-cms",
    "title": "How to add Gallery in Smart Hospital?",
    "date": "Thu, 11 Nov, 2021",
@@ -4743,7 +4743,7 @@
    "body": "To add new gallery go to\u00a0**Front CMS then click Down Arrow icon and then** click on Add Gallery button. Here you can add all image/video galleries of your hospital. To add new gallery click on + Add button. Here enter gallery Title, Description, Gallery Images, SEO Detail Meta Title, Meta Keyword, Meta Description then select Sidebar Setting, Featured Image then click on Save button.  \n  \n![add gallary](../assets/how-to-add-gallery-in-smart-hospital/1.jpg)\n\nYou can view this added Gallery record at Gallery List page.  \n  \n![gallary list](../assets/how-to-add-gallery-in-smart-hospital/2.jpg)\n\nTo edit Gallery click on\u00a0**Edit**\u00a0icon and to delete page click on**Delete**\u00a0icon present in the Gallery list."
   },
   {
-   "category": "Multi Branch (7)",
+   "category": "Multi Branch",
    "category_slug": "multi-branch",
    "title": "How to switch the branch?",
    "date": "Sat, 16 Aug, 2025",
@@ -4751,7 +4751,7 @@
    "body": "To switch branches, click the\u00a0**Switch Branch**\u00a0icon in the upper right corner.\u00a0  \n  \n![](../assets/how-to-switch-the-branch/1.jpg)  \n  \n  \n  \nThe **Switch Branch**\u00a0modal will now appear, and you can change the branch by clicking on the\u00a0**radio**button, then click on the\u00a0**Update**\u00a0button, which is located in the below.\u00a0  \n  \n  \n![](../assets/how-to-switch-the-branch/2.jpg)"
   },
   {
-   "category": "QR Code Attendance (3)",
+   "category": "QR Code Attendance",
    "category_slug": "qr-code-attendance",
    "title": "About QR Code Attendance",
    "date": "Sat, 16 Aug, 2025",
@@ -4759,7 +4759,7 @@
    "body": "**About QR Code / Barcode Attendance**\n\n**QR Code / Barcode Attendance:**To each\u00a0**Staff** assigned a unique QR code / Barcode that represents their identity. These QR Code / Barcode can be generated from the certificate module of our Smart Hospital and this code usually contains information about the individual, such as a unique identifier.\n\n* QR code / Barcode are seamlessly integrated into the and staff ID cards additionally, individuals can conveniently access their QR codes / Barcodes through their dedicated and staff profiles.\n* To mark attendance, an organizer or instructor uses a QR code scanner.\n* Staff present their QR Code / Barcode to be scanned upon entry.\n* The scanner reads the code, and attendance data is recorded in the system.\n* Attendance records are updated in real-time, providing accurate and timely information.\n* This data accessed by administrators for tracking and reporting purposes.\n* Administrators gain seamless access to this data, empowering them for comprehensive tracking and insightful reporting."
   },
   {
-   "category": "Duty Roster (4)",
+   "category": "Duty Roster",
    "category_slug": "duty-roster",
    "title": "How to assign the roster to the staff?",
    "date": "Thu, 05 Sep, 2024",
@@ -4767,7 +4767,7 @@
    "body": "To assign the roster to staff, go to the **Duty Roster** module and click on it. The Duty Roster list page will open  \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/1.jpg)  \n  \nOn the page, in the top right corner, the **Assign Roster** button is displayed. Simply click on the button, and the Assign Roster page will open  \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/2.jpg)  \n  \nNow in this page, at the top right corner **Add Assign Roster** button displaying, simply click on button, Add Assign roster window will be open  \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/3.jpg)  \n  \nIn the Assign Roster page, select the desired shift, then choose the Shift Date. Next, select the staff member you want to assign to this roster, followed by the floor and department where the duty will be assigned.   \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/4.jpg)  \n  \nFinally, click the 'Save' button, and the roster will be successfully assigned to the selected staff member  \n  \n  \nTo edit the assigned roster, simply click on the pencil icon on the right side of the page. The edit window for the assigned roster will open  \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/5.jpg)  \n  \nNow here update the details of assigned roster then click on save button, details will be update successfully and will display on the Assign Roster page  \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/6.jpg)  \n  \nTo delete the assign roster, simply click on **delete** icon showing at the right side of the page, delete window will be open, click on yes, assigned roster will be **delete** successfully  \n  \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/7.jpg)"
   },
   {
-   "category": "Annual Calendar (4)",
+   "category": "Annual Calendar",
    "category_slug": "annual-calendar",
    "title": "How to add holiday in annual calendar on smart hospital?",
    "date": "Thu, 05 Sep, 2024",
@@ -4775,7 +4775,7 @@
    "body": "To add a holiday to the annual calendar, go to the **Annual Calendar** module in your Smart Hospital system and click on it. The Annual Calendar page will open on the right side.  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/1.jpg)  \n  \nNow go to the **Add** button, showing at the top right corner and click on it, Add window will be open In this window, you can see options for Type: **Holiday**, **Activity**, and **Vacation**. Simply select **'Holiday'** by clicking on it, then choose the date when the holiday will occur. Add a description of the holiday, and if you want to display this holiday with details on the front site of your Smart Hospital, click on the **'Front Site'** button.\u00a0  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/2.jpg)  \n  \nFinally, click the **'Save'** button to save your holiday details in the holiday list.  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/3.jpg)  \n  \nTo **edit** the holiday details simply go to the pencil icon showing at the right side and click on it, edit holiday window will be open  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/4.jpg)  \n  \nNow update the details you want to change, then click the **'Save'** button. Your holiday details will be updated successfully.\n\nTo **delete** the holiday details, simply click on the delete icon on the right side, then click the **'OK'** button. The holiday details will be deleted successfully  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/5.jpg)  \n  \nIf you want to search specifically for holiday details, go to the top left of the page. Here, you'll see a **'Type'** dropdown menu. Select the **'Holiday'** option from the dropdown  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/6.jpg)  \n  \nThen click on **Search**, in below list only display the holiday details.  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/7.jpg)  \n  \nAdditionally you can also see the holiday details on the front site of your Smart Hospital, as you enabled this option when adding the holiday. Simply go to the front site of your Smart Hospital and navigate to the annual calendar  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/8.jpg)  \n  \nHere you can see the holiday details which you recently added from the annual calendar\n\nYou can see the holiday details on the **calendar** in both the **superadmin** and **patient** logins.\n\n**For Superadmin login**, you can see a calendar icon at the top right corner. Click on it to open the calendar, where you can view the holiday details for the specific day you added\n\n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/9.jpg)\n\n**For patient login**, you can see a calendar icon at the top right corner. Click on it to open the calendar, where you can view the holiday details for the specific day you added  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/10.jpg)"
   },
   {
-   "category": "Survey Form (6)",
+   "category": "Survey Form",
    "category_slug": "survey-form",
    "title": "How to create a Survey Form?",
    "date": "Sat, 25 Jul, 2026",
@@ -4783,7 +4783,7 @@
    "body": "Go to\u00a0**Survey Forms \u2192 Survey Forms**\u00a0from the sidebar and click on the\u00a0**+ Create Survey Form**\u00a0button on the top right of the list page.\n\n![](../assets/how-to-create-a-survey-form/1.jpg)  \n  \n\nOn the Create Survey Form page, enter the\u00a0**Form Title**, an optional\u00a0**Description**\u00a0shown above the form fields, and a\u00a0**Thank You Message**\u00a0shown to the user after they submit \u2014 leave the thank you message blank to show a default message instead.\n\nUnder\u00a0**Schedule**, you can optionally set a\u00a0**Start Date**\u00a0and\u00a0**End Date**\u00a0so the form is only open for a limited period. Under\u00a0**Target Audience**, select at least one of\u00a0**Staff**,\u00a0**Patient**\u00a0or\u00a0**Front Site**\u00a0\u2014 this decides who will see the form once it is published.\n\nTwo more settings are available under\u00a0**Settings**:\n\n* **Allow Edit Response**\u00a0\u2014 lets a user who already submitted the form resubmit it, overwriting their previous answers.\n* **Enable CAPTCHA**\u00a0\u2014 adds a security code verification step on public form submissions.\n\n  \n![](../assets/how-to-create-a-survey-form/2.jpg)  \n\nClick **Save as Draft**\u00a0once you are done. The form is created in\u00a0**Draft**\u00a0status and you are taken straight to the Edit page, where the\u00a0**Survey Builder**\u00a0unlocks so you can start adding fields.\n\n**Note:**\u00a0a form needs at least one Target Audience selected, and at least one field added, before it can be Published."
   },
   {
-   "category": "Referral (3)",
+   "category": "Referral",
    "category_slug": "referral",
    "title": "How to add Referral Payment?",
    "date": "Sun, 31 Oct, 2021",
@@ -4791,7 +4791,7 @@
    "body": "Now to add Referral Payment go to Referral module then click on **+Add Referral Payment** button. Here add **Patient, Patient Type, Bill No/Case Id, Patient Bill Amount, Payee, Commission Percentage (%), Commission Amount** and then click on **Save** button.  \n  \n![add referral payment](../assets/how-to-add-referral-payment/1.jpg)\n\nThis added record will show at Referral List page.  \n  \n![referral payment list](../assets/how-to-add-referral-payment/2.jpg)\n\nTo edit Referral Payment details click on **Edit** button, edit details and save it and for delete Referral Payment click on **Delete** button present at **Action** column."
   },
   {
-   "category": "TPA Management (2)",
+   "category": "TPA Management",
    "category_slug": "tpa-management",
    "title": "TPA Management",
    "date": "Wed, 10 Nov, 2021",
@@ -4799,7 +4799,7 @@
    "body": "TPA module is for managing third party administrator or Mediclaim insurance provider companies. A third-party administrator is a company that provides operational services such as claims processing and employee benefits management under contract to another company. Insurance companies and self-insured companies often outsource their claims processing to third parties. With the help of TPA patient can get lots of discount in hospital charges.  \n  \nTo check TPA list associated with the hospital, login from superadmin, admin panel and then click on the TPA Management link present in the the left sidebar, by clicking this link you can check all TPA list.  \n  \n![tpa list imag](../assets/tpa-management/1.jpg)\n\nTo add new TPA click on **+ Add TPA** button here enter **TPA Organization Name, Code, Contact Number, Address, Contact Person name, Contact Person Phone** then click on **Save** button.  \n  \n![add tpa image](../assets/tpa-management/2.jpg)\n\nadded record will be show in **TPA Management list** page.\n\nTo edit TPA record click on Edit icon and to delete TPA record click on Delete icon present at last column on mouse hover.\n\nTo see specific TPA charge details click on Organization Profile icon, for which you want to check tpa details, this will redirect you in details page, fro here you can check TPA charge details.  \n  \nTo check all details click on the Search button this will show you all charges.  \n  \n![tpa charge details](../assets/tpa-management/3.jpg)\n\nHere you can edit or delete different associated charges for this TPA organization in different charge types. Associated charges should be applied first from hospital charges module.\n\n**Add TPA charges on hospital charges -**\n\nTo add TPA charges on hospital charges, go to **Setup > Hospital Charges**, this will redirect you in **Charges Details List** page, here click on\u00a0 **+Add Charges** button present at the top right corner of the page, then enter all mandatory details like **Charge Type**, **Charge Category**, **Unit Type**, **Charge Name**, **Tax Category**, **Tax Category** and **Scheduled Charges For TPA** (enter amount for different TPA) and then finally click on the **Save** button.  \n  \n![add tpa charge](../assets/tpa-management/4.jpg)\n\nOnce TPA amount is saved, you can use it in different module. For example you have added TPA for OPD charges, now when you add any opd charge you need to selected TPA and **Charge** **Category**, **Charge** and this will automatically calculated your TPA amount. For example your OPD consultation Fees was Rs.150 and you have select CGHS TPA for which opd consultation charge was Rs.100 so your applied charge will be Rs.100 .  \n  \n![add opd with tpa amount](../assets/tpa-management/5.jpg)"
   },
   {
-   "category": "Live Consultation (3)",
+   "category": "Live Consultation",
    "category_slug": "live-consultation",
    "title": "How to add Live Consultation in Smart Hospital?",
    "date": "Mon, 08 Sep, 2025",
@@ -4807,7 +4807,7 @@
    "body": "You can add Live Consultations for patients from **Live Consultation** **>** **Live Consultation**. Here you can also check list of **Live Consultations** created from Appointment, OPD and IPD modules for patients.  \n  \n![live consultation list](../assets/how-to-add-live-consultation-in-smart-hospital/1.jpg)\n\nUsing **Live Consultation** Patients can consult to doctor through zoom video call.\n\nTo add new **Live Consultation** click on Add button here select patient and fill other fields details then click on **Save** button.  \n  \n![add live consultation](../assets/how-to-add-live-consultation-in-smart-hospital/2.jpg)"
   },
   {
-   "category": "Setup & Configuration (22)",
+   "category": "Setup & Configuration",
    "category_slug": "setup-configuration",
    "title": "Patient",
    "date": "Sat, 30 Oct, 2021",
@@ -4815,7 +4815,7 @@
    "body": "Here you can manage patient's profile data like add, edit, import, enable, disable and delete patient. You can also delete multiple patients through Delete Selected button option.\u00a0  \n  \nTo add new patient **+Add New Patient** button, here enter patient Name, Guardian Name, Gendar, Date of Birth, Age, Phone etc details and click on **Save** button. You can see this added patient record in Patient List page.  \n  \n![](../assets/patient/1.jpg)\n\nFrom patient list you can also directly switch to other modules (like OPD, IPD) where patient record exist. For this at Action column there is show option available.  \n  \n![](../assets/patient/2.jpg)\n\n---\n\n#### **Import Patient**\n\nTo import patient, go to**Setup > Patient** click on the\u00a0**Import Patient**\u00a0button present at top right corner on right side in the patient page, at click of this button page will be open.  \n  \nYou have to follow all the necessary instructions given here to create CSV file. Here you can also add multiple patients at the same time for this, you have to create a CSV file format. You can also download the sample file from top right corner by clicking on\u00a0**Download Sample Import**\u00a0**File**\u00a0button.  \n  \nYou shouldn\u2019t delete the first row of CSV file. It is necessary to fill the required field in this file.\n\nAfter completing the file editing, here select the\u00a0**Blood Group**\u00a0and then\u00a0you have to select this CSV file on\u00a0**Select CSV File**\u00a0option and then click on\u00a0**Import Patient**\u00a0button.  \n  \n![](../assets/patient/3.jpg)\n\n---\n\n#### **Disabled Patient**\n\n  \nDisabled Patient is for seeing all disabled patient. To see disabled patient list go to **Setup > Patient > Disabled Patient List**.  \n  \n![](../assets/patient/4.jpg)  \n  \nTo check disabled patient detail click on show button present at **Action** column."
   },
   {
-   "category": "Setup & Configuration (22)",
+   "category": "Setup & Configuration",
    "category_slug": "setup-configuration",
    "title": "Hospital Charges",
    "date": "Tue, 09 Nov, 2021",
@@ -4823,7 +4823,7 @@
    "body": "To add Charges for OPD or IPD patients first you should create **Charges type** and **Charges Categories** in Smart Hospital.  \n **Charge Type**\n\nTo add Hospital Charges, here first we add Charge Type, for this click on **+ Add Charge Type** button. Now enter **Charge Type** and select Module for which you want apply this charge type then click on **Save** button.  \n  \n![](../assets/hospital-charges/1.jpg)\n\nHere in Charge Type you will get 5 default charge types those are Procedure**, Investigations, Supplier, Operation Theatre** and **Others**. And your added new charge type will show in charge type list.\n\nTo delete **Charge Type** click on delete icon present at **Action** column.  \n  \n![](../assets/hospital-charges/2.jpg)\n\n---\n\n#### **Charge Category**\n\nNow we will add Charge Category, for this click on **+ Add Charge Category** button. Now enter **Name, Description** and select **Charge Type** like Procedures (is for general ipd charges like doctor visit), Investigations (is for pathology/radiology lab test or other investigations), Supplier (is for other things supply like oxygen charges), Operation Theatre (is for operation theatre charges) and Other (is for other miscellaneous charges).  \n  \n![](../assets/hospital-charges/3.jpg)\n\nYou can check this added record at **Charge Category List** page.  \n  \n![](../assets/hospital-charges/4.jpg)\n\nTo edit Charge Category click on edit icon and to delete **Charge Category** click on the delete icon present at the **Action** column.\n\n---\n\n#### **Unit Type**\n\nNow we will add **Unit Type** for this click on **+ Add Unit Type** button. Now enter **Unit** and click on **Save** button.  \n  \n![](../assets/hospital-charges/5.jpg)\n\nYour added Unit type record will show at **Unit Type List** page.  \n  \n![](../assets/hospital-charges/6.jpg)\n\nTo edit **Unit Type** click on edit button and to delete **Unit Type** click on delete button present at **Action** column.\n\n---\n\n#### **Tax Category**\n\nTo add Tax Category click on **+Add Tax Category** button then enter **Tax name** and **Percentage** and click on **Save** button**.  \n  \n![](../assets/hospital-charges/7.jpg)**\n\nYour added Tax Category record will show at T**ax Category List** page.  \n  \n![](../assets/hospital-charges/8.jpg)\n\nTo edit Tax Category click on edit icon and to delete **Tax Category** click on delete icon present at **Action** column (icon will show on mouseover).\n\n---\n\n#### **Charges**\n\nNow we will add Charges for this click on **+ Add Charge** button. Now enter **Charge Type, Charge Category, Unit Type (like ML), Charge Nam, Tax Category** \u00a0then enter **Standard Charge, Description** and if there is any **TPA (Third Party Administrator or Insurance organization)** is present then enter Scheduled Charges For TPA also) and click on **Save** button.  \n  \n  \n![](../assets/hospital-charges/9.jpg)\n\nYour added record will be show at **Charges Details List** page.  \n  \n![](../assets/hospital-charges/10.jpg)"
   },
   {
-   "category": "Setup & Configuration (22)",
+   "category": "Setup & Configuration",
    "category_slug": "setup-configuration",
    "title": "Bed",
    "date": "Sun, 31 Oct, 2021",
@@ -4831,7 +4831,7 @@
    "body": "Bed status define admit patients details as in which floor, room and bed patient is admitted.\n\nTo assign bed to a patient in Smart Hospital first you should have to do setup for bed. Here first you should add **Floor** of the Hospital building, **Bed Group** then **Bed Type** and at last you can create **Bed** record.\n\nAll bed record allotted and available lists will show here at **Bed Status** List.\n\nThere is also quick search is available to check allotted and available bed status at top of the header at right site. By click on **Bed** status button you can check allotted and available bed status list.  \n  \n![](../assets/bed/1.jpg)\n\nYou can also check patient details of allotted bed at mouse hover of bed icon or by click on bed icon, this will open IPD details of that patient.\n\nYou can also admit patient directly from Bed Status for available bed. For this is just click on available bed icon and add patient in IPD.\n\n---\n\n#### **Floor**\n\nTo add bed you need to first add Floor. To add Floor go to **Setup > Bed > Floor**, click on **+ Add Floor** button and Name and Description for floor and click on **Save** button.  \n  \n![](../assets/bed/2.jpg)  \n  \nYou can check this added record at Floor list page.  \n  \n![](../assets/bed/3.jpg)\n\nTo edit Floor click on\u00a0**Edit**\u00a0icon and to delete section click on\u00a0**Delete**\u00a0icon present in the Floor\u00a0 list.\n\n---\n\n#### **Bed Group**\n\nYou can add Bed Group to differentiate different ward on the same floor. To add Bed Group go to **Setup > Bed > Bed Group**click on Add Bed Group button, here enter Name, Floor, Color and Description for the Bed Group and click on **Save** button.  \n  \n![](../assets/bed/4.jpg)  \n  \n  \nYou can check this added record at Bed Group list page.  \n  \n![](../assets/bed/5.jpg)\n\nTo edit Bed Group click on\u00a0**Edit**\u00a0icon and to delete section click on\u00a0**Delete**\u00a0icon present in the Bed **Group list**.\n\n---\n\n#### **Bed Type**\n\nTo add Bed Type go to **Setup > Bed > Bed Type** click on Add Bed Type button enter Name and click on **Save** button.  \n  \n![](../assets/bed/6.jpg)  \n  \n  \nYou can check this added record at Bed Type list page.  \n  \n![](../assets/bed/7.jpg)\n\nTo edit Bed Type click on\u00a0**Edit**\u00a0icon and to delete section click on\u00a0**Delete**\u00a0icon present in the **Bed Type**\u00a0 list.\n\n---\n\n#### **Bed**\n\nTo add bed go to **Setup > Bed > Bed** click on Add Bed button, here enter **Name, Bed Type, Bed Group** and **Marked as unused (optional)** and click on **Save** button.  \n  \n![](../assets/bed/8.jpg)  \n  \nYou can check this added record at Bed list page.  \n  \n![](../assets/bed/9.jpg)\n\nTo edit Bed click on\u00a0**Edit**\u00a0icon and to delete section click on\u00a0**Delete**\u00a0icon present in the Bed list."
   },
   {
-   "category": "Setup & Configuration (22)",
+   "category": "Setup & Configuration",
    "category_slug": "setup-configuration",
    "title": "Print Header Footer",
    "date": "Sat, 30 Oct, 2021",
@@ -4839,7 +4839,7 @@
    "body": "For adding header and footer in OPD prescription, IPD Bill, Pharmacy Bill, Payslip go to **Setup > Print Header Footer**.\n\nYou can add Header and Footer for different modules. To add it click on **+ Add** button now select Header image then enter Footer text.  \n  \n![](../assets/print-header-footer/1.jpg)\n\nYou can add Header and Footer for below mentioned modules -\n\n* OPD Prescription\n* IPD Prescription\n* IPD Bill\n* Pharmacy Bill\n* Payslip\n* Payment Receipt\n* Birth Record\n* Death Record\n* Pathology\n* Radiology\n* Operation Theatre\n* Blood Bank\n* Ambulance\n* Discharge Card"
   },
   {
-   "category": "Appointment (8)",
+   "category": "Appointment",
    "category_slug": "appointment",
    "title": "About Appointment",
    "date": "Tue, 02 Nov, 2021",
@@ -4847,7 +4847,7 @@
    "body": "Online Apoointment fetaure provides the facility to patient to book their appointment online. Here patient can book their opd appointment for any date according to available slots by making payment online.  \n  \nIn Smart Hospital you can create Appointment for OPD only, so after that Doctor can move patient in IPD for further treatment if required.  \n  \nWe have also given the feature that patient can reschedule their appointmnet time if required.  \n\u00a0  \n  \n  \n![about online appointment](../assets/about-appointment/1.jpg)"
   },
   {
-   "category": "Appointment (8)",
+   "category": "Appointment",
    "category_slug": "appointment",
    "title": "Setup for Appointment.",
    "date": "Thu, 18 Nov, 2021",
@@ -4855,7 +4855,7 @@
    "body": "To setup appointment priority, go to\u00a0**Setup >** **Front Office**. You can add **Appointment Priority**\u00a0data which will be use in add appointment. Here enter\u00a0**priority value** and then click on\u00a0**Save**\u00a0button.   \n  \n![appointment priority](../assets/setup-for-appointment/1.jpg)  \n  \nYou can view this added record in the\u00a0**Priority List**\u00a0on Add Appointment page.  \n  \n![appointment priority list](../assets/setup-for-appointment/2.jpg)  \n  \nTo edit Priority click on edit and for delete click on delete icon present at **Action** column."
   },
   {
-   "category": "Reports (44)",
+   "category": "Reports",
    "category_slug": "reports",
    "title": "Daily Transaction Report",
    "date": "Sat, 30 Oct, 2021",
@@ -4863,7 +4863,7 @@
    "body": "To check User Log report, go to\u00a0**Reports > Daily Transaction Report**. Here select the **Date From and Date To**\u00a0then click on**Search** button. Here you can see Daily Transaction details like **Date, Total Transaction, Online, Offline, Amount** and **Collection List.**\u00a0Also you can download this report as PDF.  \n  \n![](../assets/daily-transaction-report/1.jpg)  \n  \n  \nTo view each Daily Transaction individually click on View Collection button present at Action column. Here you can see Daily Transaction details Like **Transaction ID, Date, Payment Mode, Collected By** of individual transaction.  \n  \n  \n  \n  \n![](../assets/daily-transaction-report/2.jpg)"
   },
   {
-   "category": "Reports (44)",
+   "category": "Reports",
    "category_slug": "reports",
    "title": "Stock Report",
    "date": "Sat, 16 Aug, 2025",
@@ -4871,7 +4871,7 @@
    "body": "To check Stock Report report, go to **Reports > Stock Report**.  \n  \n![](../assets/stock-report/1.jpg)  \n  \nHere select **Medicine Category, Stock Type** then click on\u00a0**Search**\u00a0button.  \n  \n![](../assets/stock-report/2.jpg)  \n  \n  \nHere you can see Expiry Medicine Report details like **Medicine Name, Medicine Company, Medicine Category, Medicine Composition,Medicine Category, Medicine Group, Unit** and **Available Qty (Quantity).**Also you can download this report as PDF."
   },
   {
-   "category": "Common Issues & Troubleshooting (13)",
+   "category": "Common Issues & Troubleshooting",
    "category_slug": "common-issues-troubleshooting",
    "title": "404 Or Page Not Found Error In Installation",
    "date": "Mon, 18 Oct, 2021",
@@ -4879,7 +4879,7 @@
    "body": "During installation if you are getting 404 or Page not found error then following possible causes may be behind this -  \n  \n\n1. Check .htaccess file is present in your Smart Hospital hosting directory. By default .htaccess files are hidden in cpanel, you can enable visible .(dot) hidden files from cpanel file manager setting option. .htaccess file already present in your downloaded package in respective folder.\n2. url rewriting module is disabled in your hosting."
   },
   {
-   "category": "Common Issues & Troubleshooting (13)",
+   "category": "Common Issues & Troubleshooting",
    "category_slug": "common-issues-troubleshooting",
    "title": "Unable To Login Or Missing Login URL",
    "date": "Tue, 02 Nov, 2021",
@@ -4887,7 +4887,7 @@
    "body": "When you open Smart Hospital url then it will be open User Panel URL **http://yourdomain/site/userlogin** (if Front CMS is not enabled). By default Smart Hospital opens User Panel instead of Admin Panel (due to security reasons).\u00a0  \n  \nIn Smart Hospital your **Admin Panel**\u00a0login url is\u00a0**http://yourdomain/site/login**  \nHere superadmin, admin, doctor, accountant or any staff can be login through their email id and password.  \n  \nAnd\u00a0**User Panel**\u00a0login is\u00a0**http://yourdomain/site/userlogin**  \nHere only patient login through their username and password.  \n  \nPlease check you are login with right panel with right credentials."
   },
   {
-   "category": "Common Issues & Troubleshooting (13)",
+   "category": "Common Issues & Troubleshooting",
    "category_slug": "common-issues-troubleshooting",
    "title": "ONLY_FULL_GROUP_BY Issue On Server",
    "date": "Mon, 18 Oct, 2021",
@@ -4895,7 +4895,7 @@
    "body": "If Smart Hospital showing **ONLY\\_FULL\\_GROUP\\_BY**\u00a0error message on your server that means on your hosting\u00a0**ONLY\\_FULL\\_GROUP\\_BY**\u00a0is enabled in your mysql\u00a0**SQL\\_MODE**. This issue comes due to on some hosting server mysql is not configured properly. Please contact to your hosting provider to\u00a0**disable/remove**\u00a0**ONLY\\_FULL\\_GROUP\\_BY**\u00a0in your hosting mysql\u00a0**SQL\\_MODE**\u00a0or follow the below instruction to fix this issue (it will require full\u00a0**root access**\u00a0of your mysql server) -  \n  \nOpen\u00a0**phpMyadmin**\u00a0of your server then go to\u00a0**Variables**\u00a0tab then edit\u00a0**sql mode**\u00a0variable value and remove\u00a0**ONLY\\_FULL\\_GROUP\\_BY**.  \n  \n![](../assets/only_full_group_by-issue-on-server/1.jpg)  \n  \n\n*Note: This fix is temporary and if your mysql server will be restart or update it will comes on default state. So ask your hosting admin to make it permanently in mysql config file.*  \n  \nGenerally this issue occurred in cheap or non professional hosting. If you will go with hosting providers like\u00a0**godaddy**\u00a0or\u00a0**hostgator**\u00a0or any reputed hosting provider then you will not face this issue."
   },
   {
-   "category": "FAQ (17)",
+   "category": "FAQ",
    "category_slug": "faq",
    "title": "Can I use special character in Smart Hospital?",
    "date": "Mon, 18 Oct, 2021",
