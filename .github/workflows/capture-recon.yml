@@ -14,7 +14,7 @@ concurrency:
 jobs:
   recon:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
     permissions:
       contents: write
     steps:
@@ -24,25 +24,43 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install playwright
+      - name: Install playwright (diagnostics captured)
+        continue-on-error: true
         working-directory: tools/capture
         run: |
-          npm install --no-audit --no-fund
-          npx playwright install --with-deps chromium
+          mkdir -p ../../capture/logs
+          {
+            echo "### npm install"; date -u
+            npm install --no-audit --no-fund 2>&1
+            echo "npm-install-exit=$?"
+            echo "### playwright install"; date -u
+            npx playwright install chromium 2>&1
+            echo "pw-chromium-exit=$?"
+            echo "### playwright install-deps (best effort)"; date -u
+            sudo npx playwright install-deps chromium 2>&1 | tail -30
+            echo "deps-exit=$?"
+            date -u
+          } > ../../capture/logs/install.log 2>&1
 
       - name: Run recon
+        id: recon
+        continue-on-error: true
         working-directory: tools/capture
         env:
           SH_BASE: https://demo.smart-hospital.in
           SH_USER: superadmin@gmail.com
           SH_PASS: password
           OUT_DIR: ../../capture/recon
-        run: node recon.js
+        run: |
+          node recon.js 2>&1 | tee ../../capture/logs/recon.log
 
       - name: Commit results
+        if: always()
         run: |
           git config user.name "capture-bot"
           git config user.email "capture-bot@users.noreply.github.com"
+          mkdir -p capture/logs
+          echo "recon concluded: ${{ steps.recon.outcome }}" > capture/logs/status.txt
           git add -A capture
           if git diff --cached --quiet; then echo "no changes"; else
             git commit -q -m "chore(capture): recon output [skip ci]"
