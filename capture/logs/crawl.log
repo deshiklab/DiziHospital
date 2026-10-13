@@ -142,3 +142,36 @@ To https://github.com/deshiklab/DiziHospital
 error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
 hint: Updates were rejected be
 2026-10-13T21:39:35.481Z [76/76] 076-setup-custom-fields status=200
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:39:35.801Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected be
+2026-10-13T21:39:35.801Z crawl finished; pages captured: 76 / 76
+crawl_exit=0
+total 684
+drwxr-xr-x  9 runner runner   4096 Oct 13 21:36 .
+drwxr-xr-x  7 runner runner   4096 Oct 13 21:36 ..
+drwxr-xr-x  2 runner runner   4096 Oct 13 21:36 detail
+drwxr-xr-x  2 runner runner  20480 Oct 13 21:36 forms
+drwxr-xr-x  2 runner runner   4096 Oct 13 21:36 frontsite
+-rw-r--r--  1 runner runner 618833 Oct 13 21:39 index.json
+drwxr-xr-x  2 runner runner   4096 Oct 13 21:36 logs
+-rw-r--r--  1 runner runner  12899 Oct 13 21:37 nav.json
+drwxr-xr-x  2 runner runner  12288 Oct 13 21:36 pages
+drwxr-xr-x  2 runner runner   4096 Oct 13 21:36 recon
+drwxr-xr-x 11 runner runner   4096 Oct 13 21:36 roles
+001-dashboard.jpg
+001-dashboard.json
+002-patient.jpg
+002-patient.json
+003-billing.jpg
+crawl step outcome: success
