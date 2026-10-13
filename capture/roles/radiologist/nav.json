@@ -1,0 +1,130 @@
+{
+ "sections": [
+  {
+   "name": "CORE OPERATIONS",
+   "items": [
+    {
+     "label": "Dashboard",
+     "href": "https://demo.smart-hospital.in/admin/admin/dashboard",
+     "children": []
+    },
+    {
+     "label": "Patient",
+     "href": "https://demo.smart-hospital.in/admin/admin/search",
+     "children": []
+    },
+    {
+     "label": "Billing",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard",
+     "children": []
+    },
+    {
+     "label": "OPD - Out Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search",
+     "children": []
+    },
+    {
+     "label": "IPD - In Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch",
+     "children": []
+    }
+   ]
+  },
+  {
+   "name": "CLINICAL",
+   "items": [
+    {
+     "label": "Radiology",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch",
+     "children": []
+    }
+   ]
+  },
+  {
+   "name": "ADMINISTRATION",
+   "items": [
+    {
+     "label": "Human Resource",
+     "href": "https://demo.smart-hospital.in/admin/staff",
+     "children": []
+    }
+   ]
+  },
+  {
+   "name": "TOOLS & CONTENT",
+   "items": [
+    {
+     "label": "Messaging",
+     "href": "https://demo.smart-hospital.in/admin/notification",
+     "children": []
+    },
+    {
+     "label": "Download Center",
+     "href": "#",
+     "children": [
+      {
+       "label": "Upload /Share Content",
+       "href": "https://demo.smart-hospital.in/admin/content/upload"
+      },
+      {
+       "label": "Content Share List",
+       "href": "https://demo.smart-hospital.in/admin/content/list"
+      },
+      {
+       "label": "Content Type",
+       "href": "https://demo.smart-hospital.in/admin/contenttype/"
+      }
+     ]
+    },
+    {
+     "label": "Live Consultation",
+     "href": "#",
+     "children": [
+      {
+       "label": "Live Meeting",
+       "href": "https://demo.smart-hospital.in/admin/zoom_conference/meeting"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "REPORTS & SETUP",
+   "items": [
+    {
+     "label": "Reports",
+     "href": "#",
+     "children": [
+      {
+       "label": "Radiology",
+       "href": "https://demo.smart-hospital.in/admin/report/radiology"
+      }
+     ]
+    },
+    {
+     "label": "Setup",
+     "href": "#",
+     "children": [
+      {
+       "label": "Hospital Charges",
+       "href": "https://demo.smart-hospital.in/admin/charges"
+      },
+      {
+       "label": "Print Header Footer",
+       "href": "https://demo.smart-hospital.in/admin/printing"
+      },
+      {
+       "label": "Radiology",
+       "href": "https://demo.smart-hospital.in/admin/lab/addlab"
+      },
+      {
+       "label": "Finance",
+       "href": "https://demo.smart-hospital.in/admin/expensehead"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "topbar": []
+}
