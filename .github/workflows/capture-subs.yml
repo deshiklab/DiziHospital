@@ -1,4 +1,4 @@
-name: capture-subs
+name: capture-subs  # sub-screens + record views
 on:
   push:
     branches: [ arena/ac321db7-dizihospital ]

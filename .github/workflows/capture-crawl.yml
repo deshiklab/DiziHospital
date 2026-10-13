@@ -2,13 +2,12 @@ name: capture-crawl
 on:
   push:
     branches: [ arena/ac321db7-dizihospital ]
-    paths-ignore:
-      - 'capture/**'
-      - 'docs/**'
+    paths:
+      - '.github/workflows/capture-crawl.yml'
   workflow_dispatch:
 
 concurrency:
-  group: capture-crawl
+  group: capture
   cancel-in-progress: false
 
 jobs:

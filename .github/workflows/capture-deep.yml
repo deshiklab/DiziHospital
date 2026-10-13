@@ -2,13 +2,12 @@ name: capture-deep
 on:
   push:
     branches: [ arena/ac321db7-dizihospital ]
-    paths-ignore:
-      - 'capture/**'
-      - 'docs/**'
+    paths:
+      - '.github/workflows/capture-deep.yml'
   workflow_dispatch:
 
 concurrency:
-  group: capture-deep
+  group: capture
   cancel-in-progress: false
 
 jobs:

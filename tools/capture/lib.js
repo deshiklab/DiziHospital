@@ -13,14 +13,30 @@ const slug = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(
 
 function autocommit(dir, msg) {
   try {
-    execFileSync('git', ['add', '-A', dir], { stdio: 'inherit' });
     const status = execFileSync('git', ['status', '--porcelain', dir], { encoding: 'utf8' });
     if (!status.trim()) return;
     execFileSync('git', ['config', 'user.name', 'capture-bot']);
     execFileSync('git', ['config', 'user.email', 'capture-bot@users.noreply.github.com']);
-    execFileSync('git', ['commit', '-q', '-m', `chore(capture): ${msg} [skip ci]`]);
-    execFileSync('git', ['push', '-q', 'origin', `HEAD:${BRANCH}`]);
-    log('autocommit pushed:', msg);
+    execFileSync('git', ['add', '-A', dir]);
+    // ignore a concurrent job pushing at the same moment: commit, then rebase and retry
+    try { execFileSync('git', ['commit', '-q', '-m', `chore(capture): ${msg} [skip ci]`]); } catch (e) { /* nothing new */ }
+    for (let attempt = 1; attempt <= 4; attempt++) {
+      try {
+        execFileSync('git', ['push', '-q', 'origin', `HEAD:${BRANCH}`]);
+        log('autocommit pushed:', msg);
+        return;
+      } catch (e) {
+        log(`autocommit push attempt ${attempt} rejected, rebasing…`);
+        try {
+          execFileSync('git', ['fetch', '-q', 'origin', BRANCH]);
+          execFileSync('git', ['rebase', '-q', `origin/${BRANCH}`]);
+        } catch (rb) {
+          try { execFileSync('git', ['rebase', '--abort']); } catch (_) {}
+          execFileSync('git', ['checkout', '--theirs', '--', '.']); // best effort, keep our files
+        }
+      }
+    }
+    log('autocommit gave up (continuing):', msg);
   } catch (e) {
     log('autocommit failed (continuing):', String(e).slice(0, 200));
   }

@@ -1,0 +1,56 @@
+name: build-pdf
+on:
+  push:
+    branches: [ arena/ac321db7-dizihospital ]
+    paths:
+      - 'docs/**'
+      - 'tools/docs/**'
+      - '.github/workflows/build-pdf.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: docs
+  cancel-in-progress: false
+
+jobs:
+  pdf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install playwright + python markdown
+        run: |
+          pip3 install --quiet markdown || pip3 install --quiet --break-system-packages markdown
+          cd tools/capture && npm install --no-audit --no-fund >/dev/null 2>&1
+          cd ../.. && npm install playwright --no-audit --no-fund >/dev/null 2>&1 || true
+          npx playwright install chromium >/dev/null 2>&1
+
+      - name: Rebuild catalogue from capture evidence
+        run: python3 tools/docs/build_docs.py
+
+      - name: Render print-ready HTML
+        run: python3 tools/docs/build_html.py
+
+      - name: Render PDF
+        run: node tools/docs/pdf.js
+
+      - name: Commit artefacts
+        run: |
+          git config user.name "docs-bot"
+          git config user.email "docs-bot@users.noreply.github.com"
+          git pull --rebase -q || true
+          git add -A docs
+          if git diff --cached --quiet; then echo "no changes"; else
+            git commit -q -m "docs: rebuild guide, catalogue and PDF [skip ci]"
+            git push || (git pull --rebase -q && git push)
+          fi
+          ls -la docs/*.pdf docs/*.md
