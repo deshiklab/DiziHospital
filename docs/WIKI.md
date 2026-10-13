@@ -78,9 +78,10 @@ Recommended order — later modules depend on earlier masters:
 12. **Symptoms / Findings / Vitals / ICD-10** — the clinical libraries used by OPD and IPD.
 13. **Finance → Referral commission**, **Human Resource → Leave types**, **Appointment → slots / online appointment**, **Inventory → item categories**, **Custom Fields**.
 14. **Users & roles**: create staff (HR → Add Staff) and assign the role that decides the menu they see.
-15. **Notification settings** — SMS, e-mail and system notifications (vendor docs: *System Settings → Notification Setting / SMS Setting / Email Setting*).
-16. **Zoom setting** (`/admin/zoom_conference`) if you will use teleconsultation.
-17. **Front CMS** (`/admin/front/page`) to publish the public website.
+15. **Notification settings** — per-event delivery over **e-mail, SMS, WhatsApp and mobile-app push** (*System Settings → Notification Setting*), plus the *SMS Setting* and *Email Setting* gateway credentials. See §6.2.
+16. **Two-Factor Authentication** — 2FA setup for privileged staff (§9.2) using Google Authenticator.
+17. **Zoom setting** (`/admin/zoom_conference`) if you will use teleconsultation.
+18. **Front CMS** (`/admin/front/page`) to publish the public website.
 
 > **Tip** — Most masters are ordinary list screens: DataTables search, an **Add** button opening a modal, row actions for edit/delete, and CSV/print export.
 
@@ -257,28 +258,49 @@ Purpose lists and call/complaint types are configured in **Setup → Front Offic
 
 **Messaging** (`/admin/notification`) — publish notices to selected audiences (roles, staff, patients, branch) with title, message, date, attachment and publish/expiry window. Recipients see them in the bell menu.
 
-### 6.2 Survey forms
+### 6.2 Notifications, SMS, e-mail and WhatsApp
+
+Notifications are **event driven**. For each event (for example *OPD Patient Registration*, *IPD Patient Discharge*,
+*Appointment Approved*, *Login Credentials*) you choose which channels deliver it:
+
+| Channel | Where it is configured | Notes |
+|---|---|---|
+| **System / in-app** | System Settings → Notification Setting | Bell menu + notice board |
+| **E-mail** | Email Setting (SMTP credentials) | Used for credentials and reports |
+| **SMS** | SMS Setting (gateway credentials) | Charged per message by the gateway |
+| **WhatsApp** | WhatsApp Messaging → Meta (Cloud API) **or** Twilio | One provider at a time; the template configured for the event is used |
+| **Mobile app push** | Android app integration | Free channel for installed patients/staff |
+
+> **WhatsApp setup** — open *WhatsApp Messaging*, choose the **Meta** tab (official WhatsApp Business Cloud API) or the
+> **Twilio** tab (sandbox or approved sender), enter the credentials, enable exactly one provider, then switch WhatsApp on
+> per event on the Notification Setting page. The same event template that already goes out by e-mail/SMS is reused.
+> Mirror: `docs/help-library/whatsapp-messaging/`.
+
+**Patient credentials** can be sent from the patient record over any enabled channel (e-mail/SMS/WhatsApp/push), which is
+how patients get access to the patient panel (see §8).
+
+### 6.3 Survey forms
 
 **Survey Forms** (`/admin/survey`) — build questionnaires (question types: text, textarea, radio, checkbox, dropdown, date, rating), publish them to selected roles/departments and read responses. **My Survey Forms** (`/admin/survey/staff_forms`) is the staff-facing list of forms assigned to the signed-in user.
 
-### 6.3 Download center
+### 6.4 Download center
 
 **Download Center** (`/admin/content/upload`, `/admin/content/list`, `/admin/contenttype/`) — content types, upload/share files (reports, circulars, policies) with audience and download counters.
 
-### 6.4 Certificates and ID cards
+### 6.5 Certificates and ID cards
 
 * **Certificate** (`/admin/generatecertificate`) — choose module (OPD/IPD), discharged patients and a certificate template; generate **single or multiple** at once and print.
 * **Patient ID Card** (`/admin/generatepatientidcard/`) and **Staff ID Card** (`/admin/generatestaffidcard/`) — template-based cards with photo, ID and validity.
 
-### 6.5 Inventory
+### 6.6 Inventory
 
 **Inventory** (`/admin/itemstock`) — item categories (Setup → Inventory), suppliers, item master, issue/return to departments, stock ledger and reorder alerts; *Inventory* report shows consumption.
 
-### 6.6 Front CMS (public website)
+### 6.7 Front CMS (public website)
 
 **Front CMS** (`/admin/front/page`) manages the public site: pages, banners/sliders, news & events, gallery, departments, doctors, contact and SEO metadata. Content published here appears on the hospital website and in the "What's new" block of the login page.
 
-### 6.7 Telemedicine
+### 6.8 Telemedicine
 
 * **Live Consultation** (`/admin/zoom_conference/consult`) — schedule a Zoom teleconsultation for a patient, share the join link, start/end the session; the call is logged for reporting.
 * **Live Meeting** (`/admin/zoom_conference/meeting`) — internal staff meetings with participants and schedule.
@@ -288,7 +310,12 @@ Purpose lists and call/complaint types are configured in **Setup → Front Offic
 
 ## 7. Reports
 
-**Reports** menu (17 reports). Every report shares the same pattern: **date range + module-specific filters → Search → results table → export/print**.
+**Reports** menu (17 report screens in the admin UI). Every report shares the same pattern:
+**date range + module-specific filters → Search → results table → export/print**.
+
+> The vendor help library documents **44 report articles** (per-report how-tos such as *Daily Transaction Report*,
+> *Stock Report*, *Balance Amount Report*, *Pathology/Radiology Balance Report*). They are mirrored under
+> `docs/help-library/reports/` and indexed in `docs/HELP-LIBRARY.md`.
 
 | Report | What you get |
 |---|---|
@@ -316,7 +343,13 @@ Purpose lists and call/complaint types are configured in **Setup → Front Offic
 
 ## 8. Patient portal & public website
 
-* **Patient portal** (`/site/userlogin`) — patients log in with the e-mail captured at registration to see appointments, prescriptions, investigations/reports, bills and payments, and to request appointments.
+* **Patient portal** (`/site/userlogin`) — patients sign in with the credentials sent from the patient record and get their own **dashboard** (counts per module plus charts of medical history, findings and symptoms). Sections available to the patient:
+  * **My Appointments** — view and **book** an appointment (date, specialist, doctor, shift, slot, priority, message, live-consultation option).
+  * **OPD** — visits list; open a visit for overview, visits, charges, payment, lab investigations, timeline, medication, operation theatre and live consultation.
+  * **IPD** — overview, nurse notes, consultant register, lab investigations, timeline, prescription, charges, payment, treatment history, medication, operation theatre, live consultation and bed history.
+  * **Pharmacy / Pathology / Radiology / Blood Bank / Ambulance** — bill and payment history per module, printable bills and payment receipts.
+  * **Live Consultation** — join the Zoom teleconsultation booked from appointment, OPD or IPD.
+  * Reference: `docs/help-library/patient-panel/`.
 * **Public website** — driven by Front CMS: home page with departments, doctors, services, health packages, news, gallery, contact and an **online appointment** form. Online bookings land in the admin *Online Appointment* queue.
 * **New patient registration** on the public site creates a patient record that appears in the admin Patient List with the same MR number.
 
@@ -324,13 +357,31 @@ Purpose lists and call/complaint types are configured in **Setup → Front Offic
 
 ## 9. Roles, permissions and security
 
+### 9.1 Roles and the audit trail
+
 * Nine staff roles ship by default; each role maps to a permission set that controls the sidebar and every screen.
 * The signed-in role is shown in the header (e.g. *Super ADMIN*); switching role requires re-login.
 * Every form carries a CSRF token; passwords are hashed; sessions expire per the configured timeout.
 * The **Log** report and dashboard *Recent activity* give an audit trail of who did what and when.
+* The **Android app** (vendor addon) provides the same staff/patient flows on mobile with push notifications; see
+  `docs/help-library/changelog/` and backlog E13 for mobile coverage.
 * Vendor documentation covers SSL enablement, LAN deployment, and moving the installation between servers.
 
 ---
+
+### 9.2 Two-factor authentication
+
+The product ships a **Two Factor Authentication** module (Google Authenticator / TOTP):
+
+1. Sign in as Super Admin (or the staff member) and open **Two Factor Authentication → Setup 2FA**.
+2. Install **Google Authenticator** (or any TOTP app) on the mobile device.
+3. Scan the QR code (or manually enter the key shown in the module) and confirm the 6-digit code to finish enrolment.
+4. From then on, sign-in asks for the current code in addition to the password.
+5. To reset a lost device, delete the 2FA account for that user from the same module and re-enrol.
+6. If automatic enrolment fails, the key for superadmin/staff can be configured manually (vendor article).
+
+> Mirror: `docs/help-library/two-factor-authentication/`.
+> **Recommendation for DiziHospital:** enforce 2FA for every role that can reach billing or clinical records (backlog E4).
 
 ## 10. Troubleshooting & FAQ
 

@@ -69,6 +69,51 @@ hr { border:none; border-top:1px solid var(--line); margin:18px 0; }
 """
 
 
+def help_parts():
+    """Part 4 = full index of the mirrored vendor help library; Part 5 = selected articles in full."""
+    hp = os.path.join(BUILD, 'help.json')
+    if not os.path.exists(hp):
+        return '', ''
+    data = json.load(open(hp))
+    cats = data.get('categories', [])
+    total = data.get('total', sum(c.get('count', 0) for c in cats))
+
+    idx = ['<h1 class="part">Part 4 — Vendor help library (mirrored index)</h1>'
+           f'<p style="color:#6b7c93;margin-top:-6px">The complete offline mirror of the product knowledge base: '
+           f'{total} articles in {len(cats)} categories, stored in <code>docs/help-library/</code>.</p>',
+           '<table><thead><tr><th>Category</th><th>Articles</th><th>What it covers</th></tr></thead><tbody>']
+    for c in cats:
+        idx.append(f"<tr><td><b>{c['name']}</b></td><td>{c['count']}</td><td>{c.get('blurb') or (c.get('description') or '')[:120]}</td></tr>")
+    idx.append('</tbody></table>')
+    for c in cats:
+        idx.append(f"<h3>{c['name']} ({c['count']})</h3>")
+        if c.get('blurb'):
+            idx.append(f"<p>{c['blurb']}</p>")
+        idx.append('<ul>')
+        for a in c['articles']:
+            date = f" — {a['date']}" if a.get('date') else ''
+            idx.append(f"<li>{a['title']}{date}</li>")
+        idx.append('</ul>')
+
+    sel = data.get('selected', [])
+    art = ['<h1 class="part">Part 5 — Selected help articles (full text)</h1>',
+           '<p style="color:#6b7c93;margin-top:-6px">Articles that document features the on-screen exploration could not '
+           'exercise (WhatsApp, 2FA, notification gateways, the patient panel, installation and troubleshooting), plus the '
+           'operationally critical how-tos. Full text and vendor screenshots, mirrored for offline use.</p>']
+    for i, a in enumerate(sel, start=1):
+        body = a['body'].replace('](../assets/', '](../help-library/assets/')
+        md = markdown.Markdown(extensions=['tables', 'sane_lists', 'attr_list'])
+        body_html = md.convert(body)
+        art.append(f"<h2>5.{i} {a['title']}</h2>")
+        meta = f"<p class='screen-shot-note'>Vendor article · category: {a['category']}"
+        if a.get('date'):
+            meta += f" · {a['date']}"
+        meta += f" · source: <a href='{a['source']}'>{a['source']}</a></p>"
+        art.append(meta)
+        art.append(body_html)
+    return ''.join(idx), ''.join(art)
+
+
 def main():
     os.makedirs(BUILD, exist_ok=True)
     catalog_json = {}
@@ -76,6 +121,7 @@ def main():
     if os.path.exists(cj):
         catalog_json = json.load(open(cj))
 
+    help_index_html, help_articles_html = help_parts()
     wiki_html, _ = md_to_html(os.path.join(DOCS, 'WIKI.md'))
     cat_html, cat_toc = md_to_html(os.path.join(DOCS, 'FEATURE-CATALOG.md'))
     backlog_html = ''
@@ -116,7 +162,8 @@ def main():
   </div>
   <div class="foot">
     Contents: Part 1 Operator wiki &amp; help handbook · Part 2 Screen-by-screen feature catalogue with screenshots ·
-    Part 3 Improvement backlog for the next phase. Screenshots were taken on the live demo instance.
+    Part 3 Improvement backlog · Part 4 Vendor help library index · Part 5 Selected help articles in full.
+    Application screenshots were taken on the live demo instance; help articles are mirrored from the vendor knowledge base.
   </div>
 </section>
 {part('Contents', 'How this guide is organised', '')}
@@ -136,10 +183,16 @@ def main():
 </ul>
 <h2>Part 2 — Feature catalogue</h2>
 {cat_toc}
+<h2>Part 3 — Improvement backlog</h2>
+<ul><li><a href="#2-findings-backlog">Findings &amp; prioritised backlog</a></li></ul>
+<h2>Part 4 — Vendor help library (mirrored index)</h2>
+<h2>Part 5 — Selected help articles (full text)</h2>
 </div>
 {part('Part 1 — Operator wiki &amp; help handbook', 'Task-oriented help: how to run every module, day to day.', wiki_html)}
 {part('Part 2 — Feature catalogue', 'Every screen, every form, every field — captured from the live application.', cat_html)}
 {('<h1 class="part">Part 3 — Improvement backlog</h1>' + backlog_html) if backlog_html else ''}
+{help_index_html}
+{help_articles_html}
 </body></html>"""
 
     out = os.path.join(BUILD, 'guide.html')
