@@ -1,0 +1,62 @@
+name: capture-crawl
+on:
+  push:
+    branches: [ arena/ac321db7-dizihospital ]
+    paths-ignore:
+      - 'capture/**'
+      - 'docs/**'
+  workflow_dispatch:
+
+concurrency:
+  group: capture-crawl
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install playwright
+        working-directory: tools/capture
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install chromium
+          sudo npx playwright install-deps chromium >/dev/null 2>&1 || true
+
+      - name: Crawl application
+        continue-on-error: true
+        timeout-minutes: 55
+        working-directory: tools/capture
+        env:
+          SH_BASE: https://demo.smart-hospital.in
+          SH_USER: superadmin@gmail.com
+          SH_PASS: password
+          OUT_DIR: ../../capture
+          MAX_PAGES: '150'
+          PAGE_BUDGET_MS: '2700000'
+        run: |
+          git config user.name "capture-bot"
+          git config user.email "capture-bot@users.noreply.github.com"
+          node crawl.js 2>&1 | tee ../../capture/logs/crawl.log
+
+      - name: Final commit
+        if: always()
+        run: |
+          git config user.name "capture-bot"
+          git config user.email "capture-bot@users.noreply.github.com"
+          git pull --rebase -q || true
+          git add -A capture
+          if git diff --cached --quiet; then echo "no changes"; else
+            git commit -q -m "chore(capture): crawl output [skip ci]"
+            git push || (git pull --rebase -q && git push)
+          fi
