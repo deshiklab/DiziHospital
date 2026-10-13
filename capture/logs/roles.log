@@ -1,0 +1,145 @@
+2026-10-13T21:29:59.505Z role superadmin: 76 menu pages, captured 6
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:29:59.849Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:30:21.099Z role admin: 74 menu pages, captured 6
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:30:21.429Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:30:41.468Z role doctor: 42 menu pages, captured 6
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:30:41.805Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:31:02.230Z role pharmacist: 18 menu pages, captured 6
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:31:02.581Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:31:22.345Z role pathologist: 20 menu pages, captured 6
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:31:22.698Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:31:42.277Z role radiologist: 17 menu pages, captured 6
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:31:42.631Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:32:02.314Z role accountant: 45 menu pages, captured 6
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:32:02.672Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:32:22.579Z role receptionist: 40 menu pages, captured 6
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:32:22.960Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:32:42.847Z role nurse: 16 menu pages, captured 6
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:32:43.202Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:32:49.865Z frontsite https://demo.smart-hospital.in/form/appointment
+2026-10-13T21:32:52.590Z frontsite https://demo.smart-hospital.in/frontend
+2026-10-13T21:32:55.338Z frontsite https://demo.smart-hospital.in/page/home
+2026-10-13T21:32:57.881Z frontsite https://demo.smart-hospital.in/page/annual_calendar
+2026-10-13T21:33:00.961Z frontsite https://demo.smart-hospital.in/page/events
+2026-10-13T21:33:03.652Z frontsite https://demo.smart-hospital.in/
+2026-10-13T21:33:06.443Z frontsite https://demo.smart-hospital.in/page/about-hospitals
+2026-10-13T21:33:08.752Z frontsite https://demo.smart-hospital.in/page/vision-and-mission
+2026-10-13T21:33:11.306Z frontsite https://demo.smart-hospital.in/page/meet-our-doctors
+2026-10-13T21:33:13.625Z frontsite https://demo.smart-hospital.in/page/faq
+2026-10-13T21:33:16.166Z frontsite https://demo.smart-hospital.in/page/departments
+2026-10-13T21:33:18.808Z frontsite https://demo.smart-hospital.in/page/testimonials
+2026-10-13T21:33:21.089Z frontsite https://demo.smart-hospital.in/surveys
+2026-10-13T21:33:23.806Z frontsite https://demo.smart-hospital.in/page/gallery
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:33:26.220Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+error: fa
+2026-10-13T21:33:26.220Z stage 3 finished
+roles_exit=0
