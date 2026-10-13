@@ -1,0 +1,54 @@
+name: help-library
+on:
+  push:
+    branches: [ arena/ac321db7-dizihospital ]
+    paths:
+      - 'tools/docs/fetch_help.py'
+      - '.github/workflows/help-library.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: docs
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install --quiet requests beautifulsoup4 markdownify pillow
+
+      - name: Mirror vendor help library
+        continue-on-error: true
+        timeout-minutes: 80
+        run: |
+          git config user.name "docs-bot"
+          git config user.email "docs-bot@users.noreply.github.com"
+          python3 tools/docs/fetch_help.py 2>&1 | tee /tmp/help.log
+          echo "exit=$?"
+
+      - name: Commit mirror
+        if: always()
+        run: |
+          git config user.name "docs-bot"
+          git config user.email "docs-bot@users.noreply.github.com"
+          mkdir -p docs/help-library
+          cp /tmp/help.log docs/help-library/fetch.log 2>/dev/null || true
+          git pull --rebase -q || true
+          git add -A docs/help-library
+          if git diff --cached --quiet; then echo "no changes"; else
+            git commit -q -m "docs: mirror vendor help library [skip ci]"
+            git push || (git pull --rebase -q && git push)
+          fi
+          du -sh docs/help-library || true
