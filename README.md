@@ -10,10 +10,11 @@ agenda for the next phase.
 
 | Document | What it is |
 |---|---|
-| **[docs/Smart-Hospital-Complete-Guide.pdf](docs/Smart-Hospital-Complete-Guide.pdf)** | The full PDF guide — cover, contents, operator wiki/help handbook, screen-by-screen feature catalogue with screenshots, and the improvement backlog |
+| **[docs/Smart-Hospital-Complete-Guide.pdf](docs/Smart-Hospital-Complete-Guide.pdf)** | The full PDF guide — cover, contents, operator wiki/help handbook, screen-by-screen feature catalogue with screenshots, the improvement backlog, the vendor help-library index and a selection of help articles in full |
 | [docs/FEATURE-CATALOG.md](docs/FEATURE-CATALOG.md) | Markdown feature catalogue: 76 screens, 96 data-entry dialogs, 29 sub-screens, 5 record views (with every tab), all 9 role dashboards — each screen documented with its purpose, grids, filters, actions and form fields, plus a screenshot |
 | [docs/WIKI.md](docs/WIKI.md) | Operator handbook / help wiki — how to run each module day to day (registration, appointment, OPD, IPD, billing, pharmacy, lab, imaging, blood bank, HR, finance, reports, CMS, telemedicine), troubleshooting and glossary |
 | [docs/IMPROVEMENT-BACKLOG.md](docs/IMPROVEMENT-BACKLOG.md) | Findings and a prioritised backlog (P0/P1/P2) with proposals, sizes and a phased sequence — the plan for improving the application |
+| [docs/HELP-LIBRARY.md](docs/HELP-LIBRARY.md) | Index of the **mirrored vendor knowledge base** — every category and article from smart-hospital.in/articles, mirrored offline under `docs/help-library/` with screenshots |
 | [docs/COVERAGE.md](docs/COVERAGE.md) | How the capture was done, what is covered, what is out of scope, and how to refresh it |
 
 ## What the application is
@@ -26,6 +27,7 @@ agenda for the next phase.
 * **Tools & content** — surveys, notice board, download centre, inventory, certificates, ID cards, Front CMS website, Zoom telemedicine
 * **Reports & setup** — 17 reports and the master/lookup configuration for every module
 * Roles: Super Admin, Admin, Doctor, Nurse, Pharmacist, Pathologist, Radiologist, Accountant, Receptionist + patient portal
+* Platform features beyond the screens: Two-Factor Authentication (Google Authenticator), event-driven notifications over in-app/e-mail/SMS/**WhatsApp (Meta Cloud API or Twilio)**/mobile push, an Android app, and a patient self-service panel
 
 ## Evidence and tooling
 
@@ -33,7 +35,7 @@ agenda for the next phase.
 capture/      raw evidence from the live demo (screenshots + JSON profiles + logs)
 docs/         deliverables and curated screenshots (docs/assets/screens)
 tools/capture Playwright capture pipeline (recon, crawl, forms, roles, sub-screens)
-tools/docs    document pipeline (catalogue → print-ready HTML → PDF)
+tools/docs    document pipeline (catalogue → help-library index → print-ready HTML → PDF)
 .github/workflows  the CI jobs that run capture and build the PDF
 ```
 

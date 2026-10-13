@@ -37,6 +37,9 @@ jobs:
       - name: Rebuild catalogue from capture evidence
         run: python3 tools/docs/build_docs.py
 
+      - name: Build help library index
+        run: python3 tools/docs/build_help_library.py || echo "no help library mirror yet"
+
       - name: Render print-ready HTML
         run: python3 tools/docs/build_html.py
 
