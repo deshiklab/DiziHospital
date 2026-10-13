@@ -1,0 +1,18 @@
+2026-10-13T21:22:53.385Z logged in -> https://demo.smart-hospital.in/admin/admin/dashboard
+2026-10-13T21:22:53.399Z nav read
+2026-10-13T21:22:53.400Z queue size 76
+2026-10-13T21:22:55.494Z [1/76] 001-dashboard status=200
+2026-10-13T21:22:57.803Z [2/76] 002-patient status=200
+2026-10-13T21:22:59.722Z [3/76] 003-billing status=200
+2026-10-13T21:23:02.400Z [4/76] 004-appointment status=200
+2026-10-13T21:23:04.652Z [5/76] 005-opd-out-patient status=200
+2026-10-13T21:23:06.784Z [6/76] 006-ipd-in-patient status=200
+2026-10-13T21:23:08.947Z [7/76] 007-pharmacy status=200
+2026-10-13T21:23:11.079Z [8/76] 008-pathology status=200
+2026-10-13T21:23:13.196Z [9/76] 009-radiology status=200
+2026-10-13T21:23:15.216Z [10/76] 010-blood-bank status=200
+2026-10-13T21:23:17.350Z [11/76] 011-ambulance status=200
+2026-10-13T21:23:19.462Z [12/76] 012-front-office status=200
+2026-10-13T21:23:21.645Z [13/76] 013-birth-death-record-birth-record status=200
+2026-10-13T21:23:23.958Z [14/76] 014-birth-death-record-death-record status=200
+2026-10-13T21:23:26.476Z [15/76] 015-multi-branch-overview status=200
