@@ -1,11 +1,11 @@
-2026-10-13T21:37:34.684Z role already captured: superadmin
-2026-10-13T21:37:34.685Z role already captured: admin
-2026-10-13T21:37:34.685Z role already captured: doctor
-2026-10-13T21:37:34.685Z role already captured: pharmacist
-2026-10-13T21:37:34.685Z role already captured: pathologist
-2026-10-13T21:37:34.685Z role already captured: radiologist
-2026-10-13T21:37:34.685Z role already captured: accountant
-2026-10-13T21:37:34.685Z role already captured: receptionist
-2026-10-13T21:37:34.685Z role already captured: nurse
-2026-10-13T21:37:34.685Z stage 3 finished
+2026-10-13T21:45:26.438Z role already captured: superadmin
+2026-10-13T21:45:26.441Z role already captured: admin
+2026-10-13T21:45:26.441Z role already captured: doctor
+2026-10-13T21:45:26.441Z role already captured: pharmacist
+2026-10-13T21:45:26.441Z role already captured: pathologist
+2026-10-13T21:45:26.441Z role already captured: radiologist
+2026-10-13T21:45:26.441Z role already captured: accountant
+2026-10-13T21:45:26.441Z role already captured: receptionist
+2026-10-13T21:45:26.441Z role already captured: nurse
+2026-10-13T21:45:26.441Z stage 3 finished
 roles_exit=0
