@@ -1,17 +1,16 @@
-2026-10-13T21:37:08.608Z login -> https://demo.smart-hospital.in/admin/admin/dashboard
-2026-10-13T21:37:11.748Z [1/20] 01-billing-appointment-module status=200 title=Smart Hospital & Research Center · Smart
-2026-10-13T21:37:14.551Z [2/20] 02-billing-opd-module status=200 title=OPD Patient · Smart Hospital
-2026-10-13T21:37:16.987Z [3/20] 03-billing-pathology-module status=200 title=Pathology Billing
-2026-10-13T21:37:19.407Z [4/20] 04-billing-radiology-module status=200 title=Radiology Billing
-2026-10-13T21:37:21.838Z [5/20] 05-billing-issue-blood status=200 title=Blood Issue Billing
-2026-10-13T21:37:24.283Z [6/20] 06-billing-issue-component status=200 title=Blood Components Issue Billing
-2026-10-13T21:37:25.996Z autocommit pushed: subs 06-billing-issue-component
-2026-10-13T21:37:28.224Z [7/20] 07-billing-pharmacy-module status=200 title=Page Not Found
-2026-10-13T21:37:30.173Z [8/20] 08-billing-ambulance-module status=200 title=Page Not Found
-2026-10-13T21:37:32.123Z [9/20] 09-billing-blood-bank-module status=200 title=Page Not Found
-2026-10-13T21:37:34.343Z [10/20] 10-patient-import status=200 title=Patient
-2026-10-13T21:37:36.732Z [11/20] 11-discharged-patients status=200 title=IPD Discharged Patient
-2026-10-13T21:37:39.190Z [12/20] 12-pharmacy-search status=200 title=Medicines Stock
+2026-10-13T21:43:04.457Z login -> https://demo.smart-hospital.in/admin/admin/dashboard
+2026-10-13T21:43:04.457Z skip 01-billing-appointment-module
+2026-10-13T21:43:04.458Z skip 02-billing-opd-module
+2026-10-13T21:43:04.458Z skip 03-billing-pathology-module
+2026-10-13T21:43:04.458Z skip 04-billing-radiology-module
+2026-10-13T21:43:04.458Z skip 05-billing-issue-blood
+2026-10-13T21:43:04.458Z skip 06-billing-issue-component
+2026-10-13T21:43:06.703Z [7/19] 07-billing-bill-dashboard status=200 title=Single Module Billing
+2026-10-13T21:43:09.473Z [8/19] 08-billing-opd-bill-screen status=200 title=OPD Patient · Smart Hospital
+2026-10-13T21:43:11.684Z [9/19] 09-patient-import status=200 title=Patient
+2026-10-13T21:43:14.037Z [10/19] 10-discharged-patients status=200 title=IPD Discharged Patient
+2026-10-13T21:43:16.457Z [11/19] 11-pharmacy-search status=200 title=Medicines Stock
+2026-10-13T21:43:18.700Z [12/19] 12-pharmacy-sale-return-bills status=200 title=Sale Return Bills
 To https://github.com/deshiklab/DiziHospital
  ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
 error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
@@ -20,86 +19,195 @@ hint: have locally. This is usually caused by another repository pushing to
 hint: the same ref. If you want to integrate the remote changes, use
 hint: 'git pull' before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-2026-10-13T21:37:39.617Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+2026-10-13T21:43:19.223Z autocommit push attempt 1 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
 To https://github.com/deshiklab/DiziHospital
- ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
-error: fa
-2026-10-13T21:37:41.843Z [13/20] 13-pharmacy-sale-return-bills status=200 title=Sale Return Bills
-2026-10-13T21:37:44.229Z [14/20] 14-pathology-search status=200 title=Pathology Test
-2026-10-13T21:37:46.595Z [15/20] 15-radiology-search status=200 title=Radiology Test
-2026-10-13T21:37:48.851Z [16/20] 16-blood-bank-status-board status=200 title=Blood Bank · Smart Hospital
-2026-10-13T21:37:50.806Z [17/20] 17-staff-attendance status=200 title=Page Not Found
-2026-10-13T21:37:53.023Z [18/20] 18-payroll status=200 title=Payroll
-To https://github.com/deshiklab/DiziHospital
- ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
 error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
-hint: Updates were rejected because the remote contains work that you do not
-hint: have locally. This is usually caused by another repository pushing to
-hint: the same ref. If you want to integrate the remote changes, use
-hint: 'git pull' before pushing again.
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-2026-10-13T21:37:53.469Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+2026-10-13T21:43:21.377Z autocommit push attempt 2 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
 To https://github.com/deshiklab/DiziHospital
- ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
-error: fa
-2026-10-13T21:37:56.189Z [19/20] 19-appointment-queue status=200 title=Smart Hospital & Research Center · Smart
-2026-10-13T21:37:58.644Z [20/20] 20-opd-patient-view status=200 title=OPD Patient · Smart Hospital
-To https://github.com/deshiklab/DiziHospital
- ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
 error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
-hint: Updates were rejected because the remote contains work that you do not
-hint: have locally. This is usually caused by another repository pushing to
-hint: the same ref. If you want to integrate the remote changes, use
-hint: 'git pull' before pushing again.
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-2026-10-13T21:37:59.090Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+2026-10-13T21:43:22.090Z autocommit push attempt 3 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
 To https://github.com/deshiklab/DiziHospital
- ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
-error: fa
-2026-10-13T21:38:02.269Z no link for opd-profile /admin/patient/profile/\d+
-2026-10-13T21:38:05.496Z record: ipd-profile https://demo.smart-hospital.in/admin/patient/ipdprofile/138/1
-2026-10-13T21:38:11.511Z   tab: Overview
-2026-10-13T21:38:13.044Z   tab: Nurse Notes
-2026-10-13T21:38:14.593Z   tab: Medication
-2026-10-13T21:38:16.144Z   tab: Prescription
-2026-10-13T21:38:17.700Z   tab: Consultant Register
-2026-10-13T21:38:19.241Z   tab: Lab Investigation
-2026-10-13T21:38:20.792Z   tab: Operations
-2026-10-13T21:38:22.342Z   tab: Charges
-2026-10-13T21:38:23.911Z   tab: Payments
-2026-10-13T21:38:25.458Z   tab: Live Consultation
-2026-10-13T21:38:27.006Z   tab: Bed History
-2026-10-13T21:38:28.539Z   tab: Timeline
-2026-10-13T21:38:30.090Z   tab: Treatment History
-2026-10-13T21:38:31.641Z   tab: Vitals
-To https://github.com/deshiklab/DiziHospital
- ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
 error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
-hint: Updates were rejected because the remote contains work that you do not
-hint: have locally. This is usually caused by another repository pushing to
-hint: the same ref. If you want to integrate the remote changes, use
-hint: 'git pull' before pushing again.
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-2026-10-13T21:38:32.095Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+2026-10-13T21:43:22.776Z autocommit push attempt 4 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+2026-10-13T21:43:23.120Z autocommit gave up (continuing): subs 12-pharmacy-sale-return-bills
+2026-10-13T21:43:25.553Z [13/19] 13-pathology-search status=200 title=Pathology Test
+2026-10-13T21:43:27.903Z [14/19] 14-radiology-search status=200 title=Radiology Test
+2026-10-13T21:43:30.158Z [15/19] 15-blood-bank-status-board status=200 title=Blood Bank · Smart Hospital
+2026-10-13T21:43:32.999Z [16/19] 16-staff-attendance-register status=200 title=QR Code Attendance
+2026-10-13T21:43:35.216Z [17/19] 17-payroll status=200 title=Payroll
+2026-10-13T21:43:38.193Z [18/19] 18-appointment-queue status=200 title=Smart Hospital & Research Center · Smart
 To https://github.com/deshiklab/DiziHospital
- ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
-error: fa
-2026-10-13T21:38:35.725Z no link for patient-profile /admin/patient/profile/\d+
-2026-10-13T21:38:38.679Z record: billing-screen https://demo.smart-hospital.in/admin/bill/appointment
-2026-10-13T21:38:44.018Z   tab: Today Appointment
-2026-10-13T21:38:45.554Z   tab: Upcoming Appointment
-2026-10-13T21:38:47.189Z   tab: Old Appointment
-To https://github.com/deshiklab/DiziHospital
- ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
 error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
-hint: Updates were rejected because the remote contains work that you do not
-hint: have locally. This is usually caused by another repository pushing to
-hint: the same ref. If you want to integrate the remote changes, use
-hint: 'git pull' before pushing again.
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-2026-10-13T21:38:47.599Z autocommit failed (continuing): Error: Command failed: git push -q origin HEAD:arena/ac321db7-dizihospital
+2026-10-13T21:43:38.582Z autocommit push attempt 1 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
 To https://github.com/deshiklab/DiziHospital
- ! [rejected]        HEAD -> arena/ac321db7-dizihospital (fetch first)
-error: fa
-2026-10-13T21:38:47.599Z stage 4 finished
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:43:39.262Z autocommit push attempt 2 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:43:39.942Z autocommit push attempt 3 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:43:40.643Z autocommit push attempt 4 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+2026-10-13T21:43:40.983Z autocommit gave up (continuing): subs 18-appointment-queue
+2026-10-13T21:43:43.544Z [19/19] 19-opd-patient-view status=200 title=OPD Patient · Smart Hospital
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:43:43.913Z autocommit push attempt 1 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:43:44.909Z autocommit push attempt 2 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:43:45.613Z autocommit push attempt 3 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:43:46.335Z autocommit push attempt 4 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+2026-10-13T21:43:46.673Z autocommit gave up (continuing): sub-screens complete
+2026-10-13T21:43:49.838Z no link for opd-profile /admin/patient/profile/\d+
+2026-10-13T21:43:58.532Z   tab: Overview
+2026-10-13T21:43:59.932Z   tab: Visits
+2026-10-13T21:44:01.330Z   tab: Lab Investigation
+2026-10-13T21:44:02.743Z   tab: Treatment History
+2026-10-13T21:44:04.163Z   tab: Timeline
+2026-10-13T21:44:05.564Z   tab: Vitals
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:44:05.959Z autocommit push attempt 1 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:44:06.686Z autocommit push attempt 2 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:44:07.385Z autocommit push attempt 3 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:44:08.071Z autocommit push attempt 4 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+2026-10-13T21:44:08.423Z autocommit gave up (continuing): record opd-profile-2
+2026-10-13T21:44:08.423Z skip record ipd-profile
+2026-10-13T21:44:11.952Z no link for patient-profile /admin/patient/profile/\d+
+2026-10-13T21:44:11.952Z skip record billing-screen
+2026-10-13T21:44:11.952Z stage 4 finished
 subs_exit=0
