@@ -1,5 +1,9 @@
 name: capture-subs
 on:
+  push:
+    branches: [ arena/ac321db7-dizihospital ]
+    paths:
+      - '.github/workflows/capture-subs.yml'
   workflow_dispatch:
 
 concurrency:
