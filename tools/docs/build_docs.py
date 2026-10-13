@@ -358,6 +358,7 @@ def main():
     A('| `docs/Smart-Hospital-Complete-Guide.pdf` | Printable guide: wiki + this catalogue + screenshots + backlog |')
     A('| `docs/IMPROVEMENT-BACKLOG.md` | Findings and the prioritised improvement backlog for the next phase |')
     A('| `docs/COVERAGE.md` | Exactly what was captured, how, and what is out of scope |')
+    A('| `docs/HELP-LIBRARY.md` | Offline mirror of the vendor knowledge base (categories + every article) |')
     A('| `capture/` | Raw evidence: screenshots, DOM profiles, role menu trees, logs |')
     A('')
 
@@ -694,6 +695,11 @@ def main():
         ('Telemedicine', 'Zoom integration for live consultations and internal meetings.'),
         ('QR attendance', 'QR-code based staff check-in with roster and holiday calendar.'),
         ('Audit trail', 'System log report plus the dashboard activity feed (who did what, in which module, when).'),
+        ('Two-factor authentication', 'Optional Google Authenticator (TOTP) 2FA for superadmin and staff: enrol, reset and manual key configuration.'),
+        ('Notification engine', 'Event-driven notifications with per-event channel toggles across in-app, e-mail, SMS, WhatsApp and mobile push.'),
+        ('WhatsApp messaging', 'Patient/staff notifications over WhatsApp via Meta (Cloud API) or Twilio — one provider active at a time, reusing the event template.'),
+        ('Mobile app', 'Vendor Android app for staff and patients with push notifications (documented in the vendor help library, not part of this screen capture).'),
+        ('Patient panel', 'Patient self-service portal: personal dashboard with charts, appointment booking, OPD/IPD history, pharmacy/pathology/radiology/blood-bank/ambulance bills and Zoom live consultation.'),
     ]:
         A(f"| **{k}** | {v} |")
     A('')

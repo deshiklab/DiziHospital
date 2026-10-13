@@ -37,8 +37,9 @@ UA = ('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) '
       'Chrome/126.0 Safari/537.36')
 SESSION = requests.Session()
 SESSION.headers.update({'User-Agent': UA, 'Accept-Language': 'en'})
-MAX_IMG_W = 1100
-IMG_QUALITY = 78
+MAX_IMG_W = 820
+IMG_QUALITY = 66
+MAX_IMG_BYTES = 250 * 1024  # skip images that stay oversized after conversion
 SKIP_IMAGE_HOSTS = ('qd-new.png', 'logo')
 
 report = {'categories': 0, 'articles': 0, 'failed': [], 'images': 0, 'warnings': []}
@@ -89,7 +90,14 @@ def save_image(src, folder, idx):
             img = img.convert('RGB')
         os.makedirs(folder, exist_ok=True)
         name = f'{idx}.jpg'
-        img.save(os.path.join(folder, name), 'JPEG', quality=IMG_QUALITY, optimize=True)
+        out_path = os.path.join(folder, name)
+        img.save(out_path, 'JPEG', quality=IMG_QUALITY, optimize=True)
+        if os.path.getsize(out_path) > MAX_IMG_BYTES:
+            # try harder before giving up on a heavy screenshot
+            img.save(out_path, 'JPEG', quality=52, optimize=True)
+            if os.path.getsize(out_path) > MAX_IMG_BYTES:
+                os.remove(out_path)
+                return None
         report['images'] += 1
         return name
     except Exception as e:  # noqa: BLE001
@@ -175,7 +183,21 @@ def parse_article(html, url):
             cat_slug = slugify(cat_link['href'].rstrip('/').split('/')[-1])
 
     if container is None:
-        return None
+        # fallback: the article body is the block that carries the publication date
+        m = re.search(r'([A-Z][a-z]{2},?\s+\d{1,2}\s+[A-Z][a-z]{2},?\s+\d{4})', soup.get_text(' '))
+        if m:
+            needle = m.group(1)
+            for el in soup.find_all(['div', 'section', 'article', 'main']):
+                t = clean_text(el.get_text(' '))
+                if needle in t and 200 < len(t) < 120000:
+                    if container is None or len(t) < len(clean_text(container.get_text(' '))):
+                        container = el
+                        date = needle
+        if container is None:
+            return None
+        if heading is None:
+            hs = container.find_all(['h1', 'h2', 'h3', 'h4'])
+            heading = hs[0] if hs else None
 
     article_slug = url.rstrip('/').split('/')[-1]
     folder = os.path.join(ASSETS, article_slug)
@@ -251,6 +273,7 @@ def main():
 
     index = []
     debug_written = False
+    canonical = {}  # article slug -> category dir that holds the mirrored file
     for ci, cat in enumerate(cats, start=1):
         cr = get(cat['url'])
         if not cr:
@@ -276,16 +299,14 @@ def main():
         for u in art_urls:
             slug = u.rstrip('/').split('/')[-1]
             md_path = os.path.join(OUT, cat_entry['slug'], slug + '.md')
-            if os.path.exists(md_path):
-                art = None
-                with open(os.path.join(OUT, 'index.json')) as f:
-                    pass
-                cached = os.path.join(OUT, cat_entry['slug'], slug + '.json')
-                if os.path.exists(cached):
-                    art = json.load(open(cached))
-            else:
-                art = None
-            if art is None:
+            art = None
+            if slug in canonical:
+                # already mirrored under another category - link to that copy
+                cat_entry['articles'].append({'title': '', 'slug': slug, 'url': u, 'date': '',
+                                              'chars': 0, 'file': f"{canonical[slug]}/{slug}.md",
+                                              'mirrored_in': canonical[slug]})
+                continue
+            if False:
                 ar = get(u)
                 if not ar:
                     report['failed'].append(u)
@@ -302,8 +323,6 @@ def main():
                 parsed['category'] = {'name': parsed['category']['name'] or cat['name'],
                                       'slug': parsed['category']['slug'] or cat_entry['slug']}
                 os.makedirs(os.path.join(OUT, cat_entry['slug']), exist_ok=True)
-                with open(os.path.join(OUT, cat_entry['slug'], slug + '.json'), 'w') as f:
-                    json.dump(parsed, f, indent=1)
                 with open(md_path, 'w') as f:
                     f.write(f"# {parsed['title']}\n\n")
                     if parsed['date']:
@@ -311,6 +330,7 @@ def main():
                     f.write(f"[{cat['name']}]({cat['url']}) · vendor article: {parsed['url']}\n\n")
                     f.write(parsed['body'] + '\n')
                 art = parsed
+                canonical[slug] = cat_entry['slug']
                 report['articles'] += 1
                 time.sleep(0.25)
             cat_entry['articles'].append({'title': art['title'], 'slug': art['slug'], 'url': u,
@@ -324,7 +344,13 @@ def main():
             if desc:
                 f.write(desc + '\n\n')
             for a in cat_entry['articles']:
-                f.write(f"- [{a['title']}]({a['slug']}.md) — {a['date']}\n")
+                if a.get('mirrored_in') and a['mirrored_in'] != cat_entry['slug']:
+                    link = f"../{a['mirrored_in']}/{a['slug']}.md"
+                else:
+                    link = f"{a['slug']}.md"
+                title = a['title'] or a['slug'].replace('-', ' ')
+                date = f" — {a['date']}" if a.get('date') else ''
+                f.write(f"- [{title}]({link}){date}\n")
         with open(os.path.join(OUT, 'index.json'), 'w') as f:
             json.dump({'categories': index, 'generated': time.strftime('%Y-%m-%d')}, f, indent=1)
 
@@ -333,7 +359,9 @@ def main():
         json.dump(report, f, indent=1)
     total = sum(len(c['articles']) for c in index)
     print(f"\nDONE categories={len(index)} articles={total} images={report['images']} failed={len(report['failed'])}")
-    for x in report['failed'][:15]:
+    uniq = sorted({re.sub(r' \(parse\)$', '', x) for x in report['failed']})
+    print(f"unique failures: {len(uniq)}")
+    for x in uniq[:20]:
         print('  failed:', x)
     return 0
 
