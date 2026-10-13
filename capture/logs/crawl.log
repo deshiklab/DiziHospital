@@ -82,3 +82,20 @@
 2026-10-13T21:25:38.069Z [75/76] 075-setup-inventory status=200
 2026-10-13T21:25:39.295Z autocommit pushed: crawl 75/76
 2026-10-13T21:25:41.218Z [76/76] 076-setup-custom-fields status=200
+2026-10-13T21:25:42.481Z autocommit pushed: final crawl state
+2026-10-13T21:25:42.481Z crawl finished; pages captured: 76 / 76
+crawl_exit=0
+total 652
+drwxr-xr-x 5 runner runner   4096 Oct 13 21:22 .
+drwxr-xr-x 6 runner runner   4096 Oct 13 21:22 ..
+-rw-r--r-- 1 runner runner 618833 Oct 13 21:25 index.json
+drwxr-xr-x 2 runner runner   4096 Oct 13 21:22 logs
+-rw-r--r-- 1 runner runner  12899 Oct 13 21:22 nav.json
+drwxr-xr-x 2 runner runner  12288 Oct 13 21:22 pages
+drwxr-xr-x 2 runner runner   4096 Oct 13 21:22 recon
+001-dashboard.jpg
+001-dashboard.json
+002-patient.jpg
+002-patient.json
+003-billing.jpg
+crawl step outcome: success
