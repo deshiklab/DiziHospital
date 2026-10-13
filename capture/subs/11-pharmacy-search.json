@@ -1,0 +1,856 @@
+{
+ "id": "11-pharmacy-search",
+ "label": "Pharmacy search",
+ "url": "/admin/pharmacy/search",
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/pharmacy/search",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Medicines Stock",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Medicines Stock",
+   "Add Medicine Details",
+   "Add Medicine",
+   "Edit Medicine Details",
+   "Medicine Details",
+   "Add Stock",
+   "Add Bad Stock",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formadd",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Medicine Name *",
+      "name": "medicine_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Medicine Category *",
+      "name": "medicine_category_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Syrup",
+       "Capsule",
+       "Injection",
+       "Ointment",
+       "Cream",
+       "Surgical",
+       "Drops",
+       "Inhalers",
+       "Implants / Patches",
+       "Liquid",
+       "Preparations",
+       "Diaper",
+       "Tablet"
+      ]
+     },
+     {
+      "label": "Medicine Company",
+      "name": "medicine_company",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Johnson & Johnson",
+       "Alkem Laboratories",
+       "Biocon Limited.",
+       "Lupin Limited.",
+       "medimax"
+      ]
+     },
+     {
+      "label": "Medicine Composition",
+      "name": "medicine_composition",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Medicine Group",
+      "name": "medicine_group",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Antibacterials",
+       "Antimycobacterials",
+       "Antiparasitics",
+       "Antigout agents",
+       "HIPERIN"
+      ]
+     },
+     {
+      "label": "Unit *",
+      "name": "unit",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "mg/mL",
+       "mm",
+       "ml",
+       "mg",
+       "g/dl"
+      ]
+     },
+     {
+      "label": "Min Level",
+      "name": "min_level",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Re-Order Level",
+      "name": "reorder_level",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "vat",
+      "name": "vat",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Box/Packing *",
+      "name": "unit_packing",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "VAT A/C",
+      "name": "vat_ac",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Rack Number",
+      "name": "rack_number",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Note",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "file",
+      "name": "file",
+      "type": "file",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formimp",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Medicine Category",
+      "name": "medicine_category_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Syrup",
+       "Capsule",
+       "Injection",
+       "Ointment",
+       "Cream",
+       "Surgical",
+       "Drops",
+       "Inhalers",
+       "Implants / Patches",
+       "Liquid",
+       "Preparations",
+       "Diaper",
+       "Tablet"
+      ]
+     },
+     {
+      "label": "medicine_image",
+      "name": "medicine_image",
+      "type": "file",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formedit",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Medicine Name *",
+      "name": "medicine_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Medicine Category *",
+      "name": "medicine_category_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Syrup",
+       "Capsule",
+       "Injection",
+       "Ointment",
+       "Cream",
+       "Surgical",
+       "Drops",
+       "Inhalers",
+       "Implants / Patches",
+       "Liquid",
+       "Preparations",
+       "Diaper",
+       "Tablet"
+      ]
+     },
+     {
+      "label": "Medicine Company",
+      "name": "medicine_company",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Johnson & Johnson",
+       "Alkem Laboratories",
+       "Biocon Limited.",
+       "Lupin Limited.",
+       "medimax"
+      ]
+     },
+     {
+      "label": "Medicine Composition",
+      "name": "medicine_composition",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Medicine Group",
+      "name": "medicine_group",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Antibacterials",
+       "Antimycobacterials",
+       "Antiparasitics",
+       "Antigout agents",
+       "HIPERIN"
+      ]
+     },
+     {
+      "label": "Unit *",
+      "name": "unit",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "mg/mL",
+       "mm",
+       "ml",
+       "mg",
+       "g/dl"
+      ]
+     },
+     {
+      "label": "Min Level",
+      "name": "min_level",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Re-Order Level",
+      "name": "reorder_level",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "vat",
+      "name": "vat",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Box/Packing *",
+      "name": "unit_packing",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "VAT A/C",
+      "name": "vat_ac",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Rack Number",
+      "name": "rack_number",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Note",
+      "name": "edit_note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "medicine_image",
+      "name": "medicine_image",
+      "type": "file",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formbatch",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Batch No",
+      "name": "batch_no",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Expire Date",
+      "name": "expiry_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Inward Date",
+      "name": "inward_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Packing Qty",
+      "name": "packing_qty",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Purchase Rate ($)",
+      "name": "purchase_rate_packing",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Quantity",
+      "name": "quantity",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "MRP ($)",
+      "name": "mrp",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Sale Price ($)",
+      "name": "sale_rate",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Batch Amount ($)",
+      "name": "amount",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formstock",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Batch No *",
+      "name": "batch_no",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Expiry Date *",
+      "name": "expiry_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Outward Date *",
+      "name": "inward_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Qty *",
+      "name": "packing_qty",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Note",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 99,
+    "columns": [
+     "#",
+     "Medicine Name",
+     "Medicine Company",
+     "Medicine Composition",
+     "Medicine Category",
+     "Medicine Group",
+     "Unit",
+     "Available Qty",
+     "Action"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Medicines Stock Import Medicines Add Medicine Purchase"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Import Medicines",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/import",
+    "target": ""
+   },
+   {
+    "text": "Add Medicine",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Purchase",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/purchase",
+    "target": ""
+   },
+   {
+    "text": "Delete Selected",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Import Medicines",
+    "h": "https://demo.smart-hospital.in/admin/pharmacy/import"
+   },
+   {
+    "t": "Purchase",
+    "h": "https://demo.smart-hospital.in/admin/pharmacy/purchase"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   }
+  ]
+ },
+ "file": "11-pharmacy-search.jpg"
+}
