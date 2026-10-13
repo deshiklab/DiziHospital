@@ -3,15 +3,21 @@
   {
    "name": "Ambulance (3)",
    "slug": "ambulance",
-   "count": 8,
+   "count": 13,
    "blurb": "Vehicles, drivers and calls.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
     {
+     "title": "About Ambulance.",
+     "slug": "about-ambulance",
+     "date": "Mon, 01 Nov, 2021",
+     "file": "ambulance/about-ambulance.md"
+    },
+    {
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "ambulance/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to add Ambulance Call?",
@@ -29,107 +35,62 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "ambulance/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "ambulance/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "ambulance/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
     },
     {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "ambulance/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "ambulance/version-7-0.md"
-    }
-   ]
-  },
-  {
-   "name": "Annual Calendar (4)",
-   "slug": "annual-calendar",
-   "count": 10,
-   "blurb": "Holidays, activities, vacations and the front-site calendar tab.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "annual-calendar/about-whatsapp-messaging.md"
-    },
-    {
-     "title": "How to add activity in annual calendar?",
-     "slug": "how-to-add-activity-in-annual-calendar",
-     "date": "Thu, 05 Sep, 2024",
-     "file": "annual-calendar/how-to-add-activity-in-annual-calendar.md"
-    },
-    {
-     "title": "How to add holiday in annual calendar on smart hospital?",
-     "slug": "how-to-add-holiday-in-annual-calendar-on-smart-hospital",
-     "date": "Thu, 05 Sep, 2024",
-     "file": "annual-calendar/how-to-add-holiday-in-annual-calendar-on-smart-hospital.md"
-    },
-    {
-     "title": "How to add vacation in annual calendar?",
-     "slug": "how-to-add-vacation-in-annual-calendar",
-     "date": "Tue, 03 Sep, 2024",
-     "file": "annual-calendar/how-to-add-vacation-in-annual-calendar.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "annual-calendar/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "annual-calendar/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "annual-calendar/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "How to show annual calendar tab on front site of smart hospital?",
-     "slug": "how-to-show-annual-calendar-tab-on-front-site-of-smart-hospital",
-     "date": "Mon, 02 Sep, 2024",
-     "file": "annual-calendar/how-to-show-annual-calendar-tab-on-front-site-of-smart-hospital.md"
-    },
-    {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
-     "date": "Thu, 30 Jul, 2026",
-     "file": "annual-calendar/version-2-0-1.md"
-    },
-    {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "annual-calendar/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "Appointment (8)",
    "slug": "appointment",
-   "count": 14,
+   "count": 18,
    "blurb": "Booking, slot setup and online appointments.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -143,7 +104,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "appointment/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to add appointment in smart hospital?",
@@ -173,13 +134,13 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "appointment/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "appointment/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to direct open the patient details in Appointment?",
@@ -197,7 +158,7 @@
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "appointment/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "Setup for Appointment.",
@@ -206,23 +167,47 @@
      "file": "appointment/setup-for-appointment.md"
     },
     {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
+    },
+    {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "appointment/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "appointment/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "Billing (3)",
    "slug": "billing",
-   "count": 9,
+   "count": 13,
    "blurb": "Billing concepts, single-module billing and case-based billing.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -236,25 +221,25 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "billing/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "billing/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "billing/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "billing/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "OPD/IPD Billing Through Case ID",
@@ -269,23 +254,47 @@
      "file": "billing/single-module-billing.md"
     },
     {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
+    },
+    {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "billing/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "billing/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "Birth & Death Record (2)",
    "slug": "birth-death-record",
-   "count": 8,
+   "count": 12,
    "blurb": "Statutory birth and death registers.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -293,7 +302,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "birth-death-record/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to add Birth Records?",
@@ -311,38 +320,62 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "birth-death-record/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "birth-death-record/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "birth-death-record/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
     },
     {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "birth-death-record/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "birth-death-record/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "Blood Bank (6)",
    "slug": "blood-bank",
-   "count": 11,
+   "count": 16,
    "blurb": "Components, donors, issue and stock.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -356,7 +389,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "blood-bank/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to add Component in Blood Bank?",
@@ -374,19 +407,19 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "blood-bank/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "blood-bank/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "blood-bank/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "How to Issue Blood?",
@@ -401,23 +434,53 @@
      "file": "blood-bank/how-to-issue-component-in-blood-bank.md"
     },
     {
+     "title": "Setup for Blood Bank",
+     "slug": "setup-for-blood-bank",
+     "date": "Thu, 21 Oct, 2021",
+     "file": "blood-bank/setup-for-blood-bank.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
+    },
+    {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "blood-bank/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "blood-bank/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "bug_report Known Issues",
    "slug": "known-issues",
-   "count": 6,
+   "count": 10,
    "blurb": "",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -446,6 +509,30 @@
      "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
+    },
+    {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
@@ -460,96 +547,9 @@
    ]
   },
   {
-   "name": "Certificate (7)",
-   "slug": "certificate",
-   "count": 13,
-   "blurb": "Certificates, patient and staff ID cards.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About Certificate.",
-     "slug": "about-certificate",
-     "date": "Tue, 02 Nov, 2021",
-     "file": "certificate/about-certificate.md"
-    },
-    {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "certificate/about-whatsapp-messaging.md"
-    },
-    {
-     "title": "How to add Certificate in Smart Hospital?",
-     "slug": "how-to-add-certificate-in-smart-hospital",
-     "date": "Tue, 02 Nov, 2021",
-     "file": "certificate/how-to-add-certificate-in-smart-hospital.md"
-    },
-    {
-     "title": "How to add Patient ID Card?",
-     "slug": "how-to-add-patient-id-card",
-     "date": "Tue, 02 Nov, 2021",
-     "file": "certificate/how-to-add-patient-id-card.md"
-    },
-    {
-     "title": "How to add Staff ID card?",
-     "slug": "how-to-add-staff-id-card",
-     "date": "Tue, 02 Nov, 2021",
-     "file": "certificate/how-to-add-staff-id-card.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "certificate/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "certificate/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "certificate/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "How to generate certificate?",
-     "slug": "how-to-generate-certificate",
-     "date": "Tue, 02 Nov, 2021",
-     "file": "certificate/how-to-generate-certificate.md"
-    },
-    {
-     "title": "How to generate patient ID card?",
-     "slug": "how-to-generate-patient-id-card",
-     "date": "Wed, 03 Nov, 2021",
-     "file": "certificate/how-to-generate-patient-id-card.md"
-    },
-    {
-     "title": "How to generate Staff ID Card?",
-     "slug": "how-to-generate-staff-id-card",
-     "date": "Wed, 03 Nov, 2021",
-     "file": "certificate/how-to-generate-staff-id-card.md"
-    },
-    {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
-     "date": "Thu, 30 Jul, 2026",
-     "file": "certificate/version-2-0-1.md"
-    },
-    {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "certificate/version-7-0.md"
-    }
-   ]
-  },
-  {
    "name": "Common Issues & Troubleshooting (13)",
    "slug": "common-issues-troubleshooting",
-   "count": 19,
+   "count": 23,
    "blurb": "Known problems and fixes (404s, login URLs, SQL modes, SSL, hosting moves).",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -563,7 +563,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "common-issues-troubleshooting/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "After adding staff or patient no email is receiving?",
@@ -599,19 +599,19 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "common-issues-troubleshooting/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "common-issues-troubleshooting/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "common-issues-troubleshooting/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "Image Upload Not Working In Media Manager",
@@ -656,149 +656,47 @@
      "file": "common-issues-troubleshooting/unable-to-login-or-missing-login-url.md"
     },
     {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
      "date": "Thu, 30 Jul, 2026",
-     "file": "common-issues-troubleshooting/version-2-0-1.md"
+     "file": "known-issues/version-1-0-6.md"
     },
     {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "common-issues-troubleshooting/version-7-0.md"
-    }
-   ]
-  },
-  {
-   "name": "Download Center (3)",
-   "slug": "download-center",
-   "count": 8,
-   "blurb": "Sharing documents and media.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "download-center/about-whatsapp-messaging.md"
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
     },
     {
-     "title": "How Download Center works in Smart Hospital?",
-     "slug": "how-download-center-works-in-smart-hospital",
-     "date": "Thu, 30 May, 2024",
-     "file": "download-center/how-download-center-works-in-smart-hospital.md"
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
     },
     {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "download-center/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "download-center/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "download-center/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "Overall working of download center module in smart hospital",
-     "slug": "overall-working-of-download-center-module-in-smart-hospital",
-     "date": "Sat, 31 Aug, 2024",
-     "file": "download-center/overall-working-of-download-center-module-in-smart-hospital.md"
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
     },
     {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "download-center/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "download-center/version-7-0.md"
-    }
-   ]
-  },
-  {
-   "name": "Duty Roster (4)",
-   "slug": "duty-roster",
-   "count": 10,
-   "blurb": "Shifts, rosters and staff assignment.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "duty-roster/about-whatsapp-messaging.md"
-    },
-    {
-     "title": "How to add the roster in duty roster module?",
-     "slug": "how-to-add-the-roster-in-duty-roster-module",
-     "date": "Thu, 05 Sep, 2024",
-     "file": "duty-roster/how-to-add-the-roster-in-duty-roster-module.md"
-    },
-    {
-     "title": "How to add the shift in duty roster?",
-     "slug": "how-to-add-the-shift-in-duty-roster",
-     "date": "Thu, 05 Sep, 2024",
-     "file": "duty-roster/how-to-add-the-shift-in-duty-roster.md"
-    },
-    {
-     "title": "How to assign the roster to the staff?",
-     "slug": "how-to-assign-the-roster-to-the-staff",
-     "date": "Thu, 05 Sep, 2024",
-     "file": "duty-roster/how-to-assign-the-roster-to-the-staff.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "duty-roster/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "duty-roster/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "duty-roster/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "How to search the duty roster?",
-     "slug": "how-to-search-the-duty-roster",
-     "date": "Thu, 05 Sep, 2024",
-     "file": "duty-roster/how-to-search-the-duty-roster.md"
-    },
-    {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
-     "date": "Thu, 30 Jul, 2026",
-     "file": "duty-roster/version-2-0-1.md"
-    },
-    {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "duty-roster/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "FAQ (17)",
    "slug": "faq",
-   "count": 18,
+   "count": 27,
    "blurb": "Frequently asked questions about deployment, characters, LAN use and multi-hospital operation.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -806,7 +704,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "faq/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "Can I use Smart Hospital as SaaS or multi hospital application?",
@@ -839,6 +737,18 @@
      "file": "faq/can-i-use-special-character-in-smart-hospital.md"
     },
     {
+     "title": "Does Smart Hospital support 3 decimals places?",
+     "slug": "does-smart-hospital-support-3-decimals-places",
+     "date": "Mon, 18 Oct, 2021",
+     "file": "faq/does-smart-hospital-support-3-decimals-places.md"
+    },
+    {
+     "title": "Does Smart Hospital support RTL direction for languages?",
+     "slug": "does-smart-hospital-support-rtl-direction-for-languages",
+     "date": "Mon, 18 Oct, 2021",
+     "file": "faq/does-smart-hospital-support-rtl-direction-for-languages.md"
+    },
+    {
      "title": "Does unicode character for languages supported in data export of table or datatable?",
      "slug": "does-unicode-character-for-languages-supported-in-data-export-of-table-or-datatable-1",
      "date": "Tue, 02 Nov, 2021",
@@ -860,13 +770,13 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "faq/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "faq/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable display error message?",
@@ -878,7 +788,7 @@
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "faq/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "How to find my Envato Market Purchase Code for an item?",
@@ -893,122 +803,71 @@
      "file": "faq/i-have-question-where-should-i-ask.md"
     },
     {
+     "title": "Is RTL supported on PDF or exported documents?",
+     "slug": "is-rtl-supported-on-pdf-or-exported-documents",
+     "date": "Mon, 18 Oct, 2021",
+     "file": "faq/is-rtl-supported-on-pdf-or-exported-documents.md"
+    },
+    {
+     "title": "Is RTL supported on PDF or exported documents?",
+     "slug": "is-rtl-supported-on-pdf-or-exported-documents-1",
+     "date": "Mon, 18 Oct, 2021",
+     "file": "faq/is-rtl-supported-on-pdf-or-exported-documents-1.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
+    },
+    {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "faq/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "faq/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     },
     {
      "title": "Want to know about Smart Hospital Biometric Attendance App?",
      "slug": "want-to-know-about-smart-hospital-biometric-attendance-app",
      "date": "Fri, 13 Sep, 2024",
      "file": "faq/want-to-know-about-smart-hospital-biometric-attendance-app.md"
-    }
-   ]
-  },
-  {
-   "name": "Front CMS (8)",
-   "slug": "front-cms",
-   "count": 14,
-   "blurb": "Website pages, banners, events, gallery and media manager.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About Front CMS",
-     "slug": "about-front-cms",
-     "date": "Thu, 11 Nov, 2021",
-     "file": "front-cms/about-front-cms.md"
     },
     {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "front-cms/about-whatsapp-messaging.md"
-    },
-    {
-     "title": "How Media Manager works in Smart Hospital.",
-     "slug": "how-media-manager-works-in-smart-hospital",
-     "date": "Thu, 11 Nov, 2021",
-     "file": "front-cms/how-media-manager-works-in-smart-hospital.md"
-    },
-    {
-     "title": "How to add an Event?",
-     "slug": "how-to-add-an-event",
-     "date": "Thu, 11 Nov, 2021",
-     "file": "front-cms/how-to-add-an-event.md"
-    },
-    {
-     "title": "How to add banner image in Smart Hospital?",
-     "slug": "how-to-add-banner-image-in-smart-hospital",
-     "date": "Thu, 11 Nov, 2021",
-     "file": "front-cms/how-to-add-banner-image-in-smart-hospital.md"
-    },
-    {
-     "title": "How to add Gallery in Smart Hospital?",
-     "slug": "how-to-add-gallery-in-smart-hospital",
-     "date": "Thu, 11 Nov, 2021",
-     "file": "front-cms/how-to-add-gallery-in-smart-hospital.md"
-    },
-    {
-     "title": "How to add menus in Smart Hospital?",
-     "slug": "how-to-add-menus-in-smart-hospital",
-     "date": "Thu, 11 Nov, 2021",
-     "file": "front-cms/how-to-add-menus-in-smart-hospital.md"
-    },
-    {
-     "title": "How to add News in Smart Hospital?",
-     "slug": "how-to-add-news-in-smart-hospital",
-     "date": "Thu, 11 Nov, 2021",
-     "file": "front-cms/how-to-add-news-in-smart-hospital.md"
-    },
-    {
-     "title": "How to add Pages in Smart Hospital?",
-     "slug": "how-to-add-pages-in-smart-hospital",
-     "date": "Thu, 11 Nov, 2021",
-     "file": "front-cms/how-to-add-pages-in-smart-hospital.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "front-cms/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "front-cms/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "front-cms/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
-     "date": "Thu, 30 Jul, 2026",
-     "file": "front-cms/version-2-0-1.md"
-    },
-    {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "front-cms/version-7-0.md"
+     "title": "What are the server requirements for installing or running Smart Hospital?",
+     "slug": "what-are-the-server-requirements-for-installing-or-running-smart-hospital",
+     "date": "Mon, 18 Oct, 2021",
+     "file": "faq/what-are-the-server-requirements-for-installing-or-running-smart-hospital.md"
     }
    ]
   },
   {
    "name": "Front Office (7)",
    "slug": "front-office",
-   "count": 12,
+   "count": 17,
    "blurb": "Visitors, calls, postal dispatch and complaints.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -1022,7 +881,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "front-office/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to add Complain in Smart Hospital?",
@@ -1058,38 +917,68 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "front-office/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "front-office/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "front-office/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "How to setup Front Office?",
+     "slug": "how-to-setup-front-office",
+     "date": "Thu, 28 Oct, 2021",
+     "file": "front-office/how-to-setup-front-office.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
     },
     {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "front-office/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "front-office/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "Getting Started (3)",
    "slug": "getting-started",
-   "count": 9,
+   "count": 13,
    "blurb": "Installation, updates, licensing and first-run setup.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -1097,7 +986,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "getting-started/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "Configure Smart Hospital To Use In Local LAN Network",
@@ -1115,19 +1004,19 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "getting-started/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "getting-started/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "getting-started/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "How to register a Webfeb.com purchased License Code in Smart Hospital?",
@@ -1136,23 +1025,47 @@
      "file": "getting-started/how-to-register-a-webfeb-com-purchased-license-code-in-smart-hospital.md"
     },
     {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
+    },
+    {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "getting-started/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "getting-started/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "Human Resource (13)",
    "slug": "human-resource",
-   "count": 19,
+   "count": 23,
    "blurb": "Departments, designations, leave types, specialists, payroll and leaves.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -1166,7 +1079,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "human-resource/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to add Department?",
@@ -1214,19 +1127,19 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "human-resource/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "human-resource/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "human-resource/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "How to generate Payroll?",
@@ -1259,23 +1172,47 @@
      "file": "human-resource/how-to-view-staff-attendance.md"
     },
     {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
+    },
+    {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "human-resource/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "human-resource/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "Installation(7)",
    "slug": "installation",
-   "count": 13,
+   "count": 17,
    "blurb": "",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -1289,7 +1226,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "installation/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "General Installation",
@@ -1301,19 +1238,19 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "installation/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "installation/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "installation/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "IIS - Windows Server Installation",
@@ -1346,92 +1283,47 @@
      "file": "installation/unable-to-connect-my-mysql-database-1.md"
     },
     {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
      "date": "Thu, 30 Jul, 2026",
-     "file": "installation/version-2-0-1.md"
+     "file": "known-issues/version-1-0-6.md"
     },
     {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "installation/version-7-0.md"
-    }
-   ]
-  },
-  {
-   "name": "Inventory (4)",
-   "slug": "inventory",
-   "count": 10,
-   "blurb": "Items, stock, issue and return.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About Inventory.",
-     "slug": "about-inventory",
-     "date": "Tue, 02 Nov, 2021",
-     "file": "inventory/about-inventory.md"
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
     },
     {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "inventory/about-whatsapp-messaging.md"
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
     },
     {
-     "title": "How to add Item Stock?",
-     "slug": "how-to-add-item-stock",
-     "date": "Sun, 31 Oct, 2021",
-     "file": "inventory/how-to-add-item-stock.md"
-    },
-    {
-     "title": "How to add Item?",
-     "slug": "how-to-add-item",
-     "date": "Sun, 31 Oct, 2021",
-     "file": "inventory/how-to-add-item.md"
-    },
-    {
-     "title": "How to check issue and return item?",
-     "slug": "how-to-check-issue-and-return-item",
-     "date": "Sun, 31 Oct, 2021",
-     "file": "inventory/how-to-check-issue-and-return-item.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "inventory/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "inventory/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "inventory/how-to-enable-whatsapp-for-a-notification-event.md"
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
     },
     {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "inventory/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "inventory/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "IPD - In Patient (19)",
    "slug": "ipd-in-patient",
-   "count": 25,
+   "count": 29,
    "blurb": "Admissions, vitals, obstetric history, BMI, overview and discharge.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -1445,7 +1337,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "ipd-in-patient/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "Bed History",
@@ -1481,13 +1373,13 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "ipd-in-patient/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "ipd-in-patient/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to Discharge patient from IPD?",
@@ -1499,7 +1391,7 @@
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "ipd-in-patient/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "How to see the details for Previous Obstetric History, Postnatal History, and Antenatal History in IPD - In Patient?",
@@ -1574,155 +1466,47 @@
      "file": "ipd-in-patient/treatment-history.md"
     },
     {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
      "date": "Thu, 30 Jul, 2026",
-     "file": "ipd-in-patient/version-2-0-1.md"
+     "file": "known-issues/version-1-0-6.md"
     },
     {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "ipd-in-patient/version-7-0.md"
-    }
-   ]
-  },
-  {
-   "name": "Live Consultation (3)",
-   "slug": "live-consultation",
-   "count": 9,
-   "blurb": "Zoom live consultations and live meetings.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About Live Consultation",
-     "slug": "about-live-consultation",
-     "date": "Thu, 11 Nov, 2021",
-     "file": "live-consultation/about-live-consultation.md"
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
     },
     {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "live-consultation/about-whatsapp-messaging.md"
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
     },
     {
-     "title": "How to add Live Consultation in Smart Hospital?",
-     "slug": "how-to-add-live-consultation-in-smart-hospital",
-     "date": "Mon, 08 Sep, 2025",
-     "file": "live-consultation/how-to-add-live-consultation-in-smart-hospital.md"
-    },
-    {
-     "title": "How to add Live Meetings in Smart Hospital?",
-     "slug": "how-to-add-live-meetings-in-smart-hospital",
-     "date": "Thu, 11 Nov, 2021",
-     "file": "live-consultation/how-to-add-live-meetings-in-smart-hospital.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "live-consultation/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "live-consultation/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "live-consultation/how-to-enable-whatsapp-for-a-notification-event.md"
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
     },
     {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "live-consultation/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "live-consultation/version-7-0.md"
-    }
-   ]
-  },
-  {
-   "name": "Messaging (4)",
-   "slug": "messaging",
-   "count": 10,
-   "blurb": "Notice board, SMS, e-mail and patient credentials.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "messaging/about-whatsapp-messaging.md"
-    },
-    {
-     "title": "How Notice Board works?",
-     "slug": "how-notice-board-works",
-     "date": "Mon, 01 Nov, 2021",
-     "file": "messaging/how-notice-board-works.md"
-    },
-    {
-     "title": "How send patient credential in Smart Hospital?",
-     "slug": "how-send-patient-credential-in-smart-hospital",
-     "date": "Fri, 30 Aug, 2024",
-     "file": "messaging/how-send-patient-credential-in-smart-hospital.md"
-    },
-    {
-     "title": "How send SMS in Smart Hospital?",
-     "slug": "how-send-sms-in-smart-hospital",
-     "date": "Mon, 01 Nov, 2021",
-     "file": "messaging/how-send-sms-in-smart-hospital.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "messaging/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "messaging/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "messaging/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "How to send Email in Smart Hospital?",
-     "slug": "how-to-send-email-in-smart-hospital",
-     "date": "Mon, 01 Nov, 2021",
-     "file": "messaging/how-to-send-email-in-smart-hospital.md"
-    },
-    {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
-     "date": "Thu, 30 Jul, 2026",
-     "file": "messaging/version-2-0-1.md"
-    },
-    {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "messaging/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "Miscellaneous (6)",
    "slug": "miscellaneous",
-   "count": 12,
+   "count": 16,
    "blurb": "Calendar, to-dos, chat and other utilities.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -1742,7 +1526,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "miscellaneous/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to add contact in chat?",
@@ -1772,125 +1556,62 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "miscellaneous/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "miscellaneous/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "miscellaneous/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
     },
     {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "miscellaneous/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "miscellaneous/version-7-0.md"
-    }
-   ]
-  },
-  {
-   "name": "Multi Branch (7)",
-   "slug": "multi-branch",
-   "count": 13,
-   "blurb": "Adding, editing, switching and reporting across branches.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About Multi Branch",
-     "slug": "about-multi-branch",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "multi-branch/about-multi-branch.md"
-    },
-    {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "multi-branch/about-whatsapp-messaging.md"
-    },
-    {
-     "title": "How to add the new branch in smart hospital home branch?",
-     "slug": "how-to-add-the-new-branch-in-smart-hospital-home-branch",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "multi-branch/how-to-add-the-new-branch-in-smart-hospital-home-branch.md"
-    },
-    {
-     "title": "How to check Multi Branch overview?",
-     "slug": "how-to-check-multi-branch-overview",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "multi-branch/how-to-check-multi-branch-overview.md"
-    },
-    {
-     "title": "How to check multi branch report in smart Hospital?",
-     "slug": "how-to-check-multi-branch-report-in-smart-hospital",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "multi-branch/how-to-check-multi-branch-report-in-smart-hospital.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "multi-branch/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "multi-branch/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to delete the branch?",
-     "slug": "how-to-delete-the-branch",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "multi-branch/how-to-delete-the-branch.md"
-    },
-    {
-     "title": "How to edit a branch?",
-     "slug": "how-to-edit-a-branch",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "multi-branch/how-to-edit-a-branch.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "multi-branch/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "How to switch the branch?",
-     "slug": "how-to-switch-the-branch",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "multi-branch/how-to-switch-the-branch.md"
-    },
-    {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
-     "date": "Thu, 30 Jul, 2026",
-     "file": "multi-branch/version-2-0-1.md"
-    },
-    {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "multi-branch/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "OPD - Out Patient (9)",
    "slug": "opd-out-patient",
-   "count": 15,
+   "count": 19,
    "blurb": "Out-patient visits, profiles and discharge.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -1904,7 +1625,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "opd-out-patient/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "BMI For OPD - Out Patient",
@@ -1940,13 +1661,13 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "opd-out-patient/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "opd-out-patient/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to Discharge patient from OPD?",
@@ -1958,7 +1679,7 @@
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "opd-out-patient/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "OPD Patient Visits",
@@ -1973,23 +1694,47 @@
      "file": "opd-out-patient/overview-of-opd-view-and-patient-view-page.md"
     },
     {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
+    },
+    {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "opd-out-patient/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "opd-out-patient/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "Pathology (4)",
    "slug": "pathology",
-   "count": 10,
+   "count": 14,
    "blurb": "Test setup, reports and payment.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -2003,7 +1748,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "pathology/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to add Pathology Test in Smart Hospital?",
@@ -2027,143 +1772,62 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "pathology/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "pathology/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "pathology/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
     },
     {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "pathology/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "pathology/version-7-0.md"
-    }
-   ]
-  },
-  {
-   "name": "Patient Panel (10)",
-   "slug": "patient-panel",
-   "count": 16,
-   "blurb": "The patient self-service portal (dashboard, appointments, OPD/IPD, bills, reports).",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "patient-panel/about-whatsapp-messaging.md"
-    },
-    {
-     "title": "Ambulance",
-     "slug": "ambulance",
-     "date": "Thu, 18 Nov, 2021",
-     "file": "patient-panel/ambulance.md"
-    },
-    {
-     "title": "Blood Bank",
-     "slug": "blood-bank-1",
-     "date": "Thu, 18 Nov, 2021",
-     "file": "patient-panel/blood-bank-1.md"
-    },
-    {
-     "title": "How to add appointment from Patient panel?",
-     "slug": "how-to-add-appointment-from-patient-panel",
-     "date": "Sat, 02 Aug, 2025",
-     "file": "patient-panel/how-to-add-appointment-from-patient-panel.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "patient-panel/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "patient-panel/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "patient-panel/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "IPD",
-     "slug": "ipd",
-     "date": "Thu, 18 Nov, 2021",
-     "file": "patient-panel/ipd.md"
-    },
-    {
-     "title": "Live Consultation",
-     "slug": "live-consultation",
-     "date": "Thu, 18 Nov, 2021",
-     "file": "patient-panel/live-consultation.md"
-    },
-    {
-     "title": "OPD",
-     "slug": "opd",
-     "date": "Thu, 18 Nov, 2021",
-     "file": "patient-panel/opd.md"
-    },
-    {
-     "title": "Pathology",
-     "slug": "pathology-1",
-     "date": "Thu, 18 Nov, 2021",
-     "file": "patient-panel/pathology-1.md"
-    },
-    {
-     "title": "Patient Dashboard",
-     "slug": "patient-dashboard",
-     "date": "Fri, 01 Aug, 2025",
-     "file": "patient-panel/patient-dashboard.md"
-    },
-    {
-     "title": "Pharmacy",
-     "slug": "pharmacy-1",
-     "date": "Fri, 01 Aug, 2025",
-     "file": "patient-panel/pharmacy-1.md"
-    },
-    {
-     "title": "Radiology",
-     "slug": "radiology-1",
-     "date": "Thu, 18 Nov, 2021",
-     "file": "patient-panel/radiology-1.md"
-    },
-    {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
-     "date": "Thu, 30 Jul, 2026",
-     "file": "patient-panel/version-2-0-1.md"
-    },
-    {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "patient-panel/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "Pharmacy (6)",
    "slug": "pharmacy",
-   "count": 12,
+   "count": 16,
    "blurb": "Medicines, stock, bad stock, import and sale.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -2177,7 +1841,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "pharmacy/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to add Medicine Bad Stock?",
@@ -2201,19 +1865,19 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "pharmacy/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "pharmacy/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "pharmacy/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "How to generate Pharmacy Bill?",
@@ -2228,23 +1892,47 @@
      "file": "pharmacy/how-to-import-medicines.md"
     },
     {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
+    },
+    {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "pharmacy/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "pharmacy/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "QR Code Attendance (3)",
    "slug": "qr-code-attendance",
-   "count": 9,
+   "count": 13,
    "blurb": "QR/barcode attendance with auto-attendance options.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -2258,19 +1946,19 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "qr-code-attendance/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "qr-code-attendance/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "qr-code-attendance/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to disable the auto attendance and mark the attendance of hospital staff using QR Code / Barcode?",
@@ -2288,26 +1976,50 @@
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "qr-code-attendance/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
     },
     {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "qr-code-attendance/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "qr-code-attendance/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "Radiology (4)",
    "slug": "radiology",
-   "count": 10,
+   "count": 14,
    "blurb": "Study setup, reports and payment.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -2321,7 +2033,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "radiology/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to add and generate patient Radiology test report in Smart Hospital?",
@@ -2345,410 +2057,62 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "radiology/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "radiology/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "radiology/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
     },
     {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "radiology/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "radiology/version-7-0.md"
-    }
-   ]
-  },
-  {
-   "name": "Referral (3)",
-   "slug": "referral",
-   "count": 9,
-   "blurb": "Referral persons and commission payments.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About Referral.",
-     "slug": "about-referral",
-     "date": "Thu, 11 Nov, 2021",
-     "file": "referral/about-referral.md"
-    },
-    {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "referral/about-whatsapp-messaging.md"
-    },
-    {
-     "title": "How to add Referral Payment?",
-     "slug": "how-to-add-referral-payment",
-     "date": "Sun, 31 Oct, 2021",
-     "file": "referral/how-to-add-referral-payment.md"
-    },
-    {
-     "title": "How to add Referral Person?",
-     "slug": "how-to-add-referral-person",
-     "date": "Sun, 31 Oct, 2021",
-     "file": "referral/how-to-add-referral-person.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "referral/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "referral/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "referral/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
-     "date": "Thu, 30 Jul, 2026",
-     "file": "referral/version-2-0-1.md"
-    },
-    {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "referral/version-7-0.md"
-    }
-   ]
-  },
-  {
-   "name": "Reports (44)",
-   "slug": "reports",
-   "count": 50,
-   "blurb": "The report library \u2014 how to read and filter each report.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "reports/about-whatsapp-messaging.md"
-    },
-    {
-     "title": "All Transaction Report.",
-     "slug": "all-transaction-report",
-     "date": "Fri, 01 Aug, 2025",
-     "file": "reports/all-transaction-report.md"
-    },
-    {
-     "title": "Ambulance Call Report.",
-     "slug": "ambulance-call-report",
-     "date": "Fri, 29 Oct, 2021",
-     "file": "reports/ambulance-call-report.md"
-    },
-    {
-     "title": "Appointment Report",
-     "slug": "appointment-report",
-     "date": "Fri, 29 Oct, 2021",
-     "file": "reports/appointment-report.md"
-    },
-    {
-     "title": "Audit Trail Report",
-     "slug": "audit-trail-report",
-     "date": "Fri, 24 May, 2024",
-     "file": "reports/audit-trail-report.md"
-    },
-    {
-     "title": "Birth Report",
-     "slug": "birth-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/birth-report.md"
-    },
-    {
-     "title": "Blood Donor Report",
-     "slug": "blood-donor-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/blood-donor-report.md"
-    },
-    {
-     "title": "Blood Issue Report",
-     "slug": "blood-issue-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/blood-issue-report.md"
-    },
-    {
-     "title": "Component Issue Report",
-     "slug": "component-issue-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/component-issue-report.md"
-    },
-    {
-     "title": "Daily Transaction Report",
-     "slug": "daily-transaction-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/daily-transaction-report.md"
-    },
-    {
-     "title": "Death Report",
-     "slug": "death-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/death-report.md"
-    },
-    {
-     "title": "Email / SMS Log Report",
-     "slug": "email-sms-log-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/email-sms-log-report.md"
-    },
-    {
-     "title": "Expense Group Report",
-     "slug": "expense-group-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/expense-group-report.md"
-    },
-    {
-     "title": "Expense Report",
-     "slug": "expense-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/expense-report.md"
-    },
-    {
-     "title": "Expiry Medicine Report",
-     "slug": "expiry-medicine-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/expiry-medicine-report.md"
-    },
-    {
-     "title": "How to check Pathology Balance Report?",
-     "slug": "how-to-check-pathology-balance-report",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "reports/how-to-check-pathology-balance-report.md"
-    },
-    {
-     "title": "How to check Radiology Balance Report?",
-     "slug": "how-to-check-radiology-balance-report",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "reports/how-to-check-radiology-balance-report.md"
-    },
-    {
-     "title": "How to checkBalance Amount Report?",
-     "slug": "how-to-checkbalance-amount-report",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "reports/how-to-checkbalance-amount-report.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "reports/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "reports/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "reports/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "Income Group Report",
-     "slug": "income-group-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/income-group-report.md"
-    },
-    {
-     "title": "Income Report",
-     "slug": "income-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/income-report.md"
-    },
-    {
-     "title": "Inventory Issue Report",
-     "slug": "inventory-issue-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/inventory-issue-report.md"
-    },
-    {
-     "title": "Inventory Item report",
-     "slug": "inventory-item-report",
-     "date": "Fri, 24 May, 2024",
-     "file": "reports/inventory-item-report.md"
-    },
-    {
-     "title": "Inventory Stock Report",
-     "slug": "inventory-stock-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/inventory-stock-report.md"
-    },
-    {
-     "title": "IPD Balance Report",
-     "slug": "ipd-balance-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/ipd-balance-report.md"
-    },
-    {
-     "title": "IPD Discharge Patient Report",
-     "slug": "ipd-discharge-patient-report",
-     "date": "Thu, 23 May, 2024",
-     "file": "reports/ipd-discharge-patient-report.md"
-    },
-    {
-     "title": "IPD Report",
-     "slug": "ipd-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/ipd-report.md"
-    },
-    {
-     "title": "Live Consultation Report",
-     "slug": "live-consultation-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/live-consultation-report.md"
-    },
-    {
-     "title": "Live Meeting Report",
-     "slug": "live-meeting-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/live-meeting-report.md"
-    },
-    {
-     "title": "OPD Balance Report",
-     "slug": "opd-balance-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/opd-balance-report.md"
-    },
-    {
-     "title": "OPD Discharge Patient Report",
-     "slug": "opd-discharge-patient-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/opd-discharge-patient-report.md"
-    },
-    {
-     "title": "OPD Report",
-     "slug": "opd-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/opd-report.md"
-    },
-    {
-     "title": "OT Report",
-     "slug": "ot-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/ot-report.md"
-    },
-    {
-     "title": "Pathology Patient Report",
-     "slug": "pathology-patient-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/pathology-patient-report.md"
-    },
-    {
-     "title": "Patient Bill Report",
-     "slug": "patient-bill-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/patient-bill-report.md"
-    },
-    {
-     "title": "Patient Login Credential Report",
-     "slug": "patient-login-credential-report",
-     "date": "Fri, 24 May, 2024",
-     "file": "reports/patient-login-credential-report.md"
-    },
-    {
-     "title": "Patient Visit Report",
-     "slug": "patient-visit-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/patient-visit-report.md"
-    },
-    {
-     "title": "Payroll Month Report",
-     "slug": "payroll-month-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/payroll-month-report.md"
-    },
-    {
-     "title": "Payroll Report",
-     "slug": "payroll-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/payroll-report.md"
-    },
-    {
-     "title": "Pharmacy Bill Report",
-     "slug": "pharmacy-bill-report",
-     "date": "Thu, 23 May, 2024",
-     "file": "reports/pharmacy-bill-report.md"
-    },
-    {
-     "title": "Radiology Patient Report",
-     "slug": "radiology-patient-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/radiology-patient-report.md"
-    },
-    {
-     "title": "Referral Report",
-     "slug": "referral-report",
-     "date": "Thu, 23 May, 2024",
-     "file": "reports/referral-report.md"
-    },
-    {
-     "title": "Staff Attendance Report",
-     "slug": "staff-attendance-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/staff-attendance-report.md"
-    },
-    {
-     "title": "Stock Report",
-     "slug": "stock-report",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "reports/stock-report.md"
-    },
-    {
-     "title": "TPA Report",
-     "slug": "tpa-report",
-     "date": "Fri, 01 Aug, 2025",
-     "file": "reports/tpa-report.md"
-    },
-    {
-     "title": "User Log Report",
-     "slug": "user-log-report",
-     "date": "Sat, 30 Oct, 2021",
-     "file": "reports/user-log-report.md"
-    },
-    {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
-     "date": "Thu, 30 Jul, 2026",
-     "file": "reports/version-2-0-1.md"
-    },
-    {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "reports/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "Setup & Configuration (22)",
    "slug": "setup-configuration",
-   "count": 28,
+   "count": 32,
    "blurb": "Master data: patient fields, charges, beds, print header/footer, front office.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -2756,7 +2120,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "setup-configuration/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "Appointment",
@@ -2810,13 +2174,13 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "setup-configuration/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "setup-configuration/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to create a master of vitals and their reference ranges?",
@@ -2828,7 +2192,7 @@
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "setup-configuration/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "Human Resource",
@@ -2897,16 +2261,40 @@
      "file": "setup-configuration/symptoms.md"
     },
     {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
+    },
+    {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "setup-configuration/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "setup-configuration/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     },
     {
      "title": "Zoom Setting",
@@ -2923,102 +2311,9 @@
    ]
   },
   {
-   "name": "Smart Hospital(10)",
-   "slug": "smart-hospital",
-   "count": 14,
-   "blurb": "",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "smart-hospital/about-whatsapp-messaging.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "smart-hospital/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "smart-hospital/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "smart-hospital/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "Version 1.1",
-     "slug": "version-1-1",
-     "date": "Thu, 21 Aug, 2025",
-     "file": "smart-hospital/version-1-1.md"
-    },
-    {
-     "title": "Version 2.0",
-     "slug": "version-2-0",
-     "date": "Thu, 21 Aug, 2025",
-     "file": "smart-hospital/version-2-0.md"
-    },
-    {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
-     "date": "Thu, 30 Jul, 2026",
-     "file": "smart-hospital/version-2-0-1.md"
-    },
-    {
-     "title": "Version 2.1",
-     "slug": "version-2-1",
-     "date": "Thu, 21 Aug, 2025",
-     "file": "smart-hospital/version-2-1.md"
-    },
-    {
-     "title": "Version 3.0",
-     "slug": "version-3-0",
-     "date": "Thu, 21 Aug, 2025",
-     "file": "smart-hospital/version-3-0.md"
-    },
-    {
-     "title": "Version 3.1",
-     "slug": "version-3-1",
-     "date": "Thu, 21 Aug, 2025",
-     "file": "smart-hospital/version-3-1.md"
-    },
-    {
-     "title": "Version 4.0",
-     "slug": "version-4-0",
-     "date": "Thu, 21 Aug, 2025",
-     "file": "smart-hospital/version-4-0.md"
-    },
-    {
-     "title": "Version 5.0",
-     "slug": "version-5-0",
-     "date": "Thu, 21 Aug, 2025",
-     "file": "smart-hospital/version-5-0.md"
-    },
-    {
-     "title": "Version 6.0",
-     "slug": "version-6-0",
-     "date": "Thu, 21 Aug, 2025",
-     "file": "smart-hospital/version-6-0.md"
-    },
-    {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "smart-hospital/version-7-0.md"
-    }
-   ]
-  },
-  {
    "name": "Survey Form (6)",
    "slug": "survey-form",
-   "count": 12,
+   "count": 16,
    "blurb": "Building, publishing and filling survey forms.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -3032,7 +2327,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "survey-form/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to add Fields to a Survey Form?",
@@ -3044,13 +2339,13 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "survey-form/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "survey-form/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to create a Survey Form?",
@@ -3062,7 +2357,7 @@
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "survey-form/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "How to fill a Survey Form? (Staff / Patient / Public)",
@@ -3083,23 +2378,47 @@
      "file": "survey-form/how-to-view-survey-form-submissions.md"
     },
     {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
+    },
+    {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "survey-form/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "survey-form/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "System Settings (16)",
    "slug": "system-settings",
-   "count": 22,
+   "count": 26,
    "blurb": "Notification, SMS, e-mail, payment-method and general system configuration.",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -3113,7 +2432,7 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "system-settings/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "Attendance Setting",
@@ -3155,19 +2474,19 @@
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "system-settings/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "system-settings/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "system-settings/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "Language Setting",
@@ -3224,23 +2543,47 @@
      "file": "system-settings/users.md"
     },
     {
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-6.md"
+    },
+    {
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
+    },
+    {
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
+    },
+    {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "system-settings/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "system-settings/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   },
   {
    "name": "System Update(1)",
    "slug": "system-update",
-   "count": 7,
+   "count": 11,
    "blurb": "",
    "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
    "articles": [
@@ -3248,25 +2591,25 @@
      "title": "About WhatsApp Messaging",
      "slug": "about-whatsapp-messaging",
      "date": "Sat, 25 Jul, 2026",
-     "file": "system-update/about-whatsapp-messaging.md"
+     "file": "known-issues/about-whatsapp-messaging.md"
     },
     {
      "title": "How to configure WhatsApp using Meta (Cloud API)?",
      "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
      "date": "Sat, 25 Jul, 2026",
-     "file": "system-update/how-to-configure-whatsapp-using-meta-cloud-api.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md"
     },
     {
      "title": "How to configure WhatsApp using Twilio?",
      "slug": "how-to-configure-whatsapp-using-twilio",
      "date": "Sat, 25 Jul, 2026",
-     "file": "system-update/how-to-configure-whatsapp-using-twilio.md"
+     "file": "known-issues/how-to-configure-whatsapp-using-twilio.md"
     },
     {
      "title": "How to enable WhatsApp for a Notification Event?",
      "slug": "how-to-enable-whatsapp-for-a-notification-event",
      "date": "Sat, 25 Jul, 2026",
-     "file": "system-update/how-to-enable-whatsapp-for-a-notification-event.md"
+     "file": "known-issues/how-to-enable-whatsapp-for-a-notification-event.md"
     },
     {
      "title": "System Update",
@@ -3275,264 +2618,73 @@
      "file": "system-update/system-update.md"
     },
     {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
+     "title": "Version 1.0",
+     "slug": "version-1-0-6",
      "date": "Thu, 30 Jul, 2026",
-     "file": "system-update/version-2-0-1.md"
+     "file": "known-issues/version-1-0-6.md"
     },
     {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "system-update/version-7-0.md"
-    }
-   ]
-  },
-  {
-   "name": "TPA Management (2)",
-   "slug": "tpa-management",
-   "count": 8,
-   "blurb": "Insurance/TPA handling.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About TPA",
-     "slug": "about-tpa",
-     "date": "Wed, 10 Nov, 2021",
-     "file": "tpa-management/about-tpa.md"
+     "title": "Version 1.0",
+     "slug": "version-1-0-5",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-1-0-5.md"
     },
     {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "tpa-management/about-whatsapp-messaging.md"
+     "title": "Version 2.0",
+     "slug": "version-2-0-3",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-3.md"
     },
     {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "tpa-management/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "tpa-management/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "tpa-management/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "TPA Management",
-     "slug": "tpa-management",
-     "date": "Wed, 10 Nov, 2021",
-     "file": "tpa-management/tpa-management.md"
+     "title": "Version 2.0",
+     "slug": "version-2-0-2",
+     "date": "Thu, 30 Jul, 2026",
+     "file": "known-issues/version-2-0-2.md"
     },
     {
      "title": "Version 2.0",
      "slug": "version-2-0-1",
      "date": "Thu, 30 Jul, 2026",
-     "file": "tpa-management/version-2-0-1.md"
+     "file": "known-issues/version-2-0-1.md"
     },
     {
      "title": "Version 7.0",
      "slug": "version-7-0",
      "date": "Mon, 27 Jul, 2026",
-     "file": "tpa-management/version-7-0.md"
-    }
-   ]
-  },
-  {
-   "name": "Two Factor Authentication (6)",
-   "slug": "two-factor-authentication",
-   "count": 12,
-   "blurb": "Google Authenticator based 2FA setup for superadmin and staff.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About Two Factor Authentication",
-     "slug": "about-two-factor-authentication",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "two-factor-authentication/about-two-factor-authentication.md"
-    },
-    {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "two-factor-authentication/about-whatsapp-messaging.md"
-    },
-    {
-     "title": "How to check Two Factor Authentication working for superadmin in your smart Hospital?",
-     "slug": "how-to-check-two-factor-authentication-working-for-superadmin-in-your-smart-hospital",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "two-factor-authentication/how-to-check-two-factor-authentication-working-for-superadmin-in-your-smart-hospital.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "two-factor-authentication/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "two-factor-authentication/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to delete the 2FA account for superadmin or staff?",
-     "slug": "how-to-delete-the-2fa-account-for-superadmin-or-staff",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "two-factor-authentication/how-to-delete-the-2fa-account-for-superadmin-or-staff.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "two-factor-authentication/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "How to Install the Google Authenticator app on a mobile device?",
-     "slug": "how-to-install-the-google-authenticator-app-on-a-mobile-device",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "two-factor-authentication/how-to-install-the-google-authenticator-app-on-a-mobile-device.md"
-    },
-    {
-     "title": "How to manually configure the key for superadmin and staff?",
-     "slug": "how-to-manually-configure-the-key-for-superadmin-and-staff",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "two-factor-authentication/how-to-manually-configure-the-key-for-superadmin-and-staff.md"
-    },
-    {
-     "title": "How to Setup 2FA?",
-     "slug": "how-to-setup-2fa",
-     "date": "Sat, 16 Aug, 2025",
-     "file": "two-factor-authentication/how-to-setup-2fa.md"
-    },
-    {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
-     "date": "Thu, 30 Jul, 2026",
-     "file": "two-factor-authentication/version-2-0-1.md"
-    },
-    {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "two-factor-authentication/version-7-0.md"
-    }
-   ]
-  },
-  {
-   "name": "WhatsApp Messaging (4)",
-   "slug": "whatsapp-messaging",
-   "count": 6,
-   "blurb": "WhatsApp Cloud API (Meta) and Twilio configuration, per-event enablement.",
-   "description": "Toggle navigation Home Features computer Demo How it Works description Help & Documentation Articles FAQ assignment User Documentation code Changelog bug_report Known Issues Support",
-   "articles": [
-    {
-     "title": "About WhatsApp Messaging",
-     "slug": "about-whatsapp-messaging",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "whatsapp-messaging/about-whatsapp-messaging.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Meta (Cloud API)?",
-     "slug": "how-to-configure-whatsapp-using-meta-cloud-api",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "whatsapp-messaging/how-to-configure-whatsapp-using-meta-cloud-api.md"
-    },
-    {
-     "title": "How to configure WhatsApp using Twilio?",
-     "slug": "how-to-configure-whatsapp-using-twilio",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "whatsapp-messaging/how-to-configure-whatsapp-using-twilio.md"
-    },
-    {
-     "title": "How to enable WhatsApp for a Notification Event?",
-     "slug": "how-to-enable-whatsapp-for-a-notification-event",
-     "date": "Sat, 25 Jul, 2026",
-     "file": "whatsapp-messaging/how-to-enable-whatsapp-for-a-notification-event.md"
-    },
-    {
-     "title": "Version 2.0",
-     "slug": "version-2-0-1",
-     "date": "Thu, 30 Jul, 2026",
-     "file": "whatsapp-messaging/version-2-0-1.md"
-    },
-    {
-     "title": "Version 7.0",
-     "slug": "version-7-0",
-     "date": "Mon, 27 Jul, 2026",
-     "file": "whatsapp-messaging/version-7-0.md"
+     "file": "known-issues/version-7-0.md"
     }
    ]
   }
  ],
- "total": 520,
+ "total": 408,
  "selected": [
   {
-   "category": "Two Factor Authentication (6)",
-   "category_slug": "two-factor-authentication",
-   "title": "About Two Factor Authentication",
-   "date": "Sat, 16 Aug, 2025",
-   "source": "https://smart-hospital.in/article/about-two-factor-authentication",
-   "body": "### About Two Factor Authentication\n\nSat, 16 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Two Factor Authentication](https://smart-hospital.in/category/two-factor-authentication)\n\n---\n\n**2FA**, or **Two-Factor Authentication**, is a security process in which a user is required to provide two different forms of authentication in order to access an account or system. The goal of 2FA is to make it harder for unauthorized individuals to gain access to an account, even if they have obtained the user's password or other credentials.\n\nThe two factors of authentication typically used in 2FA are:\n\n1. Something the user knows, such as a password, PIN, or answer to a security question.\n2. Something the user has, such as a physical token, a one-time code generated by an authentication app, or an SMS code sent to their phone.\n\nWhen 2FA is enabled for an account, the user must provide both factors of authentication to gain access. For example, they might enter their password as the first factor, and then enter a one-time code generated by an authentication app as the second factor.\n\nBy requiring two different factors of authentication, 2FA makes it much more difficult for attackers to gain access to an account. Even if an attacker manages to obtain the user's password, they will still need the second factor of authentication to gain access. This makes it much less likely that an attacker will be able to successfully compromise the account."
-  },
-  {
-   "category": "Two Factor Authentication (6)",
-   "category_slug": "two-factor-authentication",
-   "title": "How to Setup 2FA?",
-   "date": "Sat, 16 Aug, 2025",
-   "source": "https://smart-hospital.in/article/how-to-setup-2fa",
-   "body": "### How to Setup 2FA?\n\nSat, 16 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Two Factor Authentication](https://smart-hospital.in/category/two-factor-authentication)\n\n---\n\nGo to the your **Smart Hospital** to configure 2FA of Two Factor Authentication, two-step verification. For **setup 2FA**, go to the **Two Factor Authentication** module, which is shown in the left side bar. Now click on**Setup 2FA,**\u00a0the **Setup 2FA** page will open.  \n  \n![](../assets/how-to-setup-2fa/1.jpg)\n\n**Note:** For further processing, you need to set up **Google Authenticator** on your mobile device."
-  },
-  {
-   "category": "Two Factor Authentication (6)",
-   "category_slug": "two-factor-authentication",
-   "title": "How to Install the Google Authenticator app on a mobile device?",
-   "date": "Sat, 16 Aug, 2025",
-   "source": "https://smart-hospital.in/article/how-to-install-the-google-authenticator-app-on-a-mobile-device",
-   "body": "### How to Install the Google Authenticator app on a mobile device?\n\nSat, 16 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Two Factor Authentication](https://smart-hospital.in/category/two-factor-authentication)\n\n---\n\n1. On your mobile device, go to Play Store / IOS.\n2. Download the **Google Authenticator** app.\n3. After downloading the app, install in your device.\n\n  \n![](../assets/how-to-install-the-google-authenticator-app-on-a-mobile-device/1.jpg)  \n  \n  \n\n4. Now open the **Google Authenticator** app and setup your first account.\n5. Use the QR code or setup key in your **2FA** settings (by Google or third-party service). If you\u2019re having trouble, go to g.co/2sv\n6. Now click on **Scan a** **QR code** from your mobile.\n\n  \n![](../assets/how-to-install-the-google-authenticator-app-on-a-mobile-device/2.jpg)  \n  \n  \n\n7. Now, scan the **QR code,** which is available on your Smart Hospital **Two Factor Authentication > Setup 2FA** page**.**\n\n  \n![](../assets/how-to-install-the-google-authenticator-app-on-a-mobile-device/3.jpg)  \n  \n  \n\n8. You will receive the **six-digit verification code**, which will show up in the **Google Authenticator**\n9. Now fill in the six-digit verification code below the QR code and click on \"**Verify and Activate.\"**\n10. You have successfully enabled the **2FA method** in your Smart Hospital, and a message will be shown on screen.\n\n  \n![](../assets/how-to-install-the-google-authenticator-app-on-a-mobile-device/4.jpg)"
-  },
-  {
-   "category": "Two Factor Authentication (6)",
-   "category_slug": "two-factor-authentication",
-   "title": "How to delete the 2FA account for superadmin or staff?",
-   "date": "Sat, 16 Aug, 2025",
-   "source": "https://smart-hospital.in/article/how-to-delete-the-2fa-account-for-superadmin-or-staff",
-   "body": "### How to delete the 2FA account for superadmin or staff?\n\nSat, 16 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Two Factor Authentication](https://smart-hospital.in/category/two-factor-authentication)\n\n---\n\nTo delete the 2FA account, Super Admin or Staff, go to login in your **Smart Hospital**. After the login, go to the\u00a0 **Two Factor Authentication**module, which is shown in the left side bar. Now click on **Two Factor Authentication****> Setup 2FA**. A new page will open, and a message will show, \"You have enabled the 2FA method. If you want to remove your 2FA account, please \"**click here\".  \n  \n![](../assets/how-to-delete-the-2fa-account-for-superadmin-or-staff/1.jpg)**\n\nAfter **clicking here,** a delete confirmation message will appear on the screen. Now you can delete the account by clicking on the **Delete** button, which is showing in the right-bottom corner.  \n  \n  \n![](../assets/how-to-delete-the-2fa-account-for-superadmin-or-staff/2.jpg)"
-  },
-  {
-   "category": "WhatsApp Messaging (4)",
-   "category_slug": "whatsapp-messaging",
+   "category": "bug_report Known Issues",
+   "category_slug": "known-issues",
    "title": "About WhatsApp Messaging",
    "date": "Sat, 25 Jul, 2026",
    "source": "https://smart-hospital.in/article/about-whatsapp-messaging",
    "body": "### About WhatsApp Messaging\n\nSat, 25 Jul, 2026\n\n[Articles](https://smart-hospital.in/articles)[WhatsApp Messaging](https://smart-hospital.in/category/whatsapp-messaging)\n\n---\n\nWhatsApp Messaging module is for sending automatic WhatsApp notifications to patients and staff \u2014 the same events that already go out over Email, SMS and Mobile App push notifications can also be delivered over WhatsApp, using the exact template message the hospital has configured for that event.\n\nTwo WhatsApp providers are supported, configured from two tabs on the same settings page:\n\n* **Twilio WhatsApp**\u00a0\u2014 sends through your Twilio account's WhatsApp sandbox or approved sender number.\n* **Meta WhatsApp**\u00a0\u2014 sends through the official WhatsApp Business Platform (Cloud API), directly through Meta/Facebook.\n\nOnly\u00a0**one**\u00a0provider can be active at a time \u2014 enabling one automatically disables the other, since both ultimately send from the same \"WhatsApp\" channel.  \n  \n![](../assets/about-whatsapp-messaging/1.jpg)\n\nOnce a provider is configured and enabled, WhatsApp becomes available as a delivery option next to Email, SMS and Mobile App on the\u00a0**Notification Setting**\u00a0page, where it can be switched on per event \u2014 for example OPD Patient Registration, IPD Patient Discharge, Appointment Approved, or Login Credentials.  \n  \n![](../assets/about-whatsapp-messaging/2.jpg)"
   },
   {
-   "category": "WhatsApp Messaging (4)",
-   "category_slug": "whatsapp-messaging",
+   "category": "bug_report Known Issues",
+   "category_slug": "known-issues",
    "title": "How to configure WhatsApp using Meta (Cloud API)?",
    "date": "Sat, 25 Jul, 2026",
    "source": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-meta-cloud-api",
    "body": "### How to configure WhatsApp using Meta (Cloud API)?\n\nSat, 25 Jul, 2026\n\n[Articles](https://smart-hospital.in/articles)[WhatsApp Messaging](https://smart-hospital.in/category/whatsapp-messaging)\n\n---\n\nGo to\u00a0**Setup \u2192 Settings \u2192 WhatsApp Setting**\u00a0from the sidebar and click on the\u00a0**Meta WhatsApp**\u00a0tab.  \n  \n![](../assets/how-to-configure-whatsapp-using-meta-cloud-api/1.jpg)\n\nEnter the following, taken from your Meta for Developers \u2192 WhatsApp app:\n\n* **Access Token**\u00a0\u2014 the permanent (or system user) access token for your WhatsApp Business app. Required, masked after saving.\n* **Registered Phone Number**\u00a0\u2014 here this is your WhatsApp\u00a0**Phone Number ID**\u00a0from the Meta Cloud API (not the phone number itself), required.\n* **Language**\u00a0\u2014 the language code your approved message templates were created in, e.g.\u00a0`en_US`. Required.\n\nSet\u00a0**Status**\u00a0to\u00a0**Enabled**\u00a0and click\u00a0**Save**. Enabling Meta here automatically disables the Twilio provider.\n\n**Note:**\u00a0Meta WhatsApp only sends\u00a0**pre-approved message templates**\u00a0\u2014 each notification event's\u00a0**WhatsApp Template ID**\u00a0must match a template name that has already been approved in your Meta WhatsApp Business account, in the same language configured here."
   },
   {
-   "category": "WhatsApp Messaging (4)",
-   "category_slug": "whatsapp-messaging",
+   "category": "bug_report Known Issues",
+   "category_slug": "known-issues",
    "title": "How to configure WhatsApp using Twilio?",
    "date": "Sat, 25 Jul, 2026",
    "source": "https://smart-hospital.in/article/how-to-configure-whatsapp-using-twilio",
    "body": "### How to configure WhatsApp using Twilio?\n\nSat, 25 Jul, 2026\n\n[Articles](https://smart-hospital.in/articles)[WhatsApp Messaging](https://smart-hospital.in/category/whatsapp-messaging)\n\n---\n\nGo to\u00a0**Setup \u2192 Settings \u2192 WhatsApp Setting**\u00a0from the sidebar. The\u00a0**Twilio WhatsApp**\u00a0tab is selected by default.  \n  \n![](../assets/how-to-configure-whatsapp-using-twilio/1.jpg)\n\nEnter the following, taken from your Twilio Console:\n\n* **Twilio Account SID**\u00a0\u2014 required.\n* **Authentication Token**\u00a0\u2014 required. Once saved, this is masked and shown only as a hint on later visits.\n* **Registered Phone Number**\u00a0\u2014 the WhatsApp-enabled sender number linked to your Twilio account, required.\n\nSet\u00a0**Status**\u00a0to\u00a0**Enabled**\u00a0and click\u00a0**Save**. Enabling Twilio here automatically disables the Meta WhatsApp provider, since only one can be active at a time.\n\n**Note:**\u00a0the phone number must already be approved for WhatsApp on your Twilio account (either the Twilio Sandbox for testing, or your own approved WhatsApp sender for production) before messages will actually deliver."
   },
   {
-   "category": "WhatsApp Messaging (4)",
-   "category_slug": "whatsapp-messaging",
+   "category": "bug_report Known Issues",
+   "category_slug": "known-issues",
    "title": "How to enable WhatsApp for a Notification Event?",
    "date": "Sat, 25 Jul, 2026",
    "source": "https://smart-hospital.in/article/how-to-enable-whatsapp-for-a-notification-event",
@@ -3552,7 +2704,7 @@
    "title": "System Notification Setting",
    "date": "Mon, 01 Nov, 2021",
    "source": "https://smart-hospital.in/article/system-notification-setting",
-   "body": "### System Notification Setting\n\nMon, 01 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[System Settings](https://smart-hospital.in/category/system-settings)\n\n---\n\nTo manage system notification setting, go to\u00a0**Setup > Settings > System Notification Setting**. \u00a0There are 56 events \u00a0where system notification are sending to concerning user (staff or patient or both) Smart Hospital account. With the help of event option setting you can manage which notifications to send in which event to which person (staff or patient) and select the check box and then click on **Save**\u00a0button.\n\n![system notification setting](../assets/system-notification-setting/1.jpg)\n\nTo edit sample message click on\u00a0**Edit**\u00a0icon present in the sample message column, at click of this icon a modal will be open. Here enter\u00a0**Subject**,\u00a0**Staff message and Patient message**\u00a0and then click on\u00a0**Save**\u00a0button.  \n  \n![](../assets/system-notification-setting/2.jpg)"
+   "body": "### System Notification Setting\n\nMon, 01 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[System Settings](https://smart-hospital.in/category/system-settings)\n\n---\n\nTo manage system notification setting, go to\u00a0**Setup > Settings > System Notification Setting**. \u00a0There are 56 events \u00a0where system notification are sending to concerning user (staff or patient or both) Smart Hospital account. With the help of event option setting you can manage which notifications to send in which event to which person (staff or patient) and select the check box and then click on **Save**\u00a0button.\n\nTo edit sample message click on\u00a0**Edit**\u00a0icon present in the sample message column, at click of this icon a modal will be open. Here enter\u00a0**Subject**,\u00a0**Staff message and Patient message**\u00a0and then click on\u00a0**Save**\u00a0button.  \n  \n![](../assets/system-notification-setting/2.jpg)"
   },
   {
    "category": "System Settings (16)",
@@ -3569,102 +2721,6 @@
    "date": "Tue, 09 Nov, 2021",
    "source": "https://smart-hospital.in/article/email-setting",
    "body": "### Email Setting\n\nTue, 09 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[System Settings](https://smart-hospital.in/category/system-settings)\n\n---\n\nAfter adding student or staff if you found there is no email is sending by system then there may be email configuration issue on your server / Smart Hospital.  \n  \nIn Smart Hospital we have used phpmailer\u00a0[**https://github.com/PHPMailer/PHPMailer**](https://github.com/PHPMailer/PHPMailer)library which is used by many popular php application like WordPress, Drupal, SugarCRM, Yii, Joomla etc.  \n  \nBy default\u00a0**SendMail**\u00a0is set as\u00a0**Email Engine**\u00a0in\u00a0**Setup > Settings > Email Setting**. SendMail can only work and send emails if you cpanel hosting supports it. If SendMail not sending email then contact to your hosting provider. Since SendMail is easiest but less reliable so check email recipient account\u00a0**Spam**\u00a0folder because sometimes SendMail sent emails detected as spams (if using SendMail). Another and best option is to use\u00a0**SMTP**\u00a0as email engine. You can use\u00a0**Gmail**\u00a0or any other free SMTP service provider to use SMTP email engine.  \n  \n![](../assets/email-setting/1.jpg)  \n  \n![](../assets/email-setting/2.jpg)  \nu200b  \nIf you are using your hosting smtp or any other provider smtp service then check their documentation for smtp settings.  \n  \n**Gmail SMTP configuration -**  \n  \nTo configure gmail account first you have to create app password for SMTP service, Please check following steps to generate app password-  \n  \n1. Go to your Google Account.  \n2. On the left navigation panel, choose Security.  \n3. On the 'Signing in to Google' panel, choose App passwords. If you don\u2019t see this option:\n\n* 2-Step Verification is not set up for your account\n* 2-Step Verification is set up for security keys only\n* Your account is through work, hospital or other organization\n* You\u2019ve turned on Advanced Protection for your account\n\n4. At the bottom, choose Select app and choose the app that you\u2019re using.  \n   5. Choose Select device and choose the device that you're using.  \n   6. Choose Generate.  \n   7. Follow the instructions to enter the app password. The app password is the 16-character code in the yellow bar on your device.  \n   8. Choose Done.  \n     \n     \n   After generating gmail app password for SMTP service enter credentials in Smart Hospital SMTP email configuration-\n\n**Email Engine = SendMail/SMTP**  \n**SMTP Username = your gmail email id**  \n**SMTP Password = Generated App Password**  \n**SMTP Server = smtp.gmail.com**  \n**SMTP Port = 587**  \n**SMTP Security = TLS  \nSMTP Auth = ON**  \n  \n  \n  \n***Note: After configuring email setting please check you have enabled email notification settings from Setup > Settings > Notification Setting.***"
-  },
-  {
-   "category": "Messaging (4)",
-   "category_slug": "messaging",
-   "title": "How Notice Board works?",
-   "date": "Mon, 01 Nov, 2021",
-   "source": "https://smart-hospital.in/article/how-notice-board-works",
-   "body": "### How Notice Board works?\n\nMon, 01 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Messaging](https://smart-hospital.in/category/messaging)\n\n---\n\nNotice board basically a messaging system for communication to patient and staff.\n\nNotice Board is for sending common messages to all staff members to add new notice board message click on **+Post New Message** button, here enter Message Title, Message Text, Notice Date, Publish On Date and Message To different types of staff users.  \n  \n![](../assets/how-notice-board-works/1.jpg)  \n  \n  \nYou can check this added Notice at Notice list page.  \n  \n![](../assets/how-notice-board-works/2.jpg)  \n  \nFrom here you can edit or delete created Notice."
-  },
-  {
-   "category": "Messaging (4)",
-   "category_slug": "messaging",
-   "title": "How send patient credential in Smart Hospital?",
-   "date": "Fri, 30 Aug, 2024",
-   "source": "https://smart-hospital.in/article/how-send-patient-credential-in-smart-hospital",
-   "body": "### How send patient credential in Smart Hospital?\n\nFri, 30 Aug, 2024\n\n[Articles](https://smart-hospital.in/articles)[Messaging](https://smart-hospital.in/category/messaging)\n\n---\n\nTo send the patient credential, simply go to the **Messaging** > **Send Credentials  \n  \n![](../assets/how-send-patient-credential-in-smart-hospital/1.jpg)**After click on Send Credential button, **Send Patient Credential** page will be open, here in this page multple patient with their login credentials are available  \n  \n![](../assets/how-send-patient-credential-in-smart-hospital/2.jpg)  \n  \nTo send the credentials to the patient, simply select the checkbox next to the patient's id . You can select multiple checkboxes to send credentials to multiple patients. Then click on the **Save** button, located at the bottom right corner  \n  \nYou can also send a '**Forgot Password**' to the patient by following the same process. Just click on the '**Credential Type**' dropdown and select '**Forgot Password**'  \n  \n![](../assets/how-send-patient-credential-in-smart-hospital/3.jpg)  \n  \n  \nAnd if you want to send both Credentials and Forgot Password, simply select **both** from the '**Credential Type'** dropdown and follow the same process as sending the credentials  \n  \n**![](../assets/how-send-patient-credential-in-smart-hospital/4.jpg)**"
-  },
-  {
-   "category": "Patient Panel (10)",
-   "category_slug": "patient-panel",
-   "title": "Patient Dashboard",
-   "date": "Fri, 01 Aug, 2025",
-   "source": "https://smart-hospital.in/article/patient-dashboard",
-   "body": "### Patient Dashboard\n\nFri, 01 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Patient Panel](https://smart-hospital.in/category/patient-panel)\n\n---\n\nAt patient panel you will see **Dashboard**, here patient can see all their treatment details in summarized form.  \n  \nAt the top you will see tabs like **OPD, IPD, Pharmacy, Pathology, Radiology, Blood Bank** and **Ambulance**, here you can see total count for patient treatment under these tabs.\u00a0  \n  \nIn below you will see graphic representation of quantitative information for Medical History, Findings and Symptoms through Pie Chart, Bar Chart etc.  \n  \n  \n![](../assets/patient-dashboard/1.jpg)"
-  },
-  {
-   "category": "Patient Panel (10)",
-   "category_slug": "patient-panel",
-   "title": "How to add appointment from Patient panel?",
-   "date": "Sat, 02 Aug, 2025",
-   "source": "https://smart-hospital.in/article/how-to-add-appointment-from-patient-panel",
-   "body": "### How to add appointment from Patient panel?\n\nSat, 02 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Patient Panel](https://smart-hospital.in/category/patient-panel)\n\n---\n\nTo add an appointment from the patient account, go to **My Appointment**. Here you can see the patient profile along with all details.  \n  \n![](../assets/how-to-add-appointment-from-patient-panel/1.jpg)\n\nNow, click on the **+Add Appointment** button, then fill in the required details: **Date, Specialist, Doctor, Shift, Slot, Appointment Priority, Message, Live Consultation (Video Conference)**, and select a slot from the available options. Finally, click the **Save** button to complete the process.   \n  \n![](../assets/how-to-add-appointment-from-patient-panel/2.jpg)  \n  \n  \nYou can view added Appointment record at **Appointment List**. This Appointment record will how to patient as Pending until patient doesn't pay for it.  \n  \n![](../assets/how-to-add-appointment-from-patient-panel/3.jpg)\n\nTo make online payment for appointment click on Pay button present at Action column.  \n  \n![](../assets/how-to-add-appointment-from-patient-panel/4.jpg)  \n  \n**Note**:- Here after click on Pay button page will be redirect to your selected payment method. [Click here](https://smart-hospital.in/article/payment-methods) to understand how to enable payment method.  \n  \nAfter make online payment your appointment patient will see their appointment status as **Approved**.  \n  \nTo view appointment details click on show button icon and for delete appointment click on delete button icon present at **Action** column at Appointment list."
-  },
-  {
-   "category": "Patient Panel (10)",
-   "category_slug": "patient-panel",
-   "title": "OPD",
-   "date": "Thu, 18 Nov, 2021",
-   "source": "https://smart-hospital.in/article/opd",
-   "body": "### OPD\n\nThu, 18 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Patient Panel](https://smart-hospital.in/category/patient-panel)\n\n---\n\nAt patient account in OPD module, there are 4 tabs available **Visits, Lab Investigations, Treatment History and Timeline**.\n\nAt Visit tab patient can find their all visits and OPD records.\n\nTo check patient details click on show button icon present at Action column.\n\nTo check treatments under particular OPD click on OPD No, here you will find multiple tabs of Overview, Visits, Charges, Payment, Lab Investigation, Timeline, Medication, Operation Theatre, Live Consultation.\n\n### **Overview**\n\nThis section describes patients all details like patient's Allergies, Findings Symptoms, Consultant Doctors, Timeline Medical History, Lab Investigation etc. of particular visit.\n\n**![opd overview](../assets/opd/1.jpg)**\n\n---\n\n### **Visits**\n\nUnder visit section, patient can see all their Recheckups.  \n  \n![](../assets/opd/2.jpg)  \n  \n![](../assets/opd/3.jpg)\n\n---\n\n### **Charges**\n\nAll the added charge of patient can be check from Charges tab. Patient can also print charges from print button icon present at **Action** column.  \n  \n![](../assets/opd/4.jpg)\n\n---\n\n### **Payment**\n\nPatient can check all the payment details done from patient side. Patient can also print Payment from print button icon present at **Action** column.  \n  \n  \n![](../assets/opd/5.jpg)  \n  \nTo make online payment click on **+** **Make Payment** button. Here add Payment Amount and click on **Add** button.  \n  \n![](../assets/opd/6.jpg)\n\nThis will redirect to the payment page where patient can make online payment through selected payment method.  \n  \n\n---\n\n### **Lab Investigation**\n\nAt this tab patient can check their reports of Pathology and Radiology tests.  \n  \n![](../assets/opd/7.jpg)  \n  \n![](../assets/opd/8.jpg)\n\n---\n\n### **Timeline**\n\nIn Timeline section patient can see notes or quick access notes created from admin or staff panel.  \n  \n![](../assets/opd/9.jpg)\n\n---\n\n### **Medication**\n\nMedication is for comparing a patient's medication orders to all of the medications that the patient has been taking.\n\nUnder Medication patient can check all their medication routine which was given to the patient.  \n  \n![](../assets/opd/10.jpg)  \n  \n\n---\n\n### **Operation Theatre**\n\nUnder Operation Theatre tab patient can check details of their all operation done under OPD.\n\n---\n\n### **Live Consultation**\n\nUsing Live Consultation Patients can consult to doctor through zoom video call. From Live Consultation tab patient can check all their upcoming and previous Live Consultation.\n\n**![](../assets/opd/11.jpg)**"
-  },
-  {
-   "category": "Patient Panel (10)",
-   "category_slug": "patient-panel",
-   "title": "IPD",
-   "date": "Thu, 18 Nov, 2021",
-   "source": "https://smart-hospital.in/article/ipd",
-   "body": "### IPD\n\nThu, 18 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Patient Panel](https://smart-hospital.in/category/patient-panel)\n\n---\n\nAt patient account in IPD module patient can check following details like **Overview, Nurse Notes, Consultant Register, Lab Investigation, Timeline, Prescription, Charges, Payment, Treatment History, Medication, Operation Theatre, Live Consultation and Bed History.**\n\n### **Overview-**\n\nThis section describes patients all details like patients Allergies, Findings Symptoms, Consultant Doctors, Timeline Medical History, Lab investigation, module wise payment billing details etc.  \n  \n![ipd overview](../assets/ipd/1.jpg)  \n\n---\n\n### **Nurse Notes**\n\nA nursing note is a medical note into a medical or health record made by a nurse that\u00a0**can provide an accurate reflection of nursing assessments, changes in patient conditions, care provided and relevant information to support the clinical team to deliver excellent care**.\n\nPatient can check Nurse notes from **Nurse Notes** tab.  \n  \n![](../assets/ipd/2.jpg)\n\n---\n\n### **Consultant Register**\n\nConsultant Register tab has all details about instructions given by doctors day to day for this patient's treatment. Patient can check these details from **Consultant Register** tab.  \n  \n![](../assets/ipd/3.jpg)\n\n---\n\n### **Lab Investigation**\n\nIn IPD patient can also check patient all Pathology and Radiology test under **Lab Investigation** tab.  \n  \n![](../assets/ipd/4.jpg)\n\nHere in Lab Investigation List you can check all listed lab reports of. You can check lab test report details from show option available at **Action** column.  \n  \n![](../assets/ipd/5.jpg)\n\n---\n\n### **Timeline**\n\nIn Timeline section patient can see notes or quick access notes created from admin or staff panel.  \n  \n![](../assets/ipd/6.jpg)\n\n---\n\n### **Prescription**\n\nHere patient can check doctor\u2019s prescribed medicines and other details at prescription tab click on **Action** button to view prescription details.  \n  \n![](../assets/ipd/7.jpg)\n\n---\n\n### **Charges**\n\nAll the added charge of patient can be check from **Charges** tab. Patient can also print charges from print button icon present at **Action** column.  \n  \n![](../assets/ipd/8.jpg)\n\n---\n\n### **Payment**\n\nPatient can check all the payment details done from patient side. Patient can also print Payment from print button icon present at **Action** column.  \n  \n![](../assets/ipd/9.jpg)\n\n---\n\n### **Treatment History**\n\nAt Treatment History tab under OPD patient list, you can check patients old visits and whatever treatment had been given to the patient.  \n  \n![](../assets/ipd/10.jpg)\n\n---\n\n### **Medication**\n\nMedication is for comparing a patient's medication orders to all of the medications that the patient has been taking.  \n  \nUnder Medication patient can check all their medication routine which was given to the patient.  \n  \n![](../assets/ipd/11.jpg)\n\n---\n\n### **Operation Theatre**\n\nUnder Operation Theatre tab patient can check details of their all operation done under OPD.  \n  \n![](../assets/ipd/12.jpg)  \n  \n![](../assets/ipd/13.jpg)\n\n---\n\n### **Live Consultation**\n\nUsing Live Consultation Patients can consult to doctor through zoom video call. From Live Consultation tab patient can check all their upcoming and previous Live Consultation.\n\n---\n\n### **Bed History**\n\nIn IPD \u2013In Patient you will find Bed History tab, The Bed History shows the assignment of beds to the patient under different categories like Bed history when patient was admitted at ICU.\n\nUnder Bed History tab you can see **Bed Group, Bed, From Date, To Date** and current status of **Bed**.  \n  \n![](../assets/ipd/14.jpg)"
-  },
-  {
-   "category": "Patient Panel (10)",
-   "category_slug": "patient-panel",
-   "title": "Pharmacy",
-   "date": "Fri, 01 Aug, 2025",
-   "source": "https://smart-hospital.in/article/pharmacy-1",
-   "body": "### Pharmacy\n\nFri, 01 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Patient Panel](https://smart-hospital.in/category/patient-panel)\n\n---\n\nTo check Pharmacy bill, go to Pharmacy here you can check Pharmacy bill details like **Bill No., Case Id, Date, Doctor Name, Note, Discount, Net Amount, Paid Amount Refund Amound and Balance Amount**.\u00a0  \n  \n![](../assets/pharmacy-1/1.jpg)\n\nTo view paid payment details, click on View Payment icon here you can check paid payments by patient and also print them from print button present at **Action** column.  \n  \n![](../assets/pharmacy-1/2.jpg)\n\nFrom **Show** icon you can check all medicine details and bill details. You can also print them from print icon present at top right side at header.  \n  \n![](../assets/pharmacy-1/3.jpg)\n\nFrom **Pay** button, patient can make online payment for their medicine bill. To pay online click on **Pay** button it will redirect you to payment gateway from where patient can make online payment.  \n  \n![](../assets/pharmacy-1/4.jpg)  \n  \n![](../assets/pharmacy-1/5.jpg)"
-  },
-  {
-   "category": "Patient Panel (10)",
-   "category_slug": "patient-panel",
-   "title": "Pathology",
-   "date": "Thu, 18 Nov, 2021",
-   "source": "https://smart-hospital.in/article/pathology-1",
-   "body": "### Pathology\n\nThu, 18 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Patient Panel](https://smart-hospital.in/category/patient-panel)\n\n---\n\nTo check Pathology test reports bill details at patient panel go to Pathology, here you can check patient pathology test report bill details like **Bill No, Case ID, Reporting Date, Reference Doctor, Note, Amount, Paid Amount and Balance Amount**.  \n  \n![](../assets/pathology-1/1.jpg)\n\nTo view payment details click on View Payment button available on **Action** column. To print this payment details you can print on print button icon.  \n  \n![](../assets/pathology-1/2.jpg)\n\nTo view Pathology report bill details click on Show button present at **Action** column. To print bill click on print button present at top right side on the header.  \n  \n![](../assets/pathology-1/3.jpg)\n\nTo make online payment for **Pathology** click on **Pay** button here you can edit payment and click on add button, this will redirect you to payment gateway from where you can make online payment for Pathology.  \n  \n![](../assets/pathology-1/4.jpg)"
-  },
-  {
-   "category": "Patient Panel (10)",
-   "category_slug": "patient-panel",
-   "title": "Radiology",
-   "date": "Thu, 18 Nov, 2021",
-   "source": "https://smart-hospital.in/article/radiology-1",
-   "body": "### Radiology\n\nThu, 18 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Patient Panel](https://smart-hospital.in/category/patient-panel)\n\n---\n\nTo check Radiology test reports bill details at patient panel go to Radiology, here you can check patient Radiology test report bill details like **Bill No, Case ID, Reporting Date, Reference Doctor, Note, Amount, Paid Amount\u00a0 and Balance Amount**.  \n  \n![](../assets/radiology-1/1.jpg)\n\nTo view payment details click on View Payment button available on **Action** column. To print this payment details you can print on print button icon.  \n  \n![](../assets/radiology-1/2.jpg)\n\nTo view **Radiology** report bill details click on Show button present at **Action** column. To print bill click on print button present at top right side on the header.  \n  \n![](../assets/radiology-1/3.jpg)\n\nTo make online payment for Radiology click on **Pay** button here you can edit payment and click on add button, this will redirect you to payment gateway from where you can make online payment for **Radiology**.  \n  \n![](../assets/radiology-1/4.jpg)"
-  },
-  {
-   "category": "Patient Panel (10)",
-   "category_slug": "patient-panel",
-   "title": "Blood Bank",
-   "date": "Thu, 18 Nov, 2021",
-   "source": "https://smart-hospital.in/article/blood-bank-1",
-   "body": "### Blood Bank\n\nThu, 18 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Patient Panel](https://smart-hospital.in/category/patient-panel)\n\n---\n\nTo check patient Blood Bank details like Blood Issue and Component Issue Details, go to **Blood Bank**. Here you will get two section one for **Blood Issue** and another for **Component Issue**.  \n  \n\n### **Blood Issue**\n\nTo check Blood Issue details click on Blood issue tab, here you can check details like **Bill No., Issue Date, Received To, Blood Group, Gender, Donor Name, Bags, Amount, Paid Amount and Balance Amount**.  \n  \n![](../assets/blood-bank-1/1.jpg)\n\nTo view payment details click on View **Payment** button available on Action column. To print this payment details you can print on print button icon.  \n  \n![](../assets/blood-bank-1/2.jpg)\n\nTo print bill click on print button present at **Blood Issue List**.  \n  \n![](../assets/blood-bank-1/3.jpg)\n\nTo make online payment for blood issue click on **Pay** button here you can edit payment and click on add button, this will redirect you to payment gateway from where you can make online payment for Patient blood issue.  \n  \n![](../assets/blood-bank-1/4.jpg)  \n  \n\n---\n\n### **Component Issue**\n\nTo check Component \u00a0Issue details click on Blood issue tab, here you can check details like **Bill No., Issue Date, Received To, Blood Group, Component, Gender, Donor Name, Bags, Amount, Paid Amount and Balance Amount**.  \n  \n![](../assets/blood-bank-1/5.jpg)\n\nTo view payment details click on View Payment button available on **Action** column. To print this payment details you can print on print button icon.  \n  \n![](../assets/blood-bank-1/6.jpg)\n\nTo print bill click on print button present at **Component Issue List**.  \n  \n![](../assets/blood-bank-1/7.jpg)\n\nTo make online payment for Component issue click on **Pay** button here you can edit payment and click on add button, this will redirect you to payment gateway from where you can make online payment for Patient Component issue.  \n  \n![](../assets/blood-bank-1/8.jpg)"
-  },
-  {
-   "category": "Patient Panel (10)",
-   "category_slug": "patient-panel",
-   "title": "Ambulance",
-   "date": "Thu, 18 Nov, 2021",
-   "source": "https://smart-hospital.in/article/ambulance",
-   "body": "### Ambulance\n\nThu, 18 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Patient Panel](https://smart-hospital.in/category/patient-panel)\n\n---\n\nTo check Ambulance bill details at patient panel go to **Ambulance** module, here you can check patient Ambulance bill details like **Bill No, Vehicle Number, Vehicle Model, Driver Name, Driver Contact, Amount, Tax, Net Amount, Paid Amount, Balance Amount**.  \n  \n![](../assets/ambulance/1.jpg)\n\nTo view payment details click on View Payment button available on **Action** column.  \n  \n![](../assets/ambulance/2.jpg)\n\nTo view Ambulance bill details click on Show button present at Action column. To print bill click on print button present at top right side on the header.  \n  \n![](../assets/ambulance/3.jpg)\n\nTo make online payment for Ambulance call click on **Pay** button here you can edit payment and click on add button, this will redirect you to payment gateway from where you can make online payment for Ambulance call.  \n  \n![](../assets/ambulance/4.jpg)  \n  \n![](../assets/ambulance/5.jpg)"
-  },
-  {
-   "category": "Patient Panel (10)",
-   "category_slug": "patient-panel",
-   "title": "Live Consultation",
-   "date": "Thu, 18 Nov, 2021",
-   "source": "https://smart-hospital.in/article/live-consultation",
-   "body": "### Live Consultation\n\nThu, 18 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Patient Panel](https://smart-hospital.in/category/patient-panel)\n\n---\n\nUsing Live Consultation Patients can consult to doctor through zoom video call.\n\nHere all the Live Consultation like from **Appointment, OPD and IPD** modules for patients will be listed.  \n  \n![](../assets/live-consultation/1.jpg)"
   },
   {
    "category": "Billing (3)",
@@ -3747,46 +2803,6 @@
    "body": "### How to add Phone Call Log in Smart Hospital?\n\nThu, 28 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Front Office](https://smart-hospital.in/category/front-office)\n\n---\n\nPhone Call Log is for managing incoming or outgoing call details for this click on Phone Call Log button. To add Phone Call Log click on **+ Add Call Log** button, now enter **Person Name, Phone, Date, Description, Next Follow Up Date, Call Duration, Note** and **Call Type Incoming or Outgoing**.  \n  \n  \n![](../assets/how-to-add-phone-call-log-in-smart-hospital/1.jpg)\n\nTo view phone call log click on\u00a0**View**\u00a0icon present at\u00a0**Action**\u00a0column in the phone call log list, at click of this icon\u00a0**Details**\u00a0modal will be open. Here you can see the details of the phone call log.  \n  \n![](../assets/how-to-add-phone-call-log-in-smart-hospital/2.jpg)\n\nTo edit phone call log click on\u00a0**Edit**\u00a0icon and to delete phone call log click on\u00a0**Delete**\u00a0icon present in the phone call log list"
   },
   {
-   "category": "Certificate (7)",
-   "category_slug": "certificate",
-   "title": "How to generate certificate?",
-   "date": "Tue, 02 Nov, 2021",
-   "source": "https://smart-hospital.in/article/how-to-generate-certificate",
-   "body": "### How to generate certificate?\n\nTue, 02 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Certificate](https://smart-hospital.in/category/certificate)\n\n---\n\nTo generate certificate, go to\u00a0**Certificate > Generate Certificate**\u00a0then select\u00a0**Module,** **Patient Status** and**Certificate**\u00a0and then click on\u00a0**Search**\u00a0button. The list of patient will be shown in the below of the page.  \n  \n![certificate patient list](../assets/how-to-generate-certificate/1.jpg)\n\nNow select patient for generate certificate and click on\u00a0**Generate**\u00a0button present at right side in the patient list, at click of this button certificate will be generate.\n\n![generate certificate](../assets/how-to-generate-certificate/2.jpg)\n\n**Note -**\u00a0Do not print the certificate directly, here select the\u00a0**Destination**\u00a0(save as pdf) and save pdf file and then print certificate using this pdf file."
-  },
-  {
-   "category": "Inventory (4)",
-   "category_slug": "inventory",
-   "title": "How to check issue and return item?",
-   "date": "Sun, 31 Oct, 2021",
-   "source": "https://smart-hospital.in/article/how-to-check-issue-and-return-item",
-   "body": "### How to check issue and return item?\n\nSun, 31 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Inventory](https://smart-hospital.in/category/inventory)\n\n---\n\nTo see issue or return item click on Issue Item button.\n\nTo issue an item click on **+ Add Issue Item** button, here enter **User Type, Issued to, Issue By, Issue Date, Return Date, Note, Item Category, Item** and **Issue Quantity**.  \n  \n![](../assets/how-to-check-issue-and-return-item/1.jpg)   \n  \n  \nYou can view this added record in the Issue Item List page.  \n  \n![](../assets/how-to-check-issue-and-return-item/2.jpg)\n\nTo delete the issued item click on the\u00a0**Delete**\u00a0icon present at Action column and will show on mouse hover.\n\nTo return an item click on Click To **Return** button.  \n  \n![](../assets/how-to-check-issue-and-return-item/3.jpg)"
-  },
-  {
-   "category": "Front CMS (8)",
-   "category_slug": "front-cms",
-   "title": "How Media Manager works in Smart Hospital.",
-   "date": "Thu, 11 Nov, 2021",
-   "source": "https://smart-hospital.in/article/how-media-manager-works-in-smart-hospital",
-   "body": "### How Media Manager works in Smart Hospital.\n\nThu, 11 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Front CMS](https://smart-hospital.in/category/front-cms)\n\n---\n\nTo upload file (like images)\u00a0 and YouTube videos , go to\u00a0**Front CMS > Media Manager**\u00a0then Choose or drag file in the\u00a0**Upload Your File**option so selected file will be upload in your Smart hospital on Media Manager. Also to**upload youtube video enter youtube url at** **Upload Youtube Video URL**\u00a0section and then click on\u00a0**Submit**\u00a0button. Uploaded file and youtube video will show at Media Manager list page.\n\n![add media manager](../assets/how-media-manager-works-in-smart-hospital/1.jpg)\n\nYou can search media by entering any keyword in\u00a0**Search By File Name**textbox and you can also search any file by selecting file type ( like video, text,zip,Rar etc.)."
-  },
-  {
-   "category": "Front CMS (8)",
-   "category_slug": "front-cms",
-   "title": "How to add Gallery in Smart Hospital?",
-   "date": "Thu, 11 Nov, 2021",
-   "source": "https://smart-hospital.in/article/how-to-add-gallery-in-smart-hospital",
-   "body": "### How to add Gallery in Smart Hospital?\n\nThu, 11 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Front CMS](https://smart-hospital.in/category/front-cms)\n\n---\n\nTo add new gallery go to\u00a0**Front CMS then click Down Arrow icon and then** click on Add Gallery button. Here you can add all image/video galleries of your hospital. To add new gallery click on + Add button. Here enter gallery Title, Description, Gallery Images, SEO Detail Meta Title, Meta Keyword, Meta Description then select Sidebar Setting, Featured Image then click on Save button.  \n  \n![add gallary](../assets/how-to-add-gallery-in-smart-hospital/1.jpg)\n\nYou can view this added Gallery record at Gallery List page.  \n  \n![gallary list](../assets/how-to-add-gallery-in-smart-hospital/2.jpg)\n\nTo edit Gallery click on\u00a0**Edit**\u00a0icon and to delete page click on**Delete**\u00a0icon present in the Gallery list."
-  },
-  {
-   "category": "Multi Branch (7)",
-   "category_slug": "multi-branch",
-   "title": "How to switch the branch?",
-   "date": "Sat, 16 Aug, 2025",
-   "source": "https://smart-hospital.in/article/how-to-switch-the-branch",
-   "body": "### How to switch the branch?\n\nSat, 16 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Multi Branch](https://smart-hospital.in/category/multi-branch)\n\n---\n\nTo switch branches, click the\u00a0**Switch Branch**\u00a0icon in the upper right corner.\u00a0  \n  \n![](../assets/how-to-switch-the-branch/1.jpg)  \n  \n  \n  \nThe **Switch Branch**\u00a0modal will now appear, and you can change the branch by clicking on the\u00a0**radio**button, then click on the\u00a0**Update**\u00a0button, which is located in the below.\u00a0  \n  \n  \n![](../assets/how-to-switch-the-branch/2.jpg)"
-  },
-  {
    "category": "QR Code Attendance (3)",
    "category_slug": "qr-code-attendance",
    "title": "About QR Code Attendance",
@@ -3795,52 +2811,12 @@
    "body": "### About QR Code Attendance\n\nSat, 16 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[QR Code Attendance](https://smart-hospital.in/category/qr-code-attendance)\n\n---\n\n**About QR Code / Barcode Attendance**\n\n**QR Code / Barcode Attendance:**To each\u00a0**Staff** assigned a unique QR code / Barcode that represents their identity. These QR Code / Barcode can be generated from the certificate module of our Smart Hospital and this code usually contains information about the individual, such as a unique identifier.\n\n* QR code / Barcode are seamlessly integrated into the and staff ID cards additionally, individuals can conveniently access their QR codes / Barcodes through their dedicated and staff profiles.\n* To mark attendance, an organizer or instructor uses a QR code scanner.\n* Staff present their QR Code / Barcode to be scanned upon entry.\n* The scanner reads the code, and attendance data is recorded in the system.\n* Attendance records are updated in real-time, providing accurate and timely information.\n* This data accessed by administrators for tracking and reporting purposes.\n* Administrators gain seamless access to this data, empowering them for comprehensive tracking and insightful reporting."
   },
   {
-   "category": "Duty Roster (4)",
-   "category_slug": "duty-roster",
-   "title": "How to assign the roster to the staff?",
-   "date": "Thu, 05 Sep, 2024",
-   "source": "https://smart-hospital.in/article/how-to-assign-the-roster-to-the-staff",
-   "body": "### How to assign the roster to the staff?\n\nThu, 05 Sep, 2024\n\n[Articles](https://smart-hospital.in/articles)[Duty Roster](https://smart-hospital.in/category/duty-roster)\n\n---\n\nTo assign the roster to staff, go to the **Duty Roster** module and click on it. The Duty Roster list page will open  \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/1.jpg)  \n  \nOn the page, in the top right corner, the **Assign Roster** button is displayed. Simply click on the button, and the Assign Roster page will open  \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/2.jpg)  \n  \nNow in this page, at the top right corner **Add Assign Roster** button displaying, simply click on button, Add Assign roster window will be open  \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/3.jpg)  \n  \nIn the Assign Roster page, select the desired shift, then choose the Shift Date. Next, select the staff member you want to assign to this roster, followed by the floor and department where the duty will be assigned.   \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/4.jpg)  \n  \nFinally, click the 'Save' button, and the roster will be successfully assigned to the selected staff member  \n  \n  \nTo edit the assigned roster, simply click on the pencil icon on the right side of the page. The edit window for the assigned roster will open  \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/5.jpg)  \n  \nNow here update the details of assigned roster then click on save button, details will be update successfully and will display on the Assign Roster page  \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/6.jpg)  \n  \nTo delete the assign roster, simply click on **delete** icon showing at the right side of the page, delete window will be open, click on yes, assigned roster will be **delete** successfully  \n  \n  \n![](../assets/how-to-assign-the-roster-to-the-staff/7.jpg)"
-  },
-  {
-   "category": "Annual Calendar (4)",
-   "category_slug": "annual-calendar",
-   "title": "How to add holiday in annual calendar on smart hospital?",
-   "date": "Thu, 05 Sep, 2024",
-   "source": "https://smart-hospital.in/article/how-to-add-holiday-in-annual-calendar-on-smart-hospital",
-   "body": "### How to add holiday in annual calendar on smart hospital?\n\nThu, 05 Sep, 2024\n\n[Articles](https://smart-hospital.in/articles)[Annual Calendar](https://smart-hospital.in/category/annual-calendar)\n\n---\n\nTo add a holiday to the annual calendar, go to the **Annual Calendar** module in your Smart Hospital system and click on it. The Annual Calendar page will open on the right side.  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/1.jpg)  \n  \nNow go to the **Add** button, showing at the top right corner and click on it, Add window will be open In this window, you can see options for Type: **Holiday**, **Activity**, and **Vacation**. Simply select **'Holiday'** by clicking on it, then choose the date when the holiday will occur. Add a description of the holiday, and if you want to display this holiday with details on the front site of your Smart Hospital, click on the **'Front Site'** button.\u00a0  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/2.jpg)  \n  \nFinally, click the **'Save'** button to save your holiday details in the holiday list.  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/3.jpg)  \n  \nTo **edit** the holiday details simply go to the pencil icon showing at the right side and click on it, edit holiday window will be open  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/4.jpg)  \n  \nNow update the details you want to change, then click the **'Save'** button. Your holiday details will be updated successfully.\n\nTo **delete** the holiday details, simply click on the delete icon on the right side, then click the **'OK'** button. The holiday details will be deleted successfully  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/5.jpg)  \n  \nIf you want to search specifically for holiday details, go to the top left of the page. Here, you'll see a **'Type'** dropdown menu. Select the **'Holiday'** option from the dropdown  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/6.jpg)  \n  \nThen click on **Search**, in below list only display the holiday details.  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/7.jpg)  \n  \nAdditionally you can also see the holiday details on the front site of your Smart Hospital, as you enabled this option when adding the holiday. Simply go to the front site of your Smart Hospital and navigate to the annual calendar  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/8.jpg)  \n  \nHere you can see the holiday details which you recently added from the annual calendar\n\nYou can see the holiday details on the **calendar** in both the **superadmin** and **patient** logins.\n\n**For Superadmin login**, you can see a calendar icon at the top right corner. Click on it to open the calendar, where you can view the holiday details for the specific day you added\n\n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/9.jpg)\n\n**For patient login**, you can see a calendar icon at the top right corner. Click on it to open the calendar, where you can view the holiday details for the specific day you added  \n  \n![](../assets/how-to-add-holiday-in-annual-calendar-on-smart-hospital/10.jpg)"
-  },
-  {
    "category": "Survey Form (6)",
    "category_slug": "survey-form",
    "title": "How to create a Survey Form?",
    "date": "Sat, 25 Jul, 2026",
    "source": "https://smart-hospital.in/article/how-to-create-a-survey-form",
    "body": "### How to create a Survey Form?\n\nSat, 25 Jul, 2026\n\n[Articles](https://smart-hospital.in/articles)[Survey Form](https://smart-hospital.in/category/survey-form)\n\n---\n\nGo to\u00a0**Survey Forms \u2192 Survey Forms**\u00a0from the sidebar and click on the\u00a0**+ Create Survey Form**\u00a0button on the top right of the list page.\n\n![](../assets/how-to-create-a-survey-form/1.jpg)  \n  \n\nOn the Create Survey Form page, enter the\u00a0**Form Title**, an optional\u00a0**Description**\u00a0shown above the form fields, and a\u00a0**Thank You Message**\u00a0shown to the user after they submit \u2014 leave the thank you message blank to show a default message instead.\n\nUnder\u00a0**Schedule**, you can optionally set a\u00a0**Start Date**\u00a0and\u00a0**End Date**\u00a0so the form is only open for a limited period. Under\u00a0**Target Audience**, select at least one of\u00a0**Staff**,\u00a0**Patient**\u00a0or\u00a0**Front Site**\u00a0\u2014 this decides who will see the form once it is published.\n\nTwo more settings are available under\u00a0**Settings**:\n\n* **Allow Edit Response**\u00a0\u2014 lets a user who already submitted the form resubmit it, overwriting their previous answers.\n* **Enable CAPTCHA**\u00a0\u2014 adds a security code verification step on public form submissions.\n\n  \n![](../assets/how-to-create-a-survey-form/2.jpg)  \n\nClick **Save as Draft**\u00a0once you are done. The form is created in\u00a0**Draft**\u00a0status and you are taken straight to the Edit page, where the\u00a0**Survey Builder**\u00a0unlocks so you can start adding fields.\n\n**Note:**\u00a0a form needs at least one Target Audience selected, and at least one field added, before it can be Published."
-  },
-  {
-   "category": "Referral (3)",
-   "category_slug": "referral",
-   "title": "How to add Referral Payment?",
-   "date": "Sun, 31 Oct, 2021",
-   "source": "https://smart-hospital.in/article/how-to-add-referral-payment",
-   "body": "### How to add Referral Payment?\n\nSun, 31 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Referral](https://smart-hospital.in/category/referral)\n\n---\n\nNow to add Referral Payment go to Referral module then click on **+Add Referral Payment** button. Here add **Patient, Patient Type, Bill No/Case Id, Patient Bill Amount, Payee, Commission Percentage (%), Commission Amount** and then click on **Save** button.  \n  \n![add referral payment](../assets/how-to-add-referral-payment/1.jpg)\n\nThis added record will show at Referral List page.  \n  \n![referral payment list](../assets/how-to-add-referral-payment/2.jpg)\n\nTo edit Referral Payment details click on **Edit** button, edit details and save it and for delete Referral Payment click on **Delete** button present at **Action** column."
-  },
-  {
-   "category": "TPA Management (2)",
-   "category_slug": "tpa-management",
-   "title": "TPA Management",
-   "date": "Wed, 10 Nov, 2021",
-   "source": "https://smart-hospital.in/article/tpa-management",
-   "body": "### TPA Management\n\nWed, 10 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[TPA Management](https://smart-hospital.in/category/tpa-management)\n\n---\n\nTPA module is for managing third party administrator or Mediclaim insurance provider companies. A third-party administrator is a company that provides operational services such as claims processing and employee benefits management under contract to another company. Insurance companies and self-insured companies often outsource their claims processing to third parties. With the help of TPA patient can get lots of discount in hospital charges.  \n  \nTo check TPA list associated with the hospital, login from superadmin, admin panel and then click on the TPA Management link present in the the left sidebar, by clicking this link you can check all TPA list.  \n  \n![tpa list imag](../assets/tpa-management/1.jpg)\n\nTo add new TPA click on **+ Add TPA** button here enter **TPA Organization Name, Code, Contact Number, Address, Contact Person name, Contact Person Phone** then click on **Save** button.  \n  \n![add tpa image](../assets/tpa-management/2.jpg)\n\nadded record will be show in **TPA Management list** page.\n\nTo edit TPA record click on Edit icon and to delete TPA record click on Delete icon present at last column on mouse hover.\n\nTo see specific TPA charge details click on Organization Profile icon, for which you want to check tpa details, this will redirect you in details page, fro here you can check TPA charge details.  \n  \nTo check all details click on the Search button this will show you all charges.  \n  \n![tpa charge details](../assets/tpa-management/3.jpg)\n\nHere you can edit or delete different associated charges for this TPA organization in different charge types. Associated charges should be applied first from hospital charges module.\n\n**Add TPA charges on hospital charges -**\n\nTo add TPA charges on hospital charges, go to **Setup > Hospital Charges**, this will redirect you in **Charges Details List** page, here click on\u00a0 **+Add Charges** button present at the top right corner of the page, then enter all mandatory details like **Charge Type**, **Charge Category**, **Unit Type**, **Charge Name**, **Tax Category**, **Tax Category** and **Scheduled Charges For TPA** (enter amount for different TPA) and then finally click on the **Save** button.  \n  \n![add tpa charge](../assets/tpa-management/4.jpg)\n\nOnce TPA amount is saved, you can use it in different module. For example you have added TPA for OPD charges, now when you add any opd charge you need to selected TPA and **Charge** **Category**, **Charge** and this will automatically calculated your TPA amount. For example your OPD consultation Fees was Rs.150 and you have select CGHS TPA for which opd consultation charge was Rs.100 so your applied charge will be Rs.100 .  \n  \n![add opd with tpa amount](../assets/tpa-management/5.jpg)"
-  },
-  {
-   "category": "Live Consultation (3)",
-   "category_slug": "live-consultation",
-   "title": "How to add Live Consultation in Smart Hospital?",
-   "date": "Mon, 08 Sep, 2025",
-   "source": "https://smart-hospital.in/article/how-to-add-live-consultation-in-smart-hospital",
-   "body": "### How to add Live Consultation in Smart Hospital?\n\nMon, 08 Sep, 2025\n\n[Articles](https://smart-hospital.in/articles)[Live Consultation](https://smart-hospital.in/category/live-consultation)\n\n---\n\nYou can add Live Consultations for patients from **Live Consultation** **>** **Live Consultation**. Here you can also check list of **Live Consultations** created from Appointment, OPD and IPD modules for patients.  \n  \n![live consultation list](../assets/how-to-add-live-consultation-in-smart-hospital/1.jpg)\n\nUsing **Live Consultation** Patients can consult to doctor through zoom video call.\n\nTo add new **Live Consultation** click on Add button here select patient and fill other fields details then click on **Save** button.  \n  \n![add live consultation](../assets/how-to-add-live-consultation-in-smart-hospital/2.jpg)"
   },
   {
    "category": "Setup & Configuration (22)",
@@ -3889,22 +2865,6 @@
    "date": "Thu, 18 Nov, 2021",
    "source": "https://smart-hospital.in/article/setup-for-appointment",
    "body": "### Setup for Appointment.\n\nThu, 18 Nov, 2021\n\n[Articles](https://smart-hospital.in/articles)[Appointment](https://smart-hospital.in/category/appointment)\n\n---\n\nTo setup appointment priority, go to\u00a0**Setup >** **Front Office**. You can add **Appointment Priority**\u00a0data which will be use in add appointment. Here enter\u00a0**priority value** and then click on\u00a0**Save**\u00a0button.   \n  \n![appointment priority](../assets/setup-for-appointment/1.jpg)  \n  \nYou can view this added record in the\u00a0**Priority List**\u00a0on Add Appointment page.  \n  \n![appointment priority list](../assets/setup-for-appointment/2.jpg)  \n  \nTo edit Priority click on edit and for delete click on delete icon present at **Action** column."
-  },
-  {
-   "category": "Reports (44)",
-   "category_slug": "reports",
-   "title": "Daily Transaction Report",
-   "date": "Sat, 30 Oct, 2021",
-   "source": "https://smart-hospital.in/article/daily-transaction-report",
-   "body": "### Daily Transaction Report\n\nSat, 30 Oct, 2021\n\n[Articles](https://smart-hospital.in/articles)[Reports](https://smart-hospital.in/category/reports)\n\n---\n\nTo check User Log report, go to\u00a0**Reports > Daily Transaction Report**. Here select the **Date From and Date To**\u00a0then click on**Search** button. Here you can see Daily Transaction details like **Date, Total Transaction, Online, Offline, Amount** and **Collection List.**\u00a0Also you can download this report as PDF.  \n  \n![](../assets/daily-transaction-report/1.jpg)  \n  \n  \nTo view each Daily Transaction individually click on View Collection button present at Action column. Here you can see Daily Transaction details Like **Transaction ID, Date, Payment Mode, Collected By** of individual transaction.  \n  \n  \n  \n  \n![](../assets/daily-transaction-report/2.jpg)"
-  },
-  {
-   "category": "Reports (44)",
-   "category_slug": "reports",
-   "title": "Stock Report",
-   "date": "Sat, 16 Aug, 2025",
-   "source": "https://smart-hospital.in/article/stock-report",
-   "body": "### Stock Report\n\nSat, 16 Aug, 2025\n\n[Articles](https://smart-hospital.in/articles)[Reports](https://smart-hospital.in/category/reports)\n\n---\n\nTo check Stock Report report, go to **Reports > Stock Report**.  \n  \n![](../assets/stock-report/1.jpg)  \n  \nHere select **Medicine Category, Stock Type** then click on\u00a0**Search**\u00a0button.  \n  \n![](../assets/stock-report/2.jpg)  \n  \n  \nHere you can see Expiry Medicine Report details like **Medicine Name, Medicine Company, Medicine Category, Medicine Composition,Medicine Category, Medicine Group, Unit** and **Available Qty (Quantity).**Also you can download this report as PDF."
   },
   {
    "category": "Common Issues & Troubleshooting (13)",
