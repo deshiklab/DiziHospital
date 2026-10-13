@@ -1,0 +1,22 @@
+{
+ "id": "09-billing-blood-bank-module",
+ "label": "Billing - Blood Bank module",
+ "url": "/admin/bill/bloodbank",
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/bill/bloodbank",
+  "title": "Smart Hospital & Research Center",
+  "pageTitle": "Page Not Found",
+  "breadcrumb": "",
+  "headings": [
+   "Page Not Found"
+  ],
+  "forms": [],
+  "tables": [],
+  "tabs": [],
+  "sections": [],
+  "buttons": [],
+  "anchors": []
+ },
+ "file": "09-billing-blood-bank-module.jpg"
+}
