@@ -38,6 +38,7 @@ const ROUTES = [
   '/patients',
   '/patients/SH-102311',
   '/patients/new',
+  '/patients/import',
   '/appointments',
   '/clinical',
   '/ward',

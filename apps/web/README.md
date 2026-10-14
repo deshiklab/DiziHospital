@@ -39,6 +39,7 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 | `/patients` | The full DataGrid (below), advanced filter panel with removable chips, saved views, bulk actions, tabs for duplicates/merges |
 | `/patients/[mrn]` | Patient record: banner with allergy alerts, tabbed detail, editable contact block, visit history grid, read-only projections of legacy-owned modules, record metadata |
 | `/patients/new` | Registration in five sections, live duplicate detection, honest offline ("Saved on this device" vs "Saved") |
+| `/patients/import` | Legacy register import: column mapping guessed from the header and overruled by hand, row-by-row validation against the register's own rules, duplicates split into *clashing MRN* (rejected) and *possible duplicate* (merge queue), the rows that need fixing downloadable as a CSV, and a dry run that writes nothing |
 | `/appointments` | The appointment desk: doctor × time calendar (desktop) and list (mobile), a drag-free queue board, online requests from the patient portal, and the full list — plus the booking sheet with real slot conflicts |
 | `/login` | Two-step sign-in preview (credentials → six-digit code), branch picker, English ⇄ বাংলা |
 | `/clinical` | OPD consultation: the room queue beside one patient's workspace — vitals with reference-range flags, SOAP notes, ICD-10 diagnosis, lab/imaging orders, and a prescription screened for allergies, high-alert medicines and dangerous abbreviations before it can be signed |

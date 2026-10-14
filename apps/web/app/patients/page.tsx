@@ -123,7 +123,9 @@ export default function PatientsPage() {
           <Link href="/patients/new">
             <Button variant="primary">Register patient</Button>
           </Link>
-          <Button onClick={() => push({ title: 'Import wizard', description: 'Legacy patients arrive through the read bridge; nothing is typed twice.', tone: 'info' })}>Import</Button>
+          <Link href="/patients/import">
+            <Button>Import</Button>
+          </Link>
         </div>
       </div>
 

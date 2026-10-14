@@ -102,7 +102,12 @@ export function breadcrumbsFor(pathname: string, locale: Locale): Array<{ label:
 
   const rest = segments.slice(1);
   if (rest.length > 0) {
-    if (rest[0] === 'new') trail.push({ label: locale === 'bn' ? 'নতুন' : 'New', href: pathname });
+    // A word or two for the screens that have their own page, so the trail reads like a place and not a path.
+    const named: Record<string, { en: string; bn: string }> = {
+      new: { en: 'New', bn: 'নতুন' },
+      import: { en: 'Import', bn: 'ইমপোর্ট' },
+    };
+    if (rest.length === 1 && named[rest[0]]) trail.push({ label: named[rest[0]][locale], href: pathname });
     else trail.push({ label: rest.join(' / '), href: pathname });
   }
   return trail;
