@@ -16,7 +16,9 @@
  * What it can and cannot see: it runs the components, the state and the CSS class names, so it proves which
  * chrome is rendered, which mode was chosen and that the buttons open and close things. jsdom has no layout
  * engine, so it cannot prove anything about pixels, stacking or what is visible — that is what the stylesheet
- * assertions at the end are for, and what a browser-based check (P0 CI hardening) will add later.
+ * assertions at the end are for, and what a browser-based check (P0 CI hardening) will add later. Those
+ * assertions read whichever server `DIZI_BASE` points at — the dev server or the minified production build — so
+ * they match the rule, not its spelling.
  */
 import { mkdtempSync, rmSync } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -26,6 +28,9 @@ import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
 const here = dirname(fileURLToPath(import.meta.url));
+
+/** Where the app is served from: the dev server by default, or DIZI_BASE (CI serves a production build). */
+const BASE = process.env.DIZI_BASE ?? 'http://127.0.0.1:3000';
 const root = join(here, '..', '..');
 
 let jsdom;
@@ -219,23 +224,27 @@ for (const scenario of SCENARIOS) {
 
 /* ------------------------------------------------------------------ the stylesheet the mode relies on */
 try {
-  const home = await fetch('http://127.0.0.1:3000/');
+  const home = await fetch(`${BASE}/`);
   const html = await home.text();
   const href = html.match(/href="(\/_next\/static\/css\/[^"]+\.css)/)?.[1];
   if (href) {
-    const css = await (await fetch(`http://127.0.0.1:3000${href}`)).text();
+    // `next start` serves the minified stylesheet, and the minifier writes the same rules differently:
+    // `html[data-nav='drawer']` loses its quotes and `(width >= 64rem)` becomes `(min-width:64rem)`. The check
+    // therefore normalises the stylesheet and accepts either spelling — otherwise it only ever passes against
+    // the dev server, which is the one place the rules are never minified.
+    const css = (await (await fetch(`${BASE}${href}`)).text()).replace(/\[([a-zA-Z-]+)=['"]([^'"]*)['"]\]/g, '[$1=$2]');
     const want = [
-      ['.dizi-bar', 'the bar has no display rule'],
-      ['.dizi-drawer', 'the drawer has no display rule'],
-      ['.dizi-aside', 'the sidebar has no display rule'],
-      ['.dizi-rail-toggle', 'the rail toggle has no display rule'],
-      ['.dizi-footer', 'the footer has no offset rule'],
-      ["html[data-nav='drawer']", 'the drawer override did not survive the build'],
-      ["html[data-nav='rail']", 'the rail override did not survive the build'],
-      ['(width >= 64rem)', 'the default breakpoint is not in the built stylesheet'],
+      [['.dizi-bar'], 'the bar has no display rule'],
+      [['.dizi-drawer'], 'the drawer has no display rule'],
+      [['.dizi-aside'], 'the sidebar has no display rule'],
+      [['.dizi-rail-toggle'], 'the rail toggle has no display rule'],
+      [['.dizi-footer'], 'the footer has no offset rule'],
+      [['html[data-nav=drawer]'], 'the drawer override did not survive the build'],
+      [['html[data-nav=rail]'], 'the rail override did not survive the build'],
+      [['(min-width:64rem)', '(width >= 64rem)'], 'the default breakpoint is not in the built stylesheet'],
     ];
-    for (const [marker, message] of want) {
-      check('stylesheet', css.includes(marker), `${message} (${marker})`);
+    for (const [markers, message] of want) {
+      check('stylesheet', markers.some((m) => css.includes(m)), `${message} (${markers.join(' or ')})`);
     }
     notes.push('  built stylesheet                  mode rules present');
   } else {

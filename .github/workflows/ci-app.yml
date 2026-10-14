@@ -10,6 +10,7 @@ on:
       - 'packages/**'
       - 'services/**'
       - 'tools/ci/**'
+      - 'tools/test/**'
       - 'package.json'
       - 'docs/plan/design-tokens.json'
       - '.github/workflows/ci-app.yml'
@@ -19,6 +20,7 @@ on:
       - 'packages/**'
       - 'services/**'
       - 'tools/ci/**'
+      - 'tools/test/**'
       - 'package.json'
       - 'docs/plan/design-tokens.json'
       - '.github/workflows/ci-app.yml'
@@ -56,3 +58,60 @@ jobs:
 
       - name: Every relative link in docs/ resolves
         run: python3 tools/docs/check_links.py
+
+  # The shell and runtime harnesses were written and run by hand for months, which meant the strongest check in
+  # the repository — thirty routes hydrating with no console error, and the navigation driven at five widths —
+  # was the one check that did not run on a pull request. They need jsdom and esbuild, which the product does not
+  # depend on, so this job installs them without saving them and serves the production build: the same artefact
+  # that ships, minified stylesheet included.
+  runtime:
+    name: production build, thirty routes hydrated, shell driven
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install the workspace
+        run: npm install --no-audit --no-fund
+
+      # --no-save on purpose: the product must not grow a dependency on its own test harness.
+      - name: Install the harness dependencies
+        run: npm i --no-save jsdom esbuild --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck --workspace @dizi/web
+
+      - name: Build (default dist directory — no dev server is running here)
+        run: npm run build --workspace @dizi/web
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+
+      - name: Serve the production build
+        run: |
+          # nohup so the server survives the shell that started it — each CI step is its own shell.
+          nohup npm run start --workspace @dizi/web > /tmp/next.log 2>&1 &
+          for i in $(seq 1 60); do
+            if curl -sf -o /dev/null http://127.0.0.1:3000/; then echo "server answered after ${i}s"; exit 0; fi
+            sleep 1
+          done
+          echo "the server never answered:"; cat /tmp/next.log; exit 1
+
+      # The stylesheet assertions read whichever server DIZI_BASE points at, so they are checked here against
+      # the minified production CSS rather than the dev server's.
+      - name: Shell navigation — drawer and rail at five widths
+        run: npm run test:shell
+        env:
+          DIZI_BASE: http://127.0.0.1:3000
+
+      - name: Every route hydrates, with the clipboard refusing
+        run: npm run test:runtime
+        env:
+          DIZI_BASE: http://127.0.0.1:3000
+
+      - name: Server log
+        if: failure()
+        run: tail -100 /tmp/next.log || true
