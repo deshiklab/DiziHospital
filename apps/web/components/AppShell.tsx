@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { BedDouble, Bell, CalendarDays, ChartColumn, Check, CircleHelp, Command, FlaskConical, Keyboard, LayoutDashboard, LogOut, Maximize, Menu as MenuIcon, Minimize, Package, PanelLeftClose, PanelLeftOpen, Pill, Plus, Receipt, RefreshCw, Search, ShieldCheck, Stethoscope, Type, Users, X, ZoomIn, ZoomOut } from 'lucide-react';
+import { Ambulance, BedDouble, Bell, CalendarClock, CalendarDays, ChartColumn, Check, CircleHelp, Command, Droplet, FlaskConical, Footprints, Keyboard, LayoutDashboard, LogOut, Maximize, Menu as MenuIcon, Minimize, Package, PanelLeftClose, PanelLeftOpen, Pill, Plus, Receipt, RefreshCw, Scissors, Search, Settings2, ShieldCheck, Stethoscope, Type, Users, X, ZoomIn, ZoomOut } from 'lucide-react';
 import {
   Button,
   Menu,
@@ -52,6 +52,12 @@ const ICONS: Record<string, React.ReactNode> = {
   stethoscope: <Stethoscope className="size-4" aria-hidden />,
   flask: <FlaskConical className="size-4" aria-hidden />,
   bed: <BedDouble className="size-4" aria-hidden />,
+  round: <Footprints className="size-4" aria-hidden />,
+  duty: <CalendarClock className="size-4" aria-hidden />,
+  theatre: <Scissors className="size-4" aria-hidden />,
+  blood: <Droplet className="size-4" aria-hidden />,
+  ambulance: <Ambulance className="size-4" aria-hidden />,
+  setup: <Settings2 className="size-4" aria-hidden />,
   sync: <RefreshCw className="size-4" aria-hidden />,
   pill: <Pill className="size-4" aria-hidden />,
   receipt: <Receipt className="size-4" aria-hidden />,
@@ -63,9 +69,9 @@ const ICONS: Record<string, React.ReactNode> = {
 
 /** Sidebar sections: the legacy product had one flat list of 30 items; grouping is the cheapest usability win. */
 const SECTIONS: Array<{ id: string; label: { en: string; bn: string }; keys: string[] }> = [
-  { id: 'care', label: { en: 'Care', bn: 'সেবা' }, keys: ['nav.dashboard', 'nav.patients', 'nav.appointments', 'nav.clinical', 'nav.ward', 'nav.diagnostics'] },
-  { id: 'ops', label: { en: 'Operations', bn: 'পরিচালনা' }, keys: ['nav.pharmacy', 'nav.billing', 'nav.inventory'] },
-  { id: 'system', label: { en: 'Insight & system', bn: 'বিশ্লেষণ ও সিস্টেম' }, keys: ['nav.reports', 'nav.admin', 'nav.sync', 'nav.help'] },
+  { id: 'care', label: { en: 'Care', bn: 'সেবা' }, keys: ['nav.dashboard', 'nav.patients', 'nav.appointments', 'nav.clinical', 'nav.ward', 'nav.round', 'nav.duty', 'nav.diagnostics', 'nav.bloodbank', 'nav.ot'] },
+  { id: 'ops', label: { en: 'Operations', bn: 'পরিচালনা' }, keys: ['nav.pharmacy', 'nav.billing', 'nav.inventory', 'nav.ambulance'] },
+  { id: 'system', label: { en: 'Insight & system', bn: 'বিশ্লেষণ ও সিস্টেম' }, keys: ['nav.reports', 'nav.setup', 'nav.admin', 'nav.sync', 'nav.help'] },
 ];
 
 const WIKI_TOPICS = [
