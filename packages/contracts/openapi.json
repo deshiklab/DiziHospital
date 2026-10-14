@@ -48,6 +48,10 @@
     {
       "name": "platform",
       "description": "Health, number blocks and the audit ledger"
+    },
+    {
+      "name": "finance",
+      "description": "The cash book: income and expense vouchers, approvals and the day-end reconciliation (P6)"
     }
   ],
   "paths": {
@@ -1571,6 +1575,175 @@
         }
       }
     }
+,
+  "/ledger/income": {
+  "post": {
+    "operationId": "createIncomeVoucher",
+    "summary": "Post an income voucher",
+    "tags": [
+      "finance"
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/IncomeVoucherCreate"
+          }
+        }
+      }
+    },
+    "responses": {
+      "201": {
+        "description": "Posted",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/IncomeVoucher"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Missing or expired token",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "The role in the token may not do this",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Voucher number already issued to this node",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "422": {
+        "description": "Validation failed — an unknown head, a reversal with no original voucher, or an amount of zero",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      }
+    },
+    "x-dizi": {
+      "entity": "ledger.income",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "The counter that took the money is the only place that knows it was taken. Queue it, and the day book shows the receipt as awaiting sync until it lands, which is how a drawer and a ledger stay reconciled without a phone call."
+    },
+    "parameters": [
+      {
+        "$ref": "#/components/parameters/IdempotencyKey"
+      }
+    ]
+  }
+  },
+  "/ledger/expense": {
+  "post": {
+    "operationId": "createExpenseVoucher",
+    "summary": "Post an expense voucher",
+    "tags": [
+      "finance"
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/ExpenseVoucherCreate"
+          }
+        }
+      }
+    },
+    "responses": {
+      "201": {
+        "description": "Posted",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ExpenseVoucher"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Missing or expired token",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "The role in the token may not do this",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Voucher number already issued to this node",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "422": {
+        "description": "Validation failed — the approval ladder, a cash payment above the counter limit, or a self-approval",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      }
+    },
+    "x-dizi": {
+      "entity": "ledger.expense",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Accounts records what it paid when it paid it, and the approval ladder is checked before the voucher leaves the desk — a payment that cannot be approved is refused at the source rather than found missing a signature a week later."
+    },
+    "parameters": [
+      {
+        "$ref": "#/components/parameters/IdempotencyKey"
+      }
+    ]
+  }
+  }
   },
   "components": {
     "securitySchemes": {
@@ -2728,6 +2901,232 @@
           }
         }
       }
+,
+  "IncomeVoucherCreate": {
+  "type": "object",
+  "required": [
+    "headCode",
+    "amount",
+    "method"
+  ],
+  "properties": {
+    "headCode": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "method": {
+      "type": "string"
+    },
+    "branch": {
+      "type": "string"
+    },
+    "counter": {
+      "type": "string"
+    },
+    "invoiceNo": {
+      "type": "string"
+    },
+    "reference": {
+      "type": "string"
+    },
+    "narration": {
+      "type": "string"
+    },
+    "reversalOf": {
+      "type": "string",
+      "description": "The voucher being reversed. A reversal is a voucher of its own, never an edit."
+    },
+    "at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+  },
+  "IncomeVoucher": {
+  "type": "object",
+  "required": [
+    "id",
+    "voucherNo",
+    "headCode",
+    "amount",
+    "method",
+    "postedAt",
+    "sequence"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "voucherNo": {
+      "type": "string"
+    },
+    "headCode": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "method": {
+      "type": "string"
+    },
+    "branch": {
+      "type": "string"
+    },
+    "counter": {
+      "type": "string"
+    },
+    "invoiceNo": {
+      "type": "string"
+    },
+    "reference": {
+      "type": "string"
+    },
+    "narration": {
+      "type": "string"
+    },
+    "postedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sequence": {
+      "type": "integer",
+      "description": "Position in this node’s ledger — gapless per node, which is what makes a missing voucher visible."
+    },
+    "recordedBy": {
+      "type": "string"
+    }
+  }
+  },
+  "ExpenseVoucherCreate": {
+  "type": "object",
+  "required": [
+    "headCode",
+    "payee",
+    "amount",
+    "method"
+  ],
+  "properties": {
+    "headCode": {
+      "type": "string"
+    },
+    "payee": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "method": {
+      "type": "string"
+    },
+    "branch": {
+      "type": "string"
+    },
+    "costCentre": {
+      "type": "string"
+    },
+    "billNo": {
+      "type": "string"
+    },
+    "chequeNo": {
+      "type": "string"
+    },
+    "quotationRef": {
+      "type": "string"
+    },
+    "narration": {
+      "type": "string"
+    },
+    "at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "preparedBy": {
+      "type": "string"
+    },
+    "approvedBy": {
+      "type": "string"
+    },
+    "secondApprover": {
+      "type": "string"
+    }
+  }
+  },
+  "ExpenseVoucher": {
+  "type": "object",
+  "required": [
+    "id",
+    "voucherNo",
+    "headCode",
+    "payee",
+    "amount",
+    "method",
+    "paidAt",
+    "sequence"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "voucherNo": {
+      "type": "string"
+    },
+    "headCode": {
+      "type": "string"
+    },
+    "payee": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Net paid to the payee, after withholding where the head attracts it."
+    },
+    "gross": {
+      "type": "number"
+    },
+    "ait": {
+      "type": "number"
+    },
+    "vat": {
+      "type": "number"
+    },
+    "method": {
+      "type": "string"
+    },
+    "branch": {
+      "type": "string"
+    },
+    "costCentre": {
+      "type": "string"
+    },
+    "billNo": {
+      "type": "string"
+    },
+    "chequeNo": {
+      "type": "string"
+    },
+    "quotationRef": {
+      "type": "string"
+    },
+    "narration": {
+      "type": "string"
+    },
+    "paidAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sequence": {
+      "type": "integer"
+    },
+    "approvedBy": {
+      "type": "string"
+    },
+    "secondApprover": {
+      "type": "string"
+    }
+  }
+  }
     }
   },
   "security": [
@@ -2791,6 +3190,17 @@
       "label": "Audit entry",
       "why": "The ledger of who did what is the one thing that must never be merged away."
     }
+,
+  "ledger.income": {
+  "policy": "append-only",
+  "label": "Income voucher",
+  "why": "A receipt is money in the drawer at a time and a counter. Nothing merges it and nothing edits it: a correction is a reversing voucher, which is the only form of correction an auditor accepts."
+  },
+  "ledger.expense": {
+  "policy": "append-only",
+  "label": "Expense voucher",
+  "why": "A payment is money out, with a payee and a cheque or transfer behind it. Two nodes paying the same bill is two payments, and the bank statement will show both."
+  }
   },
   "x-dizi-conventions": {
     "idempotency": "Every operation whose `x-dizi.idempotency` is `required` carries an `Idempotency-Key`. A replay of the same key returns the original response and status, so draining a queue twice is safe — which is the whole reason a queue can exist.",

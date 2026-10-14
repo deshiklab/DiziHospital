@@ -18,6 +18,7 @@
  */
 
 import { TARIFF, type Category, type TariffItem } from './billing';
+import { EXPENSE_HEADS, INCOME_HEADS } from './finance';
 import { TESTS, type LabTest } from './diagnostics';
 import { DRUGS, type Drug } from './pharmacy';
 import { ICD10, VITALS, type IcdCode, type VitalDef } from './clinical';
@@ -231,7 +232,61 @@ const theatreRows: MasterRow[] = [
   { id: 'ot-4', code: 'OT-4', label: 'Obstetric theatre', values: { specialty: 'Obstetrics · caesarean', cleaning: '15 min', equipment: 'Neonatal resuscitaire · warmer', state: 'Cleaning' }, active: true, lastChange: changed(SEED_DAY, 'Theatre in-charge', 'Equipment list and turn-around checked') },
 ];
 
+/**
+ * The two head masters finance owns. They live here rather than in the finance screens because a head is a
+ * setting: the ledger, the day book and every report read the same list, so adding one is a setup change and
+ * never a code change.
+ */
+export const incomeHeadRows: MasterRow[] = INCOME_HEADS.map((h) => ({
+  id: `ih-${h.code}`,
+  code: h.code,
+  label: h.label,
+  values: { group: h.group, billedAs: h.category ?? 'never billed', taken: h.category ? 'Through the counter, against an invoice' : 'Direct counter income' },
+  active: true,
+  lastChange: changed(SEED_DAY, 'Finance manager — S. Chowdhury', 'Reviewed against the ledger heads'),
+}));
+
+export const expenseHeadRows: MasterRow[] = EXPENSE_HEADS.map((h) => ({
+  id: `eh-${h.code}`,
+  code: h.code,
+  label: h.label,
+  values: { klass: h.klass, ait: h.aitPct == null ? 'none' : `${h.aitPct} %`, vat: h.vatPct == null ? 'none' : `${h.vatPct} %`, quoted: h.quotable ? 'quotation required' : 'meter or agreement' },
+  active: true,
+  lastChange: changed(SEED_DAY, 'Finance manager — S. Chowdhury', 'Withholding and VAT reviewed for the year'),
+}));
+
 export const CATALOGUES: Catalogue[] = [
+  {
+    id: 'incomeHeads',
+    name: 'Income heads',
+    nameBn: 'আয়ের খাত',
+    legacy: 'Setup › Finance',
+    purpose: 'Every head a receipt may post to, and the billing category it collects.',
+    columns: [
+      { key: 'group', header: 'Group' },
+      { key: 'billedAs', header: 'Billed as' },
+      { key: 'taken', header: 'How it is taken' },
+    ],
+    rows: incomeHeadRows,
+    risk: 'A head that is missing becomes “miscellaneous”, and a ledger whose largest line is miscellaneous cannot be reconciled or reported against. Retiring a head that has history hides the money rather than moving it.',
+    owner: 'Finance manager',
+  },
+  {
+    id: 'expenseHeads',
+    name: 'Expense heads',
+    nameBn: 'ব্যয়ের খাত',
+    legacy: 'Setup › Finance',
+    purpose: 'What money may be spent on, whether it is capital, and what tax has to be held back.',
+    columns: [
+      { key: 'klass', header: 'Class' },
+      { key: 'ait', header: 'Withholding' },
+      { key: 'vat', header: 'VAT' },
+      { key: 'quoted', header: 'Quotation' },
+    ],
+    rows: expenseHeadRows,
+    risk: 'The withholding percentage here is a legal obligation, not a preference: paying a supplier gross because the head says “none” is the hospital carrying the supplier’s tax. Whether a head is capital decides whether a purchase lands on the asset register or in this month’s cost.',
+    owner: 'Finance manager',
+  },
   {
     id: 'charges',
     name: 'Hospital charges',

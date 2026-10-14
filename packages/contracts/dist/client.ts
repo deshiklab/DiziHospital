@@ -321,6 +321,77 @@ export interface Health {
   readonly replicaLagSeconds?: number;
 }
 
+export interface IncomeVoucherCreate {
+  readonly headCode: string;
+  readonly amount: number;
+  readonly method: string;
+  readonly branch?: string;
+  readonly counter?: string;
+  readonly invoiceNo?: string;
+  readonly reference?: string;
+  readonly narration?: string;
+  /** The voucher being reversed. A reversal is a voucher of its own, never an edit. */
+  readonly reversalOf?: string;
+  readonly at?: string;
+}
+
+export interface IncomeVoucher {
+  readonly id: string;
+  readonly voucherNo: string;
+  readonly headCode: string;
+  readonly amount: number;
+  readonly method: string;
+  readonly branch?: string;
+  readonly counter?: string;
+  readonly invoiceNo?: string;
+  readonly reference?: string;
+  readonly narration?: string;
+  readonly postedAt: string;
+  /** Position in this node’s ledger — gapless per node, which is what makes a missing voucher visible. */
+  readonly sequence: number;
+  readonly recordedBy?: string;
+}
+
+export interface ExpenseVoucherCreate {
+  readonly headCode: string;
+  readonly payee: string;
+  readonly amount: number;
+  readonly method: string;
+  readonly branch?: string;
+  readonly costCentre?: string;
+  readonly billNo?: string;
+  readonly chequeNo?: string;
+  readonly quotationRef?: string;
+  readonly narration?: string;
+  readonly at?: string;
+  readonly preparedBy?: string;
+  readonly approvedBy?: string;
+  readonly secondApprover?: string;
+}
+
+export interface ExpenseVoucher {
+  readonly id: string;
+  readonly voucherNo: string;
+  readonly headCode: string;
+  readonly payee: string;
+  /** Net paid to the payee, after withholding where the head attracts it. */
+  readonly amount: number;
+  readonly gross?: number;
+  readonly ait?: number;
+  readonly vat?: number;
+  readonly method: string;
+  readonly branch?: string;
+  readonly costCentre?: string;
+  readonly billNo?: string;
+  readonly chequeNo?: string;
+  readonly quotationRef?: string;
+  readonly narration?: string;
+  readonly paidAt: string;
+  readonly sequence: number;
+  readonly approvedBy?: string;
+  readonly secondApprover?: string;
+}
+
 
 /* ------------------------------------------------------------- operations */
 
@@ -798,6 +869,50 @@ export const operations = {
     needsNetwork: true,
     requiresIdempotencyKey: false,
   },
+  createIncomeVoucher: {
+    id: "createIncomeVoucher",
+    method: "post",
+    path: "/ledger/income",
+    tag: "finance",
+    summary: "Post an income voucher",
+    entity: "ledger.income",
+    offline: "queue",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "The counter that took the money is the only place that knows it was taken. Queue it, and the day book shows the receipt as awaiting sync until it lands, which is how a drawer and a ledger stay reconciled without a phone call.",
+    notes: null,
+    request: "IncomeVoucherCreate",
+    responses: { "201": "IncomeVoucher", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  createExpenseVoucher: {
+    id: "createExpenseVoucher",
+    method: "post",
+    path: "/ledger/expense",
+    tag: "finance",
+    summary: "Post an expense voucher",
+    entity: "ledger.expense",
+    offline: "queue",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "Accounts records what it paid when it paid it, and the approval ladder is checked before the voucher leaves the desk — a payment that cannot be approved is refused at the source rather than found missing a signature a week later.",
+    notes: null,
+    request: "ExpenseVoucherCreate",
+    responses: { "201": "ExpenseVoucher", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
 } as const satisfies Record<string, OperationMeta>;
 
 export type OperationId = keyof typeof operations;
@@ -862,6 +977,16 @@ export const entityPolicies = {
     "policy": "append-only",
     "label": "Audit entry",
     "why": "The ledger of who did what is the one thing that must never be merged away."
+  },
+  "ledger.income": {
+    "policy": "append-only",
+    "label": "Income voucher",
+    "why": "A receipt is money in the drawer at a time and a counter. Nothing merges it and nothing edits it: a correction is a reversing voucher, which is the only form of correction an auditor accepts."
+  },
+  "ledger.expense": {
+    "policy": "append-only",
+    "label": "Expense voucher",
+    "why": "A payment is money out, with a payee and a cheque or transfer behind it. Two nodes paying the same bill is two payments, and the bank statement will show both."
   }
 } as const;
 

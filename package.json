@@ -23,6 +23,7 @@
     "verify": "npm run contract:check && npm run contract:test && npm run clean-room && npm run tokens:check && npm run check:classes",
     "test:shell": "node tools/test/shell-nav.mjs",
     "test:runtime": "node tools/test/runtime.mjs",
-    "test:rules": "node tools/test/duplicate-rules.mjs"
+    "test:rules": "node tools/test/duplicate-rules.mjs",
+    "test:finance": "node tools/test/finance.mjs"
   }
 }

@@ -108,6 +108,11 @@ jobs:
       - name: The duplicate rule set behaves as the contract says
         run: npm run test:rules
 
+      # The approval ladder, withholding, and the three verdicts a reconciliation can reach: a book that agrees,
+      # a difference the queue explains, and a short drawer nobody can explain.
+      - name: The cash book's rules hold
+        run: npm run test:finance
+
       - name: Build (default dist directory — no dev server is running here)
         run: npm run build --workspace @dizi/web
         env:

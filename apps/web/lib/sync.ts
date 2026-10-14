@@ -55,6 +55,8 @@ export type EntityKind =
   | 'mar.dose'
   | 'invoice'
   | 'payment'
+  | 'ledger.income'
+  | 'ledger.expense'
   | 'audit';
 
 /** How two writers on different nodes are allowed to collide on this entity. */
@@ -110,6 +112,16 @@ export const ENTITY_POLICY: Record<EntityKind, { policy: ConflictPolicy; label: 
     policy: 'append-only',
     label: 'Payment',
     why: 'Money received is a fact with a counter and a time. Two receipts are two payments.',
+  },
+  'ledger.income': {
+    policy: 'append-only',
+    label: 'Income voucher',
+    why: 'A receipt is money in the drawer at a time and a counter. Two receipts are two movements, and a wrong one is reversed by another voucher rather than deleted — which is the only kind of correction an auditor accepts.',
+  },
+  'ledger.expense': {
+    policy: 'append-only',
+    label: 'Expense voucher',
+    why: 'A payment is money out with a payee and a cheque or transfer behind it. The bank statement will show both, so nothing merges and nothing is edited after the fact.',
   },
   audit: {
     policy: 'append-only',

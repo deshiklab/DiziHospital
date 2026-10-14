@@ -735,6 +735,84 @@
       "servesFromReplica": false,
       "needsNetwork": true,
       "requiresIdempotencyKey": false
+    },
+    "createIncomeVoucher": {
+      "id": "createIncomeVoucher",
+      "method": "post",
+      "path": "/ledger/income",
+      "tag": "finance",
+      "summary": "Post an income voucher",
+      "entity": "ledger.income",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "The counter that took the money is the only place that knows it was taken. Queue it, and the day book shows the receipt as awaiting sync until it lands, which is how a drawer and a ledger stay reconciled without a phone call.",
+      "notes": null,
+      "request": "IncomeVoucherCreate",
+      "responses": {
+        "201": "IncomeVoucher",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "createExpenseVoucher": {
+      "id": "createExpenseVoucher",
+      "method": "post",
+      "path": "/ledger/expense",
+      "tag": "finance",
+      "summary": "Post an expense voucher",
+      "entity": "ledger.expense",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Accounts records what it paid when it paid it, and the approval ladder is checked before the voucher leaves the desk — a payment that cannot be approved is refused at the source rather than found missing a signature a week later.",
+      "notes": null,
+      "request": "ExpenseVoucherCreate",
+      "responses": {
+        "201": "ExpenseVoucher",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
     }
   },
   "operationOrder": [
@@ -757,7 +835,9 @@
     "createInvoice",
     "recordPayment",
     "appendAuditEntry",
-    "listNumberBlocks"
+    "listNumberBlocks",
+    "createIncomeVoucher",
+    "createExpenseVoucher"
   ],
   "byEntity": {
     "patient.demographic": [
@@ -800,6 +880,12 @@
     "audit": [
       "appendAuditEntry",
       "listNumberBlocks"
+    ],
+    "ledger.income": [
+      "createIncomeVoucher"
+    ],
+    "ledger.expense": [
+      "createExpenseVoucher"
     ]
   },
   "queueable": [
@@ -816,7 +902,9 @@
     "signDose",
     "createInvoice",
     "recordPayment",
-    "appendAuditEntry"
+    "appendAuditEntry",
+    "createIncomeVoucher",
+    "createExpenseVoucher"
   ],
   "servedFromReplica": [
     "listPatients",
@@ -844,7 +932,9 @@
       "signDose",
       "createInvoice",
       "recordPayment",
-      "appendAuditEntry"
+      "appendAuditEntry",
+      "createIncomeVoucher",
+      "createExpenseVoucher"
     ]
   },
   "entities": {
@@ -902,6 +992,16 @@
       "policy": "append-only",
       "label": "Audit entry",
       "why": "The ledger of who did what is the one thing that must never be merged away."
+    },
+    "ledger.income": {
+      "policy": "append-only",
+      "label": "Income voucher",
+      "why": "A receipt is money in the drawer at a time and a counter. Nothing merges it and nothing edits it: a correction is a reversing voucher, which is the only form of correction an auditor accepts."
+    },
+    "ledger.expense": {
+      "policy": "append-only",
+      "label": "Expense voucher",
+      "why": "A payment is money out, with a payee and a cheque or transfer behind it. Two nodes paying the same bill is two payments, and the bank statement will show both."
     }
   },
   "drainOutcomes": {

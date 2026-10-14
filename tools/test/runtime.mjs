@@ -78,6 +78,9 @@ const ROUTES = [
   '/billing/appointments',
   '/billing/modules',
   '/inventory',
+  '/finance',
+  '/finance/income',
+  '/finance/expenses',
   '/setup',
   '/reports',
   '/sync',
@@ -252,6 +255,35 @@ async function check(route) {
     }
   }
 
+  /* The cash book's headline claim, driven rather than asserted by hand: a receipt taken on this device is in a
+   * drawer and not yet in the ledger, so the day's verdict has to move from "agrees" to "explained" — and name
+   * the voucher that moved it. This goes through the page and the contract, not through a helper called here. */
+  let ledger = 'n/a';
+  if (route === '/finance') {
+    const open = [...doc.querySelectorAll('button')].find((b) => /record a counter receipt/i.test(b.textContent ?? ''));
+    if (!open) {
+      ledger = 'NO BUTTON';
+      routeProblems.push('the counter-receipt button is missing from the finance overview');
+    } else {
+      press(open);
+      await new Promise((r) => setTimeout(r, 250));
+      const post = [...doc.querySelectorAll('button')].find((b) => /^post the voucher$/i.test((b.textContent ?? '').trim()));
+      if (!post) {
+        ledger = 'NO SHEET';
+        routeProblems.push('the receipt sheet did not open with a post button');
+      } else {
+        press(post);
+        await new Promise((r) => setTimeout(r, 400));
+        const text = doc.body.textContent ?? '';
+        const verdict = /Explained by the queue/i.test(text) ? 'explained' : /Investigate — the queue/i.test(text) ? 'investigate' : /Every counter agrees/i.test(text) ? 'still agrees' : 'no verdict';
+        const named = /queued on this device/i.test(text);
+        ledger = `${verdict}${named ? ' named' : ' unnamed'}`;
+        if (verdict !== 'explained') routeProblems.push(`posting a receipt left the reconciliation saying “${verdict}”`);
+        if (!named) routeProblems.push('the queued receipt is not reported on the screen it was taken on');
+      }
+    }
+  }
+
   // Did the saved queue come back, and is the contract the thing refusing what cannot be queued?
   let queue = 'n/a';
   if (seeded) {
@@ -381,7 +413,7 @@ async function check(route) {
 
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors: [...errors, ...routeProblems], handlers, copy, drill, queue, persist, named, retry, refusal, readyWait };
+  return { errors: [...errors, ...routeProblems], handlers, copy, ledger, drill, queue, persist, named, retry, refusal, readyWait };
 }
 
 const CONCURRENCY = Math.max(1, Number(process.env.DIZI_CONCURRENCY ?? 4));
@@ -436,10 +468,10 @@ outcomes.forEach((outcome, i) => {
     problems += 1;
     return;
   }
-  const { errors, handlers, copy, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
+  const { errors, handlers, copy, ledger, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
   const bad = errors.length > 0 || handlers === 'DEAD';
   const slow = readyWait !== undefined && readyWait > 2000 ? `  ready=${(readyWait / 1000).toFixed(1)}s` : '';
-  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
+  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
   if (handlers === 'DEAD') {
     console.log('      the shared control did not respond after hydration');
     problems += 1;
