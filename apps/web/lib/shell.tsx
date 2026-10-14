@@ -1,8 +1,20 @@
 'use client';
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import type { SyncState } from '@dizi/ui';
 import { usePersistentState } from '@dizi/ui';
+import {
+  DrillClock,
+  SimulatedCloud,
+  drain,
+  enqueue,
+  initialOutbox,
+  resolveConflict,
+  syncSummary,
+  type Conflict,
+  type Operation,
+  type OutboxState,
+} from './sync';
 
 /* -----------------------------------------------------------------------------
  * Shell state: layout preferences (sidebar mode, zoom, text size), identity (role, language, density)
@@ -25,6 +37,22 @@ export interface QueuedWrite {
   at: string;
 }
 
+/** What the sync console and the header pill read: one engine, one queue, one set of conflicts. */
+export interface SyncEngineHandle {
+  outbox: OutboxState;
+  summary: ReturnType<typeof syncSummary>;
+  /** The server side of the prototype. The console uses it to make the other branch write while we are dark. */
+  cloud: SimulatedCloud;
+  /** Queue a write: applied on this device at once, sent when the uplink is there. */
+  enqueue: (write: Omit<Operation, 'id' | 'nodeId' | 'seq' | 'queuedAt'>) => void;
+  /** Drain the queue and report what happened. */
+  drainNow: () => ReturnType<typeof syncSummary>;
+  resolve: (conflictId: string, choice: NonNullable<Conflict['resolution']>) => void;
+  setUplink: (reachable: boolean) => void;
+  /** Start again with an empty queue and full number blocks. */
+  reset: () => void;
+}
+
 export const ZOOM_STEPS = [0.8, 0.9, 1, 1.1, 1.25, 1.5] as const;
 export const TEXT_STEPS = [0.875, 1, 1.125, 1.25] as const;
 
@@ -42,6 +70,8 @@ interface ShellState {
   queued: QueuedWrite[];
   queueWrite: (label: string) => void;
   flushQueue: () => void;
+  /** The P0-210/211 prototype: the outbox, the conflict list, the number blocks and the drain. */
+  syncEngine: SyncEngineHandle;
   /** Sidebar: full (labels + icons), half (icon rail) or hidden. Persisted. */
   sidebarMode: SidebarMode;
   setSidebarMode: (m: SidebarMode) => void;
@@ -75,8 +105,16 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
   const [fullscreen, setFullscreen] = useState(false);
   const [sync, setSync] = useState<SyncState>('live');
   const [siteMode, setSiteMode] = useState<SiteMode>('edge-authoritative');
-  const [queued, setQueued] = useState<QueuedWrite[]>([]);
   const [buildStamp] = useState(() => new Date().toISOString().slice(0, 10));
+
+  /* ---- the sync engine (P0-210/211) ----------------------------------------------------------
+   * One engine for the whole shell: the header pill, the offline behaviour of the other screens and the sync
+   * console all read and write this. The cloud and the clock live outside the component because they are not
+   * this device: they are the other branch and the passage of time. */
+  const cloud = useMemo(() => new SimulatedCloud('edge-b'), []);
+  const clockRef = useRef(new DrillClock(9 * 60 + 40));
+  const [outbox, setOutbox] = useState<OutboxState>(() => initialOutbox('edge-a'));
+  const [queued, setQueued] = useState<QueuedWrite[]>([]);
 
   /* ---- side effects that touch the document -------------------------------------------------- */
   const applyDensity = useCallback(
@@ -147,15 +185,92 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
     return () => document.removeEventListener('fullscreenchange', onChange);
   }, []);
 
-  const queueWrite = useCallback((label: string) => {
-    setQueued((q) => [...q, { id: `q-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, label, at: new Date().toLocaleTimeString() }]);
-    setSync('queued');
-  }, []);
+  const enqueueOperation = useCallback(
+    (write: Omit<Operation, 'id' | 'nodeId' | 'seq' | 'queuedAt'>) => {
+      setOutbox((current) => {
+        const next = enqueue(current, write);
+        setQueued(next.pending.map((op) => ({ id: op.id, label: op.label, at: op.at.slice(11) })));
+        setSync(cloud.reachable ? 'syncing' : 'queued');
+        return next;
+      });
+    },
+    [cloud],
+  );
 
-  const flushQueue = useCallback(() => {
+  const drainNow = useCallback(() => {
+    let summary = syncSummary(outbox);
+    setOutbox((current) => {
+      const next = drain(current, cloud, clockRef.current.tick(1));
+      summary = syncSummary(next);
+      setQueued(next.pending.map((op) => ({ id: op.id, label: op.label, at: op.at.slice(11) })));
+      setSync(summary.conflictsOpen > 0 ? 'conflict' : next.pending.length > 0 ? 'queued' : 'live');
+      return next;
+    });
+    return summary;
+  }, [cloud, outbox]);
+
+  const resolveSyncConflict = useCallback(
+    (conflictId: string, choice: NonNullable<Conflict['resolution']>) => {
+      setOutbox((current) => {
+        const next = resolveConflict(current, conflictId, choice, cloud);
+        setQueued(next.pending.map((op) => ({ id: op.id, label: op.label, at: op.at.slice(11) })));
+        setSync(syncSummary(next).conflictsOpen > 0 ? 'conflict' : 'live');
+        return next;
+      });
+    },
+    [cloud],
+  );
+
+  const setUplink = useCallback(
+    (reachable: boolean) => {
+      cloud.reachable = reachable;
+      setSync(reachable ? 'live' : 'queued');
+    },
+    [cloud],
+  );
+
+  const resetEngine = useCallback(() => {
+    clockRef.current = new DrillClock(9 * 60 + 40);
+    cloud.reachable = true;
+    setOutbox(initialOutbox('edge-a'));
     setQueued([]);
     setSync('live');
-  }, []);
+  }, [cloud]);
+
+  /** `queueWrite(label)` stays the simple call other screens already make: an audit write in the outbox. */
+  const queueWrite = useCallback(
+    (label: string) => {
+      enqueueOperation({
+        at: clockRef.current.tick(1),
+        entity: 'audit',
+        recordId: `audit-${label.slice(0, 12)}`,
+        label,
+        op: 'append',
+        fields: { note: label },
+        actor: 'Signed on this device',
+        node: 'Main Campus',
+      });
+    },
+    [enqueueOperation],
+  );
+
+  const flushQueue = useCallback(() => {
+    drainNow();
+  }, [drainNow]);
+
+  const syncEngine = useMemo<SyncEngineHandle>(
+    () => ({
+      outbox,
+      summary: syncSummary(outbox),
+      cloud,
+      enqueue: enqueueOperation,
+      drainNow,
+      resolve: resolveSyncConflict,
+      setUplink,
+      reset: resetEngine,
+    }),
+    [outbox, cloud, enqueueOperation, drainNow, resolveSyncConflict, setUplink, resetEngine],
+  );
 
   const value = useMemo<ShellState>(
     () => ({
@@ -172,6 +287,7 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
       queued,
       queueWrite,
       flushQueue,
+      syncEngine,
       sidebarMode,
       setSidebarMode: applySidebar,
       toggleSidebar,
@@ -189,7 +305,7 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
     [
       density, applyDensity, locale, applyLocale, role, setRoleState, sync, siteMode, queued, queueWrite, flushQueue,
       sidebarMode, applySidebar, toggleSidebar, mobileNavOpen, zoom, setZoom, textScale, applyTextScale, fullscreen,
-      toggleFullscreen, buildStamp,
+      toggleFullscreen, buildStamp, queued, queueWrite, flushQueue, syncEngine,
     ],
   );
 

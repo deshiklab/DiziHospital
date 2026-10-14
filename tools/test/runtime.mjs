@@ -47,6 +47,7 @@ const ROUTES = [
   '/billing',
   '/inventory',
   '/reports',
+  '/sync',
   '/help',
 ];
 
@@ -60,6 +61,7 @@ process.on('unhandledRejection', (reason) => unhandled.push(String(reason).slice
 async function check(route) {
   const { JSDOM, VirtualConsole } = jsdom;
   const errors = [];
+  const routeProblems = [];
   const vc = new VirtualConsole();
   const record = (line) => {
     const text = String(line).replace(/\s+/g, ' ').slice(0, 300);
@@ -113,7 +115,7 @@ async function check(route) {
     },
   });
 
-  await new Promise((r) => setTimeout(r, 2500));
+  await new Promise((r) => setTimeout(r, 1800));
 
   const doc = dom.window.document;
   const press = (el) => el.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true, cancelable: true }));
@@ -144,9 +146,25 @@ async function check(route) {
     }
   }
 
+  // The sync console runs the outage drill from this harness. The verdict it prints is the plan's exit criterion,
+  // so it is asserted rather than eyeballed — and the click goes through the real engine, not a stub.
+  let drill = 'n/a';
+  if (route === '/sync') {
+    const run = [...doc.querySelectorAll('button')].find((b) => /run the drill/i.test(b.textContent ?? ''));
+    if (!run) {
+      drill = 'NO BUTTON';
+      routeProblems.push('the outage drill button is not on the sync console');
+    } else {
+      press(run);
+      await new Promise((r) => setTimeout(r, 400));
+      drill = /No writes lost across the outage/.test(doc.body.textContent ?? '') ? 'passed' : 'FAILED';
+      if (drill === 'FAILED') routeProblems.push('the outage drill did not report zero lost writes');
+    }
+  }
+
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors, handlers, copy };
+  return { errors: [...errors, ...routeProblems], handlers, copy, drill };
 }
 
 let problems = 0;
@@ -154,9 +172,9 @@ console.log(`\nruntime — ${ROUTES.length} routes against ${BASE}\n`);
 for (const route of ROUTES) {
   try {
     // eslint-disable-next-line no-await-in-loop
-    const { errors, handlers, copy } = await check(route);
+    const { errors, handlers, copy, drill } = await check(route);
     const bad = errors.length > 0 || handlers === 'DEAD';
-    console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}`);
+    console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${drill === 'n/a' ? '' : `  drill=${drill}`}`);
     if (handlers === 'DEAD') {
       console.log('      the shared control did not respond after hydration');
       problems += 1;

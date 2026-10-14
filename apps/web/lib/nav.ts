@@ -25,6 +25,7 @@ export const NAV: NavItem[] = [
   { key: 'nav.billing', href: '/billing', icon: 'receipt', roles: ['billing', 'receptionist', 'admin'], owner: 'legacy', phase: 'P2' },
   { key: 'nav.inventory', href: '/inventory', icon: 'package', roles: ['pharmacist', 'admin'], owner: 'legacy', phase: 'P3' },
   { key: 'nav.reports', href: '/reports', icon: 'chart', roles: ['admin', 'billing'], owner: 'legacy', phase: 'P6' },
+  { key: 'nav.sync', href: '/sync', icon: 'sync', roles: ['admin'], owner: 'new', phase: 'P0' },
   { key: 'nav.admin', href: '/admin', icon: 'shield', roles: ['admin'], owner: 'legacy', phase: 'P7' },
   { key: 'nav.help', href: '/help', icon: 'help', roles: ['receptionist', 'doctor', 'pharmacist', 'billing', 'admin'], owner: 'new', phase: 'P0' },
 ];
@@ -40,6 +41,7 @@ export const strings: Record<string, { en: string; bn: string }> = {
   'nav.billing': { en: 'Billing', bn: 'বিলিং' },
   'nav.inventory': { en: 'Inventory', bn: 'ইনভেন্টরি' },
   'nav.reports': { en: 'Reports', bn: 'রিপোর্ট' },
+  'nav.sync': { en: 'Sync console', bn: 'সিঙ্ক কনসোল' },
   'nav.admin': { en: 'Admin', bn: 'অ্যাডমিন' },
   'nav.help': { en: 'Help', bn: 'সহায়তা' },
 
