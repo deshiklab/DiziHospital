@@ -44,6 +44,7 @@ import {
 } from '@dizi/ui';
 import { APP_PHASE, APP_VERSION, TEXT_STEPS, ZOOM_STEPS, useShell, type Density, type Locale, type Role, type SidebarMode } from '@/lib/shell';
 import { HOTKEYS, NAV, breadcrumbsFor, roleLabels, t } from '@/lib/nav';
+import { MobileBar } from '@/components/MobileBar';
 import { MobileNav } from '@/components/MobileNav';
 import { patients } from '@/lib/mock';
 
@@ -330,7 +331,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </>
             )}
             {searchOpen && results.length > 0 && (
-              <ul className="absolute z-50 mt-1 w-full min-w-80 rounded-md border border-border-subtle bg-surface-raised shadow-lg">
+              <ul className="absolute z-[68] mt-1 w-full min-w-80 rounded-md border border-border-subtle bg-surface-raised shadow-lg">
                 {results.map((p) => (
                   <li key={p.mrn}>
                     <Link href={`/patients/${p.mrn}`} className="flex items-center justify-between gap-2 px-3 py-2 text-sm hover:bg-surface-sunken">
@@ -357,7 +358,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </button>
             </Tooltip>
             {syncOpen && (
-              <div className="absolute right-0 z-50 mt-1 w-80 rounded-md border border-border-subtle bg-surface-raised p-3 shadow-lg">
+              <div className="absolute right-0 z-[68] mt-1 w-80 rounded-md border border-border-subtle bg-surface-raised p-3 shadow-lg">
                 <p className="mb-2 text-xs font-semibold text-text-secondary">{t('sync.simulate', locale)}</p>
                 <div className="flex flex-wrap gap-1">
                   {(['live', 'lanOnly', 'queued', 'syncing', 'conflict'] as const).map((s) => (
@@ -437,7 +438,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </button>
             </Tooltip>
             {notifOpen && (
-              <div className="absolute right-0 z-50 mt-1 w-80 rounded-md border border-border-subtle bg-surface-raised p-2 shadow-lg">
+              <div className="absolute right-0 z-[68] mt-1 w-80 rounded-md border border-border-subtle bg-surface-raised p-2 shadow-lg">
                 {[
                   ['Critical potassium result — Bed 12', 'Acknowledge', 'critical'],
                   ['Appointment approved — Nasrin Akter', 'View', 'info'],
@@ -475,7 +476,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </button>
             </Tooltip>
             {displayOpen && (
-              <div className="absolute right-0 z-50 mt-1 w-72 space-y-3 rounded-md border border-border-subtle bg-surface-raised p-3 shadow-lg">
+              <div className="absolute right-0 z-[68] mt-1 w-72 space-y-3 rounded-md border border-border-subtle bg-surface-raised p-3 shadow-lg">
                 <div>
                   <p className="mb-1 text-xs font-semibold text-text-secondary">{t('shell.zoom', locale)}</p>
                   <div className="flex items-center gap-2">
@@ -646,7 +647,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* =================================================================== footer */}
-      <footer className="no-print sticky bottom-0 z-30 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border-subtle bg-surface-raised px-3 py-1.5 text-[11px] text-text-tertiary">
+      <footer className="no-print sticky bottom-[calc(var(--dizi-mobile-bar)+env(safe-area-inset-bottom))] z-30 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border-subtle bg-surface-raised px-3 py-1.5 text-[11px] text-text-tertiary lg:bottom-0">
         {/* The breadcrumb trail lives down here, not in the header: the header is for actions, and the trail is
             orientation — it does not need to be at the top, but it does need to be visible on every screen size. */}
         <nav aria-label="Breadcrumb" className="flex min-w-0 flex-1 items-center gap-1 text-xs text-text-secondary">
@@ -672,28 +673,26 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             {t('shell.hotkeys', locale)}
           </button>
           <span className="hidden md:inline">All data shown is synthetic</span>
-          {/* The only navigation trigger on a phone or tablet, now that the header no longer carries one. It is
-              a real toggle: pressing it again closes the drawer, which is what a button that looks like this has
-              to do. */}
-          <button
-            id={MOBILE_NAV_TRIGGER_ID}
-            type="button"
-            onClick={toggleMobileNav}
-            aria-expanded={mobileNavOpen}
-            aria-controls="mobile-nav-panel"
-            className="inline-flex min-h-9 items-center gap-1.5 rounded-sm border border-border-default px-2.5 py-1 hover:text-text-primary lg:hidden"
-          >
-            {/* A hamburger, not a panel: the panel-shaped icon in this shell means “the sidebar”, and on a
-                phone there is no sidebar to expand. This opens the navigation drawer, and closes it again. */}
-            {mobileNavOpen ? <X className="size-3.5" aria-hidden /> : <MenuIcon className="size-3.5" aria-hidden />}
-            {mobileNavOpen ? t('shell.closeMenu', locale) : t('shell.menu', locale)}
-          </button>
         </span>
       </footer>
 
+      {/* The phone's action bar: dashboard, the patient register, search and the navigation drawer — at the
+          bottom edge, under the thumb, instead of at the far end of a long page. `lg:hidden`. */}
+      <MobileBar
+        locale={locale}
+        pathname={pathname}
+        menuOpen={mobileNavOpen}
+        onMenuToggle={toggleMobileNav}
+        onSearch={() => {
+          setSearchOpen(true);
+          setTimeout(() => searchRef.current?.focus(), 30);
+        }}
+        triggerId={MOBILE_NAV_TRIGGER_ID}
+      />
+
       {/* ============================================================== overlays */}
       {paletteOpen && (
-        <div className="fixed inset-0 z-[60] flex items-start justify-center bg-surface-overlay p-4 pt-24" role="dialog" aria-modal="true" aria-label={t('shell.palette', locale)}>
+        <div className="fixed inset-0 z-[72] flex items-start justify-center bg-surface-overlay p-4 pb-24 pt-24 lg:pb-4" role="dialog" aria-modal="true" aria-label={t('shell.palette', locale)}>
           <div className="w-full max-w-xl rounded-lg border border-border-subtle bg-surface-raised shadow-xl">
             <input
               autoFocus

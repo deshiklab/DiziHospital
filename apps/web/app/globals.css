@@ -15,6 +15,9 @@
   --dizi-density-row-height: var(--dizi-density-comfortable-row-height);
   --dizi-density-field-height: var(--dizi-density-comfortable-field-height);
   --dizi-zoom: 1;
+  /* Height of the mobile thumb bar, before the device's own bottom inset. The bar, the drawer and the sticky
+     footer all take their offset from this one number so they cannot drift apart. */
+  --dizi-mobile-bar: 3.5rem;
 }
 html[data-density='compact'] {
   --dizi-density-row-height: var(--dizi-density-compact-row-height);

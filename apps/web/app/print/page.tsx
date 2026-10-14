@@ -16,6 +16,7 @@ const TEMPLATES = [
   { doc: 'invoice', title: 'Invoice', paper: 'A4', when: 'The full bill, with the payer share and any approved discount.' },
   { doc: 'dispense-label', title: 'Medicine label', paper: '50 × 25 mm', when: 'Applied to the pack at the pharmacy; dose in Bangla and English.' },
   { doc: 'result-report', title: 'Laboratory report', paper: 'A4', when: 'Released after verification; carries the reference ranges, the flags and the verifier’s name.' },
+  { doc: 'purchase-order', title: 'Purchase order', paper: 'A4', when: 'Sent to the supplier from the store; every line carries the packs and the units.' },
   { doc: 'specimen-label', title: 'Specimen label', paper: '50 × 25 mm', when: 'Applied to sample tubes at collection; the lab scans the barcode.' },
   { doc: 'id-card', title: 'Patient ID card', paper: 'CR80 card', when: 'Optional, for long-term patients and corporate schemes.' },
   { doc: 'day-list', title: 'Appointment day list', paper: 'A4 landscape', when: 'Printed at the start of a shift, and again after a change of plan.' },

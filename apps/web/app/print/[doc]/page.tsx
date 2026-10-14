@@ -16,6 +16,12 @@ import {
   testByCode,
   worstFlag,
 } from '@/lib/diagnostics';
+import {
+  generateInventory,
+  poTotals,
+  supplierById,
+  type PurchaseOrder,
+} from '@/lib/inventory';
 import { patients } from '@/lib/mock';
 
 /* Print templates.
@@ -38,6 +44,7 @@ type DocKind =
   | 'dispense-label'
   | 'specimen-label'
   | 'result-report'
+  | 'purchase-order'
   | 'id-card'
   | 'day-list';
 
@@ -49,6 +56,7 @@ const DOC_META: Record<DocKind, { title: string; paper: string; page: string; no
   invoice: { title: 'Invoice', paper: 'A4', page: 'A4 portrait', note: 'The full bill for the patient, the payer or the file.', param: 'inv' },
   'dispense-label': { title: 'Medicine label', paper: '50 × 25 mm', page: '50mm 25mm', note: 'Applied to the pack: four doses a day, in Bangla and English.', param: 'dsp' },
   'result-report': { title: 'Laboratory report', paper: 'A4', page: 'A4 portrait', note: 'Reference ranges, flags and the verifier’s name.', param: 'spec' },
+  'purchase-order': { title: 'Purchase order', paper: 'A4', page: 'A4 portrait', note: 'Sent to the supplier; the store keeps the copy that was ordered.', param: 'po' },
   'specimen-label': { title: 'Specimen label', paper: '50 × 25 mm', page: '50mm 25mm', note: 'Two-line label for tubes; the barcode is what the lab scans.', param: 'spec' },
   'id-card': { title: 'Patient ID card', paper: 'CR80 card', page: 'A4 portrait', note: 'Crop marks shown for card printers.', param: 'mrn' },
   'day-list': { title: 'Appointment day list', paper: 'A4 landscape', page: 'A4 landscape', note: 'What the desk prints at the start of a shift.' },
@@ -77,7 +85,7 @@ export default function PrintPage({
   searchParams,
 }: {
   params: Promise<{ doc: string }>;
-  searchParams: Promise<{ id?: string; mrn?: string; enc?: string; inv?: string; dsp?: string; spec?: string }>;
+  searchParams: Promise<{ id?: string; mrn?: string; enc?: string; inv?: string; dsp?: string; spec?: string; po?: string }>;
 }) {
   const { doc } = use(params);
   const query = use(searchParams);
@@ -111,6 +119,12 @@ export default function PrintPage({
     diagnosticOrders.find((o) => Object.keys(o.results).length > 0) ??
     diagnosticOrders[0];
   const reportTest = testByCode(report.testCode);
+
+  const inventory = generateInventory(day);
+  const purchaseOrder: PurchaseOrder =
+    inventory.purchaseOrders.find((po) => po.id === query.po) ??
+    inventory.purchaseOrders.find((po) => po.status === 'Sent') ??
+    inventory.purchaseOrders[0];
 
   const specimenId = query.spec ?? `SP-${appointment?.token ?? '000'}1`;
 
@@ -535,6 +549,105 @@ export default function PrintPage({
             </div>
           </div>
         );
+
+      case 'purchase-order': {
+        const supplier = supplierById(purchaseOrder.supplierId);
+        const totals = poTotals(purchaseOrder);
+        const packs = (units: number, packSize: number) => Math.round(units / packSize);
+        return (
+          <div className="w-[210mm] bg-white p-6 text-black">
+            {header('Purchase order', purchaseOrder.id)}
+
+            <div className="mb-3 grid grid-cols-2 gap-6 text-sm">
+              <div>
+                <p className="text-xs font-bold uppercase">Supplier</p>
+                <p className="font-semibold">{supplier?.name}</p>
+                <p className="text-xs">{supplier?.contact}</p>
+                <p className="text-xs">Terms: {supplier?.terms}</p>
+                <p className="text-xs">Lead time: {supplier?.leadTimeDays} days</p>
+              </div>
+              <div>
+                <p className="text-xs font-bold uppercase">Deliver to</p>
+                <p className="font-semibold">Main store — Goods receiving</p>
+                <p className="text-xs">DiziHospital, Main Campus · open 08:00–16:00, Friday closed</p>
+                <p className="mt-1 text-xs">
+                  Order date <span className="font-mono">{purchaseOrder.createdAt}</span> · expected{' '}
+                  <span className="font-mono">{purchaseOrder.expectedAt}</span>
+                </p>
+                <p className="text-xs">Raised by {purchaseOrder.raisedBy}</p>
+              </div>
+            </div>
+
+            <table className="w-full border-collapse text-sm">
+              <thead>
+                <tr>
+                  <th className="border border-black px-2 py-1 text-left">#</th>
+                  <th className="border border-black px-2 py-1 text-left">Item</th>
+                  <th className="border border-black px-2 py-1 text-left">Pack</th>
+                  <th className="border border-black px-2 py-1 text-right">Packs</th>
+                  <th className="border border-black px-2 py-1 text-right">Units</th>
+                  <th className="border border-black px-2 py-1 text-right">Unit cost</th>
+                  <th className="border border-black px-2 py-1 text-right">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {purchaseOrder.lines.map((line, i) => {
+                  const item = inventory.items.find((x) => x.id === line.itemId);
+                  return (
+                    <tr key={line.itemId}>
+                      <td className="border border-black px-2 py-1 text-xs">{i + 1}</td>
+                      <td className="border border-black px-2 py-1">
+                        {item?.name}
+                        <span className="block text-[10px]">{item?.generic}</span>
+                      </td>
+                      <td className="border border-black px-2 py-1 text-xs">{item?.packUnit}</td>
+                      <td className="border border-black px-2 py-1 text-right font-mono">{packs(line.quantity, item?.packSize ?? 1)}</td>
+                      <td className="border border-black px-2 py-1 text-right font-mono">{line.quantity.toLocaleString()}</td>
+                      <td className="border border-black px-2 py-1 text-right font-mono">{line.unitCost}</td>
+                      <td className="border border-black px-2 py-1 text-right font-mono">{(line.quantity * line.unitCost).toLocaleString()}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+
+            <div className="mt-2 flex justify-between">
+              <div className="max-w-[110mm] text-xs">
+                <p className="font-bold">Conditions</p>
+                <ul className="ml-4 list-disc">
+                  <li>Every line must arrive with a batch number and an expiry date on the pack and on the delivery note.</li>
+                  <li>Cold-chain items are accepted only with the temperature log for the journey.</li>
+                  <li>Quantities are checked at the receiving bay; a short line is recorded against this order.</li>
+                  <li>Controlled items: licence copy and the signed indent accompany this order.</li>
+                </ul>
+                {purchaseOrder.note && <p className="mt-1">Note: {purchaseOrder.note}</p>}
+              </div>
+              <div className="w-60 text-sm">
+                <p className="flex justify-between"><span>Sub-total</span><span className="font-mono">{totals.subtotal.toLocaleString()}</span></p>
+                <p className="flex justify-between"><span>Tax at {totals.vatRate} %</span><span className="font-mono">{totals.vat.toLocaleString()}</span></p>
+                <p className="mt-1 flex justify-between border-t border-black pt-1 font-bold"><span>Total</span><span className="font-mono">৳{totals.total.toLocaleString()}</span></p>
+                <p className="mt-1 text-[10px]">Tax treatment follows the supplier record; the supplier&apos;s invoice is the tax document, not this order.</p>
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-8 text-xs">
+              <div>
+                <div className="mb-1 h-10 border-b border-black" />
+                <p>Raised by · {purchaseOrder.raisedBy}</p>
+              </div>
+              <div>
+                <div className="mb-1 h-10 border-b border-black" />
+                <p>Approved by · store manager (above the value limit)</p>
+              </div>
+            </div>
+
+            <div className="mt-4 flex items-end justify-between text-xs">
+              <p>Printed {new Date().toLocaleString()} · this is an order, not a tax invoice</p>
+              <BarCode value={purchaseOrder.id} height={26} />
+            </div>
+          </div>
+        );
+      }
 
       case 'specimen-label':
         return (

@@ -9,9 +9,12 @@ import { X } from 'lucide-react';
  * The off-canvas navigation for phones and tablets.
  *
  * It used to be an inline element that only ever opened: pressing the button a second time did nothing, Escape
- * did nothing, focus stayed on the footer button behind the panel and the page beneath it kept scrolling. All
- * four are fixed here, and the panel is rendered in a portal so no ancestor's overflow or stacking context can
- * clip it or swallow its taps.
+ * did nothing, focus stayed on the button behind the panel and the page beneath it kept scrolling. All four are
+ * fixed here, and the panel is rendered in a portal so no ancestor's overflow or stacking context can clip it or
+ * swallow its taps.
+ *
+ * The panel deliberately stops above the mobile action bar (z-65, which paints over this overlay's backdrop), so
+ * the button that opened the drawer is still visible and still live while it is open.
  *
  * Behaviours, matching the Sheet: Escape closes, focus moves in on open and returns to the trigger on close,
  * Tab is trapped inside, the background does not scroll, and the panel is labelled.
@@ -88,7 +91,7 @@ export function MobileNav({
         role="dialog"
         aria-modal="true"
         aria-label="Navigation"
-        className="absolute inset-y-0 left-0 flex w-[min(18rem,88vw)] flex-col border-r border-border-subtle bg-surface-raised shadow-2xl"
+        className="absolute left-0 top-0 bottom-[calc(var(--dizi-mobile-bar)+env(safe-area-inset-bottom))] flex w-[min(18rem,88vw)] flex-col border-r border-border-subtle bg-surface-raised shadow-2xl"
       >
         <div className="flex items-center justify-between border-b border-border-subtle px-3 py-2">
           <span className="flex items-center gap-2">

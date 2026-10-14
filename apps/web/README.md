@@ -14,7 +14,7 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 | Feature | Where | Notes |
 |---|---|---|
 | **Sidebar: full ⇄ half (icons only)** | one toggle, top-left of the header (`lg` and up only) | Half mode is a 64 px icon rail with tooltips; the mode is remembered, and `Ctrl+B` switches it. `hidden` gives the table the entire width. There is deliberately no second control inside the sidebar |
-| **Mobile navigation** | the Menu button in the footer — no navigation control in the header below `lg` | Off-canvas drawer in a portal: opens and closes from that same button, and also closes on Escape, on the backdrop, on any navigation, and when the viewport reaches the desktop layout. Focus moves into the panel and returns to the button; the page behind it cannot scroll |
+| **Mobile bar** | fixed to the bottom edge below `lg` — Home, Patients, Search and the Menu | The drawer opens and closes from the Menu column of that bar, and also closes on Escape, on the backdrop, on any navigation, and when the viewport reaches the desktop layout. The bar paints *over* the drawer's backdrop and the panel stops above it, so the button that opened the drawer is still visible and still live while it is open. Focus moves into the panel and returns to the button; the page behind it cannot scroll. Nothing to do with the sidebar: there is no panel-shaped control in the mobile header at all |
 | **Fixed header** | always | Breadcrumbs, global search, connection state, hot actions, command palette, notifications, display controls, language, help, account |
 | **Fixed footer** | always | Version, phase, build stamp, credits, site mode, keyboard-shortcut link |
 | **Global search** | header, `/` or click | Name, Bangla name, MRN and phone; results link straight to the record |
@@ -42,12 +42,13 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 | `/login` | Two-step sign-in preview (credentials → six-digit code), branch picker, English ⇄ বাংলা |
 | `/clinical` | OPD consultation: the room queue beside one patient's workspace — vitals with reference-range flags, SOAP notes, ICD-10 diagnosis, lab/imaging orders, and a prescription screened for allergies, high-alert medicines and dangerous abbreviations before it can be signed |
 | `/diagnostics` | Laboratory and imaging worklist: every specimen's journey (ordered → collected → in the lab → resulted → verified → dispatched), per-analyte reference ranges checked as the value is typed, turnaround deadlines on the row, verification as a second-person gate, the critical-value call-back log, rejected samples with reasons, and the day's quality-control runs |
+| `/inventory` | Stores and purchase: stock on hand per store with cover in days, batches with expiry (expired ones quarantined, valued, and written off with a reason), a replenishment list whose quantities cover the lead time, purchase orders with send/receive/cancel, goods receipt with a batch number and an expiry required on every line, the append-only store ledger, and a stock-take sheet a second person has to approve |
 | `/pharmacy` | The dispensary: prescription queue, FEFO batch picking (expired batches cannot be selected), substitution with both names kept, controlled-substance register with a witness, and the append-only stock ledger |
 | `/billing` | Billing counter: invoices built from what the doctor ordered, payment capture per method, discount approval above the limit, day-end sheet with cash reconciliation, and the branch tariff |
 | `/help` | Help centre: how the new platform works (six anchored topics), the shortcut list, and the mirrored reference library by category |
 | `/help/search` | Server-rendered search over the reference library, with the matching text highlighted |
 | `/help/[category]/[slug]` | One mirrored article, rendered from Markdown with its screenshots served from the library, attributed to its source |
-| `/print` and `/print/[doc]` | Print templates: registration slip and appointment slip (A5), prescription (A4), laboratory report (A4), receipt (80 mm thermal), specimen label (50 × 25 mm), patient ID card (CR80), day list (A4 landscape) |
+| `/print` and `/print/[doc]` | Print templates: registration slip and appointment slip (A5), prescription (A4), laboratory report (A4), purchase order (A4), receipt (80 mm thermal), specimen label (50 × 25 mm), patient ID card (CR80), day list (A4 landscape) |
 | `/<module>` | Launcher: modules still owned by the legacy system say so and point there |
 
 ## DataGrid
@@ -99,9 +100,13 @@ Rules that keep the mirror *reference material* rather than product material:
 * The laboratory worklist shows the controls it should show — reference ranges, turnaround deadlines, verification
   and the call-back log — but no analyser, label printer or SMS gateway is connected (`P4` integration hardening).
   Until then the values are typed by hand or filled from the synthetic generator.
+* The store module has no barcode or GS1 scanning yet: batch numbers and expiries are typed. Scanning is the
+  point of the receiving bay (and of the analyser interface) and it lands with `P3` integration work.
+* No credit-note path for short-dated stock returned to a supplier, and no cold-chain temperature log — both are
+  on the `P3` list, and both are visible in the data model's shape rather than hidden behind a claim.
 * There is no separate laboratory role yet: the worklist is reached with the doctor/admin roles, and the actions on
   it stand in for a technologist and a pathologist. A dedicated role with its own permissions arrives with `P0-205`.
-* The appointment desk, the consultation workspace, the laboratory worklist, the dispensary and the billing counter all run on the same
+* The appointment desk, the consultation workspace, the laboratory worklist, the dispensary, the store and the billing counter all run on the same
   deterministic synthetic data as the rest of the shell: the rules are real, the patients, stock and money are not.
 * Nothing on those screens is persisted — reload and the day starts again. The write paths (sign a note, record a
   movement, take a payment) are the shapes the API will accept, not a database yet.
