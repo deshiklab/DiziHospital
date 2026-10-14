@@ -7,7 +7,8 @@
  *     rather than disappearing into a count.
  *  2. **A duplicate is never merged silently.** An existing MRN wins; a row that matches on phone or on
  *     name+age+sex is *possible* duplicate and goes to the merge queue for a human, because merging two real
- *     patients is worse than leaving two rows for an afternoon.
+ *     patients is worse than leaving two rows for an afternoon — and that includes two rows of the *same file*,
+ *     which the register cannot know about.
  *  3. **The file is not the truth.** Missing fields stay missing: an import that invents a phone number produces a
  *     record nobody can call.
  *
@@ -16,6 +17,7 @@
  */
 
 import { branches, payers, patients, type Patient } from './mock';
+import { strongestDuplicate, duplicateSummary, type DuplicateIdentity } from './duplicate-rules';
 
 export interface ImportField {
   key: keyof Pick<Patient, 'mrn' | 'name' | 'nameBn' | 'age' | 'sex' | 'phone' | 'branch' | 'payer' | 'lastVisit' | 'allergies'>;
@@ -159,14 +161,12 @@ export function previewImport(csv: string, mapping?: Record<string, string>, exi
   const table = parseCsv(csv);
   const headers = table[0] ?? [];
   const map = mapping ?? guessMapping(headers);
-  const byMrn = new Map(existing.map((p) => [p.mrn.toLowerCase(), p]));
-  const byPhone = new Map<string, Patient>();
-  for (const p of existing) {
-    const d = digits(p.phone);
-    if (d.length >= 10 && !byPhone.has(d)) byPhone.set(d, p);
-  }
-
   const indexOf = (key: ImportField['key']) => (map[key] ? headers.indexOf(map[key]) : -1);
+
+  /* Rows already read from this file, in order. A migration spreadsheet that holds the same person twice is as
+   * common as one that collides with the register, and until this existed the import checked each row against the
+   * register and never against its neighbours — so two rows for one patient both came in. */
+  const seen: Array<{ line: number; identity: DuplicateIdentity }> = [];
 
   const rows: ImportRow[] = table.slice(1).map((cells, i) => {
     const values: ImportRow['values'] = {};
@@ -197,26 +197,58 @@ export function previewImport(csv: string, mapping?: Record<string, string>, exi
     if (values.payer && !payers.includes(values.payer as never)) problems.push(`Payer “${values.payer}” is not in the payer list`);
     if (values.lastVisit && !/^\d{4}-\d{2}-\d{2}$/.test(values.lastVisit)) problems.push(`Last visit “${values.lastVisit}” is not YYYY-MM-DD`);
 
-    // identity: an MRN clash is an error, a phone or name clash is a possible duplicate for a human
+    /* Identity, by the register's own rule set — `lib/duplicate-rules.ts`, the same seven weighted rules the
+     * desk form runs. A migration and a registration desk disagreeing about who is already registered is the
+     * whole reason this is one module rather than two copies.
+     *
+     * The MRN keeps its own line and its own wording: it is not a similarity verdict but a data error in the
+     * file — the register already has that number — and the desk fixing the spreadsheet needs to be told
+     * exactly that. Everything else is a candidate with evidence, scored against the contract's thresholds. */
     const mrn = values.mrn?.toLowerCase();
-    const hitMrn = mrn ? byMrn.get(mrn) : undefined;
+    const hitMrn = mrn ? existing.find((p) => p.mrn.toLowerCase() === mrn) : undefined;
     if (hitMrn) {
       problems.push(`MRN ${values.mrn} already exists — ${hitMrn.name}`);
       duplicateOf = `${hitMrn.mrn} · ${hitMrn.name}`;
-    } else if (phone.length === 11 && byPhone.has(phone)) {
-      const other = byPhone.get(phone)!;
-      problems.push(`Same phone number as ${other.name} (${other.mrn}) — possible duplicate`);
-      duplicateOf = `${other.mrn} · ${other.name}`;
-    } else if (values.name && values.age && values.sex) {
-      const sex = SEXES[normalise(values.sex)];
-      const twin = existing.find(
-        (p) => p.name.toLowerCase() === values.name!.toLowerCase() && p.age === Number(values.age) && p.sex === sex,
+    } else {
+      const strongest = strongestDuplicate(
+        {
+          mrn: values.mrn ?? '',
+          name: values.name ?? '',
+          age: values.age ?? '',
+          sex: SEXES[normalise(values.sex ?? '')] ?? values.sex ?? '',
+          phone: values.phone ?? '',
+        },
+        existing,
       );
-      if (twin) {
-        problems.push(`Same name, age and sex as ${twin.name} (${twin.mrn}) — possible duplicate`);
-        duplicateOf = `${twin.mrn} · ${twin.name}`;
+      if (strongest) {
+        duplicateOf = `${strongest.record.mrn} · ${strongest.record.name}`;
+        problems.push(duplicateSummary(strongest));
       }
     }
+
+    // And against the rows above it in this file, which the register cannot know about.
+    const identity: DuplicateIdentity = {
+      mrn: values.mrn ?? '',
+      name: values.name ?? '',
+      age: values.age ?? '',
+      sex: SEXES[normalise(values.sex ?? '')] ?? values.sex ?? '',
+      phone: values.phone ?? '',
+    };
+    if (!duplicateOf) {
+      const earlier = strongestDuplicate(
+        identity,
+        seen.map((entry) => ({ ...entry.identity, line: entry.line })),
+      );
+      if (earlier) {
+        const line = (earlier.record as DuplicateIdentity & { line?: number }).line;
+        duplicateOf = `${earlier.record.mrn ?? ''} · ${earlier.record.name ?? ''} (line ${line})`;
+        const tail = earlier.vetoed
+          ? ` — two rows in this file (line ${line}), probably two people, so check before merging`
+          : ` — two rows in this file may be one person (line ${line})`;
+        problems.push(`${earlier.matches.map((m) => m.evidence).join('; ')}${tail}`);
+      }
+    }
+    seen.push({ line: row.line, identity });
 
     if (problems.length > 0) row.status = duplicateOf ? 'duplicate' : 'error';
     if (duplicateOf) row.status = 'duplicate';

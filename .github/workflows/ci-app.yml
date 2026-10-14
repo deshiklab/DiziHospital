@@ -103,6 +103,11 @@ jobs:
       - name: The generated API client typechecks
         run: npm run typecheck --workspace @dizi/contracts
 
+      # The duplicate rules are contract data and the engine is code; this bundles the real engine and puts one
+      # case per rule through it, which is the only way to see a rule that stopped firing.
+      - name: The duplicate rule set behaves as the contract says
+        run: npm run test:rules
+
       - name: Build (default dist directory — no dev server is running here)
         run: npm run build --workspace @dizi/web
         env:

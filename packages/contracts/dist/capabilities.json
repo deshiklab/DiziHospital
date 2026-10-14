@@ -1000,8 +1000,8 @@
   },
   "duplicateRules": {
     "description": "How two records are decided to be the same person. The rule set is data, not code: a branch tunes the weights and the thresholds in Setup, and the register screen and the API read the same set. Two screens checking different rules is how a duplicate comes in through the front door and a false match is flagged at the back. Nothing here merges. A rule can only raise a candidate, and a person decides.",
-    "configuredIn": "Setup → Registration → duplicate rules, per branch, with the defaults below",
-    "combination": "score = min(1, the sum of the weights of the rules that matched). A rule with `veto: true` is excluded from that sum and can never contribute to a block. At or above `block` the write is refused with 409 and the candidates; at or above `warn` the desk is shown them and may continue; below `warn` nothing is shown, because a desk warned about everything is warned about nothing.",
+    "configuredIn": "Setup → Registration → duplicate rules, per branch, with the defaults below. The client reads the weights and the thresholds from here through the generated client, so a branch that tunes them is tuning the one table both the desk form and the import read.",
+    "combination": "score = min(1, the sum of the weights of the rules that matched). A rule with `veto: true` is excluded from that sum, and a vetoing match also caps the verdict at `warn`: two records whose sex disagrees are two people, so nothing may be refused on likeness alone. The one exception is the MRN, which is identity rather than likeness — two records carrying one number is a data error and a desk has to look at it whatever else disagrees. At or above `block` the write is refused with 409 and the candidates; at or above `warn` the desk is shown them and may continue; below `warn` nothing is shown, because a desk warned about everything is warned about nothing.",
     "thresholds": {
       "warn": 0.4,
       "block": 0.85,
@@ -1016,10 +1016,10 @@
         "label": "Same MRN",
         "when": "The MRN matches an existing record exactly. This is not a duplicate to review: it is the same patient, so the existing record is opened instead of a second one being created.",
         "evidence": [
-          "already exists"
+          "identity.mrn-exact"
         ],
         "implementedBy": [
-          "apps/web/lib/patient-import.ts"
+          "apps/web/lib/duplicate-rules.ts"
         ]
       },
       {
@@ -1030,12 +1030,10 @@
         "label": "Same phone number",
         "when": "The digits match after stripping spaces, dashes and the country code. A household often shares one number, so this raises a candidate rather than deciding anything.",
         "evidence": [
-          "Same phone number as",
-          "p.phone === values.phone"
+          "identity.phone-normalised"
         ],
         "implementedBy": [
-          "apps/web/lib/patient-import.ts",
-          "apps/web/app/patients/new/page.tsx"
+          "apps/web/lib/duplicate-rules.ts"
         ]
       },
       {
@@ -1046,10 +1044,10 @@
         "label": "National ID ending matches",
         "when": "The last four digits of the national ID match the tail of an existing identifier. A partial match that a complete national-ID field would make unnecessary, kept because the register already contains one.",
         "evidence": [
-          "nationalId"
+          "identity.national-id-suffix"
         ],
         "implementedBy": [
-          "apps/web/app/patients/new/page.tsx"
+          "apps/web/lib/duplicate-rules.ts"
         ]
       },
       {
@@ -1060,10 +1058,10 @@
         "label": "Same name, age and sex",
         "when": "Three fields agree. Where names repeat as often as they do here, that is more than a coincidence and still less than a certainty.",
         "evidence": [
-          "Same name, age and sex as"
+          "identity.name-age-sex"
         ],
         "implementedBy": [
-          "apps/web/lib/patient-import.ts"
+          "apps/web/lib/duplicate-rules.ts"
         ]
       },
       {
@@ -1074,9 +1072,11 @@
         "label": "Same date of birth",
         "when": "The full date of birth agrees. Weaker than it looks: the first of January is a placeholder for an unknown date in this register.",
         "evidence": [
-          "dateOfBirth"
+          "identity.dob-exact"
         ],
-        "implementedBy": []
+        "implementedBy": [
+          "apps/web/lib/duplicate-rules.ts"
+        ]
       },
       {
         "id": "identity.name-fuzzy",
@@ -1086,9 +1086,11 @@
         "label": "Name within one edit",
         "when": "The names differ by a single insertion, deletion or substitution — the commonest transcription error at a busy desk, and the one a typo-by-typo search never finds.",
         "evidence": [
-          "similarity"
+          "identity.name-fuzzy"
         ],
-        "implementedBy": []
+        "implementedBy": [
+          "apps/web/lib/duplicate-rules.ts"
+        ]
       },
       {
         "id": "identity.sex-conflict",
@@ -1098,9 +1100,11 @@
         "label": "Sex disagrees",
         "when": "The records differ on sex, so they are two people. This vetoes a block outright however alike the names look, which is the difference between a duplicate check the desk trusts and one it learns to click past.",
         "evidence": [
-          "sex"
+          "identity.sex-conflict"
         ],
-        "implementedBy": []
+        "implementedBy": [
+          "apps/web/lib/duplicate-rules.ts"
+        ]
       }
     ]
   },

@@ -7,6 +7,7 @@ import { useShell } from '@/lib/shell';
 import { todayIso } from '@/lib/appointments';
 import { t } from '@/lib/nav';
 import { patients } from '@/lib/mock';
+import { findDuplicates } from '@/lib/duplicate-rules';
 
 /* Patient registration (legacy screen 001 — a 19-field modal).
  *
@@ -34,10 +35,15 @@ export default function RegisterPatientPage() {
   const set = (name: keyof typeof values) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setValues((v) => ({ ...v, [name]: e.target.value }));
 
-  // Duplicate detection runs against the same fields the legacy system uses, plus national ID.
-  const duplicates = values.phone.length >= 6
-    ? patients.filter((p) => p.phone === values.phone || (values.nationalId && p.mrn.endsWith(values.nationalId.slice(-4)))).slice(0, 3)
-    : [];
+  /* Duplicate detection runs the contract's rule set — the same seven rules, the same weights and the same two
+   * thresholds the CSV import runs (`lib/duplicate-rules.ts`). Before this, the form checked a phone number and a
+   * national-ID suffix while the import checked a normalised phone and name + age + sex: two answers to one
+   * question, which is how a duplicate comes in at the desk and a false match gets flagged during migration.
+   *
+   * It runs on the identity block as it is typed, so the panel below fills in from the name as well as the
+   * number, and each candidate arrives with the evidence that raised it. */
+  const identity = { name: values.name, age: values.age, sex: values.sex, phone: values.phone, nationalId: values.nationalId };
+  const duplicates = identity.name.trim() || values.phone.length >= 6 ? findDuplicates(identity, patients).slice(0, 3) : [];
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -128,13 +134,28 @@ export default function RegisterPatientPage() {
       </div>
 
       {duplicates.length > 0 && (
-        <SafetyBanner severity="warning" title="This number is already registered" requiresAcknowledgement={false}>
-          {duplicates.map((d) => (
-            <span key={d.mrn} className="mr-3 font-numeric text-sm">
-              {d.name} · {d.mrn} · {d.phone}
-            </span>
-          ))}
-          <p className="mt-1 text-sm">Open the existing record instead of creating a duplicate.</p>
+        <SafetyBanner
+          severity={duplicates.some((d) => d.verdict === 'block') ? 'critical' : 'warning'}
+          title={duplicates.some((d) => d.verdict === 'block') ? 'This patient already looks registered — check before continuing' : 'Possible duplicate — check before continuing'}
+          requiresAcknowledgement={false}
+        >
+          <ul className="flex flex-col gap-1">
+            {duplicates.map((d) => (
+              <li key={d.record.mrn} className="text-sm">
+                <span className="font-medium">{d.record.name}</span>{' '}
+                <span className="font-numeric">{d.record.mrn}</span> · {d.record.phone}
+                <span className="ml-2 rounded-full bg-surface-sunken px-2 py-0.5 text-xs">
+                  {d.verdict} · score {d.score.toFixed(2)}
+                </span>
+                <span className="block text-xs text-text-secondary">{d.matches.map((m) => m.evidence).join(' · ')}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-1 text-sm">
+            The matching rules and the thresholds are the contract’s (`x-dizi-duplicate-rules`), the same set the
+            import runs, and a branch can tune both in Setup. Nothing is merged here: open the existing record, or
+            continue and the match is recorded with this registration.
+          </p>
         </SafetyBanner>
       )}
 

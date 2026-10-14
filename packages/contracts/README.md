@@ -62,26 +62,31 @@ Rules the guardrail enforces on that metadata:
 
 ## The duplicate rule set, as it stands
 
-`score = min(1, sum of the weights of the matching rules)`; a `veto` rule never contributes to a block.
+`score = min(1, sum of the weights of the matching rules)`; a rule with `veto: true` is excluded from the sum,
+and a vetoing match also caps the verdict below `block` — two records whose sex disagrees are two people, so
+nothing is refused on likeness alone. The exception is the MRN, which is identity rather than likeness: two
+records carrying one number is a data error and a desk has to see it whatever else disagrees.
 
-| Rule | Signal | Weight | In the product today |
+| Rule | Signal | Weight | Implemented in |
 |---|---|---|---|
-| `identity.mrn-exact` | mrn | 1.00 | import path — an MRN clash is a refusal, not a merge |
-| `identity.phone-normalised` | phone | 0.80 | import path and the register screen |
-| `identity.national-id-suffix` | nationalId | 0.70 | register screen |
-| `identity.name-age-sex` | name | 0.60 | import path |
-| `identity.dob-exact` | dob | 0.50 | not yet — the API computes it |
-| `identity.name-fuzzy` | name | 0.45 | not yet — the API computes it |
-| `identity.sex-conflict` | sex | 0 veto | not yet — the API computes it |
+| `identity.mrn-exact` | mrn | 1.00 | `apps/web/lib/duplicate-rules.ts` — blocks; the import also reports it as a file error, because an MRN that is already taken is a mistake in the spreadsheet |
+| `identity.phone-normalised` | phone | 0.80 | the same module — warns; a phone match is `blocks` only if other rules push it over |
+| `identity.national-id-suffix` | nationalId | 0.70 | the same module |
+| `identity.name-age-sex` | name | 0.60 | the same module |
+| `identity.dob-exact` | dob | 0.50 | the same module |
+| `identity.name-fuzzy` | name | 0.45 | the same module — one insertion, deletion or substitution |
+| `identity.sex-conflict` | sex | 0 veto | the same module — caps the verdict below `block` |
 
-Two things this table already tells us, and neither is a surprise to the code:
+The register screen and the CSV import both call that module, so the desk and the migration cannot disagree about
+who is already registered — which they did until it existed: the form checked a phone number and a national-ID
+suffix while the import checked a normalised phone and name + age + sex. Both also now read the weights and the
+thresholds from this file through the generated client, so a branch that tunes them in Setup tunes the one table
+both paths use.
 
-1. **The register screen and the import path do not check the same rules.** The register screen checks phone and a
-   national-ID suffix; the import path checks normalised phone and name + age + sex. Consolidating both onto this
-   rule set is the P0-301 follow-on, and it is the difference between a duplicate check the desk trusts and one it
-   learns to click past.
-2. **Weight 0.8 sits below `block` on purpose.** A phone number shared by a household must warn, never refuse —
-   that threshold is a branch-level judgement, which is why it is data here and not a constant in a component.
+`npm run test:rules` bundles the real module and puts one case per rule through it, plus the combination rule
+(a phone match plus a one-edit name adds up to a capped 1.0), the veto (a shared phone number whose sexes
+disagree warns rather than blocks) and the MRN exception. A rule that stops firing is caught there; the
+`implementedBy`/`evidence` entries above are what the guardrail checks statically.
 
 ## Running the guardrail
 
