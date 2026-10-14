@@ -146,7 +146,11 @@ export default function ModuleBillingPage() {
       state: collected >= billTotal.patientShare && billTotal.patientShare > 0 ? 'Collected' : collected > 0 ? 'Partially collected' : 'Issued',
     };
     setBills((b) => [bill, ...b]);
-    queueWrite(`${invoiceNo}: ${module} bill for ${bill.patientName}, ${money(billTotal.net)}${checks.preAuthRequired ? `, pre-authorisation ${preAuth}` : ''}`);
+    queueWrite(`${invoiceNo}: ${module} bill for ${bill.patientName}, ${money(billTotal.net)}${checks.preAuthRequired ? `, pre-authorisation ${preAuth}` : ''}`, {
+      id: 'createInvoice',
+      recordId: invoiceNo,
+      fields: { module, patientShare: billTotal.patientShare, net: billTotal.net, ...(checks.preAuthRequired ? { preAuth } : {}) },
+    });
     push({
       title: `${invoiceNo} issued — net ${money(billTotal.net)}`,
       description: collectNow
@@ -169,14 +173,23 @@ export default function ModuleBillingPage() {
     setBills((list) => list.map((b) => (b.id === openBill.id
       ? { ...b, collected: b.collected + amount, state: b.collected + amount >= b.net ? 'Collected' : 'Partially collected' }
       : b)));
-    queueWrite(`${openBill.invoiceNo}: ${money(amount)} received by ${collectMethod}`);
+    queueWrite(`${openBill.invoiceNo}: ${money(amount)} received by ${collectMethod}`, {
+      id: 'recordPayment',
+      recordId: openBill.invoiceNo,
+      fields: { amount, method: collectMethod },
+    });
     push({ title: `${money(amount)} received on ${openBill.invoiceNo}`, description: `By ${collectMethod}. The bill moves to ${openBill.collected + amount >= openBill.net ? 'collected' : 'partially collected'}.`, tone: 'success' });
     setCollectAmount(0);
   };
 
   const cancelBill = (bill: OpenBill) => {
     setBills((list) => list.map((b) => (b.id === bill.id ? { ...b, state: 'Cancelled', cancelledBecause: cancelReason } : b)));
-    queueWrite(`${bill.invoiceNo}: cancelled — ${cancelReason}`);
+    queueWrite(`${bill.invoiceNo}: cancelled — ${cancelReason}`, {
+      // An invoice is never edited: cancelling one issues a credit note against it.
+      id: 'createInvoice',
+      recordId: `CN-${bill.invoiceNo}`,
+      fields: { creditNoteOf: bill.invoiceNo, because: cancelReason },
+    });
     push({
       title: `${bill.invoiceNo} cancelled`,
       description: bill.collected > 0

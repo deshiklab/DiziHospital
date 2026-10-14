@@ -96,15 +96,25 @@ export default function SyncConsolePage() {
     { key: 'actor', header: 'By', hideBelow: 'lg', render: (op) => <span className="text-xs text-text-secondary">{op.actor} · {op.node}</span> },
   ];
 
-  const enqueue = (write: Parameters<typeof syncEngine.enqueue>[0]) => {
-    syncEngine.enqueue(write);
+  /**
+   * The demo writes go through the contract like everything else: the button names the operation, and the
+   * entity, the conflict policy and the kind of write come from `capabilityOf` rather than from this screen.
+   * A demo that bypassed the contract would be a demo of a path the product does not take.
+   */
+  const enqueueNamed = (
+    operationId: string,
+    write: { at: string; recordId: string; label: string; fields?: Record<string, string | number | null>; actor: string; node: string },
+  ) => {
+    const outcome = syncEngine.queueOperation(operationId, write);
+    const capability = syncEngine.capabilityOf(operationId);
     push({
-      title: cloud.reachable ? 'Written and sent' : 'Written on this device',
-      description: cloud.reachable
-        ? 'The operation has an id and a sequence number; draining is idempotent, so sending it twice applies it once.'
-        : 'Saved here, queued, and applied to this device’s record immediately — the ward does not stop for the uplink.',
-      tone: cloud.reachable ? 'success' : 'warning',
+      title: outcome.queued ? (cloud.reachable ? 'Written and sent' : 'Written on this device') : 'The contract refused this one',
+      description: outcome.queued
+        ? `${operationId} · ${capability?.method.toUpperCase()} ${capability?.path}. ${cloud.reachable ? 'The operation has an id and a sequence number; draining is idempotent, so sending it twice applies it once.' : 'Saved here, queued, and applied to this device’s record immediately — the ward does not stop for the uplink.'}`
+        : outcome.because,
+      tone: outcome.queued ? (cloud.reachable ? 'success' : 'warning') : 'critical',
     });
+    if (!outcome.queued) setRefusal(outcome.because);
   };
 
   const solve = (conflict: Conflict, choice: Conflict['resolution'] extends undefined ? never : NonNullable<Conflict['resolution']>['choice']) => {
@@ -169,19 +179,19 @@ export default function SyncConsolePage() {
       <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
         <Panel title="Write something — with the uplink up or down" actions={<span className="text-xs text-text-tertiary">{cloud.reachable ? 'the cloud is reachable' : 'the uplink is down'}</span>}>
           <div className="flex flex-wrap gap-2">
-            <Button size="sm" variant="ghost" onClick={() => enqueue({ at: `${day} 10:12`, entity: 'nursing.note', recordId: 'med-a-12', label: 'Note for bed A-12', op: 'append', fields: { note: 'Wound edge clean; dressing changed.' }, actor: 'S. Sultana', node: 'Medicine Ward A' })}>
+            <Button size="sm" variant="ghost" onClick={() => enqueueNamed('createNursingNote', { at: `${day} 10:12`, recordId: 'med-a-12', label: 'Note for bed A-12', fields: { note: 'Wound edge clean; dressing changed.' }, actor: 'S. Sultana', node: 'Medicine Ward A' })}>
               Add a nursing note
             </Button>
-            <Button size="sm" variant="ghost" onClick={() => enqueue({ at: `${day} 10:13`, entity: 'mar.dose', recordId: 'mar-8830', label: 'Morphine 10 mg for bed A-12', op: 'claim', fields: { dose: 'Given', witness: 'N. Haque' }, actor: 'S. Sultana', node: 'Medicine Ward A' })}>
+            <Button size="sm" variant="ghost" onClick={() => enqueueNamed('signDose', { at: `${day} 10:13`, recordId: 'mar-8830', label: 'Morphine 10 mg for bed A-12', fields: { dose: 'Given', witness: 'N. Haque' }, actor: 'S. Sultana', node: 'Medicine Ward A' })}>
               Sign a controlled dose
             </Button>
-            <Button size="sm" variant="ghost" onClick={() => enqueue({ at: `${day} 10:14`, entity: 'payment', recordId: 'rc-8842', label: 'Cash 1 200 received at the counter', op: 'append', fields: { amount: 1200, method: 'Cash' }, actor: 'Billing', node: 'Billing counter' })}>
+            <Button size="sm" variant="ghost" onClick={() => enqueueNamed('recordPayment', { at: `${day} 10:14`, recordId: 'rc-8842', label: 'Cash 1 200 received at the counter', fields: { amount: 1200, method: 'Cash' }, actor: 'Billing', node: 'Billing counter' })}>
               Take a cash payment
             </Button>
-            <Button size="sm" variant="ghost" onClick={() => enqueue({ at: `${day} 10:15`, entity: 'patient.contact', recordId: 'SH-102311', label: 'Phone corrected at the desk', op: 'set', fields: { phone: '01711223344' }, actor: 'Reception', node: 'OPD desk' })}>
+            <Button size="sm" variant="ghost" onClick={() => enqueueNamed('updatePatientContact', { at: `${day} 10:15`, recordId: 'SH-102311', label: 'Phone corrected at the desk', fields: { phone: '01711223344' }, actor: 'Reception', node: 'OPD desk' })}>
               Correct a phone number
             </Button>
-            <Button size="sm" variant="ghost" onClick={() => enqueue({ at: `${day} 10:16`, entity: 'bed.state', recordId: 'med-a-19', label: 'Admit into bed A-19', op: 'claim', fields: { admitted: 'SH-103902' }, actor: 'Ward desk', node: 'Medicine Ward A' })}>
+            <Button size="sm" variant="ghost" onClick={() => enqueueNamed('claimBed', { at: `${day} 10:16`, recordId: 'med-a-19', label: 'Admit into bed A-19', fields: { admitted: 'SH-103902' }, actor: 'Ward desk', node: 'Medicine Ward A' })}>
               Admit into bed A-19
             </Button>
             <Button
@@ -433,6 +443,23 @@ export default function SyncConsolePage() {
                   </div>
                   <p className="mt-1 text-sm text-text-secondary">{result.reason ?? 'The server refused it.'}</p>
                   {capability?.because && <p className="mt-1 text-sm">{capability.because}</p>}
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    className="mt-2"
+                    onClick={() => {
+                      const answer = syncEngine.retry(result.operation.id);
+                      push({
+                        title: answer.requeued ? 'Queued again' : 'Not queued again',
+                        description: answer.requeued
+                          ? 'It goes back as a new operation with a fresh nodeId:seq — the old id was spent on the refusal, and the refusal stays in the history as the reason this one exists.'
+                          : answer.because,
+                        tone: answer.requeued ? 'success' : 'warning',
+                      });
+                    }}
+                  >
+                    Queue it again
+                  </Button>
                 </li>
               );
             })}

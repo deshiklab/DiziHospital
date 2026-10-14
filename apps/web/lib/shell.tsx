@@ -13,6 +13,7 @@ import {
   enqueueContractOperation,
   initialOutbox,
   rehydrateOutbox,
+  requeueRefused,
   resolveConflict,
   serialiseOutbox,
   syncSummary,
@@ -70,6 +71,8 @@ export interface SyncEngineHandle {
   drainNow: () => ReturnType<typeof syncSummary>;
   resolve: (conflictId: string, choice: NonNullable<Conflict['resolution']>) => void;
   setUplink: (reachable: boolean) => void;
+  /** Send a refused write again, as a new operation. Returns why not when the contract says it cannot be queued. */
+  retry: (refusedId: string) => { requeued: boolean; because?: string };
   /** Start again with an empty queue and full number blocks. */
   reset: () => void;
 }
@@ -89,7 +92,19 @@ interface ShellState {
   siteMode: SiteMode;
   setSiteMode: (m: SiteMode) => void;
   queued: QueuedWrite[];
-  queueWrite: (label: string) => void;
+  /**
+   * Record a desk action in the outbox.
+   *
+   * Every queued write names the contract operation it replays as, because a write with no operation is a write a
+   * drain cannot send. `byOperation` names a real domain write — an invoice raised, a payment taken, a dose signed
+   * — and when it is left out the write is recorded as what it is: an audit entry (`appendAuditEntry`), which the
+   * contract declares queueable and audited. If the contract refuses the named operation the desk is told, in the
+   * contract's words, and the action still lands in the ledger rather than vanishing.
+   */
+  queueWrite: (
+    label: string,
+    byOperation?: { id: string; recordId: string; fields?: Record<string, string | number | null> },
+  ) => QueueOutcome;
   flushQueue: () => void;
   /** The P0-210/211 prototype: the outbox, the conflict list, the number blocks and the drain. */
   syncEngine: SyncEngineHandle;
@@ -300,6 +315,49 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
     [cloud],
   );
 
+  /**
+   * The call every screen already makes, now operation-aware.
+   *
+   * A screen that names `byOperation` is asking the contract about a real domain write; a screen that does not is
+   * recording a desk action, and the honest name for that is an audit entry. Either way the write leaves with a
+   * contract operation attached, so the queue never contains something a drain cannot send.
+   */
+  const queueWrite = useCallback<ShellState['queueWrite']>(
+    (label, byOperation) => {
+      if (byOperation) {
+        const outcome = queueOperation(byOperation.id, {
+          at: clockRef.current.tick(1),
+          recordId: byOperation.recordId,
+          label,
+          ...(byOperation.fields ? { fields: byOperation.fields } : {}),
+          actor: 'Signed on this device',
+          node: 'Main Campus',
+        });
+        if (outcome.queued) return outcome;
+        // The contract would not take the named write. Say so, and still record what the desk did — as a ledger
+        // entry, which is what it is once the domain write has not happened.
+        const ledger = queueOperation('appendAuditEntry', {
+          at: clockRef.current.tick(1),
+          recordId: byOperation.recordId,
+          label: `${label} — the platform API could not be asked to ${byOperation.id}: ${outcome.because}`,
+          fields: { note: label, refusedOperation: byOperation.id },
+          actor: 'Signed on this device',
+          node: 'Main Campus',
+        });
+        return ledger.queued ? ledger : outcome;
+      }
+      return queueOperation('appendAuditEntry', {
+        at: clockRef.current.tick(1),
+        recordId: `audit-${label.slice(0, 12)}`,
+        label,
+        fields: { note: label },
+        actor: 'Signed on this device',
+        node: 'Main Campus',
+      });
+    },
+    [queueOperation],
+  );
+
   const drainNow = useCallback(() => {
     let summary = syncSummary(outbox);
     setOutbox((current) => {
@@ -340,21 +398,23 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
     setSync('live');
   }, [cloud]);
 
-  /** `queueWrite(label)` stays the simple call other screens already make: an audit write in the outbox. */
-  const queueWrite = useCallback(
-    (label: string) => {
-      enqueueOperation({
-        at: clockRef.current.tick(1),
-        entity: 'audit',
-        recordId: `audit-${label.slice(0, 12)}`,
-        label,
-        op: 'append',
-        fields: { note: label },
-        actor: 'Signed on this device',
-        node: 'Main Campus',
+  const retryRefusedOperation = useCallback<SyncEngineHandle['retry']>(
+    (refusedId) => {
+      let answer: { requeued: boolean; because?: string } = { requeued: false, because: 'That refusal is no longer in the history.' };
+      setOutbox((current) => {
+        const result = requeueRefused(current, refusedId);
+        if (!result.operation) {
+          answer = { requeued: false, ...(result.because ? { because: result.because } : {}) };
+          return current;
+        }
+        answer = { requeued: true };
+        setQueued(result.state.pending.map((op) => ({ id: op.id, label: op.label, at: op.at.slice(11) })));
+        setSync(cloud.reachable ? 'syncing' : 'queued');
+        return result.state;
       });
+      return answer;
     },
-    [enqueueOperation],
+    [cloud],
   );
 
   const flushQueue = useCallback(() => {
@@ -373,9 +433,10 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
       drainNow,
       resolve: resolveSyncConflict,
       setUplink,
+      retry: retryRefusedOperation,
       reset: resetEngine,
     }),
-    [outbox, cloud, enqueueOperation, queueOperation, storageNote, drainNow, resolveSyncConflict, setUplink, resetEngine],
+    [outbox, cloud, enqueueOperation, queueOperation, queueWrite, storageNote, retryRefusedOperation, drainNow, resolveSyncConflict, setUplink, resetEngine],
   );
 
   const value = useMemo<ShellState>(

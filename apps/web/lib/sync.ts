@@ -501,6 +501,42 @@ export function rehydrateOutbox(raw: string | null | undefined, nodeId = 'edge-a
   };
 }
 
+/**
+ * Send a refused write again, as a new operation.
+ *
+ * A refusal means the server would not take it as it stood: a bed somebody else holds, a field somebody else
+ * changed. Retrying it is a decision the desk makes — after moving the patient, or after correcting a value — so
+ * this is a button in the queue, never a loop in the drain. The operation gets a fresh `nodeId:seq`: the old id is
+ * spent, and a write resent under a spent id would be dropped as a duplicate of the refusal rather than looked at.
+ */
+export function requeueRefused(state: OutboxState, refusedId: string): { state: OutboxState; operation?: Operation; because?: string } {
+  const result = state.results.find((r) => r.outcome === 'refused' && r.operation.id === refusedId);
+  if (!result) return { state, because: 'That refusal is no longer in the history, so there is nothing to send again.' };
+
+  const previous = result.operation;
+  if (previous.operationId && !capabilityOf(previous.operationId)?.mayQueue) {
+    return {
+      state,
+      because: capabilityOf(previous.operationId)?.because ?? `${previous.operationId} cannot be queued, so sending it again would fail the same way.`,
+    };
+  }
+
+  const seq = state.seq + 1;
+  const operation: Operation = { ...previous, id: `${state.nodeId}:${seq}`, nodeId: state.nodeId, seq, queuedAt: previous.at };
+  return {
+    state: {
+      ...state,
+      seq,
+      pending: [...state.pending, operation],
+      local: applyLocally(state.local, operation),
+      // The refusal stays in the history — it happened, and it is why this one exists — and `lastError` is cleared
+      // because the desk has just dealt with it.
+      lastError: undefined,
+    },
+    operation,
+  };
+}
+
 /* ------------------------------------------------------------------ the server side */
 
 export interface ServerRecord {

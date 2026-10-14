@@ -150,7 +150,11 @@ export default function OpdBillPage() {
     }
     const number = `R-${day.slice(2, 4)}${day.slice(5, 7)}-${String(7400 + encounters.length)}`;
     setEncounters((list) => [{ ...target, status: 'Issued', receipt: number }, ...list.filter((e) => e.id !== target.id)]);
-    queueWrite(`OPD bill ${number} issued for ${target.patientName}: ${money(encounterTotals(target).net)}`);
+    queueWrite(`OPD bill ${number} issued for ${target.patientName}: ${money(encounterTotals(target).net)}`, {
+      id: 'createInvoice',
+      recordId: number,
+      fields: { mrn: target.mrn, net: encounterTotals(target).net, lines: target.lines.length },
+    });
     setDraft(null);
     setOpenId(number === '' ? null : target.id);
     push({
@@ -183,7 +187,11 @@ export default function OpdBillPage() {
     setEncounters((list) => list.map((e) => (e.id === target.id ? paid : e)));
     setDraft(paid);
     setPayment({ ...payment, amount: String(encounterTotals(paid).due), reference: '' });
-    queueWrite(`OPD payment ${money(amount)} by ${payment.method} received from ${target.patientName}`);
+    queueWrite(`OPD payment ${money(amount)} by ${payment.method} received from ${target.patientName}`, {
+      id: 'recordPayment',
+      recordId: target.receipt ?? target.id,
+      fields: { amount, method: payment.method, ...(payment.reference ? { reference: payment.reference } : {}) },
+    });
     push({ title: `${money(amount)} received by ${payment.method}`, description: `Outstanding now ${money(encounterTotals(paid).due)}. The collection gate re-reads this bill, so the sample can be taken the moment it is cleared.`, tone: 'success' });
   };
 
@@ -205,7 +213,12 @@ export default function OpdBillPage() {
     setDraft(draft?.id === target.id ? refunded : draft);
     setRefundLine(null);
     setRefundReason('');
-    queueWrite(`OPD refund ${money(amount)} to ${target.patientName} by ${method}: ${line.name}`);
+    queueWrite(`OPD refund ${money(amount)} to ${target.patientName} by ${method}: ${line.name}`, {
+      // Money going back is a document too: a credit note against the bill, never an edit of it.
+      id: 'createInvoice',
+      recordId: `CN-${target.receipt ?? target.id}`,
+      fields: { creditNoteOf: target.receipt ?? target.id, amount, method, line: line.name },
+    });
     push({
       title: `${money(amount)} refunded by ${method}`,
       description: `Back the way it came, with the receipt number beside it. ${line.name} is cancelled on the bill and the laboratory is told through the same record.`,

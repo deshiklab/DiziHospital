@@ -87,7 +87,11 @@ export default function AppointmentBillingPage() {
   const record = (r: DeskRow, kind: 'billed' | 'waived' | 'no show' | 'cancelled') => {
     setOutcome((o) => ({ ...o, [r.appointment.id]: kind }));
     if (kind === 'billed') {
-      queueWrite(`${r.appointment.token} billed at the desk: ${money(r.patientDue)} from the patient, ${money(r.payerDue)} to ${payer}`);
+      queueWrite(`${r.appointment.token} billed at the desk: ${money(r.patientDue)} from the patient, ${money(r.payerDue)} to ${payer}`, {
+        id: 'createInvoice',
+        recordId: `INV-${r.appointment.token}`,
+        fields: { token: r.appointment.token, patientDue: r.patientDue, payerDue: r.payerDue, payer },
+      });
       push({
         title: `${money(r.patientDue + r.bookingFee)} taken at the desk`,
         description: `${r.lines.map((l) => l.name).join(' · ')}. ${r.bookingFee > 0 ? `The ৳ ${r.bookingFee} booking fee is adjusted against the consultation, not added to it.` : 'No booking fee on this appointment.'} ${payer !== 'Self pay' ? `${payer} is invoiced ${money(r.payerDue)}.` : ''}`,
@@ -101,7 +105,11 @@ export default function AppointmentBillingPage() {
       return;
     }
     if (kind === 'no show') {
-      queueWrite(`${r.appointment.token} no show: booking fee of ${money(BOOKING_FEE)} retained`);
+      queueWrite(`${r.appointment.token} no show: booking fee of ${money(BOOKING_FEE)} retained`, {
+        id: 'updateAppointment',
+        recordId: r.appointment.id,
+        fields: { status: 'No show', bookingFeeRetained: BOOKING_FEE },
+      });
       push({
         title: `Marked as a no show — ৳ ${BOOKING_FEE} retained`,
         description: r.depositNextTime
@@ -111,7 +119,11 @@ export default function AppointmentBillingPage() {
       });
       return;
     }
-    queueWrite(`${r.appointment.token} cancelled: ${cancel?.free ? 'fee refunded or carried forward' : 'fee retained inside the cut-off'}`);
+    queueWrite(`${r.appointment.token} cancelled: ${cancel?.free ? 'fee refunded or carried forward' : 'fee retained inside the cut-off'}`, {
+      id: 'updateAppointment',
+      recordId: r.appointment.id,
+      fields: { status: 'Cancelled', feeRefunded: cancel?.free ? 'yes' : 'no' },
+    });
     push({
       title: cancel?.free ? 'Cancelled in time — fee refunded or carried forward once' : 'Cancelled inside the cut-off — fee retained',
       description: cancel?.because,

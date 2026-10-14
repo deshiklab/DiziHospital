@@ -130,7 +130,12 @@ export default function PharmacyReturnsPage() {
     setRegister((r) => [record, ...r]);
     setDispenseId(null);
     setLines({});
-    queueWrite(`Pharmacy return ${record.id} on ${dispense.rxNumber}: ${money(credit)} credited, ${willRestock.length} line(s) to quarantine`);
+    queueWrite(`Pharmacy return ${record.id} on ${dispense.rxNumber}: ${money(credit)} credited, ${willRestock.length} line(s) to quarantine`, {
+      // A return credits the sale: another document against the invoice, and the quarantine lines are on it.
+      id: 'createInvoice',
+      recordId: record.id,
+      fields: { creditNoteOf: dispense.rxNumber, credit, restocked: willRestock.length, writtenOff: willWriteOff.length },
+    });
     push({
       title: `${money(credit)} credited — ${note}`,
       description: `${willRestock.length} line(s) to quarantine for a restock decision, ${willWriteOff.length} written off${willWriteOff.length ? ` with ${witness} witnessing` : ''}. The credit note goes back where the money came from.`,

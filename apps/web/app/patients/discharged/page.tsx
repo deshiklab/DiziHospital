@@ -241,7 +241,11 @@ export default function DischargedPage() {
                     variant="ghost"
                     size="sm"
                     onClick={() => {
-                      queueWrite(`Follow-up booked for ${p.record.name} in ${p.followUp.department}`);
+                      queueWrite(`Follow-up booked for ${p.record.name} in ${p.followUp.department}`, {
+                        id: 'createAppointment',
+                        recordId: p.record.mrn,
+                        fields: { mrn: p.record.mrn, type: 'Follow-up', department: p.followUp.department },
+                      });
                       push({ title: `Follow-up booked for ${p.record.name}`, description: `The appointment is in ${p.followUp.department} and the summary is reprinted with the date on it, because a date the family has to remember is a date nobody keeps.`, tone: 'success' });
                     }}
                   >
@@ -323,7 +327,11 @@ export default function DischargedPage() {
                 variant="ghost"
                 onClick={() => {
                   setSettled((s) => ({ ...s, [row.record.id]: 'today 15:52' }));
-                  queueWrite(`Dues settled for ${row.record.name}: ${row.dues.amount}`);
+                  queueWrite(`Dues settled for ${row.record.name}: ${row.dues.amount}`, {
+                    id: 'recordPayment',
+                    recordId: row.record.mrn,
+                    fields: { amount: row.dues.amount, method: 'Cash' },
+                  });
                   push({ title: `${money(row.dues.amount)} settled`, description: 'Recorded against the discharge with the time and the cashier, so the receipt can be matched later.', tone: 'success' });
                 }}
                 disabled={row.dues.amount === 0}

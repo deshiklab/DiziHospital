@@ -248,16 +248,26 @@ try {
     }
     notes.push('  built stylesheet                  mode rules present');
   } else {
-    notes.push('  built stylesheet                  NOT checked (dev server not reachable or no stylesheet link)');
+    const message = `the page served at ${BASE} has no /_next/static/css link, so the mode rules were not read`;
+    if (process.env.DIZI_BASE) check('stylesheet', false, message);
+    else notes.push(`  built stylesheet                  NOT checked (no DIZI_BASE; ${message})`);
   }
-} catch {
-  notes.push('  built stylesheet                  NOT checked (dev server not reachable)');
+} catch (error) {
+  /* The five scenarios above need no server — they bundle the real shell and render it. The stylesheet
+   * assertions do need one, and silently skipping them is how a suite reports green while checking less than it
+   * claims: if `DIZI_BASE` was set, somebody has named the app to check and it is not answering, so that is a
+   * failure. With no `DIZI_BASE`, the skip is the documented behaviour and stays a note. */
+  const message = `the app at ${BASE} could not be read for the stylesheet checks: ${error?.message ?? error}`;
+  if (process.env.DIZI_BASE) check('stylesheet', false, message);
+  else notes.push(`  built stylesheet                  NOT checked (no DIZI_BASE; ${message})`);
 }
 
 rmSync(work, { recursive: true, force: true });
 
 /* ------------------------------------------------------------------ report */
-console.log('\nshell navigation — drawer and rail\n');
+console.log('\nshell navigation — drawer and rail');
+console.log('  the five scenarios bundle the real shell and render it (no server needed);');
+console.log(`  the stylesheet assertions read ${BASE} and fail if it was named but does not answer\n`);
 console.log(notes.join('\n'));
 if (failures.length) {
   console.log('');

@@ -92,7 +92,12 @@ export default function RoundPage() {
       items: r.items.map((i) => (i.admissionId === target.admissionId ? { ...i, seenAt: `${day} 15:35`, plan: text } : i)),
       stats: { ...r.stats, seen: r.stats.seen + (target.seenAt ? 0 : 1), openDecisions: Math.max(0, r.stats.openDecisions - closes.length) },
     }));
-    queueWrite(`Round plan recorded for ${target.admission.patient.name} (${target.bedLabel})${closes.length ? ` — closed: ${closes.join(', ')}` : ''}`);
+    queueWrite(`Round plan recorded for ${target.admission.patient.name} (${target.bedLabel})${closes.length ? ` — closed: ${closes.join(', ')}` : ''}`, {
+      // A round plan is a clinical note: appended to the chart, never overwritten, and attributed to whoever wrote it.
+      id: 'createNursingNote',
+      recordId: target.admissionId,
+      fields: { admissionId: target.admissionId, kind: 'Round plan', note: text, closed: closes.join(', ') || 'none' },
+    });
     setPlan('');
     push({
       title: `Plan written to the chart for ${target.admission.patient.name}`,

@@ -31,8 +31,16 @@
  * the P0 browser checks.
  */
 import { createRequire } from 'node:module';
+import { readFileSync as readJson } from 'node:fs';
+import { dirname as dirOf, resolve as resolvePath } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
+
+/* The generated contract projection, so the queue can be checked against the API rather than against a list kept
+ * in this file: every queued write has to name an operation the contract actually declares. */
+const REPO = resolvePath(dirOf(fileURLToPath(import.meta.url)), '../..');
+const CONTRACT = JSON.parse(readJson(resolvePath(REPO, 'packages/contracts/dist/capabilities.json'), 'utf8'));
 
 let jsdom;
 try {
@@ -281,6 +289,80 @@ async function check(route) {
     }
   }
 
+  /* Every queued write has to name an operation the contract declares. This is the difference between a queue a
+   * drain can send and a queue of prose: an unnamed write has nothing to replay as, and the last unnamed writes in
+   * the product were the ones this ticket is about. */
+  let named = 'n/a';
+  if (seeded) {
+    const press_ = (re) => {
+      const button = [...doc.querySelectorAll('button')].find((b) => re.test(b.textContent ?? ''));
+      if (button) press(button);
+      return Boolean(button);
+    };
+    press_(/take a cash payment/i);
+    press_(/add a nursing note/i);
+    await new Promise((r) => setTimeout(r, 300));
+    try {
+      const queued = JSON.parse(dom.window.localStorage.getItem('dizi.outbox.v1') ?? 'null')?.pending ?? [];
+      const unnamed = queued.filter((op) => !op.operationId || !CONTRACT.operations[op.operationId]);
+      named = `${queued.length - unnamed.length}/${queued.length}`;
+      if (queued.length < 3 || unnamed.length > 0) {
+        routeProblems.push(
+          `${unnamed.length} of ${queued.length} queued write(s) do not name an operation the contract declares` +
+            (unnamed.length ? ` (${unnamed.map((op) => op.operationId ?? '(none)').join(', ')})` : ''),
+        );
+      }
+    } catch (error) {
+      named = 'UNREADABLE';
+      routeProblems.push(`the saved queue could not be read for the naming check: ${error.message}`);
+    }
+  }
+
+  /* A refusal, and the desk sending it again. The other branch takes bed A-19 first, so the claim on it is refused
+   * for a reason a person can act on — and retrying is a button, not a loop. The retry has to arrive as a new
+   * operation: the old id was spent on the refusal. */
+  let retry = 'n/a';
+  if (seeded) {
+    const pressText = (re) => {
+      const button = [...doc.querySelectorAll('button')].find((b) => re.test(b.textContent ?? ''));
+      if (button) press(button);
+      return Boolean(button);
+    };
+    pressText(/take the same bed/i);
+    await new Promise((r) => setTimeout(r, 150));
+    pressText(/admit into bed A-19/i);
+    await new Promise((r) => setTimeout(r, 150));
+    const before = JSON.parse(dom.window.localStorage.getItem('dizi.outbox.v1') ?? 'null')?.pending ?? [];
+    const claim = before.find((op) => op.operationId === 'claimBed');
+    if (!claim) {
+      retry = 'NO CLAIM';
+      routeProblems.push('the bed claim was not queued, so the refusal could not be exercised');
+    } else {
+      pressText(/^\s*drain the queue/i);
+      await new Promise((r) => setTimeout(r, 300));
+      const refused = /Already held by/i.test(doc.body.textContent ?? '');
+      const again = [...doc.querySelectorAll('button')].find((b) => /queue it again/i.test(b.textContent ?? ''));
+      if (!refused || !again) {
+        retry = refused ? 'NO RETRY BUTTON' : 'NOT REFUSED';
+        routeProblems.push(refused ? 'a refused write has no way to be sent again' : 'the exclusive claim was not refused with the holder named');
+      } else {
+        press(again);
+        await new Promise((r) => setTimeout(r, 300));
+        const after = JSON.parse(dom.window.localStorage.getItem('dizi.outbox.v1') ?? 'null')?.pending ?? [];
+        const resent = after.filter((op) => op.operationId === 'claimBed');
+        const fresh = resent.some((op) => op.id !== claim.id);
+        retry = fresh ? 'requeued as a new operation' : resent.length ? 'SAME ID' : 'NOT REQUEUED';
+        if (!fresh) {
+          routeProblems.push(
+            resent.length
+              ? 'the retried write kept the id that was already refused, so the drain would drop it as a duplicate'
+              : 'a refused write was not put back in the queue when the desk asked for it again',
+          );
+        }
+      }
+    }
+  }
+
   let refusal = 'n/a';
   if (seeded) {
     const attempt = [...doc.querySelectorAll('button')].find((b) => /needs the network/i.test(b.textContent ?? ''));
@@ -299,7 +381,7 @@ async function check(route) {
 
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors: [...errors, ...routeProblems], handlers, copy, drill, queue, persist, refusal, readyWait };
+  return { errors: [...errors, ...routeProblems], handlers, copy, drill, queue, persist, named, retry, refusal, readyWait };
 }
 
 const CONCURRENCY = Math.max(1, Number(process.env.DIZI_CONCURRENCY ?? 4));
@@ -354,10 +436,10 @@ outcomes.forEach((outcome, i) => {
     problems += 1;
     return;
   }
-  const { errors, handlers, copy, drill, queue, persist, refusal, readyWait } = outcome.value;
+  const { errors, handlers, copy, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
   const bad = errors.length > 0 || handlers === 'DEAD';
   const slow = readyWait !== undefined && readyWait > 2000 ? `  ready=${(readyWait / 1000).toFixed(1)}s` : '';
-  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
+  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
   if (handlers === 'DEAD') {
     console.log('      the shared control did not respond after hydration');
     problems += 1;
