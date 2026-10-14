@@ -28,7 +28,9 @@ import {
   INCOME_HEADS,
   PAYER_AGREEMENTS,
   REFERRERS,
+  commissionable,
   expenseHeadByCode,
+  headCollects,
   incomeHeadByCode,
   payerAgreement,
   referrerByCode,
@@ -41,14 +43,24 @@ import {
   type ReferrerKind,
 } from './finance-tables';
 
-/* The heads live in their own leaf module (see `finance-heads.ts`); they are re-exported here so every caller
- * that reaches for `INCOME_HEADS` from the ledger keeps working. */
+/* The standing tables — the heads, what each payer agreed, who may be paid a commission and how long that lasts —
+ * live in their own leaf module (`finance-tables.ts`). They are re-exported here so every caller that reaches for
+ * `INCOME_HEADS` or `REFERRERS` from the ledger keeps working, and so a screen has one import for the terms. */
 export {
+  AGREEMENT_WARN_DAYS,
   EXPENSE_HEADS,
   INCOME_HEADS,
+  PAYER_AGREEMENTS,
+  REFERRERS,
+  agreementLife,
+  commissionable,
   expenseHeadByCode,
+  headCollects,
   incomeHeadByCode,
+  payerAgreement,
+  referrerByCode,
 } from './finance-tables';
+export type { AgreementLife, AgreementState, PayerAgreement, PayerKind, Referrer, ReferrerKind } from './finance-tables';
 export type { ExpenseHead, ExpenseHeadClass, IncomeGroup, IncomeHead } from './finance-tables';
 
 
@@ -316,7 +328,7 @@ export function headForInvoice(invoice: Invoice): IncomeHead {
     byCategory.set(key as Category, (byCategory.get(key as Category) ?? 0) + lineNet(line));
   }
   const dominant = [...byCategory.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] as Category | undefined;
-  return INCOME_HEADS.find((h) => h.category === dominant) ?? incomeHeadByCode('INC-OTHER')!;
+  return (dominant ? INCOME_HEADS.find((h) => headCollects(h, dominant)) : undefined) ?? incomeHeadByCode('INC-OTHER')!;
 }
 
 /* ------------------------------------------------------------------ generators */
@@ -1088,13 +1100,6 @@ export function unsettledCashInvoices(day: string, limit = 8): Invoice[] {
  *     against the claim rather than a second claim being raised.
  */
 
-/* These two tables are the agreements the ledger is built on: what each payer promises, and who may be paid a
- * referral commission. They live in `finance-tables.ts` with the heads, for the same reason — the setup catalogue
- * and the ledger read one copy of each. */
-export { PAYER_AGREEMENTS, REFERRERS, payerAgreement, referrerByCode } from './finance-tables';
-export type { PayerAgreement, PayerKind, Referrer, ReferrerKind } from './finance-tables';
-
-
 
 export type ClaimStatus = 'Draft' | 'Pre-auth requested' | 'Pre-auth approved' | 'Submitted' | 'Query raised' | 'Partially settled' | 'Settled' | 'Rejected';
 
@@ -1590,6 +1595,18 @@ export const COMMISSION_HOLD_DAYS = 14;
 /** Heads a commission may never be paid on, whoever the agreement names. */
 export const COMMISSION_BLOCKED_HEADS = ['INC-PHARM', 'INC-OTHER', 'INC-DONATION'];
 
+/**
+ * Why a head can never be commissioned, in the register's own words. The same three heads the Setup › Finance
+ * screen prints under “Heads no agreement may ever name”, because the register and the screen have to agree on why
+ * a line earns nothing — a reason only one of them knows is a reason somebody will argue with.
+ */
+const blockedBecause = (head: string): string =>
+  head === 'INC-PHARM'
+    ? 'paying a share of drug sales pays a prescriber to prescribe'
+    : head === 'INC-DONATION'
+      ? 'a donation is somebody else’s generosity, not the patient’s spending to share'
+      : 'sundry counter income is not attributable to a referrer';
+
 /** The head a module's own counter collects against. Module bills carry no per-category lines, so the mapping is
  * by hand — and it is by hand everywhere else in this product too, because a pharmacy receipt is a pharmacy
  * receipt whichever screen raised it. */
@@ -1649,7 +1666,7 @@ export function referralAccruals(day: string, days = 30): Accrual[] {
       if (invoice.status === 'Cancelled' || invoice.payments.length === 0) continue;
       const t = totals(invoice);
       for (const head of INCOME_HEADS) {
-        const headValue = invoice.lines.filter((l) => l.category === head.category && head.category !== null).reduce((n, l) => n + lineNet(l), 0);
+        const headValue = invoice.lines.filter((l) => headCollects(head, l.category)).reduce((n, l) => n + lineNet(l), 0);
         if (headValue <= 0) continue;
         const share = Math.round((t.paid * headValue) / Math.max(1, t.net));
         if (share <= 0) continue;
@@ -1687,13 +1704,19 @@ export function referralAccruals(day: string, days = 30): Accrual[] {
       const inHouse = referrer.kind === 'In-house consultant';
       const rate = notAgreed ? 0 : referrer.commissionPct / 100;
       const payableFrom = shiftDay(collection.at.slice(0, 10), COMMISSION_HOLD_DAYS);
+      // Order matters, and it is the order of what can be fixed. A head that may never be commissioned outranks a
+      // lapsed agreement: renewing the agreement would not pay that line, so telling the desk to renew it would be
+      // advice that leads nowhere. Expiry still outranks the head list, because a lapsed agreement pays nothing at
+      // all — every line of it is excluded, not only the ones the agreement never named.
       const exclusion = blocked
-        ? `${head.label} is never commissioned: paying a share of drug sales pays a doctor to prescribe.`
-        : inHouse
-          ? 'An in-house consultant earns the consultant share, not a referral commission — one consultation, one payout.'
-          : notAgreed
-            ? `${head.label} is not in this agreement, and a rate applies to the heads it names, not to everything the patient spends.`
-            : null;
+        ? `${head.label} is never commissioned: ${blockedBecause(head.code)}.`
+        : !commissionable(referrer, day)
+          ? `The agreement expired on ${referrer.agreementTo}. A rate nobody has renewed is not a rate: Setup › Referral renews it, or the register stops paying on the date it ended.`
+          : inHouse
+            ? 'An in-house consultant earns the consultant share, not a referral commission — one consultation, one payout.'
+            : notAgreed
+              ? `${head.label} is not in this agreement, and a rate applies to the heads it names, not to everything the patient spends.`
+              : null;
 
       accr.push({
         id: `${collection.billNo}-${head.code}`,

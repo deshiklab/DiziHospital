@@ -240,7 +240,7 @@ export default function IncomeVouchersPage() {
                     <span>
                       <span className="text-text-primary">{h.label}</span>
                       <span className="block text-xs text-text-tertiary">
-                        {h.code} · {h.group} · {rows.length} voucher{rows.length === 1 ? '' : 's'}{h.category ? ` · billed as ${h.category}` : ' · never billed'}
+                        {h.code} · {h.group} · {rows.length} voucher{rows.length === 1 ? '' : 's'}{h.categories.length > 0 ? ` · billed as ${h.categories.join(' and ')}` : ' · no billing category'}
                       </span>
                       <span className="block text-xs text-text-secondary">{h.note}</span>
                     </span>

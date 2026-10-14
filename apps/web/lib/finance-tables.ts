@@ -18,21 +18,30 @@ export interface IncomeHead {
   code: string;
   label: string;
   group: IncomeGroup;
-  /** The billing category this head collects, when it collects one — the link that makes the reconciliation possible. */
-  category: Category | null;
+  /**
+   * The billing categories this head collects — the link that makes the reconciliation possible. A list rather
+   * than one category because the tariff splits what a head does not: laboratory and imaging are two categories
+   * on a bill and one line of business, and a head that could collect only one of them would push the other into
+   * “other operating income” for ever. An empty list is counter income no bill knows about.
+   */
+  categories: Category[];
   note: string;
 }
 
+/** Whether this head collects a billing category. The reconciliation asks this, one line at a time.
+ *  Takes anything carrying a category list, so a setup screen can ask the same question of an unsaved draft. */
+export const headCollects = (head: { categories: Category[] }, category: Category): boolean => head.categories.includes(category);
+
 export const INCOME_HEADS: IncomeHead[] = [
-  { code: 'INC-OPD', label: 'Outpatient consultation', group: 'Operating', category: 'Consultation', note: 'Counter receipts for OPD and emergency consultations.' },
-  { code: 'INC-IPD', label: 'Inpatient — bed and nursing', group: 'Operating', category: 'Bed', note: 'Interim bills and deposits against an admission.' },
-  { code: 'INC-DIAG', label: 'Diagnostics — laboratory and imaging', group: 'Operating', category: 'Pathology', note: 'Samples and studies are collected before the report; the head follows the order, not the result.' },
-  { code: 'INC-PHARM', label: 'Pharmacy sales', group: 'Operating', category: 'Pharmacy', note: 'Retail counter. Ward issues are billed through the inpatient head instead.' },
-  { code: 'INC-PROC', label: 'Procedures and theatre', group: 'Operating', category: 'Procedure', note: 'Dressings, ECG, day procedures and theatre charges.' },
-  { code: 'INC-BB', label: 'Blood bank', group: 'Operating', category: 'Procedure', note: 'Components and cross-match. The service charge only — donations are not income.' },
-  { code: 'INC-AMB', label: 'Ambulance', group: 'Operating', category: 'Ambulance', note: 'Trip charges. A call that never left the gate is not billed.' },
-  { code: 'INC-OTHER', label: 'Other operating income', group: 'Operating', category: null, note: 'Canteen rent, medical reports, certificates — collected at the counter but not billed to a patient account.' },
-  { code: 'INC-DONATION', label: 'Donations and grants', group: 'Non-operating', category: null, note: 'Kept out of operating income on purpose: it must never pay for a month of salaries.' },
+  { code: 'INC-OPD', label: 'Outpatient consultation', group: 'Operating', categories: ['Consultation'], note: 'Counter receipts for OPD and emergency consultations.' },
+  { code: 'INC-IPD', label: 'Inpatient — bed and nursing', group: 'Operating', categories: ['Bed'], note: 'Interim bills and deposits against an admission.' },
+  { code: 'INC-DIAG', label: 'Diagnostics — laboratory', group: 'Operating', categories: ['Pathology'], note: 'Samples and studies are collected before the report; the head follows the order, not the result.' },
+  { code: 'INC-PHARM', label: 'Pharmacy sales', group: 'Operating', categories: ['Pharmacy'], note: 'Retail counter. Ward issues are billed through the inpatient head instead.' },
+  { code: 'INC-PROC', label: 'Procedures and theatre', group: 'Operating', categories: ['Procedure'], note: 'Dressings, ECG, day procedures and theatre charges.' },
+  { code: 'INC-BB', label: 'Blood bank', group: 'Operating', categories: ['Procedure'], note: 'Components and cross-match. The service charge only — donations are not income. The tariff files blood under the procedure category, so this head and Procedures and theatre both claim it and the reconciliation credits the first.' },
+  { code: 'INC-AMB', label: 'Ambulance', group: 'Operating', categories: ['Ambulance'], note: 'Trip charges. A call that never left the gate is not billed.' },
+  { code: 'INC-OTHER', label: 'Other operating income', group: 'Operating', categories: [], note: 'Canteen rent, medical reports, certificates — collected at the counter but not billed to a patient account.' },
+  { code: 'INC-DONATION', label: 'Donations and grants', group: 'Non-operating', categories: [], note: 'Kept out of operating income on purpose: it must never pay for a month of salaries.' },
 ];
 
 export const incomeHeadByCode = (code: string): IncomeHead | undefined => INCOME_HEADS.find((h) => h.code === code);
@@ -173,7 +182,7 @@ export const REFERRERS: Referrer[] = [
     tin: 'TIN-455-119-774',
     heads: ['INC-DIAG', 'INC-PROC'],
     commissionPct: 12,
-    agreementTo: '2027-03-31',
+    agreementTo: '2026-09-30',
     because: 'A diagnostic centre with no imaging of its own. A flat rate on studies and procedures, and never on pharmacy.',
   },
   {
@@ -203,3 +212,42 @@ export const REFERRERS: Referrer[] = [
 ];
 
 export const referrerByCode = (code: string): Referrer | undefined => REFERRERS.find((r) => r.code === code);
+
+/* ------------------------------------------------------------------ the lifecycle of an agreement
+ *
+ * A commission rate is only a rate while the paper behind it is current. That is a date comparison, so it lives
+ * here beside the table rather than in a reminder somebody is supposed to read: the register asks this function
+ * whether a referrer may be paid on a given day, and the answer is no the day after the agreement runs out.
+ */
+export type AgreementState = 'Active' | 'Expiring soon' | 'Expired';
+
+/** How far ahead the register starts saying an agreement is running out — two months to renew it or stop it. */
+export const AGREEMENT_WARN_DAYS = 60;
+
+export interface AgreementLife {
+  state: AgreementState;
+  daysToExpiry: number;
+  because: string;
+}
+
+export function agreementLife(expiresOn: string, day: string): AgreementLife {
+  const daysToExpiry = Math.round((new Date(`${expiresOn}T00:00:00`).getTime() - new Date(`${day}T00:00:00`).getTime()) / 86_400_000);
+  if (daysToExpiry < 0) {
+    return {
+      state: 'Expired',
+      daysToExpiry,
+      because: `The agreement ran out on ${expiresOn}, ${Math.abs(daysToExpiry)} day${Math.abs(daysToExpiry) === 1 ? '' : 's'} ago. A rate nobody has renewed is not a rate, so nothing accrues from that date until it is signed again.`,
+    };
+  }
+  if (daysToExpiry <= AGREEMENT_WARN_DAYS) {
+    return {
+      state: 'Expiring soon',
+      daysToExpiry,
+      because: `The agreement runs out on ${expiresOn} — ${daysToExpiry} day${daysToExpiry === 1 ? '' : 's'} left. Renew it or stop paying on the date it ends; the register will not carry a rate past this.`,
+    };
+  }
+  return { state: 'Active', daysToExpiry, because: `Current to ${expiresOn}, ${daysToExpiry} days away.` };
+}
+
+/** Whether a referrer may be paid at all on this day. */
+export const commissionable = (referrer: Referrer, day: string): boolean => agreementLife(referrer.agreementTo, day).state !== 'Expired';

@@ -16,6 +16,10 @@
  *   4. **The counters are counted**: the billing counter against the day-end sheet, the pharmacy window against
  *      what it dispensed, the ambulance desk against the trips that completed — and geometry is not left to
  *      chance, because a book that totals is not a book that reconciles.
+ *   5. **The two setup screens keep their promises**: a head may not re-label money it has already had matched, a
+ *      rate the law does not have is refused, a lapsed agreement pays nothing, and the heads no agreement may
+ *      name are the same list on the screen and in the register. Every seeded row is put through the rules its own
+ *      screen enforces, because a fixture that would be refused on save is a fixture nobody can edit.
  *
  * Needs one dev-only package, like the other harnesses:
  *
@@ -61,7 +65,20 @@ try {
     logLevel: 'error',
   });
 
+  await esbuild.build({
+    entryPoints: [join(root, 'apps/web/lib/finance-setup.ts')],
+    outdir: work,
+    bundle: true,
+    format: 'cjs',
+    platform: 'node',
+    target: 'node22',
+    absWorkingDir: root,
+    tsconfig: join(root, 'apps/web/tsconfig.json'),
+    logLevel: 'error',
+  });
+
   const F = await import(pathToFileURL(join(work, 'finance.js')).href);
+  const S = await import(pathToFileURL(join(work, 'finance-setup.js')).href);
   const DAY = '2026-10-14';
   const draft = (over = {}) => ({
     headCode: 'EXP-DRUG',
@@ -301,6 +318,13 @@ try {
     offAgreement.length > 0 && offAgreement.every((a) => a.commission === 0 && a.rate === 0),
     `${offAgreement.length} lines outside the referrer’s heads`);
   const inHouseLines = accruals.filter((a) => a.referrerCode === 'REF-PROFS');
+  const lapsed = accruals.filter((a) => a.referrerCode === 'REF-NURJAHAN');
+  pass('a head that may never be commissioned outranks a lapsed agreement, because renewing would not pay it',
+    lapsed.length > 0
+      && lapsed.filter((a) => F.COMMISSION_BLOCKED_HEADS.includes(a.headCode)).every((a) => /never commissioned/.test(a.exclusion ?? ''))
+      && lapsed.filter((a) => !F.COMMISSION_BLOCKED_HEADS.includes(a.headCode)).every((a) => /expired on/.test(a.exclusion ?? '')),
+    `${lapsed.length} lines from the lapsed agreement · ${lapsed.filter((a) => /never commissioned/.test(a.exclusion ?? '')).length} named the head rule`);
+
   pass('an in-house consultant is refused a referral commission by name — one consultation, one payout',
     inHouseLines.length > 0 && inHouseLines.every((a) => a.commission === 0
       && a.status === 'Excluded'
@@ -319,11 +343,98 @@ try {
     accruals.filter((a) => a.exclusion).every((a) => a.commission === 0 && a.status === 'Excluded' && a.exclusion.length > 40),
     `${accruals.filter((a) => a.status === 'Excluded').length} excluded lines`);
 
+  /* ---------------------------------------------------------------- the setup rules (Setup › Finance, Setup › Referral) */
+  console.log('\n  the setup rules');
+  const seedVerdicts = S.SEED_HEADS.map((h) => S.checkHead(h, S.SEED_HEADS, { editing: true, hasMoneyInPeriod: true, periodEnds: DAY }));
+  pass('every head on the ledger passes the rules its own setup screen enforces',
+    seedVerdicts.every((v) => v.ok),
+    `${S.SEED_HEADS.length} heads · ${seedVerdicts.filter((v) => !v.ok).map((v) => v.refusals[0]?.code).join(',') || 'none refused'}`);
+
+  const incomeDraft = S.SEED_HEADS.find((h) => h.code === 'INC-OPD');
+  const expenseDraft = S.SEED_HEADS.find((h) => h.code === 'EXP-SALARY');
+  const opts = { editing: true, hasMoneyInPeriod: true, periodEnds: DAY, hasCapitalisedAssets: true };
+
+  const bothSides = S.checkHead({ ...expenseDraft, code: 'INC-OPD' }, S.SEED_HEADS, opts);
+  pass('one code may not sit on both sides of the book',
+    !bothSides.ok && bothSides.refusals.some((r) => r.code === 'code-across-kinds'),
+    bothSides.refusals.find((r) => r.code === 'code-across-kinds')?.message ?? 'not refused');
+
+  const taxedIncome = S.checkHead({ ...incomeDraft, aitPct: 5 }, S.SEED_HEADS, opts);
+  pass('an income head may not withhold — tax belongs to what the hospital pays',
+    !taxedIncome.ok && taxedIncome.refusals.some((r) => r.code === 'tax-on-income'));
+
+  const invented = S.checkHead({ ...incomeDraft, code: 'INC-NEW', categories: ['Imaging'] }, S.SEED_HEADS, { periodEnds: DAY });
+  pass('a billing category this branch does not bill under is refused',
+    !invented.ok && invented.refusals.some((r) => r.code === 'unknown-category'));
+
+  const reDated = { ...S.SEED_HEADS.find((h) => h.code === 'INC-DIAG'), categories: ['Pathology', 'Radiology'] };
+  const inside = S.checkHead({ ...reDated, effectiveFrom: DAY }, S.SEED_HEADS, opts);
+  const after = S.checkHead({ ...reDated, effectiveFrom: '2026-11-01' }, S.SEED_HEADS, opts);
+  pass('re-labelling a category while the period has money is refused, and dating it after the period is not',
+    !inside.ok && inside.refusals.some((r) => r.code === 'category-moves-history')
+      && after.ok && after.warnings.some((w) => /already matched keep the head/.test(w)),
+    `dated ${DAY}: ${inside.refusals[0]?.code ?? 'allowed'} · dated 2026-11-01: ${after.ok ? 'allowed' : after.refusals[0]?.code}`);
+
+  const offRegister = S.checkHead({ ...S.SEED_HEADS.find((h) => h.code === 'EXP-EQUIP'), group: 'Revenue' }, S.SEED_HEADS, opts);
+  pass('a capital head may not become revenue while its assets are on the register',
+    !offRegister.ok && offRegister.refusals.some((r) => r.code === 'capital-flip'),
+    offRegister.refusals.find((r) => r.code === 'capital-flip')?.message?.slice(0, 60) ?? 'not refused');
+
+  const oddRate = S.checkHead({ ...expenseDraft, aitPct: 7 }, S.SEED_HEADS, opts);
+  const oddVat = S.checkHead({ ...expenseDraft, vatPct: 12, effectiveFrom: '2026-11-01' }, S.SEED_HEADS, opts);
+  pass('a withholding or VAT rate the law does not have is refused',
+    !oddRate.ok && oddRate.refusals.some((r) => r.code === 'ait-not-a-rate') && !oddVat.ok && oddVat.refusals.some((r) => r.code === 'vat-not-a-rate'),
+    `withholding 7 % → ${oddRate.refusals[0]?.code} · VAT 12 % → ${oddVat.refusals[0]?.code}`);
+
+  const noDate = S.checkHead({ ...expenseDraft, vatPct: 15, effectiveFrom: '' }, S.SEED_HEADS, opts);
+  pass('a rate change with no effective date is refused',
+    !noDate.ok && noDate.refusals.some((r) => r.code === 'no-effective'));
+
+  const coverage = S.categoryCoverage();
+  const shared = coverage.find((c) => c.state === 'shared');
+  pass('the reconciliation credits the first head a category maps to, and the screen says which',
+    coverage.every((c) => c.state !== 'unmapped' || c.winner === null)
+      && (shared?.winner === shared?.heads[0]) === true,
+    `${coverage.filter((c) => c.state === 'unmapped').map((c) => c.category).join(', ') || 'no gaps'} · shared: ${shared?.category} → ${shared?.winner}`);
+
+  const withImaging = [...S.SEED_HEADS.filter((h) => h.kind === 'Income'), { ...incomeDraft, code: 'INC-IMAG', categories: ['Radiology'] }];
+  pass('a head that collects a category nobody collected closes the gap the gap list reports',
+    S.UNMAPPED_CATEGORIES(S.SEED_HEADS.filter((h) => h.kind === 'Income')).length === 1 && S.UNMAPPED_CATEGORIES(withImaging).length === 0,
+    `${S.UNMAPPED_CATEGORIES(S.SEED_HEADS.filter((h) => h.kind === 'Income')).join(',')} → ${S.UNMAPPED_CATEGORIES(withImaging).length}`);
+
+  pass('the heads no agreement may name are the same heads the register refuses',
+    S.NEVER_COMMISSIONABLE().map((b) => b.head.code).sort().join(',') === [...F.COMMISSION_BLOCKED_HEADS].sort().join(','),
+    S.NEVER_COMMISSIONABLE().map((b) => b.head.code).join(', '));
+
+  const withheld = S.WITHHOLDING_HEADS();
+  pass('the withholding list is ordered by what it holds back, and every row holds something',
+    withheld.every((h) => h.aitPct != null || h.vatPct != null)
+      && withheld.every((h, i) => i === 0 || (withheld[i - 1].aitPct ?? 0) >= (h.aitPct ?? 0)),
+    `${withheld.length} heads · ${withheld[0]?.code} ${withheld[0]?.aitPct} % first`);
+
+  const lapsedAgreement = S.SEED_AGREEMENTS.find((a) => a.code === 'REF-NURJAHAN');
+  const lapsedState = S.agreementStatus(lapsedAgreement, DAY);
+  const renewed = S.renewAgreement(lapsedAgreement, { to: '2027-09-30', by: 'Finance manager — S. Chowdhury', at: `${DAY} 16:10` });
+  pass('a lapsed agreement pays nothing, and a renewal dated today starts it again',
+    lapsedState.pays === false && lapsedState.daysToExpiry < 0 && S.agreementStatus(renewed, DAY).pays === true,
+    `${lapsedAgreement.code} expired ${lapsedState.daysToExpiry} days ago → renewed to ${renewed.expiresOn}`);
+
+  const weakTds = S.checkAgreement({ ...lapsedAgreement, tdsPct: 1 }, S.SEED_AGREEMENTS, DAY);
+  const oneName = S.checkAgreement({ ...lapsedAgreement, approvedBy: lapsedAgreement.preparedBy }, S.SEED_AGREEMENTS, DAY);
+  pass('an agreement may withhold more than the statute, never less — and it takes two names',
+    !weakTds.ok && weakTds.refusals.some((r) => r.code === 'tds-low')
+      && !oneName.ok && oneName.refusals.some((r) => r.code === 'self-approval'),
+    `1 % → ${weakTds.refusals[0]?.code} · one name → ${oneName.refusals[0]?.code}`);
+
+  pass('every agreement on file passes the rules its own screen enforces',
+    S.SEED_AGREEMENTS.every((a) => S.checkAgreement(a, S.SEED_AGREEMENTS, DAY).ok),
+    `${S.SEED_AGREEMENTS.length} agreements`);
+
   if (failures.length) {
     console.log(`\nFAILED — ${failures.length} case${failures.length === 1 ? '' : 's'}\n`);
     process.exitCode = 1;
   } else {
-    console.log('\nOK — the ladder decides by amount, the tax leaves with the payment, the book explains a difference before it alarms, and a claim is filed against a bill.\n');
+    console.log('\nOK — the ladder decides by amount, the tax leaves with the payment, the book explains a difference before it alarms, a claim is filed against a bill, and the two setup screens refuse what would break the ledger.\n');
   }
   process.exit(process.exitCode ?? 0);
 } finally {

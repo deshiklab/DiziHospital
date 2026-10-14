@@ -84,6 +84,8 @@ const ROUTES = [
   '/finance/tpa',
   '/finance/referral',
   '/setup',
+  '/setup/finance',
+  '/setup/referral-commission',
   '/reports',
   '/sync',
   '/help',
@@ -282,6 +284,62 @@ async function check(route) {
         ledger = `${verdict}${named ? ' named' : ' unnamed'}`;
         if (verdict !== 'explained') routeProblems.push(`posting a receipt left the reconciliation saying “${verdict}”`);
         if (!named) routeProblems.push('the queued receipt is not reported on the screen it was taken on');
+      }
+    }
+  }
+
+  /* Setup › Finance's headline job, driven: a billing category no income head collects is revenue that lands in
+   * “other operating income” and reads as missing documents at day end. The screen has to show the gap, and closing
+   * it has to be a thing a person can do here — a category given a head stops being a gap on the same screen. */
+  let heads = 'n/a';
+  if (route === '/setup/finance') {
+    const buttonBy = (re) => [...doc.querySelectorAll('button')].find((b) => re.test((b.textContent ?? '').trim()));
+    const textOf = () => doc.body.textContent ?? '';
+
+    const gapFirst = /has no income head/.test(textOf());
+    const decide = buttonBy(/^Decide where it lands?$/);
+    if (!decide) {
+      heads = 'NO GAP';
+      routeProblems.push('the category-coverage gap is not reported on Setup › Finance');
+    } else {
+      press(decide);
+      await new Promise((r) => setTimeout(r, 300));
+      const unmapped = /No head collects it/.test(textOf());
+      const trigger = [...doc.querySelectorAll('button')].find((b) => /^Actions for record Radiology$/.test(b.getAttribute('aria-label') ?? ''));
+      if (!unmapped) {
+        heads = 'NO GAP ROW';
+        routeProblems.push('the coverage list does not say which category has no head');
+      } else if (!trigger) {
+        heads = 'NO ROW ACTION';
+        routeProblems.push('an unmapped category offers no way to give it a head');
+      } else {
+        press(trigger);
+        await new Promise((r) => setTimeout(r, 200));
+        const give = [...doc.querySelectorAll('button, [role="menuitem"]')].find((b) => /^Give it its own head$/.test((b.textContent ?? '').trim()));
+        if (!give) {
+          heads = 'NO MENU ITEM';
+          routeProblems.push('the unmapped row does not offer its own head');
+        } else {
+          press(give);
+          await new Promise((r) => setTimeout(r, 300));
+          // The form opens with the head that would collect it, its category already chosen.
+          const prefilled = /INC-IMAG/.test(textOf());
+          const chipOn = [...doc.querySelectorAll('button[aria-pressed="true"]')].some((b) => (b.textContent ?? '').trim() === 'Radiology');
+          const create = buttonBy(/^Create the head$/);
+          if (!create || !prefilled || !chipOn) {
+            heads = `NO FORM (${prefilled ? 'prefilled' : 'EMPTY'}${chipOn ? ' · chip on' : ' · chip off'})`;
+            routeProblems.push('“Give it its own head” did not open a form for a head that collects the category');
+          } else {
+            press(create);
+            await new Promise((r) => setTimeout(r, 400));
+            const saved = /INC-IMAG saved/.test(textOf());
+            // The gap closes on the screen that reported it, because coverage is read from the drafts here.
+            const closed = !/has no income head/.test(textOf()) && /One head collects it/.test(textOf());
+            heads = `${gapFirst ? 'gap shown' : 'NO BANNER'} · ${saved ? 'INC-IMAG saved' : 'NOT SAVED'} · ${closed ? 'gap closed' : 'STILL OPEN'}`;
+            if (!saved) routeProblems.push('creating the head did not save it (the toast never said so)');
+            if (!closed) routeProblems.push('the coverage gap did not close on the screen that reported it');
+          }
+        }
       }
     }
   }
@@ -502,7 +560,7 @@ async function check(route) {
 
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors: [...errors, ...routeProblems], handlers, copy, ledger, claims, drill, queue, persist, named, retry, refusal, readyWait };
+  return { errors: [...errors, ...routeProblems], handlers, copy, ledger, claims, heads, drill, queue, persist, named, retry, refusal, readyWait };
 }
 
 const CONCURRENCY = Math.max(1, Number(process.env.DIZI_CONCURRENCY ?? 4));
@@ -557,10 +615,10 @@ outcomes.forEach((outcome, i) => {
     problems += 1;
     return;
   }
-  const { errors, handlers, copy, ledger, claims, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
+  const { errors, handlers, copy, ledger, claims, heads, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
   const bad = errors.length > 0 || handlers === 'DEAD';
   const slow = readyWait !== undefined && readyWait > 2000 ? `  ready=${(readyWait / 1000).toFixed(1)}s` : '';
-  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
+  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
   if (handlers === 'DEAD') {
     console.log('      the shared control did not respond after hydration');
     problems += 1;

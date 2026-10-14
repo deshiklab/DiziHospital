@@ -241,7 +241,7 @@ export const incomeHeadRows: MasterRow[] = INCOME_HEADS.map((h) => ({
   id: `ih-${h.code}`,
   code: h.code,
   label: h.label,
-  values: { group: h.group, billedAs: h.category ?? 'never billed', taken: h.category ? 'Through the counter, against an invoice' : 'Direct counter income' },
+  values: { group: h.group, billedAs: h.categories.length > 0 ? h.categories.join(' · ') : 'no billing category', taken: h.categories.length > 0 ? 'Through the counter, against an invoice' : 'Direct counter income' },
   active: true,
   lastChange: changed(SEED_DAY, 'Finance manager — S. Chowdhury', 'Reviewed against the ledger heads'),
 }));
