@@ -29,7 +29,7 @@ concurrency:
 
 jobs:
   verify:
-    name: tokens, clean-room, docs links
+    name: tokens, clean-room, docs links, class order
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -44,6 +44,11 @@ jobs:
 
       - name: Clean-room scan (no vendor material in the product)
         run: npm run clean-room
+
+      # The mobile header once shipped an "Expand sidebar" button that could not do anything: two base display
+      # utilities in one class list, and the stylesheet order picked the one that keeps it visible.
+      - name: No class list carries two base display utilities
+        run: npm run check:classes
 
       - uses: actions/setup-python@v5
         with:

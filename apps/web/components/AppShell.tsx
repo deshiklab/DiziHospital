@@ -15,6 +15,7 @@ import {
   LayoutDashboard,
   LogOut,
   Maximize,
+  Menu as MenuIcon,
   Minimize,
   Package,
   PanelLeftClose,
@@ -46,9 +47,24 @@ import { HOTKEYS, NAV, breadcrumbsFor, roleLabels, t } from '@/lib/nav';
 import { MobileNav } from '@/components/MobileNav';
 import { patients } from '@/lib/mock';
 
-/** One class string for every header icon button: identical hit area, identical centring, no drift between them. */
-const ICON_BTN =
-  'inline-grid size-9 shrink-0 place-items-center rounded-md text-text-secondary hover:bg-surface-sunken hover:text-text-primary';
+/* One shape for every header icon button: identical hit area, identical centring, no drift between them.
+ *
+ * The display utility is NOT part of the shape on purpose. A class list may carry only one *base* display
+ * utility, because the winner is decided by the order of the rules in the stylesheet and not by the order in
+ * the attribute — and in this build `.hidden` is emitted after `.grid`/`.flex` but BEFORE `.inline`,
+ * `.inline-flex` and `.inline-grid`. So `cx(ICON_BTN, 'hidden lg:inline-grid')` with `inline-grid` inside
+ * ICON_BTN stayed visible at every width: that is exactly how the sidebar toggle ended up sitting in the
+ * mobile header, toggling a rail that does not exist there, and doing nothing at all. Keep the display
+ * utility in the same string as `hidden`; never mix two of them.
+ */
+const ICON_BTN_SHAPE =
+  'size-9 shrink-0 place-items-center rounded-md text-text-secondary hover:bg-surface-sunken hover:text-text-primary';
+/** Visible at every width. */
+const ICON_BTN = `${ICON_BTN_SHAPE} inline-grid`;
+/** Desktop only — the sidebar it toggles does not exist below `lg`. */
+const ICON_BTN_LG = `${ICON_BTN_SHAPE} hidden lg:inline-grid`;
+/** Hidden on the narrowest phones so the header never wraps. */
+const ICON_BTN_SM = `${ICON_BTN_SHAPE} hidden sm:inline-grid`;
 
 const ICONS: Record<string, React.ReactNode> = {
   dashboard: <LayoutDashboard className="size-4" aria-hidden />,
@@ -249,10 +265,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           >
             <button
               type="button"
-              onClick={() => (showSidebar ? toggleSidebar() : setSidebarMode('half'))}
+              onClick={() => {
+                // Desktop: collapse to the rail and back. A narrow viewport has no rail, so — should this button
+                // ever be visible there again — it opens the navigation drawer instead of doing nothing.
+                if (window.innerWidth < 1024) {
+                  toggleMobileNav();
+                  return;
+                }
+                if (showSidebar) toggleSidebar();
+                else setSidebarMode('half');
+              }}
               aria-label={showSidebar ? (isHalf ? 'Expand sidebar' : 'Collapse sidebar to icons') : 'Show sidebar'}
               aria-pressed={showSidebar}
-              className={cx(ICON_BTN, 'hidden lg:inline-grid')}
+              className={ICON_BTN_LG}
             >
               {showSidebar && !isHalf ? <PanelLeftClose className="size-4" aria-hidden /> : <PanelLeftOpen className="size-4" aria-hidden />}
             </button>
@@ -391,7 +416,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               type="button"
               onClick={() => setPaletteOpen(true)}
               aria-label={t('shell.palette', locale)}
-              className={cx(ICON_BTN, 'hidden sm:inline-grid')}
+              className={ICON_BTN_SM}
             >
               <Command className="size-4" aria-hidden />
             </button>
@@ -656,9 +681,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             onClick={toggleMobileNav}
             aria-expanded={mobileNavOpen}
             aria-controls="mobile-nav-panel"
-            className="inline-flex min-h-8 items-center gap-1 rounded-sm border border-border-default px-2 py-1 hover:text-text-primary lg:hidden"
+            className="inline-flex min-h-9 items-center gap-1.5 rounded-sm border border-border-default px-2.5 py-1 hover:text-text-primary lg:hidden"
           >
-            {mobileNavOpen ? <X className="size-3" aria-hidden /> : <PanelLeftOpen className="size-3" aria-hidden />}
+            {/* A hamburger, not a panel: the panel-shaped icon in this shell means “the sidebar”, and on a
+                phone there is no sidebar to expand. This opens the navigation drawer, and closes it again. */}
+            {mobileNavOpen ? <X className="size-3.5" aria-hidden /> : <MenuIcon className="size-3.5" aria-hidden />}
             {mobileNavOpen ? t('shell.closeMenu', locale) : t('shell.menu', locale)}
           </button>
         </span>

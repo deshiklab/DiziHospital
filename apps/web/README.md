@@ -13,8 +13,8 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 
 | Feature | Where | Notes |
 |---|---|---|
-| **Sidebar: full ⇄ half (icons only)** | toggle in the header or the sidebar header | Half mode is a 64 px icon rail with tooltips; the mode is remembered, and `Ctrl+B` switches it. `hidden` gives the table the entire width |
-| **Mobile navigation** | hamburger in the header | Off-canvas drawer, closes on navigation |
+| **Sidebar: full ⇄ half (icons only)** | one toggle, top-left of the header (`lg` and up only) | Half mode is a 64 px icon rail with tooltips; the mode is remembered, and `Ctrl+B` switches it. `hidden` gives the table the entire width. There is deliberately no second control inside the sidebar |
+| **Mobile navigation** | the Menu button in the footer — no navigation control in the header below `lg` | Off-canvas drawer in a portal: opens and closes from that same button, and also closes on Escape, on the backdrop, on any navigation, and when the viewport reaches the desktop layout. Focus moves into the panel and returns to the button; the page behind it cannot scroll |
 | **Fixed header** | always | Breadcrumbs, global search, connection state, hot actions, command palette, notifications, display controls, language, help, account |
 | **Fixed footer** | always | Version, phase, build stamp, credits, site mode, keyboard-shortcut link |
 | **Global search** | header, `/` or click | Name, Bangla name, MRN and phone; results link straight to the record |
@@ -112,3 +112,10 @@ Rules that keep the mirror *reference material* rather than product material:
 * Primitives live in `@dizi/ui`; a screen that needs a new pattern adds it there, not locally.
 * Anything that writes data shows its sync state (`docs/plan/02` §11 rule 1).
 * Tooltips are supplementary: every control keeps an accessible name without one.
+* **One base display utility per class list.** Two `display` utilities of equal specificity are settled by the
+  order of the rules in the stylesheet, not by the order in the `class` attribute — and in this build `.hidden`
+  is emitted after `.grid`/`.flex` but *before* `.inline-grid`. So `cx(ICON_BTN, 'hidden lg:inline-grid')`, with
+  `inline-grid` inside `ICON_BTN`, stays visible at every width: that is how an “Expand sidebar” button ended up
+  in the mobile header, toggling a rail that does not exist there. Keep the display utility in the same string as
+  `hidden` and put the other breakpoint behind a variant. `npm run check:classes` enforces this and runs inside
+  `npm run verify` and CI.
