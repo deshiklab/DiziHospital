@@ -17,6 +17,7 @@ import {
 } from '@/lib/reports';
 import { todayIso } from '@/lib/appointments';
 import { useShell } from '@/lib/shell';
+import { PLANNED_REPORTS, REPORT_GROUPS, REPORT_SUITE_TOTAL, reportsInGroup } from '@/lib/report-suite';
 
 /* Reports and dashboards (legacy report screens replaced) — the P6 read side.
  *
@@ -132,6 +133,9 @@ export default function ReportsPage() {
     { label: 'This week', value: String(snapshot.dataQuality.filter((f) => f.severity === 'warning').length), definition: 'Findings that cost money or time if left alone.', asOf: snapshot.asOf, tone: 'warning' },
   ];
 
+  /** The phase's own count, read from the suite rather than kept here: what is built, out of what was promised. */
+  const builtCount = REPORT_GROUPS.reduce((n, g) => n + reportsInGroup(g).length, 0);
+
   const tile = (m: Metric, i: number) => (
     <div key={i} className="flex flex-col gap-1">
       <span className="flex items-center gap-1.5">
@@ -156,6 +160,45 @@ export default function ReportsPage() {
         <RankList title="How patients booked" items={snapshot.visits.bySource} />
         <RankList title="Consultations per doctor" items={snapshot.clinical.byDoctor} />
       </div>
+
+      <Panel title={`Reports › … — ${builtCount} of ${REPORT_SUITE_TOTAL} built`}>
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          {REPORT_GROUPS.map((group) => {
+            const built = reportsInGroup(group);
+            const planned = PLANNED_REPORTS.filter((p) => p.group === group);
+            if (built.length === 0 && planned.length === 0) return null;
+            return (
+              <div key={group}>
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-text-tertiary">{group}</p>
+                <ul className="mt-1 flex flex-col gap-1.5">
+                  {built.map((def) => (
+                    <li key={def.topic}>
+                      <Link href={`/reports/${def.topic}`} className="block rounded-md px-2 py-1 hover:bg-surface-sunken">
+                        <span className="text-sm font-medium text-brand-700 underline-offset-2 hover:underline">{def.title}</span>
+                        <span className="block text-xs text-text-secondary">{def.question}</span>
+                        <span className="block text-[11px] text-text-tertiary">
+                          Legacy {def.legacy} · {def.owner} · {def.schedule.split(';')[0].toLowerCase()}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                  {planned.map((p2) => (
+                    <li key={p2.legacy} className="px-2 py-1" title={p2.blockedBy}>
+                      <span className="text-sm text-text-tertiary">{p2.name} — not built yet</span>
+                      <span className="block text-xs text-text-tertiary">{p2.blockedBy}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+        <p className="mt-3 text-xs text-text-secondary">
+          Each built report opens on its own route, reads the same generators the operational screens use, and prints the days it actually read, the
+          control total its figures have to agree with, and how the consolidated column was arrived at. This list is kept in the module the reports
+          themselves are written in, so the phase cannot be called finished with a screen missing.
+        </p>
+      </Panel>
     </div>
   );
 

@@ -87,6 +87,12 @@ const ROUTES = [
   '/setup/finance',
   '/setup/referral-commission',
   '/reports',
+  '/reports/finance',
+  '/reports/tpa',
+  '/reports/patient',
+  '/reports/appointment',
+  '/reports/opd',
+  '/reports/ipd',
   '/sync',
   '/help',
 ];
@@ -344,6 +350,49 @@ async function check(route) {
     }
   }
 
+  /* The report suite's headline claim, driven on a report screen: switching the scope from every branch to one
+   * branch has to do what the framework says it does — read that branch's own records, and where a branch cannot
+   * answer at all, say so rather than print a row of zeros. A promise that only lives in a comment is a promise
+   * nobody has read. */
+  let suite = 'n/a';
+  if (route === '/reports/finance') {
+    const buttonBy = (re) => [...doc.querySelectorAll('button')].find((b) => re.test((b.textContent ?? '').trim()));
+    const textOf = () => doc.body.textContent ?? '';
+    /* The scope switch is a real radio group — arrow keys and a screen reader both work on it — so it is driven the
+       way a keyboard user drives it, by its own input rather than by a styled label that only looks pressable. */
+    const chooseScope = (label) => {
+      const input = [...doc.querySelectorAll('input[type="radio"][name="report-scope"]')].find(
+        (i) => (i.closest('label')?.textContent ?? '').trim() === label,
+      );
+      if (!input) return false;
+      input.click();
+      return true;
+    };
+
+    const consolidated = /Consolidated — /.test(textOf());
+    const uttara = chooseScope('Uttara');
+    if (!consolidated) {
+      suite = 'NO RECONCILIATION';
+      routeProblems.push('the report does not say how its consolidated column was arrived at');
+    } else if (!uttara) {
+      suite = 'NO SCOPE SWITCH';
+      routeProblems.push('the report has no per-branch scope switch');
+    } else {
+      await new Promise((r) => setTimeout(r, 350));
+      const refused = /Uttara Branch cannot answer this report/i.test(textOf()) && /not a share of another branch’s till/i.test(textOf());
+      const scoped = /Uttara Branch alone, read from its own records/.test(textOf());
+      chooseScope('All');
+      await new Promise((r) => setTimeout(r, 350));
+      const restored = /Consolidated — /.test(textOf());
+      const back = buttonBy(/^All$/);
+      suite = `${refused ? 'refused with a reason' : 'NO REASON'} · ${scoped ? 'branch scope' : 'NO BRANCH SCOPE'} · ${restored ? 'consolidated again' : 'STUCK'}`;
+      if (!refused) routeProblems.push('a branch with no ledger of its own was shown a figure anyway');
+      if (!scoped) routeProblems.push('a branch scope did not read that branch’s own records');
+      if (!restored) routeProblems.push('the report did not come back to the consolidated view');
+      if (back) back.blur();
+    }
+  }
+
   /* The claim pipeline's headline claim, driven the same way: a refusal is refused *with the payer's own rule*,
    * and an accepted claim moves out of Draft and into the device's own queue. A preview that only renders a status
    * column can demonstrate neither. */
@@ -560,7 +609,7 @@ async function check(route) {
 
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors: [...errors, ...routeProblems], handlers, copy, ledger, claims, heads, drill, queue, persist, named, retry, refusal, readyWait };
+  return { errors: [...errors, ...routeProblems], handlers, copy, ledger, claims, heads, suite, drill, queue, persist, named, retry, refusal, readyWait };
 }
 
 const CONCURRENCY = Math.max(1, Number(process.env.DIZI_CONCURRENCY ?? 4));
@@ -615,10 +664,10 @@ outcomes.forEach((outcome, i) => {
     problems += 1;
     return;
   }
-  const { errors, handlers, copy, ledger, claims, heads, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
+  const { errors, handlers, copy, ledger, claims, heads, suite, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
   const bad = errors.length > 0 || handlers === 'DEAD';
   const slow = readyWait !== undefined && readyWait > 2000 ? `  ready=${(readyWait / 1000).toFixed(1)}s` : '';
-  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
+  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${suite === 'n/a' ? '' : `  suite=${suite}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
   if (handlers === 'DEAD') {
     console.log('      the shared control did not respond after hydration');
     problems += 1;

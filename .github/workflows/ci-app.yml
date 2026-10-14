@@ -75,7 +75,7 @@ jobs:
   # depend on, so this job installs them without saving them and serves the production build: the same artefact
   # that ships, minified stylesheet included.
   runtime:
-    name: production build, thirty routes hydrated, shell driven
+    name: production build, every route hydrated, shell driven
     runs-on: ubuntu-latest
     # The harness checks thirty routes and each one is a page load; the pool keeps it to a few minutes, and this
     # is the ceiling that keeps a slow runner from being killed mid-run.
@@ -112,6 +112,12 @@ jobs:
       # a difference the queue explains, and a short drawer nobody can explain.
       - name: The cash book's rules hold
         run: npm run test:finance
+
+      # The report suite's framework: per branch and consolidated are the same query added up, a maximum and a
+      # ratio and an average are recomputed rather than summed, and a branch that cannot answer says so instead of
+      # printing zero. This is the check that keeps seventeen report screens honest at once.
+      - name: Every report adds up per branch, and says where it cannot answer
+        run: npm run test:reports
 
       - name: Build (default dist directory — no dev server is running here)
         run: npm run build --workspace @dizi/web
