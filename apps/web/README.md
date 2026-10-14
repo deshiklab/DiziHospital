@@ -44,13 +44,14 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 | `/clinical` | OPD consultation: the room queue beside one patient's workspace — vitals with reference-range flags, SOAP notes, ICD-10 diagnosis, lab/imaging orders, and a prescription screened for allergies, high-alert medicines and dangerous abbreviations before it can be signed |
 | `/diagnostics` | Laboratory and imaging worklist: every specimen's journey (ordered → collected → in the lab → resulted → verified → dispatched), per-analyte reference ranges checked as the value is typed, turnaround deadlines on the row, verification as a second-person gate, the critical-value call-back log, rejected samples with reasons, and the day's quality-control runs |
 | `/inventory` | Stores and purchase: stock on hand per store with cover in days, batches with expiry (expired ones quarantined, valued, and written off with a reason), a replenishment list whose quantities cover the lead time, purchase orders with send/receive/cancel, goods receipt with a batch number and an expiry required on every line, the append-only store ledger, and a stock-take sheet a second person has to approve |
+| `/ward` | The ward: a bed board per ward with the five bed states and the reason each one is in that state, admissions with a consultant and a reason (never just a bed number), observations scored with an early-warning aggregate that carries the response it requires and records the review when it happens, nursing notes that append rather than edit, a drug round that signs at the bedside (check recorded, witness for a controlled drug, reason for anything not given, indication for a PRN), handover as written SBAR with inherited tasks, transfers with two locations and an accepting name, and a discharge desk with a checklist, outstanding dues and a printable summary |
 | `/reports` | Reports and dashboards: eight figures that each state their definition and their as-of stamp, patients-seen-per-day against bookings, case mix and workload by doctor, laboratory turnaround, critical-value call-back compliance and quality control, stock valuation and expiry risk, revenue split by method and payer with the discounts that needed an approver, and a data-quality tab that counts the record's own gaps and names who closes each one |
 | `/pharmacy` | The dispensary: prescription queue, FEFO batch picking (expired batches cannot be selected), substitution with both names kept, controlled-substance register with a witness, and the append-only stock ledger |
 | `/billing` | Billing counter: invoices built from what the doctor ordered, payment capture per method, discount approval above the limit, day-end sheet with cash reconciliation, and the branch tariff |
 | `/help` | Help centre: how the new platform works (six anchored topics), the shortcut list, and the mirrored reference library by category |
 | `/help/search` | Server-rendered search over the reference library, with the matching text highlighted |
 | `/help/[category]/[slug]` | One mirrored article, rendered from Markdown with its screenshots served from the library, attributed to its source |
-| `/print` and `/print/[doc]` | Print templates: registration slip and appointment slip (A5), prescription (A4), laboratory report (A4), purchase order (A4), receipt (80 mm thermal), specimen label (50 × 25 mm), patient ID card (CR80), day list (A4 landscape) |
+| `/print` and `/print/[doc]` | Print templates: registration slip and appointment slip (A5), prescription (A4), laboratory report (A4), purchase order (A4), discharge summary (A4), receipt (80 mm thermal), specimen label (50 × 25 mm), patient ID card (CR80), day list (A4 landscape) |
 | `/<module>` | Launcher: modules still owned by the legacy system say so and point there |
 
 ## DataGrid
@@ -127,6 +128,13 @@ value on the server and another in the browser, and React throws the rendered tr
   grid's CSV.
 * The store module has no barcode or GS1 scanning yet: batch numbers and expiries are typed. Scanning is the
   point of the receiving bay (and of the analyser interface) and it lands with `P3` integration work.
+* The ward module is a full workflow on synthetic patients: bed states, observations, notes, the drug round,
+  handover, transfers and discharge all behave, and the discharge summary prints — but nothing is persisted
+  (reload and the ward starts again) and no chart is signed with a clinician's own credentials. The offline queue
+  the ward actually needs is the P0-210 prototype, and until it lands the screen says what a lost reload costs.
+* There is no doctor's round screen yet: the observation escalation records who attended and what was done, and
+  orders can be raised from the consultation workspace, but a ward round that writes orders, stops medicines and
+  plans the day is still `P5`'s remaining work.
 * No credit-note path for short-dated stock returned to a supplier, and no cold-chain temperature log — both are
   on the `P3` list, and both are visible in the data model's shape rather than hidden behind a claim.
 * There is no separate laboratory role yet: the worklist is reached with the doctor/admin roles, and the actions on

@@ -40,6 +40,7 @@ const ROUTES = [
   '/patients/new',
   '/appointments',
   '/clinical',
+  '/ward',
   '/diagnostics',
   '/pharmacy',
   '/billing',

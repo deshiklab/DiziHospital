@@ -23,6 +23,7 @@ import {
   type PurchaseOrder,
 } from '@/lib/inventory';
 import { patients } from '@/lib/mock';
+import { BED_CHARGE, generateInpatient, wardName } from '@/lib/ward';
 
 /* Print templates.
  *
@@ -45,6 +46,7 @@ type DocKind =
   | 'specimen-label'
   | 'result-report'
   | 'purchase-order'
+  | 'discharge-summary'
   | 'id-card'
   | 'day-list';
 
@@ -57,6 +59,7 @@ const DOC_META: Record<DocKind, { title: string; paper: string; page: string; no
   'dispense-label': { title: 'Medicine label', paper: '50 × 25 mm', page: '50mm 25mm', note: 'Applied to the pack: four doses a day, in Bangla and English.', param: 'dsp' },
   'result-report': { title: 'Laboratory report', paper: 'A4', page: 'A4 portrait', note: 'Reference ranges, flags and the verifier’s name.', param: 'spec' },
   'purchase-order': { title: 'Purchase order', paper: 'A4', page: 'A4 portrait', note: 'Sent to the supplier; the store keeps the copy that was ordered.', param: 'po' },
+  'discharge-summary': { title: 'Discharge summary', paper: 'A4', page: 'A4 portrait', note: 'The document the patient carries home: course, condition, medicines and the follow-up date.', param: 'dsc' },
   'specimen-label': { title: 'Specimen label', paper: '50 × 25 mm', page: '50mm 25mm', note: 'Two-line label for tubes; the barcode is what the lab scans.', param: 'spec' },
   'id-card': { title: 'Patient ID card', paper: 'CR80 card', page: 'A4 portrait', note: 'Crop marks shown for card printers.', param: 'mrn' },
   'day-list': { title: 'Appointment day list', paper: 'A4 landscape', page: 'A4 landscape', note: 'What the desk prints at the start of a shift.' },
@@ -85,7 +88,7 @@ export default function PrintPage({
   searchParams,
 }: {
   params: Promise<{ doc: string }>;
-  searchParams: Promise<{ id?: string; mrn?: string; enc?: string; inv?: string; dsp?: string; spec?: string; po?: string }>;
+  searchParams: Promise<{ id?: string; mrn?: string; enc?: string; inv?: string; dsp?: string; spec?: string; po?: string; dsc?: string }>;
 }) {
   const { doc } = use(params);
   const query = use(searchParams);
@@ -125,6 +128,13 @@ export default function PrintPage({
     inventory.purchaseOrders.find((po) => po.id === query.po) ??
     inventory.purchaseOrders.find((po) => po.status === 'Sent') ??
     inventory.purchaseOrders[0];
+
+  const inpatient = generateInpatient(day);
+  const discharge =
+    inpatient.discharges.find((d) => d.id === query.dsc) ??
+    inpatient.discharges.find((d) => d.mrn === query.mrn) ??
+    inpatient.discharges[0];
+  const dischargeBed = inpatient.beds.find((b) => b.id === discharge?.bedId);
 
   const specimenId = query.spec ?? `SP-${appointment?.token ?? '000'}1`;
 
@@ -681,6 +691,128 @@ export default function PrintPage({
             <p className="max-w-40 text-xs">Dashed outline is the card cut line for a CR80 card printer.</p>
           </div>
         );
+
+      case 'discharge-summary': {
+        const d = discharge;
+        const bedClass = dischargeBed?.class ?? 'General';
+        return (
+          <div className="w-[210mm] bg-white p-6 text-black">
+            {header('Discharge summary', `${wardName(d.wardId)} · ${d.bedId.replace(/^\w+-/, '')}`)}
+            <div className="grid grid-cols-4 gap-x-4 gap-y-1 border-b border-black pb-2 text-xs">
+              <div><p className="font-semibold">Patient</p><p>{d.name}</p></div>
+              <div><p className="font-semibold">MRN</p><p className="font-mono">{d.mrn}</p></div>
+              <div><p className="font-semibold">Age / sex</p><p>{d.age} · {d.sex}</p></div>
+              <div><p className="font-semibold">Consultant</p><p>{d.consultantName}</p></div>
+              <div><p className="font-semibold">Admitted</p><p className="font-mono">{d.admittedAt}</p></div>
+              <div><p className="font-semibold">Discharged</p><p className="font-mono">{d.dischargedAt}</p></div>
+              <div><p className="font-semibold">Stay</p><p>{d.stayedDays} day(s)</p></div>
+              <div><p className="font-semibold">Bed class</p><p>{bedClass} · {BED_CHARGE[bedClass].toLocaleString()} Taka/day</p></div>
+            </div>
+
+            <section className="mt-3">
+              <h2 className="text-sm font-bold">Diagnosis</h2>
+              <p className="text-sm">{d.diagnosis.code} · {d.diagnosis.label}</p>
+              {d.procedures && d.procedures.length > 0 && (
+                <p className="mt-1 text-xs">Procedures: {d.procedures.join(' · ')}</p>
+              )}
+            </section>
+
+            <section className="mt-3">
+              <h2 className="text-sm font-bold">Type of discharge</h2>
+              <p className="text-sm">{d.type}</p>
+            </section>
+
+            <section className="mt-3">
+              <h2 className="text-sm font-bold">Course in hospital</h2>
+              <p className="text-sm leading-relaxed">{d.summary.course}</p>
+            </section>
+
+            <section className="mt-3">
+              <h2 className="text-sm font-bold">Findings and investigations</h2>
+              <p className="text-sm leading-relaxed">{d.summary.findings}</p>
+            </section>
+
+            <section className="mt-3">
+              <h2 className="text-sm font-bold">Treatment given</h2>
+              <p className="text-sm leading-relaxed">{d.summary.treatment}</p>
+            </section>
+
+            <section className="mt-3">
+              <h2 className="text-sm font-bold">Condition on discharge</h2>
+              <p className="text-sm">{d.summary.condition}</p>
+            </section>
+
+            <section className="mt-3">
+              <h2 className="text-sm font-bold">Medicines to continue</h2>
+              {d.medications.length === 0 ? (
+                <p className="text-sm">None prescribed at discharge — the patient was referred onward.</p>
+              ) : (
+                <table className="mt-1 w-full border-collapse text-xs">
+                  <thead>
+                    <tr>
+                      {['Medicine', 'Dose', 'Route', 'Frequency', 'Days', 'Quantity', 'What to tell the patient'].map((h) => (
+                        <th key={h} className="border border-black px-1.5 py-1 text-left">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {d.medications.map((m) => (
+                      <tr key={m.id}>
+                        <td className="border border-black px-1.5 py-0.5">
+                          <span className="font-medium">{m.brand}</span> {m.strength}
+                          <span className="block text-[10px]">{m.generic} · {m.form}</span>
+                        </td>
+                        <td className="border border-black px-1.5 py-0.5 font-mono">{m.dose}</td>
+                        <td className="border border-black px-1.5 py-0.5">{m.route}</td>
+                        <td className="border border-black px-1.5 py-0.5">{m.frequency}</td>
+                        <td className="border border-black px-1.5 py-0.5 font-mono">{m.durationDays}</td>
+                        <td className="border border-black px-1.5 py-0.5 font-mono">{m.quantity}</td>
+                        <td className="border border-black px-1.5 py-0.5">{m.instructions}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+              <p className="mt-1 text-[10px]">
+                A medicine stopped in hospital is not on this list on purpose: the discharge list is what the patient
+                takes home, and anything meant to stop would be an instruction, not a prescription.
+              </p>
+            </section>
+
+            <section className="mt-3">
+              <h2 className="text-sm font-bold">Follow-up</h2>
+              <p className="text-sm">
+                {d.followUpDays ? `Come back in ${d.followUpDays} day(s)` : 'No routine follow-up booked'}
+                {d.followUpWith ? ` · ${d.followUpWith} · OPD, Main Campus` : ''}
+              </p>
+              <p className="mt-1 text-sm">{d.summary.adviceBn}</p>
+            </section>
+
+            {!d.bill.settled && (
+              <section className="mt-3 border border-black p-2">
+                <h2 className="text-sm font-bold">Bill outstanding</h2>
+                <p className="text-sm">
+                  {d.bill.due.toLocaleString()} Taka was outstanding when the patient left.
+                  {d.bill.invoiceId ? ` Invoice ${d.bill.invoiceId}.` : ' No invoice was raised.'}
+                </p>
+              </section>
+            )}
+
+            <div className="mt-6 flex justify-between text-xs">
+              <div>
+                <p className="border-t border-black pt-1">Prepared by · {d.preparedBy}</p>
+              </div>
+              <div>
+                <p className="border-t border-black pt-1">Countersigned · {d.countersignedBy ?? 'Consultant'}</p>
+              </div>
+              <div>
+                <p className="border-t border-black pt-1">Patient or attendant</p>
+              </div>
+            </div>
+            <p className="mt-2 text-[10px]">Printed {new Date().toLocaleString()} · patient copy · bring this sheet to every follow-up</p>
+          </div>
+        );
+      }
 
       case 'day-list':
         return (
