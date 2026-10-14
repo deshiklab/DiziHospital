@@ -96,7 +96,7 @@ Rules that keep the mirror *reference material* rather than product material:
 | `NEXT_DIST_DIR=.next-build npx next build apps/web` | the production build — the alternate dist directory keeps a running dev server intact |
 | `python3 tools/docs/check_links.py` | every relative link and image in `docs/` resolves |
 | `npm run test:shell` | the shell's navigation, driven for real: five width/pointer scenarios, the drawer opening *and* closing from the bar, the rail collapsing *and* expanding, and the built stylesheet carrying the mode rules |
-| `npm run test:hydration` | every route hydrates with no server/client mismatch and the shared control is live afterwards (needs the dev server on :3000) |
+| `npm run test:runtime` | every route hydrates with no server/client mismatch and no console error, uncaught exception or unhandled rejection — with the clipboard deliberately rejecting, which is what an embedded frame does (needs the dev server on :3000) |
 
 Both `test:` commands need `npm i --no-save jsdom esbuild`; they render the real components in jsdom, so they
 prove state, handlers and class names but nothing about pixels — jsdom has no layout engine. They are deliberately
