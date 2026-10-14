@@ -1,0 +1,17 @@
+{
+  "name": "@dizi/ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "DiziHospital design system primitives (plan 02 §5)",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19"
+  },
+  "dependencies": {
+    "@dizi/tokens": "*"
+  }
+}

@@ -1,0 +1,55 @@
+/* DiziHospital web shell — global styles.
+ * Order matters: Tailwind first, then our tokens (plain CSS variables), then the Tailwind theme that maps
+ * those variables onto Tailwind namespaces. The design system source is scanned from the workspace, so
+ * component classes exist without duplicating a Tailwind config.
+ */
+@import 'tailwindcss';
+@import '@dizi/tokens/css';
+@import '@dizi/tokens/theme.css';
+
+@source '../';
+@source '../../../packages/ui/src';
+
+/* Density is a user preference, not a redesign: both modes come from the token file. */
+:root {
+  --dizi-density-row-height: var(--dizi-density-comfortable-row-height);
+  --dizi-density-field-height: var(--dizi-density-comfortable-field-height);
+}
+html[data-density='compact'] {
+  --dizi-density-row-height: var(--dizi-density-compact-row-height);
+  --dizi-density-field-height: var(--dizi-density-compact-field-height);
+}
+
+html {
+  font-family: var(--dizi-typography-family-ui);
+  font-size: var(--dizi-typography-size-base);
+  line-height: var(--dizi-typography-line-height-normal);
+  background: var(--dizi-color-surface-canvas);
+  color: var(--dizi-color-text-primary);
+}
+
+html[lang='bn'] {
+  font-family: var(--dizi-typography-family-bengali);
+}
+
+/* Money and clinical values always line up: tabular numerals, courtesy of the token layer. */
+.font-numeric {
+  font-family: var(--dizi-typography-family-numeric);
+  font-variant-numeric: tabular-nums;
+}
+
+/* A visible, high-contrast focus ring everywhere — the legacy UI had none on most controls. */
+:focus-visible {
+  outline: 2px solid var(--dizi-color-brand-500);
+  outline-offset: 2px;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  /* Printing must work with the uplink down (plan 02 §11), so nothing depends on the network here. */
+  a[href]::after {
+    content: '';
+  }
+}

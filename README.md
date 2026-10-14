@@ -10,7 +10,11 @@ agenda for the next phase.
 
 | Document | What it is |
 |---|---|
+| **[apps/web](apps/web/README.md)** | **Phase 0 application shell** (running): role-aware navigation, ⌘K command palette, global patient search, DataGrid with server-shaped paging and export, patient registration with live duplicate detection, offline/sync states, en/bn and density switches — `npm install && npm run dev` |
 | **[docs/plan/](docs/plan/README.md)** | **Development plan & process** for rebuilding the app with a modern UI/UX — strategy and target architecture (no vendor source: module ownership + data bridge), design system & UX spec (incl. offline states), screen-by-phase map, roadmap & budget, engineering process, data migration & rollout, hybrid LAN/cloud deployment (ADR 0007), legacy integration & vendor exit, and a 30-day kickoff |
+| **[docs/research/](docs/research/README.md)** | Week-1 field templates: infrastructure survey, branch inventory and pilot selection, shadowing notes, baseline task timings, hardware inventory |
+| **[docs/migration/](docs/migration/01-profile.md)** | Migration working files: the module × branch ownership matrix and the data-profile template |
+| **[docs/vendor/requests.md](docs/vendor/requests.md)** | Vendor log: safety fixes to request, and the data-access tracking Phase 0 exit depends on |
 | **[docs/Smart-Hospital-Complete-Guide.pdf](docs/Smart-Hospital-Complete-Guide.pdf)** | The full PDF guide — cover, contents, operator wiki/help handbook, screen-by-screen feature catalogue with screenshots, the improvement backlog, the vendor help-library index and a selection of help articles in full |
 | [docs/FEATURE-CATALOG.md](docs/FEATURE-CATALOG.md) | Markdown feature catalogue: 76 screens, 96 data-entry dialogs, 29 sub-screens, 5 record views (with every tab), all 9 role dashboards — each screen documented with its purpose, grids, filters, actions and form fields, plus a screenshot |
 | [docs/WIKI.md](docs/WIKI.md) | Operator handbook / help wiki — how to run each module day to day (registration, appointment, OPD, IPD, billing, pharmacy, lab, imaging, blood bank, HR, finance, reports, CMS, telemedicine), troubleshooting and glossary |

@@ -84,10 +84,15 @@ function emitThemeCss() {
   for (const t of tokens) {
     // Tailwind namespaces: colours -> --color-*, fonts -> --font-*, spacing -> --spacing-*, others keep --dizi-*
     const [group, ...rest] = t.path;
-    const tail = rest.map((p) => p.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()).join('-');
+    const kebab = (parts) => parts.map((p) => p.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()).join('-');
+    const tail = kebab(rest);
+    const sub = kebab(rest.slice(1)); // typography sub-groups map onto Tailwind namespaces
     let twName;
     if (group === 'color') twName = `--color-${tail}`;
-    else if (group === 'typography' && rest[0] === 'family') twName = `--font-${tail}`;
+    else if (group === 'typography' && rest[0] === 'family') twName = `--font-${sub}`;
+    else if (group === 'typography' && rest[0] === 'size') twName = `--text-${sub}`;
+    else if (group === 'typography' && rest[0] === 'weight') twName = `--font-weight-${sub}`;
+    else if (group === 'typography' && rest[0] === 'lineHeight') twName = `--leading-${sub}`;
     else if (group === 'space') twName = `--spacing-${tail}`;
     else if (group === 'radius') twName = `--radius-${tail}`;
     else twName = cssName(t.path);

@@ -61,6 +61,9 @@ for (const dir of productDirs) {
     scanned++;
     const lines = readFileSync(file, 'utf8').split('\n');
     lines.forEach((line, i) => {
+      // Escape hatch: a reviewed line may name the product it replaces (staff-facing copy only).
+      const directive = /clean-room:\s*allow/.test(line) || (i > 0 && /clean-room:\s*allow/.test(lines[i - 1]));
+      if (directive) return;
       for (const { re, why } of markers) {
         if (re.test(line)) {
           violations++;
