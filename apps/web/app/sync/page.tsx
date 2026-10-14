@@ -20,6 +20,7 @@ import {
   blockRemaining,
   blockLow,
   runOutageDrill,
+  waitingToSync,
   type Conflict,
   type DrillStep,
   type EntityKind,
@@ -60,8 +61,11 @@ export default function SyncConsolePage() {
   const [drill, setDrill] = useState<ReturnType<typeof runOutageDrill> | null>(null);
   const [remoteNote, setRemoteNote] = useState('edge-b has not written anything yet');
   const [manualNote, setManualNote] = useState<Record<string, string>>({});
+  /** The last thing the contract refused to queue, in the contract's own words. */
+  const [refusal, setRefusal] = useState<string | null>(null);
 
   const { outbox, summary, cloud } = syncEngine;
+  const refusedResults = outbox.results.filter((r) => r.outcome === 'refused');
   const oldest = outbox.pending.length
     ? Math.max(...outbox.pending.map((op) => Number(op.at.slice(11, 13)) * 60 + Number(op.at.slice(14, 16))))
     : null;
@@ -77,6 +81,18 @@ export default function SyncConsolePage() {
       </span>
     ) },
     { key: 'op', header: 'Kind', width: '6rem', render: (op) => <span className="rounded-full bg-surface-sunken px-2 py-0.5 text-xs">{op.op}</span> },
+    { key: 'operationId', header: 'Contract operation', hideBelow: 'xl', render: (op) => {
+      if (!op.operationId) {
+        return <span className="text-xs text-safety-warning">not named by the screen — this write has no API operation to replay as</span>;
+      }
+      const capability = syncEngine.capabilityOf(op.operationId);
+      return (
+        <span className="flex flex-col">
+          <span className="font-numeric text-xs">{op.operationId}</span>
+          <span className="text-[11px] text-text-tertiary">{capability ? `${capability.method.toUpperCase()} ${capability.path} · ${capability.policy ?? 'platform'}` : 'not in the contract'}</span>
+        </span>
+      );
+    } },
     { key: 'actor', header: 'By', hideBelow: 'lg', render: (op) => <span className="text-xs text-text-secondary">{op.actor} · {op.node}</span> },
   ];
 
@@ -127,13 +143,19 @@ export default function SyncConsolePage() {
         </div>
       </div>
 
-      <SafetyBanner severity="info" title="P0-210/211 prototype — the protocol is real, the transport is simulated">
-        Operation ids, per-node sequence numbers, reserved number blocks, idempotent replay and the three conflict
-        policies are all implemented and exercised here. There is no server yet: the cloud side is a simulated peer
-        inside this build, and the queue lives in memory, so a reload forgets it. The drill below is the plan’s exit
-        criterion run in code — the same drill still has to be run on a real edge node with a real uplink before P1
-        can be signed off.
+      <SafetyBanner severity="info" title="P0-210/211/306 prototype — the protocol is real, the transport is simulated">
+        Operation ids, per-node sequence numbers, reserved number blocks, idempotent replay, the three conflict
+        policies and the queue’s contract metadata are all implemented and exercised here. The queue is saved on the
+        device (<span className="font-numeric">dizi.outbox.v1</span>), so a reload keeps what is waiting — the earlier
+        version kept it in memory only. There is still no server: the cloud side is a simulated peer inside this
+        build, and the same drill has to be run on a real edge node with a real uplink before P1 can be signed off.
       </SafetyBanner>
+
+      {syncEngine.storageNote && (
+        <SafetyBanner severity="warning" title="This device’s saved queue needed attention">
+          {syncEngine.storageNote}
+        </SafetyBanner>
+      )}
 
       <div className="grid grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-6">
         <KpiTile label="Queued writes" value={String(summary.pending)} definition="Operations written on this device that the server has not accepted yet. They are already applied here." asOf={`${day} · live`} footnote={summary.pending ? 'nothing is blocked while they wait' : 'the queue is empty'} />
@@ -162,7 +184,60 @@ export default function SyncConsolePage() {
             <Button size="sm" variant="ghost" onClick={() => enqueue({ at: `${day} 10:16`, entity: 'bed.state', recordId: 'med-a-19', label: 'Admit into bed A-19', op: 'claim', fields: { admitted: 'SH-103902' }, actor: 'Ward desk', node: 'Medicine Ward A' })}>
               Admit into bed A-19
             </Button>
+            <Button
+              size="sm"
+              variant="secondary"
+              className="gap-1.5"
+              onClick={() => {
+                const outcome = syncEngine.queueOperation('createPatient', {
+                  at: `${day} 10:17`,
+                  recordId: 'SH-200312',
+                  label: 'Register Rahim Uddin at the desk',
+                  fields: { name: 'Rahim Uddin', phone: '01711223344' },
+                  actor: 'Reception',
+                  node: 'OPD desk',
+                });
+                setRefusal(outcome.queued ? null : outcome.because);
+                push({
+                  title: outcome.queued ? 'Registered by the contract' : 'The contract refused this one',
+                  description: outcome.queued
+                    ? 'The screen named the operation — createPatient — and the queue took its entity, its policy and its kind from the API contract rather than from a rule kept in the screen.'
+                    : outcome.because,
+                  tone: outcome.queued ? 'success' : 'warning',
+                });
+              }}
+            >
+              Register a patient — the contract names the operation
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => {
+                // Deliberately online-only, and the contract says why. The answer comes back synchronously, so a
+                // screen can grey this out before anyone taps it — which is the point of P0-306.
+                const outcome = syncEngine.queueOperation('listNumberBlocks', {
+                  at: `${day} 10:18`,
+                  recordId: 'node/edge-a',
+                  label: 'Reserve the next number block',
+                  actor: 'System',
+                  node: 'edge-a',
+                });
+                setRefusal(outcome.queued ? null : outcome.because);
+                push({
+                  title: outcome.queued ? 'Queued' : 'This one cannot be queued',
+                  description: outcome.queued ? 'Unexpected — this operation is online-only in the contract.' : outcome.because,
+                  tone: outcome.queued ? 'success' : 'info',
+                });
+              }}
+            >
+              Attempt an action that needs the network
+            </Button>
           </div>
+          {refusal && (
+            <p className="mt-2 rounded-md border border-safety-warning/40 bg-safety-warning/5 p-2 text-sm">
+              {refusal}
+            </p>
+          )}
           <p className="mt-2 text-xs text-text-tertiary">
             Each write gets an id before it leaves the row it was made in, is applied to this device’s record
             immediately, and joins the queue. That is what makes a device that goes dark for an hour a delay instead
@@ -205,6 +280,34 @@ export default function SyncConsolePage() {
             height="18rem"
             printMeta={`Outbox on edge-a · ${outbox.pending.length} operation(s) awaiting the server`}
           />
+        )}
+        {outbox.pending.length > 0 && (
+          <ul className="mt-3 flex flex-col gap-1 text-xs text-text-secondary">
+            {waitingToSync(outbox).map(({ operation, capability }) => (
+              <li key={operation.id} className="flex flex-wrap items-center gap-2">
+                <span className="font-numeric text-text-tertiary">{operation.id}</span>
+                <span aria-hidden>→</span>
+                {capability ? (
+                  <>
+                    <span className="font-numeric">{`${capability.method.toUpperCase()} ${capability.path}`}</span>
+                    {capability.policy ? (
+                      <span className={cx('rounded-full px-2 py-0.5', POLICY_TONE[capability.policy])}>{capability.policy}</span>
+                    ) : (
+                      <span className="rounded-full bg-surface-sunken px-2 py-0.5">platform</span>
+                    )}
+                    <span className="text-text-tertiary">
+                      {capability.audit ? 'audited' : 'not audited'} ·{' '}
+                      {capability.mayQueue ? 'replayed on drain' : 'not queueable — it needs the network'}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-safety-warning">
+                    queued without a contract operation — a replay has nothing to send it as
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
         )}
       </Panel>
 
@@ -305,6 +408,34 @@ export default function SyncConsolePage() {
                 )}
               </li>
             ))}
+          </ul>
+        )}
+      </Panel>
+
+      <Panel title={`Refused writes — ${refusedResults.length} needing a decision`}>
+        {refusedResults.length === 0 ? (
+          <p className="text-sm text-text-secondary">
+            Nothing has been refused. A refusal is not a retry: the write leaves the queue, keeps its place in the
+            history, and is shown to the desk with the reason — the contract’s own sentence, not an error code.
+          </p>
+        ) : (
+          <ul className="flex flex-col gap-2">
+            {refusedResults.map((result) => {
+              const capability = result.operation.operationId ? syncEngine.capabilityOf(result.operation.operationId) : null;
+              return (
+                <li key={`${result.operation.id}-refused`} className="rounded-md border border-safety-warning/40 bg-safety-warning/5 p-2">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-sm font-medium">{result.operation.label}</span>
+                    <span className="font-numeric text-xs text-text-tertiary">
+                      {result.operation.id}
+                      {result.operation.operationId ? ` · ${result.operation.operationId}` : ' · no contract operation'}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-sm text-text-secondary">{result.reason ?? 'The server refused it.'}</p>
+                  {capability?.because && <p className="mt-1 text-sm">{capability.because}</p>}
+                </li>
+              );
+            })}
           </ul>
         )}
       </Panel>

@@ -5,15 +5,21 @@ import type { SyncState } from '@dizi/ui';
 import { usePersistentState } from '@dizi/ui';
 import {
   DrillClock,
+  OUTBOX_STORAGE_KEY,
   SimulatedCloud,
+  capabilityOf,
   drain,
   enqueue,
+  enqueueContractOperation,
   initialOutbox,
+  rehydrateOutbox,
   resolveConflict,
+  serialiseOutbox,
   syncSummary,
   type Conflict,
   type Operation,
   type OutboxState,
+  type QueueOutcome,
 } from './sync';
 
 /* -----------------------------------------------------------------------------
@@ -45,6 +51,21 @@ export interface SyncEngineHandle {
   cloud: SimulatedCloud;
   /** Queue a write: applied on this device at once, sent when the uplink is there. */
   enqueue: (write: Omit<Operation, 'id' | 'nodeId' | 'seq' | 'queuedAt'>) => void;
+  /**
+   * Queue a write named by its operation in the platform API contract (P0-306).
+   *
+   * The answer is synchronous and comes from the contract, not from the queue: an operation the contract marks
+   * `online-only` is refused here and now, with the sentence the desk is shown, so a screen can grey the action
+   * out before anyone taps it. `enqueue` above stays for the screens that have not been moved over.
+   */
+  queueOperation: (
+    operationId: string,
+    write: { at: string; recordId: string; label: string; fields?: Record<string, string | number | null>; actor: string; node: string },
+  ) => QueueOutcome;
+  /** What the contract says about an operation, for a screen that is about to offer it. */
+  capabilityOf: typeof capabilityOf;
+  /** Set when the saved queue could not be read back exactly (P0-306) — the console shows it rather than hiding it. */
+  storageNote: string | null;
   /** Drain the queue and report what happened. */
   drainNow: () => ReturnType<typeof syncSummary>;
   resolve: (conflictId: string, choice: NonNullable<Conflict['resolution']>) => void;
@@ -115,6 +136,14 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
   const clockRef = useRef(new DrillClock(9 * 60 + 40));
   const [outbox, setOutbox] = useState<OutboxState>(() => initialOutbox('edge-a'));
   const [queued, setQueued] = useState<QueuedWrite[]>([]);
+  const [storageNote, setStorageNote] = useState<string | null>(null);
+  /**
+   * P0-306: the outbox is read back from the device before anything is written to it. The ref matters — without
+   * it the persist effect below would run on the first paint with the empty initial state and wipe the saved
+   * queue before the rehydrate effect had a chance to read it, which is the bug that makes a queue look like it
+   * survived and then quietly not.
+   */
+  const rehydratedRef = useRef(false);
 
   /* ---- side effects that touch the document -------------------------------------------------- */
   const applyDensity = useCallback(
@@ -185,6 +214,41 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
     return () => document.removeEventListener('fullscreenchange', onChange);
   }, []);
 
+  /* ---- the queue survives a reload (P0-306) ----------------------------------------------------
+   * Two effects, in this order: read the device's saved queue once, then keep the device's copy in step with it.
+   * `localStorage` is read inside an effect rather than during render because the server has no storage — reading
+   * it while rendering is how a page that renders on the server and hydrates in the browser ends up with two
+   * different first paints. */
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    let raw: string | null = null;
+    try {
+      raw = window.localStorage.getItem(OUTBOX_STORAGE_KEY);
+    } catch {
+      // A browser with storage disabled (private mode, an embedded frame): the console works, it just forgets.
+      setStorageNote('This browser will not let the app save the queue, so a reload will lose anything still waiting to sync.');
+      rehydratedRef.current = true;
+      return;
+    }
+    const { state, note } = rehydrateOutbox(raw, 'edge-a');
+    rehydratedRef.current = true;
+    if (note) setStorageNote(note);
+    if (raw) {
+      setOutbox(state);
+      setQueued(state.pending.map((op) => ({ id: op.id, label: op.label, at: op.at.slice(11) })));
+      setSync(state.pending.length > 0 ? 'queued' : 'live');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!rehydratedRef.current || typeof window === 'undefined') return;
+    try {
+      window.localStorage.setItem(OUTBOX_STORAGE_KEY, serialiseOutbox(outbox));
+    } catch {
+      // Storage full or refused: the queue in memory is still the truth for this session.
+    }
+  }, [outbox]);
+
   const enqueueOperation = useCallback(
     (write: Omit<Operation, 'id' | 'nodeId' | 'seq' | 'queuedAt'>) => {
       setOutbox((current) => {
@@ -193,6 +257,45 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
         setSync(cloud.reachable ? 'syncing' : 'queued');
         return next;
       });
+    },
+    [cloud],
+  );
+
+  /**
+   * P0-306's entry point: the contract answers first, and only then does anything reach the queue. Nothing is
+   * written into a screen's own idea of the rules — `capabilityOf` is the same metadata the API service is built
+   * from, so a screen that greys out an action and the API that later refuses it are reading one list.
+   */
+  const queueOperation = useCallback<SyncEngineHandle['queueOperation']>(
+    (operationId, write) => {
+      const capability = capabilityOf(operationId);
+      if (!capability) {
+        return {
+          queued: false,
+          operationId,
+          because: `${operationId} is not an operation in the platform API contract, so there is nothing for a replay to send. The write was not queued.`,
+        };
+      }
+      if (capability.needsNetwork) {
+        return {
+          queued: false,
+          operationId,
+          because: capability.because ?? `${operationId} has to reach the cloud tier, so it cannot be queued offline.`,
+        };
+      }
+      // The clock is read here, outside the state updater: an updater may be called twice by React, and a
+      // simulation clock that ticks twice for one write is a subtle lie about when the ward wrote it.
+      const at = clockRef.current.tick(1);
+      let outcome: QueueOutcome = { queued: false, operationId, because: 'The write was not queued.' };
+      setOutbox((current) => {
+        const result = enqueueContractOperation(current, operationId, { ...write, at });
+        outcome = result.outcome;
+        if (!result.outcome.queued) return current;
+        setQueued(result.state.pending.map((op) => ({ id: op.id, label: op.label, at: op.at.slice(11) })));
+        setSync(cloud.reachable ? 'syncing' : 'queued');
+        return result.state;
+      });
+      return outcome;
     },
     [cloud],
   );
@@ -264,12 +367,15 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
       summary: syncSummary(outbox),
       cloud,
       enqueue: enqueueOperation,
+      queueOperation,
+      capabilityOf,
+      storageNote,
       drainNow,
       resolve: resolveSyncConflict,
       setUplink,
       reset: resetEngine,
     }),
-    [outbox, cloud, enqueueOperation, drainNow, resolveSyncConflict, setUplink, resetEngine],
+    [outbox, cloud, enqueueOperation, queueOperation, storageNote, drainNow, resolveSyncConflict, setUplink, resetEngine],
   );
 
   const value = useMemo<ShellState>(

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Button, FieldSection, SafetyBanner, SelectField, TextAreaField, TextField } from '@dizi/ui';
 import { useShell } from '@/lib/shell';
+import { todayIso } from '@/lib/appointments';
 import { t } from '@/lib/nav';
 import { patients } from '@/lib/mock';
 
@@ -15,14 +16,20 @@ import { patients } from '@/lib/mock';
  *  - scanner-ready fields: the barcode scanner is a keyboard wedge, so focus lands on MRN/ID
  *  - offline: the form queues locally and says so, rather than claiming success (02 §11 rule 1)
  */
+/** `YYYY-MM-DD HH:MM` — the stamp the outbox uses. Read when the write happens, never while rendering. */
+const stampNow = (): string => {
+  const now = new Date();
+  return `${todayIso()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+};
+
 export default function RegisterPatientPage() {
-  const { queueWrite, sync } = useShell();
+  const { syncEngine, sync } = useShell();
   const [values, setValues] = useState({
     name: '', nameBn: '', age: '', sex: '', phone: '', nationalId: '', address: '',
     guardianName: '', guardianPhone: '', payer: '', allergies: '', notes: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [outcome, setOutcome] = useState<{ queued: boolean; mrn: string } | null>(null);
+  const [outcome, setOutcome] = useState<{ queued: boolean; mrn: string; refused?: string } | null>(null);
 
   const set = (name: keyof typeof values) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setValues((v) => ({ ...v, [name]: e.target.value }));
@@ -44,9 +51,46 @@ export default function RegisterPatientPage() {
 
     const mrn = `SH-${String(102_300 + patients.length).padStart(6, '0')}`;
     const offline = sync === 'queued' || sync === 'lanOnly';
-    if (offline) queueWrite(`Register ${values.name}`);
-    setOutcome({ queued: offline, mrn });
+    if (offline) {
+      // P0-306: the screen names the operation, and the contract decides the entity, the conflict policy and the
+      // kind of write. If the contract ever says registration cannot be queued, this screen says so rather than
+      // queueing something the API will refuse when the uplink returns.
+      const outcome = syncEngine.queueOperation('createPatient', {
+        at: stampNow(),
+        recordId: mrn,
+        label: `Register ${values.name}`,
+        fields: { name: values.name, phone: values.phone, sex: values.sex },
+        actor: 'Reception',
+        node: 'OPD desk',
+      });
+      if (!outcome.queued) {
+        // Refused by the contract: nothing was queued and nothing was saved, so the screen says exactly that
+        // instead of showing a success banner over a write that does not exist.
+        setOutcome({ queued: false, mrn, refused: outcome.because });
+        return;
+      }
+      setOutcome({ queued: true, mrn });
+      return;
+    }
+    setOutcome({ queued: false, mrn });
   };
+
+  if (outcome?.refused) {
+    return (
+      <div className="mx-auto flex max-w-2xl flex-col gap-4">
+        <SafetyBanner severity="critical" title="Not saved — this one cannot be queued offline">
+          {outcome.refused} The provisional MRN <span className="font-numeric">{outcome.mrn}</span> was not issued and
+          nothing was written.
+          <div className="mt-2 flex gap-2">
+            <Button variant="primary" onClick={() => setOutcome(null)}>Try again when the uplink is back</Button>
+            <Link href="/patients">
+              <Button variant="ghost">Back to patients</Button>
+            </Link>
+          </div>
+        </SafetyBanner>
+      </div>
+    );
+  }
 
   if (outcome) {
     return (

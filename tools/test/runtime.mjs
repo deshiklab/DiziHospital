@@ -96,12 +96,54 @@ async function check(route) {
   vc.on('error', (...args) => record(args.map(String).join(' ')));
   vc.on('jsdomError', (e) => record(e?.message ?? e));
 
+  /* P0-306: the queue survives a reload.
+   *
+   * The strongest way to check that a saved queue is read back is to plant one *before* the page's scripts run and
+   * then look for it on screen. A stub that asserted "localStorage was read" would pass while the console rendered
+   * an empty queue, and an empty queue after a reload is exactly the failure the ticket is about. */
+  const seeded = route === '/sync';
+  const SEEDED_OPERATION = {
+    id: 'edge-a:7',
+    nodeId: 'edge-a',
+    seq: 7,
+    at: '2026-10-14 10:05',
+    entity: 'patient.demographic',
+    recordId: 'SH-200311',
+    label: 'Register Halima Begum at the desk',
+    operationId: 'createPatient',
+    op: 'append',
+    fields: { name: 'Halima Begum', phone: '01711223344' },
+    queuedAt: '2026-10-14 10:05',
+    actor: 'Reception',
+    node: 'OPD desk',
+  };
+
   const dom = await JSDOM.fromURL(`${BASE}${route}`, {
     runScripts: 'dangerously',
     resources: 'usable',
     pretendToBeVisual: true,
     virtualConsole: vc,
     beforeParse(window) {
+      if (seeded) {
+        try {
+          window.localStorage.setItem(
+            'dizi.outbox.v1',
+            JSON.stringify({
+              version: 1,
+              nodeId: 'edge-a',
+              seq: 7,
+              pending: [SEEDED_OPERATION],
+              conflicts: [],
+              blocks: [],
+              local: {},
+              confirmed: {},
+              results: [],
+            }),
+          );
+        } catch {
+          // jsdom without storage: the check below reports it rather than passing quietly.
+        }
+      }
       window.matchMedia = (q) => ({
         matches: false,
         media: String(q),
@@ -202,9 +244,62 @@ async function check(route) {
     }
   }
 
+  // Did the saved queue come back, and is the contract the thing refusing what cannot be queued?
+  let queue = 'n/a';
+  if (seeded) {
+    const text = doc.body.textContent ?? '';
+    const found = text.includes('edge-a:7') && text.includes('createPatient') && text.includes('Halima Begum');
+    queue = found ? 'rehydrated' : 'LOST';
+    if (!found) {
+      routeProblems.push('a queue saved on the device was not read back — P0-306 says it survives a reload');
+    }
+  }
+
+  /* The other half of the round trip: a write made in the page has to *reach* storage, or the check above would
+   * pass on a saved queue that this build can read but never writes. */
+  let persist = 'n/a';
+  if (seeded) {
+    const register = [...doc.querySelectorAll('button')].find((b) => /the contract names the operation/i.test(b.textContent ?? ''));
+    if (!register) {
+      persist = 'NO BUTTON';
+      routeProblems.push('the contract-driven registration button is not on the sync console');
+    } else {
+      press(register);
+      await new Promise((r) => setTimeout(r, 300));
+      try {
+        const saved = JSON.parse(dom.window.localStorage.getItem('dizi.outbox.v1') ?? 'null');
+        const queued = Array.isArray(saved?.pending) ? saved.pending : [];
+        const named = queued.filter((op) => op.operationId === 'createPatient');
+        persist = named.length === 2 ? 'saved (2 named writes)' : `saved=${queued.length} named=${named.length}`;
+        if (named.length !== 2) {
+          routeProblems.push(`a write made in the page did not reach the saved queue (${persist}) — P0-306 keeps the queue on the device`);
+        }
+      } catch (error) {
+        persist = 'UNREADABLE';
+        routeProblems.push(`the saved queue could not be read after a write: ${error.message}`);
+      }
+    }
+  }
+
+  let refusal = 'n/a';
+  if (seeded) {
+    const attempt = [...doc.querySelectorAll('button')].find((b) => /needs the network/i.test(b.textContent ?? ''));
+    if (!attempt) {
+      refusal = 'NO BUTTON';
+      routeProblems.push('the online-only attempt button is not on the sync console');
+    } else {
+      press(attempt);
+      await new Promise((r) => setTimeout(r, 250));
+      refusal = /cannot start a day offline/i.test(doc.body.textContent ?? '') ? 'sentence shown' : 'NOT SHOWN';
+      if (refusal === 'NOT SHOWN') {
+        routeProblems.push('an action the contract marks online-only was not refused with the contract’s own sentence');
+      }
+    }
+  }
+
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors: [...errors, ...routeProblems], handlers, copy, drill, readyWait };
+  return { errors: [...errors, ...routeProblems], handlers, copy, drill, queue, persist, refusal, readyWait };
 }
 
 const CONCURRENCY = Math.max(1, Number(process.env.DIZI_CONCURRENCY ?? 4));
@@ -259,10 +354,10 @@ outcomes.forEach((outcome, i) => {
     problems += 1;
     return;
   }
-  const { errors, handlers, copy, drill, readyWait } = outcome.value;
+  const { errors, handlers, copy, drill, queue, persist, refusal, readyWait } = outcome.value;
   const bad = errors.length > 0 || handlers === 'DEAD';
   const slow = readyWait !== undefined && readyWait > 2000 ? `  ready=${(readyWait / 1000).toFixed(1)}s` : '';
-  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${drill === 'n/a' ? '' : `  drill=${drill}`}${slow}`);
+  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
   if (handlers === 'DEAD') {
     console.log('      the shared control did not respond after hydration');
     problems += 1;

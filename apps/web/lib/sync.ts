@@ -32,9 +32,22 @@
 
 /* ------------------------------------------------------------------ entities and shapes */
 
+/**
+ * The contract decides what may be queued. `@dizi/contracts/client` is generated from
+ * `packages/contracts/openapi.json` (P0-207), and the metadata below is read from it rather than restated here:
+ * an operation the contract marks `online-only` cannot be queued however convenient that would be, and the
+ * sentence shown to the desk when the app refuses something is the contract's own `because`.
+ *
+ * The entity policies stay written out in this file on purpose. They are the ones the desks have been running
+ * against since P0-201, and `packages/contracts/check.mjs` compares the two tables entity by entity — a check
+ * that would be worth nothing if this file merely imported the answer it is being checked against.
+ */
+import { operations as contractOperations, type OperationMeta } from '@dizi/contracts/client';
+
 export type EntityKind =
   | 'patient.demographic'
   | 'patient.contact'
+  | 'appointment'
   | 'bed.state'
   | 'admission'
   | 'observation'
@@ -57,6 +70,11 @@ export const ENTITY_POLICY: Record<EntityKind, { policy: ConflictPolicy; label: 
     policy: 'field-level',
     label: 'Patient contact details',
     why: 'Phone numbers change and relatives answer. Different fields merge; the same field is offered to the desk, with both values kept.',
+  },
+  appointment: {
+    policy: 'exclusive',
+    label: 'Appointment slot',
+    why: 'A slot holds one patient. The branch that took the booking owns it, and a second branch asking for the same slot is refused with the alternatives rather than merged.',
   },
   'bed.state': {
     policy: 'exclusive',
@@ -105,6 +123,8 @@ export const ENTITY_POLICY: Record<EntityKind, { policy: ConflictPolicy; label: 
 export interface Operation {
   /** `nodeId:seq` — the idempotency key. A replay of the same operation is dropped by the server. */
   id: string;
+  /** The contract operation this write replays as, e.g. `createPatient`. Set by `enqueueContractOperation`. */
+  operationId?: string;
   nodeId: string;
   seq: number;
   at: string;
@@ -269,6 +289,216 @@ function applyLocally(
   if (op.op === 'set' && op.fields) return { ...local, [op.recordId]: { ...current, ...op.fields } };
   if (op.op === 'append') return { ...local, [op.recordId]: { ...current, ...(op.fields ?? {}), _appended: (Number(current._appended ?? 0) + 1) as number } };
   return { ...local, [op.recordId]: { ...current, ...(op.fields ?? {}) } };
+}
+
+/* ------------------------------------------------------ what the contract allows, and what it refuses */
+
+const contractIndex = contractOperations as unknown as Record<string, OperationMeta>;
+
+export interface ContractCapability {
+  /** The operation's id in the OpenAPI contract, e.g. `createPatient`. */
+  id: string;
+  method: string;
+  path: string;
+  /** The record this operation touches, and therefore the conflict policy that applies to it. */
+  entity: EntityKind | null;
+  policy: ConflictPolicy | null;
+  /** May this write be queued while the uplink is down and replayed later? */
+  mayQueue: boolean;
+  /** May the screen answer from the edge replica, stamping how old the answer is? */
+  servesFromReplica: boolean;
+  /** Must the action be refused when there is no connection? */
+  needsNetwork: boolean;
+  /** The sentence the desk is shown when the app refuses the action — the contract's words, not ours. */
+  because: string | null;
+  audit: boolean;
+}
+
+/**
+ * What the contract allows for one operation, or null when the id is not in the contract.
+ *
+ * This is deliberately a property of the *operation* and not of the queue: whether a write may be queued at all is
+ * decided by the contract, so a screen can grey out an action that cannot be queued with no connection, before
+ * anyone taps it, rather than letting them find out afterwards.
+ */
+export function capabilityOf(operationId: string): ContractCapability | null {
+  const meta = contractIndex[operationId];
+  if (!meta) return null;
+  const entity = (meta.entity ?? null) as EntityKind | null;
+  return {
+    id: operationId,
+    method: meta.method,
+    path: meta.path,
+    entity,
+    policy: entity ? ENTITY_POLICY[entity]?.policy ?? null : null,
+    mayQueue: meta.mayQueue === true,
+    servesFromReplica: meta.servesFromReplica === true,
+    needsNetwork: meta.needsNetwork === true,
+    because: meta.because ?? null,
+    audit: meta.audit === true,
+  };
+}
+
+/**
+ * How a contract operation is written into the outbox, derived from the contract rather than from a list kept
+ * beside it: a read is never queued, a correction is a field-level `set`, a claim on an exclusive record is a
+ * `claim` (a bed, a dose, an appointment slot), and anything else is an `append` — an event that happened.
+ */
+export function opKindFor(operationId: string): Operation['op'] | null {
+  const capability = capabilityOf(operationId);
+  if (!capability) return null;
+  if (capability.method === 'get') return null;
+  if (capability.method === 'patch' || capability.method === 'put') return 'set';
+  return capability.policy === 'exclusive' ? 'claim' : 'append';
+}
+
+export type QueueOutcome =
+  | { queued: true; operation: Operation }
+  | { queued: false; operationId: string; because: string };
+
+/**
+ * Queue a write for a named contract operation.
+ *
+ * The operation decides the entity, the policy, the kind of write and whether it may be queued at all — which is
+ * the whole point of P0-306. A screen that calls `enqueue` directly is still free to, but it is asserting those
+ * four things itself; a screen that calls this one is asking the contract.
+ */
+export function enqueueContractOperation(
+  state: OutboxState,
+  operationId: string,
+  write: { at: string; recordId: string; label: string; fields?: Record<string, string | number | null>; actor: string; node: string },
+): { state: OutboxState; outcome: QueueOutcome } {
+  const capability = capabilityOf(operationId);
+  if (!capability) {
+    return {
+      state,
+      outcome: {
+        queued: false,
+        operationId,
+        because: `${operationId} is not an operation in the platform API contract, so there is nothing for a replay to send. The write was not queued.`,
+      },
+    };
+  }
+  if (capability.needsNetwork) {
+    return {
+      state,
+      outcome: {
+        queued: false,
+        operationId,
+        because: capability.because ?? `${operationId} has to reach the cloud tier, so it cannot be queued offline.`,
+      },
+    };
+  }
+  const op = opKindFor(operationId);
+  if (!op || !capability.entity) {
+    return {
+      state,
+      outcome: { queued: false, operationId, because: `${operationId} is a read, and a read is answered from the replica rather than queued.` },
+    };
+  }
+  const next = enqueue(state, {
+    at: write.at,
+    recordId: write.recordId,
+    label: write.label,
+    actor: write.actor,
+    node: write.node,
+    entity: capability.entity,
+    op,
+    operationId,
+    ...(write.fields ? { fields: write.fields } : {}),
+  });
+  return { state: next, outcome: { queued: true, operation: next.pending[next.pending.length - 1] } };
+}
+
+/** Every queued write, paired with what the contract says about it — what the sync console renders. */
+export function waitingToSync(state: OutboxState): Array<{ operation: Operation; capability: ContractCapability | null }> {
+  return state.pending.map((operation) => ({
+    operation,
+    capability: operation.operationId ? capabilityOf(operation.operationId) : null,
+  }));
+}
+
+/* ---------------------------------------------------------------- the queue survives a reload */
+
+/**
+ * P0-306: a queue that forgets itself when the tab is reloaded is not a queue, it is a buffer — and the reload
+ * happens exactly when a desk is busiest. The saved state is the queue, the conflicts, the number blocks and the
+ * records this node believes it wrote; `dizi.` is the same prefix the shell already uses for density, locale and
+ * the sidebar, so a technician clearing `dizi.*` clears the device rather than half of it.
+ */
+export const OUTBOX_STORAGE_KEY = 'dizi.outbox.v1';
+
+export function serialiseOutbox(state: OutboxState): string {
+  return JSON.stringify({
+    version: 1,
+    nodeId: state.nodeId,
+    seq: state.seq,
+    pending: state.pending,
+    conflicts: state.conflicts,
+    blocks: state.blocks,
+    local: state.local,
+    confirmed: state.confirmed,
+    // Drain history is useful for a few minutes, not forever: the console shows the last 50 and the rest is a log.
+    results: state.results.slice(0, 50),
+    ...(state.lastDrainAt ? { lastDrainAt: state.lastDrainAt } : {}),
+    ...(state.lastError ? { lastError: state.lastError } : {}),
+  });
+}
+
+const isOperation = (value: unknown): value is Operation => {
+  const op = value as Operation | null;
+  return Boolean(
+    op &&
+      typeof op === 'object' &&
+      typeof op.id === 'string' &&
+      typeof op.label === 'string' &&
+      typeof op.at === 'string' &&
+      typeof op.entity === 'string' &&
+      op.entity in ENTITY_POLICY &&
+      (op.op === 'set' || op.op === 'append' || op.op === 'claim'),
+  );
+};
+
+/**
+ * Read the saved queue back. Never throws: a device whose storage is corrupt, half-written or from a future
+ * version starts with an empty queue and says so, because a ward desk that cannot open because of a parsing error
+ * is a far worse outcome than a queue that has to be typed again.
+ */
+export function rehydrateOutbox(raw: string | null | undefined, nodeId = 'edge-a'): { state: OutboxState; note?: string } {
+  if (!raw) return { state: initialOutbox(nodeId) };
+  let parsed: Record<string, unknown>;
+  try {
+    parsed = JSON.parse(raw) as Record<string, unknown>;
+  } catch {
+    return { state: initialOutbox(nodeId), note: 'The queue saved on this device could not be read, so it started empty. Nothing was sent, and nothing was half-sent.' };
+  }
+  if (!parsed || typeof parsed !== 'object' || parsed.version !== 1 || typeof parsed.seq !== 'number' || !Array.isArray(parsed.pending)) {
+    return { state: initialOutbox(nodeId), note: 'The queue saved on this device was written by a different version, so it started empty.' };
+  }
+
+  const pending = parsed.pending.filter(isOperation);
+  const droppedPending = parsed.pending.length - pending.length;
+  const conflicts = Array.isArray(parsed.conflicts) ? (parsed.conflicts as Conflict[]) : [];
+  const blocks = Array.isArray(parsed.blocks) && parsed.blocks.length ? (parsed.blocks as NumberBlock[]) : DEFAULT_BLOCKS.map((b) => ({ ...b, nodeId }));
+  const notes = [
+    droppedPending ? `${droppedPending} queued write(s) could not be read and were dropped — the rest of the queue is intact` : null,
+  ].filter(Boolean) as string[];
+
+  return {
+    state: {
+      nodeId: typeof parsed.nodeId === 'string' ? parsed.nodeId : nodeId,
+      pending,
+      results: Array.isArray(parsed.results) ? (parsed.results as DrainResult[]) : [],
+      conflicts,
+      blocks,
+      local: (parsed.local ?? {}) as OutboxState['local'],
+      confirmed: (parsed.confirmed ?? {}) as OutboxState['confirmed'],
+      seq: parsed.seq,
+      ...(typeof parsed.lastDrainAt === 'string' ? { lastDrainAt: parsed.lastDrainAt } : {}),
+      ...(typeof parsed.lastError === 'string' ? { lastError: parsed.lastError } : {}),
+    },
+    ...(notes.length ? { note: notes.join('. ') } : {}),
+  };
 }
 
 /* ------------------------------------------------------------------ the server side */
