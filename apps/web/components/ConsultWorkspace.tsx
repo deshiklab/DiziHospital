@@ -327,6 +327,10 @@ export function ConsultWorkspace({
         Orders stay drafts until the note is signed, then they land on the laboratory and radiology worklists. A
         STAT order goes to the top of the list and the collections desk is told.
       </p>
+      <div className="flex flex-wrap items-center gap-2">
+        <Link href="/diagnostics"><Button size="sm" variant="ghost">Open the worklist</Button></Link>
+        <span className="text-xs text-text-tertiary">Orders appear there the moment the note is signed.</span>
+      </div>
       <div className="flex flex-wrap gap-1">
         {ORDERS.map((o) => (
           <Button key={o.code} size="sm" disabled={readOnly} onClick={() => addOrder(o.code)} className="gap-1">

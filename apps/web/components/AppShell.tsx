@@ -31,9 +31,19 @@ import {
   ZoomIn,
   ZoomOut,
 } from 'lucide-react';
-import { Button, Menu, SyncPill, Tooltip, cx, useHotkeys, useToast } from '@dizi/ui';
+import {
+  Button,
+  Menu,
+  SyncPill,
+  Tooltip,
+  cx,
+  useHotkeys,
+  useToast,
+  useMediaQuery,
+} from '@dizi/ui';
 import { APP_PHASE, APP_VERSION, TEXT_STEPS, ZOOM_STEPS, useShell, type Density, type Locale, type Role, type SidebarMode } from '@/lib/shell';
 import { HOTKEYS, NAV, breadcrumbsFor, roleLabels, t } from '@/lib/nav';
+import { MobileNav } from '@/components/MobileNav';
 import { patients } from '@/lib/mock';
 
 /** One class string for every header icon button: identical hit area, identical centring, no drift between them. */
@@ -94,6 +104,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const isHalf = sidebarMode === 'half';
   const showSidebar = sidebarMode !== 'hidden';
 
+  const MOBILE_NAV_TRIGGER_ID = 'mobile-nav-trigger';
+  const closeMobileNav = useCallback(() => setMobileNavOpen(false), [setMobileNavOpen]);
+  const toggleMobileNav = useCallback(() => setMobileNavOpen(!mobileNavOpen), [mobileNavOpen, setMobileNavOpen]);
+  // Crossing into the desktop layout hides the drawer: leaving it open would leave an invisible panel capturing
+  // the keyboard (and the next Escape would go to a drawer nobody can see).
+  const desktopLayout = useMediaQuery('(min-width: 1024px)');
+  useEffect(() => {
+    if (desktopLayout) setMobileNavOpen(false);
+  }, [desktopLayout, setMobileNavOpen]);
+
   /* ------------------------------------------------------------------ shortcuts */
   const hotkeys = useMemo(
     () => [
@@ -106,7 +126,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       { combo: 'alt+shift+z', handler: () => setZoom(Math.max(0.8, ZOOM_STEPS[Math.max(ZOOM_STEPS.indexOf(zoom as never) - 1, 0)])) },
       { combo: 'alt+t', handler: () => setTextScale(TEXT_STEPS[(TEXT_STEPS.indexOf(textScale as never) + 1) % TEXT_STEPS.length]) },
       { combo: 'shift+?', handler: () => setHotkeysOpen(true) },
-      { combo: 'escape', handler: () => { setPaletteOpen(false); setHelpOpen(false); setHotkeysOpen(false); setNotifOpen(false); setDisplayOpen(false); setSearchOpen(false); } },
+      { combo: 'escape', handler: () => { setPaletteOpen(false); setHelpOpen(false); setHotkeysOpen(false); setNotifOpen(false); setDisplayOpen(false); setSearchOpen(false); setMobileNavOpen(false); } },
     ],
     [toggleSidebar, toggleFullscreen, zoom, setZoom, textScale, setTextScale, mobileNavOpen, setMobileNavOpen],
   );
@@ -114,7 +134,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   // On mobile the drawer must close whenever the route changes, or the user lands "inside" a closed menu.
   useEffect(() => {
-    setMobileNavOpen(false);
+    closeMobileNav();
     setNotifOpen(false);
     setDisplayOpen(false);
     setSyncOpen(false);
@@ -575,24 +595,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           )}
         </aside>
 
-        {/* mobile drawer */}
-        {mobileNavOpen && (
-          <div className="fixed inset-0 z-50 lg:hidden">
-            <div className="absolute inset-0 bg-surface-overlay" onClick={() => setMobileNavOpen(false)} aria-hidden />
-            <div role="dialog" aria-modal="true" aria-label="Navigation" className="absolute inset-y-0 left-0 flex w-72 flex-col border-r border-border-subtle bg-surface-raised">
-              <div className="flex items-center justify-between border-b border-border-subtle px-3 py-2">
-                <span className="flex items-center gap-2">
-                  <span aria-hidden className="grid size-7 place-items-center rounded-md bg-brand-500 text-xs font-bold text-text-inverse">D</span>
-                  <span className="text-sm font-semibold">DiziHospital</span>
-                </span>
-                <button type="button" onClick={() => setMobileNavOpen(false)} aria-label="Close navigation" className="grid size-8 place-items-center rounded-md hover:bg-surface-sunken">
-                  <X className="size-4" aria-hidden />
-                </button>
-              </div>
-              {sidebarBody('full')}
-            </div>
-          </div>
-        )}
+        <MobileNav open={mobileNavOpen} onClose={closeMobileNav} triggerId={MOBILE_NAV_TRIGGER_ID}>
+          {sidebarBody('full')}
+        </MobileNav>
 
         {/* working area: broad and fluid — no max width, the grid decides how wide it needs to be */}
         <main className="min-w-0 flex-1">
@@ -642,15 +647,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             {t('shell.hotkeys', locale)}
           </button>
           <span className="hidden md:inline">All data shown is synthetic</span>
-          {/* The only navigation trigger on a phone or tablet, now that the header no longer carries one. */}
+          {/* The only navigation trigger on a phone or tablet, now that the header no longer carries one. It is
+              a real toggle: pressing it again closes the drawer, which is what a button that looks like this has
+              to do. */}
           <button
+            id={MOBILE_NAV_TRIGGER_ID}
             type="button"
-            onClick={() => setMobileNavOpen(true)}
-            aria-label="Open navigation"
-            className="inline-flex items-center gap-1 rounded-sm border border-border-default px-1.5 py-0.5 hover:text-text-primary lg:hidden"
+            onClick={toggleMobileNav}
+            aria-expanded={mobileNavOpen}
+            aria-controls="mobile-nav-panel"
+            className="inline-flex min-h-8 items-center gap-1 rounded-sm border border-border-default px-2 py-1 hover:text-text-primary lg:hidden"
           >
-            <PanelLeftOpen className="size-3" aria-hidden />
-            {t('shell.menu', locale)}
+            {mobileNavOpen ? <X className="size-3" aria-hidden /> : <PanelLeftOpen className="size-3" aria-hidden />}
+            {mobileNavOpen ? t('shell.closeMenu', locale) : t('shell.menu', locale)}
           </button>
         </span>
       </footer>

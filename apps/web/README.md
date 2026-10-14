@@ -41,12 +41,13 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 | `/appointments` | The appointment desk: doctor × time calendar (desktop) and list (mobile), a drag-free queue board, online requests from the patient portal, and the full list — plus the booking sheet with real slot conflicts |
 | `/login` | Two-step sign-in preview (credentials → six-digit code), branch picker, English ⇄ বাংলা |
 | `/clinical` | OPD consultation: the room queue beside one patient's workspace — vitals with reference-range flags, SOAP notes, ICD-10 diagnosis, lab/imaging orders, and a prescription screened for allergies, high-alert medicines and dangerous abbreviations before it can be signed |
+| `/diagnostics` | Laboratory and imaging worklist: every specimen's journey (ordered → collected → in the lab → resulted → verified → dispatched), per-analyte reference ranges checked as the value is typed, turnaround deadlines on the row, verification as a second-person gate, the critical-value call-back log, rejected samples with reasons, and the day's quality-control runs |
 | `/pharmacy` | The dispensary: prescription queue, FEFO batch picking (expired batches cannot be selected), substitution with both names kept, controlled-substance register with a witness, and the append-only stock ledger |
 | `/billing` | Billing counter: invoices built from what the doctor ordered, payment capture per method, discount approval above the limit, day-end sheet with cash reconciliation, and the branch tariff |
 | `/help` | Help centre: how the new platform works (six anchored topics), the shortcut list, and the mirrored reference library by category |
 | `/help/search` | Server-rendered search over the reference library, with the matching text highlighted |
 | `/help/[category]/[slug]` | One mirrored article, rendered from Markdown with its screenshots served from the library, attributed to its source |
-| `/print` and `/print/[doc]` | Print templates: registration slip and appointment slip (A5), prescription (A4), receipt (80 mm thermal), specimen label (50 × 25 mm), patient ID card (CR80), day list (A4 landscape) |
+| `/print` and `/print/[doc]` | Print templates: registration slip and appointment slip (A5), prescription (A4), laboratory report (A4), receipt (80 mm thermal), specimen label (50 × 25 mm), patient ID card (CR80), day list (A4 landscape) |
 | `/<module>` | Launcher: modules still owned by the legacy system say so and point there |
 
 ## DataGrid
@@ -93,9 +94,14 @@ Rules that keep the mirror *reference material* rather than product material:
 * Sign-in is a **preview**: no session is created and no password is checked. Keycloak/OIDC is `P0-205`, and the
   screen says so on itself.
 * Print templates render real layouts from synthetic data; the barcodes are drawn from the identifier itself, not
-  from a certified encoder (that lands with the laboratory module, `P4`).
+  from a certified encoder (a real Code 128/QR encoder lands with the analyser and label-printer integration, `P4`).
 * Help article feedback ("Was this helpful?") is inert — it needs the store and the editorial owner first.
-* The appointment desk, the consultation workspace, the dispensary and the billing counter all run on the same
+* The laboratory worklist shows the controls it should show — reference ranges, turnaround deadlines, verification
+  and the call-back log — but no analyser, label printer or SMS gateway is connected (`P4` integration hardening).
+  Until then the values are typed by hand or filled from the synthetic generator.
+* There is no separate laboratory role yet: the worklist is reached with the doctor/admin roles, and the actions on
+  it stand in for a technologist and a pathologist. A dedicated role with its own permissions arrives with `P0-205`.
+* The appointment desk, the consultation workspace, the laboratory worklist, the dispensary and the billing counter all run on the same
   deterministic synthetic data as the rest of the shell: the rules are real, the patients, stock and money are not.
 * Nothing on those screens is persisted — reload and the day starts again. The write paths (sign a note, record a
   movement, take a payment) are the shapes the API will accept, not a database yet.

@@ -2,11 +2,20 @@
 
 import { use } from 'react';
 import Link from 'next/link';
-import { Button, SafetyBanner, Tooltip } from '@dizi/ui';
+import { Button, SafetyBanner, Tooltip, cx } from '@dizi/ui';
 import { DOCTORS, doctorById, generateAppointments, timeLabel, todayIso } from '@/lib/appointments';
 import { encounterById, generateEncounters } from '@/lib/clinical';
 import { DRUGS, drugById, generateBatches, generateDispenses } from '@/lib/pharmacy';
 import { generateInvoices, lineNet, receiptNo, totals } from '@/lib/billing';
+import {
+  flagLabel,
+  flagTone,
+  flagValue,
+  generateDiagnosticOrders,
+  needsCallback,
+  testByCode,
+  worstFlag,
+} from '@/lib/diagnostics';
 import { patients } from '@/lib/mock';
 
 /* Print templates.
@@ -28,6 +37,7 @@ type DocKind =
   | 'invoice'
   | 'dispense-label'
   | 'specimen-label'
+  | 'result-report'
   | 'id-card'
   | 'day-list';
 
@@ -38,6 +48,7 @@ const DOC_META: Record<DocKind, { title: string; paper: string; page: string; no
   receipt: { title: 'Payment receipt', paper: 'Thermal 80 mm', page: '80mm auto', note: 'Monospace layout for a thermal printer.', param: 'inv' },
   invoice: { title: 'Invoice', paper: 'A4', page: 'A4 portrait', note: 'The full bill for the patient, the payer or the file.', param: 'inv' },
   'dispense-label': { title: 'Medicine label', paper: '50 × 25 mm', page: '50mm 25mm', note: 'Applied to the pack: four doses a day, in Bangla and English.', param: 'dsp' },
+  'result-report': { title: 'Laboratory report', paper: 'A4', page: 'A4 portrait', note: 'Reference ranges, flags and the verifier’s name.', param: 'spec' },
   'specimen-label': { title: 'Specimen label', paper: '50 × 25 mm', page: '50mm 25mm', note: 'Two-line label for tubes; the barcode is what the lab scans.', param: 'spec' },
   'id-card': { title: 'Patient ID card', paper: 'CR80 card', page: 'A4 portrait', note: 'Crop marks shown for card printers.', param: 'mrn' },
   'day-list': { title: 'Appointment day list', paper: 'A4 landscape', page: 'A4 landscape', note: 'What the desk prints at the start of a shift.' },
@@ -93,6 +104,13 @@ export default function PrintPage({
   const invoices = generateInvoices(day);
   const invoice = invoices.find((i) => i.number.endsWith(query.inv ?? '') || i.id === query.inv) ?? invoices.find((i) => i.status !== 'Cancelled')!;
   const invoiceTotals = totals(invoice);
+
+  const diagnosticOrders = generateDiagnosticOrders(day);
+  const report =
+    diagnosticOrders.find((o) => o.specimenId === query.spec) ??
+    diagnosticOrders.find((o) => Object.keys(o.results).length > 0) ??
+    diagnosticOrders[0];
+  const reportTest = testByCode(report.testCode);
 
   const specimenId = query.spec ?? `SP-${appointment?.token ?? '000'}1`;
 
@@ -413,6 +431,110 @@ export default function PrintPage({
           </div>
         );
       }
+
+      case 'result-report':
+        return (
+          <div className="w-[210mm] bg-white p-6 text-black">
+            {header('Laboratory report', report.specimenId)}
+            <div className="mb-3 flex justify-between text-sm">
+              <div>
+                <p className="font-semibold">{report.patient.name} ({report.patient.nameBn})</p>
+                <p className="font-mono text-xs">
+                  {report.patient.mrn} · {report.patient.age}{report.patient.sex.slice(0, 1)} · {report.patient.phone}
+                </p>
+                <p className="text-xs">Payer: {report.patient.payer}{report.encounterId ? ` · ${report.encounterId}` : ' · walk-in'}</p>
+              </div>
+              <div className="text-right text-xs">
+                <p>Specimen: {report.sample ?? report.modality}</p>
+                <p>Collected: {report.collectedAt ?? '—'}</p>
+                <p>Reported: {report.resultedAt ?? report.orderedAt}</p>
+                <p>Verified: {report.verifiedAt ?? '—'} {report.verifiedBy ? `· ${report.verifiedBy}` : ''}</p>
+              </div>
+            </div>
+
+            <h2 className="mb-1 border-b border-black pb-1 text-sm font-bold">{report.testName} ({report.testCode})</h2>
+
+            {reportTest && reportTest.analytes.length > 0 ? (
+              <table className="w-full border-collapse text-sm">
+                <thead>
+                  <tr>
+                    <th className="border border-black px-2 py-1 text-left">Analyte</th>
+                    <th className="border border-black px-2 py-1 text-right">Result</th>
+                    <th className="border border-black px-2 py-1 text-left">Unit</th>
+                    <th className="border border-black px-2 py-1 text-left">Reference range</th>
+                    <th className="border border-black px-2 py-1 text-left">Flag</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {reportTest.analytes.map((a) => {
+                    const value = report.results[a.key];
+                    const flag = typeof value === 'number' ? flagValue(a, value) : 'text';
+                    const critical = flagTone[flag] === 'critical';
+                    return (
+                      <tr key={a.key}>
+                        <td className="border border-black px-2 py-1">{a.label}</td>
+                        <td className={cx('border border-black px-2 py-1 text-right font-mono', critical && 'font-bold')}>
+                          {value ?? '—'}
+                        </td>
+                        <td className="border border-black px-2 py-1">{a.unit}</td>
+                        <td className="border border-black px-2 py-1 text-xs">
+                          {a.low}–{a.high}
+                          {a.criticalHigh !== undefined ? ` (critical ≥ ${a.criticalHigh})` : ''}
+                          {a.criticalLow !== undefined ? ` (critical ≤ ${a.criticalLow})` : ''}
+                        </td>
+                        <td className={cx('border border-black px-2 py-1 text-xs', critical && 'font-bold')}>
+                          {typeof value === 'number' ? flagLabel[flag] : ''}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <p className="border border-black px-2 py-2 text-sm">{report.report ?? 'No report text recorded.'}</p>
+            )}
+
+            {reportTest && reportTest.analytes.length > 0 && report.report && (
+              <p className="mt-2 text-sm"><span className="text-xs">Note </span>{report.report}</p>
+            )}
+
+            {needsCallback(report) && (
+              <p className="mt-3 border border-black px-2 py-1 text-sm font-bold">
+                CRITICAL VALUE — the clinician was told
+                {report.callback ? ` (${report.callback.toWhom}, ${report.callback.at}, read back)` : ' — call-back not yet recorded'}.
+              </p>
+            )}
+
+            {report.rejection && (
+              <p className="mt-3 border border-black px-2 py-1 text-sm">
+                Sample rejected: {report.rejection.reason} ({report.rejection.by}, {report.rejection.at}). Recollection requested.
+              </p>
+            )}
+
+            <div className="mt-4 grid grid-cols-3 gap-4 text-xs">
+              <div className="col-span-2">
+                <p>Method: {reportTest?.method ?? report.modality ?? '—'} · {' '}
+                  Quality controls were in range at the time of reporting.</p>
+                <p className="mt-1">
+                  Check the specimen identifier against the patient before acting on this report. Values marked
+                  critical must be confirmed by the clinician who ordered the test.
+                </p>
+              </div>
+              <div>
+                <p>Flag {flagLabel[worstFlag(report)]}</p>
+                <BarCode value={report.specimenId} height={26} />
+              </div>
+            </div>
+
+            <div className="mt-8 flex justify-between text-xs">
+              <p>Printed {new Date().toLocaleString()} · Main Campus laboratory</p>
+              <div className="text-right">
+                <div className="mb-1 h-10 w-56 border-b border-black" />
+                <p>{report.verifiedBy ?? 'Verifier signature & registration number'}</p>
+              </div>
+            </div>
+          </div>
+        );
 
       case 'specimen-label':
         return (
