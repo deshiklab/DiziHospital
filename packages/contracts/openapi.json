@@ -1,0 +1,3003 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "DiziHospital platform API",
+    "version": "0.1.0-p0",
+    "summary": "The P0 slice: the endpoints the built screens write through, each with the offline and conflict behaviour it is allowed.",
+    "description": "One contract with three consumers. The web app reads the per-operation metadata to decide what it may queue while the uplink is down; the API service has to satisfy it; the conformance harness fails the build when the two drift apart.\n\nThe `x-dizi` extension is not documentation. It is the input the client is generated from. `offline` says whether the app may serve a read from the replica (`cache`), queue a write and replay it (`queue`), or must refuse the action with an explanation (`online-only`). `authority` names the tier that owns the record, which decides whose value wins when two nodes disagree. `idempotency` and `audit` say what a request must carry. `because` is the sentence shown to staff when the app refuses something: the reason in their words, not an error code.\n\nNothing in here is invented for the API’s benefit. Each operation exists because a screen that is already built writes through it, and each policy is the one `apps/web/lib/sync.ts` has been enforcing since P0-201.",
+    "license": {
+      "name": "Proprietary — internal platform",
+      "identifier": "LicenseRef-Proprietary"
+    },
+    "contact": {
+      "name": "DiziHospital platform team"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://{branch}.dizi.internal/api/v1",
+      "description": "Branch edge node — the origin for every write made in that branch, and the replica the screens read from",
+      "variables": {
+        "branch": {
+          "default": "main"
+        }
+      }
+    },
+    {
+      "url": "https://cloud.dizi.internal/api/v1",
+      "description": "Cloud tier — the canonical record, the replica source, and the only tier that reserves number blocks"
+    }
+  ],
+  "tags": [
+    {
+      "name": "patients",
+      "description": "Registration, the register and duplicate review (P0-301, P0-305)"
+    },
+    {
+      "name": "appointments",
+      "description": "Booking, the queue and check-in (P0-401)"
+    },
+    {
+      "name": "ward",
+      "description": "Admission, observations, notes and the drug round (P5)"
+    },
+    {
+      "name": "billing",
+      "description": "Invoices and payments (P2)"
+    },
+    {
+      "name": "platform",
+      "description": "Health, number blocks and the audit ledger"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "health",
+        "summary": "Liveness and the tier the node is talking to",
+        "tags": [
+          "platform"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Cloud tier unreachable",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": null,
+          "offline": "online-only",
+          "authority": "cloud",
+          "idempotency": "none",
+          "audit": false,
+          "because": "The edge node polls this to decide whether it is online, in which case the UI must not claim a write reached the cloud. Nothing here may be cached.",
+          "notes": "Deliberately online-only: a stale answer to “am I connected?” is worse than no answer, because the whole point of the call is to tell the screen whether a write reached the cloud."
+        }
+      }
+    },
+    "/patients": {
+      "get": {
+        "operationId": "listPatients",
+        "summary": "Search the patient register",
+        "tags": [
+          "patients"
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name, Bangla name, MRN or phone"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "Server-paged; the grid asks for a page, never the table"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PatientPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed query",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "patient.demographic",
+          "offline": "cache",
+          "authority": "edge",
+          "idempotency": "none",
+          "audit": false,
+          "because": "Reads are served from the edge replica, so the desk keeps working with the uplink down. A cached page of results is better than an empty one, and the screen stamps how old it is."
+        }
+      },
+      "post": {
+        "operationId": "createPatient",
+        "summary": "Register a patient",
+        "tags": [
+          "patients"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatientCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Patient"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Possible duplicate — the response carries the candidates",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Cloud tier unreachable; the write stays queued",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "patient.demographic",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "A registration at a desk over a dead uplink still has to happen: the patient is in front of you. The write is queued with an idempotency key and replayed; the MRN comes from a block already reserved to this node."
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ]
+      }
+    },
+    "/patients/{mrn}": {
+      "get": {
+        "operationId": "getPatient",
+        "summary": "One patient, by MRN",
+        "tags": [
+          "patients"
+        ],
+        "parameters": [
+          {
+            "name": "mrn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Medical record number, e.g. SH-102311"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Patient"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such patient",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "patient.demographic",
+          "offline": "cache",
+          "authority": "edge",
+          "idempotency": "none",
+          "audit": false,
+          "because": "Served from the local replica; a record opened during an outage is the record the desk needs most."
+        }
+      },
+      "patch": {
+        "operationId": "updatePatient",
+        "summary": "Correct a patient detail",
+        "tags": [
+          "patients"
+        ],
+        "parameters": [
+          {
+            "name": "mrn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatientPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Patient"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such patient",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Field-level conflict — both values are returned",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "patient.demographic",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "Two desks can both correct a name or an age. Different fields merge automatically; the same field is offered to a person, because one of the two is wrong and only the patient knows which."
+        }
+      }
+    },
+    "/patients/{mrn}/contact": {
+      "patch": {
+        "operationId": "updatePatientContact",
+        "summary": "Correct a phone number, address or next of kin",
+        "tags": [
+          "patients"
+        ],
+        "parameters": [
+          {
+            "name": "mrn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatientContactPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Patient"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such patient",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Field-level conflict — both values are returned",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "patient.contact",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "Contact details change constantly and relatives answer the phone. The same field on two nodes is a conflict for a person to settle, never a silent overwrite: the wrong number on a discharge call is a patient who cannot be reached."
+        }
+      }
+    },
+    "/patients/{mrn}/duplicates": {
+      "get": {
+        "operationId": "listPatientDuplicates",
+        "summary": "Possible duplicates for a patient",
+        "tags": [
+          "patients"
+        ],
+        "parameters": [
+          {
+            "name": "mrn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuplicateList"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such patient",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "patient.demographic",
+          "offline": "cache",
+          "authority": "edge",
+          "idempotency": "none",
+          "audit": false,
+          "because": "Duplicate detection is a rule set, not a boolean: the response carries the evidence (matching name, phone, date of birth, branch) so a person can decide, and the thresholds are tunable in Setup."
+        }
+      }
+    },
+    "/appointments": {
+      "get": {
+        "operationId": "listAppointments",
+        "summary": "Appointments for a day",
+        "tags": [
+          "appointments"
+        ],
+        "parameters": [
+          {
+            "name": "day",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "doctorId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppointmentPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed day",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "appointment",
+          "offline": "cache",
+          "authority": "edge",
+          "idempotency": "none",
+          "audit": false,
+          "because": "Reads come from the replica, so the calendar draws during an outage. Bookings made offline are merged on drain and the screen marks which rows are still local."
+        }
+      },
+      "post": {
+        "operationId": "createAppointment",
+        "summary": "Book an appointment",
+        "tags": [
+          "appointments"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppointmentCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Appointment"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Slot taken — alternatives are returned",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "appointment",
+          "offline": "queue",
+          "authority": "edge",
+          "idempotency": "required",
+          "audit": true,
+          "because": "The branch where the patient is standing owns the slot. If two branches book the last slot, the origin that took the booking keeps it and the other is refused with the alternative times — a booking desk that cannot say who has the slot is worse than a busy signal."
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ]
+      }
+    },
+    "/appointments/{id}": {
+      "patch": {
+        "operationId": "updateAppointment",
+        "summary": "Reschedule or cancel an appointment",
+        "tags": [
+          "appointments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppointmentPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Appointment"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such appointment",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Slot taken — alternatives are returned",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "appointment",
+          "offline": "queue",
+          "authority": "edge",
+          "idempotency": "required",
+          "audit": true,
+          "because": "Slots are exclusive: one appointment holds one slot. A reschedule is a claim on the new slot and a release of the old one, in that order, so a failed second step never leaves two appointments holding one slot."
+        }
+      }
+    },
+    "/appointments/{id}/check-in": {
+      "post": {
+        "operationId": "checkInAppointment",
+        "summary": "Check a patient in",
+        "tags": [
+          "appointments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Appointment"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such appointment",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already checked in",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "appointment",
+          "offline": "queue",
+          "authority": "edge",
+          "idempotency": "required",
+          "audit": true,
+          "because": "Check-in is what puts a patient into the queue, and it is the event the queue board and the bill both read. It is exclusive: the second check-in of the same token is refused rather than duplicated, because a patient called twice is a patient seen once."
+        }
+      }
+    },
+    "/beds/{bedId}/claim": {
+      "post": {
+        "operationId": "claimBed",
+        "summary": "Claim a bed for an admission",
+        "tags": [
+          "ward"
+        ],
+        "parameters": [
+          {
+            "name": "bedId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BedClaim"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Bed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such bed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Bed already occupied",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "423": {
+            "description": "Bed blocked or being cleaned",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "bed.state",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "A bed holds one patient. Two nodes admitting into the same bed is not a merge — the second arrival needs another bed, so the claim is refused and the admission desk is told which beds are free."
+        }
+      }
+    },
+    "/admissions": {
+      "post": {
+        "operationId": "createAdmission",
+        "summary": "Admit a patient",
+        "tags": [
+          "ward"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdmissionCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Admission"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Bed not held",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "admission",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "An admission is an event with a time and an author. Two events written on two nodes are two events and both belong in the record, so nothing is merged away."
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ]
+      }
+    },
+    "/observations": {
+      "post": {
+        "operationId": "createObservation",
+        "summary": "Record a set of observations",
+        "tags": [
+          "ward"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ObservationCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Observation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "observation",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "A set of vitals is a measurement at a time. Two sets are two measurements; both belong on the chart, and the early-warning score is computed on the server that holds the chart."
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ]
+      }
+    },
+    "/nursing-notes": {
+      "post": {
+        "operationId": "createNursingNote",
+        "summary": "Write a nursing note",
+        "tags": [
+          "ward"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NursingNoteCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NursingNote"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "nursing.note",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "Notes are the record of what was seen and done: nothing merges and nothing is overwritten, so the note is appended and the author and time are part of it."
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ]
+      }
+    },
+    "/mar-doses/{doseId}/sign": {
+      "post": {
+        "operationId": "signDose",
+        "summary": "Sign a dose at the bedside",
+        "tags": [
+          "ward"
+        ],
+        "parameters": [
+          {
+            "name": "doseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoseSignature"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarDose"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already signed — refused rather than merged",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "A reason is required for anything other than given",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "A controlled drug needs a witness",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "mar.dose",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "A dose is given once. Two nodes signing the same slot is a double-dose risk: the first signature stands and the second is refused with the reason. A controlled drug also carries a witness, which is why the audit requirement here is not the usual one."
+        }
+      }
+    },
+    "/invoices": {
+      "post": {
+        "operationId": "createInvoice",
+        "summary": "Raise an invoice",
+        "tags": [
+          "billing"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvoiceCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Invoice"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Invoice number already issued",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "invoice",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "Invoices are reversed and reissued, never edited — so two nodes produce two documents and a credit note rather than one merged figure. The number comes from a block reserved to this node, which is what keeps two branches from issuing the same receipt."
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ]
+      }
+    },
+    "/payments": {
+      "post": {
+        "operationId": "recordPayment",
+        "summary": "Record money received",
+        "tags": [
+          "billing"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Payment"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Duplicate receipt",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "payment",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "Money received is a fact with a counter and a time. Two receipts are two payments, and the day-end sheet has to reconcile against a physical drawer, so nothing merges."
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ]
+      }
+    },
+    "/audit": {
+      "post": {
+        "operationId": "appendAuditEntry",
+        "summary": "Append an audit entry",
+        "tags": [
+          "platform"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuditCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditEntry"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "audit",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": false,
+          "because": "The ledger of who did what is the one thing that must never be merged away, and it is written on the node that performed the action. An audit entry that waits for a connection is still an audit entry."
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ]
+      }
+    },
+    "/node/number-blocks": {
+      "get": {
+        "operationId": "listNumberBlocks",
+        "summary": "Number blocks reserved to this node",
+        "tags": [
+          "platform"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NumberBlockList"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Cloud tier unreachable — start the day online first",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "audit",
+          "offline": "online-only",
+          "authority": "cloud",
+          "idempotency": "none",
+          "audit": false,
+          "because": "A node draws MRNs and invoice numbers from ranges reserved to it, which is what lets it register a patient with no uplink and still not collide with another branch. The call must reach the cloud tier: a node that cannot reserve a block cannot start a day offline, and the UI has to say so before the uplink fails rather than after.",
+          "notes": "Deliberately online-only: an offline node with no reserved block may read and queue, but it may not mint identifiers."
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Keycloak-issued access token (P0-205). The branch and the role come from the token, never from the request body."
+      }
+    },
+    "parameters": {
+      "IdempotencyKey": {
+        "name": "Idempotency-Key",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 128
+        },
+        "description": "`nodeId:seq` for a queued write, or a fresh UUID for one made online. Replaying the same key returns the original response instead of applying the write twice."
+      }
+    },
+    "schemas": {
+      "Problem": {
+        "type": "object",
+        "description": "RFC 9457 problem detail. The `type` URI identifies the failure, `detail` is written for the person reading it, and the extensions carry what a client needs to act: the conflicting values, the alternative slots, the duplicate candidates.",
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri",
+            "description": "Stable across releases, so the app can branch on it without parsing prose"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 599
+          },
+          "detail": {
+            "type": "string",
+            "description": "One sentence, in the language the app requested, worded for the person at the desk"
+          },
+          "instance": {
+            "type": "string"
+          },
+          "traceId": {
+            "type": "string",
+            "description": "Correlates the refusal with the server log"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "field",
+                "message"
+              ],
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "conflict": {
+            "type": "object",
+            "description": "Present on 409 — the decision a person has to make",
+            "required": [],
+            "properties": {
+              "entity": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [],
+                  "properties": {
+                    "field": {
+                      "type": "string"
+                    },
+                    "yours": {
+                      "description": "The value this node tried to write"
+                    },
+                    "theirs": {
+                      "description": "The value already on the canonical record"
+                    },
+                    "theirsActor": {
+                      "type": "string"
+                    },
+                    "theirsAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "candidates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DuplicateCandidate"
+            },
+            "description": "Present on a duplicate registration"
+          },
+          "alternatives": {
+            "type": "array",
+            "description": "Present on a taken slot: the nearest free times"
+          }
+        }
+      },
+      "Patient": {
+        "type": "object",
+        "required": [
+          "mrn",
+          "name",
+          "nameBn",
+          "sex",
+          "phone",
+          "createdAt"
+        ],
+        "properties": {
+          "mrn": {
+            "type": "string",
+            "description": "Drawn from a block reserved to the node that registered the patient, so two branches never mint the same number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "nameBn": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 130
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date"
+          },
+          "sex": {
+            "type": "string",
+            "enum": [
+              "Male",
+              "Female",
+              "Other"
+            ]
+          },
+          "phone": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "allergies": {
+            "type": "string",
+            "description": "Free text, shown on every screen that can prescribe or dispense"
+          },
+          "payer": {
+            "type": "string",
+            "enum": [
+              "Self pay",
+              "Corporate — BRAC",
+              "Insurance — MetLife",
+              "Govt. scheme"
+            ]
+          },
+          "branch": {
+            "type": "string"
+          },
+          "legacyUid": {
+            "type": "string",
+            "description": "The identifier in the system being replaced, carried so a chart can be found by its old number during migration"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "version": {
+            "type": "integer",
+            "description": "Optimistic concurrency: a write carrying a stale version is refused with both values rather than merged blindly"
+          }
+        }
+      },
+      "PatientCreate": {
+        "type": "object",
+        "required": [
+          "name",
+          "sex",
+          "phone"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "nameBn": {
+            "type": "string"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date"
+          },
+          "age": {
+            "type": "integer"
+          },
+          "sex": {
+            "type": "string",
+            "enum": [
+              "Male",
+              "Female",
+              "Other"
+            ]
+          },
+          "phone": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "allergies": {
+            "type": "string"
+          },
+          "payer": {
+            "type": "string",
+            "enum": [
+              "Self pay",
+              "Corporate — BRAC",
+              "Insurance — MetLife",
+              "Govt. scheme"
+            ]
+          },
+          "mrn": {
+            "type": "string",
+            "description": "Present only when the node drew it from its reserved block"
+          },
+          "duplicateAcknowledged": {
+            "type": "boolean",
+            "description": "Set after a person has seen and dismissed the duplicate candidates — an unacknowledged match is a 409, not a silent insert"
+          }
+        }
+      },
+      "PatientPatch": {
+        "type": "object",
+        "required": [
+          "fields",
+          "version",
+          "reason"
+        ],
+        "properties": {
+          "fields": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Only the fields being changed, so there is something for a field-level merge to merge"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Why the record was corrected — part of the audit entry, not optional"
+          }
+        }
+      },
+      "PatientContactPatch": {
+        "type": "object",
+        "required": [
+          "version"
+        ],
+        "properties": {
+          "phone": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "nextOfKin": {
+            "type": "object",
+            "required": [],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "relation": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              }
+            }
+          },
+          "version": {
+            "type": "integer"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "PatientPage": {
+        "type": "object",
+        "required": [
+          "rows",
+          "total",
+          "page",
+          "pageSize"
+        ],
+        "properties": {
+          "rows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Patient"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the replica this page came from was last synced — the screen stamps it rather than implying the data is live"
+          }
+        }
+      },
+      "DuplicateCandidate": {
+        "type": "object",
+        "required": [
+          "mrn",
+          "name",
+          "score"
+        ],
+        "properties": {
+          "mrn": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "nameBn": {
+            "type": "string"
+          },
+          "branch": {
+            "type": "string"
+          },
+          "registeredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "How alike the records are, from the tunable rule set"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Which rules matched — “same phone”, “name within one edit”, “same date of birth”"
+          }
+        }
+      },
+      "DuplicateList": {
+        "type": "object",
+        "required": [
+          "candidates"
+        ],
+        "properties": {
+          "candidates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DuplicateCandidate"
+            }
+          }
+        }
+      },
+      "Appointment": {
+        "type": "object",
+        "required": [
+          "id",
+          "token",
+          "doctorId",
+          "start",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "mrn": {
+            "type": "string"
+          },
+          "doctorId": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMin": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Requested",
+              "Confirmed",
+              "Checked in",
+              "Waiting",
+              "In consultation",
+              "Completed",
+              "No show",
+              "Cancelled"
+            ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "New",
+              "Follow-up",
+              "Report review",
+              "Procedure"
+            ]
+          },
+          "origin": {
+            "type": "string",
+            "description": "The branch that owns the slot — the appointment lives where it was taken"
+          },
+          "queued": {
+            "type": "boolean",
+            "description": "Still in the local outbox: the screen says so rather than implying the branch holds the slot"
+          }
+        }
+      },
+      "AppointmentCreate": {
+        "type": "object",
+        "required": [
+          "mrn",
+          "doctorId",
+          "start"
+        ],
+        "properties": {
+          "mrn": {
+            "type": "string"
+          },
+          "doctorId": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "New",
+              "Follow-up",
+              "Report review",
+              "Procedure"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "Walk-in",
+              "Phone",
+              "Online portal",
+              "Follow-up"
+            ]
+          }
+        }
+      },
+      "AppointmentPatch": {
+        "type": "object",
+        "required": [
+          "status",
+          "because"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "Confirmed",
+              "Cancelled",
+              "No show"
+            ]
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Reschedule: the new slot is claimed before the old one is released"
+          },
+          "because": {
+            "type": "string",
+            "description": "A cancellation without a reason cannot be reviewed later"
+          }
+        }
+      },
+      "AppointmentPage": {
+        "type": "object",
+        "required": [
+          "rows"
+        ],
+        "properties": {
+          "rows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Appointment"
+            }
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Bed": {
+        "type": "object",
+        "required": [
+          "id",
+          "wardId",
+          "label",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "wardId": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Free",
+              "Occupied",
+              "Cleaning",
+              "Reserved",
+              "Blocked"
+            ]
+          },
+          "class": {
+            "type": "string",
+            "enum": [
+              "General",
+              "Cabin",
+              "HDU",
+              "Isolation"
+            ]
+          },
+          "admissionId": {
+            "type": "string"
+          }
+        }
+      },
+      "BedClaim": {
+        "type": "object",
+        "required": [
+          "mrn"
+        ],
+        "properties": {
+          "mrn": {
+            "type": "string"
+          },
+          "heldFor": {
+            "type": "string",
+            "description": "Who the bed is being held for while the patient is still on the way"
+          }
+        }
+      },
+      "Admission": {
+        "type": "object",
+        "required": [
+          "id",
+          "mrn",
+          "bedId",
+          "admittedAt",
+          "admittedBy"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "mrn": {
+            "type": "string"
+          },
+          "bedId": {
+            "type": "string"
+          },
+          "admittedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "admittedBy": {
+            "type": "string"
+          },
+          "consultantId": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "Stable",
+              "Guarded",
+              "Critical"
+            ]
+          }
+        }
+      },
+      "AdmissionCreate": {
+        "type": "object",
+        "required": [
+          "mrn",
+          "bedId",
+          "reason",
+          "consultantId"
+        ],
+        "properties": {
+          "mrn": {
+            "type": "string"
+          },
+          "bedId": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "consultantId": {
+            "type": "string"
+          }
+        }
+      },
+      "Observation": {
+        "type": "object",
+        "required": [
+          "id",
+          "admissionId",
+          "at",
+          "values"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "admissionId": {
+            "type": "string"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "values": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "The measured set — blood pressure, pulse, temperature, saturations and so on"
+          },
+          "earlyWarningScore": {
+            "type": "integer",
+            "description": "Computed on the server that holds the chart, never on the node that typed the numbers"
+          }
+        }
+      },
+      "ObservationCreate": {
+        "type": "object",
+        "required": [
+          "admissionId",
+          "values"
+        ],
+        "properties": {
+          "admissionId": {
+            "type": "string"
+          },
+          "values": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "consciousness": {
+            "type": "string"
+          }
+        }
+      },
+      "NursingNote": {
+        "type": "object",
+        "required": [
+          "id",
+          "admissionId",
+          "kind",
+          "text",
+          "at",
+          "by"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "admissionId": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "by": {
+            "type": "string"
+          }
+        }
+      },
+      "NursingNoteCreate": {
+        "type": "object",
+        "required": [
+          "admissionId",
+          "kind",
+          "text"
+        ],
+        "properties": {
+          "admissionId": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
+      "DoseSignature": {
+        "type": "object",
+        "required": [
+          "status",
+          "by"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "Given",
+              "Held",
+              "Refused",
+              "Not given"
+            ]
+          },
+          "by": {
+            "type": "string"
+          },
+          "witness": {
+            "type": "string",
+            "description": "Required for a controlled drug — the second signature is the control"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Required for anything other than Given"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the dose was actually given, which is not necessarily when the node reached the network"
+          }
+        }
+      },
+      "MarDose": {
+        "type": "object",
+        "required": [
+          "id",
+          "admissionId",
+          "due",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "admissionId": {
+            "type": "string"
+          },
+          "due": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Due",
+              "Given",
+              "Held",
+              "Refused",
+              "Not given"
+            ]
+          },
+          "controlled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Invoice": {
+        "type": "object",
+        "required": [
+          "id",
+          "number",
+          "mrn",
+          "total",
+          "state"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string",
+            "description": "From a block reserved to the issuing node"
+          },
+          "mrn": {
+            "type": "string"
+          },
+          "creditNoteOf": {
+            "type": "string",
+            "description": "Set when this document reverses an earlier one, because invoices are never edited"
+          },
+          "total": {
+            "type": "number"
+          },
+          "patientShare": {
+            "type": "number"
+          },
+          "payerShare": {
+            "type": "number"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "Draft",
+              "Issued",
+              "Partially paid",
+              "Paid",
+              "Cancelled"
+            ]
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "InvoiceCreate": {
+        "type": "object",
+        "required": [
+          "mrn",
+          "lines"
+        ],
+        "properties": {
+          "mrn": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "discountReason": {
+            "type": "string"
+          },
+          "approvedBy": {
+            "type": "string"
+          }
+        }
+      },
+      "Payment": {
+        "type": "object",
+        "required": [
+          "id",
+          "receiptNo",
+          "amount",
+          "method",
+          "at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "receiptNo": {
+            "type": "string"
+          },
+          "invoiceId": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "Cash",
+              "Card",
+              "bKash",
+              "Nagad",
+              "Insurance",
+              "Corporate"
+            ]
+          },
+          "reference": {
+            "type": "string",
+            "description": "Required for anything but cash — the drawer is reconciled against receipts"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "counter": {
+            "type": "string"
+          }
+        }
+      },
+      "PaymentCreate": {
+        "type": "object",
+        "required": [
+          "invoiceId",
+          "amount",
+          "method"
+        ],
+        "properties": {
+          "invoiceId": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "method": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "counter": {
+            "type": "string"
+          }
+        }
+      },
+      "AuditEntry": {
+        "type": "object",
+        "required": [
+          "id",
+          "sequence",
+          "at",
+          "actor",
+          "action",
+          "entity",
+          "hash",
+          "prevHash"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sequence": {
+            "type": "integer",
+            "description": "Monotonic within this node’s chain, so a gap is visible"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actor": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "entity": {
+            "type": "string"
+          },
+          "recordId": {
+            "type": "string"
+          },
+          "before": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "after": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "node": {
+            "type": "string",
+            "description": "Which node performed it, so an offline action is traced to the device that took it, not just the person"
+          },
+          "hash": {
+            "type": "string",
+            "description": "SHA-256 over this entry’s canonical form together with `prevHash`. Recomputing it is how tampering is detected — and the reason a ledger row is never updated."
+          },
+          "prevHash": {
+            "type": "string",
+            "description": "The hash of the previous entry on this node’s chain. The chains are per node, because a node keeps appending while it is disconnected; the cloud tier reconciles them on drain and the nightly job (P0-311) checks the result."
+          }
+        }
+      },
+      "AuditCreate": {
+        "type": "object",
+        "required": [
+          "action",
+          "entity",
+          "recordId"
+        ],
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "entity": {
+            "type": "string"
+          },
+          "recordId": {
+            "type": "string"
+          },
+          "before": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "after": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "NumberBlock": {
+        "type": "object",
+        "required": [
+          "series",
+          "prefix",
+          "from",
+          "to",
+          "next"
+        ],
+        "properties": {
+          "series": {
+            "type": "string",
+            "enum": [
+              "mrn",
+              "invoice",
+              "receipt"
+            ]
+          },
+          "prefix": {
+            "type": "string"
+          },
+          "from": {
+            "type": "integer"
+          },
+          "to": {
+            "type": "integer"
+          },
+          "next": {
+            "type": "integer"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "A block is leased, not owned: an unused number returns to the pool and a node that never came back does not burn a range forever"
+          }
+        }
+      },
+      "NumberBlockList": {
+        "type": "object",
+        "required": [
+          "blocks"
+        ],
+        "properties": {
+          "blocks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NumberBlock"
+            }
+          }
+        }
+      },
+      "Health": {
+        "type": "object",
+        "required": [
+          "status",
+          "tier",
+          "version"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "degraded"
+            ]
+          },
+          "tier": {
+            "type": "string",
+            "enum": [
+              "edge",
+              "cloud"
+            ]
+          },
+          "version": {
+            "type": "string"
+          },
+          "replicaLagSeconds": {
+            "type": "integer",
+            "description": "How far behind the cloud the edge replica is — the number the screen stamps on cached reads"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ],
+  "x-dizi-entities": {
+    "patient.demographic": {
+      "policy": "field-level",
+      "label": "Patient identity",
+      "why": "Two desks can both correct a name or an age. Different fields merge; the same field needs a person, because one of the two is wrong and only the patient knows which."
+    },
+    "patient.contact": {
+      "policy": "field-level",
+      "label": "Patient contact details",
+      "why": "Phone numbers change and relatives answer. Different fields merge; the same field is offered to the desk, with both values kept."
+    },
+    "appointment": {
+      "policy": "exclusive",
+      "label": "Appointment slot",
+      "why": "A slot holds one patient. The branch that took the booking owns it, and a second branch asking for the same slot is refused with the alternatives rather than merged."
+    },
+    "bed.state": {
+      "policy": "exclusive",
+      "label": "Bed state",
+      "why": "A bed holds one patient. Two nodes admitting into the same bed is not a merge — the second arrival needs another bed, so the server refuses the claim."
+    },
+    "mar.dose": {
+      "policy": "exclusive",
+      "label": "Medication administration",
+      "why": "A dose is given once. Two nodes signing the same slot is a double-dose risk: the first signature stands and the second is refused with the reason."
+    },
+    "admission": {
+      "policy": "append-only",
+      "label": "Admission",
+      "why": "An admission is an event with a time and an author. Two events on two nodes are two events."
+    },
+    "observation": {
+      "policy": "append-only",
+      "label": "Observation set",
+      "why": "A set of vitals is a measurement at a time. Two sets are two measurements, and both belong on the chart."
+    },
+    "nursing.note": {
+      "policy": "append-only",
+      "label": "Nursing note",
+      "why": "Notes are the record of what was seen and done. Nothing merges and nothing is overwritten."
+    },
+    "invoice": {
+      "policy": "append-only",
+      "label": "Invoice",
+      "why": "Invoices are reversed and reissued, never edited — so two nodes produce two documents and a credit note, not one merged figure."
+    },
+    "payment": {
+      "policy": "append-only",
+      "label": "Payment",
+      "why": "Money received is a fact with a counter and a time. Two receipts are two payments."
+    },
+    "audit": {
+      "policy": "append-only",
+      "label": "Audit entry",
+      "why": "The ledger of who did what is the one thing that must never be merged away."
+    }
+  },
+  "x-dizi-conventions": {
+    "idempotency": "Every operation whose `x-dizi.idempotency` is `required` carries an `Idempotency-Key`. A replay of the same key returns the original response and status, so draining a queue twice is safe — which is the whole reason a queue can exist.",
+    "authority": "`cloud` means the canonical record lives in the cloud tier and an edge write is a proposal replayed on reconnect. `edge` means the node that owns the record answers: reads come from the replica, and slots belong to the branch that took the booking.",
+    "conflictIsNotAnError": "A 409 is a decision for a person, never a failure to hide. The response carries both values and who wrote them, and the app routes it to the review queue rather than retrying in a loop.",
+    "errors": "Every failure is RFC 9457 `application/problem+json`. No endpoint returns a bare string or an HTML error page — an offline desk showing `500 Internal Server Error` is a support call.",
+    "audit": "Every write marked `audit: true` appends an audit entry in the same transaction as the write. The ledger is hash-chained (P0-208): each entry carries the hash of the previous one on its node’s chain, so an edit in the middle of it is detectable rather than merely discouraged. An offline write carries the node that performed it, so the ledger names the device as well as the person, and the chains are reconciled when the node drains.",
+    "time": "Every timestamp is an ISO 8601 instant with an offset. Duration fields hold a duration, never a formatted time — the screens format for Dhaka, the API does not."
+  },
+  "x-dizi-drain-outcomes": {
+    "applied": {
+      "status": "2xx",
+      "meaning": "The write is in the canonical record.",
+      "client": "The outbox entry is dropped and the screen stops marking the row as local."
+    },
+    "duplicate": {
+      "status": "2xx replay, or 409 with problem type dizi.duplicate-operation",
+      "meaning": "This Idempotency-Key was already applied, so nothing changed and the original response is returned.",
+      "client": "The outbox entry is dropped: a drain that ran twice must not write twice."
+    },
+    "conflict": {
+      "status": "409 with `conflict`, `candidates` or `alternatives`",
+      "meaning": "A person has to decide. Both values are returned; nothing is merged silently.",
+      "client": "The operation leaves the automatic queue and appears in the review list until someone resolves it."
+    },
+    "refused": {
+      "status": "4xx (422, 404, 403) other than a conflict",
+      "meaning": "The write will never be accepted as it stands.",
+      "client": "Shown to the desk with the reason and the original entry: retrying it automatically would only hide it."
+    },
+    "deferred": {
+      "status": "503, 504 or a timeout",
+      "meaning": "The cloud tier is not reachable.",
+      "client": "The operation keeps its place in the queue, and the queue keeps its order."
+    }
+  },
+  "x-dizi-problem-types": {
+    "dizi.bed-occupied": {
+      "title": "That bed is already in use",
+      "when": "The bed claim loses to another node",
+      "client": "Send the admission desk back to the bed board; the bed holds one patient"
+    },
+    "dizi.dose-already-signed": {
+      "title": "This dose has already been signed",
+      "when": "Two nodes sign the same administration slot",
+      "client": "Refuse locally and name who signed it and when — this one is a double-dose risk, not a merge"
+    },
+    "dizi.duplicate-operation": {
+      "title": "This write was already applied",
+      "when": "The Idempotency-Key has been seen before",
+      "client": "Treat as success — drop the outbox entry, do not resend"
+    },
+    "dizi.duplicate-patient": {
+      "title": "This patient may already be registered",
+      "when": "A registration matches an existing record on the tunable duplicate rules",
+      "client": "Show the candidates with their evidence; registering anyway needs an acknowledgement"
+    },
+    "dizi.forbidden": {
+      "title": "Your role cannot do this",
+      "when": "The token lacks the role the operation needs",
+      "client": "Hide or disable the action rather than offering it and refusing it"
+    },
+    "dizi.not-found": {
+      "title": "Not found here",
+      "when": "The record exists on another node or does not exist",
+      "client": "Say which node last saw it when the replica knows — search the branch register, do not dead-end"
+    },
+    "dizi.number-block-exhausted": {
+      "title": "This node has run out of reserved numbers",
+      "when": "A node draws a number with no block left",
+      "client": "Stop issuing that series and say so; registering with a made-up number is worse than waiting"
+    },
+    "dizi.offline-not-allowed": {
+      "title": "This action needs the network",
+      "when": "The operation is `online-only` and the cloud tier is unreachable",
+      "client": "Explain before the action is attempted, not after — the row shows why it cannot be queued"
+    },
+    "dizi.slot-taken": {
+      "title": "That slot has just been taken",
+      "when": "Another node holds the appointment slot",
+      "client": "Offer the alternatives in the response; never silently move the appointment"
+    },
+    "dizi.stale-version": {
+      "title": "Someone changed this record while you were looking at it",
+      "when": "The write carries an older `version` than the canonical record",
+      "client": "Show both values side by side; the desk decides, the server does not guess"
+    },
+    "dizi.unauthenticated": {
+      "title": "Your session has ended",
+      "when": "Missing or expired token (Keycloak, P0-205)",
+      "client": "Re-authenticate and replay: the outbox survives a session ending"
+    },
+    "dizi.unavailable": {
+      "title": "The cloud is unreachable",
+      "when": "The database, or the uplink, or the cloud tier is down",
+      "client": "Keep the write queued and keep working; the sync pill already says how long it has been"
+    },
+    "dizi.validation-failed": {
+      "title": "Some fields need attention",
+      "when": "A required or ill-formed field",
+      "client": "Mark the fields from `errors`; keep everything the desk typed"
+    }
+  },
+  "x-dizi-duplicate-rules": {
+    "description": "How two records are decided to be the same person. The rule set is data, not code: a branch tunes the weights and the thresholds in Setup, and the register screen and the API read the same set. Two screens checking different rules is how a duplicate comes in through the front door and a false match is flagged at the back. Nothing here merges. A rule can only raise a candidate, and a person decides.",
+    "configuredIn": "Setup → Registration → duplicate rules, per branch, with the defaults below",
+    "combination": "score = min(1, the sum of the weights of the rules that matched). A rule with `veto: true` is excluded from that sum and can never contribute to a block. At or above `block` the write is refused with 409 and the candidates; at or above `warn` the desk is shown them and may continue; below `warn` nothing is shown, because a desk warned about everything is warned about nothing.",
+    "thresholds": {
+      "warn": 0.4,
+      "block": 0.85,
+      "note": "Raising `block` lets more duplicates through; lowering it starts refusing real new patients, and a phone number shared by a household must never block on its own (0.8 < 0.85) — it warns. One of those is a branch-level judgement, so it belongs to the branch, not to a developer."
+    },
+    "rules": [
+      {
+        "id": "identity.mrn-exact",
+        "signal": "mrn",
+        "weight": 1.0,
+        "veto": false,
+        "label": "Same MRN",
+        "when": "The MRN matches an existing record exactly. This is not a duplicate to review: it is the same patient, so the existing record is opened instead of a second one being created.",
+        "evidence": [
+          "already exists"
+        ],
+        "implementedBy": [
+          "apps/web/lib/patient-import.ts"
+        ]
+      },
+      {
+        "id": "identity.phone-normalised",
+        "signal": "phone",
+        "weight": 0.8,
+        "veto": false,
+        "label": "Same phone number",
+        "when": "The digits match after stripping spaces, dashes and the country code. A household often shares one number, so this raises a candidate rather than deciding anything.",
+        "evidence": [
+          "Same phone number as",
+          "p.phone === values.phone"
+        ],
+        "implementedBy": [
+          "apps/web/lib/patient-import.ts",
+          "apps/web/app/patients/new/page.tsx"
+        ]
+      },
+      {
+        "id": "identity.national-id-suffix",
+        "signal": "nationalId",
+        "weight": 0.7,
+        "veto": false,
+        "label": "National ID ending matches",
+        "when": "The last four digits of the national ID match the tail of an existing identifier. A partial match that a complete national-ID field would make unnecessary, kept because the register already contains one.",
+        "evidence": [
+          "nationalId"
+        ],
+        "implementedBy": [
+          "apps/web/app/patients/new/page.tsx"
+        ]
+      },
+      {
+        "id": "identity.name-age-sex",
+        "signal": "name",
+        "weight": 0.6,
+        "veto": false,
+        "label": "Same name, age and sex",
+        "when": "Three fields agree. Where names repeat as often as they do here, that is more than a coincidence and still less than a certainty.",
+        "evidence": [
+          "Same name, age and sex as"
+        ],
+        "implementedBy": [
+          "apps/web/lib/patient-import.ts"
+        ]
+      },
+      {
+        "id": "identity.dob-exact",
+        "signal": "dob",
+        "weight": 0.5,
+        "veto": false,
+        "label": "Same date of birth",
+        "when": "The full date of birth agrees. Weaker than it looks: the first of January is a placeholder for an unknown date in this register.",
+        "evidence": [
+          "dateOfBirth"
+        ],
+        "implementedBy": []
+      },
+      {
+        "id": "identity.name-fuzzy",
+        "signal": "name",
+        "weight": 0.45,
+        "veto": false,
+        "label": "Name within one edit",
+        "when": "The names differ by a single insertion, deletion or substitution — the commonest transcription error at a busy desk, and the one a typo-by-typo search never finds.",
+        "evidence": [
+          "similarity"
+        ],
+        "implementedBy": []
+      },
+      {
+        "id": "identity.sex-conflict",
+        "signal": "sex",
+        "weight": 0.0,
+        "veto": true,
+        "label": "Sex disagrees",
+        "when": "The records differ on sex, so they are two people. This vetoes a block outright however alike the names look, which is the difference between a duplicate check the desk trusts and one it learns to click past.",
+        "evidence": [
+          "sex"
+        ],
+        "implementedBy": []
+      }
+    ]
+  }
+}
