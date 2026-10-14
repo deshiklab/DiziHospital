@@ -12,21 +12,43 @@ export interface NavItem {
   /** Modules still owned by the legacy system show a "legacy" chip so staff know where records are created. */
   owner?: 'legacy' | 'new';
   phase?: string;
+  /**
+   * Sub-screens of this module: routes that belong to the module rather than being a module of their own.
+   * They appear under the module while it is open, in the command palette as searchable routes, and in the
+   * breadcrumb — which is the whole reason they are declared here instead of being hand-typed into the shell.
+   */
+  children?: Array<{ key: string; href: string }>;
 }
 
 export const NAV: NavItem[] = [
   { key: 'nav.dashboard', href: '/', icon: 'dashboard', roles: ['receptionist', 'doctor', 'pharmacist', 'billing', 'admin'], owner: 'new', phase: 'P0' },
-  { key: 'nav.patients', href: '/patients', icon: 'users', roles: ['receptionist', 'doctor', 'pharmacist', 'billing', 'admin'], owner: 'new', phase: 'P1' },
-  { key: 'nav.appointments', href: '/appointments', icon: 'calendar', roles: ['receptionist', 'doctor', 'admin'], owner: 'legacy', phase: 'P1' },
+  { key: 'nav.patients', href: '/patients', icon: 'users', roles: ['receptionist', 'doctor', 'pharmacist', 'billing', 'admin'], owner: 'new', phase: 'P1', children: [
+    { key: 'nav.patients.new', href: '/patients/new' },
+    { key: 'nav.patients.import', href: '/patients/import' },
+    { key: 'nav.patients.discharged', href: '/patients/discharged' },
+  ] },
+  { key: 'nav.appointments', href: '/appointments', icon: 'calendar', roles: ['receptionist', 'doctor', 'admin'], owner: 'legacy', phase: 'P1', children: [
+    { key: 'nav.appointments.queue', href: '/appointments/queue' },
+  ] },
   { key: 'nav.clinical', href: '/clinical', icon: 'stethoscope', roles: ['doctor', 'admin'], owner: 'legacy', phase: 'P2' },
-  { key: 'nav.diagnostics', href: '/diagnostics', icon: 'flask', roles: ['doctor', 'admin'], owner: 'legacy', phase: 'P4' },
+  { key: 'nav.diagnostics', href: '/diagnostics', icon: 'flask', roles: ['doctor', 'admin'], owner: 'new', phase: 'P4', children: [
+    { key: 'nav.diagnostics.search', href: '/diagnostics/search' },
+  ] },
   { key: 'nav.ward', href: '/ward', icon: 'bed', roles: ['doctor', 'admin'], owner: 'legacy', phase: 'P5' },
   { key: 'nav.round', href: '/round', icon: 'round', roles: ['doctor', 'admin'], owner: 'new', phase: 'P5' },
   { key: 'nav.duty', href: '/duty', icon: 'duty', roles: ['doctor', 'admin'], owner: 'legacy', phase: 'P5' },
   { key: 'nav.ot', href: '/ot', icon: 'theatre', roles: ['doctor', 'admin'], owner: 'legacy', phase: 'P5' },
   { key: 'nav.bloodbank', href: '/bloodbank', icon: 'blood', roles: ['doctor', 'admin'], owner: 'legacy', phase: 'P4' },
-  { key: 'nav.pharmacy', href: '/pharmacy', icon: 'pill', roles: ['pharmacist', 'admin'], owner: 'legacy', phase: 'P3' },
-  { key: 'nav.billing', href: '/billing', icon: 'receipt', roles: ['billing', 'receptionist', 'admin'], owner: 'legacy', phase: 'P2' },
+  { key: 'nav.pharmacy', href: '/pharmacy', icon: 'pill', roles: ['pharmacist', 'admin'], owner: 'legacy', phase: 'P3', children: [
+    { key: 'nav.pharmacy.search', href: '/pharmacy/search' },
+    { key: 'nav.pharmacy.returns', href: '/pharmacy/returns' },
+  ] },
+  { key: 'nav.billing', href: '/billing', icon: 'receipt', roles: ['billing', 'receptionist', 'admin'], owner: 'legacy', phase: 'P2', children: [
+    { key: 'nav.billing.opd', href: '/billing/opd' },
+    { key: 'nav.billing.patient', href: '/billing/opd-patient' },
+    { key: 'nav.billing.appointments', href: '/billing/appointments' },
+    { key: 'nav.billing.modules', href: '/billing/modules' },
+  ] },
   { key: 'nav.inventory', href: '/inventory', icon: 'package', roles: ['pharmacist', 'admin'], owner: 'legacy', phase: 'P3' },
   { key: 'nav.ambulance', href: '/ambulance', icon: 'ambulance', roles: ['receptionist', 'admin'], owner: 'legacy', phase: 'P4' },
   { key: 'nav.setup', href: '/setup', icon: 'setup', roles: ['admin'], owner: 'new', phase: 'P2' },
@@ -56,6 +78,18 @@ export const strings: Record<string, { en: string; bn: string }> = {
   'nav.sync': { en: 'Sync console', bn: 'সিঙ্ক কনসোল' },
   'nav.admin': { en: 'Admin', bn: 'অ্যাডমিন' },
   'nav.help': { en: 'Help', bn: 'সহায়তা' },
+
+  'nav.patients.new': { en: 'Register a patient', bn: 'রোগী নিবন্ধন' },
+  'nav.patients.import': { en: 'Import a spreadsheet', bn: 'স্প্রেডশিট ইমপোর্ট' },
+  'nav.patients.discharged': { en: 'Discharged patients', bn: 'ডিসচার্জড রোগী' },
+  'nav.appointments.queue': { en: 'Today’s queue', bn: 'আজকের সিরিয়াল' },
+  'nav.diagnostics.search': { en: 'Result search', bn: 'ফলাফল অনুসন্ধান' },
+  'nav.pharmacy.search': { en: 'Medicine search', bn: 'ঔষধ অনুসন্ধান' },
+  'nav.pharmacy.returns': { en: 'Sale returns', bn: 'বিক্রয় ফেরত' },
+  'nav.billing.opd': { en: 'OPD counter', bn: 'ওপিডি কাউন্টার' },
+  'nav.billing.patient': { en: 'OPD patient account', bn: 'ওপিডি রোগীর হিসাব' },
+  'nav.billing.appointments': { en: 'Appointment billing', bn: 'অ্যাপয়েন্টমেন্ট বিলিং' },
+  'nav.billing.modules': { en: 'Single-module billing', bn: 'একক মডিউল বিলিং' },
 
   'shell.search': { en: 'Search patients, MRN, phone', bn: 'রোগী, এমআরএন, ফোন খুঁজুন' },
   'shell.palette': { en: 'Command palette', bn: 'কমান্ড প্যালেট' },
@@ -116,6 +150,12 @@ export function breadcrumbsFor(pathname: string, locale: Locale): Array<{ label:
 
   const rest = segments.slice(1);
   if (rest.length > 0) {
+    // A declared sub-screen is a named place: the trail reads like somewhere you are, not like a path.
+    const child = match?.children?.find((c) => c.href === pathname);
+    if (child) {
+      trail.push({ label: t(child.key, locale), href: pathname });
+      return trail;
+    }
     // A word or two for the screens that have their own page, so the trail reads like a place and not a path.
     const named: Record<string, { en: string; bn: string }> = {
       new: { en: 'New', bn: 'নতুন' },

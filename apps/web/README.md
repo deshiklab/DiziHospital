@@ -1,7 +1,8 @@
 # @dizi/web — DiziHospital application shell
 
-Phase 0 slice of the new UI. Running against deterministic synthetic data; every feature below is real
-interaction, not a screenshot.
+The new UI's P1–P5 screens, running against deterministic synthetic data; every feature below is real
+interaction, not a screenshot. The platform beneath them (auth, API, database, CI) is still P0 work — the
+coverage table at the end of this file says exactly what is real, what is a preview and what is still ahead.
 
 ```bash
 npm install                            # from the repository root
@@ -20,7 +21,8 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 | **Fixed header** | always | Global search, connection state, hot actions, command palette, notifications, display controls, language, help, account |
 | **Fixed footer** | always | The breadcrumb trail, version, phase, build stamp, credits, site mode, keyboard-shortcut link. The trail lives here rather than in the header so it stays visible at every width |
 | **Global search** | header, `/` or click | Name, Bangla name, MRN and phone; results link straight to the record |
-| **Command palette** | `⌘K` / `Ctrl+K` | Every route, plus role-aware "legacy · phase" chips |
+| **Sub-screens** | under the module in the sidebar, and in the palette | A route that belongs to a module rather than being a module of its own (`/billing/opd`, `/pharmacy/returns`, `/patients/discharged`) is declared as a child of its parent in `lib/nav.ts`. It appears under the module while the module is open, in the command palette as a searchable destination with its parent named, and in the breadcrumb as a place rather than as a path — one declaration, three uses, so a route cannot exist in the sidebar and be missing from search |
+| **Command palette** | `⌘K` / `Ctrl+K` | Every route — modules and their sub-screens — plus role-aware "legacy · phase" chips |
 | **Hot & action buttons** | `+` in the header, `Alt+1…4` | Register, book, bill, search |
 | **Zoom control** | Display popover, `Alt+Z` | 80–150 %, remembered, applied to the working area only |
 | **Text size control** | Display popover, `Alt+T` | A− / A / A+ / A++ — type only, independent of zoom |
@@ -41,16 +43,31 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 | `/patients/[mrn]` | Patient record: banner with allergy alerts, tabbed detail, editable contact block, visit history grid, read-only projections of legacy-owned modules, record metadata |
 | `/patients/new` | Registration in five sections, live duplicate detection, honest offline ("Saved on this device" vs "Saved") |
 | `/patients/import` | Legacy register import: column mapping guessed from the header and overruled by hand, row-by-row validation against the register's own rules, duplicates split into *clashing MRN* (rejected) and *possible duplicate* (merge queue), the rows that need fixing downloadable as a CSV, and a dry run that writes nothing |
+| `/patients/discharged` | The discharged register: today, this week or the whole record, with the summary gaps, the results still pending, the calls to make, the follow-ups not booked, the dues outstanding and the readmissions inside 30 days — and the discharge summary itself behind each row |
 | `/appointments` | The appointment desk: doctor × time calendar (desktop) and list (mobile), a drag-free queue board, online requests from the patient portal, and the full list — plus the booking sheet with real slot conflicts |
+| `/appointments/queue` | The live queue: who is next and in which room, waiting times measured rather than guessed, tokens called and skipped and requeued, walk-ins triaged into the line without ever jumping it, and the check-in-to-consultation timeline on each token |
 | `/login` | Two-step sign-in preview (credentials → six-digit code), branch picker, English ⇄ বাংলা |
 | `/clinical` | OPD consultation: the room queue beside one patient's workspace — vitals with reference-range flags, SOAP notes, ICD-10 diagnosis, lab/imaging orders, and a prescription screened for allergies, high-alert medicines and dangerous abbreviations before it can be signed |
 | `/diagnostics` | Laboratory and imaging worklist: every specimen's journey (ordered → collected → in the lab → resulted → verified → dispatched), per-analyte reference ranges checked as the value is typed, turnaround deadlines on the row, verification as a second-person gate, the critical-value call-back log, rejected samples with reasons, and the day's quality-control runs |
+| `/diagnostics/search` | Pathology and radiology search: verified results only by default, values against the analyte's own reference range, the previous verified result beside each one, trends that compare like with like, imaging reports read by the question that was asked, and the list of critical results nobody has telephoned about yet |
 | `/inventory` | Stores and purchase: stock on hand per store with cover in days, batches with expiry (expired ones quarantined, valued, and written off with a reason), a replenishment list whose quantities cover the lead time, purchase orders with send/receive/cancel, goods receipt with a batch number and an expiry required on every line, the append-only store ledger, and a stock-take sheet a second person has to approve |
 | `/ward` | The ward: a bed board per ward with the five bed states and the reason each one is in that state, admissions with a consultant and a reason (never just a bed number), observations scored with an early-warning aggregate that carries the response it requires and records the review when it happens, nursing notes that append rather than edit, a drug round that signs at the bedside (check recorded, witness for a controlled drug, reason for anything not given, indication for a PRN), handover as written SBAR with inherited tasks, transfers with two locations and an accepting name, and a discharge desk with a checklist, outstanding dues and a printable summary |
+| `/round` | The doctor's round: the list ordered by how sick the patient is rather than by bed number, per-patient charts and results on one page, orders, and the consultant review and ceiling-of-care decisions the round has to document |
+| `/ot` | Theatre: the day's list with its gates (consent, site, anaesthesia, nil by mouth, investigations), sign-in / time-out / sign-out, swab and instrument counts that refuse a mismatch, implants and specimens, recovery with a score that gates the return to the ward, and cancellations and bumping with reasons |
+| `/duty` | The duty roster: who is on each shift and in which role, the skills each area requires, the minimum rest between shifts, and the gaps that need filling before the shift starts |
+| `/bloodbank` | The blood bank: compatibility computed from antigens and antibodies with the reason for every refusal, the unit register with shelf life and the out-of-fridge clock, donor criteria and deferrals, cross-match requests with a sample that can go stale, issue and return with quarantine, and a trace that runs both ways |
+| `/ambulance` | Ambulance dispatch: the vehicle board with states and readiness checks, the call queue with response times measured against the P1 target, the fare table, and decontamination and turnaround times that cannot be billed |
+| `/setup` | Setup: every “Setup › …” catalogue as one registry with one audit trail — charge master, drugs, items, tests, ICD-10, symptoms, findings, vitals, blood products, wards, bed classes and theatres — where a code is an identity, nothing is deleted, and a price change is a dated row |
 | `/sync` | Sync console (P0-210/211): the offline outbox with operation ids and per-node sequence numbers, reserved MRN/invoice number blocks, a drain that drops a replay instead of applying it twice, the three conflict policies (append-only · field-level · exclusive) with both values side by side and a person to decide, and the plan's outage drill runnable on demand — it reports whether any write was lost |
 | `/reports` | Reports and dashboards: eight figures that each state their definition and their as-of stamp, patients-seen-per-day against bookings, case mix and workload by doctor, laboratory turnaround, critical-value call-back compliance and quality control, stock valuation and expiry risk, revenue split by method and payer with the discounts that needed an approver, and a data-quality tab that counts the record's own gaps and names who closes each one |
 | `/pharmacy` | The dispensary: prescription queue, FEFO batch picking (expired batches cannot be selected), substitution with both names kept, controlled-substance register with a witness, and the append-only stock ledger |
+| `/pharmacy/search` | Medicine search: which store holds it and how long until it expires, what may legally be substituted (same generic and strength, never a controlled drug), a live allergy check against the patient's record, and the unit price — with consumables and reagents searched the same way |
+| `/pharmacy/returns` | Sale returns and credit notes: the seven-day window with the bill, sealed packs only, cold-chain items never restocked, controlled medicines destroyed with a witness instead of returned, nothing on the shelf without a decision, and the credit going back by the method the money came in |
 | `/billing` | Billing counter: invoices built from what the doctor ordered, payment capture per method, discount approval above the limit, day-end sheet with cash reconciliation, and the branch tariff |
+| `/billing/opd` | The OPD counter (legacy screens 001 / 002 / 008): the checked-in pick-list, lines added from the tariff, the discount with a reason and an approver above the limit, the collection gate that stops a sample on an unpaid bill, take money, issue and print the receipt, and per-line refunds |
+| `/billing/opd-patient` | The OPD patient account: every visit, charge, payment and refund on one page with the receipt numbers, the payer's share beside the patient's, and waivers shown as zero-value lines rather than as absences — the screen that answers “I have already paid for this” |
+| `/billing/appointments` | Appointment billing: what each booking costs and why (new, follow-up inside the window, report review, procedure package), the booking fee as a commitment rather than revenue, the cancellation cut-off, the no-show rule, the corporate cap and the co-pay, and the consultant share computed on money collected rather than money billed |
+| `/billing/modules` | Single-module billing (legacy screens 010, 003, 004, 005 and 006): bill pathology, radiology, blood issue, blood components, pharmacy, IPD or ambulance from the worklist that produced each item, when each module charges and who owes it, pre-authorisation above the insurance threshold, credit limits, deposits, and an emergency override that carries a name |
 | `/help` | Help centre: how the new platform works (six anchored topics), the shortcut list, and the mirrored reference library by category |
 | `/help/search` | Server-rendered search over the reference library, with the matching text highlighted |
 | `/help/[category]/[slug]` | One mirrored article, rendered from Markdown with its screenshots served from the library, attributed to its source |
@@ -136,17 +153,37 @@ value on the server and another in the browser, and React throws the rendered tr
   handover, transfers and discharge all behave, and the discharge summary prints — but nothing is persisted
   (reload and the ward starts again) and no chart is signed with a clinician's own credentials. The offline queue
   the ward actually needs is the P0-210 prototype, and until it lands the screen says what a lost reload costs.
-* There is no doctor's round screen yet: the observation escalation records who attended and what was done, and
-  orders can be raised from the consultation workspace, but a ward round that writes orders, stops medicines and
-  plans the day is still `P5`'s remaining work.
-* No credit-note path for short-dated stock returned to a supplier, and no cold-chain temperature log — both are
-  on the `P3` list, and both are visible in the data model's shape rather than hidden behind a claim.
+* The doctor's round (`/round`) writes orders, reviews results, sets the ceiling of care and prints the round
+  list — but it is not yet *the* record: the round note it produces is a preview, and no ward round is signed with
+  a clinician's own credentials until `P0-205`.
+* `/pharmacy/returns` issues credit notes for **sales** returns — the seven-day window, sealed packs, cold-chain
+  lines quarantined rather than restocked, controlled medicines destroyed with a witness, the credit going back by
+  the method the money came in. Two `P3` gaps remain and neither is hidden: there is no credit-note path for
+  short-dated stock returned **to a supplier**, and no **cold-chain temperature log** for the fridges and the
+  vaccine carrier.
 * There is no separate laboratory role yet: the worklist is reached with the doctor/admin roles, and the actions on
   it stand in for a technologist and a pathologist. A dedicated role with its own permissions arrives with `P0-205`.
 * The appointment desk, the consultation workspace, the laboratory worklist, the dispensary, the store and the billing counter all run on the same
   deterministic synthetic data as the rest of the shell: the rules are real, the patients, stock and money are not.
 * Nothing on those screens is persisted — reload and the day starts again. The write paths (sign a note, record a
   movement, take a payment) are the shapes the API will accept, not a database yet.
+
+## Phase coverage — P1 to P5
+
+The plan's phases are sequences of screens (`docs/plan/03-SCREEN-MAP.md`). This is where that plan stands in the
+preview: what is built, and what the same phase still owes.
+
+| Phase | Delivered in this build | Still owed by the phase |
+|---|---|---|
+| **P1** Identity, patients, appointments | `M` Patient register, profile, registration with live duplicate detection, `/patients/import` (legacy register import with a dry run), `/patients/discharged` (the discharged register, recalls, dues and readmission flags), `/appointments` (the desk, the calendar, online requests), `/appointments/queue` (tokens, rooms, waiting times, walk-in triage), sign-in preview | Real SSO/MFA (`P0-205`), the API behind registration and booking, duplicate merging that writes, and the appointment reminder channel |
+| **P2** Billing and OPD consultation | `/clinical` (the consultation workspace), `/billing` (invoices, payment capture, discount approval, day end, tariff), `/billing/opd` (the OPD counter: pick-list, lines, collection gate, receipt, per-line refunds), `/billing/opd-patient` (the patient's own account), `/billing/appointments` (booking fees, the cancellation cut-off, the no-show rule, consultant share on collected money), `/billing/modules` (module billing), `/setup` (charge master among the twelve catalogues) | Non-cash settlement (insurance claim submission, corporate statements), the referral payout run, and the tariff's effective-dating wired to a store rather than to a catalogue |
+| **P3** Pharmacy and inventory | `/pharmacy` (dispensary: FEFO picking, substitution, controlled register), `/pharmacy/search` (medicine search with stock, substitutes and a live allergy check), `/pharmacy/returns` (sale returns and credit notes), `/inventory` (stores, batches, expiry, reorder, purchase orders, goods receipt, ledger, stock take), `/setup` item and drug catalogues | Barcode/GS1 scanning at the receiving bay, supplier credit notes, the cold-chain log, and the POS hardware (cash drawer, label printer) |
+| **P4** Laboratory, imaging, blood bank, ambulance | `/diagnostics` (specimen journey, reference ranges, verification gate, call-backs, QC), `/diagnostics/search` (pathology and radiology search with trends and uncalled criticals), `/bloodbank` (compatibility, shelf life, donors, cross-match, issue, trace), `/ambulance` (vehicles, calls, response times, fares), `/billing/modules` (pathology, radiology, blood issue and blood component billing), `/setup` laboratory, imaging, ICD-10, symptoms, findings and blood-bank catalogues | Analyser and PACS interfaces, barcode specimen labels from a certified encoder, the blood-bank look-back report as a document, and the imaging calendar's real modality capacity |
+| **P5** In-patient, ward, theatre | `/ward` (bed board, admissions, observations with an early-warning score, notes, drug round, handover, transfers, discharge desk), `/round` (order of the round, charts, orders, ceiling-of-care decisions), `/ot` (theatre list with gates, counts, implants, recovery and cancellations), `/duty` (roster, skills, rest between shifts), `/setup` bed classes and theatres | The nursing care plan, theatre consumable billing to the case, the ICU chart, and the ward's offline queue on the real edge node (`P0-210`) |
+
+Everything above is a **preview**: the rules, refusals and arithmetic are real, the patients, stock, money and
+blood are not, and a reload starts the day again. The write paths are the shapes the API will accept. What each
+screen refuses — and why — is in the screen itself, not only in this file.
 
 ## Conventions
 

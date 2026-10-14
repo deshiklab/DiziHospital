@@ -235,7 +235,33 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                         {link}
                       </Tooltip>
                     ) : (
-                      link
+                      <>
+                        {link}
+                        {/* Sub-screens belong to the module, so they appear under it while it is open and not as
+                            top-level destinations of their own. The rail has no room for labels, and the module
+                            page links to the same places in its own words. */}
+                        {active && item.children && item.children.length > 0 && (
+                          <ul className="mt-0.5 ml-4 flex flex-col gap-0.5 border-l border-border-subtle pl-2">
+                            {item.children.map((child) => {
+                              const childActive = pathname === child.href || pathname.startsWith(`${child.href}/`);
+                              return (
+                                <li key={child.key}>
+                                  <Link
+                                    href={child.href}
+                                    aria-current={childActive ? 'page' : undefined}
+                                    className={cx(
+                                      'block rounded-md px-2 py-1 text-sm',
+                                      childActive ? 'bg-brand-50 font-medium text-brand-700' : 'text-text-secondary hover:bg-surface-sunken hover:text-text-primary',
+                                    )}
+                                  >
+                                    {t(child.key, locale)}
+                                  </Link>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
+                      </>
                     )}
                   </li>
                 );
@@ -692,15 +718,23 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               className="w-full rounded-t-lg border-b border-border-subtle bg-transparent px-4 py-3 text-md outline-none"
             />
             <ul className="max-h-80 overflow-y-auto p-2">
-              {NAV.filter((n) => n.roles.includes(role)).map((n) => (
-                <li key={n.key}>
-                  <Link href={n.href} onClick={() => setPaletteOpen(false)} className="flex items-center gap-2 rounded-sm px-3 py-2 text-base hover:bg-surface-sunken">
-                    {ICONS[n.icon]}
-                    {t(n.key, locale)}
-                    {n.owner === 'legacy' && <span className="ml-auto rounded-full border border-border-subtle px-1.5 text-[10px] text-text-tertiary">legacy · {n.phase}</span>}
-                  </Link>
-                </li>
-              ))}
+              {NAV.filter((n) => n.roles.includes(role))
+                .flatMap((n) => [
+                  { key: n.key, href: n.href, icon: n.icon, owner: n.owner, phase: n.phase, parent: undefined as string | undefined },
+                  ...(n.children ?? []).map((c) => ({ key: c.key, href: c.href, icon: n.icon, owner: n.owner, phase: n.phase, parent: n.key })),
+                ])
+                .map((n) => (
+                  <li key={n.key}>
+                    <Link href={n.href} onClick={() => setPaletteOpen(false)} className="flex items-center gap-2 rounded-sm px-3 py-2 text-base hover:bg-surface-sunken">
+                      {ICONS[n.icon]}
+                      <span className="min-w-0 flex-1 truncate">
+                        {t(n.key, locale)}
+                        {n.parent && <span className="ml-2 text-xs text-text-tertiary">in {t(n.parent, locale)}</span>}
+                      </span>
+                      {n.owner === 'legacy' && <span className="shrink-0 rounded-full border border-border-subtle px-1.5 text-[10px] text-text-tertiary">legacy · {n.phase}</span>}
+                    </Link>
+                  </li>
+                ))}
             </ul>
             <p className="border-t border-border-subtle px-4 py-2 text-xs text-text-tertiary">Esc closes · ⌘K toggles · every route is a plain link you can copy</p>
           </div>
