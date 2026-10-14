@@ -206,11 +206,124 @@ try {
     [...window14.income, ...window14.expense].every((h) => Boolean(F.incomeHeadByCode(h.code) ?? F.expenseHeadByCode(h.code))),
   );
 
+  /* ---------------------------------------------------------------- the payer's money: claims */
+  console.log('\n  the claim register');
+  const claims = F.generateClaims(DAY, DAY);
+  const claimSnap = F.claimsSnapshot(claims);
+  const finalClaims = claims.filter((c) => c.basis === 'Final bill');
+  pass('the register is built from bills that exist, not from a list of its own',
+    finalClaims.every((c) => /^[A-Z]{1,3}-\d{6,8}-\d{4}$/.test(c.invoiceNo) && c.mrn.startsWith('SH-') && c.patientName.length > 0)
+      && finalClaims.every((c) => c.invoiceNo !== c.claimNo),
+    `${finalClaims.length} against bills · ${claims.length - finalClaims.length} estimates`);
+  const key = (c) => `${c.invoiceNo}|${c.payer}`;
+  pass('one invoice, one claim, per payer — in the register as well as in the rule',
+    new Set(finalClaims.map(key)).size === finalClaims.length,
+    finalClaims.length + ' lines');
+
+  const filed = claims.filter((c) => c.basis === 'Final bill' && c.submittedAt);
+  pass('ageing runs from the day the claim was filed, never from the day of the bill',
+    filed.every((c) => c.ageDays === F.daysBetween(c.submittedAt.slice(0, 10), DAY) && c.ageDays < F.daysBetween(c.raisedAt, DAY)),
+    `oldest bill ${claims.reduce((m, c) => (c.raisedAt < m ? c.raisedAt : m), DAY)} · oldest filing ${filed.reduce((m, c) => (c.submittedAt.slice(0, 10) < m ? c.submittedAt.slice(0, 10) : m), DAY)}`);
+
+  pass('a late filing is a real state: the paper arrived after the service did',
+    filed.some((c) => F.daysBetween(c.raisedAt, c.submittedAt.slice(0, 10)) > F.CLAIM_FILING_DELAY_DAYS));
+
+  const interim = claimSnap.interim;
+  pass('the inpatients still in a bed are on the register as estimates, not as claims',
+    interim.length > 0 && interim.every((c) => c.invoiceNo.startsWith('EST-') && c.basis === 'Interim estimate'),
+    interim.map((c) => `${c.claimNo} ${money(c.claimed)}`).join(' · '));
+
+  const approvedEstimate = interim.find((c) => c.status === 'Pre-auth approved') ?? interim[0];
+  const interimCheck = F.checkClaim(approvedEstimate, claims);
+  pass('submitting an estimate is refused for one reason: there is no bill yet',
+    !interimCheck.ok && interimCheck.refusals.length === 1 && interimCheck.refusals[0].code === 'not-discharged',
+    interimCheck.refusals[0]?.message.slice(0, 90));
+
+  const underwritten = interim.filter((c) => c.claimed > F.payerAgreement(c.payer).preAuthAbove);
+  pass('every estimate above its payer’s threshold is on the pre-authorisation watchlist',
+    underwritten.length > 0 && underwritten.every((c) => ['Pre-auth requested', 'Pre-auth approved'].includes(c.status)),
+    underwritten.map((c) => `${c.claimNo} ${c.status}`).join(' · '));
+
+  const bigDraft = { ...claims.find((c) => c.basis === 'Final bill'), status: 'Draft', claimed: 90_000, preAuth: null, basis: 'Final bill', documents: F.payerAgreement(claims[0].payer).documents };
+  pass('a bill above the threshold with no pre-authorisation is refused at the desk', F.checkClaim(bigDraft, claims).refusals.some((r) => r.code === 'pre-auth'));
+  const noDocs = { ...bigDraft, claimed: 200, preAuth: 'PA-2610-0001', documents: [] };
+  pass('and a claim missing its documents is refused by name', F.checkClaim(noDocs, claims).refusals.some((r) => r.code === 'documents' && /missing/.test(r.message)));
+  const duplicate = { ...claims[0], status: 'Draft', claimNo: 'CL-999999-9999' };
+  pass('one invoice, one claim, per payer: a second is refused with the claim that holds it',
+    F.checkClaim(duplicate, claims).refusals.some((r) => r.code === 'duplicate-invoice'));
+
+  const queried = claims.find((c) => c.status === 'Query raised');
+  pass('a query is waiting on a document, and the register says which',
+    Boolean(queried) && F.payerAgreement(queried.payer).documents.some((d) => !queried.documents.includes(d) && queried.notes.some((n) => n.includes(d))),
+    queried ? queried.notes.find((n) => n.startsWith('Waiting on')) : 'no queried claim in the register');
+
+  const shortPaid = claimSnap.claims.filter((c) => c.disallowed > 0);
+  pass('a short payment is carried whole by the hospital or not at all',
+    shortPaid.length > 0 && shortPaid.every((c) => c.absorbed === 0 || c.absorbed === c.disallowed),
+    `${shortPaid.length} short-paid lines`);
+  pass('money the hospital carries is either signed for or the claim stays open',
+    shortPaid.every((c) => c.absorbed === 0 || c.absorbedBy !== null || c.status !== 'Settled')
+      && claimSnap.totals.unassigned === claimSnap.claims.filter((c) => c.absorbed > 0 && !c.absorbedBy).reduce((n, c) => n + c.absorbed, 0),
+    `unassigned ${money(claimSnap.totals.unassigned)}`);
+  pass('a short payment always carries a reason code — an unexplained one teaches nothing',
+    shortPaid.every((c) => c.rejectionReason !== null || c.shortPayCode !== null),
+    [...new Set(shortPaid.map((c) => c.shortPayCode ?? c.rejectionReason))].join(' · '));
+
+  const line = F.settleClaim({ ...claims[0], status: 'Submitted', allowed: 0, disallowed: 0 }, { allowed: Math.round(claims[0].claimed * 0.8), code: 'tariff', at: `${DAY} 16:00` });
+  pass('recording an answer with nobody named to carry the difference leaves the claim open',
+    line.status === 'Partially settled' && line.absorbed > 0 && line.absorbedBy === null && /Nobody has been named/.test(line.because),
+    line.because);
+  const rejected = F.settleClaim({ ...claims[0], status: 'Submitted' }, { allowed: 0, rejection: F.REJECTION_REASONS[0], at: `${DAY} 16:00` });
+  pass('and a rejection is refused until somebody accepts it',
+    rejected.status === 'Rejected' && rejected.absorbed === 0 && /unassigned/.test(rejected.because), rejected.because);
+
+  pass('ageing buckets are the payer’s own promise first, and they add up to the register',
+    F.AGEING_BUCKETS[0] === 'Within terms' && claimSnap.ageing.reduce((n, b) => n + b.count, 0) === claims.length,
+    claimSnap.ageing.map((b) => `${b.bucket} ${b.count}`).join(' · '));
+  pass('a reason code with no money against it is not reported as a short payment',
+    claimSnap.reasons.every((r) => r.amount > 0), claimSnap.reasons.map((r) => `${r.code} ${money(r.amount)}`).join(' · '));
+  pass('the register names what it cannot show, rather than inventing an old claim',
+    /no payer bill older than/.test(F.CLAIM_REGISTER_NOTE) && claims.every((c) => F.daysBetween(c.raisedAt, DAY) <= F.CLAIM_REGISTER_DAYS + F.CLAIM_LATE_FILING_DAYS + 1),
+    `${claimSnap.ageing.map((b) => `${b.bucket}:${b.count}`).join(' ')}`);
+
+  /* ---------------------------------------------------------------- referral commission */
+  console.log('\n  referral commission');
+  const accruals = F.referralAccruals(DAY, 30);
+  const run = F.payoutRun(accruals, DAY);
+  pass('commission accrues on money collected, not on what was billed',
+    accruals.every((a) => a.base <= a.collected));
+  const blocked = accruals.filter((a) => F.COMMISSION_BLOCKED_HEADS.includes(a.headCode));
+  pass('a head that is never commissioned earns nothing, whoever the agreement names',
+    blocked.every((a) => a.commission === 0 && a.rate === 0 && a.status === 'Excluded' && /never commissioned/.test(a.exclusion ?? '')),
+    `${blocked.length} blocked-head lines · blocked: ${F.COMMISSION_BLOCKED_HEADS.join(', ')}`);
+  const offAgreement = accruals.filter((a) => /not in this agreement/.test(a.exclusion ?? ''));
+  pass('a head the agreement does not name earns nothing either, and says which',
+    offAgreement.length > 0 && offAgreement.every((a) => a.commission === 0 && a.rate === 0),
+    `${offAgreement.length} lines outside the referrer’s heads`);
+  const inHouseLines = accruals.filter((a) => a.referrerCode === 'REF-PROFS');
+  pass('an in-house consultant is refused a referral commission by name — one consultation, one payout',
+    inHouseLines.length > 0 && inHouseLines.every((a) => a.commission === 0
+      && a.status === 'Excluded'
+      && /consultant share, not a referral commission|never commissioned/.test(a.exclusion ?? '')),
+    `${inHouseLines.length} lines, none payable`);
+  pass('the hold is a fortnight, so a refund can net off before the money leaves',
+    accruals.every((a) => F.daysBetween(a.collectedAt.slice(0, 10), a.payableFrom) === F.COMMISSION_HOLD_DAYS),
+    `${F.COMMISSION_HOLD_DAYS} days · ${accruals.filter((a) => a.status === 'Held').length} still held`);
+  pass('a run pays what has become payable and shows what is still held',
+    run.totalPayable > 0 && run.lines.every((l) => l.payable + l.held === l.accrued) && run.totalNet === run.totalPayable - run.totalTds,
+    `payable ${money(run.totalPayable)} · held ${money(run.lines.reduce((n, l) => n + l.held, 0))} · net ${money(run.totalNet)}`);
+  pass('withholding leaves with the payment, at the professional rate',
+    run.lines.every((l) => l.tds === Math.round((l.payable * F.COMMISSION_TDS_PCT) / 100)),
+    `${F.COMMISSION_TDS_PCT} % · ${money(run.totalTds)}`);
+  pass('every exclusion names its reason, and an excluded line earns nothing',
+    accruals.filter((a) => a.exclusion).every((a) => a.commission === 0 && a.status === 'Excluded' && a.exclusion.length > 40),
+    `${accruals.filter((a) => a.status === 'Excluded').length} excluded lines`);
+
   if (failures.length) {
     console.log(`\nFAILED — ${failures.length} case${failures.length === 1 ? '' : 's'}\n`);
     process.exitCode = 1;
   } else {
-    console.log('\nOK — the ladder decides by amount, the tax leaves with the payment, and the book explains a difference before it alarms.\n');
+    console.log('\nOK — the ladder decides by amount, the tax leaves with the payment, the book explains a difference before it alarms, and a claim is filed against a bill.\n');
   }
   process.exit(process.exitCode ?? 0);
 } finally {

@@ -18,72 +18,39 @@
  * answers with the rule that refused a voucher, and the screen prints it.
  */
 
-import { PAYMENT_METHODS, dayEnd, generateInvoices, lineNet, totals, type Category, type DayEnd, type Invoice, type PaymentMethod } from './billing';
+import { PAYMENT_METHODS, dayEnd, generateInvoices, lineNet, payerCoverage, totals, type Category, type DayEnd, type Invoice, type Payer, type PaymentMethod } from './billing';
 import { ambulanceDay } from './ambulance';
 import { generateDispenses } from './pharmacy';
-import { patients } from './mock';
+import { BED_CHARGE, generateInpatient } from './ward';
+import { openBills } from './module-billing';
+import {
+  EXPENSE_HEADS,
+  INCOME_HEADS,
+  PAYER_AGREEMENTS,
+  REFERRERS,
+  expenseHeadByCode,
+  incomeHeadByCode,
+  payerAgreement,
+  referrerByCode,
+  type ExpenseHead,
+  type ExpenseHeadClass,
+  type IncomeGroup,
+  type IncomeHead,
+  type PayerAgreement,
+  type Referrer,
+  type ReferrerKind,
+} from './finance-tables';
 
-/* ------------------------------------------------------------------ heads */
+/* The heads live in their own leaf module (see `finance-heads.ts`); they are re-exported here so every caller
+ * that reaches for `INCOME_HEADS` from the ledger keeps working. */
+export {
+  EXPENSE_HEADS,
+  INCOME_HEADS,
+  expenseHeadByCode,
+  incomeHeadByCode,
+} from './finance-tables';
+export type { ExpenseHead, ExpenseHeadClass, IncomeGroup, IncomeHead } from './finance-tables';
 
-export type IncomeGroup = 'Operating' | 'Non-operating';
-
-export interface IncomeHead {
-  code: string;
-  label: string;
-  group: IncomeGroup;
-  /** The billing category this head collects, when it collects one — the link that makes the reconciliation possible. */
-  category: Category | null;
-  note: string;
-}
-
-export const INCOME_HEADS: IncomeHead[] = [
-  { code: 'INC-OPD', label: 'Outpatient consultation', group: 'Operating', category: 'Consultation', note: 'Counter receipts for OPD and emergency consultations.' },
-  { code: 'INC-IPD', label: 'Inpatient — bed and nursing', group: 'Operating', category: 'Bed', note: 'Interim bills and deposits against an admission.' },
-  { code: 'INC-DIAG', label: 'Diagnostics — laboratory and imaging', group: 'Operating', category: 'Pathology', note: 'Samples and studies are collected before the report; the head follows the order, not the result.' },
-  { code: 'INC-PHARM', label: 'Pharmacy sales', group: 'Operating', category: 'Pharmacy', note: 'Retail counter. Ward issues are billed through the inpatient head instead.' },
-  { code: 'INC-PROC', label: 'Procedures and theatre', group: 'Operating', category: 'Procedure', note: 'Dressings, ECG, day procedures and theatre charges.' },
-  { code: 'INC-BB', label: 'Blood bank', group: 'Operating', category: 'Procedure', note: 'Components and cross-match. The service charge only — donations are not income.' },
-  { code: 'INC-AMB', label: 'Ambulance', group: 'Operating', category: 'Ambulance', note: 'Trip charges. A call that never left the gate is not billed.' },
-  { code: 'INC-OTHER', label: 'Other operating income', group: 'Operating', category: null, note: 'Canteen rent, medical reports, certificates — collected at the counter but not billed to a patient account.' },
-  { code: 'INC-DONATION', label: 'Donations and grants', group: 'Non-operating', category: null, note: 'Kept out of operating income on purpose: it must never pay for a month of salaries.' },
-];
-
-export const incomeHeadByCode = (code: string): IncomeHead | undefined => INCOME_HEADS.find((h) => h.code === code);
-
-export type ExpenseHeadClass = 'Revenue' | 'Capital';
-
-export interface ExpenseHead {
-  code: string;
-  label: string;
-  klass: ExpenseHeadClass;
-  /** Withholding tax as a share of the bill, or null when the head does not attract any. */
-  aitPct: number | null;
-  /** Input VAT recorded on the bill, or null when the supplier is not registered. */
-  vatPct: number | null;
-  /**
-   * Whether the payment is a purchase. A purchase is quoted and compared; a meter, a rental agreement and a
-   * licence are not, and asking for a quotation for electricity is how an approval queue becomes a formality.
-   */
-  quotable: boolean;
-  note: string;
-}
-
-export const EXPENSE_HEADS: ExpenseHead[] = [
-  { code: 'EXP-DRUG', label: 'Drugs and surgical supplies', klass: 'Revenue', aitPct: 3, vatPct: 5, quotable: true, note: 'The largest line in a hospital. Withholding applies to the supplier, VAT to the goods.' },
-  { code: 'EXP-SALARY', label: 'Salaries and wages', klass: 'Revenue', aitPct: null, vatPct: null, quotable: false, note: 'Payroll is paid from its own run and appears here as a single monthly voucher; withholding on salary is deducted per employee, not per voucher.' },
-  { code: 'EXP-RENT', label: 'Rent and rates', klass: 'Revenue', aitPct: 5, vatPct: null, quotable: false, note: 'Withholding on rent is the tenant’s duty, and an unpaid one lands on the hospital, not the landlord.' },
-  { code: 'EXP-UTIL', label: 'Utilities — power, gas, water', klass: 'Revenue', aitPct: null, vatPct: 5, quotable: false, note: 'Paid against a meter. A generator running on diesel appears under repairs and fuel instead.' },
-  { code: 'EXP-REPAIR', label: 'Repairs and maintenance', klass: 'Revenue', aitPct: 5, vatPct: 5, quotable: true, note: 'Keeps an asset working. Replaces an asset: capital.' },
-  { code: 'EXP-EQUIP', label: 'Equipment and instruments', klass: 'Capital', aitPct: 5, vatPct: 5, quotable: true, note: 'Above the capital floor this is an asset on the register, depreciated — not an expense of the month it arrived.' },
-  { code: 'EXP-VENDOR', label: 'Outsourced services', klass: 'Revenue', aitPct: 5, vatPct: 5, quotable: true, note: 'Cleaning, security, laundry, waste. They bill monthly and they must show a VAT registration.' },
-  { code: 'EXP-TRANSPORT', label: 'Transport and fuel', klass: 'Revenue', aitPct: null, vatPct: null, quotable: false, note: 'Filled at the pump against a vehicle log; the log, not the receipt, is what a fuel audit reads.' },
-  { code: 'EXP-PROF', label: 'Professional and consultancy fees', klass: 'Revenue', aitPct: 10, vatPct: null, quotable: false, note: 'Doctors, auditors, lawyers. The highest withholding rate on the list, and the voucher names the engagement.' },
-  { code: 'EXP-STAT', label: 'Statutory and licences', klass: 'Revenue', aitPct: null, vatPct: null, quotable: false, note: 'VAT returns, trade licence, drug licence, fire safety, waste clearance.' },
-  { code: 'EXP-MARKET', label: 'Marketing and referral events', klass: 'Revenue', aitPct: 5, vatPct: 15, quotable: true, note: 'Referral payouts are not marketing: they are commission, and they run through their own register.' },
-  { code: 'EXP-TRAIN', label: 'Training and continuing education', klass: 'Revenue', aitPct: 10, vatPct: null, quotable: false, note: 'Fees for a named staff member, and the certificate is filed with the voucher.' },
-];
-
-export const expenseHeadByCode = (code: string): ExpenseHead | undefined => EXPENSE_HEADS.find((h) => h.code === code);
 
 /** What the branch does with input VAT. It is a setting, not a law in this file: change it with the law. */
 export const INPUT_VAT_CREDITABLE = false;
@@ -339,7 +306,7 @@ export const shiftDay = (day: string, days: number): string => {
 };
 
 const money = (n: number): string => `৳ ${Math.round(n).toLocaleString('en-IN')}`;
-export { money as financeMoney };
+const financeMoney = money;
 
 /** The head an invoice's money belongs to: the category that carries the most value on the bill. */
 export function headForInvoice(invoice: Invoice): IncomeHead {
@@ -1103,7 +1070,720 @@ export function unsettledCashInvoices(day: string, limit = 8): Invoice[] {
     .slice(0, limit);
 }
 
-export const unknownPatientName = (mrn: string): string => patients.find((p) => p.mrn === mrn)?.name ?? mrn;
+/* ================================================================================== receivables — TPA claims
+ *
+ * Billing knows the payer owes; this is where the hospital gets paid. Four rules, each of which is a way
+ * hospitals lose money:
+ *
+ *  1. **Pre-authorisation is bought before the service.** Above the agreed threshold a claim without a
+ *     pre-authorisation number is the commonest short payment there is, so it is refused at submission rather
+ *     than discovered on the remittance.
+ *  2. **The clock is the payer's promise, and a query does not stop it.** Ageing is measured from submission
+ *     against the agreed settlement period; a claim sitting with the payer for a hundred days is chased
+ *     whatever stage it claims to be at.
+ *  3. **A short payment or a rejection is assigned to somebody.** A disallowed amount stays open until it is
+ *     absorbed by the hospital, billed to the patient or sent back for rework — an unassigned write-off is how
+ *     money disappears a year at a time without a decision.
+ *  4. **Nothing is submitted twice.** One claim per invoice per payer, and the payer's answer is recorded
+ *     against the claim rather than a second claim being raised.
+ */
 
-export const PAYMENT_METHOD_LIST = PAYMENT_METHODS;
-export { totals as invoiceTotals };
+/* These two tables are the agreements the ledger is built on: what each payer promises, and who may be paid a
+ * referral commission. They live in `finance-tables.ts` with the heads, for the same reason — the setup catalogue
+ * and the ledger read one copy of each. */
+export { PAYER_AGREEMENTS, REFERRERS, payerAgreement, referrerByCode } from './finance-tables';
+export type { PayerAgreement, PayerKind, Referrer, ReferrerKind } from './finance-tables';
+
+
+
+export type ClaimStatus = 'Draft' | 'Pre-auth requested' | 'Pre-auth approved' | 'Submitted' | 'Query raised' | 'Partially settled' | 'Settled' | 'Rejected';
+
+export const CLAIM_STATUSES: ClaimStatus[] = ['Draft', 'Pre-auth requested', 'Pre-auth approved', 'Submitted', 'Query raised', 'Partially settled', 'Settled', 'Rejected'];
+
+export const CLAIM_OPEN: ClaimStatus[] = ['Draft', 'Pre-auth requested', 'Pre-auth approved', 'Submitted', 'Query raised', 'Partially settled'];
+
+export const claimTone: Record<ClaimStatus, 'neutral' | 'info' | 'warning' | 'success' | 'critical'> = {
+  Draft: 'neutral',
+  'Pre-auth requested': 'info',
+  'Pre-auth approved': 'info',
+  Submitted: 'info',
+  'Query raised': 'warning',
+  'Partially settled': 'warning',
+  Settled: 'success',
+  Rejected: 'critical',
+};
+
+/** The vocabulary a remittance advice uses, and who carries each one. Recording it is what turns a short payment into a lesson. */
+export const SHORT_PAY_REASONS: Array<{ code: string; label: string; who: 'Hospital' | 'Patient' | 'Payer rework'; because: string }> = [
+  { code: 'no-pre-auth', label: 'No pre-authorisation', who: 'Hospital', because: 'The service was above the threshold and nobody asked first. The hospital carries it.' },
+  { code: 'tariff', label: 'Above the agreed tariff', who: 'Hospital', because: 'The hospital billed more than the contract allows for that item. The tariff, not the bill, is the agreement.' },
+  { code: 'not-covered', label: 'Not covered by the policy', who: 'Patient', because: 'The policy excludes it — a waiting period, a pre-existing condition, an exclusion clause. It is the patient’s to pay, and the patient has to be told.' },
+  { code: 'no-documents', label: 'Documents incomplete', who: 'Payer rework', because: 'A missing discharge summary or report. Resubmit rather than write anything off.' },
+  { code: 'co-pay', label: 'Co-payment applied', who: 'Patient', because: 'The agreed share the patient pays. Not a loss — it moves from the payer to the patient.' },
+  { code: 'duplicate', label: 'Duplicate item', who: 'Hospital', because: 'The same item was claimed twice on one bill, which is a billing error and gets corrected in the ledger.' },
+];
+
+export const REJECTION_REASONS = [
+  'Eligibility not found',
+  'Policy lapsed on the treatment date',
+  'Treatment inside a waiting period',
+  'Claim filed after the deadline',
+  'Signature missing',
+];
+
+export type ClaimBasis = 'Final bill' | 'Interim estimate';
+
+/** The register covers this many days of bills. An older claim would stay in it until it is closed — see the note below. */
+export const CLAIM_REGISTER_DAYS = 45;
+/** The desk files a claim this many days after the bill is raised. */
+export const CLAIM_FILING_DELAY_DAYS = 2;
+/** Every seventh claim is filed late, because a document was missing: the delay is the payer's clock, not an excuse. */
+export const CLAIM_LATE_FILING_DAYS = 20;
+export const CLAIM_LATE_FILING_EVERY = 7;
+
+/**
+ * What a ward's stay is expected to cost beyond the bed itself — theatre, the delivery room, intensive monitoring.
+ * An inpatient claim is raised on an estimate like this one because the pre-authorisation is decided before the
+ * final bill exists; the claim is filed against the discharge bill, and the screen says which basis it is on.
+ */
+export const WARD_PROCEDURE_ESTIMATE: Record<string, number> = { 'med-a': 8_000, 'surg-b': 45_000, 'mat-c': 35_000, hdu: 25_000 };
+
+export interface Claim {
+  id: string;
+  claimNo: string;
+  invoiceNo: string;
+  mrn: string;
+  patientName: string;
+  payer: Payer;
+  tpa: string | null;
+  /** Whether this is a claim against a raised bill or an estimate for a patient still in a bed. */
+  basis: ClaimBasis;
+  /** What the hospital claims: the payer's share of the bill, or of the estimate, after the agreed discount. */
+  claimed: number;
+  /** What the payer allowed. Zero while the claim is open. */
+  allowed: number;
+  disallowed: number;
+  /** The patient's share of what was not allowed — moved to their account, not lost. */
+  toPatient: number;
+  /** What the hospital carries, and who signed for it. */
+  absorbed: number;
+  absorbedBy: string | null;
+  status: ClaimStatus;
+  shortPayCode: string | null;
+  rejectionReason: string | null;
+  preAuth: string | null;
+  /** When the bill was raised. The claim's clock starts at filing, not here. */
+  raisedAt: string;
+  submittedAt: string | null;
+  respondedAt: string | null;
+  settledAmount: number;
+  settledAt: string | null;
+  documents: string[];
+  /** Days since filing, against the payer's promised period. */
+  ageDays: number;
+  overdueDays: number;
+  notes: string[];
+}
+
+/** Where a remittance line leaves the money. An unassigned difference keeps the claim open. */
+export interface RemittanceLine {
+  status: ClaimStatus;
+  allowed: number;
+  disallowed: number;
+  toPatient: number;
+  absorbed: number;
+  absorbedBy: string | null;
+  shortPayCode: string | null;
+  rejectionReason: string | null;
+  because: string;
+}
+
+export interface ClaimCheck {
+  ok: boolean;
+  refusals: Array<{ code: string; message: string }>;
+  warnings: string[];
+}
+
+/** Whether a claim may leave the desk. Each refusal is a remittance-advice line waiting to happen. */
+export function checkClaim(
+  claim: Pick<Claim, 'payer' | 'claimed' | 'preAuth' | 'documents' | 'status' | 'invoiceNo' | 'claimNo' | 'basis'>,
+  existing: Claim[] = [],
+): ClaimCheck {
+  const agreement = payerAgreement(claim.payer);
+  const refusals: Array<{ code: string; message: string }> = [];
+  const warnings: string[] = [];
+  if (!agreement) return { ok: false, refusals: [{ code: 'no-agreement', message: 'This payer has no agreement on file, so there is no tariff to claim against.' }], warnings };
+
+  if (claim.basis === 'Interim estimate') {
+    refusals.push({
+      code: 'not-discharged',
+      message: 'This is an interim estimate for a patient still in a bed. It is what the pre-authorisation is decided on; the claim itself is filed against the discharge bill, because a claim is a bill and an estimate is not.',
+    });
+  }
+  if (claim.claimed > agreement.preAuthAbove && !claim.preAuth) {
+    refusals.push({
+      code: 'pre-auth',
+      message: `Above ${financeMoney(agreement.preAuthAbove)} this payer requires pre-authorisation, and it is bought before the service rather than after. A claim without the number comes back as “no pre-authorisation”, which is the hospital’s loss.`,
+    });
+  }
+  const missing = agreement.documents.filter((doc) => !claim.documents.includes(doc));
+  // The documents are gathered for filing. An interim estimate has no discharge summary yet, so demanding one
+  // now would give two refusals for one fact; `not-discharged` already says what has to happen.
+  if (missing.length > 0 && claim.basis !== 'Interim estimate') {
+    refusals.push({
+      code: 'documents',
+      message: `A ${agreement.kind.toLowerCase()} claim needs ${agreement.documents.length} documents; ${missing.length} ${missing.length === 1 ? 'is' : 'are'} missing: ${missing.join(', ')}. A missing document is not a delay, it is a rejection waiting to happen.`,
+    });
+  }
+  if (claim.status !== 'Draft' && claim.status !== 'Pre-auth approved') {
+    refusals.push({ code: 'already-submitted', message: `This claim is already ${claim.status.toLowerCase()}. A second claim against one invoice is a duplicate, and payers find those.` });
+  }
+  const other = existing.find((c) => c.invoiceNo === claim.invoiceNo && c.payer === claim.payer && c.claimNo !== claim.claimNo);
+  if (other) refusals.push({ code: 'duplicate-invoice', message: `${claim.invoiceNo} is already claimed on ${other.claimNo}. One invoice, one claim, per payer.` });
+
+  if (agreement.kind === 'Government scheme') warnings.push('A government scheme pays at its own tariff and in its own time: ninety days is normal, not a delay to chase.');
+  if (agreement.coPayPct > 0) warnings.push(`The patient pays ${agreement.coPayPct} % of the allowed amount as co-payment, collected at the counter rather than deducted from the claim.`);
+  if (agreement.tpa) warnings.push(`This claim goes to ${agreement.tpa}, who decides; the insurer pays. Both names belong on the file.`);
+  return { ok: refusals.length === 0, refusals, warnings };
+}
+
+/** Record what the payer answered. Nothing here is ever edited afterwards: the claim carries its own history. */
+export function settleClaim(
+  claim: Claim,
+  opts: { allowed: number; code?: string | null; rejection?: string | null; absorbedBy?: string | null; at: string },
+): RemittanceLine {
+  const agreement = payerAgreement(claim.payer)!;
+
+  if (opts.rejection) {
+    return {
+      status: 'Rejected',
+      allowed: 0,
+      disallowed: claim.claimed,
+      toPatient: 0,
+      absorbed: opts.absorbedBy ? claim.claimed : 0,
+      absorbedBy: opts.absorbedBy ?? null,
+      shortPayCode: null,
+      rejectionReason: opts.rejection,
+      because: `Rejected outright: ${opts.rejection.toLowerCase()}. ${
+        opts.absorbedBy
+          ? `${financeMoney(claim.claimed)} is written off with ${opts.absorbedBy} named on the write-off.`
+          : `${financeMoney(claim.claimed)} is unassigned, so the claim stays open: a rejection is closed by somebody accepting it, never by falling off a list.`
+      }`,
+    };
+  }
+
+  const allowed = Math.max(0, Math.min(opts.allowed, claim.claimed));
+  const disallowed = claim.claimed - allowed;
+  const code = opts.code ?? (disallowed > 0 ? 'tariff' : 'co-pay');
+  const rule = SHORT_PAY_REASONS.find((r) => r.code === code);
+  const coPay = Math.round((allowed * agreement.coPayPct) / 100);
+  const toPatient = (rule?.who === 'Patient' ? disallowed : 0) + coPay;
+  const absorbed = rule?.who === 'Patient' || rule?.who === 'Payer rework' ? 0 : disallowed;
+  const settledAmount = allowed - coPay;
+  const status: ClaimStatus = absorbed > 0 && !opts.absorbedBy ? 'Partially settled' : allowed === claim.claimed ? (toPatient > 0 ? 'Partially settled' : 'Settled') : 'Partially settled';
+
+  return {
+    status,
+    allowed,
+    disallowed,
+    toPatient,
+    absorbed,
+    absorbedBy: absorbed > 0 ? opts.absorbedBy ?? null : null,
+    shortPayCode: code,
+    rejectionReason: null,
+    because:
+      disallowed === 0
+        ? coPay > 0
+          ? `Allowed in full; ${financeMoney(coPay)} of it is the patient’s co-payment, so the payer settles ${financeMoney(settledAmount)} and the patient account carries the rest.`
+          : 'Allowed in full and settled — the payer kept the promise the agreement records.'
+        : rule
+          ? `${financeMoney(disallowed)} was not allowed: ${rule.label.toLowerCase()}. ${rule.because}${
+              absorbed > 0 && !opts.absorbedBy ? ' Nobody has been named as carrying it yet, so the claim stays open.' : ''
+            }`
+          : `${financeMoney(disallowed)} was not allowed and no reason code was recorded. A short payment with no reason is money that leaves without a lesson.`,
+  };
+}
+
+/** Ageing buckets. The first one is the payer's own promise, not a round thirty days. */
+export const AGEING_BUCKETS = ['Within terms', '1–30 over', '31–60 over', '61–90 over', 'Over 90'] as const;
+
+export function ageingBucket(overdueDays: number): (typeof AGEING_BUCKETS)[number] {
+  if (overdueDays <= 0) return 'Within terms';
+  if (overdueDays <= 30) return '1–30 over';
+  if (overdueDays <= 60) return '31–60 over';
+  if (overdueDays <= 90) return '61–90 over';
+  return 'Over 90';
+}
+
+/**
+ * The claim register: every payer bill the hospital's modules raised in the window, aged against the agreement,
+ * plus an interim estimate for the inpatients whose pre-authorisation is still being decided.
+ *
+ * It is built from the bills the other screens already hold — `openBills` for the modules and the day's own payer
+ * invoices — so the register cannot invent a claim for a bill that does not exist, and a claim's value is the
+ * payer's share of a real document rather than a number typed here.
+ */
+export function generateClaims(day: string, today = day): Claim[] {
+  const rand = rng(day.split('-').reduce((s, part) => s * 41 + Number(part), 3));
+  const claims: Claim[] = [];
+  let seq = 0;
+
+  /* ---------------------------------------------------------------- claims against raised bills */
+  for (let back = CLAIM_REGISTER_DAYS; back >= 0; back -= 1) {
+    const theDay = shiftDay(day, -back);
+    const bills = [
+      ...openBills(theDay)
+        // A bill with no patient on it cannot be claimed: there would be nobody to chase and nothing to attach
+        // the payer's answer to, so it is left where it is rather than turned into a claim that cannot be worked.
+        .filter((b) => b.payer !== 'Self pay' && b.state !== 'Cancelled' && b.mrn.startsWith('SH-'))
+        .map((b) => ({ invoiceNo: b.invoiceNo, mrn: b.mrn, patientName: b.patientName, payer: b.payer, payerShare: b.payerShare, at: b.at.slice(0, 10), what: `${b.module} bill` })),
+      ...generateInvoices(theDay)
+        .filter((i) => i.payer !== 'Self pay' && i.status !== 'Cancelled')
+        .map((i) => ({ invoiceNo: i.number, mrn: i.mrn, patientName: i.patientName, payer: i.payer, payerShare: totals(i).payerShare, at: i.createdAt.slice(0, 10), what: 'Out-patient bill' })),
+    ];
+
+    bills.forEach((bill, k) => {
+      const agreement = payerAgreement(bill.payer);
+      if (!agreement || bill.payerShare <= 0) return;
+      const index = seq + k;
+      const claimed = Math.round(bill.payerShare * (1 - agreement.discountPct / 100));
+      const late = index % CLAIM_LATE_FILING_EVERY === 0;
+      const filedOn = shiftDay(bill.at, late ? CLAIM_LATE_FILING_DAYS : CLAIM_FILING_DELAY_DAYS);
+      const filed = filedOn <= today;
+      const ageDays = filed ? daysBetween(filedOn, today) : 0;
+      const missingDocs = index % 4 === 1 ? agreement.documents.slice(-1) : [];
+      const needsPreAuth = claimed > agreement.preAuthAbove;
+
+      // A claim that has not been filed yet is a draft: the desk still owes the payer a document or a decision.
+      let status: ClaimStatus = filed ? 'Submitted' : 'Draft';
+      let preAuth: string | null = needsPreAuth ? (index % 3 === 0 ? `PA-${bill.at.slice(2, 4)}${bill.at.slice(5, 7)}-${String(4_100 + index)}` : null) : null;
+      if (filed && needsPreAuth && !preAuth) status = 'Pre-auth requested';
+      else if (filed && missingDocs.length > 0 && ageDays <= 20) status = 'Query raised';
+      else if (filed && ageDays > 20) status = index % 11 === 0 ? 'Rejected' : index % 3 === 0 ? 'Settled' : index % 3 === 1 ? 'Partially settled' : 'Submitted';
+
+      claims.push(buildClaim({
+        index, seq: seq + k, claimNo: `CL-${day.replace(/-/g, '').slice(2)}-${String(1_100 + index)}`,
+        invoiceNo: bill.invoiceNo, mrn: bill.mrn, patientName: bill.patientName, payer: bill.payer,
+        agreement, claimed, status, preAuth, basis: 'Final bill', raisedAt: bill.at, filedOn: filed ? filedOn : null,
+        ageDays, documents: agreement.documents.filter((d) => !missingDocs.includes(d)),
+        notes: [
+          `${bill.what} raised on ${bill.at}${late ? `, filed ${CLAIM_LATE_FILING_DAYS} days later because a document was missing — the payer’s clock started when the paper arrived, not when the service was given.` : ''}`,
+          missingDocs.length > 0 ? `Waiting on ${missingDocs.join(', ')} — a query is answered with a document, not a phone call.` : '',
+        ].filter(Boolean),
+        rand,
+      }));
+    });
+    seq += bills.length;
+  }
+
+  /* ---------------------------------------------------------------- interim estimates for inpatients */
+  const inpatients = generateInpatient(day).admissions
+    .filter((a) => a.patient.payer !== 'Self pay' && payerAgreement(a.patient.payer as Payer))
+    .map((a) => {
+      const payer = a.patient.payer as Payer;
+      const agreement = payerAgreement(payer)!;
+      const bedDays = a.expectedStayDays;
+      const estimate = bedDays * BED_CHARGE[a.class] + (WARD_PROCEDURE_ESTIMATE[a.wardId] ?? 0);
+      const claimed = Math.round(estimate * payerCoverage[payer] * (1 - agreement.discountPct / 100));
+      return { admission: a, payer, agreement, estimate, claimed, above: claimed > agreement.preAuthAbove };
+    })
+    .sort((x, y) => y.claimed - x.claimed);
+
+  // The desk watches the ones that need a decision: everything above its payer's threshold, plus the largest
+  // below it, which is the claim that will be filed on discharge without anybody having to look at it twice.
+  const watchlist = [...inpatients.filter((r) => r.above).slice(0, 4), ...inpatients.filter((r) => !r.above).slice(0, 1)];
+
+  watchlist.forEach((row, k) => {
+    const index = seq + k;
+    const above = row.above;
+    claims.push(buildClaim({
+      index, seq, claimNo: `CL-${day.replace(/-/g, '').slice(2)}-${String(2_300 + k)}`,
+      invoiceNo: `EST-${row.admission.bedId.toUpperCase()}-${day.replace(/-/g, '').slice(2)}`,
+      mrn: row.admission.mrn, patientName: row.admission.patient.name, payer: row.payer, agreement: row.agreement,
+      claimed: row.claimed,
+      status: above ? (k % 2 === 0 ? 'Pre-auth requested' : 'Pre-auth approved') : 'Pre-auth approved',
+      preAuth: above && k % 2 === 1 ? `PA-${day.slice(2, 4)}${day.slice(5, 7)}-${String(6_100 + k)}` : null,
+      basis: 'Interim estimate', raisedAt: row.admission.admittedAt.slice(0, 10), filedOn: null, ageDays: 0,
+      documents: row.agreement.documents.filter((d) => d !== 'Discharge summary'),
+      notes: [
+        `Interim estimate for ${row.admission.patient.name}, ${row.admission.bedId} (${row.admission.class}, ${row.admission.expectedStayDays} bed-days expected, ${row.admission.diagnosis?.label ?? 'diagnosis on the chart'}): ${financeMoney(row.estimate)} of stay value, ${financeMoney(row.claimed)} of it the payer's after the agreed discount.`,
+        above
+          ? `Above ${financeMoney(row.agreement.preAuthAbove)}, so the pre-authorisation is what is decided now: ${financeMoney(row.claimed)} sits with ${row.agreement.tpa ?? row.payer} until a number comes back, and the claim is filed against the discharge bill.`
+          : `Inside ${financeMoney(row.agreement.preAuthAbove)}, so no pre-authorisation is needed; the claim files itself on discharge against the final bill.`,
+        'The final claim is filed against the discharge bill. Until then the payer owes nothing, and the ward board, not this register, is what tells you where the patient is.',
+      ],
+      rand,
+    }));
+  });
+
+  void rand;
+  return claims.sort((a, b) => (a.raisedAt === b.raisedAt ? b.claimNo.localeCompare(a.claimNo) : b.raisedAt.localeCompare(a.raisedAt)));
+}
+
+interface BuildArgs {
+  index: number;
+  seq: number;
+  claimNo: string;
+  invoiceNo: string;
+  mrn: string;
+  patientName: string;
+  payer: Payer;
+  agreement: PayerAgreement;
+  claimed: number;
+  status: ClaimStatus;
+  preAuth: string | null;
+  basis: ClaimBasis;
+  raisedAt: string;
+  filedOn: string | null;
+  ageDays: number;
+  documents: string[];
+  notes: string[];
+  rand: () => number;
+}
+
+/** One place where a register line is assembled, so a settled claim and an open one cannot drift apart. */
+function buildClaim(a: BuildArgs): Claim {
+  const answered = a.status === 'Settled' || a.status === 'Partially settled' || a.status === 'Rejected';
+  const shortPay = a.status === 'Partially settled';
+  const rejected = a.status === 'Rejected';
+  const allowed = a.status === 'Settled' ? a.claimed : shortPay ? Math.round(a.claimed * 0.82) : 0;
+  const disallowed = answered ? a.claimed - allowed : 0;
+  const code = shortPay ? (a.index % 2 === 0 ? 'not-covered' : 'tariff') : a.status === 'Settled' ? 'co-pay' : null;
+  const rule = code ? SHORT_PAY_REASONS.find((r) => r.code === code) : undefined;
+  const coPay = Math.round((allowed * a.agreement.coPayPct) / 100);
+  const toPatient = answered ? (rule?.who === 'Patient' ? disallowed : 0) + coPay : 0;
+  const absorbed = rejected ? a.claimed : answered ? (rule && rule.who !== 'Patient' && rule.who !== 'Payer rework' ? disallowed : 0) : 0;
+  const absorbedBy = absorbed > 0 && a.index % 2 === 0 ? 'Clinical director — necessity documented' : null;
+
+  return {
+    id: `CLM-${5_200 + a.index}`,
+    claimNo: a.claimNo,
+    invoiceNo: a.invoiceNo,
+    mrn: a.mrn,
+    patientName: a.patientName,
+    payer: a.payer,
+    tpa: a.agreement.tpa,
+    basis: a.basis,
+    claimed: a.claimed,
+    allowed,
+    disallowed,
+    toPatient,
+    absorbed,
+    absorbedBy,
+    status: a.status,
+    shortPayCode: rejected ? null : code,
+    rejectionReason: rejected ? REJECTION_REASONS[a.index % REJECTION_REASONS.length] : null,
+    preAuth: a.preAuth,
+    raisedAt: a.raisedAt,
+    submittedAt: a.filedOn ? atMinute(a.filedOn, 9 * 60 + (a.index % 8) * 25) : null,
+    respondedAt: answered ? atMinute(shiftDay(a.filedOn ?? a.raisedAt, 9 + (a.index % 12)), 15 * 60 + (a.index % 6) * 10) : null,
+    settledAmount: answered ? Math.max(0, allowed - coPay) : 0,
+    settledAt: a.status === 'Settled' ? atMinute(shiftDay(a.filedOn ?? a.raisedAt, 12 + (a.index % 20)), 16 * 60 + (a.index % 5) * 5) : null,
+    documents: a.documents,
+    ageDays: a.ageDays,
+    overdueDays: a.filedOn ? Math.max(0, a.ageDays - a.agreement.settlementDays) : 0,
+    notes: [
+      ...a.notes,
+      ...(absorbed > 0
+        ? [absorbedBy
+          ? `${financeMoney(absorbed)} was short-paid and absorbed by the hospital, signed ${absorbedBy}: the treatment was clinically necessary and documented, so it is written off with a name against it.`
+          : `${financeMoney(absorbed)} was short-paid and nobody has been named as carrying it, so the claim stays open: a write-off is closed by somebody accepting it, never by falling off a list.`]
+        : []),
+      ...(rejected ? [`Rejected outright: ${REJECTION_REASONS[a.index % REJECTION_REASONS.length].toLowerCase()}. The hospital carries the whole ${financeMoney(a.claimed)} unless it is reworked and refiled inside the payer's window.`] : []),
+    ],
+  };
+}
+
+export interface ClaimsSnapshot {
+  claims: Claim[];
+  /** Claims against an estimate rather than a raised bill: the pre-authorisation decisions a desk works. */
+  interim: Claim[];
+  totals: { claimed: number; allowed: number; settled: number; outstanding: number; shortPaid: number; unassigned: number; patient: number };
+  byStatus: Array<{ status: ClaimStatus; count: number; amount: number }>;
+  ageing: Array<{ bucket: (typeof AGEING_BUCKETS)[number]; count: number; amount: number; because: string }>;
+  overdue: Claim[];
+  reasons: Array<{ code: string; label: string; count: number; amount: number; who: string }>;
+  missingDocuments: Claim[];
+}
+
+export function claimsSnapshot(claims: Claim[]): ClaimsSnapshot {
+  const open = claims.filter((c) => CLAIM_OPEN.includes(c.status));
+  const claimed = sum(claims, (c) => c.claimed);
+  const byStatus = CLAIM_STATUSES.map((status) => {
+    const rows = claims.filter((c) => c.status === status);
+    return { status, count: rows.length, amount: sum(rows, (c) => c.claimed) };
+  }).filter((row) => row.count > 0);
+
+  const ageing = AGEING_BUCKETS.map((bucket) => {
+    const rows = claims.filter((c) => ageingBucket(c.overdueDays) === bucket);
+    const because =
+      bucket === 'Within terms'
+        ? 'Inside the payer’s own settlement period. Nothing to chase yet, and chasing early costs goodwill.'
+        : bucket === 'Over 90'
+          ? 'Past ninety days: escalate in writing to the payer and the TPA, with the claim number and the submission date on the letter.'
+          : 'Past the promised period. A call with the claim number moves these; a statement of account moves very little.';
+    return { bucket, count: rows.length, amount: sum(rows, (c) => c.claimed), because };
+  }).filter((row) => row.count > 0);
+
+  const reasons = SHORT_PAY_REASONS.map((rule) => {
+    const rows = claims.filter((c) => c.shortPayCode === rule.code);
+    // A reason with no money against it is noise: a settled claim whose only difference is the patient's
+    // co-payment is not a short payment, and a list that says it was teaches the desk to ignore the list.
+    return { code: rule.code, label: rule.label, count: rows.filter((c) => c.disallowed > 0).length, amount: sum(rows, (c) => c.disallowed), who: rule.who };
+  }).filter((row) => row.amount > 0).sort((a, b) => b.amount - a.amount);
+
+  return {
+    claims,
+    interim: claims.filter((c) => c.basis === 'Interim estimate'),
+    totals: {
+      claimed,
+      allowed: sum(claims, (c) => c.allowed),
+      settled: sum(claims, (c) => c.settledAmount),
+      outstanding: sum(open, (c) => c.claimed),
+      shortPaid: sum(claims, (c) => c.disallowed),
+      unassigned: sum(claims.filter((c) => c.disallowed > 0 && c.absorbed > 0 && !c.absorbedBy), (c) => c.absorbed),
+      patient: sum(claims, (c) => c.toPatient),
+    },
+    byStatus,
+    ageing,
+    overdue: claims.filter((c) => c.overdueDays > 0).sort((a, b) => b.overdueDays - a.overdueDays),
+    reasons,
+    missingDocuments: claims.filter((c) => c.notes.some((n) => /Waiting on/.test(n))),
+  };
+}
+
+/** The claim the user is working on, from the register. */
+export const claimByNo = (claims: Claim[], claimNo: string): Claim | undefined => claims.find((c) => c.claimNo === claimNo);
+
+/**
+ * What the register is and what it is not. The branch's synthetic history is forty-five days deep, so the two
+ * oldest ageing buckets are empty here: the screen says which buckets are empty and why rather than inventing a
+ * ninety-day-old claim to make a chart look busy.
+ */
+export const CLAIM_REGISTER_NOTE =
+  `Built from the payer bills the modules raised in the last ${CLAIM_REGISTER_DAYS} days and the interim estimates for the inpatients whose pre-authorisation is still open. An older claim would stay in the register until it is closed; the branch has no payer bill older than that, so the two oldest ageing buckets are empty here.`;
+
+export const CLAIM_NEEDS_AGREEMENT = 'A claim with no agreement behind it is a guess at a tariff, and the guess is always the hospital’s. Setup › Finance holds the payer agreements.';
+
+/* ================================================================================== referral commission
+ *
+ * A referral commission is a payment for a clinical decision, so the register is where it belongs: who may be
+ * paid, on which heads, at what rate, under which agreement. Five rules keep it from becoming a bribe with an
+ * invoice:
+ *
+ *  1. **Collected, not billed.** Commission is computed on money the hospital actually has. Billed value is a
+ *     promise, and paying a share of a promise is how a commission run loses money.
+ *  2. **Not on pharmacy, not on anything the agreement does not name.** A rate that applies to drug sales pays a
+ *     doctor to prescribe. The heads are part of the agreement, not a footnote to it.
+ *  3. **A hold, so refunds net off.** Commission becomes payable a fortnight after collection, not the same day.
+ *  4. **Withholding leaves with the payment**, like every other payment to a professional.
+ *  5. **The consultant’s share and the referral commission are never both.** A referrer who is also the treating
+ *     consultant gets the share; the commission register refuses the double dip by name.
+ */
+
+
+
+/** Withholding on commission, like any other professional payment. */
+export const COMMISSION_TDS_PCT = 5;
+/** Commission becomes payable this many days after collection, so a refund can net off first. */
+export const COMMISSION_HOLD_DAYS = 14;
+/** Heads a commission may never be paid on, whoever the agreement names. */
+export const COMMISSION_BLOCKED_HEADS = ['INC-PHARM', 'INC-OTHER', 'INC-DONATION'];
+
+/** The head a module's own counter collects against. Module bills carry no per-category lines, so the mapping is
+ * by hand — and it is by hand everywhere else in this product too, because a pharmacy receipt is a pharmacy
+ * receipt whichever screen raised it. */
+export const MODULE_INCOME_HEAD: Record<string, string> = {
+  Pathology: 'INC-DIAG',
+  Radiology: 'INC-DIAG',
+  'Blood issue': 'INC-BB',
+  'Blood components': 'INC-BB',
+  IPD: 'INC-IPD',
+  Ambulance: 'INC-AMB',
+  Pharmacy: 'INC-PHARM',
+  OPD: 'INC-OPD',
+};
+
+export interface Accrual {
+  id: string;
+  referrerCode: string;
+  referrerName: string;
+  invoiceNo: string;
+  mrn: string;
+  patientName: string;
+  headCode: string;
+  /** What the invoice collected, which is what the commission is a share of. */
+  collected: number;
+  /** The share of the collected amount this head carries. */
+  base: number;
+  rate: number;
+  commission: number;
+  collectedAt: string;
+  /** The day it becomes payable: collection + the hold. */
+  payableFrom: string;
+  status: 'Held' | 'Payable' | 'Excluded' | 'Paid';
+  /** Why it is not payable, when it is not. */
+  exclusion: string | null;
+}
+
+/**
+ * The accruals for a window, computed per invoice from money collected and per head, so a rate that must not
+ * touch pharmacy simply never accrues on it — rather than accruing and being removed later, which is how a
+ * commission run and its register drift apart.
+ *
+ * The window is wider than the hold on purpose: a run pays what has become payable and shows what is still held,
+ * so a referrer whose statement looks short is owed the reason rather than an argument.
+ */
+export function referralAccruals(day: string, days = 30): Accrual[] {
+  const accr: Accrual[] = [];
+  for (let back = 0; back < days; back += 1) {
+    const theDay = shiftDay(day, -back);
+
+    /* What was collected, per head, from both registers: the counter bills the billing desk raised, and the
+     * module bills the pathology, radiology, blood bank, ward, ambulance and pharmacy counters raised. A
+     * commission that only saw one of the two would pay a referrer for a radiology study and not for the
+     * pharmacy the same patient bought on the way out — and half a register is worse than none, because it
+     * looks complete. */
+    const collections: Array<{ billNo: string; mrn: string; patientName: string; headCode: string; base: number; at: string }> = [];
+    for (const invoice of generateInvoices(theDay)) {
+      if (invoice.status === 'Cancelled' || invoice.payments.length === 0) continue;
+      const t = totals(invoice);
+      for (const head of INCOME_HEADS) {
+        const headValue = invoice.lines.filter((l) => l.category === head.category && head.category !== null).reduce((n, l) => n + lineNet(l), 0);
+        if (headValue <= 0) continue;
+        const share = Math.round((t.paid * headValue) / Math.max(1, t.net));
+        if (share <= 0) continue;
+        collections.push({ billNo: invoice.number, mrn: invoice.mrn, patientName: invoice.patientName, headCode: head.code, base: share, at: invoice.payments[0]?.at ?? atMinute(theDay, 10 * 60) });
+      }
+    }
+    for (const bill of openBills(theDay)) {
+      const headCode = MODULE_INCOME_HEAD[bill.module];
+      if (!headCode || bill.state === 'Cancelled' || bill.collected <= 0 || !bill.mrn.startsWith('SH-')) continue;
+      collections.push({ billNo: bill.invoiceNo, mrn: bill.mrn, patientName: bill.patientName, headCode, base: bill.collected, at: bill.at });
+    }
+    // The pharmacy counter's own register: a dispensed prescription to a self-paying patient is money collected,
+    // and it is the line that keeps the “never commissioned” rule from being a sentence in a document.
+    for (const dispense of generateDispenses(theDay)) {
+      if (dispense.status !== 'Dispensed' || dispense.patient.payer !== 'Self pay' || dispense.total <= 0) continue;
+      collections.push({
+        billNo: dispense.rxNumber,
+        mrn: dispense.patient.mrn,
+        patientName: dispense.patient.name,
+        headCode: 'INC-PHARM',
+        base: dispense.total,
+        at: dispense.dispensedAt ?? atMinute(theDay, 12 * 60),
+      });
+    }
+
+    for (const collection of collections) {
+      const head = incomeHeadByCode(collection.headCode);
+      if (!head || collection.base <= 0) continue;
+
+      // In production the referrer is a field on the registration; here it is assigned from the MRN so the same
+      // patient is always referred by the same desk, and the register is stable across a reload.
+      const referrer = REFERRERS[Number(collection.mrn.replace(/\D/g, '')) % REFERRERS.length];
+      const blocked = COMMISSION_BLOCKED_HEADS.includes(head.code);
+      const notAgreed = !referrer.heads.includes(head.code);
+      const inHouse = referrer.kind === 'In-house consultant';
+      const rate = notAgreed ? 0 : referrer.commissionPct / 100;
+      const payableFrom = shiftDay(collection.at.slice(0, 10), COMMISSION_HOLD_DAYS);
+      const exclusion = blocked
+        ? `${head.label} is never commissioned: paying a share of drug sales pays a doctor to prescribe.`
+        : inHouse
+          ? 'An in-house consultant earns the consultant share, not a referral commission — one consultation, one payout.'
+          : notAgreed
+            ? `${head.label} is not in this agreement, and a rate applies to the heads it names, not to everything the patient spends.`
+            : null;
+
+      accr.push({
+        id: `${collection.billNo}-${head.code}`,
+        referrerCode: referrer.code,
+        referrerName: referrer.name,
+        invoiceNo: collection.billNo,
+        mrn: collection.mrn,
+        patientName: collection.patientName,
+        headCode: head.code,
+        collected: collection.base,
+        base: collection.base,
+        rate,
+        commission: exclusion ? 0 : Math.round(collection.base * rate),
+        collectedAt: collection.at,
+        payableFrom,
+        status: exclusion ? 'Excluded' : payableFrom <= day ? 'Payable' : 'Held',
+        exclusion,
+      });
+    }
+  }
+  return accr;
+}
+
+export interface PayoutLine {
+  referrerCode: string;
+  referrerName: string;
+  kind: ReferrerKind;
+  tin: string | null;
+  accrued: number;
+  held: number;
+  payable: number;
+  tds: number;
+  net: number;
+  lines: number;
+  statement: string;
+}
+
+export interface PayoutRun {
+  to: string;
+  lines: PayoutLine[];
+  totalPayable: number;
+  totalTds: number;
+  totalNet: number;
+  excluded: number;
+  because: string;
+}
+
+/**
+ * What may be paid today. Held accruals are counted and shown rather than hidden: a referrer asking why the
+ * statement is short deserves the reason, and the reason is usually that the money has not been collected long
+ * enough for a refund to be impossible.
+ */
+export function payoutRun(accruals: Accrual[], to: string): PayoutRun {
+  const rows = REFERRERS.map((referrer) => {
+    const mine = accruals.filter((a) => a.referrerCode === referrer.code);
+    const accrued = sum(mine.filter((a) => a.status !== 'Excluded'), (a) => a.commission);
+    const payable = sum(mine.filter((a) => a.status === 'Payable'), (a) => a.commission);
+    const held = accrued - payable;
+    const tds = Math.round((payable * COMMISSION_TDS_PCT) / 100);
+    return {
+      referrerCode: referrer.code,
+      referrerName: referrer.name,
+      kind: referrer.kind,
+      tin: referrer.tin,
+      accrued,
+      held,
+      payable,
+      tds,
+      net: payable - tds,
+      lines: mine.filter((a) => a.status !== 'Excluded').length,
+      statement: referrer.tin
+        ? `${referrer.commissionPct} % on ${referrer.heads.length} head(s) — ${referrer.heads.join(', ')}`
+        : 'No TIN on file: a commission paid without one attracts the higher deduction, so get the number first.',
+    };
+  }).filter((row) => row.accrued > 0 || row.payable > 0);
+
+  const excluded = sum(accruals.filter((a) => a.status === 'Excluded'), (a) => a.base);
+  return {
+    to,
+    lines: rows,
+    totalPayable: sum(rows, (r) => r.payable),
+    totalTds: sum(rows, (r) => r.tds),
+    totalNet: sum(rows, (r) => r.net),
+    excluded,
+    because: `Paid on money collected at least ${COMMISSION_HOLD_DAYS} days ago, so a refund can still net off; withholding at ${COMMISSION_TDS_PCT} % leaves with the payment. ${financeMoney(excluded)} of billed value was excluded, and every exclusion names its reason.`,
+  };
+}
+
+/** The referrer a payout is being prepared for, with their accruals. */
+export const accrualsFor = (accruals: Accrual[], code: string): Accrual[] => accruals.filter((a) => a.referrerCode === code);
+
+export const referralRegisterNote =
+  'A commission register is not a marketing list: it says who may be paid, on which heads, at what rate, and under which written agreement — and the agreement expires.';

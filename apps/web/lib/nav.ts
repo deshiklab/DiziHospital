@@ -54,6 +54,8 @@ export const NAV: NavItem[] = [
   { key: 'nav.finance', href: '/finance', icon: 'banknote', roles: ['billing', 'admin'], owner: 'new', phase: 'P6', children: [
     { key: 'nav.finance.income', href: '/finance/income' },
     { key: 'nav.finance.expenses', href: '/finance/expenses' },
+    { key: 'nav.finance.tpa', href: '/finance/tpa' },
+    { key: 'nav.finance.referral', href: '/finance/referral' },
   ] },
   { key: 'nav.setup', href: '/setup', icon: 'setup', roles: ['admin'], owner: 'new', phase: 'P2' },
   { key: 'nav.reports', href: '/reports', icon: 'chart', roles: ['admin', 'billing'], owner: 'legacy', phase: 'P6' },
@@ -77,6 +79,8 @@ export const strings: Record<string, { en: string; bn: string }> = {
   'nav.finance': { en: 'Finance', bn: 'আর্থিক' },
   'nav.finance.income': { en: 'Income vouchers', bn: 'আয় ভাউচার' },
   'nav.finance.expenses': { en: 'Expense vouchers', bn: 'ব্যয় ভাউচার' },
+  'nav.finance.tpa': { en: 'TPA and insurance claims', bn: 'টিপিএ ও বীমা দাবি' },
+  'nav.finance.referral': { en: 'Referral commission', bn: 'রেফারেল কমিশন' },
   'nav.setup': { en: 'Setup', bn: 'সেটআপ' },
   'nav.pharmacy': { en: 'Pharmacy', bn: 'ফার্মেসি' },
   'nav.billing': { en: 'Billing', bn: 'বিলিং' },

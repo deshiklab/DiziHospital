@@ -81,6 +81,8 @@ const ROUTES = [
   '/finance',
   '/finance/income',
   '/finance/expenses',
+  '/finance/tpa',
+  '/finance/referral',
   '/setup',
   '/reports',
   '/sync',
@@ -284,6 +286,93 @@ async function check(route) {
     }
   }
 
+  /* The claim pipeline's headline claim, driven the same way: a refusal is refused *with the payer's own rule*,
+   * and an accepted claim moves out of Draft and into the device's own queue. A preview that only renders a status
+   * column can demonstrate neither. */
+  let claims = 'n/a';
+  if (route === '/finance/tpa') {
+    const chip = (re) => [...doc.querySelectorAll('button')].find((b) => re.test(b.textContent ?? ''));
+    const toastText = () => [...doc.querySelectorAll('[role="status"], [role="alert"], li')].map((n) => n.textContent ?? '').join(' ');
+    const pressChip = (re) => {
+      const button = chip(re);
+      if (button) press(button);
+      return Boolean(button);
+    };
+
+    // 1. An interim estimate is refused, and the refusal quotes the payer's rule rather than an error code.
+    if (!pressChip(/^Awaiting pre-authorisation$/)) {
+      claims = 'NO VIEW';
+      routeProblems.push('the “Awaiting pre-authorisation” saved view is missing from the claim register');
+    } else {
+      await new Promise((r) => setTimeout(r, 300));
+      // The sheet offers submission for the states it is allowed in, so the row is chosen by state rather than by
+      // position: only an approved pre-authorisation is a claim the desk may try to send.
+      const rows = [...doc.querySelectorAll('tbody tr')];
+      const firstRow = rows.find((r) => /Pre-auth approved/.test(r.textContent ?? '')) ?? rows[0];
+      if (!firstRow) {
+        claims = 'NO ROWS';
+        routeProblems.push('the pre-authorisation view rendered no rows');
+      } else {
+        press(firstRow);
+        await new Promise((r) => setTimeout(r, 250));
+        const submit = [...doc.querySelectorAll('button')].find((b) => /^submit the claim$/i.test((b.textContent ?? '').trim()));
+        if (!submit) {
+          claims = 'NO SUBMIT';
+          routeProblems.push('an interim claim cannot be submitted from its sheet — the refusal is the screen');
+        } else {
+          press(submit);
+          await new Promise((r) => setTimeout(r, 350));
+          const refused = /Refused — This is an interim estimate/i.test(toastText());
+          // 2. A draft claim is submitted: it stays in the register — an answer from the payer closes it — but it is
+          //    no longer a draft, and the write is in the queue under the contract's operation name.
+          const close = [...doc.querySelectorAll('button')].find((b) => /^close$/i.test((b.textContent ?? '').trim()));
+          if (close) press(close);
+          pressChip(/^Open register$/);
+          await new Promise((r) => setTimeout(r, 300));
+          const openRows = [...doc.querySelectorAll('tbody tr')];
+          const draftRow = openRows.find((r) => /Draft/.test(r.textContent ?? '')) ?? openRows[0];
+          const claimNo = (draftRow?.textContent ?? '').match(/CL-\d+-\d+/)?.[0] ?? '';
+          if (!draftRow) {
+            claims = refused ? 'refused · NO DRAFT ROW' : 'NO DRAFT ROW';
+            routeProblems.push('the open register rendered no rows');
+          } else {
+            press(draftRow);
+            await new Promise((r) => setTimeout(r, 250));
+            const send = [...doc.querySelectorAll('button')].find((b) => /^submit the claim$/i.test((b.textContent ?? '').trim()));
+            if (!send) {
+              claims = refused ? 'refused · NO SUBMIT' : 'NO SUBMIT';
+              routeProblems.push('a draft claim cannot be submitted from the register');
+            } else {
+              press(send);
+              await new Promise((r) => setTimeout(r, 400));
+              // The write has to reach the saved queue under the operation the contract declares: a status that
+              // only changes on screen is a status a reload loses.
+              let queued = 0;
+              try {
+                const saved = JSON.parse(dom.window.localStorage.getItem('dizi.outbox.v1') ?? 'null');
+                queued = (Array.isArray(saved?.pending) ? saved.pending : []).filter((op) => op.operationId === 'submitClaim' && op.recordId === claimNo).length;
+              } catch {
+                queued = -1;
+              }
+              const close = [...doc.querySelectorAll('button')].find((b) => /^close$/i.test((b.textContent ?? '').trim()));
+              if (close) press(close);
+              await new Promise((r) => setTimeout(r, 300));
+              const named = /submitted — ৳/.test(toastText());
+              // And it is a claim, not a draft: it stays in the register, because an answer from the payer is what
+              // closes it — but its state has moved on, which is what the desk reads.
+              const row = [...doc.querySelectorAll('tbody tr')].find((r) => (r.textContent ?? '').includes(claimNo));
+              const moved = /Submitted/.test(row?.textContent ?? '');
+              claims = `${refused ? 'refused' : 'NO REFUSAL'} · ${claimNo} ${moved ? 'submitted' : 'STILL Draft'}${queued === 1 ? ' · queued as submitClaim' : ` · queued=${queued}`}${named ? ' · named' : ''}`;
+              if (!refused) routeProblems.push('submitting an interim estimate was allowed — a claim is filed against a bill, not an estimate');
+              if (!moved) routeProblems.push(`submitting ${claimNo} left it reading “Draft” in the register`);
+              if (queued !== 1) routeProblems.push(`the submitted claim did not reach the saved queue as \`submitClaim\` (${queued} matching operations) — P0-306 keeps the queue on the device`);
+            }
+          }
+        }
+      }
+    }
+  }
+
   // Did the saved queue come back, and is the contract the thing refusing what cannot be queued?
   let queue = 'n/a';
   if (seeded) {
@@ -413,7 +502,7 @@ async function check(route) {
 
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors: [...errors, ...routeProblems], handlers, copy, ledger, drill, queue, persist, named, retry, refusal, readyWait };
+  return { errors: [...errors, ...routeProblems], handlers, copy, ledger, claims, drill, queue, persist, named, retry, refusal, readyWait };
 }
 
 const CONCURRENCY = Math.max(1, Number(process.env.DIZI_CONCURRENCY ?? 4));
@@ -468,10 +557,10 @@ outcomes.forEach((outcome, i) => {
     problems += 1;
     return;
   }
-  const { errors, handlers, copy, ledger, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
+  const { errors, handlers, copy, ledger, claims, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
   const bad = errors.length > 0 || handlers === 'DEAD';
   const slow = readyWait !== undefined && readyWait > 2000 ? `  ready=${(readyWait / 1000).toFixed(1)}s` : '';
-  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
+  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
   if (handlers === 'DEAD') {
     console.log('      the shared control did not respond after hydration');
     problems += 1;

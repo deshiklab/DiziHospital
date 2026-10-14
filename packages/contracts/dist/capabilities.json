@@ -813,6 +813,123 @@
       "servesFromReplica": false,
       "needsNetwork": false,
       "requiresIdempotencyKey": true
+    },
+    "submitClaim": {
+      "id": "submitClaim",
+      "method": "post",
+      "path": "/claims",
+      "tag": "finance",
+      "summary": "Submit a payer claim",
+      "entity": "claim",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "The claim is raised where the patient was treated, which is the only place that has the file and the discharge summary. Queue it: a claim desk that cannot raise a claim offline stops admitting payer patients the moment the link drops.",
+      "notes": null,
+      "request": "ClaimSubmit",
+      "responses": {
+        "201": "Claim",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "recordClaimResponse": {
+      "id": "recordClaimResponse",
+      "method": "post",
+      "path": "/claims/{claimNo}/response",
+      "tag": "finance",
+      "summary": "Record what the payer allowed",
+      "entity": "claim",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "The remittance advice arrives at a desk with a telephone and a spreadsheet, so the answer is typed where it is read. Queue it, and the claim shows the answer as awaiting sync until it lands rather than pretending the money is settled.",
+      "notes": null,
+      "request": "ClaimResponseCreate",
+      "responses": {
+        "201": "Claim",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "createCommissionPayout": {
+      "id": "createCommissionPayout",
+      "method": "post",
+      "path": "/commission/payouts",
+      "tag": "finance",
+      "summary": "Record a referral commission payout",
+      "entity": "commission.payout",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "A payout is money leaving for a clinical decision made weeks earlier, and the account that pays it is where the cheque is written. Queue it, and the run shows the voucher as awaiting sync until the bank confirms it.",
+      "notes": null,
+      "request": "CommissionPayoutCreate",
+      "responses": {
+        "201": "CommissionPayout",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
     }
   },
   "operationOrder": [
@@ -837,7 +954,10 @@
     "appendAuditEntry",
     "listNumberBlocks",
     "createIncomeVoucher",
-    "createExpenseVoucher"
+    "createExpenseVoucher",
+    "submitClaim",
+    "recordClaimResponse",
+    "createCommissionPayout"
   ],
   "byEntity": {
     "patient.demographic": [
@@ -886,6 +1006,13 @@
     ],
     "ledger.expense": [
       "createExpenseVoucher"
+    ],
+    "claim": [
+      "submitClaim",
+      "recordClaimResponse"
+    ],
+    "commission.payout": [
+      "createCommissionPayout"
     ]
   },
   "queueable": [
@@ -904,7 +1031,10 @@
     "recordPayment",
     "appendAuditEntry",
     "createIncomeVoucher",
-    "createExpenseVoucher"
+    "createExpenseVoucher",
+    "submitClaim",
+    "recordClaimResponse",
+    "createCommissionPayout"
   ],
   "servedFromReplica": [
     "listPatients",
@@ -934,7 +1064,10 @@
       "recordPayment",
       "appendAuditEntry",
       "createIncomeVoucher",
-      "createExpenseVoucher"
+      "createExpenseVoucher",
+      "submitClaim",
+      "recordClaimResponse",
+      "createCommissionPayout"
     ]
   },
   "entities": {
@@ -1002,6 +1135,16 @@
       "policy": "append-only",
       "label": "Expense voucher",
       "why": "A payment is money out, with a payee and a cheque or transfer behind it. Two nodes paying the same bill is two payments, and the bank statement will show both."
+    },
+    "claim": {
+      "policy": "exclusive",
+      "label": "Payer claim",
+      "why": "One invoice is claimed once with one payer. Two desks submitting the same bill is a duplicate claim, which payers find and hospitals are repaid for by being put on a watch list, so the second submission is refused with the claim number that already holds it."
+    },
+    "commission.payout": {
+      "policy": "append-only",
+      "label": "Commission payout",
+      "why": "A payout is an event: a voucher number, an amount, a withholding, a reference and two names. Nothing about it is edited afterwards — a mistake is corrected by a reversing voucher, and the bank statement shows both."
     }
   },
   "drainOutcomes": {

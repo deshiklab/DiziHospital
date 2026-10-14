@@ -18,7 +18,7 @@
  */
 
 import { TARIFF, type Category, type TariffItem } from './billing';
-import { EXPENSE_HEADS, INCOME_HEADS } from './finance';
+import { EXPENSE_HEADS, INCOME_HEADS, PAYER_AGREEMENTS, REFERRERS } from './finance-tables';
 import { TESTS, type LabTest } from './diagnostics';
 import { DRUGS, type Drug } from './pharmacy';
 import { ICD10, VITALS, type IcdCode, type VitalDef } from './clinical';
@@ -255,6 +255,46 @@ export const expenseHeadRows: MasterRow[] = EXPENSE_HEADS.map((h) => ({
   lastChange: changed(SEED_DAY, 'Finance manager — S. Chowdhury', 'Withholding and VAT reviewed for the year'),
 }));
 
+/**
+ * The referral register as a master. A commission rate is a commercial agreement with an expiry date, so the
+ * catalogue that holds it has to show both: a rate nobody has renewed is not a rate, and a referrer whose heads
+ * are wrong is paid on work they had nothing to do with.
+ */
+export const referralRows: MasterRow[] = REFERRERS.map((r, i) => ({
+  id: `rc-${r.code}`,
+  code: r.code,
+  label: r.name,
+  values: {
+    kind: r.kind,
+    rate: r.commissionPct === 0 ? 'none — consultant share instead' : `${r.commissionPct} %`,
+    heads: r.heads.length > 0 ? `${r.heads.length} head${r.heads.length === 1 ? '' : 's'}` : 'none — not payable',
+    agreement: `to ${r.agreementTo}`,
+    tin: r.tin ?? 'not on file',
+  },
+  active: true,
+  lastChange: changed(SEED_DAY === r.agreementTo ? SEED_DAY : SEED_DAY, i % 2 === 0 ? 'Finance manager — S. Chowdhury' : 'Managing director — A. H. Khan', 'Agreement renewed for the year'),
+}));
+
+/**
+ * The payer agreements as a master. The hospital's tariff for a payer, its settlement period and what it requires
+ * before it pays are contract terms, and a claim desk that cannot see them is guessing.
+ */
+export const payerAgreementRows: MasterRow[] = PAYER_AGREEMENTS.map((a) => ({
+  id: `pa-${a.payer.replace(/\W+/g, '-').toLowerCase()}`,
+  code: a.payer,
+  label: a.tpa ? `via ${a.tpa}` : a.kind,
+  values: {
+    kind: a.kind,
+    settles: `${a.settlementDays} days`,
+    discount: `${a.discountPct} %`,
+    preAuth: `above ৳ ${a.preAuthAbove.toLocaleString('en-IN')}`,
+    coPay: `${a.coPayPct} %`,
+    documents: `${a.documents.length} required`,
+  },
+  active: true,
+  lastChange: changed(SEED_DAY, 'Finance manager — S. Chowdhury', 'Terms taken from the signed agreement'),
+}));
+
 export const CATALOGUES: Catalogue[] = [
   {
     id: 'incomeHeads',
@@ -286,6 +326,41 @@ export const CATALOGUES: Catalogue[] = [
     rows: expenseHeadRows,
     risk: 'The withholding percentage here is a legal obligation, not a preference: paying a supplier gross because the head says “none” is the hospital carrying the supplier’s tax. Whether a head is capital decides whether a purchase lands on the asset register or in this month’s cost.',
     owner: 'Finance manager',
+  },
+  {
+    id: 'referralCommission',
+    name: 'Referral commission',
+    nameBn: 'রেফারেল কমিশন',
+    legacy: 'Setup › Referral',
+    purpose: 'Who may be paid a commission, on which heads, at what rate, and under which dated agreement.',
+    columns: [
+      { key: 'kind', header: 'Kind' },
+      { key: 'rate', header: 'Rate' },
+      { key: 'heads', header: 'Heads' },
+      { key: 'agreement', header: 'Agreement' },
+      { key: 'tin', header: 'TIN' },
+    ],
+    rows: referralRows,
+    risk: 'A commission rate that is wrong is money out of the hospital’s pocket, and a rate that applies to the wrong heads pays a clinician to prescribe. An expired agreement left in the register is the one an auditor finds first.',
+    owner: 'Finance manager, with the managing director',
+  },
+  {
+    id: 'payerAgreements',
+    name: 'TPA and insurer agreements',
+    nameBn: 'টিপিএ ও বীমা চুক্তি',
+    legacy: 'Setup › Finance',
+    purpose: 'What each payer pays, when, at what discount, and what it needs before it pays at all.',
+    columns: [
+      { key: 'kind', header: 'Kind' },
+      { key: 'settles', header: 'Settles in' },
+      { key: 'discount', header: 'Agreed discount' },
+      { key: 'preAuth', header: 'Pre-authorisation' },
+      { key: 'coPay', header: 'Patient co-pay' },
+      { key: 'documents', header: 'Documents' },
+    ],
+    rows: payerAgreementRows,
+    risk: 'The claim desk follows these terms, and the claim register measures ageing against the settlement period here. Get the discount wrong and every claim is short-paid for a reason the hospital wrote into its own contract.',
+    owner: 'Finance manager, with the managing director',
   },
   {
     id: 'charges',

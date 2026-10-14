@@ -392,6 +392,117 @@ export interface ExpenseVoucher {
   readonly secondApprover?: string;
 }
 
+export interface ClaimSubmit {
+  /** From a block reserved to the issuing node; the server issues one when it is absent */
+  readonly claimNo?: string;
+  /** The bill being claimed. One invoice, one claim, per payer */
+  readonly invoiceNo: string;
+  readonly mrn: string;
+  readonly payer: "Self pay" | "Insurance — MetLife" | "Corporate — BRAC" | "Govt. scheme";
+  /** The payer’s share after the agreed discount, in taka */
+  readonly claimed: number;
+  /** The pre-authorisation number. Required above the threshold the payer’s agreement records, because the threshold is the payer’s, not the hospital’s */
+  readonly preAuth?: unknown;
+  /** The treatment date the policy is checked against — a claim is judged on eligibility on that day, not on the day it is filed */
+  readonly treatedOn: string;
+  /** What is attached. The payer’s agreement names what it requires, and a claim missing one is refused here rather than weeks later on a remittance advice */
+  readonly documents: Array<string>;
+  readonly admissionId?: unknown;
+  readonly notes?: Array<string>;
+}
+
+export interface Claim {
+  readonly id: string;
+  readonly claimNo: string;
+  readonly invoiceNo: string;
+  readonly mrn: string;
+  /** The payer as the bill records it, so the claim and the invoice cannot disagree */
+  readonly paidBy?: string;
+  readonly payer: "Self pay" | "Insurance — MetLife" | "Corporate — BRAC" | "Govt. scheme";
+  /** The administrator the claim goes to, when the payer uses one: the TPA decides and the insurer pays */
+  readonly tpa?: unknown;
+  readonly claimed: number;
+  /** What the payer allowed. Zero until an answer is recorded */
+  readonly allowed: number;
+  readonly disallowed?: number;
+  /** What moved to the patient’s account: a co-payment or an excluded item, and never a loss */
+  readonly patientShare?: number;
+  /** What the hospital carries */
+  readonly absorbed?: number;
+  /** The person who accepted the write-off. Null keeps the claim open, which is the honest state and the one a finance committee asks about */
+  readonly absorbedBy?: unknown;
+  readonly shortPayCode?: "no-pre-auth" | "tariff" | "not-covered" | "no-documents" | "co-pay" | "duplicate" | null;
+  readonly rejectionReason?: unknown;
+  readonly preAuth?: unknown;
+  readonly state: "Draft" | "Pre-auth requested" | "Pre-auth approved" | "Submitted" | "Query raised" | "Partially settled" | "Settled" | "Rejected";
+  /** When the clock started. Ageing is measured from here against the payer’s promised period, and a query does not stop it */
+  readonly submittedAt?: unknown;
+  readonly respondedAt?: unknown;
+  readonly settledAmount?: number;
+  readonly settledAt?: unknown;
+  readonly documents?: Array<string>;
+  readonly ageDays: number;
+  /** Days past the payer’s own settlement period. The oldest of these is what a finance manager works from */
+  readonly overdueDays: number;
+  readonly notes?: Array<string>;
+}
+
+export interface ClaimResponseCreate {
+  /** What the remittance advice allowed, which may be nothing at all */
+  readonly allowed: number;
+  /** The payer’s reason vocabulary. A short payment recorded as “other” cannot be argued with the payer or learned from */
+  readonly shortPayCode?: "no-pre-auth" | "tariff" | "not-covered" | "no-documents" | "co-pay" | "duplicate" | null;
+  /** Set instead of a short-pay code when the claim is refused outright */
+  readonly rejectionReason?: unknown;
+  /** The person accepting the hospital’s share. Left null, the claim stays open rather than being tidied away */
+  readonly absorbedBy?: unknown;
+  /** The remittance advice number and line, so the claim can be traced back to the payer’s own document */
+  readonly reference?: unknown;
+  readonly answeredAt: string;
+}
+
+export interface CommissionPayoutCreate {
+  /** From a block reserved to the issuing node */
+  readonly voucherNo?: string;
+  readonly referrerCode: string;
+  /** Commission payable on money collected, never on billed value */
+  readonly gross: number;
+  /** Withheld at source and paid to the tax authority: it leaves with the payment */
+  readonly tds: number;
+  readonly net: number;
+  readonly method: "Bank transfer" | "Cheque" | "Cash";
+  /** A payment with no reference cannot be reconciled against a bank statement, so it is refused rather than recorded */
+  readonly reference: string;
+  readonly preparedBy: string;
+  /** Has to differ from `preparedBy`: the same person on both sides is a self-approval an auditor finds */
+  readonly approvedBy: string;
+  readonly periodFrom: string;
+  readonly periodTo: string;
+  /** The accrual lines this voucher settles. Marking them paid is what stops a second run paying them again */
+  readonly accrualIds?: Array<string>;
+  /** The referrer’s statement for the period, attached to the payment */
+  readonly statement?: unknown;
+}
+
+export interface CommissionPayout {
+  readonly id: string;
+  readonly voucherNo: string;
+  readonly referrerCode: string;
+  readonly referrerName?: string;
+  readonly gross: number;
+  readonly tds: number;
+  readonly net: number;
+  readonly method?: "Bank transfer" | "Cheque" | "Cash";
+  readonly reference?: string;
+  readonly state: "Posted" | "Paid" | "Reversed";
+  readonly preparedBy?: string;
+  readonly approvedBy?: string;
+  readonly at: string;
+  readonly periodFrom?: string;
+  readonly periodTo?: string;
+  readonly accrualIds?: Array<string>;
+}
+
 
 /* ------------------------------------------------------------- operations */
 
@@ -913,6 +1024,72 @@ export const operations = {
     needsNetwork: false,
     requiresIdempotencyKey: true,
   },
+  submitClaim: {
+    id: "submitClaim",
+    method: "post",
+    path: "/claims",
+    tag: "finance",
+    summary: "Submit a payer claim",
+    entity: "claim",
+    offline: "queue",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "The claim is raised where the patient was treated, which is the only place that has the file and the discharge summary. Queue it: a claim desk that cannot raise a claim offline stops admitting payer patients the moment the link drops.",
+    notes: null,
+    request: "ClaimSubmit",
+    responses: { "201": "Claim", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  recordClaimResponse: {
+    id: "recordClaimResponse",
+    method: "post",
+    path: "/claims/{claimNo}/response",
+    tag: "finance",
+    summary: "Record what the payer allowed",
+    entity: "claim",
+    offline: "queue",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "The remittance advice arrives at a desk with a telephone and a spreadsheet, so the answer is typed where it is read. Queue it, and the claim shows the answer as awaiting sync until it lands rather than pretending the money is settled.",
+    notes: null,
+    request: "ClaimResponseCreate",
+    responses: { "201": "Claim", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  createCommissionPayout: {
+    id: "createCommissionPayout",
+    method: "post",
+    path: "/commission/payouts",
+    tag: "finance",
+    summary: "Record a referral commission payout",
+    entity: "commission.payout",
+    offline: "queue",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "A payout is money leaving for a clinical decision made weeks earlier, and the account that pays it is where the cheque is written. Queue it, and the run shows the voucher as awaiting sync until the bank confirms it.",
+    notes: null,
+    request: "CommissionPayoutCreate",
+    responses: { "201": "CommissionPayout", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
 } as const satisfies Record<string, OperationMeta>;
 
 export type OperationId = keyof typeof operations;
@@ -987,6 +1164,16 @@ export const entityPolicies = {
     "policy": "append-only",
     "label": "Expense voucher",
     "why": "A payment is money out, with a payee and a cheque or transfer behind it. Two nodes paying the same bill is two payments, and the bank statement will show both."
+  },
+  "claim": {
+    "policy": "exclusive",
+    "label": "Payer claim",
+    "why": "One invoice is claimed once with one payer. Two desks submitting the same bill is a duplicate claim, which payers find and hospitals are repaid for by being put on a watch list, so the second submission is refused with the claim number that already holds it."
+  },
+  "commission.payout": {
+    "policy": "append-only",
+    "label": "Commission payout",
+    "why": "A payout is an event: a voucher number, an amount, a withholding, a reference and two names. Nothing about it is edited afterwards — a mistake is corrected by a reversing voucher, and the bank statement shows both."
   }
 } as const;
 

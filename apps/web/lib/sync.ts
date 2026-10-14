@@ -57,6 +57,8 @@ export type EntityKind =
   | 'payment'
   | 'ledger.income'
   | 'ledger.expense'
+  | 'claim'
+  | 'commission.payout'
   | 'audit';
 
 /** How two writers on different nodes are allowed to collide on this entity. */
@@ -122,6 +124,16 @@ export const ENTITY_POLICY: Record<EntityKind, { policy: ConflictPolicy; label: 
     policy: 'append-only',
     label: 'Expense voucher',
     why: 'A payment is money out with a payee and a cheque or transfer behind it. The bank statement will show both, so nothing merges and nothing is edited after the fact.',
+  },
+  claim: {
+    policy: 'exclusive',
+    label: 'Payer claim',
+    why: 'One invoice is claimed once with one payer. Two desks submitting the same bill is a duplicate claim, which payers find and hospitals are repaid for by being put on a watch list, so the second submission is refused with the claim number that already holds it.',
+  },
+  'commission.payout': {
+    policy: 'append-only',
+    label: 'Commission payout',
+    why: 'A payout is an event: a voucher number, an amount, a withholding, a reference and two names. Nothing about it is edited afterwards — a mistake is corrected by a reversing voucher, and the bank statement shows both.',
   },
   audit: {
     policy: 'append-only',

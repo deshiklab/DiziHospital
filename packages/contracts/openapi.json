@@ -1574,176 +1574,436 @@
           "notes": "Deliberately online-only: an offline node with no reserved block may read and queue, but it may not mint identifiers."
         }
       }
+    },
+    "/ledger/income": {
+      "post": {
+        "operationId": "createIncomeVoucher",
+        "summary": "Post an income voucher",
+        "tags": [
+          "finance"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IncomeVoucherCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Posted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IncomeVoucher"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Voucher number already issued to this node",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed — an unknown head, a reversal with no original voucher, or an amount of zero",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "ledger.income",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "The counter that took the money is the only place that knows it was taken. Queue it, and the day book shows the receipt as awaiting sync until it lands, which is how a drawer and a ledger stay reconciled without a phone call."
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ]
+      }
+    },
+    "/ledger/expense": {
+      "post": {
+        "operationId": "createExpenseVoucher",
+        "summary": "Post an expense voucher",
+        "tags": [
+          "finance"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExpenseVoucherCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Posted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExpenseVoucher"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Voucher number already issued to this node",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed — the approval ladder, a cash payment above the counter limit, or a self-approval",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "ledger.expense",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "Accounts records what it paid when it paid it, and the approval ladder is checked before the voucher leaves the desk — a payment that cannot be approved is refused at the source rather than found missing a signature a week later."
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ]
+      }
+    },
+    "/claims": {
+      "post": {
+        "operationId": "submitClaim",
+        "summary": "Submit a payer claim",
+        "tags": [
+          "finance"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClaimSubmit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Recorded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Claim"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "This invoice is already claimed with this payer — the response names the claim that holds it",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Pre-authorisation is missing above the payer’s threshold, a required document is absent, or the payer has no agreement on file",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "claim",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "The claim is raised where the patient was treated, which is the only place that has the file and the discharge summary. Queue it: a claim desk that cannot raise a claim offline stops admitting payer patients the moment the link drops."
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ]
+      }
+    },
+    "/claims/{claimNo}/response": {
+      "post": {
+        "operationId": "recordClaimResponse",
+        "summary": "Record what the payer allowed",
+        "tags": [
+          "finance"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClaimResponseCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Recorded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Claim"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "This claim already carries an answer — a second one is a correction, and a correction is a reversing entry, not an overwrite",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The allowed amount is above the claimed amount, no reason code accompanies a short payment, or a rejection names no reason",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "claim",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "The remittance advice arrives at a desk with a telephone and a spreadsheet, so the answer is typed where it is read. Queue it, and the claim shows the answer as awaiting sync until it lands rather than pretending the money is settled."
+        },
+        "parameters": [
+          {
+            "name": "claimNo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The claim being answered"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ]
+      }
+    },
+    "/commission/payouts": {
+      "post": {
+        "operationId": "createCommissionPayout",
+        "summary": "Record a referral commission payout",
+        "tags": [
+          "finance"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommissionPayoutCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Recorded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommissionPayout"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Voucher number already issued to this node, or the accruals on this statement have already been paid",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "No payable accrual for this referrer, the same person prepared and approved the payment, or the reference is empty",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "commission.payout",
+          "offline": "queue",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "A payout is money leaving for a clinical decision made weeks earlier, and the account that pays it is where the cheque is written. Queue it, and the run shows the voucher as awaiting sync until the bank confirms it."
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ]
+      }
     }
-,
-  "/ledger/income": {
-  "post": {
-    "operationId": "createIncomeVoucher",
-    "summary": "Post an income voucher",
-    "tags": [
-      "finance"
-    ],
-    "requestBody": {
-      "required": true,
-      "content": {
-        "application/json": {
-          "schema": {
-            "$ref": "#/components/schemas/IncomeVoucherCreate"
-          }
-        }
-      }
-    },
-    "responses": {
-      "201": {
-        "description": "Posted",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/IncomeVoucher"
-            }
-          }
-        }
-      },
-      "401": {
-        "description": "Missing or expired token",
-        "content": {
-          "application/problem+json": {
-            "schema": {
-              "$ref": "#/components/schemas/Problem"
-            }
-          }
-        }
-      },
-      "403": {
-        "description": "The role in the token may not do this",
-        "content": {
-          "application/problem+json": {
-            "schema": {
-              "$ref": "#/components/schemas/Problem"
-            }
-          }
-        }
-      },
-      "409": {
-        "description": "Voucher number already issued to this node",
-        "content": {
-          "application/problem+json": {
-            "schema": {
-              "$ref": "#/components/schemas/Problem"
-            }
-          }
-        }
-      },
-      "422": {
-        "description": "Validation failed — an unknown head, a reversal with no original voucher, or an amount of zero",
-        "content": {
-          "application/problem+json": {
-            "schema": {
-              "$ref": "#/components/schemas/Problem"
-            }
-          }
-        }
-      }
-    },
-    "x-dizi": {
-      "entity": "ledger.income",
-      "offline": "queue",
-      "authority": "cloud",
-      "idempotency": "required",
-      "audit": true,
-      "because": "The counter that took the money is the only place that knows it was taken. Queue it, and the day book shows the receipt as awaiting sync until it lands, which is how a drawer and a ledger stay reconciled without a phone call."
-    },
-    "parameters": [
-      {
-        "$ref": "#/components/parameters/IdempotencyKey"
-      }
-    ]
-  }
-  },
-  "/ledger/expense": {
-  "post": {
-    "operationId": "createExpenseVoucher",
-    "summary": "Post an expense voucher",
-    "tags": [
-      "finance"
-    ],
-    "requestBody": {
-      "required": true,
-      "content": {
-        "application/json": {
-          "schema": {
-            "$ref": "#/components/schemas/ExpenseVoucherCreate"
-          }
-        }
-      }
-    },
-    "responses": {
-      "201": {
-        "description": "Posted",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ExpenseVoucher"
-            }
-          }
-        }
-      },
-      "401": {
-        "description": "Missing or expired token",
-        "content": {
-          "application/problem+json": {
-            "schema": {
-              "$ref": "#/components/schemas/Problem"
-            }
-          }
-        }
-      },
-      "403": {
-        "description": "The role in the token may not do this",
-        "content": {
-          "application/problem+json": {
-            "schema": {
-              "$ref": "#/components/schemas/Problem"
-            }
-          }
-        }
-      },
-      "409": {
-        "description": "Voucher number already issued to this node",
-        "content": {
-          "application/problem+json": {
-            "schema": {
-              "$ref": "#/components/schemas/Problem"
-            }
-          }
-        }
-      },
-      "422": {
-        "description": "Validation failed — the approval ladder, a cash payment above the counter limit, or a self-approval",
-        "content": {
-          "application/problem+json": {
-            "schema": {
-              "$ref": "#/components/schemas/Problem"
-            }
-          }
-        }
-      }
-    },
-    "x-dizi": {
-      "entity": "ledger.expense",
-      "offline": "queue",
-      "authority": "cloud",
-      "idempotency": "required",
-      "audit": true,
-      "because": "Accounts records what it paid when it paid it, and the approval ladder is checked before the voucher leaves the desk — a payment that cannot be approved is refused at the source rather than found missing a signature a week later."
-    },
-    "parameters": [
-      {
-        "$ref": "#/components/parameters/IdempotencyKey"
-      }
-    ]
-  }
-  }
   },
   "components": {
     "securitySchemes": {
@@ -2900,233 +3160,667 @@
             "description": "How far behind the cloud the edge replica is — the number the screen stamps on cached reads"
           }
         }
+      },
+      "IncomeVoucherCreate": {
+        "type": "object",
+        "required": [
+          "headCode",
+          "amount",
+          "method"
+        ],
+        "properties": {
+          "headCode": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "method": {
+            "type": "string"
+          },
+          "branch": {
+            "type": "string"
+          },
+          "counter": {
+            "type": "string"
+          },
+          "invoiceNo": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "narration": {
+            "type": "string"
+          },
+          "reversalOf": {
+            "type": "string",
+            "description": "The voucher being reversed. A reversal is a voucher of its own, never an edit."
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "IncomeVoucher": {
+        "type": "object",
+        "required": [
+          "id",
+          "voucherNo",
+          "headCode",
+          "amount",
+          "method",
+          "postedAt",
+          "sequence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "voucherNo": {
+            "type": "string"
+          },
+          "headCode": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "method": {
+            "type": "string"
+          },
+          "branch": {
+            "type": "string"
+          },
+          "counter": {
+            "type": "string"
+          },
+          "invoiceNo": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "narration": {
+            "type": "string"
+          },
+          "postedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sequence": {
+            "type": "integer",
+            "description": "Position in this node’s ledger — gapless per node, which is what makes a missing voucher visible."
+          },
+          "recordedBy": {
+            "type": "string"
+          }
+        }
+      },
+      "ExpenseVoucherCreate": {
+        "type": "object",
+        "required": [
+          "headCode",
+          "payee",
+          "amount",
+          "method"
+        ],
+        "properties": {
+          "headCode": {
+            "type": "string"
+          },
+          "payee": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "method": {
+            "type": "string"
+          },
+          "branch": {
+            "type": "string"
+          },
+          "costCentre": {
+            "type": "string"
+          },
+          "billNo": {
+            "type": "string"
+          },
+          "chequeNo": {
+            "type": "string"
+          },
+          "quotationRef": {
+            "type": "string"
+          },
+          "narration": {
+            "type": "string"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "preparedBy": {
+            "type": "string"
+          },
+          "approvedBy": {
+            "type": "string"
+          },
+          "secondApprover": {
+            "type": "string"
+          }
+        }
+      },
+      "ExpenseVoucher": {
+        "type": "object",
+        "required": [
+          "id",
+          "voucherNo",
+          "headCode",
+          "payee",
+          "amount",
+          "method",
+          "paidAt",
+          "sequence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "voucherNo": {
+            "type": "string"
+          },
+          "headCode": {
+            "type": "string"
+          },
+          "payee": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Net paid to the payee, after withholding where the head attracts it."
+          },
+          "gross": {
+            "type": "number"
+          },
+          "ait": {
+            "type": "number"
+          },
+          "vat": {
+            "type": "number"
+          },
+          "method": {
+            "type": "string"
+          },
+          "branch": {
+            "type": "string"
+          },
+          "costCentre": {
+            "type": "string"
+          },
+          "billNo": {
+            "type": "string"
+          },
+          "chequeNo": {
+            "type": "string"
+          },
+          "quotationRef": {
+            "type": "string"
+          },
+          "narration": {
+            "type": "string"
+          },
+          "paidAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sequence": {
+            "type": "integer"
+          },
+          "approvedBy": {
+            "type": "string"
+          },
+          "secondApprover": {
+            "type": "string"
+          }
+        }
+      },
+      "ClaimSubmit": {
+        "type": "object",
+        "required": [
+          "invoiceNo",
+          "mrn",
+          "payer",
+          "claimed",
+          "documents",
+          "treatedOn"
+        ],
+        "properties": {
+          "claimNo": {
+            "type": "string",
+            "description": "From a block reserved to the issuing node; the server issues one when it is absent"
+          },
+          "invoiceNo": {
+            "type": "string",
+            "description": "The bill being claimed. One invoice, one claim, per payer"
+          },
+          "mrn": {
+            "type": "string"
+          },
+          "payer": {
+            "type": "string",
+            "enum": [
+              "Self pay",
+              "Insurance — MetLife",
+              "Corporate — BRAC",
+              "Govt. scheme"
+            ]
+          },
+          "claimed": {
+            "type": "number",
+            "description": "The payer’s share after the agreed discount, in taka"
+          },
+          "preAuth": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The pre-authorisation number. Required above the threshold the payer’s agreement records, because the threshold is the payer’s, not the hospital’s"
+          },
+          "treatedOn": {
+            "type": "string",
+            "format": "date",
+            "description": "The treatment date the policy is checked against — a claim is judged on eligibility on that day, not on the day it is filed"
+          },
+          "documents": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "What is attached. The payer’s agreement names what it requires, and a claim missing one is refused here rather than weeks later on a remittance advice"
+          },
+          "admissionId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Claim": {
+        "type": "object",
+        "required": [
+          "id",
+          "claimNo",
+          "invoiceNo",
+          "mrn",
+          "payer",
+          "claimed",
+          "allowed",
+          "state",
+          "ageDays",
+          "overdueDays"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "claimNo": {
+            "type": "string"
+          },
+          "invoiceNo": {
+            "type": "string"
+          },
+          "mrn": {
+            "type": "string"
+          },
+          "paidBy": {
+            "type": "string",
+            "description": "The payer as the bill records it, so the claim and the invoice cannot disagree"
+          },
+          "payer": {
+            "type": "string",
+            "enum": [
+              "Self pay",
+              "Insurance — MetLife",
+              "Corporate — BRAC",
+              "Govt. scheme"
+            ]
+          },
+          "tpa": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The administrator the claim goes to, when the payer uses one: the TPA decides and the insurer pays"
+          },
+          "claimed": {
+            "type": "number"
+          },
+          "allowed": {
+            "type": "number",
+            "description": "What the payer allowed. Zero until an answer is recorded"
+          },
+          "disallowed": {
+            "type": "number"
+          },
+          "patientShare": {
+            "type": "number",
+            "description": "What moved to the patient’s account: a co-payment or an excluded item, and never a loss"
+          },
+          "absorbed": {
+            "type": "number",
+            "description": "What the hospital carries"
+          },
+          "absorbedBy": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The person who accepted the write-off. Null keeps the claim open, which is the honest state and the one a finance committee asks about"
+          },
+          "shortPayCode": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "no-pre-auth",
+              "tariff",
+              "not-covered",
+              "no-documents",
+              "co-pay",
+              "duplicate",
+              null
+            ]
+          },
+          "rejectionReason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "preAuth": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "Draft",
+              "Pre-auth requested",
+              "Pre-auth approved",
+              "Submitted",
+              "Query raised",
+              "Partially settled",
+              "Settled",
+              "Rejected"
+            ]
+          },
+          "submittedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "When the clock started. Ageing is measured from here against the payer’s promised period, and a query does not stop it"
+          },
+          "respondedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "settledAmount": {
+            "type": "number"
+          },
+          "settledAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "documents": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ageDays": {
+            "type": "integer"
+          },
+          "overdueDays": {
+            "type": "integer",
+            "description": "Days past the payer’s own settlement period. The oldest of these is what a finance manager works from"
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ClaimResponseCreate": {
+        "type": "object",
+        "required": [
+          "allowed",
+          "answeredAt"
+        ],
+        "properties": {
+          "allowed": {
+            "type": "number",
+            "description": "What the remittance advice allowed, which may be nothing at all"
+          },
+          "shortPayCode": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "no-pre-auth",
+              "tariff",
+              "not-covered",
+              "no-documents",
+              "co-pay",
+              "duplicate",
+              null
+            ],
+            "description": "The payer’s reason vocabulary. A short payment recorded as “other” cannot be argued with the payer or learned from"
+          },
+          "rejectionReason": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Set instead of a short-pay code when the claim is refused outright"
+          },
+          "absorbedBy": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The person accepting the hospital’s share. Left null, the claim stays open rather than being tidied away"
+          },
+          "reference": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The remittance advice number and line, so the claim can be traced back to the payer’s own document"
+          },
+          "answeredAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CommissionPayoutCreate": {
+        "type": "object",
+        "required": [
+          "referrerCode",
+          "gross",
+          "tds",
+          "net",
+          "method",
+          "reference",
+          "preparedBy",
+          "approvedBy",
+          "periodFrom",
+          "periodTo"
+        ],
+        "properties": {
+          "voucherNo": {
+            "type": "string",
+            "description": "From a block reserved to the issuing node"
+          },
+          "referrerCode": {
+            "type": "string"
+          },
+          "gross": {
+            "type": "number",
+            "description": "Commission payable on money collected, never on billed value"
+          },
+          "tds": {
+            "type": "number",
+            "description": "Withheld at source and paid to the tax authority: it leaves with the payment"
+          },
+          "net": {
+            "type": "number"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "Bank transfer",
+              "Cheque",
+              "Cash"
+            ]
+          },
+          "reference": {
+            "type": "string",
+            "description": "A payment with no reference cannot be reconciled against a bank statement, so it is refused rather than recorded"
+          },
+          "preparedBy": {
+            "type": "string"
+          },
+          "approvedBy": {
+            "type": "string",
+            "description": "Has to differ from `preparedBy`: the same person on both sides is a self-approval an auditor finds"
+          },
+          "periodFrom": {
+            "type": "string",
+            "format": "date"
+          },
+          "periodTo": {
+            "type": "string",
+            "format": "date"
+          },
+          "accrualIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The accrual lines this voucher settles. Marking them paid is what stops a second run paying them again"
+          },
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The referrer’s statement for the period, attached to the payment"
+          }
+        }
+      },
+      "CommissionPayout": {
+        "type": "object",
+        "required": [
+          "id",
+          "voucherNo",
+          "referrerCode",
+          "gross",
+          "tds",
+          "net",
+          "state",
+          "at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "voucherNo": {
+            "type": "string"
+          },
+          "referrerCode": {
+            "type": "string"
+          },
+          "referrerName": {
+            "type": "string"
+          },
+          "gross": {
+            "type": "number"
+          },
+          "tds": {
+            "type": "number"
+          },
+          "net": {
+            "type": "number"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "Bank transfer",
+              "Cheque",
+              "Cash"
+            ]
+          },
+          "reference": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "Posted",
+              "Paid",
+              "Reversed"
+            ]
+          },
+          "preparedBy": {
+            "type": "string"
+          },
+          "approvedBy": {
+            "type": "string"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "periodFrom": {
+            "type": "string",
+            "format": "date"
+          },
+          "periodTo": {
+            "type": "string",
+            "format": "date"
+          },
+          "accrualIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       }
-,
-  "IncomeVoucherCreate": {
-  "type": "object",
-  "required": [
-    "headCode",
-    "amount",
-    "method"
-  ],
-  "properties": {
-    "headCode": {
-      "type": "string"
-    },
-    "amount": {
-      "type": "number"
-    },
-    "method": {
-      "type": "string"
-    },
-    "branch": {
-      "type": "string"
-    },
-    "counter": {
-      "type": "string"
-    },
-    "invoiceNo": {
-      "type": "string"
-    },
-    "reference": {
-      "type": "string"
-    },
-    "narration": {
-      "type": "string"
-    },
-    "reversalOf": {
-      "type": "string",
-      "description": "The voucher being reversed. A reversal is a voucher of its own, never an edit."
-    },
-    "at": {
-      "type": "string",
-      "format": "date-time"
-    }
-  }
-  },
-  "IncomeVoucher": {
-  "type": "object",
-  "required": [
-    "id",
-    "voucherNo",
-    "headCode",
-    "amount",
-    "method",
-    "postedAt",
-    "sequence"
-  ],
-  "properties": {
-    "id": {
-      "type": "string"
-    },
-    "voucherNo": {
-      "type": "string"
-    },
-    "headCode": {
-      "type": "string"
-    },
-    "amount": {
-      "type": "number"
-    },
-    "method": {
-      "type": "string"
-    },
-    "branch": {
-      "type": "string"
-    },
-    "counter": {
-      "type": "string"
-    },
-    "invoiceNo": {
-      "type": "string"
-    },
-    "reference": {
-      "type": "string"
-    },
-    "narration": {
-      "type": "string"
-    },
-    "postedAt": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "sequence": {
-      "type": "integer",
-      "description": "Position in this node’s ledger — gapless per node, which is what makes a missing voucher visible."
-    },
-    "recordedBy": {
-      "type": "string"
-    }
-  }
-  },
-  "ExpenseVoucherCreate": {
-  "type": "object",
-  "required": [
-    "headCode",
-    "payee",
-    "amount",
-    "method"
-  ],
-  "properties": {
-    "headCode": {
-      "type": "string"
-    },
-    "payee": {
-      "type": "string"
-    },
-    "amount": {
-      "type": "number"
-    },
-    "method": {
-      "type": "string"
-    },
-    "branch": {
-      "type": "string"
-    },
-    "costCentre": {
-      "type": "string"
-    },
-    "billNo": {
-      "type": "string"
-    },
-    "chequeNo": {
-      "type": "string"
-    },
-    "quotationRef": {
-      "type": "string"
-    },
-    "narration": {
-      "type": "string"
-    },
-    "at": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "preparedBy": {
-      "type": "string"
-    },
-    "approvedBy": {
-      "type": "string"
-    },
-    "secondApprover": {
-      "type": "string"
-    }
-  }
-  },
-  "ExpenseVoucher": {
-  "type": "object",
-  "required": [
-    "id",
-    "voucherNo",
-    "headCode",
-    "payee",
-    "amount",
-    "method",
-    "paidAt",
-    "sequence"
-  ],
-  "properties": {
-    "id": {
-      "type": "string"
-    },
-    "voucherNo": {
-      "type": "string"
-    },
-    "headCode": {
-      "type": "string"
-    },
-    "payee": {
-      "type": "string"
-    },
-    "amount": {
-      "type": "number",
-      "description": "Net paid to the payee, after withholding where the head attracts it."
-    },
-    "gross": {
-      "type": "number"
-    },
-    "ait": {
-      "type": "number"
-    },
-    "vat": {
-      "type": "number"
-    },
-    "method": {
-      "type": "string"
-    },
-    "branch": {
-      "type": "string"
-    },
-    "costCentre": {
-      "type": "string"
-    },
-    "billNo": {
-      "type": "string"
-    },
-    "chequeNo": {
-      "type": "string"
-    },
-    "quotationRef": {
-      "type": "string"
-    },
-    "narration": {
-      "type": "string"
-    },
-    "paidAt": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "sequence": {
-      "type": "integer"
-    },
-    "approvedBy": {
-      "type": "string"
-    },
-    "secondApprover": {
-      "type": "string"
-    }
-  }
-  }
     }
   },
   "security": [
@@ -3189,18 +3883,27 @@
       "policy": "append-only",
       "label": "Audit entry",
       "why": "The ledger of who did what is the one thing that must never be merged away."
+    },
+    "ledger.income": {
+      "policy": "append-only",
+      "label": "Income voucher",
+      "why": "A receipt is money in the drawer at a time and a counter. Nothing merges it and nothing edits it: a correction is a reversing voucher, which is the only form of correction an auditor accepts."
+    },
+    "ledger.expense": {
+      "policy": "append-only",
+      "label": "Expense voucher",
+      "why": "A payment is money out, with a payee and a cheque or transfer behind it. Two nodes paying the same bill is two payments, and the bank statement will show both."
+    },
+    "claim": {
+      "policy": "exclusive",
+      "label": "Payer claim",
+      "why": "One invoice is claimed once with one payer. Two desks submitting the same bill is a duplicate claim, which payers find and hospitals are repaid for by being put on a watch list, so the second submission is refused with the claim number that already holds it."
+    },
+    "commission.payout": {
+      "policy": "append-only",
+      "label": "Commission payout",
+      "why": "A payout is an event: a voucher number, an amount, a withholding, a reference and two names. Nothing about it is edited afterwards — a mistake is corrected by a reversing voucher, and the bank statement shows both."
     }
-,
-  "ledger.income": {
-  "policy": "append-only",
-  "label": "Income voucher",
-  "why": "A receipt is money in the drawer at a time and a counter. Nothing merges it and nothing edits it: a correction is a reversing voucher, which is the only form of correction an auditor accepts."
-  },
-  "ledger.expense": {
-  "policy": "append-only",
-  "label": "Expense voucher",
-  "why": "A payment is money out, with a payee and a cheque or transfer behind it. Two nodes paying the same bill is two payments, and the bank statement will show both."
-  }
   },
   "x-dizi-conventions": {
     "idempotency": "Every operation whose `x-dizi.idempotency` is `required` carries an `Idempotency-Key`. A replay of the same key returns the original response and status, so draining a queue twice is safe — which is the whole reason a queue can exist.",
