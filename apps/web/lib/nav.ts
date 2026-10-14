@@ -56,6 +56,7 @@ export const strings: Record<string, { en: string; bn: string }> = {
   'shell.fullscreen': { en: 'Full screen', bn: 'ফুল স্ক্রিন' },
   'shell.sidebar': { en: 'Sidebar', bn: 'সাইডবার' },
   'shell.hotkeys': { en: 'Keyboard shortcuts', bn: 'কীবোর্ড শর্টকাট' },
+  'shell.menu': { en: 'Menu', bn: 'মেনু' },
   'shell.signOut': { en: 'Sign out', bn: 'লগ আউট' },
   'shell.version': { en: 'Version', bn: 'সংস্করণ' },
   'shell.credits': { en: 'Credits', bn: 'কৃতিত্ব' },

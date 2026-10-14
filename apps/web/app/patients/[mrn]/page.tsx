@@ -15,6 +15,7 @@ import {
   TextAreaField,
   TextField,
   Tooltip,
+  copyText,
   useToast,
   type Column,
   type RowAction,
@@ -94,7 +95,18 @@ export default function PatientRecordPage() {
     { label: 'Open visit note', onSelect: () => push({ title: `Opening ${v.id}`, tone: 'info' }) },
     { label: 'Print prescription', onSelect: () => push({ title: 'Prescription sent to the printer', tone: 'success' }) },
     { label: 'Print invoice', onSelect: () => push({ title: 'Invoice sent to the printer', tone: 'success' }) },
-    { label: 'Copy visit ID', onSelect: () => { void navigator.clipboard?.writeText(v.id); push({ title: 'Visit ID copied', tone: 'info' }); } },
+    {
+      label: 'Copy visit ID',
+      onSelect: () => {
+        void copyText(v.id).then((ok) =>
+          push(
+            ok
+              ? { title: 'Visit ID copied', description: v.id, tone: 'info' }
+              : { title: 'The browser blocked the copy', description: `Select ${v.id} in the visit list and copy it by hand.`, tone: 'warning' },
+          ),
+        );
+      },
+    },
   ];
 
   return (

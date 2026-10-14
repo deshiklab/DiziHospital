@@ -98,7 +98,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const hotkeys = useMemo(
     () => [
       { combo: 'mod+k', handler: () => setPaletteOpen((o) => !o) },
-      { combo: 'mod+b', handler: () => toggleSidebar() },
+      // Ctrl+B collapses the desktop rail; on a phone there is no rail, so it opens the navigation drawer.
+      { combo: 'mod+b', handler: () => (window.innerWidth < 1024 ? setMobileNavOpen(!mobileNavOpen) : toggleSidebar()) },
       { combo: '/', handler: () => { setSearchOpen(true); setTimeout(() => searchRef.current?.focus(), 30); } },
       { combo: 'alt+f', handler: () => toggleFullscreen() },
       { combo: 'alt+z', handler: () => setZoom(Math.min(1.5, ZOOM_STEPS[Math.min(ZOOM_STEPS.indexOf(zoom as never) + 1, ZOOM_STEPS.length - 1)])) },
@@ -107,7 +108,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       { combo: 'shift+?', handler: () => setHotkeysOpen(true) },
       { combo: 'escape', handler: () => { setPaletteOpen(false); setHelpOpen(false); setHotkeysOpen(false); setNotifOpen(false); setDisplayOpen(false); setSearchOpen(false); } },
     ],
-    [toggleSidebar, toggleFullscreen, zoom, setZoom, textScale, setTextScale],
+    [toggleSidebar, toggleFullscreen, zoom, setZoom, textScale, setTextScale, mobileNavOpen, setMobileNavOpen],
   );
   useHotkeys(hotkeys);
 
@@ -236,14 +237,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               {showSidebar && !isHalf ? <PanelLeftClose className="size-4" aria-hidden /> : <PanelLeftOpen className="size-4" aria-hidden />}
             </button>
           </Tooltip>
-          <button
-            type="button"
-            onClick={() => setMobileNavOpen(true)}
-            aria-label="Open navigation"
-            className={cx(ICON_BTN, 'lg:hidden')}
-          >
-            <PanelLeftOpen className="size-4" aria-hidden />
-          </button>
+          {/* No panel icon here on phones and tablets: the header's left edge is the one place a
+              panel-shaped icon reads as "expand the sidebar", and there is no sidebar to expand on a phone.
+              Navigation is opened from the Menu button in the footer instead. */}
 
           <Link href="/" className="hidden items-center gap-2 sm:flex">
             <span aria-hidden className="grid size-8 place-items-center rounded-md bg-brand-500 text-sm font-bold text-text-inverse">D</span>
@@ -253,22 +249,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </span>
           </Link>
 
-          {/* breadcrumbs + global search share the middle row */}
-          <nav aria-label="Breadcrumb" className="hidden min-w-0 flex-1 items-center gap-1 text-sm text-text-secondary md:flex">
-            {crumbTrail.map((c, i) => (
-              <span key={c.href + i} className="flex min-w-0 items-center gap-1">
-                {i > 0 && <span aria-hidden className="text-text-tertiary">/</span>}
-                {i === crumbTrail.length - 1 ? (
-                  <span aria-current="page" className="truncate font-medium text-text-primary">{c.label}</span>
-                ) : (
-                  <Link href={c.href} className="truncate hover:text-brand-600">{c.label}</Link>
-                )}
-              </span>
-            ))}
-          </nav>
-
           {/* global search: collapses to an icon on small screens so the header never wraps */}
-          <div className={cx('relative', searchOpen ? 'flex-1 md:flex-none' : 'ml-auto md:ml-0')}>
+          <div className={cx('relative', searchOpen ? 'flex-1 md:flex-none' : 'ml-auto')}>
             {!searchOpen && (
               <button
                 type="button"
@@ -615,7 +597,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         {/* working area: broad and fluid — no max width, the grid decides how wide it needs to be */}
         <main className="min-w-0 flex-1">
           {sidebarMode === 'hidden' && (
-            <div className="no-print flex items-center gap-2 border-b border-border-subtle bg-surface-raised px-3 py-1.5">
+            <div className="no-print hidden items-center gap-2 border-b border-border-subtle bg-surface-raised px-3 py-1.5 lg:flex">
               <Button size="sm" onClick={() => setSidebarMode('half')} className="gap-1.5">
                 <PanelLeftOpen className="size-3.5" aria-hidden />
                 Show sidebar
@@ -635,17 +617,41 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* =================================================================== footer */}
       <footer className="no-print sticky bottom-0 z-30 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border-subtle bg-surface-raised px-3 py-1.5 text-[11px] text-text-tertiary">
+        {/* The breadcrumb trail lives down here, not in the header: the header is for actions, and the trail is
+            orientation — it does not need to be at the top, but it does need to be visible on every screen size. */}
+        <nav aria-label="Breadcrumb" className="flex min-w-0 flex-1 items-center gap-1 text-xs text-text-secondary">
+          {crumbTrail.map((c, i) => (
+            <span key={c.href + i} className="flex min-w-0 items-center gap-1">
+              {i > 0 && <span aria-hidden className="text-text-tertiary">/</span>}
+              {i === crumbTrail.length - 1 ? (
+                <span aria-current="page" className="truncate font-medium text-text-primary">{c.label}</span>
+              ) : (
+                <Link href={c.href} className="truncate hover:text-brand-600">{c.label}</Link>
+              )}
+            </span>
+          ))}
+        </nav>
         <span className="font-numeric">
           DiziHospital <strong className="font-semibold text-text-secondary">{version}</strong> · {APP_PHASE} · build {buildStamp}
         </span>
         <span className="hidden sm:inline">Credits: clinical workflow captured from the legacy system · design tokens from the plan</span>
-        <span className="ml-auto flex items-center gap-3">
+        <span className="flex items-center gap-3 lg:ml-auto">
           <span className="font-numeric">{t('shell.mode', locale)}: {siteMode}</span>
           <button type="button" onClick={() => setHotkeysOpen(true)} className="inline-flex items-center gap-1 hover:text-text-primary">
             <Keyboard className="size-3" aria-hidden />
             {t('shell.hotkeys', locale)}
           </button>
           <span className="hidden md:inline">All data shown is synthetic</span>
+          {/* The only navigation trigger on a phone or tablet, now that the header no longer carries one. */}
+          <button
+            type="button"
+            onClick={() => setMobileNavOpen(true)}
+            aria-label="Open navigation"
+            className="inline-flex items-center gap-1 rounded-sm border border-border-default px-1.5 py-0.5 hover:text-text-primary lg:hidden"
+          >
+            <PanelLeftOpen className="size-3" aria-hidden />
+            {t('shell.menu', locale)}
+          </button>
         </span>
       </footer>
 

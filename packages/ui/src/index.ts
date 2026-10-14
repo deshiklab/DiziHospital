@@ -1,5 +1,7 @@
 export { cx } from './cx';
 
+export { copyText } from './clipboard';
+
 export { Button, Spinner } from './Button';
 export type { ButtonProps } from './Button';
 

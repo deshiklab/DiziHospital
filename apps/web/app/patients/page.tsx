@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Button, DataGrid, Panel, SafetyBanner, Tabs, useToast, type Column, type RowAction } from '@dizi/ui';
+import { Button, DataGrid, Panel, SafetyBanner, Tabs, copyText, useToast, type Column, type RowAction } from '@dizi/ui';
 import { branches, payers, queryPatients, type Patient } from '@/lib/mock';
 import { useShell } from '@/lib/shell';
 
@@ -82,7 +82,19 @@ export default function PatientsPage() {
     { label: 'New appointment', onSelect: () => push({ title: `Appointment started for ${p.name}`, tone: 'success' }) },
     { label: 'Print registration slip', onSelect: () => push({ title: 'Slip sent to the counter printer', description: 'Works offline', tone: 'success' }) },
     { label: 'Print ID card', onSelect: () => push({ title: 'ID card queued', tone: 'success' }) },
-    { label: 'Copy MRN', onSelect: () => { void navigator.clipboard?.writeText(p.mrn); push({ title: 'MRN copied', description: p.mrn, tone: 'info' }); } },
+    {
+      label: 'Copy MRN',
+      onSelect: () => {
+        // The browser can refuse (no secure context, or an embedded frame); say so instead of claiming success.
+        void copyText(p.mrn).then((ok) =>
+          push(
+            ok
+              ? { title: 'MRN copied', description: p.mrn, tone: 'info' }
+              : { title: 'The browser blocked the copy', description: `Select ${p.mrn} in the record and copy it by hand.`, tone: 'warning' },
+          ),
+        );
+      },
+    },
     { label: 'Register a visit', separated: true, onSelect: () => push({ title: `Visit opened for ${p.name}`, tone: 'info' }) },
     { label: 'Mark inactive', danger: true, separated: true, onSelect: () => push({ title: `${p.name} marked inactive`, description: 'Nothing is deleted; the record is retained per the retention policy.', tone: 'warning' }) },
   ];
