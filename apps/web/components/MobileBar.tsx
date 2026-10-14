@@ -50,7 +50,7 @@ export function MobileBar({
   return (
     <nav
       aria-label={t('bar.primary', locale)}
-      className="no-print fixed inset-x-0 bottom-0 z-[65] flex items-stretch gap-1 border-t border-border-subtle bg-surface-raised px-1 lg:hidden"
+      className="dizi-bar no-print fixed inset-x-0 bottom-0 z-[65] flex items-stretch gap-1 border-t border-border-subtle bg-surface-raised px-1 lg:hidden"
       style={{
         height: 'calc(var(--dizi-mobile-bar) + env(safe-area-inset-bottom))',
         paddingBottom: 'env(safe-area-inset-bottom)',
@@ -76,6 +76,8 @@ export function MobileBar({
         type="button"
         id={triggerId}
         onClick={onMenuToggle}
+        aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
+        title={menuOpen ? 'Close navigation' : 'Open navigation'}
         aria-expanded={menuOpen}
         aria-controls="mobile-nav-panel"
         className={cx(ITEM, menuOpen ? CURRENT : IDLE)}

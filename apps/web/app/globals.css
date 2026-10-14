@@ -69,6 +69,97 @@ tbody tr:focus-within {
   }
 }
 
+/* ----------------------------------------------------------------- navigation mode
+ * Which navigation chrome is on screen, owned by one set of rules.
+ *
+ * Two layouts share this shell: a desk gets the sidebar rail, a phone or tablet gets the thumb bar and the
+ * drawer. The width query below is the default, so the shell still works with JavaScript off. On top of it the
+ * shell writes `data-nav` on <html> from `window.matchMedia` with the SAME query plus the pointer type — a
+ * touch device gets the drawer even when its viewport is wide, which is what a bed side tablet wants anyway.
+ *
+ * These rules are deliberately unlayered: an unlayered declaration outranks every `@layer utilities` rule, so
+ * `data-nav` beats the Tailwind utilities that used to decide this on their own. That is the whole point. The
+ * bug this replaces: the header's toggle was hidden by one rule and the drawer it opened by another, resolved
+ * from `64rem` by two different engines, so a button could sit on screen doing nothing.
+ */
+.dizi-bar {
+  display: flex;
+}
+.dizi-drawer {
+  display: block;
+}
+.dizi-aside {
+  display: none;
+}
+.dizi-rail-toggle {
+  display: none;
+}
+.dizi-footer {
+  bottom: calc(var(--dizi-mobile-bar) + env(safe-area-inset-bottom));
+}
+.dizi-palette {
+  padding-bottom: 6rem;
+}
+
+@media (width >= 64rem) {
+  .dizi-bar {
+    display: none;
+  }
+  .dizi-drawer {
+    display: none;
+  }
+  .dizi-aside {
+    display: flex;
+  }
+  .dizi-rail-toggle {
+    display: inline-grid;
+  }
+  .dizi-footer {
+    bottom: 0;
+  }
+  .dizi-palette {
+    padding-bottom: 1rem;
+  }
+}
+
+html[data-nav='drawer'] .dizi-bar {
+  display: flex;
+}
+html[data-nav='drawer'] .dizi-drawer {
+  display: block;
+}
+html[data-nav='drawer'] .dizi-aside {
+  display: none;
+}
+html[data-nav='drawer'] .dizi-rail-toggle {
+  display: none;
+}
+html[data-nav='drawer'] .dizi-footer {
+  bottom: calc(var(--dizi-mobile-bar) + env(safe-area-inset-bottom));
+}
+html[data-nav='drawer'] .dizi-palette {
+  padding-bottom: 6rem;
+}
+
+html[data-nav='rail'] .dizi-bar {
+  display: none;
+}
+html[data-nav='rail'] .dizi-drawer {
+  display: none;
+}
+html[data-nav='rail'] .dizi-aside {
+  display: flex;
+}
+html[data-nav='rail'] .dizi-rail-toggle {
+  display: inline-grid;
+}
+html[data-nav='rail'] .dizi-footer {
+  bottom: 0;
+}
+html[data-nav='rail'] .dizi-palette {
+  padding-bottom: 1rem;
+}
+
 /* ------------------------------------------------------------------------------ print
  * Printing must work with the uplink down, so nothing here depends on the network. The shell chrome is
  * hidden, the working area is expanded, and tables print with their borders.

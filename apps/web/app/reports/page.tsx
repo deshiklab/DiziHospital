@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Button, KpiTile, Panel, SafetyBanner, Segmented, Tabs, cx, useToast } from '@dizi/ui';
 import { Printer } from 'lucide-react';
@@ -108,6 +108,10 @@ export default function ReportsPage() {
   const today = todayIso();
   const [range, setRange] = useState<RangeId>('week');
   const [tab, setTab] = useState('overview');
+  /* When this render was built. Set from an effect, never during render: a clock read while rendering is one
+     value in the server HTML and another in the browser, and React discards the tree when the two disagree. */
+  const [generatedAt, setGeneratedAt] = useState<string | null>(null);
+  useEffect(() => setGeneratedAt(new Date().toLocaleTimeString()), []);
 
   const snapshot = useMemo(() => buildSnapshot(range, today), [range, today]);
   const metrics = useMemo(() => overviewMetrics(snapshot), [snapshot]);
@@ -297,6 +301,7 @@ export default function ReportsPage() {
           <p className="text-sm text-text-secondary">
             {snapshot.rangeLabel} · {rangeNote} · {snapshot.days.length} day(s) ·{' '}
             {snapshot.days.length > 1 ? `${snapshot.days[0]} → ${snapshot.days[snapshot.days.length - 1]}` : snapshot.days[0]}
+            {generatedAt && <span className="font-numeric"> · generated {generatedAt}</span>}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">

@@ -349,7 +349,10 @@ export function buildSnapshot(range: RangeId, dayIso: string): ReportsSnapshot {
     range: config.id,
     rangeLabel: config.label,
     days,
-    asOf: `${dayIso} · generated ${new Date().toLocaleTimeString()}`,
+    /* The as-of stamp is the day the data belongs to, and nothing else: a wall clock here would read one time in
+       the server-rendered HTML and another in the browser, and React throws the whole tree away on a mismatch.
+       The generation time the reader cares about is shown by the screen, once, from an effect. */
+    asOf: dayIso,
     stockAsOf: dayIso,
     visits: {
       appointments: appts.length,

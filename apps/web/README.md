@@ -13,10 +13,11 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 
 | Feature | Where | Notes |
 |---|---|---|
-| **Sidebar: full ⇄ half (icons only)** | one toggle, top-left of the header (`lg` and up only) | Half mode is a 64 px icon rail with tooltips; the mode is remembered, and `Ctrl+B` switches it. `hidden` gives the table the entire width. There is deliberately no second control inside the sidebar |
-| **Mobile bar** | fixed to the bottom edge below `lg` — Home, Patients, Search and the Menu | The drawer opens and closes from the Menu column of that bar, and also closes on Escape, on the backdrop, on any navigation, and when the viewport reaches the desktop layout. The bar paints *over* the drawer's backdrop and the panel stops above it, so the button that opened the drawer is still visible and still live while it is open. Focus moves into the panel and returns to the button; the page behind it cannot scroll. Nothing to do with the sidebar: there is no panel-shaped control in the mobile header at all |
-| **Fixed header** | always | Breadcrumbs, global search, connection state, hot actions, command palette, notifications, display controls, language, help, account |
-| **Fixed footer** | always | Version, phase, build stamp, credits, site mode, keyboard-shortcut link |
+| **Sidebar: full ⇄ half (icons only)** | one toggle, top-left of the header — shown in rail mode only | Half mode is a 64 px icon rail with tooltips; the mode is remembered, and `Ctrl+B` switches it. `hidden` gives the table the entire width. There is deliberately no second control inside the sidebar, and the button is not rendered at all when the drawer is the way in |
+| **Mobile bar** | fixed to the bottom edge in drawer mode — Home, Patients, Search and the Menu | The drawer opens *and closes* from the Menu column of that bar (the column turns into a close button), and also closes on Escape, on the backdrop, on any navigation, and when the shell crosses into rail mode. The bar paints *over* the drawer's backdrop and the panel stops above it, so the button that opened it stays visible and live. Focus moves into the panel and returns to the button; the page behind it cannot scroll. Nothing to do with the sidebar: there is no panel-shaped control in the mobile header at all |
+| **Navigation mode — one decision** | `<html data-nav="rail\|drawer">` | The shell decides rail or drawer **once** — from `(min-width: 64rem)` *and* the pointer type — and writes it to the document element. `globals.css` paints from that attribute, with the same width query as its no-JS default, so the control that is on screen and the code behind it can never disagree. A touch device gets the thumb bar and the drawer at *any* width (a tablet in landscape is a thumb device, not a small desk), and in drawer mode the header shows no panel-shaped icon at all. Before this, "is the button visible" was decided by a class list and "what the button does" by `window.innerWidth`: that is how an Expand sidebar button came to sit on a phone doing nothing. `npm run test:shell` drives the decision at five widths and pointer types |
+| **Fixed header** | always | Global search, connection state, hot actions, command palette, notifications, display controls, language, help, account |
+| **Fixed footer** | always | The breadcrumb trail, version, phase, build stamp, credits, site mode, keyboard-shortcut link. The trail lives here rather than in the header so it stays visible at every width |
 | **Global search** | header, `/` or click | Name, Bangla name, MRN and phone; results link straight to the record |
 | **Command palette** | `⌘K` / `Ctrl+K` | Every route, plus role-aware "legacy · phase" chips |
 | **Hot & action buttons** | `+` in the header, `Alt+1…4` | Register, book, bill, search |
@@ -85,6 +86,23 @@ Rules that keep the mirror *reference material* rather than product material:
 * Articles the library holds as title-only stubs say so on the page instead of rendering blank.
 * The app must run where the repository's `docs/help-library/` is reachable (`lib/help.ts` looks next to and
   above the app directory); in a deployed image, mount it read-only.
+
+## Checks
+
+| Command | What it proves |
+|---|---|
+| `npm run verify` | clean-room scan, design tokens in sync, and no class list carrying two base display utilities |
+| `npx tsc --noEmit -p apps/web/tsconfig.json` | types |
+| `NEXT_DIST_DIR=.next-build npx next build apps/web` | the production build — the alternate dist directory keeps a running dev server intact |
+| `python3 tools/docs/check_links.py` | every relative link and image in `docs/` resolves |
+| `npm run test:shell` | the shell's navigation, driven for real: five width/pointer scenarios, the drawer opening *and* closing from the bar, the rail collapsing *and* expanding, and the built stylesheet carrying the mode rules |
+| `npm run test:hydration` | every route hydrates with no server/client mismatch and the shared control is live afterwards (needs the dev server on :3000) |
+
+Both `test:` commands need `npm i --no-save jsdom esbuild`; they render the real components in jsdom, so they
+prove state, handlers and class names but nothing about pixels — jsdom has no layout engine. They are deliberately
+not part of `npm run verify`, because CI installs nothing today; wiring them in belongs with the P0 CI hardening.
+The reports screen's as-of stamps are plain dates for the same reason: a wall clock read while rendering is one
+value on the server and another in the browser, and React throws the rendered tree away when the two disagree.
 
 ## Deliberately not here yet
 

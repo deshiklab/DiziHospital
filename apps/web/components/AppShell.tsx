@@ -53,17 +53,23 @@ import { patients } from '@/lib/mock';
  * The display utility is NOT part of the shape on purpose. A class list may carry only one *base* display
  * utility, because the winner is decided by the order of the rules in the stylesheet and not by the order in
  * the attribute — and in this build `.hidden` is emitted after `.grid`/`.flex` but BEFORE `.inline`,
- * `.inline-flex` and `.inline-grid`. So `cx(ICON_BTN, 'hidden lg:inline-grid')` with `inline-grid` inside
- * ICON_BTN stayed visible at every width: that is exactly how the sidebar toggle ended up sitting in the
- * mobile header, toggling a rail that does not exist there, and doing nothing at all. Keep the display
- * utility in the same string as `hidden`; never mix two of them.
+ * `.inline-flex` and `.inline-grid`. Two of them in one list and the width the button appears at stops being
+ * a decision anyone made: that is how the sidebar toggle ended up on a phone, toggling a rail that is not
+ * there, doing nothing. `npm run check:classes` now fails on that pattern.
+ *
+ * The shell chrome (bar, drawer, aside, rail toggle, footer offset) does not spell its own display at all:
+ * globals.css owns it in one place, and `data-nav` settles it. See the navigation-mode block there.
  */
+/** The shell's navigation breakpoint, spelled exactly as globals.css spells it so both resolve the same. */
+const NAV_MODE_QUERY = '(min-width: 64rem)';
+
 const ICON_BTN_SHAPE =
   'size-9 shrink-0 place-items-center rounded-md text-text-secondary hover:bg-surface-sunken hover:text-text-primary';
 /** Visible at every width. */
 const ICON_BTN = `${ICON_BTN_SHAPE} inline-grid`;
-/** Desktop only — the sidebar it toggles does not exist below `lg`. */
-const ICON_BTN_LG = `${ICON_BTN_SHAPE} hidden lg:inline-grid`;
+/** The sidebar toggle. Its display comes from the navigation-mode rules in globals.css (`dizi-rail-toggle`),
+ *  not from a second display utility here: whether it is on screen and what it does must be one decision. */
+const ICON_BTN_RAIL = `${ICON_BTN_SHAPE} inline-grid dizi-rail-toggle`;
 /** Hidden on the narrowest phones so the header never wraps. */
 const ICON_BTN_SM = `${ICON_BTN_SHAPE} hidden sm:inline-grid`;
 
@@ -124,19 +130,34 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const MOBILE_NAV_TRIGGER_ID = 'mobile-nav-trigger';
   const closeMobileNav = useCallback(() => setMobileNavOpen(false), [setMobileNavOpen]);
   const toggleMobileNav = useCallback(() => setMobileNavOpen(!mobileNavOpen), [mobileNavOpen, setMobileNavOpen]);
-  // Crossing into the desktop layout hides the drawer: leaving it open would leave an invisible panel capturing
-  // the keyboard (and the next Escape would go to a drawer nobody can see).
-  const desktopLayout = useMediaQuery('(min-width: 1024px)');
+
+  /* ---------------------------------------------------------------- navigation mode
+   * ONE decision about which navigation chrome belongs on this screen, and everything else reads it.
+   *
+   * `NAV_MODE_QUERY` is the same string globals.css uses as its default, so `window.matchMedia` and the
+   * stylesheet resolve the breakpoint with the same engine and cannot disagree. The pointer type is the second
+   * input: a tablet or a phone with a wide viewport is still a thumb device, and gets the bar and the drawer
+   * rather than a rail it cannot reach. `data-nav` on <html> then overrides the stylesheet's default — that is
+   * how the button on screen and the code behind it stay in step at every width and in every embedding.
+   */
+  const wideLayout = useMediaQuery(NAV_MODE_QUERY);
+  const coarsePointer = useMediaQuery('(pointer: coarse)');
+  const navMode: 'rail' | 'drawer' = wideLayout && !coarsePointer ? 'rail' : 'drawer';
   useEffect(() => {
-    if (desktopLayout) setMobileNavOpen(false);
-  }, [desktopLayout, setMobileNavOpen]);
+    document.documentElement.dataset.nav = navMode;
+    // Crossing into the rail hides the drawer: leaving it open would leave an invisible panel capturing the
+    // keyboard (and the next Escape would go to a drawer nobody can see).
+    if (navMode === 'rail') setMobileNavOpen(false);
+  }, [navMode, setMobileNavOpen]);
 
   /* ------------------------------------------------------------------ shortcuts */
   const hotkeys = useMemo(
     () => [
       { combo: 'mod+k', handler: () => setPaletteOpen((o) => !o) },
       // Ctrl+B collapses the desktop rail; on a phone there is no rail, so it opens the navigation drawer.
-      { combo: 'mod+b', handler: () => (window.innerWidth < 1024 ? setMobileNavOpen(!mobileNavOpen) : toggleSidebar()) },
+      // Ctrl+B is the sidebar toggle on a desk and the drawer toggle on a thumb device — the same mode the
+      // header button and the bottom bar read.
+      { combo: 'mod+b', handler: () => (navMode === 'drawer' ? setMobileNavOpen(!mobileNavOpen) : toggleSidebar()) },
       { combo: '/', handler: () => { setSearchOpen(true); setTimeout(() => searchRef.current?.focus(), 30); } },
       { combo: 'alt+f', handler: () => toggleFullscreen() },
       { combo: 'alt+z', handler: () => setZoom(Math.min(1.5, ZOOM_STEPS[Math.min(ZOOM_STEPS.indexOf(zoom as never) + 1, ZOOM_STEPS.length - 1)])) },
@@ -145,7 +166,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       { combo: 'shift+?', handler: () => setHotkeysOpen(true) },
       { combo: 'escape', handler: () => { setPaletteOpen(false); setHelpOpen(false); setHotkeysOpen(false); setNotifOpen(false); setDisplayOpen(false); setSearchOpen(false); setMobileNavOpen(false); } },
     ],
-    [toggleSidebar, toggleFullscreen, zoom, setZoom, textScale, setTextScale, mobileNavOpen, setMobileNavOpen],
+    [toggleSidebar, toggleFullscreen, zoom, setZoom, textScale, setTextScale, mobileNavOpen, setMobileNavOpen, navMode],
   );
   useHotkeys(hotkeys);
 
@@ -266,19 +287,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           >
             <button
               type="button"
-              onClick={() => {
-                // Desktop: collapse to the rail and back. A narrow viewport has no rail, so — should this button
-                // ever be visible there again — it opens the navigation drawer instead of doing nothing.
-                if (window.innerWidth < 1024) {
-                  toggleMobileNav();
-                  return;
-                }
-                if (showSidebar) toggleSidebar();
-                else setSidebarMode('half');
-              }}
+              onClick={() => (showSidebar ? toggleSidebar() : setSidebarMode('half'))}
               aria-label={showSidebar ? (isHalf ? 'Expand sidebar' : 'Collapse sidebar to icons') : 'Show sidebar'}
               aria-pressed={showSidebar}
-              className={ICON_BTN_LG}
+              className={ICON_BTN_RAIL}
             >
               {showSidebar && !isHalf ? <PanelLeftClose className="size-4" aria-hidden /> : <PanelLeftOpen className="size-4" aria-hidden />}
             </button>
@@ -582,7 +594,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <div className="flex min-h-0 flex-1">
         <aside
           className={cx(
-            'no-print sticky top-[3.25rem] hidden h-[calc(100vh-3.25rem-2.25rem)] shrink-0 flex-col border-r border-border-subtle bg-surface-raised lg:flex',
+            'dizi-aside no-print sticky top-[3.25rem] hidden h-[calc(100vh-3.25rem-2.25rem)] shrink-0 flex-col border-r border-border-subtle bg-surface-raised lg:flex',
             isHalf ? 'w-16' : 'w-60',
           )}
         >
@@ -647,7 +659,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* =================================================================== footer */}
-      <footer className="no-print sticky bottom-[calc(var(--dizi-mobile-bar)+env(safe-area-inset-bottom))] z-30 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border-subtle bg-surface-raised px-3 py-1.5 text-[11px] text-text-tertiary lg:bottom-0">
+      <footer className="dizi-footer no-print sticky bottom-[calc(var(--dizi-mobile-bar)+env(safe-area-inset-bottom))] z-30 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border-subtle bg-surface-raised px-3 py-1.5 text-[11px] text-text-tertiary lg:bottom-0">
         {/* The breadcrumb trail lives down here, not in the header: the header is for actions, and the trail is
             orientation — it does not need to be at the top, but it does need to be visible on every screen size. */}
         <nav aria-label="Breadcrumb" className="flex min-w-0 flex-1 items-center gap-1 text-xs text-text-secondary">
@@ -692,7 +704,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* ============================================================== overlays */}
       {paletteOpen && (
-        <div className="fixed inset-0 z-[72] flex items-start justify-center bg-surface-overlay p-4 pb-24 pt-24 lg:pb-4" role="dialog" aria-modal="true" aria-label={t('shell.palette', locale)}>
+        <div className="dizi-palette fixed inset-0 z-[72] flex items-start justify-center bg-surface-overlay p-4 pb-24 pt-24 lg:pb-4" role="dialog" aria-modal="true" aria-label={t('shell.palette', locale)}>
           <div className="w-full max-w-xl rounded-lg border border-border-subtle bg-surface-raised shadow-xl">
             <input
               autoFocus

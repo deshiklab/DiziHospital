@@ -83,7 +83,7 @@ export function MobileNav({
   if (typeof document === 'undefined' || !open) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[60] lg:hidden">
+    <div className="dizi-drawer fixed inset-0 z-[60] lg:hidden">
       <div className="absolute inset-0 bg-surface-overlay" onClick={onClose} aria-hidden />
       <div
         ref={panelRef}
