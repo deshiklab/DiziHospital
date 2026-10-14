@@ -21,6 +21,15 @@ export type { MenuItem, MenuProps } from './Menu';
 export { AppSlider } from './AppSlider';
 export type { Slide } from './AppSlider';
 
+export { Sheet } from './Sheet';
+export type { SheetProps } from './Sheet';
+
+export { Board } from './Board';
+export type { BoardColumn, BoardCard, BoardProps } from './Board';
+
+export { Segmented } from './Segmented';
+export type { SegmentedOption } from './Segmented';
+
 export { ToastProvider, useToast } from './Toast';
 
 export { PatientBanner, SafetyBanner, SyncPill, KpiTile, Panel, EmptyState, SubNav } from './Clinical';

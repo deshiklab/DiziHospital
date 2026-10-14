@@ -35,12 +35,16 @@ const allow = [
   /\.test\.[cm]?[jt]sx?$/,
 ];
 
-const skipDirs = new Set(['node_modules', 'dist', 'build', '.git', 'coverage', '.next', 'vendor']);
+// Build output is a copy of the product, not source: it is skipped so a local production build cannot make the
+// scan fail. `.next-build` is the alternative distDir used to build beside a running dev server, and its
+// `*.nft.json` traces legitimately mention the mirrored help library (which ships as labelled reference *data*,
+// never as product code).
+const skipDirs = new Set(['node_modules', 'dist', 'build', '.git', 'coverage', '.next', '.next-build', '.turbo', '.vercel', 'out', 'vendor']);
 const textExt = new Set(['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs', '.css', '.scss', '.php', '.blade.php', '.json', '.html', '.svg', '.md', '.sql']);
 
 function* walk(dir) {
   for (const entry of readdirSync(dir)) {
-    if (skipDirs.has(entry)) continue;
+    if (skipDirs.has(entry) || entry.startsWith('.next')) continue;
     const full = join(dir, entry);
     const st = statSync(full);
     if (st.isDirectory()) yield* walk(full);

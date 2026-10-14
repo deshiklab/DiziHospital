@@ -38,6 +38,12 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 | `/patients` | The full DataGrid (below), advanced filter panel with removable chips, saved views, bulk actions, tabs for duplicates/merges |
 | `/patients/[mrn]` | Patient record: banner with allergy alerts, tabbed detail, editable contact block, visit history grid, read-only projections of legacy-owned modules, record metadata |
 | `/patients/new` | Registration in five sections, live duplicate detection, honest offline ("Saved on this device" vs "Saved") |
+| `/appointments` | The appointment desk: doctor × time calendar (desktop) and list (mobile), a drag-free queue board, online requests from the patient portal, and the full list — plus the booking sheet with real slot conflicts |
+| `/login` | Two-step sign-in preview (credentials → six-digit code), branch picker, English ⇄ বাংলা |
+| `/help` | Help centre: how the new platform works (six anchored topics), the shortcut list, and the mirrored reference library by category |
+| `/help/search` | Server-rendered search over the reference library, with the matching text highlighted |
+| `/help/[category]/[slug]` | One mirrored article, rendered from Markdown with its screenshots served from the library, attributed to its source |
+| `/print` and `/print/[doc]` | Print templates: registration slip and appointment slip (A5), prescription (A4), receipt (80 mm thermal), specimen label (50 × 25 mm), patient ID card (CR80), day list (A4 landscape) |
 | `/<module>` | Launcher: modules still owned by the legacy system say so and point there |
 
 ## DataGrid
@@ -55,6 +61,25 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 | **Export** | CSV with a UTF-8 BOM so Bangla exports open correctly in Excel |
 | **Print CSS** | Shell chrome hidden, tables expanded and bordered, zoom forced to 100 % |
 
+## Help centre and the mirrored library
+
+Words, not code, are the other half of a handover. The help centre has two deliberately separate halves:
+
+* **How the new platform works** — our own text, versioned with the app, so it can never describe a screen that
+  no longer exists.
+* **The reference library** — the legacy product's published documentation, mirrored into `docs/help-library/`
+  and read at runtime by `lib/help.ts` (`/help`, `/help/search`, `/help/[category]/[slug]`,
+  `/api/help-asset/[...path]`). Each page says that it documents the legacy product and links to its source.
+
+Rules that keep the mirror *reference material* rather than product material:
+
+* Nothing is copied out of `docs/help-library/` into product code — the wiki reads it, and the clean-room scan
+  (`npm run clean-room`) still passes with the library present.
+* The asset route resolves strictly inside `docs/help-library/assets`, so a crafted URL cannot walk out of it.
+* Articles the library holds as title-only stubs say so on the page instead of rendering blank.
+* The app must run where the repository's `docs/help-library/` is reachable (`lib/help.ts` looks next to and
+  above the app directory); in a deployed image, mount it read-only.
+
 ## Deliberately not here yet
 
 * No API calls: `lib/mock.ts` is deterministic synthetic data (2 000 patients) that disappears in `P0-301`;
@@ -62,6 +87,13 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 * No auth (Keycloak/OIDC is `P0-205`), so the role switcher and sign-out are placeholders.
 * Grid row-level keyboard navigation (↑/↓/Enter) and virtualisation land with `P0-204` completion.
 * Clinical terminology is not translated yet — that needs the reviewed glossary (`docs/plan/02` §9).
+* Sign-in is a **preview**: no session is created and no password is checked. Keycloak/OIDC is `P0-205`, and the
+  screen says so on itself.
+* Print templates render real layouts from synthetic data; the barcodes are drawn from the identifier itself, not
+  from a certified encoder (that lands with the laboratory module, `P4`).
+* Help article feedback ("Was this helpful?") is inert — it needs the store and the editorial owner first.
+* The appointment desk runs on the same deterministic synthetic data as the rest of the shell: the scheduling
+  rules are real, the appointments are not.
 
 ## Conventions
 
