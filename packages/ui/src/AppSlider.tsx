@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { X } from 'lucide-react';
 import { cx } from './cx';
 
 /* --------------------------------------------------------------------------- AppSlider
@@ -31,15 +32,19 @@ const toneStyles: Record<NonNullable<Slide['tone']>, string> = {
 export function AppSlider({
   slides,
   autoplayMs = 7000,
+  dismissible = true,
   className,
 }: {
   slides: Slide[];
   autoplayMs?: number;
+  /** Shows a close button. Dismissal lasts for the current page view only: a refresh brings the slider back. */
+  dismissible?: boolean;
   className?: string;
 }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
   const touchStart = useRef<number | null>(null);
   const count = slides.length;
 
@@ -65,7 +70,9 @@ export function AppSlider({
     };
   }, [paused, reduced, count, autoplayMs]);
 
-  if (count === 0) return null;
+  // Dismissal is intentionally component state, not storage: the highlights return on the next page load
+  // instead of disappearing for good on a device.
+  if (count === 0 || dismissed) return null;
 
   return (
     <section
@@ -150,10 +157,23 @@ export function AppSlider({
             />
           ))}
         </div>
-        <p className="font-numeric text-xs text-text-tertiary">
-          {index + 1}/{count}
-          {reduced && ' · autoplay off (reduced motion)'}
-        </p>
+        <div className="flex items-center gap-2">
+          <p className="font-numeric text-xs text-text-tertiary">
+            {index + 1}/{count}
+            {reduced && ' · autoplay off (reduced motion)'}
+          </p>
+          {dismissible && (
+            <button
+              type="button"
+              onClick={() => setDismissed(true)}
+              aria-label="Hide highlights"
+              title="Hide highlights (they return when you reload the page)"
+              className="grid size-7 place-items-center rounded-md border border-border-subtle text-text-tertiary hover:bg-surface-sunken hover:text-text-primary"
+            >
+              <X className="size-3.5" aria-hidden />
+            </button>
+          )}
+        </div>
       </div>
     </section>
   );

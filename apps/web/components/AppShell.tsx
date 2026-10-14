@@ -36,6 +36,10 @@ import { APP_PHASE, APP_VERSION, TEXT_STEPS, ZOOM_STEPS, useShell, type Density,
 import { HOTKEYS, NAV, breadcrumbsFor, roleLabels, t } from '@/lib/nav';
 import { patients } from '@/lib/mock';
 
+/** One class string for every header icon button: identical hit area, identical centring, no drift between them. */
+const ICON_BTN =
+  'inline-grid size-9 shrink-0 place-items-center rounded-md text-text-secondary hover:bg-surface-sunken hover:text-text-primary';
+
 const ICONS: Record<string, React.ReactNode> = {
   dashboard: <LayoutDashboard className="size-4" aria-hidden />,
   users: <Users className="size-4" aria-hidden />,
@@ -137,11 +141,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   const sidebarBody = (mode: SidebarMode) => (
     <nav className="flex-1 overflow-y-auto p-2" aria-label="Main navigation">
-      {SECTIONS.map((section) => {
+      {SECTIONS.map((section, sectionIndex) => {
         const items = NAV.filter((n) => section.keys.includes(n.key) && n.roles.includes(role));
         if (items.length === 0) return null;
         return (
-          <div key={section.id} className="mb-2">
+          <div
+            key={section.id}
+            className={cx(
+              'mb-2',
+              // In the rail the section headings are gone, so a divider keeps the grouping readable.
+              mode === 'half' && sectionIndex > 0 && 'mt-2 border-t border-border-subtle pt-2',
+            )}
+          >
             {mode === 'full' && (
               <p className="px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-text-tertiary">
                 {section.label[locale]}
@@ -155,8 +166,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                     href={item.href}
                     aria-current={active ? 'page' : undefined}
                     className={cx(
-                      'flex items-center gap-3 rounded-md py-2 text-base',
-                      mode === 'full' ? 'px-3' : 'justify-center px-2',
+                      'rounded-md text-base',
+                      // The rail uses a fixed 40 px grid cell so every icon sits on the same centre line,
+                      // rather than relying on padding that shifts with label length.
+                      mode === 'full' ? 'flex items-center gap-3 px-3 py-2' : 'grid size-10 place-items-center',
                       active ? 'bg-brand-50 font-medium text-brand-700' : 'text-text-secondary hover:bg-surface-sunken hover:text-text-primary',
                     )}
                   >
@@ -168,9 +181,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   </Link>
                 );
                 return (
-                  <li key={item.key}>
+                  <li key={item.key} className={cx(mode === 'half' && 'flex justify-center')}>
                     {mode === 'half' ? (
-                      <Tooltip side="right" title={t(item.key, locale)} content={item.owner === 'legacy' ? 'Records are created in the legacy system until its cutover.' : 'Owned by the new platform.'}>
+                      <Tooltip
+                        side="right"
+                        flip={false}
+                        title={t(item.key, locale)}
+                        content={
+                          item.owner === 'legacy'
+                            ? `Still in the legacy system until ${item.phase}`
+                            : 'Owned by the new platform'
+                        }
+                      >
                         {link}
                       </Tooltip>
                     ) : (
@@ -193,20 +215,32 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <header className="no-print sticky top-0 z-40 border-b border-border-subtle bg-surface-raised">
         <div className="flex items-center gap-2 px-2 py-2 sm:px-3">
           {/* sidebar controls: collapse to a rail on desktop, open a drawer on mobile */}
-          <button
-            type="button"
-            onClick={toggleSidebar}
-            aria-label={t('shell.sidebar', locale)}
-            aria-expanded={showSidebar}
-            className="hidden size-9 shrink-0 place-items-center rounded-md text-text-secondary hover:bg-surface-sunken lg:grid"
+          {/* The single collapse/expand control for desktop. The sidebar itself no longer carries one,
+              which is what made two buttons appear to do the same job. */}
+          <Tooltip
+            title={showSidebar ? (isHalf ? 'Expand sidebar' : 'Collapse sidebar to icons') : 'Show sidebar'}
+            content={
+              showSidebar
+                ? 'Collapses the sidebar to an icon rail (labels appear on hover) and expands it again.'
+                : 'The sidebar is hidden; this brings it back as an icon rail.'
+            }
+            shortcut="Ctrl+B"
           >
-            {isHalf ? <PanelLeftOpen className="size-4" aria-hidden /> : <PanelLeftClose className="size-4" aria-hidden />}
-          </button>
+            <button
+              type="button"
+              onClick={() => (showSidebar ? toggleSidebar() : setSidebarMode('half'))}
+              aria-label={showSidebar ? (isHalf ? 'Expand sidebar' : 'Collapse sidebar to icons') : 'Show sidebar'}
+              aria-pressed={showSidebar}
+              className={cx(ICON_BTN, 'hidden lg:inline-grid')}
+            >
+              {showSidebar && !isHalf ? <PanelLeftClose className="size-4" aria-hidden /> : <PanelLeftOpen className="size-4" aria-hidden />}
+            </button>
+          </Tooltip>
           <button
             type="button"
             onClick={() => setMobileNavOpen(true)}
             aria-label="Open navigation"
-            className="grid size-9 shrink-0 place-items-center rounded-md text-text-secondary hover:bg-surface-sunken lg:hidden"
+            className={cx(ICON_BTN, 'lg:hidden')}
           >
             <PanelLeftOpen className="size-4" aria-hidden />
           </button>
@@ -339,7 +373,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   onClick={toggle}
                   aria-expanded={open}
                   aria-haspopup="menu"
-                  className="grid size-9 place-items-center rounded-md bg-brand-500 text-text-inverse hover:bg-brand-600"
+                  className="inline-grid size-9 shrink-0 place-items-center rounded-md bg-brand-500 text-text-inverse hover:bg-brand-600"
                   aria-label="Quick actions"
                 >
                   <Plus className="size-4" aria-hidden />
@@ -355,7 +389,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               type="button"
               onClick={() => setPaletteOpen(true)}
               aria-label={t('shell.palette', locale)}
-              className="hidden size-9 place-items-center rounded-md text-text-secondary hover:bg-surface-sunken sm:grid"
+              className={cx(ICON_BTN, 'hidden sm:inline-grid')}
             >
               <Command className="size-4" aria-hidden />
             </button>
@@ -369,7 +403,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 onClick={() => setNotifOpen((o) => !o)}
                 aria-expanded={notifOpen}
                 aria-label={`${t('shell.notifications', locale)}, 3 unread`}
-                className="relative grid size-9 place-items-center rounded-md text-text-secondary hover:bg-surface-sunken"
+                className={cx(ICON_BTN, 'relative')}
               >
                 <Bell className="size-4" aria-hidden />
                 <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-safety-critical" aria-hidden />
@@ -408,7 +442,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 onClick={() => setDisplayOpen((o) => !o)}
                 aria-expanded={displayOpen}
                 aria-label="Display settings"
-                className="grid size-9 place-items-center rounded-md text-text-secondary hover:bg-surface-sunken"
+                className={ICON_BTN}
               >
                 <Type className="size-4" aria-hidden />
               </button>
@@ -480,7 +514,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               type="button"
               onClick={() => setHelpOpen(true)}
               aria-label={t('shell.help', locale)}
-              className="grid size-9 place-items-center rounded-md text-text-secondary hover:bg-surface-sunken"
+              className={ICON_BTN}
             >
               <CircleHelp className="size-4" aria-hidden />
             </button>
@@ -524,25 +558,29 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             isHalf ? 'w-16' : 'w-60',
           )}
         >
-          <div className={cx('flex items-center gap-2 border-b border-border-subtle px-2 py-2', isHalf && 'justify-center')}>
-            <button
-              type="button"
-              onClick={() => setSidebarMode(isHalf ? 'full' : 'half')}
-              aria-label={isHalf ? 'Expand sidebar' : 'Collapse sidebar to icons'}
-              className="grid size-8 place-items-center rounded-md text-text-secondary hover:bg-surface-sunken"
-            >
-              {isHalf ? <PanelLeftOpen className="size-4" aria-hidden /> : <PanelLeftClose className="size-4" aria-hidden />}
-            </button>
-            {!isHalf && <span className="text-xs text-text-tertiary">Main Campus · edge</span>}
-            {!isHalf && (
-              <button
-                type="button"
-                onClick={() => setSidebarMode('hidden')}
-                aria-label="Hide sidebar"
-                className="ml-auto grid size-8 place-items-center rounded-md text-text-tertiary hover:bg-surface-sunken"
-              >
-                <X className="size-3.5" aria-hidden />
-              </button>
+          {/* No collapse/expand button here: that control lives in the header only. This row carries the
+              site label and the one action the header cannot express — hiding the sidebar completely. */}
+          <div className={cx('flex h-10 shrink-0 items-center gap-2 border-b border-border-subtle px-2', isHalf && 'justify-center')}>
+            {isHalf ? (
+              <Tooltip side="right" title="DiziHospital" content="Main Campus · edge node">
+                <span aria-hidden className="inline-grid size-8 place-items-center rounded-md bg-brand-500 text-xs font-bold text-text-inverse">
+                  D
+                </span>
+              </Tooltip>
+            ) : (
+              <>
+                <span className="truncate text-xs text-text-tertiary">Main Campus · edge</span>
+                <Tooltip side="left" title="Hide sidebar" content="Gives the whole width to the table. Bring it back from the header.">
+                  <button
+                    type="button"
+                    onClick={() => setSidebarMode('hidden')}
+                    aria-label="Hide sidebar"
+                    className="ml-auto inline-grid size-8 shrink-0 place-items-center rounded-md text-text-tertiary hover:bg-surface-sunken hover:text-text-primary"
+                  >
+                    <X className="size-3.5" aria-hidden />
+                  </button>
+                </Tooltip>
+              </>
             )}
           </div>
           {sidebarBody(isHalf ? 'half' : 'full')}
