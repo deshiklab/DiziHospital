@@ -375,8 +375,11 @@ export function generateEncounters(dayIso: string): Encounter[] {
     const patient = patients[Math.floor(rand() * patients.length)];
     const statusPool: EncounterStatus[] = ['Waiting', 'Waiting', 'In consultation', 'Signed', 'Signed'];
     const status = statusPool[Math.floor(rand() * statusPool.length)];
-    const hour = 9 + Math.floor(i / 2);
-    const minute = (i % 2) * 30 + (rand() < 0.5 ? 10 : 40);
+    /* Arrivals start at 09:00 in half-hour steps with a random offset. The offset has to be carried into the
+       hour: minutes 17 to 40 past the half-hour would otherwise read 09:70, which is not a time anyone can print. */
+    const arrivalMinutes = (9 + Math.floor(i / 2)) * 60 + (i % 2) * 30 + (rand() < 0.5 ? 10 : 40);
+    const hour = Math.floor(arrivalMinutes / 60);
+    const minute = arrivalMinutes % 60;
     const id = `ENC-${dayIso.replace(/-/g, '')}-${String(i + 1).padStart(3, '0')}`;
 
     const vitalKeys = VITALS.map((v) => v.key);

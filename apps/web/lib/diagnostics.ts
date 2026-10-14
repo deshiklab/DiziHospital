@@ -298,6 +298,9 @@ function rng(seed: number) {
 }
 
 const addHours = (stamp: string, hours: number): string => {
+  if (!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(stamp)) {
+    throw new Error(`Expected a YYYY-MM-DD HH:MM stamp, got "${stamp}"`);
+  }
   const d = new Date(`${stamp.replace(' ', 'T')}:00`);
   d.setMinutes(d.getMinutes() + hours * 60);
   const pad = (n: number) => String(n).padStart(2, '0');

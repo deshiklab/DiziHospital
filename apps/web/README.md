@@ -43,6 +43,7 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 | `/clinical` | OPD consultation: the room queue beside one patient's workspace — vitals with reference-range flags, SOAP notes, ICD-10 diagnosis, lab/imaging orders, and a prescription screened for allergies, high-alert medicines and dangerous abbreviations before it can be signed |
 | `/diagnostics` | Laboratory and imaging worklist: every specimen's journey (ordered → collected → in the lab → resulted → verified → dispatched), per-analyte reference ranges checked as the value is typed, turnaround deadlines on the row, verification as a second-person gate, the critical-value call-back log, rejected samples with reasons, and the day's quality-control runs |
 | `/inventory` | Stores and purchase: stock on hand per store with cover in days, batches with expiry (expired ones quarantined, valued, and written off with a reason), a replenishment list whose quantities cover the lead time, purchase orders with send/receive/cancel, goods receipt with a batch number and an expiry required on every line, the append-only store ledger, and a stock-take sheet a second person has to approve |
+| `/reports` | Reports and dashboards: eight figures that each state their definition and their as-of stamp, patients-seen-per-day against bookings, case mix and workload by doctor, laboratory turnaround, critical-value call-back compliance and quality control, stock valuation and expiry risk, revenue split by method and payer with the discounts that needed an approver, and a data-quality tab that counts the record's own gaps and names who closes each one |
 | `/pharmacy` | The dispensary: prescription queue, FEFO batch picking (expired batches cannot be selected), substitution with both names kept, controlled-substance register with a witness, and the append-only stock ledger |
 | `/billing` | Billing counter: invoices built from what the doctor ordered, payment capture per method, discount approval above the limit, day-end sheet with cash reconciliation, and the branch tariff |
 | `/help` | Help centre: how the new platform works (six anchored topics), the shortcut list, and the mirrored reference library by category |
@@ -100,6 +101,12 @@ Rules that keep the mirror *reference material* rather than product material:
 * The laboratory worklist shows the controls it should show — reference ranges, turnaround deadlines, verification
   and the call-back log — but no analyser, label printer or SMS gateway is connected (`P4` integration hardening).
   Until then the values are typed by hand or filled from the synthetic generator.
+* The reports are computed in the browser from the same deterministic generators as the operational screens, so
+  they are always in step with them; on the real system the heavy aggregates run on the server (`P6`) and the
+  screen reads a materialised summary instead. The scheduled-report panel is a specification, not a job runner.
+* Reports have no drill-through yet: clicking a figure does not yet open the rows behind it (it goes to the
+  operational screen instead), and there is no PDF or spreadsheet export beyond the browser's own print and the
+  grid's CSV.
 * The store module has no barcode or GS1 scanning yet: batch numbers and expiries are typed. Scanning is the
   point of the receiving bay (and of the analyser interface) and it lands with `P3` integration work.
 * No credit-note path for short-dated stock returned to a supplier, and no cold-chain temperature log — both are
