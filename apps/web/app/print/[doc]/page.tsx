@@ -4,27 +4,42 @@ import { use } from 'react';
 import Link from 'next/link';
 import { Button, SafetyBanner, Tooltip } from '@dizi/ui';
 import { DOCTORS, doctorById, generateAppointments, timeLabel, todayIso } from '@/lib/appointments';
+import { encounterById, generateEncounters } from '@/lib/clinical';
+import { DRUGS, drugById, generateBatches, generateDispenses } from '@/lib/pharmacy';
+import { generateInvoices, lineNet, receiptNo, totals } from '@/lib/billing';
 import { patients } from '@/lib/mock';
 
 /* Print templates.
  *
- * Every document here is a real layout, sized for the paper it will be printed on, with the print button and
- * the surrounding chrome removed at print time. They matter more than they look:
- *  - printing is the one thing that must work with the uplink down (plan 02 §11), so nothing here fetches data;
- *  - the paper is not one size: A4 reports, A5 slips, 80 mm thermal receipts, 50 × 25 mm labels;
- *  - the barcode is drawn from the identifier itself, so a scanner test is meaningful even before a real
- *    encoder is wired in (that lands with the lab module, where labels become safety-critical).
+ * Every document here is a real layout, sized for the paper it will be printed on, with the buttons and
+ * surrounding chrome removed at print time. Printing is the one thing that must work with the uplink down, so
+ * nothing on this page fetches anything; each template reads its data from the same deterministic modules the
+ * screens use, which is why a slip printed from here matches the screen it came from.
+ *
+ * Templates take a query parameter for the record they print (`?id=`, `?enc=`, `?inv=`, `?dsp=`, `?spec=`); with
+ * no parameter they render a sample, and the preview banner says so.
  */
 
-type DocKind = 'registration-slip' | 'appointment-slip' | 'prescription' | 'receipt' | 'specimen-label' | 'id-card' | 'day-list';
+type DocKind =
+  | 'registration-slip'
+  | 'appointment-slip'
+  | 'prescription'
+  | 'receipt'
+  | 'invoice'
+  | 'dispense-label'
+  | 'specimen-label'
+  | 'id-card'
+  | 'day-list';
 
-const DOC_META: Record<DocKind, { title: string; paper: string; page: string; note: string }> = {
-  'registration-slip': { title: 'Registration slip', paper: 'A5', page: 'A5 portrait', note: 'Handed to the patient at the counter.' },
-  'appointment-slip': { title: 'Appointment slip', paper: 'A5', page: 'A5 portrait', note: 'Includes the token and the reporting time.' },
-  prescription: { title: 'Prescription', paper: 'A4', page: 'A4 portrait', note: 'Bangla-first with English drug names; allergy line always printed.' },
-  receipt: { title: 'Payment receipt', paper: 'Thermal 80 mm', page: '80mm auto', note: 'Monospace layout for a thermal printer; QR for the payment lookup.' },
-  'specimen-label': { title: 'Specimen label', paper: '50 × 25 mm', page: '50mm 25mm', note: 'Two-line label for tubes; the barcode is what the lab scans.' },
-  'id-card': { title: 'Patient ID card', paper: 'CR80 card', page: 'A4 portrait', note: 'Crop marks shown for card printers.' },
+const DOC_META: Record<DocKind, { title: string; paper: string; page: string; note: string; param?: string }> = {
+  'registration-slip': { title: 'Registration slip', paper: 'A5', page: 'A5 portrait', note: 'Handed to the patient at the counter.', param: 'mrn' },
+  'appointment-slip': { title: 'Appointment slip', paper: 'A5', page: 'A5 portrait', note: 'Includes the token and the reporting time.', param: 'id' },
+  prescription: { title: 'Prescription', paper: 'A4', page: 'A4 portrait', note: 'Bangla advice, allergies and the doctor’s signature.', param: 'enc' },
+  receipt: { title: 'Payment receipt', paper: 'Thermal 80 mm', page: '80mm auto', note: 'Monospace layout for a thermal printer.', param: 'inv' },
+  invoice: { title: 'Invoice', paper: 'A4', page: 'A4 portrait', note: 'The full bill for the patient, the payer or the file.', param: 'inv' },
+  'dispense-label': { title: 'Medicine label', paper: '50 × 25 mm', page: '50mm 25mm', note: 'Applied to the pack: four doses a day, in Bangla and English.', param: 'dsp' },
+  'specimen-label': { title: 'Specimen label', paper: '50 × 25 mm', page: '50mm 25mm', note: 'Two-line label for tubes; the barcode is what the lab scans.', param: 'spec' },
+  'id-card': { title: 'Patient ID card', paper: 'CR80 card', page: 'A4 portrait', note: 'Crop marks shown for card printers.', param: 'mrn' },
   'day-list': { title: 'Appointment day list', paper: 'A4 landscape', page: 'A4 landscape', note: 'What the desk prints at the start of a shift.' },
 };
 
@@ -46,18 +61,40 @@ function BarCode({ value, height = 40, className }: { value: string; height?: nu
   );
 }
 
-export default function PrintPage({ params, searchParams }: { params: Promise<{ doc: string }>; searchParams: Promise<{ id?: string; mrn?: string }> }) {
+export default function PrintPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ doc: string }>;
+  searchParams: Promise<{ id?: string; mrn?: string; enc?: string; inv?: string; dsp?: string; spec?: string }>;
+}) {
   const { doc } = use(params);
   const query = use(searchParams);
   const known = Object.prototype.hasOwnProperty.call(DOC_META, doc);
   const kind = (known ? doc : 'appointment-slip') as DocKind;
   const meta = DOC_META[kind];
-
   const day = todayIso();
+
+  /* ------------------------------------------------------------------------------ data */
   const appointments = generateAppointments(day);
   const appointment = appointments.find((a) => a.id === query.id) ?? appointments[0];
-  const patient = patients.find((p) => p.mrn === query.mrn) ?? patients.find((p) => p.mrn === appointment?.patient.mrn) ?? patients[0];
+  const patient =
+    patients.find((p) => p.mrn === query.mrn) ??
+    patients.find((p) => p.mrn === appointment?.patient.mrn) ??
+    patients[0];
   const doctor = doctorById(appointment?.doctorId ?? DOCTORS[0].id);
+
+  const encounters = generateEncounters(day);
+  const encounter = (query.enc ? encounterById(query.enc, day) : undefined) ?? encounters.find((e) => e.rx.length > 0) ?? encounters[0];
+
+  const dispenses = generateDispenses(day, generateBatches(day));
+  const dispense = dispenses.find((d) => d.id === query.dsp) ?? dispenses[0];
+
+  const invoices = generateInvoices(day);
+  const invoice = invoices.find((i) => i.number.endsWith(query.inv ?? '') || i.id === query.inv) ?? invoices.find((i) => i.status !== 'Cancelled')!;
+  const invoiceTotals = totals(invoice);
+
+  const specimenId = query.spec ?? `SP-${appointment?.token ?? '000'}1`;
 
   const header = (title: string, subtitle?: string) => (
     <header className="mb-3 border-b border-black pb-2">
@@ -133,14 +170,31 @@ export default function PrintPage({ params, searchParams }: { params: Promise<{ 
             {header('Prescription', `${doctor.name} · ${doctor.department}`)}
             <div className="mb-2 flex justify-between text-sm">
               <div>
-                <p className="font-semibold">{appointment?.patient.name} <span className="font-normal">({appointment?.patient.nameBn})</span></p>
-                <p className="font-mono text-xs">{appointment?.patient.mrn} · {appointment?.patient.age}{appointment?.patient.sex.slice(0, 1)} · {appointment?.patient.phone}</p>
+                <p className="font-semibold">
+                  {encounter.patient.name} <span className="font-normal">({encounter.patient.nameBn})</span>
+                </p>
+                <p className="font-mono text-xs">
+                  {encounter.patient.mrn} · {encounter.patient.age}{encounter.patient.sex.slice(0, 1)} · {encounter.patient.phone}
+                </p>
               </div>
-              <p className="text-xs">{new Date(`${day}T00:00:00`).toLocaleDateString('en-GB')} · OPD</p>
+              <p className="text-xs">
+                {new Date(`${day}T00:00:00`).toLocaleDateString('en-GB')} · {encounter.room} · token {encounter.token}
+              </p>
             </div>
-            {appointment?.patient.allergies && (
-              <p className="mb-3 border border-black px-2 py-1 text-sm font-bold">ALLERGY: {appointment.patient.allergies.toUpperCase()}</p>
+
+            {encounter.patient.allergies && (
+              <p className="mb-2 border border-black px-2 py-1 text-sm font-bold">
+                ALLERGY: {encounter.patient.allergies.toUpperCase()}
+              </p>
             )}
+
+            {encounter.diagnoses.length > 0 && (
+              <p className="mb-2 text-sm">
+                <span className="text-xs">Diagnosis </span>
+                {encounter.diagnoses.map((d) => `${d.label} (${d.code})`).join('; ')}
+              </p>
+            )}
+
             <table className="w-full border-collapse text-sm">
               <thead>
                 <tr>
@@ -149,39 +203,57 @@ export default function PrintPage({ params, searchParams }: { params: Promise<{ 
                   <th className="border border-black px-2 py-1 text-left">Dose</th>
                   <th className="border border-black px-2 py-1 text-left">Frequency</th>
                   <th className="border border-black px-2 py-1 text-left">Duration</th>
-                  <th className="border border-black px-2 py-1 text-left">Note</th>
+                  <th className="border border-black px-2 py-1 text-left">Instructions</th>
                 </tr>
               </thead>
               <tbody>
-                {[
-                  ['1', 'Tab. Metformin 500 mg', '1 tablet', 'After breakfast & dinner', '30 days', 'Take with food'],
-                  ['2', 'Tab. Amlodipine 5 mg', '1 tablet', 'Once daily, morning', '30 days', 'Monitor BP weekly'],
-                  ['3', 'Cap. Omeprazole 20 mg', '1 capsule', 'Before breakfast', '14 days', ''],
-                  ['4', 'Tab. Paracetamol 500 mg', '1 tablet', 'If fever or pain, up to 3/day', '5 days', 'Maximum 3 g per day'],
-                ].map((row) => (
-                  <tr key={row[0]}>
-                    {row.map((cell, i) => (
-                      <td key={i} className="border border-black px-2 py-1 align-top">{cell}</td>
-                    ))}
+                {encounter.rx.map((line, i) => (
+                  <tr key={line.id}>
+                    <td className="border border-black px-2 py-1 align-top">{i + 1}</td>
+                    <td className="border border-black px-2 py-1 align-top">
+                      {line.brand} <span className="text-xs">{line.generic} {line.strength}</span>
+                      {line.substitutedFor && <span className="block text-[10px]">substituted for {line.substitutedFor}</span>}
+                    </td>
+                    <td className="border border-black px-2 py-1 align-top">{line.dose}</td>
+                    <td className="border border-black px-2 py-1 align-top">{line.frequency}{line.prn ? ' (as needed)' : ''}</td>
+                    <td className="border border-black px-2 py-1 align-top">{line.durationDays} days</td>
+                    <td className="border border-black px-2 py-1 align-top">{line.instructions}</td>
                   </tr>
                 ))}
+                {encounter.rx.length === 0 && (
+                  <tr>
+                    <td colSpan={6} className="border border-black px-2 py-3 text-center">
+                      No medicines prescribed on this visit.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
-            <div className="mt-3 grid grid-cols-3 gap-4 text-sm">
+
+            {encounter.adviceBn && (
+              <div className="mt-3 border border-black px-2 py-1 text-sm">
+                <p className="text-xs">পরামর্শ / Advice</p>
+                <p className="text-base">{encounter.adviceBn}</p>
+              </div>
+            )}
+
+            <div className="mt-4 grid grid-cols-3 gap-4 text-sm">
               <div className="col-span-2">
-                <p className="text-xs">Advice</p>
-                <p>Low-sugar diet, 30 minutes walking daily, review with fasting blood sugar report.</p>
+                <p className="text-xs">Plan</p>
+                <p>{encounter.soap.plan || 'Review with the reports.'}</p>
               </div>
               <div>
                 <p className="text-xs">Follow-up</p>
-                <p>{new Date(Date.now() + 30 * 864e5).toLocaleDateString('en-GB')}</p>
+                <p>{new Date(Date.now() + 14 * 864e5).toLocaleDateString('en-GB')}</p>
               </div>
             </div>
-            <div className="mt-10 flex justify-between text-xs">
-              <BarCode value={`RX-${appointment?.token ?? '000'}`} height={32} />
+
+            <div className="mt-8 flex justify-between text-xs">
+              <BarCode value={`RX-${encounter.token}`} height={32} />
               <div className="text-right">
-                <div className="mb-1 h-10 w-48 border-b border-black" />
-                <p>Doctor signature &amp; BMDC number</p>
+                <p className="mb-1">{encounter.signedBy ?? 'Doctor signature & BMDC number'}</p>
+                <div className="h-10 w-48 border-b border-black" />
+                <p>Signed {encounter.signedAt ?? '—'}</p>
               </div>
             </div>
           </div>
@@ -193,33 +265,154 @@ export default function PrintPage({ params, searchParams }: { params: Promise<{ 
             <p className="text-center font-bold">Shaheed Suhrawardy General Hospital</p>
             <p className="text-center">Main Campus · Hotline 16263</p>
             <p className="my-1 border-t border-dashed border-black" />
-            <p>Receipt : {`RC-${day.replace(/-/g, '')}-0417`}</p>
-            <p>Patient: {appointment?.patient.name}</p>
-            <p>MRN    : {appointment?.patient.mrn}</p>
+            <p>Receipt : {receiptNo(day, invoice.payments.length || 1)}</p>
+            <p>Invoice : {invoice.number}</p>
+            <p>Patient: {invoice.patientName}</p>
+            <p>MRN    : {invoice.mrn}</p>
             <p>Date   : {new Date().toLocaleString()}</p>
             <p className="my-1 border-t border-dashed border-black" />
-            {[
-              ['OPD consultation', 500],
-              ['CBC (lab)', 350],
-              ['X-ray chest PA', 800],
-              ['Tab. Metformin 500mg x30', 180],
-            ].map(([label, amount]) => (
-              <p key={label as string} className="flex justify-between">
-                <span>{label}</span>
-                <span>{Number(amount).toFixed(2)}</span>
+            {invoice.lines.map((l) => (
+              <p key={l.id} className="flex justify-between">
+                <span className="truncate pr-2">{l.name}{l.qty > 1 ? ` x${l.qty}` : ''}</span>
+                <span>{lineNet(l).toFixed(2)}</span>
               </p>
             ))}
             <p className="my-1 border-t border-dashed border-black" />
-            <p className="flex justify-between font-bold"><span>TOTAL</span><span>1830.00</span></p>
-            <p className="flex justify-between"><span>Paid (cash)</span><span>1500.00</span></p>
-            <p className="flex justify-between"><span>Due</span><span>330.00</span></p>
+            <p className="flex justify-between"><span>GROSS</span><span>{invoiceTotals.gross.toFixed(2)}</span></p>
+            <p className="flex justify-between"><span>DISCOUNT</span><span>-{invoiceTotals.discount.toFixed(2)}</span></p>
+            <p className="flex justify-between font-bold"><span>NET</span><span>{invoiceTotals.net.toFixed(2)}</span></p>
+            <p className="flex justify-between"><span>PAID</span><span>{invoiceTotals.paid.toFixed(2)}</span></p>
+            <p className="flex justify-between"><span>DUE</span><span>{invoiceTotals.due.toFixed(2)}</span></p>
+            {invoiceTotals.payerShare > 0 && (
+              <>
+                <p className="my-1 border-t border-dashed border-black" />
+                <p>Patient share : {invoiceTotals.patientShare.toFixed(2)}</p>
+                <p>Payer share   : {invoiceTotals.payerShare.toFixed(2)} ({invoice.payer})</p>
+              </>
+            )}
             <p className="my-1 border-t border-dashed border-black" />
-            <p className="text-center">Bill prepared by: Billing counter 1</p>
+            {invoice.payments.map((p) => (
+              <p key={p.id}>{p.method} {p.reference ? `(${p.reference})` : ''} {p.amount.toFixed(2)}</p>
+            ))}
+            <p className="text-center">Bill prepared by: {invoice.counter}</p>
             <p className="text-center">Not valid without the official seal</p>
             <p className="mt-2 text-center">||| ||||| ||| |||||| ||||</p>
-            <p className="text-center">RC{day.replace(/-/g, '')}0417</p>
+            <p className="text-center">{invoice.number}</p>
           </div>
         );
+
+      case 'invoice':
+        return (
+          <div className="w-[210mm] bg-white p-6 text-black">
+            {header('Invoice', invoice.number)}
+            <div className="mb-3 flex justify-between text-sm">
+              <div>
+                <p className="font-semibold">{invoice.patientName} ({invoice.patientNameBn})</p>
+                <p className="font-mono text-xs">{invoice.mrn} · {invoice.age}{invoice.sex.slice(0, 1)}</p>
+                <p className="text-xs">Payer: {invoice.payer}</p>
+              </div>
+              <p className="text-xs">{new Date(invoice.createdAt.replace(' ', 'T')).toLocaleString()}<br />{invoice.counter}</p>
+            </div>
+            <table className="w-full border-collapse text-sm">
+              <thead>
+                <tr>
+                  <th className="border border-black px-2 py-1 text-left">Code</th>
+                  <th className="border border-black px-2 py-1 text-left">Service</th>
+                  <th className="border border-black px-2 py-1 text-left">Category</th>
+                  <th className="border border-black px-2 py-1 text-right">Qty</th>
+                  <th className="border border-black px-2 py-1 text-right">Price</th>
+                  <th className="border border-black px-2 py-1 text-right">Discount</th>
+                  <th className="border border-black px-2 py-1 text-right">Net</th>
+                  <th className="border border-black px-2 py-1 text-left">Charged to</th>
+                </tr>
+              </thead>
+              <tbody>
+                {invoice.lines.map((l) => (
+                  <tr key={l.id}>
+                    <td className="border border-black px-2 py-1 font-mono text-xs">{l.code}</td>
+                    <td className="border border-black px-2 py-1">{l.name}</td>
+                    <td className="border border-black px-2 py-1 text-xs">{l.category}</td>
+                    <td className="border border-black px-2 py-1 text-right">{l.qty}</td>
+                    <td className="border border-black px-2 py-1 text-right">{l.unitPrice.toFixed(2)}</td>
+                    <td className="border border-black px-2 py-1 text-right">{l.discountPct}%</td>
+                    <td className="border border-black px-2 py-1 text-right">{lineNet(l).toFixed(2)}</td>
+                    <td className="border border-black px-2 py-1 text-xs">{l.chargedTo}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="mt-3 flex justify-end">
+              <table className="text-sm">
+                <tbody>
+                  <tr><td className="pr-6">Gross</td><td className="text-right">{invoiceTotals.gross.toFixed(2)}</td></tr>
+                  <tr><td className="pr-6">Discount</td><td className="text-right">-{invoiceTotals.discount.toFixed(2)}</td></tr>
+                  <tr className="font-bold"><td className="pr-6">Net payable</td><td className="text-right">{invoiceTotals.net.toFixed(2)}</td></tr>
+                  <tr><td className="pr-6">Paid</td><td className="text-right">{invoiceTotals.paid.toFixed(2)}</td></tr>
+                  <tr className="font-bold"><td className="pr-6">Due</td><td className="text-right">{invoiceTotals.due.toFixed(2)}</td></tr>
+                  <tr><td className="pr-6">Payer share</td><td className="text-right">{invoiceTotals.payerShare.toFixed(2)}</td></tr>
+                </tbody>
+              </table>
+            </div>
+            {invoice.approvedBy && (
+              <p className="mt-2 text-xs">Discount approved by {invoice.approvedBy}.</p>
+            )}
+            {invoice.status === 'Cancelled' && (
+              <p className="mt-2 border border-black px-2 py-1 text-sm font-bold">
+                CANCELLED — {invoice.cancelledReason}{invoice.replacedBy ? ` Replacement: ${invoice.replacedBy}.` : ''}
+              </p>
+            )}
+            <div className="mt-6 flex items-end justify-between text-xs">
+              <BarCode value={invoice.number} height={32} />
+              <div className="text-right">
+                <div className="mb-1 h-10 w-48 border-b border-black" />
+                <p>Cashier signature</p>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'dispense-label': {
+        const labelDrug = drugById(dispense.lines[0]?.drug.id ?? DRUGS[0].id) ?? DRUGS[0];
+        const labelLine = dispense.lines[0];
+        const batch = generateBatches(day).find((b) => b.id === labelLine?.batchId);
+        const perDay =
+          labelLine?.rxLine.frequency === 'Once daily'
+            ? '1 time daily'
+            : labelLine?.rxLine.frequency === 'Twice daily'
+              ? '2 times daily'
+              : labelLine?.rxLine.frequency === 'Three times a day'
+                ? '3 times daily'
+                : labelLine?.rxLine.frequency === 'Four times a day'
+                  ? '4 times daily'
+                  : labelLine?.rxLine.frequency ?? '';
+        return (
+          <div className="flex flex-col gap-3">
+            {dispense.lines.slice(0, 3).map((line, i) => (
+              <div key={line.id} className="h-[25mm] w-[50mm] border border-dashed border-black bg-white p-1 text-black">
+                <div className="flex items-start justify-between">
+                  <p className="truncate text-[10px] font-bold leading-tight">{dispense.patient.name}</p>
+                  <p className="font-mono text-[8px] leading-tight">{dispense.patient.mrn}</p>
+                </div>
+                <p className="truncate text-[10px] font-semibold leading-tight">
+                  {line.drug.brand} {line.drug.strength} · {line.drug.bengaliName}
+                </p>
+                <p className="text-[8px] leading-tight">
+                  {line.rxLine.dose} · {line.rxLine.route} · {perDay} · {line.rxLine.durationDays} days
+                </p>
+                {i === 0 && (
+                  <div className="mt-0.5 flex items-end justify-between">
+                    <BarCode value={labelLine?.batchId ? (batch?.batchNo ?? line.drug.id) : line.drug.id} height={14} />
+                    <p className="text-[7px]">Exp {batch?.expiry ?? '—'}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+            {dispense.lines.length === 0 && (
+              <p className="text-sm text-black">Nothing on this prescription to label.</p>
+            )}
+          </div>
+        );
+      }
 
       case 'specimen-label':
         return (
@@ -227,8 +420,10 @@ export default function PrintPage({ params, searchParams }: { params: Promise<{ 
             {[1, 2].map((n) => (
               <div key={n} className="h-[25mm] w-[50mm] border border-dashed border-black bg-white p-1 text-black">
                 <p className="truncate text-[10px] font-bold leading-tight">{appointment?.patient.name}</p>
-                <p className="font-mono text-[9px] leading-tight">{appointment?.patient.mrn} · {appointment?.patient.age}{appointment?.patient.sex.slice(0, 1)}</p>
-                <BarCode value={`SP-${appointment?.token ?? '000'}${n}`} height={22} />
+                <p className="font-mono text-[9px] leading-tight">
+                  {appointment?.patient.mrn} · {appointment?.patient.age}{appointment?.patient.sex.slice(0, 1)}
+                </p>
+                <BarCode value={`${specimenId}${n === 2 ? '-2' : ''}`} height={22} />
               </div>
             ))}
           </div>
@@ -289,33 +484,42 @@ export default function PrintPage({ params, searchParams }: { params: Promise<{ 
 
   return (
     <div className="min-h-screen bg-surface-sunken p-4">
-      {!known && (
-        <div className="no-print mx-auto mb-4 max-w-4xl">
-          <SafetyBanner severity="warning" title={`No template called “${doc}”`}>
-            Showing the appointment slip instead.{' '}
-            <Link href="/print" className="underline">See every print template</Link>.
-          </SafetyBanner>
-        </div>
-      )}
       {/* Paper-size specific rules: one document per page, no browser headers where the printer allows it. */}
       <style>{`@page { size: ${meta.page}; margin: 6mm; } @media print { .print-preview { padding: 0 !important; background: #fff !important; } .print-paper { box-shadow: none !important; border: 0 !important; margin: 0 !important; } }`}</style>
 
+      {!known && (
+        <div className="no-print mx-auto mb-4 max-w-4xl">
+          <SafetyBanner severity="warning" title={`No template called “${doc}”`}>
+            Showing the appointment slip instead. <Link href="/print" className="underline">See every print template</Link>.
+          </SafetyBanner>
+        </div>
+      )}
+
       <div className="no-print mx-auto mb-4 flex max-w-4xl flex-wrap items-center gap-2">
-        <Link href="/appointments"><Button size="sm" variant="ghost">← Back</Button></Link>
+        <Link href="/print"><Button size="sm" variant="ghost">← Back</Button></Link>
         <div className="mr-auto">
-          <h1 className="text-lg font-semibold">{meta.title} <span className="text-sm font-normal text-text-tertiary">· {meta.paper}</span></h1>
+          <h1 className="text-lg font-semibold">
+            {meta.title} <span className="text-sm font-normal text-text-tertiary">· {meta.paper}</span>
+          </h1>
           <p className="text-xs text-text-secondary">{meta.note}</p>
         </div>
-        <Tooltip content="Printing uses the system dialog; the paper size above is set with @page so it matches the printer tray.">
-          <Button size="sm" variant="ghost">Which paper?</Button>
-        </Tooltip>
+        {meta.param && query[meta.param as keyof typeof query] ? (
+          <span className="font-numeric rounded-sm border border-border-default px-1.5 py-0.5 text-xs text-text-secondary">
+            {meta.param}={query[meta.param as keyof typeof query]}
+          </span>
+        ) : (
+          <Tooltip content={`Add ?${meta.param ?? 'id'}=… to print a real record instead of the sample.`}>
+            <Button size="sm" variant="ghost">Which record?</Button>
+          </Tooltip>
+        )}
         <Button size="sm" variant="primary" onClick={() => window.print()}>Print</Button>
       </div>
 
       <div className="no-print mx-auto mb-4 max-w-4xl">
         <SafetyBanner severity="info" title="Preview with sample data">
-          Templates render from the same components the real screens use. Barcodes are drawn from the identifier
-          itself until the lab module wires in a certified encoder (P4).
+          Templates render from the same data modules the screens use, so a slip printed from a record matches what
+          was on screen. Barcodes are drawn from the identifier itself until the laboratory module wires in a
+          certified encoder (P4).
         </SafetyBanner>
       </div>
 

@@ -460,6 +460,7 @@ export default function AppointmentsPage() {
           detail && (
             <div className="flex flex-wrap gap-2">
               <Button variant="primary" onClick={() => window.open(`/print/appointment-slip?id=${detail.id}`, '_blank')}>Print slip</Button>
+              <Link href="/clinical"><Button>Open consultation</Button></Link>
               <Link href={`/patients/${detail.patient.mrn}`}><Button>Open patient</Button></Link>
               <Button variant="ghost" onClick={() => push({ title: 'Reminder queued', description: 'WhatsApp/SMS from the outbox', tone: 'info' })}>Send reminder</Button>
             </div>

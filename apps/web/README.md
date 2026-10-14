@@ -40,6 +40,9 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 | `/patients/new` | Registration in five sections, live duplicate detection, honest offline ("Saved on this device" vs "Saved") |
 | `/appointments` | The appointment desk: doctor × time calendar (desktop) and list (mobile), a drag-free queue board, online requests from the patient portal, and the full list — plus the booking sheet with real slot conflicts |
 | `/login` | Two-step sign-in preview (credentials → six-digit code), branch picker, English ⇄ বাংলা |
+| `/clinical` | OPD consultation: the room queue beside one patient's workspace — vitals with reference-range flags, SOAP notes, ICD-10 diagnosis, lab/imaging orders, and a prescription screened for allergies, high-alert medicines and dangerous abbreviations before it can be signed |
+| `/pharmacy` | The dispensary: prescription queue, FEFO batch picking (expired batches cannot be selected), substitution with both names kept, controlled-substance register with a witness, and the append-only stock ledger |
+| `/billing` | Billing counter: invoices built from what the doctor ordered, payment capture per method, discount approval above the limit, day-end sheet with cash reconciliation, and the branch tariff |
 | `/help` | Help centre: how the new platform works (six anchored topics), the shortcut list, and the mirrored reference library by category |
 | `/help/search` | Server-rendered search over the reference library, with the matching text highlighted |
 | `/help/[category]/[slug]` | One mirrored article, rendered from Markdown with its screenshots served from the library, attributed to its source |
@@ -92,8 +95,10 @@ Rules that keep the mirror *reference material* rather than product material:
 * Print templates render real layouts from synthetic data; the barcodes are drawn from the identifier itself, not
   from a certified encoder (that lands with the laboratory module, `P4`).
 * Help article feedback ("Was this helpful?") is inert — it needs the store and the editorial owner first.
-* The appointment desk runs on the same deterministic synthetic data as the rest of the shell: the scheduling
-  rules are real, the appointments are not.
+* The appointment desk, the consultation workspace, the dispensary and the billing counter all run on the same
+  deterministic synthetic data as the rest of the shell: the rules are real, the patients, stock and money are not.
+* Nothing on those screens is persisted — reload and the day starts again. The write paths (sign a note, record a
+  movement, take a payment) are the shapes the API will accept, not a database yet.
 
 ## Conventions
 

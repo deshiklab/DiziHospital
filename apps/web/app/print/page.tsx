@@ -11,8 +11,10 @@ export const dynamic = 'force-dynamic';
 const TEMPLATES = [
   { doc: 'registration-slip', title: 'Registration slip', paper: 'A5', when: 'Handed to the patient at the counter after registration.' },
   { doc: 'appointment-slip', title: 'Appointment slip', paper: 'A5', when: 'Given when a booking is made, and reprinted for walk-ins.' },
-  { doc: 'prescription', title: 'Prescription', paper: 'A4', when: 'Printed at the end of a consultation, or reissued on request.' },
-  { doc: 'receipt', title: 'Payment receipt', paper: 'Thermal 80 mm', when: 'Printed at the billing counter; a reprint is watermarked.' },
+  { doc: 'prescription', title: 'Prescription', paper: 'A4', when: 'Printed at the end of a consultation, with the Bangla advice and the allergy line.' },
+  { doc: 'receipt', title: 'Payment receipt', paper: 'Thermal 80 mm', when: 'Printed at the billing counter, offline included.' },
+  { doc: 'invoice', title: 'Invoice', paper: 'A4', when: 'The full bill, with the payer share and any approved discount.' },
+  { doc: 'dispense-label', title: 'Medicine label', paper: '50 × 25 mm', when: 'Applied to the pack at the pharmacy; dose in Bangla and English.' },
   { doc: 'specimen-label', title: 'Specimen label', paper: '50 × 25 mm', when: 'Applied to sample tubes at collection; the lab scans the barcode.' },
   { doc: 'id-card', title: 'Patient ID card', paper: 'CR80 card', when: 'Optional, for long-term patients and corporate schemes.' },
   { doc: 'day-list', title: 'Appointment day list', paper: 'A4 landscape', when: 'Printed at the start of a shift, and again after a change of plan.' },
