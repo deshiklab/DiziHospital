@@ -93,6 +93,8 @@ const ROUTES = [
   '/reports/appointment',
   '/reports/opd',
   '/reports/ipd',
+  '/reports/pathology',
+  '/reports/birth_death',
   '/sync',
   '/help',
 ];
@@ -347,6 +349,33 @@ async function check(route) {
           }
         }
       }
+    }
+  }
+
+  /* A saved view is the point of a report screen, so it is pressed: the laboratory's “Awaiting a result” view has
+   * to keep fewer rows than the whole table and keep the ones it claims to. A chip that does nothing is a chip
+   * nobody presses twice. */
+  let viewPress = 'n/a';
+  if (route === '/reports/pathology') {
+    const textOf = () => doc.body.textContent ?? '';
+    const chip = [...doc.querySelectorAll('button[aria-pressed]')].find((b) => (b.textContent ?? '').trim() === 'Awaiting a result');
+    const rowsBefore = doc.querySelectorAll('tbody tr').length;
+    if (!chip) {
+      viewPress = 'NO CHIP';
+      routeProblems.push('the pathology report has no “Awaiting a result” saved view');
+    } else {
+      chip.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true, cancelable: true }));
+      await new Promise((r) => setTimeout(r, 300));
+      const rowsAfter = doc.querySelectorAll('tbody tr').length;
+      const on = [...doc.querySelectorAll('button[aria-pressed="true"]')].some((b) => (b.textContent ?? '').trim() === 'Awaiting a result');
+      const explained = /Awaiting a result —/.test(textOf());
+      const back = [...doc.querySelectorAll('button[aria-pressed]')].find((b) => (b.textContent ?? '').trim() === 'Everything');
+      if (back) back.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true, cancelable: true }));
+      await new Promise((r) => setTimeout(r, 300));
+      const restored = doc.querySelectorAll('tbody tr').length === rowsBefore;
+      viewPress = `${rowsBefore}→${rowsAfter} rows · ${on ? 'pressed' : 'NOT PRESSED'} · ${explained ? 'explained' : 'NO HINT'} · ${restored ? 'back to everything' : 'STUCK'}`;
+      if (!on || !explained) routeProblems.push('the saved view did not take effect');
+      if (!restored) routeProblems.push('the report did not come back to the full table');
     }
   }
 
@@ -609,7 +638,7 @@ async function check(route) {
 
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors: [...errors, ...routeProblems], handlers, copy, ledger, claims, heads, suite, drill, queue, persist, named, retry, refusal, readyWait };
+  return { errors: [...errors, ...routeProblems], handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, readyWait };
 }
 
 const CONCURRENCY = Math.max(1, Number(process.env.DIZI_CONCURRENCY ?? 4));
@@ -664,10 +693,10 @@ outcomes.forEach((outcome, i) => {
     problems += 1;
     return;
   }
-  const { errors, handlers, copy, ledger, claims, heads, suite, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
+  const { errors, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
   const bad = errors.length > 0 || handlers === 'DEAD';
   const slow = readyWait !== undefined && readyWait > 2000 ? `  ready=${(readyWait / 1000).toFixed(1)}s` : '';
-  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${suite === 'n/a' ? '' : `  suite=${suite}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
+  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${suite === 'n/a' ? '' : `  suite=${suite}`}${viewPress === 'n/a' ? '' : `  view=${viewPress}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
   if (handlers === 'DEAD') {
     console.log('      the shared control did not respond after hydration');
     problems += 1;

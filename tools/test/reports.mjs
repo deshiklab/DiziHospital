@@ -53,7 +53,7 @@ const num = (v) => (typeof v === 'number' ? v : 0);
 
 try {
   await esbuild.build({
-    entryPoints: [join(root, 'apps/web/lib/report-suite.ts')],
+    entryPoints: [join(root, 'apps/web/lib/report-suite.ts'), join(root, 'apps/web/lib/birthdeath.ts')],
     outdir: work,
     bundle: true,
     format: 'cjs',
@@ -65,6 +65,7 @@ try {
   });
 
   const R = await import(pathToFileURL(join(work, 'report-suite.js')).href);
+  const V = await import(pathToFileURL(join(work, 'birthdeath.js')).href);
   const { buildReport, REPORTS, PLANNED_REPORTS, REPORT_SUITE_TOTAL, REPORT_GROUPS, branches, CONSOLIDATED, SCOPES } = R;
   const build = (topic, scope, range = 'week') => buildReport(topic, { day: DAY, range, scope });
 
@@ -93,9 +94,9 @@ try {
 
   /* ---------------------------------------------------------------- the phase's own count */
   console.log('  the suite');
-  pass('the built reports plus the planned ones are the seventeen screens the legacy product had',
-    REPORTS.length + PLANNED_REPORTS.length === REPORT_SUITE_TOTAL,
-    `${REPORTS.length} built + ${PLANNED_REPORTS.length} planned = ${REPORTS.length + PLANNED_REPORTS.length} of ${REPORT_SUITE_TOTAL}`);
+  pass('the seventeen screens the legacy product had are all built, and nothing is left on the planned list',
+    REPORTS.length === REPORT_SUITE_TOTAL && PLANNED_REPORTS.length === 0,
+    `${REPORTS.length} built of ${REPORT_SUITE_TOTAL}, ${PLANNED_REPORTS.length} still planned`);
   pass('every report is in a group the hub renders, and no topic or legacy screen is claimed twice',
     REPORTS.every((d) => REPORT_GROUPS.includes(d.group))
       && new Set(REPORTS.map((d) => d.topic)).size === REPORTS.length
@@ -176,6 +177,110 @@ try {
   pass('a figure carried by two unprinted columns is still carried into the consolidated row',
     opdAvg.def.columns.every((c) => !c.avgOf || (c.avgOf.count in (opdAvg.rows[0]?.cells ?? {})) || opdAvg.rows.length === 0),
     'the ratio and average columns can be recomputed from the row itself');
+
+  /* ---------------------------------------------------------------- the saved views */
+  console.log('\n  the views a reader opens the report for');
+  const withViews = REPORTS.filter((d) => (d.views?.length ?? 0) > 0);
+  pass('every report has at least one saved view',
+    withViews.length === REPORTS.length,
+    REPORTS.map((d) => `${d.topic}:${d.views?.length ?? 0}`).join(' '));
+
+  let emptyViews = [];
+  let drops = 0;
+  for (const def of withViews) {
+    const table = build(def.topic, CONSOLIDATED);
+    const labels = def.views.map((v) => v.label);
+    if (new Set(labels).size !== labels.length) emptyViews.push(`${def.topic}: duplicate label`);
+    if (labels.some((l) => l.trim().length === 0)) emptyViews.push(`${def.topic}: empty label`);
+    for (const view of def.views) {
+      const kept = table.rows.filter(view.keep).length;
+      /* A chip that leads to an empty table reads as a broken report, so every view keeps something on the day the
+         preview shows — and at least one of them has to actually drop a row, or the filters are not wired at all. */
+      if (kept === 0) emptyViews.push(`${def.topic} / ${view.label}`);
+      if (kept < table.rows.length) drops += 1;
+    }
+  }
+  pass('every saved view keeps at least one row, and the views really do filter',
+    emptyViews.length === 0 && drops > 0,
+    emptyViews.length ? `empty: ${emptyViews.join(', ')}` : `${withViews.length} reports, ${withViews.reduce((n, d) => n + d.views.length, 0)} views, ${drops} of them dropping rows`);
+
+  /* ---------------------------------------------------------------- the register the last report reads */
+  console.log('\n  the vital-events register');
+  const register = V.birthDeathDay(DAY);
+  pass('the register reads the day’s own records rather than inventing people',
+    register.births.every((b) => b.mother.mrn !== '—')
+      && register.deaths.some((d) => d.kind === 'Brought in dead' && /ambulance|AMB-/i.test(d.note ?? '')),
+    `${register.births.length} births, ${register.deaths.length} deaths — the obstetric one carrying the fleet’s own call`);
+
+  const stillbirth = register.births.find((b) => b.outcome === 'Stillbirth');
+  pass('a stillbirth is recorded as a birth with its outcome and never as a live-birth registration',
+    stillbirth !== undefined
+      && stillbirth.civil.number === null
+      && stillbirth.civil.state === 'Not applicable'
+      && stillbirth.vitaminKGiven === false
+      && stillbirth.bcgGiven === false,
+    `${stillbirth?.registerNo}: outcome ${stillbirth?.outcome}, registration ${stillbirth?.civil.state}`);
+
+  const medicoLegal = register.deaths.find((d) => d.police !== null);
+  pass('an unnatural death goes to the police before the body moves, and the certificate waits for the post-mortem',
+    medicoLegal !== undefined
+      && medicoLegal.certificateNo === null
+      && medicoLegal.postMortemReferred === true
+      && medicoLegal.releasedAt === null
+      && V.certificateState(medicoLegal).startsWith('Post-mortem'),
+    `${medicoLegal?.registerNo}: ${V.certificateState(medicoLegal)} · referred ${medicoLegal?.police?.referredAt}`);
+
+  const released = register.deaths.filter((d) => d.releasedAt !== null);
+  pass('every body that left the mortuary has either a certificate or a police referral behind it, and a name',
+    released.length > 0
+      && released.every((d) => (d.certificateNo !== null || d.police !== null) && (d.releasedTo ?? '').length > 0)
+      && register.deaths.filter((d) => d.releasedAt === null).every((d) => V.canReleaseBody(d).ok || V.canReleaseBody(d).because.length > 20),
+    `${released.length} released (${released.map((d) => d.releasedTo).join(', ')}), ${register.stats.bodiesHeld} still held`);
+
+  pass('every record in the register passes the register’s own rules',
+    register.births.every((b) => V.checkBirth(b).ok) && register.deaths.every((d) => V.checkDeath(d).ok) && register.findings.length === 0,
+    `${register.births.length + register.deaths.length} records checked, ${register.findings.length} finding(s)`);
+
+  /* The rules are only worth having if they fire. Each of these is a record the register must refuse, built from a
+     real one so the negative case is the same shape as the positive. */
+  const noPaper = { ...register.deaths[0], certificateNo: null, releasedAt: `${DAY} 16:00`, releasedTo: null, police: null };
+  pass('a body released with neither a certificate nor a referral is refused, and a release with no name at all on it',
+    V.checkDeath(noPaper).reasons.some((r) => r.code === 'released-without-paper')
+      && V.checkDeath(noPaper).reasons.some((r) => r.code === 'released-to-nobody')
+      /* Naming the person clears the second refusal and not the first: the paper is what the body needs, and the
+         name is what the register needs. */
+      && !V.checkDeath({ ...noPaper, releasedTo: 'Somebody' }).reasons.some((r) => r.code === 'released-to-nobody')
+      && V.checkDeath({ ...noPaper, releasedTo: 'Somebody' }).reasons.some((r) => r.code === 'released-without-paper'),
+    V.checkDeath(noPaper).reasons.map((r) => r.code).join(', '));
+
+  const unnaturalNoReferral = { ...register.deaths[0], manner: 'Unknown — referred to police', police: null };
+  pass('an unnatural manner with no police referral is refused, because the body is then held on the hospital’s authority',
+    V.checkDeath(unnaturalNoReferral).reasons.some((r) => r.code === 'unnatural-without-referral'),
+    V.checkDeath(unnaturalNoReferral).reasons.map((r) => r.code).join(', '));
+
+  const uncaused = { ...register.deaths[1], cause: { immediate: '', antecedent: '', underlying: '', icd: '' }, certificateNo: 'DC-X' };
+  pass('a certificate number with no cause written is refused, and a blank cause is refused on its own',
+    V.checkDeath(uncaused).reasons.some((r) => r.code === 'certificate-without-cause')
+      && V.checkDeath({ ...uncaused, certificateNo: null }).reasons.some((r) => r.code === 'no-cause'),
+    V.checkDeath(uncaused).reasons.map((r) => r.code).join(', '));
+
+  const liveBirthAsStillbirth = { ...stillbirth, civil: { state: 'Number issued', number: 'BRIS-2026-9999' }, apgar: { oneMin: 4, fiveMin: 7 } };
+  pass('a stillbirth carrying a live-birth number, or an Apgar score, is refused',
+    V.checkBirth(liveBirthAsStillbirth).reasons.some((r) => r.code === 'stillbirth-as-live-birth')
+      && V.checkBirth(liveBirthAsStillbirth).reasons.some((r) => r.code === 'stillbirth-with-apgar'),
+    V.checkBirth(liveBirthAsStillbirth).reasons.map((r) => r.code).join(', '));
+
+  const sectionNoReason = { ...register.births.find((b) => b.type === 'Caesarean'), complications: [] };
+  pass('a caesarean without an indication is refused',
+    V.checkBirth(sectionNoReason).reasons.some((r) => r.code === 'caesarean-without-indication'),
+    V.checkBirth(sectionNoReason).reasons.map((r) => r.code).join(', '));
+
+  pass('the register opens the reviews a mortality meeting reads',
+    register.reviews.length >= 3
+      && register.reviews.some((r) => r.kind === 'Mortality')
+      && register.reviews.some((r) => r.kind === 'Maternal')
+      && register.reviews.some((r) => r.kind === 'Medico-legal'),
+    register.reviews.map((r) => r.kind).join(', '));
 
   /* ---------------------------------------------------------------- where a branch cannot answer */
   console.log('\n  where a branch cannot answer');

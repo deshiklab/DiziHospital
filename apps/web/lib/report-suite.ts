@@ -50,6 +50,7 @@ import {
 } from './inventory';
 import { dutyDay, MAX_CONSECUTIVE_NIGHTS, MIN_REST_HOURS } from './duty';
 import { theatreDay, TURNAROUND_FLOOR_MIN } from './theatre';
+import { birthDeathDay } from './birthdeath';
 import { ENTITY_POLICY } from './sync';
 /* The contract's own operation list, so the audit report describes the trail the API will actually write rather
    than a second list kept beside it — the same reason `lib/sync.ts` reads the contract instead of a table. */
@@ -160,6 +161,13 @@ export interface ReportFilter {
   hint: string;
 }
 
+export interface ReportView {
+  label: string;
+  hint: string;
+  /** What the view keeps. Written against the row's own cells, so it moves with the report's arithmetic. */
+  keep: (row: ReportRow) => boolean;
+}
+
 export interface ReportRow {
   id: string;
   label: string;
@@ -231,6 +239,13 @@ export interface ReportDef {
    */
   sameEverywhere?: string;
   filters: ReportFilter[];
+  /**
+   * The views a reader opens the report for, each a filter over its own rows. A management report is read the same
+   * way every morning — the same queue, the same exceptions — so the morning's question is a chip rather than a
+   * search somebody has to remember how to type. Every view here keeps at least one row on the day the preview
+   * shows, because a chip that leads to an empty table reads as a broken report.
+   */
+  views?: ReportView[];
   columns: ReportColumn[];
   /** When the report goes out, to whom, and why then. A report nobody is sent is a report nobody reads. */
   schedule: string;
@@ -483,6 +498,10 @@ const financeReport: ReportDef = {
   ],
   schedule: 'Sent to the finance manager and the accountant every evening at 21:00; the day-book control total goes to the medical superintendent with it.',
   owner: 'Finance manager',
+  views: [
+    { label: 'Expense heads', hint: 'What the branch spent, head by head — the half of the day book the purchase desk reads.', keep: (r) => r.cells.kind === 'Expense' },
+    { label: 'Income heads', hint: 'What it took, head by head, including the counter income no invoice knows about.', keep: (r) => r.cells.kind === 'Income' },
+  ],
   columns: [
     { key: 'head', header: 'Head', kind: 'text' },
     { key: 'kind', header: 'Book', kind: 'text', width: '6rem' },
@@ -553,6 +572,11 @@ const tpaReport: ReportDef = {
   ],
   schedule: 'Sent to the TPA desk and the finance manager every Monday and Thursday at 08:00, with anything past its settlement period listed first.',
   owner: 'TPA desk',
+  views: [
+    { label: 'Past the promise', hint: 'A payer that has held a claim past the period it promised, which is the only ageing a desk can act on.', keep: (r) => numeric(r.cells.oldest) > 0 },
+    { label: 'Still open', hint: 'Money claimed and not yet settled, whether that is the payer’s delay or a query on the hospital’s side.', keep: (r) => numeric(r.cells.outstanding) > 0 },
+    { label: 'Came back short', hint: 'Claims that were allowed in part, with a code on each: a short payment with no code is re-submitted the same way.', keep: (r) => numeric(r.cells.shortPaid) > 0 },
+  ],
   columns: [
     { key: 'payer', header: 'Payer', kind: 'text' },
     { key: 'claims', header: 'Claims', align: 'right', kind: 'count', width: '6rem' },
@@ -640,6 +664,10 @@ const patientReport: ReportDef = {
   ],
   schedule: 'Sent to the medical superintendent and the marketing office on the first of every month at 08:00.',
   owner: 'Medical superintendent',
+  views: [
+    { label: 'Allergies on file', hint: 'The bands whose records carry an allergy — the figure the prescribing screens depend on.', keep: (r) => numeric(r.cells.allergies) > 0 },
+    { label: 'With a payer', hint: 'Patients with an insurer, a corporate or the government scheme behind them rather than cash at the counter.', keep: (r) => numeric(r.cells.insured) > 0 },
+  ],
   columns: [
     { key: 'band', header: 'Age band', kind: 'text' },
     { key: 'patients', header: 'Patients', align: 'right', kind: 'count', width: '7rem' },
@@ -703,6 +731,10 @@ const appointmentReport: ReportDef = {
   ],
   schedule: 'Sent to every consultant and to the OPD manager every morning at 07:00 with that consultant’s own list.',
   owner: 'OPD manager',
+  views: [
+    { label: 'No-shows', hint: 'A consultant’s empty chair. Read with the source column: a portal booking that does not come is a reminder problem, a counter booking is a travel one.', keep: (r) => numeric(r.cells.noShow) > 0 },
+    { label: 'Booked online', hint: 'What the portal and the phone brought in, against the counter — how a clinic grows without a second receptionist.', keep: (r) => numeric(r.cells.portal) > 0 },
+  ],
   columns: [
     { key: 'doctor', header: 'Consultant', kind: 'text' },
     { key: 'booked', header: 'Booked', align: 'right', kind: 'count', width: '6rem' },
@@ -767,6 +799,10 @@ const opdReport: ReportDef = {
   ],
   schedule: 'Sent to the medical superintendent and each department head every morning at 07:30, with the unsigned notes listed first.',
   owner: 'Medical superintendent',
+  views: [
+    { label: 'Notes still open', hint: 'A consultation that has started and not been signed: work in progress, and the list the clinical lead chases.', keep: (r) => numeric(r.cells.waiting) > 0 },
+    { label: 'Medicine prescribed', hint: 'Departments whose consultations ended in a prescription, which is what the pharmacy fills.', keep: (r) => numeric(r.cells.prescriptions) > 0 },
+  ],
   columns: [
     { key: 'department', header: 'Department', kind: 'text' },
     { key: 'consultations', header: 'Consultations', align: 'right', kind: 'count', width: '8rem' },
@@ -832,6 +868,10 @@ const ipdReport: ReportDef = {
   schedule: 'Sent to the nursing superintendent, the duty medical officer and the admission desk every morning at 07:00 and every evening at 19:00.',
   owner: 'Nursing superintendent',
   maxDays: 7,
+  views: [
+    { label: 'Blocked beds', hint: 'A blocked bed is not a bed: the ward’s capacity and its occupancy are both counted without it.', keep: (r) => numeric(r.cells.blocked) > 0 },
+    { label: 'Beds still free', hint: 'Where the admission desk can put a patient right now.', keep: (r) => numeric(r.cells.free) > 0 },
+  ],
   columns: [
     { key: 'ward', header: 'Ward', kind: 'text' },
     { key: 'beds', header: 'Beds in service', align: 'right', kind: 'count', width: '8rem' },
@@ -900,6 +940,9 @@ const pharmacyReport: ReportDef = {
   ],
   schedule: 'Sent to the chief pharmacist and the finance manager every morning at 08:00; the expiry column also goes out on Mondays, when the store plans its fortnight.',
   owner: 'Chief pharmacist',
+  views: [
+    { label: 'Expiring in the window', hint: 'Batches inside the warning window, counted rather than written off: the store has a fortnight to use them.', keep: (r) => numeric(r.cells.expiring) > 0 },
+  ],
   columns: [
     { key: 'klass', header: 'Medicine class', kind: 'text' },
     { key: 'dispenses', header: 'Dispenses touching this class', align: 'right', kind: 'count', width: '11rem' },
@@ -1000,6 +1043,11 @@ const pathologyReport: ReportDef = {
   ],
   schedule: 'Sent to the consultant pathologist and the laboratory manager every morning at 07:30, with the critical-value callbacks listed first.',
   owner: 'Consultant pathologist',
+  views: [
+    { label: 'Awaiting a result', hint: 'Ordered, sample taken, nothing back yet — the worklist the laboratory manager starts the day from.', keep: (r) => numeric(r.cells.awaiting) > 0 },
+    { label: 'Critical callbacks', hint: 'A value the clinician must be told about. The call is recorded against the person who made it.', keep: (r) => numeric(r.cells.callbacks) > 0 },
+    { label: 'Rejected samples', hint: 'A rejected sample is a second needle for the patient, so it is counted rather than quietly re-ordered.', keep: (r) => numeric(r.cells.rejected) > 0 },
+  ],
   columns: [
     { key: 'test', header: 'Test', kind: 'text' },
     { key: 'ordered', header: 'Ordered', align: 'right', kind: 'count', width: '6rem' },
@@ -1102,6 +1150,9 @@ const radiologyReport: ReportDef = {
   ],
   schedule: 'Sent to the radiologist and the OPD manager every morning at 07:30, and again at 16:00 with the studies still awaiting a report.',
   owner: 'Consultant radiologist',
+  views: [
+    { label: 'Awaiting a report', hint: 'A film nobody has read. It sits in the same list as the reported ones, which is why the report prints it rather than hiding it.', keep: (r) => numeric(r.cells.awaiting) > 0 },
+  ],
   columns: [
     { key: 'modality', header: 'Modality', kind: 'text' },
     { key: 'ordered', header: 'Ordered', align: 'right', kind: 'count', width: '6rem' },
@@ -1187,6 +1238,9 @@ const bloodBankReport: ReportDef = {
   ],
   schedule: 'Sent to the blood bank in-charge and the duty medical officer at 07:00, and again at 18:00; a group below its floor raises a message as soon as the count is taken.',
   owner: 'Blood bank in-charge',
+  views: [
+    { label: 'Below the floor', hint: 'A group and component under its own minimum: a call to the donor list rather than a rounding error.', keep: (r) => String(r.cells.rule).startsWith('Below') },
+  ],
   columns: [
     { key: 'unit', header: 'Group and component', kind: 'text' },
     { key: 'units', header: 'On the shelf', align: 'right', kind: 'count', width: '8rem' },
@@ -1256,6 +1310,11 @@ const ambulanceReport: ReportDef = {
   ],
   schedule: 'Sent to the transport officer every morning at 08:00; a response past its target is messaged to the duty manager when the shift is handed over.',
   owner: 'Transport officer',
+  views: [
+    { label: 'Missed the target', hint: 'A response past the time the priority promised, with the reason recorded rather than an excuse offered.', keep: (r) => numeric(r.cells.missed) > 0 },
+    { label: 'Below the oxygen floor', hint: 'A van that can still transfer a stable patient and cannot take a breathless one — why the state is reported rather than the count.', keep: (r) => String(r.cells.oxygen).includes('below') },
+    { label: 'Not yet assigned', hint: 'A call waiting for a vehicle: the one row that would otherwise be missing from the day’s total.', keep: (r) => String(r.cells.vehicle).startsWith('Not yet assigned') },
+  ],
   columns: [
     { key: 'vehicle', header: 'Vehicle', kind: 'text' },
     { key: 'calls', header: 'Calls', align: 'right', kind: 'count', width: '6rem' },
@@ -1348,6 +1407,11 @@ const inventoryReport: ReportDef = {
   ],
   schedule: 'Sent to the store keeper, the finance manager and the medical superintendent every Monday at 08:00, with the expiring batches attached.',
   owner: 'Store keeper',
+  views: [
+    { label: 'Below the reorder level', hint: 'Where a purchase order is raised from, with the lead time already allowed for.', keep: (r) => numeric(r.cells.reorder) > 0 },
+    { label: 'Expiring stock', hint: 'Stock inside the expiry window, valued at what it cost — use it or lose it, and the store keeps the list.', keep: (r) => numeric(r.cells.expiring) > 0 },
+    { label: 'Count differences', hint: 'Stores where the hand count did not match the system. Beyond the tolerance, somebody signs for the difference.', keep: (r) => numeric(r.cells.variance) > 0 },
+  ],
   columns: [
     { key: 'store', header: 'Store', kind: 'text' },
     { key: 'items', header: 'Items', align: 'right', kind: 'count', width: '6rem' },
@@ -1435,6 +1499,10 @@ const otReport: ReportDef = {
   ],
   schedule: 'Sent to the theatre manager and the surgeons’ coordinator every evening at 20:00, with tomorrow’s list attached.',
   owner: 'Theatre manager',
+  views: [
+    { label: 'Cancelled or bumped', hint: 'A patient who was prepared and did not go to theatre, with the reason the theatre screen recorded.', keep: (r) => numeric(r.cells.cancelled) + numeric(r.cells.bumped) > 0 },
+    { label: 'Cases listed', hint: 'The theatres with a list today — the ones a coordinator has to keep moving.', keep: (r) => numeric(r.cells.listed) > 0 },
+  ],
   columns: [
     { key: 'theatre', header: 'Theatre', kind: 'text' },
     { key: 'listed', header: 'Listed', align: 'right', kind: 'count', width: '6rem' },
@@ -1531,6 +1599,10 @@ const dutyReport: ReportDef = {
   ],
   schedule: 'Sent to the nursing superintendent and the HR manager every Monday at 07:00, with the rest violations listed first.',
   owner: 'Nursing superintendent',
+  views: [
+    { label: 'Short of a skill', hint: 'A shift whose gap is a skill and not a headcount: a fourth nurse without the skill does not close it.', keep: (r) => numeric(r.cells.skillSlots) > 0 },
+    { label: 'Short-staffed shifts', hint: 'Every ward-shift where the present count came in under what the ward’s own ratio requires.', keep: (r) => numeric(r.cells.gap) > 0 },
+  ],
   columns: [
     { key: 'ward', header: 'Ward', kind: 'text' },
     { key: 'slots', header: 'Shift slots', align: 'right', kind: 'count', width: '7rem' },
@@ -1604,6 +1676,9 @@ const liveReport: ReportDef = {
   ],
   schedule: 'Read live on the OPD board, refreshed every minute; nobody is sent it, because a picture e-mailed at 09:00 is a historical document by 09:02.',
   owner: 'OPD manager',
+  views: [
+    { label: 'Waiting over an hour', hint: 'A patient whose consultation started and has not been signed in an hour — the room where a second person should be asked to help.', keep: (r) => numeric(r.cells.oldest) >= 60 },
+  ],
   columns: [
     { key: 'room', header: 'Room', kind: 'text' },
     { key: 'consultations', header: 'Consultations', align: 'right', kind: 'count', width: '8rem' },
@@ -1683,6 +1758,10 @@ const logReport: ReportDef = {
   ],
   schedule: 'Read on demand by the medical superintendent and the auditor; a monthly extract is sent to the audit committee, and the extract is the trail itself rather than a summary of it.',
   owner: 'Medical superintendent',
+  views: [
+    { label: 'Writes only', hint: 'The operations that change a record: a trail records what changed one, not who looked at one.', keep: (r) => numeric(r.cells.write) > 0 },
+    { label: 'Needs the link', hint: 'Operations the contract refuses when the uplink is down, each with the sentence the desk is shown.', keep: (r) => numeric(r.cells.onlineOnly) > 0 },
+  ],
   columns: [
     { key: 'module', header: 'Module', kind: 'text' },
     { key: 'operations', header: 'Operations', align: 'right', kind: 'count', width: '7rem' },
@@ -1735,6 +1814,127 @@ const logReport: ReportDef = {
   },
 };
 
+/* ========================================================================================= Governance */
+
+/**
+ * Births and deaths, by ward.
+ *
+ * The register's own day is the row set: a ward with no births and no deaths is still a row, because a ward that
+ * reports nothing is a fact the mortality meeting reads, while a ward that is missing from the table is a question
+ * nobody asks. The emergency row is where a patient brought in dead belongs — there is no bed, no ward round and no
+ * admission, and putting those patients in a ward's row would credit a ward with a death it never saw.
+ */
+const birthDeathReport: ReportDef = {
+  topic: 'birth_death',
+  title: 'Births and deaths',
+  legacy: '/admin/report/birth_death',
+  group: 'Governance',
+  question: 'Who was born and who died, in which ward, with which certificate and which registration — the two events nobody decides, read the way a registrar, a family and a mortality meeting each read them.',
+  requires: 'In-patient',
+  maxDays: 1,
+  filters: [
+    { key: 'scope', label: 'Branch', value: 'All branches', hint: 'The register is the hospital’s own: one series of numbers, one mortuary, one office that files with the registrar.' },
+    { key: 'range', label: 'Period', value: 'Today, with the register as it stands', hint: 'A birth and a death are events, not averages: the report reads the day it was taken, and the review deadlines are counted from the event.' },
+    { key: 'ward', label: 'Ward', value: 'Every ward, plus the emergency room', hint: 'A patient brought in dead belongs to no ward, and the register says so rather than crediting one with a death it never saw.' },
+    { key: 'certificate', label: 'Certificate', value: 'A cause in three parts before a number', hint: 'What stopped the patient, what led to it, what started it — and where the manner is unnatural, a police referral instead, because the certificate is then written from the post-mortem.' },
+    { key: 'registration', label: 'Registration', value: 'The hospital register, then the registrar’s', hint: 'The hospital’s number is not the civil one: the birth registration and the death registration are filed with the city corporation, and this report shows which are still open.' },
+  ],
+  schedule: 'Sent to the medical superintendent, the nursing superintendent and the medical records officer every morning at 07:00, and to the mortality review committee on Mondays with the previous week’s deaths and the reviews they opened.',
+  owner: 'Medical records officer',
+  views: [
+    { label: 'Reviews to open', hint: 'A death within 24 hours of admission, a death in a woman of childbearing age, or a stillbirth: each one opens a review by the register’s own rules, and this is the list the committee reads.', keep: (r) => numeric(r.cells.within24h) + numeric(r.cells.maternal) + numeric(r.cells.stillbirths) > 0 },
+    { label: 'Medico-legal', hint: 'An unnatural or unknown death, where the body goes to the police and the certificate waits for the post-mortem.', keep: (r) => numeric(r.cells.medicoLegal) > 0 },
+    { label: 'Registration open', hint: 'Births and deaths whose civil registration has not produced a number yet — the paperwork a family carries away from the hospital.', keep: (r) => numeric(r.cells.registrationOpen) > 0 },
+    { label: 'Births', hint: 'The maternity rows only, which is how the obstetrician reads the same report.', keep: (r) => numeric(r.cells.births) > 0 },
+  ],
+  columns: [
+    { key: 'ward', header: 'Ward', kind: 'text' },
+    { key: 'births', header: 'Births', align: 'right', kind: 'count', width: '6rem' },
+    { key: 'caesareans', header: 'Caesarean', align: 'right', kind: 'count', width: '7rem' },
+    { key: 'stillbirths', header: 'Stillbirth', align: 'right', kind: 'count', width: '7rem' },
+    { key: 'lowBirthWeight', header: 'Under 2 500 g', align: 'right', kind: 'count', width: '8rem' },
+    { key: 'deaths', header: 'Deaths', align: 'right', kind: 'count', width: '6rem' },
+    { key: 'broughtInDead', header: 'Brought in dead', align: 'right', kind: 'count', width: '9rem' },
+    { key: 'within24h', header: 'Within 24 h of admission', align: 'right', kind: 'count', width: '10rem' },
+    { key: 'maternal', header: 'Women of childbearing age', align: 'right', kind: 'count', width: '10rem' },
+    { key: 'medicoLegal', header: 'Medico-legal', align: 'right', kind: 'count', width: '8rem' },
+    { key: 'certificates', header: 'Certificates issued', align: 'right', kind: 'count', width: '9rem' },
+    { key: 'registrationOpen', header: 'Registration open', align: 'right', kind: 'count', width: '9rem' },
+  ],
+  rows: ({ day, branch }) => {
+    if (branch !== 'Main Campus') return [];
+    const register = birthDeathDay(day);
+    const wardOf = (id: string | null) => (id === null ? 'emergency' : id);
+
+    const blank = () => ({ births: 0, caesareans: 0, stillbirths: 0, lowBirthWeight: 0, deaths: 0, broughtInDead: 0, within24h: 0, maternal: 0, medicoLegal: 0, certificates: 0, registrationOpen: 0 });
+    const tally = new Map<string, ReturnType<typeof blank>>();
+    const of = (id: string) => {
+      const row = tally.get(id) ?? blank();
+      tally.set(id, row);
+      return row;
+    };
+
+    for (const birth of register.births) {
+      const row = of(wardOf(birth.wardId));
+      row.births += 1;
+      if (birth.type === 'Caesarean') row.caesareans += 1;
+      if (birth.outcome === 'Stillbirth') row.stillbirths += 1;
+      if (birth.outcome === 'Live birth' && birth.weightGrams < 2500) row.lowBirthWeight += 1;
+      if (birth.civil.state === 'Started online' || birth.civil.state === 'Filed, number awaited' || birth.civil.state === 'Not yet filed') row.registrationOpen += 1;
+    }
+
+    for (const death of register.deaths) {
+      const row = of(wardOf(death.wardId));
+      row.deaths += 1;
+      if (death.kind === 'Brought in dead') row.broughtInDead += 1;
+      if (death.kind === 'In-patient' && death.admittedAt && death.at.slice(0, 10) === death.admittedAt.slice(0, 10)) row.within24h += 1;
+      if (death.patient?.sex === 'Female' && (death.patient?.age ?? 0) >= 15 && (death.patient?.age ?? 0) <= 49) row.maternal += 1;
+      if (death.police) row.medicoLegal += 1;
+      if (death.certificateNo) row.certificates += 1;
+      if (death.civil.state === 'Not yet filed' || death.civil.state === 'Filed, number awaited' || death.civil.state === 'Started online') row.registrationOpen += 1;
+    }
+
+    const board = generateInpatient(day);
+    const order = [...board.wards.map((w) => w.id), 'emergency'];
+    const labelOf = (id: string) => (id === 'emergency' ? 'Emergency — brought in dead' : board.wards.find((w) => w.id === id)?.name ?? id);
+
+    return order
+      .filter((id) => tally.has(id) || id !== 'emergency')
+      .map((id) => {
+        const row = tally.get(id) ?? blank();
+        return {
+          id,
+          label: labelOf(id),
+          cells: { ward: labelOf(id), ...row },
+        };
+      });
+  },
+  closing: ({ day }) => {
+    const register = birthDeathDay(day);
+    const state = register.stats;
+    const live = register.births.filter((b) => b.outcome === 'Live birth');
+    const section = register.births.find((b) => b.type === 'Caesarean');
+    const small = live.filter((b) => b.weightGrams < 2500);
+    const held = register.deaths.filter((d) => d.releasedAt === null);
+    const open = [...register.births.map((b) => ({ who: b.registerNo, state: b.civil.state })), ...register.deaths.map((d) => ({ who: d.registerNo, state: d.civil.state }))]
+      .filter((x) => x.state === 'Started online' || x.state === 'Filed, number awaited' || x.state === 'Not yet filed');
+    return (
+      `The register at ${register.now}: ${state.births} birth${state.births === 1 ? '' : 's'} — ${state.liveBirths} live and ${state.stillbirths} stillborn — and ${state.deaths} death${state.deaths === 1 ? '' : 's'}, ${state.inPatient} of them in a bed and ${state.broughtInDead} brought in dead. ` +
+      (small.length > 0 ? `${small.length} live-born baby is under 2 500 g and has a feeding plan and a follow-up date rather than a routine discharge. ` : '') +
+      (section ? `The caesarean today was for ${section.complications[0].split(' — ')[0].toLowerCase()}, and the indication is on the record because the next pregnancy is planned around it. ` : '') +
+      `${state.certified} certificate${state.certified === 1 ? '' : 's'} issued and ${state.medicoLegal} death referred to the police and the post-mortem, where the certificate waits for the report rather than for the ward round. ` +
+      (state.certificatesOutstanding > 0
+        ? `${state.certificatesOutstanding} death has neither a certificate nor a referral, which is the one state this register may not leave alone. `
+        : 'Every death that can be certified has been, and every body leaving the mortuary has either a certificate or a police referral behind it. ') +
+      (held.length > 0 ? `${held.length} ${held.length === 1 ? 'body is' : 'bodies are'} still in the mortuary${held.some((d) => d.police) ? ', one of them until the post-mortem' : ''}. ` : '') +
+      `${state.civilFiled} civil registration number${state.civilFiled === 1 ? '' : 's'} came back and ${open.length} ${open.length === 1 ? 'is' : 'are'} still open — ${open.map((x) => x.who).join(', ')} — because a birth or a death that is never filed with the registrar is one the district cannot plan a clinic around. ` +
+      (register.reviews.length > 0
+        ? `${register.reviews.length} review${register.reviews.length === 1 ? '' : 's'} opened by the register itself: ${register.reviews.map((r) => r.kind.toLowerCase()).join(', ')}.`
+        : 'No death or birth today opened a review.')
+    );
+  },
+};
+
 /* ================================================================================== the suite itself */
 
 export const REPORTS: ReportDef[] = [
@@ -1759,6 +1959,7 @@ export const REPORTS: ReportDef[] = [
   /* Workforce and governance */
   dutyReport,
   logReport,
+  birthDeathReport,
 ];
 
 export const REPORT_TOPICS: string[] = REPORTS.map((r) => r.topic);
@@ -1781,16 +1982,12 @@ export interface PlannedReport {
   blockedBy?: string;
 }
 
-export const PLANNED_REPORTS: PlannedReport[] = [
-  {
-    name: 'Births and deaths',
-    legacy: '/admin/report/birth_death',
-    group: 'Governance',
-    question: 'Births by type, deaths by ward and by whether the patient was brought in dead, and the certificates issued for each.',
-    blockedBy:
-      'Nothing in the preview writes either half of this register: the ward’s discharges carry no outcome, and no delivery is recorded anywhere. The report is in the suite because the phase owes the screen, and it is not built because a screen that invents a birth is worse than a screen that says the register does not exist yet.',
-  },
-];
-
+/**
+ * Nothing is left to plan: the phase's seventeen screens are built, and this list stays here empty rather than
+ * deleted, because the harness and the hub both read it and the next report the product owes will start life in
+ * it. Births and deaths used to sit here, blocked on a register nothing wrote; it is built now, on
+ * `lib/birthdeath.ts`, which is where the ward's own admissions and the ambulance fleet's obstetric call are read.
+ */
+export const PLANNED_REPORTS: PlannedReport[] = [];
 export const REPORT_SUITE_NOTE =
   'Seventeen Reports › … screens, one framework: per branch and consolidated are the same query added up, every column carries its definition, and a branch that has no such service says so instead of printing a zero.';

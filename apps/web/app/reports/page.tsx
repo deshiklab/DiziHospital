@@ -161,7 +161,7 @@ export default function ReportsPage() {
         <RankList title="Consultations per doctor" items={snapshot.clinical.byDoctor} />
       </div>
 
-      <Panel title={`Reports › … — ${builtCount} of ${REPORT_SUITE_TOTAL} built`}>
+      <Panel title={`Reports › … — ${builtCount} of ${REPORT_SUITE_TOTAL} built${builtCount === REPORT_SUITE_TOTAL ? ', the phase’s seventeen complete' : ''}`}>
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {REPORT_GROUPS.map((group) => {
             const built = reportsInGroup(group);
@@ -195,8 +195,10 @@ export default function ReportsPage() {
         </div>
         <p className="mt-3 text-xs text-text-secondary">
           Each built report opens on its own route, reads the same generators the operational screens use, and prints the days it actually read, the
-          control total its figures have to agree with, and how the consolidated column was arrived at. This list is kept in the module the reports
-          themselves are written in, so the phase cannot be called finished with a screen missing.
+          control total its figures have to agree with, and how the consolidated column was arrived at. Most carry saved views — the same queue or
+          the same exceptions a reader opens them for every morning — so the morning’s question is a chip rather than a search somebody has to
+          remember how to type. This list is kept in the module the reports themselves are written in, so the phase cannot be called finished with a
+          screen missing.
         </p>
       </Panel>
     </div>

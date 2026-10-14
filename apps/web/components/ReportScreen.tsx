@@ -31,9 +31,13 @@ export function ReportScreen({ topic }: { topic: string }) {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
+  /** The saved view, by label, plus the plain table. `undefined` means “Everything”. */
+  const [view, setView] = useState<string | undefined>(undefined);
 
   const table = useMemo(() => buildReport(topic, { day, range, scope }), [topic, day, range, scope]);
   const def = table.def;
+  const views = def.views ?? [];
+  const activeView = views.find((v) => v.label === view);
 
   const rows = useMemo<Row[]>(
     () =>
@@ -49,10 +53,14 @@ export function ReportScreen({ topic }: { topic: string }) {
   );
 
   const filtered = useMemo(() => {
-    if (!query.trim()) return rows;
+    /* The saved view first, then the search inside it: a reader who has opened “Awaiting a report” and then types
+       a modality means the two together, not the search across everything. */
+    const kept = activeView ? table.rows.filter(activeView.keep).map((r) => r.id) : null;
+    const scoped = kept ? rows.filter((row) => kept.includes(row.id)) : rows;
+    if (!query.trim()) return scoped;
     const q = query.trim().toLowerCase();
-    return rows.filter((row) => Object.values(row).some((v) => String(v).toLowerCase().includes(q)));
-  }, [rows, query]);
+    return scoped.filter((row) => Object.values(row).some((v) => String(v).toLowerCase().includes(q)));
+  }, [rows, table.rows, activeView, query]);
 
   const pageRows = filtered.slice((page - 1) * pageSize, page * pageSize);
   const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
@@ -191,6 +199,12 @@ export function ReportScreen({ topic }: { topic: string }) {
                 setPage(q.page);
                 setPageSize(q.pageSize);
               }}
+              savedViews={['Everything', ...views.map((v) => v.label)]}
+              activeView={view ?? 'Everything'}
+              onViewChange={(v) => {
+                setView(v === 'Everything' ? undefined : v);
+                setPage(1);
+              }}
               quickSearch={{
                 value: query,
                 onChange: (v) => {
@@ -204,6 +218,15 @@ export function ReportScreen({ topic }: { topic: string }) {
               rowId={(r) => r.id}
               height="26rem"
             />
+          )}
+          {activeView && filtered.length > 0 && (
+            <p className="mt-2 flex items-start gap-2 text-xs text-text-tertiary">
+              <Info className="mt-0.5 size-3.5 shrink-0" aria-hidden />
+              <span>
+                <span className="font-medium text-text-secondary">{activeView.label}</span> — {activeView.hint} The view is a filter over this report’s
+                own rows: the figures are the same arithmetic, over the rows it keeps.
+              </span>
+            </p>
           )}
         </Panel>
 
