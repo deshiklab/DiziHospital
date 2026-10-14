@@ -86,8 +86,8 @@ Two things this table already tells us, and neither is a surprise to the code:
 ## Running the guardrail
 
 ```bash
-npm run contract:check   # shape + agreement with apps/web/lib/sync.ts
-npm run contract:test    # mutates the contract 24 ways and asserts every one is caught
+npm run contract:check   # shape + agreement with apps/web/lib/sync.ts + the generated output is fresh
+npm run contract:test    # mutates the contract 33 ways and asserts every one is caught
 ```
 
 The package owns its own check, the way `@dizi/tokens` does, and it has no dependencies — so it runs in the
@@ -100,17 +100,52 @@ node packages/contracts/check.mjs --contract packages/contracts/openapi.json --s
 ```
 
 A guardrail that cannot fail is not a guardrail, so the guardrail is itself tested: `contract:test` breaks the
-contract deliberately — a policy the client cannot honour, a queued write with no replay key, a cached write, a
-`$ref` that lands nowhere, an audit ledger that is not hash-chained, a duplicate rule attributed to a file that is
-gone, a vetoing rule scoring above the block threshold — and fails if any mutation slips through.
+contract and the generated projection deliberately — a policy the client cannot honour, a queued write with no
+replay key, a cached write, a `$ref` that lands nowhere, an audit ledger that is not hash-chained, a duplicate
+rule attributed to a file that is gone, a vetoing rule scoring above the block threshold, an operation missing
+from the projection, a paraphrased `because`, a derived flag contradicting `offline` — and fails if any of the 33
+mutations slips through.
+
+## The generated client
+
+P0-207's acceptance is that a TypeScript client builds from this contract, so it is generated and committed —
+the same convention `@dizi/tokens` uses for its `dist`, and for the same reason: the generated artefact is what
+consumers import, and a checkout without it is a broken checkout.
+
+```bash
+npm run contract:build   # regenerate dist/ from openapi.json
+npm run contract:check   # conformance + agreement + the generated output is up to date
+```
+
+`build.mjs` has no dependencies, deliberately: a generator that cannot itself drift is the only kind that keeps a
+contract honest. It emits two files:
+
+* **`dist/capabilities.json`** — the projection the app and the API service read. Per operation: `offline`,
+  `authority`, `idempotency`, `audit`, `entity`, the request and response schema names, the statuses, and the
+  derived flags (`mayQueue`, `servesFromReplica`, `needsNetwork`, `requiresIdempotencyKey`) so no consumer has to
+  re-interpret `offline` and get it subtly wrong. Plus the indices (`operationOrder`, `byEntity`, `queueable`,
+  `servedFromReplica`, `onlineOnly`, `idempotencyHeader.requiredOn`) and the contract's own blocks copied
+  verbatim. It is a *projection*, not a second contract: `check.mjs` compares it field by field against
+  `openapi.json` and fails if anything paraphrases it, if a derived flag contradicts `offline`, or if an index has
+  drifted. Hand-editing the JSON is caught, because the projection is generated.
+* **`dist/client.ts`** — an interface per schema (optionality straight from `required`, descriptions as JSDoc),
+  the operations as a `const` map with `OperationMeta`, and the small set of decisions worth having in code
+  rather than in prose: `mayQueue`, `servesFromReplica`, `needsNetwork`, `refusalReason`, `policyFor`,
+  `operationsFor` and a total `drainOutcomeFor(status, problemType?)`.
+
+The app imports it the way it imports `@dizi/ui` — `@dizi/contracts/client` — and CI compiles it on every run
+(`npm run typecheck --workspace @dizi/contracts`), because "the generated client builds" is the acceptance and a
+generated file nobody compiles is a generated file nobody reads.
 
 ## Changing the contract
 
 1. Change `packages/contracts/openapi.json`. It is hand-maintained and hand-readable: keep it pretty, keep the
    `x-dizi` block on every operation, and bump `info.version` for anything that would break a client.
-2. Run `npm run contract:check`. If it complains that the client disagrees, the client is usually right — the
-   policies in `lib/sync.ts` are the ones the desks have been running against since P0-201. Change the contract, or
-   change the client and say why in the entity's `why`.
+2. Run `npm run contract:build`, then `npm run contract:check`. The first regenerates the client and the
+   projection; the second checks the contract's shape, its agreement with `apps/web/lib/sync.ts`, and that the
+   generated output matches. If it complains that the *client* disagrees, the client is usually right — the
+   policies in `lib/sync.ts` are the ones the desks have been running against since P0-201. Change the contract,
+   or change the client and say why in the entity's `why`.
 3. Implement it. The API service owes every path in `paths`; a path with no route is an unfinished ticket, not a
    `501`.
 4. Add a self-test case for any new rule the guardrail learns. A new check with no mutation proving it fires is a

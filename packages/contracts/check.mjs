@@ -25,7 +25,7 @@
  *     --contract packages/contracts/openapi.json      # override either input
  *     --sync apps/web/lib/sync.ts
  *
- * `--self-test` mutates a copy of the contract in 24 ways and asserts that each mutation is caught. A
+ * `--self-test` mutates a copy of the contract in 33 ways and asserts that each mutation is caught. A
  * guardrail that cannot fail is not a guardrail, so the guardrail is itself tested.
  *
  * Exit code 0 when the contract conforms and agrees with the client, 1 otherwise.
@@ -137,16 +137,19 @@ function collectRefs(node, acc = []) {
  * Both jobs, in one pass, over a document and a client source. Returns errors, warnings and the tables the
  * report needs — never prints, so the self-test can run it against mutated copies.
  *
- * `readFile` is injectable so the self-test can lie about a file that does not exist without touching disk.
+ * `options.caps`, `options.readFile` and `options.fileExists` are injectable so the self-test can lie about the
+ * generated projection or a file that does not exist without touching disk.
  */
-function validate(doc, syncSource, readFile = (path) => readFileSync(resolve(root, path), 'utf8'), fileExists = (path) => {
-  try {
-    readFileSync(resolve(root, path));
-    return true;
-  } catch {
-    return false;
-  }
-}) {
+function validate(doc, syncSource, options = {}) {
+  const readFile = options.readFile ?? ((path) => readFileSync(resolve(root, path), 'utf8'));
+  const fileExists = options.fileExists ?? ((path) => {
+    try {
+      readFileSync(resolve(root, path));
+      return true;
+    } catch {
+      return false;
+    }
+  });
   const errors = [];
   const warnings = [];
   const fail = (where, message) => errors.push({ where, message });
@@ -376,6 +379,104 @@ function validate(doc, syncSource, readFile = (path) => readFileSync(resolve(roo
     }
   }
 
+  /* The generated projection (P0-207). It is not a second contract — it is this one, projected. Anything that
+   * paraphrases the contract instead of copying it goes stale in a way nobody notices until a desk is offline,
+   * so the projection is checked against the contract rather than trusted. Its freshness is checked separately,
+   * by `node build.mjs --check`. */
+  const capsPath = 'packages/contracts/dist/capabilities.json';
+  let caps = options.caps ?? null;
+  if (!caps) {
+    if (!fileExists(capsPath)) {
+      fail(capsPath, 'missing — run `npm run contract:build`; the generated client is committed, so a checkout without it is a broken checkout');
+    } else {
+      try {
+        caps = JSON.parse(readFile(capsPath));
+      } catch (error) {
+        fail(capsPath, `is not valid JSON: ${error.message}`);
+      }
+    }
+  }
+
+  if (caps) {
+    const projected = caps.operations ?? {};
+    const byId = new Map(operations.map((o) => [o.op.operationId, o]));
+    for (const { meta, op, path, method } of operations) {
+      const id = op.operationId;
+      const entry = projected[id];
+      if (!entry) {
+        fail(capsPath, `operation \`${id}\` is missing from the generated projection`);
+        continue;
+      }
+      for (const key of ['method', 'path', 'offline', 'authority', 'entity', 'idempotency']) {
+        const expected = key === 'method' ? method : key === 'path' ? path : meta[key];
+        if (entry[key] !== (expected ?? null)) {
+          fail(`${capsPath}#${id}.${key}`, `is ${JSON.stringify(entry[key])} and the contract says ${JSON.stringify(expected ?? null)} — the projection paraphrases the contract instead of copying it`);
+        }
+      }
+      if (entry.because !== (meta.because ?? null)) {
+        fail(`${capsPath}#${id}.because`, 'does not match the contract verbatim — it is the sentence staff read, so it is copied, not rewritten');
+      }
+      const derived = [
+        ['mayQueue', entry.offline === 'queue'],
+        ['servesFromReplica', entry.offline === 'cache'],
+        ['needsNetwork', entry.offline === 'online-only'],
+        ['requiresIdempotencyKey', entry.idempotency === 'required'],
+      ];
+      for (const [flag, expected] of derived) {
+        if (entry[flag] !== expected) fail(`${capsPath}#${id}.${flag}`, `is ${entry[flag]} while \`${flag === 'mayQueue' ? 'offline: queue' : flag === 'servesFromReplica' ? 'offline: cache' : flag === 'needsNetwork' ? 'offline: online-only' : 'idempotency: required'}\` implies ${expected}`);
+      }
+    }
+    for (const id of Object.keys(projected)) {
+      if (!byId.has(id)) fail(`${capsPath}#${id}`, 'is in the generated projection and not in the contract — the projection is generated, so this means it was edited by hand');
+    }
+
+    const derivedList = (predicate) => operations.filter(predicate).map((o) => o.op.operationId);
+    const lists = [
+      ['queueable', derivedList((o) => o.meta.offline === 'queue')],
+      ['servedFromReplica', derivedList((o) => o.meta.offline === 'cache')],
+      ['onlineOnly', derivedList((o) => o.meta.offline === 'online-only')],
+    ];
+    for (const [key, expected] of lists) {
+      if (JSON.stringify(caps[key]) !== JSON.stringify(expected)) {
+        fail(`${capsPath}.${key}`, `is ${JSON.stringify(caps[key])} and the contract implies ${JSON.stringify(expected)}`);
+      }
+    }
+    const headerName = doc.components?.parameters?.IdempotencyKey?.name ?? null;
+    if (caps.idempotencyHeader?.name !== headerName) {
+      fail(`${capsPath}.idempotencyHeader.name`, `is ${JSON.stringify(caps.idempotencyHeader?.name)} and the contract declares ${JSON.stringify(headerName)}`);
+    }
+    const requiredOn = derivedList((o) => o.meta.idempotency === 'required');
+    if (JSON.stringify(caps.idempotencyHeader?.requiredOn) !== JSON.stringify(requiredOn)) {
+      fail(`${capsPath}.idempotencyHeader.requiredOn`, `is ${JSON.stringify(caps.idempotencyHeader?.requiredOn)} and the contract implies ${JSON.stringify(requiredOn)}`);
+    }
+
+    const usedEntities = [...new Set(operations.map((o) => o.meta.entity).filter(Boolean))];
+    for (const entity of usedEntities) {
+      const expected = derivedList((o) => o.meta.entity === entity);
+      if (JSON.stringify(caps.byEntity?.[entity]) !== JSON.stringify(expected)) {
+        fail(`${capsPath}.byEntity.${entity}`, `is ${JSON.stringify(caps.byEntity?.[entity])} and the operations on ${entity} are ${JSON.stringify(expected)}`);
+      }
+    }
+    for (const entity of Object.keys(caps.byEntity ?? {})) {
+      if (!usedEntities.includes(entity)) fail(`${capsPath}.byEntity.${entity}`, 'lists an entity no operation touches');
+    }
+
+    // The copied blocks have to be the contract's own words, not a summary of them.
+    for (const [key, block] of [['entities', entities], ['drainOutcomes', drainOutcomes], ['problemTypes', problemTypes], ['duplicateRules', doc['x-dizi-duplicate-rules'] ?? {}]]) {
+      if (JSON.stringify(caps[key]) !== JSON.stringify(block)) {
+        fail(`${capsPath}.${key}`, 'differs from the contract — these blocks are copied verbatim so a screen can render the rule it is enforcing');
+      }
+    }
+
+    // The drain mapping is total, or a drain drops writes it does not recognise.
+    const statusText = Object.values(caps.drainOutcomes ?? {}).map((o) => String(o?.status ?? '')).join(' ');
+    for (const [label, re] of [['2xx', /\b2(?:xx|\d\d)\b/], ['4xx', /\b4(?:xx|\d\d)\b/], ['5xx', /\b5(?:xx|\d\d)\b/]]) {
+      if (!re.test(statusText)) {
+        fail(`${capsPath}.drainOutcomes`, `no outcome covers ${label} — \`drainOutcomeFor\` in the generated client is total, so the contract has to say what ${label} means`);
+      }
+    }
+  }
+
   /* The duplicate rules. P0-301's acceptance is that they are documented *and* tunable; the second half only
    * holds if the rules are the ones the product actually runs, so each rule names the files that implement it and
    * this checks that they still do. A rule nobody implements is a claim, not a rule. */
@@ -437,7 +538,7 @@ function validate(doc, syncSource, readFile = (path) => readFileSync(resolve(roo
     fail('x-dizi-duplicate-rules.rules', 'no rule names a file that implements it — the rule set is documentation, not the rule set the product runs');
   }
 
-  return { errors, warnings, operations, policyTable, client, entities, drainOutcomes, problemTypes, duplicateRules, ruleRows, thresholds };
+  return { errors, warnings, operations, policyTable, client, entities, drainOutcomes, problemTypes, duplicateRules, ruleRows, thresholds, caps };
 }
 
 /* ------------------------------------------------------------------ report */
@@ -445,7 +546,7 @@ function validate(doc, syncSource, readFile = (path) => readFileSync(resolve(roo
 const VERBS = { get: 'GET ', post: 'POST', patch: 'PATCH', put: 'PUT', delete: 'DEL ' };
 const pad = (value, width) => String(value).padEnd(width);
 
-function report({ errors, warnings, operations, policyTable, client, drainOutcomes, problemTypes, ruleRows, thresholds }, doc, contractLabel, syncLabel) {
+function report({ errors, warnings, operations, policyTable, client, drainOutcomes, problemTypes, ruleRows, thresholds, caps }, doc, contractLabel, syncLabel) {
   const widths = {
     verb: 5,
     path: Math.max(6, ...operations.map((o) => o.path.length)),
@@ -461,6 +562,10 @@ function report({ errors, warnings, operations, policyTable, client, drainOutcom
   console.log(`client     ${syncLabel}`);
   console.log(`           ${client.entities?.length ?? '?'} entities · ${client.drainOutcomes?.length ?? '?'} drain outcomes · ` +
     `${client.policies?.length ?? '?'} conflict policies`);
+  if (caps) {
+    console.log(`generated  packages/contracts/dist — ${Object.keys(caps.operations ?? {}).length} operations · ` +
+      `${Object.keys(caps.entities ?? {}).length} entity policies · ${Object.keys(caps.problemTypes ?? {}).length} problem types`);
+  }
 
   console.log('\noperations');
   for (const { method, path, meta } of operations) {
@@ -541,23 +646,39 @@ const SELF_TEST_CASES = [
   { name: 'a vetoing rule that scores above the block threshold', mutate: (d) => { d['x-dizi-duplicate-rules'].rules[6].weight = 0.9; }, expect: 'may not score at or above `block`' },
   { name: 'a signal outside the vocabulary', mutate: (d) => { d['x-dizi-duplicate-rules'].rules[3].signal = 'vibes'; }, expect: 'is not one of' },
   { name: 'an audit ledger that is not hash-chained', mutate: (d) => { d.components.schemas.AuditEntry.required = ['id', 'at', 'actor', 'action', 'entity']; }, expect: 'hash-chained' },
+
+  /* The generated projection. These are the mutations that would otherwise reach a desk as a screen quietly
+   * disagreeing with the API about whether an action may be queued. */
+  { name: 'an operation missing from the generated projection', mutateCaps: (c) => { delete c.operations.createPatient; }, expect: 'is missing from the generated projection' },
+  { name: 'an operation added to the projection by hand', mutateCaps: (c) => { c.operations.inventedEndpoint = { ...c.operations.createPatient, id: 'inventedEndpoint' }; }, expect: 'is in the generated projection and not in the contract' },
+  { name: 'a paraphrased `because`', mutateCaps: (c) => { c.operations.createPatient.because = 'Duplicate possible.'; }, expect: 'verbatim' },
+  { name: 'a derived flag that contradicts `offline`', mutateCaps: (c) => { c.operations.createPatient.mayQueue = false; }, expect: 'implies true' },
+  { name: 'a hand-edited entity policy', mutateCaps: (c) => { c.entities['mar.dose'].policy = 'field-level'; }, expect: 'copied verbatim' },
+  // Both sides are mutated together so the verbatim check stays quiet and the totality rule is what fires:
+  // `drainOutcomeFor` is total, so the contract has to account for every status class.
+  { name: 'a drain mapping with no outcome for 5xx', mutate: (d) => { d['x-dizi-drain-outcomes'].deferred.status = 'much later'; }, mutateCaps: (c) => { c.drainOutcomes.deferred.status = 'much later'; }, expect: 'no outcome covers 5xx' },
+  { name: 'an idempotency header under a different name', mutateCaps: (c) => { c.idempotencyHeader.name = 'X-Idempotency-Key'; }, expect: 'the contract declares' },
+  { name: 'an entity index that has drifted', mutateCaps: (c) => { c.byEntity['bed.state'] = []; }, expect: 'the operations on bed.state are' },
+  { name: 'a queueable list that has drifted', mutateCaps: (c) => { c.queueable = []; }, expect: 'and the contract implies' },
 ];
 
-function selfTest(baseDoc, baseSync) {
+function selfTest(baseDoc, baseSync, baseCaps) {
   console.log('\ncontract conformance · self-test\n');
   let survived = 0;
   for (const testCase of SELF_TEST_CASES) {
     const doc = JSON.parse(JSON.stringify(baseDoc));
+    const caps = JSON.parse(JSON.stringify(baseCaps));
     let sync = baseSync;
     try {
-      sync = testCase.mutate(doc, baseSync);
-      if (sync === undefined) sync = baseSync;
+      const mutated = testCase.mutate?.(doc, baseSync);
+      if (typeof mutated === 'string') sync = mutated;
+      testCase.mutateCaps?.(caps);
     } catch (error) {
       console.log(`  ✗ ${testCase.name}\n      the mutation itself threw: ${error.message}`);
       survived += 1;
       continue;
     }
-    const { errors } = validate(doc, sync);
+    const { errors } = validate(doc, sync, { caps });
     const caught = errors.some((e) => e.message.includes(testCase.expect));
     if (caught) {
       console.log(`  ✓ ${testCase.name}`);
@@ -566,7 +687,7 @@ function selfTest(baseDoc, baseSync) {
       survived += 1;
     }
   }
-  const clean = validate(baseDoc, baseSync);
+  const clean = validate(baseDoc, baseSync, { caps: baseCaps });
   if (clean.errors.length) {
     console.log(`  ✗ the unmutated contract is already failing (${clean.errors.length} error${clean.errors.length === 1 ? '' : 's'})`);
     survived += 1;
@@ -594,8 +715,10 @@ const syncSource = readFileSync(syncPath, 'utf8');
 
 const rel = (p) => p.replace(`${root}/`, '');
 
+const capsPathAbs = resolve(root, 'packages/contracts/dist/capabilities.json');
+
 if (args.includes('--self-test')) {
-  process.exit(selfTest(doc, syncSource));
+  process.exit(selfTest(doc, syncSource, JSON.parse(readFileSync(capsPathAbs, 'utf8'))));
 }
 
 const result = validate(doc, syncSource);

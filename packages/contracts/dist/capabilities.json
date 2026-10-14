@@ -1,0 +1,1115 @@
+{
+  "contract": {
+    "title": "DiziHospital platform API",
+    "version": "0.1.0-p0",
+    "openapi": "3.1.0",
+    "source": "packages/contracts/openapi.json"
+  },
+  "generatedBy": "packages/contracts/build.mjs",
+  "operations": {
+    "health": {
+      "id": "health",
+      "method": "get",
+      "path": "/health",
+      "tag": "platform",
+      "summary": "Liveness and the tier the node is talking to",
+      "entity": null,
+      "offline": "online-only",
+      "authority": "cloud",
+      "idempotency": "none",
+      "audit": false,
+      "because": "The edge node polls this to decide whether it is online, in which case the UI must not claim a write reached the cloud. Nothing here may be cached.",
+      "notes": "Deliberately online-only: a stale answer to “am I connected?” is worse than no answer, because the whole point of the call is to tell the screen whether a write reached the cloud.",
+      "request": null,
+      "responses": {
+        "200": "Health",
+        "503": null
+      },
+      "problemResponses": [
+        "503"
+      ],
+      "statuses": [
+        200,
+        503
+      ],
+      "mayQueue": false,
+      "servesFromReplica": false,
+      "needsNetwork": true,
+      "requiresIdempotencyKey": false
+    },
+    "listPatients": {
+      "id": "listPatients",
+      "method": "get",
+      "path": "/patients",
+      "tag": "patients",
+      "summary": "Search the patient register",
+      "entity": "patient.demographic",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "Reads are served from the edge replica, so the desk keeps working with the uplink down. A cached page of results is better than an empty one, and the screen stamps how old it is.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "PatientPage",
+        "400": null
+      },
+      "problemResponses": [
+        "400"
+      ],
+      "statuses": [
+        200,
+        400
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "createPatient": {
+      "id": "createPatient",
+      "method": "post",
+      "path": "/patients",
+      "tag": "patients",
+      "summary": "Register a patient",
+      "entity": "patient.demographic",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "A registration at a desk over a dead uplink still has to happen: the patient is in front of you. The write is queued with an idempotency key and replayed; the MRN comes from a block already reserved to this node.",
+      "notes": null,
+      "request": "PatientCreate",
+      "responses": {
+        "201": "Patient",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null,
+        "503": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422",
+        "503"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422,
+        503
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "getPatient": {
+      "id": "getPatient",
+      "method": "get",
+      "path": "/patients/{mrn}",
+      "tag": "patients",
+      "summary": "One patient, by MRN",
+      "entity": "patient.demographic",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "Served from the local replica; a record opened during an outage is the record the desk needs most.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "Patient",
+        "404": null
+      },
+      "problemResponses": [
+        "404"
+      ],
+      "statuses": [
+        200,
+        404
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "updatePatient": {
+      "id": "updatePatient",
+      "method": "patch",
+      "path": "/patients/{mrn}",
+      "tag": "patients",
+      "summary": "Correct a patient detail",
+      "entity": "patient.demographic",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Two desks can both correct a name or an age. Different fields merge automatically; the same field is offered to a person, because one of the two is wrong and only the patient knows which.",
+      "notes": null,
+      "request": "PatientPatch",
+      "responses": {
+        "200": "Patient",
+        "401": null,
+        "403": null,
+        "404": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "404",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        404,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "updatePatientContact": {
+      "id": "updatePatientContact",
+      "method": "patch",
+      "path": "/patients/{mrn}/contact",
+      "tag": "patients",
+      "summary": "Correct a phone number, address or next of kin",
+      "entity": "patient.contact",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Contact details change constantly and relatives answer the phone. The same field on two nodes is a conflict for a person to settle, never a silent overwrite: the wrong number on a discharge call is a patient who cannot be reached.",
+      "notes": null,
+      "request": "PatientContactPatch",
+      "responses": {
+        "200": "Patient",
+        "401": null,
+        "403": null,
+        "404": null,
+        "409": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "404",
+        "409"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        404,
+        409
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "listPatientDuplicates": {
+      "id": "listPatientDuplicates",
+      "method": "get",
+      "path": "/patients/{mrn}/duplicates",
+      "tag": "patients",
+      "summary": "Possible duplicates for a patient",
+      "entity": "patient.demographic",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "Duplicate detection is a rule set, not a boolean: the response carries the evidence (matching name, phone, date of birth, branch) so a person can decide, and the thresholds are tunable in Setup.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "DuplicateList",
+        "404": null
+      },
+      "problemResponses": [
+        "404"
+      ],
+      "statuses": [
+        200,
+        404
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "listAppointments": {
+      "id": "listAppointments",
+      "method": "get",
+      "path": "/appointments",
+      "tag": "appointments",
+      "summary": "Appointments for a day",
+      "entity": "appointment",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "Reads come from the replica, so the calendar draws during an outage. Bookings made offline are merged on drain and the screen marks which rows are still local.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "AppointmentPage",
+        "400": null
+      },
+      "problemResponses": [
+        "400"
+      ],
+      "statuses": [
+        200,
+        400
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "createAppointment": {
+      "id": "createAppointment",
+      "method": "post",
+      "path": "/appointments",
+      "tag": "appointments",
+      "summary": "Book an appointment",
+      "entity": "appointment",
+      "offline": "queue",
+      "authority": "edge",
+      "idempotency": "required",
+      "audit": true,
+      "because": "The branch where the patient is standing owns the slot. If two branches book the last slot, the origin that took the booking keeps it and the other is refused with the alternative times — a booking desk that cannot say who has the slot is worse than a busy signal.",
+      "notes": null,
+      "request": "AppointmentCreate",
+      "responses": {
+        "201": "Appointment",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "updateAppointment": {
+      "id": "updateAppointment",
+      "method": "patch",
+      "path": "/appointments/{id}",
+      "tag": "appointments",
+      "summary": "Reschedule or cancel an appointment",
+      "entity": "appointment",
+      "offline": "queue",
+      "authority": "edge",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Slots are exclusive: one appointment holds one slot. A reschedule is a claim on the new slot and a release of the old one, in that order, so a failed second step never leaves two appointments holding one slot.",
+      "notes": null,
+      "request": "AppointmentPatch",
+      "responses": {
+        "200": "Appointment",
+        "401": null,
+        "403": null,
+        "404": null,
+        "409": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "404",
+        "409"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        404,
+        409
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "checkInAppointment": {
+      "id": "checkInAppointment",
+      "method": "post",
+      "path": "/appointments/{id}/check-in",
+      "tag": "appointments",
+      "summary": "Check a patient in",
+      "entity": "appointment",
+      "offline": "queue",
+      "authority": "edge",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Check-in is what puts a patient into the queue, and it is the event the queue board and the bill both read. It is exclusive: the second check-in of the same token is refused rather than duplicated, because a patient called twice is a patient seen once.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "Appointment",
+        "401": null,
+        "403": null,
+        "404": null,
+        "409": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "404",
+        "409"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        404,
+        409
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "claimBed": {
+      "id": "claimBed",
+      "method": "post",
+      "path": "/beds/{bedId}/claim",
+      "tag": "ward",
+      "summary": "Claim a bed for an admission",
+      "entity": "bed.state",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "A bed holds one patient. Two nodes admitting into the same bed is not a merge — the second arrival needs another bed, so the claim is refused and the admission desk is told which beds are free.",
+      "notes": null,
+      "request": "BedClaim",
+      "responses": {
+        "200": "Bed",
+        "401": null,
+        "403": null,
+        "404": null,
+        "409": null,
+        "423": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "404",
+        "409",
+        "423"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        404,
+        409,
+        423
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "createAdmission": {
+      "id": "createAdmission",
+      "method": "post",
+      "path": "/admissions",
+      "tag": "ward",
+      "summary": "Admit a patient",
+      "entity": "admission",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "An admission is an event with a time and an author. Two events written on two nodes are two events and both belong in the record, so nothing is merged away.",
+      "notes": null,
+      "request": "AdmissionCreate",
+      "responses": {
+        "201": "Admission",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "createObservation": {
+      "id": "createObservation",
+      "method": "post",
+      "path": "/observations",
+      "tag": "ward",
+      "summary": "Record a set of observations",
+      "entity": "observation",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "A set of vitals is a measurement at a time. Two sets are two measurements; both belong on the chart, and the early-warning score is computed on the server that holds the chart.",
+      "notes": null,
+      "request": "ObservationCreate",
+      "responses": {
+        "201": "Observation",
+        "401": null,
+        "403": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "createNursingNote": {
+      "id": "createNursingNote",
+      "method": "post",
+      "path": "/nursing-notes",
+      "tag": "ward",
+      "summary": "Write a nursing note",
+      "entity": "nursing.note",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Notes are the record of what was seen and done: nothing merges and nothing is overwritten, so the note is appended and the author and time are part of it.",
+      "notes": null,
+      "request": "NursingNoteCreate",
+      "responses": {
+        "201": "NursingNote",
+        "401": null,
+        "403": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "signDose": {
+      "id": "signDose",
+      "method": "post",
+      "path": "/mar-doses/{doseId}/sign",
+      "tag": "ward",
+      "summary": "Sign a dose at the bedside",
+      "entity": "mar.dose",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "A dose is given once. Two nodes signing the same slot is a double-dose risk: the first signature stands and the second is refused with the reason. A controlled drug also carries a witness, which is why the audit requirement here is not the usual one.",
+      "notes": null,
+      "request": "DoseSignature",
+      "responses": {
+        "200": "MarDose",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null,
+        "428": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422",
+        "428"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        409,
+        422,
+        428
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "createInvoice": {
+      "id": "createInvoice",
+      "method": "post",
+      "path": "/invoices",
+      "tag": "billing",
+      "summary": "Raise an invoice",
+      "entity": "invoice",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Invoices are reversed and reissued, never edited — so two nodes produce two documents and a credit note rather than one merged figure. The number comes from a block reserved to this node, which is what keeps two branches from issuing the same receipt.",
+      "notes": null,
+      "request": "InvoiceCreate",
+      "responses": {
+        "201": "Invoice",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "recordPayment": {
+      "id": "recordPayment",
+      "method": "post",
+      "path": "/payments",
+      "tag": "billing",
+      "summary": "Record money received",
+      "entity": "payment",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Money received is a fact with a counter and a time. Two receipts are two payments, and the day-end sheet has to reconcile against a physical drawer, so nothing merges.",
+      "notes": null,
+      "request": "PaymentCreate",
+      "responses": {
+        "201": "Payment",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "appendAuditEntry": {
+      "id": "appendAuditEntry",
+      "method": "post",
+      "path": "/audit",
+      "tag": "platform",
+      "summary": "Append an audit entry",
+      "entity": "audit",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": false,
+      "because": "The ledger of who did what is the one thing that must never be merged away, and it is written on the node that performed the action. An audit entry that waits for a connection is still an audit entry.",
+      "notes": null,
+      "request": "AuditCreate",
+      "responses": {
+        "201": "AuditEntry",
+        "401": null,
+        "403": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "listNumberBlocks": {
+      "id": "listNumberBlocks",
+      "method": "get",
+      "path": "/node/number-blocks",
+      "tag": "platform",
+      "summary": "Number blocks reserved to this node",
+      "entity": "audit",
+      "offline": "online-only",
+      "authority": "cloud",
+      "idempotency": "none",
+      "audit": false,
+      "because": "A node draws MRNs and invoice numbers from ranges reserved to it, which is what lets it register a patient with no uplink and still not collide with another branch. The call must reach the cloud tier: a node that cannot reserve a block cannot start a day offline, and the UI has to say so before the uplink fails rather than after.",
+      "notes": "Deliberately online-only: an offline node with no reserved block may read and queue, but it may not mint identifiers.",
+      "request": null,
+      "responses": {
+        "200": "NumberBlockList",
+        "503": null
+      },
+      "problemResponses": [
+        "503"
+      ],
+      "statuses": [
+        200,
+        503
+      ],
+      "mayQueue": false,
+      "servesFromReplica": false,
+      "needsNetwork": true,
+      "requiresIdempotencyKey": false
+    }
+  },
+  "operationOrder": [
+    "health",
+    "listPatients",
+    "createPatient",
+    "getPatient",
+    "updatePatient",
+    "updatePatientContact",
+    "listPatientDuplicates",
+    "listAppointments",
+    "createAppointment",
+    "updateAppointment",
+    "checkInAppointment",
+    "claimBed",
+    "createAdmission",
+    "createObservation",
+    "createNursingNote",
+    "signDose",
+    "createInvoice",
+    "recordPayment",
+    "appendAuditEntry",
+    "listNumberBlocks"
+  ],
+  "byEntity": {
+    "patient.demographic": [
+      "listPatients",
+      "createPatient",
+      "getPatient",
+      "updatePatient",
+      "listPatientDuplicates"
+    ],
+    "patient.contact": [
+      "updatePatientContact"
+    ],
+    "appointment": [
+      "listAppointments",
+      "createAppointment",
+      "updateAppointment",
+      "checkInAppointment"
+    ],
+    "bed.state": [
+      "claimBed"
+    ],
+    "admission": [
+      "createAdmission"
+    ],
+    "observation": [
+      "createObservation"
+    ],
+    "nursing.note": [
+      "createNursingNote"
+    ],
+    "mar.dose": [
+      "signDose"
+    ],
+    "invoice": [
+      "createInvoice"
+    ],
+    "payment": [
+      "recordPayment"
+    ],
+    "audit": [
+      "appendAuditEntry",
+      "listNumberBlocks"
+    ]
+  },
+  "queueable": [
+    "createPatient",
+    "updatePatient",
+    "updatePatientContact",
+    "createAppointment",
+    "updateAppointment",
+    "checkInAppointment",
+    "claimBed",
+    "createAdmission",
+    "createObservation",
+    "createNursingNote",
+    "signDose",
+    "createInvoice",
+    "recordPayment",
+    "appendAuditEntry"
+  ],
+  "servedFromReplica": [
+    "listPatients",
+    "getPatient",
+    "listPatientDuplicates",
+    "listAppointments"
+  ],
+  "onlineOnly": [
+    "health",
+    "listNumberBlocks"
+  ],
+  "idempotencyHeader": {
+    "name": "Idempotency-Key",
+    "requiredOn": [
+      "createPatient",
+      "updatePatient",
+      "updatePatientContact",
+      "createAppointment",
+      "updateAppointment",
+      "checkInAppointment",
+      "claimBed",
+      "createAdmission",
+      "createObservation",
+      "createNursingNote",
+      "signDose",
+      "createInvoice",
+      "recordPayment",
+      "appendAuditEntry"
+    ]
+  },
+  "entities": {
+    "patient.demographic": {
+      "policy": "field-level",
+      "label": "Patient identity",
+      "why": "Two desks can both correct a name or an age. Different fields merge; the same field needs a person, because one of the two is wrong and only the patient knows which."
+    },
+    "patient.contact": {
+      "policy": "field-level",
+      "label": "Patient contact details",
+      "why": "Phone numbers change and relatives answer. Different fields merge; the same field is offered to the desk, with both values kept."
+    },
+    "appointment": {
+      "policy": "exclusive",
+      "label": "Appointment slot",
+      "why": "A slot holds one patient. The branch that took the booking owns it, and a second branch asking for the same slot is refused with the alternatives rather than merged."
+    },
+    "bed.state": {
+      "policy": "exclusive",
+      "label": "Bed state",
+      "why": "A bed holds one patient. Two nodes admitting into the same bed is not a merge — the second arrival needs another bed, so the server refuses the claim."
+    },
+    "mar.dose": {
+      "policy": "exclusive",
+      "label": "Medication administration",
+      "why": "A dose is given once. Two nodes signing the same slot is a double-dose risk: the first signature stands and the second is refused with the reason."
+    },
+    "admission": {
+      "policy": "append-only",
+      "label": "Admission",
+      "why": "An admission is an event with a time and an author. Two events on two nodes are two events."
+    },
+    "observation": {
+      "policy": "append-only",
+      "label": "Observation set",
+      "why": "A set of vitals is a measurement at a time. Two sets are two measurements, and both belong on the chart."
+    },
+    "nursing.note": {
+      "policy": "append-only",
+      "label": "Nursing note",
+      "why": "Notes are the record of what was seen and done. Nothing merges and nothing is overwritten."
+    },
+    "invoice": {
+      "policy": "append-only",
+      "label": "Invoice",
+      "why": "Invoices are reversed and reissued, never edited — so two nodes produce two documents and a credit note, not one merged figure."
+    },
+    "payment": {
+      "policy": "append-only",
+      "label": "Payment",
+      "why": "Money received is a fact with a counter and a time. Two receipts are two payments."
+    },
+    "audit": {
+      "policy": "append-only",
+      "label": "Audit entry",
+      "why": "The ledger of who did what is the one thing that must never be merged away."
+    }
+  },
+  "drainOutcomes": {
+    "applied": {
+      "status": "2xx",
+      "meaning": "The write is in the canonical record.",
+      "client": "The outbox entry is dropped and the screen stops marking the row as local."
+    },
+    "duplicate": {
+      "status": "2xx replay, or 409 with problem type dizi.duplicate-operation",
+      "meaning": "This Idempotency-Key was already applied, so nothing changed and the original response is returned.",
+      "client": "The outbox entry is dropped: a drain that ran twice must not write twice."
+    },
+    "conflict": {
+      "status": "409 with `conflict`, `candidates` or `alternatives`",
+      "meaning": "A person has to decide. Both values are returned; nothing is merged silently.",
+      "client": "The operation leaves the automatic queue and appears in the review list until someone resolves it."
+    },
+    "refused": {
+      "status": "4xx (422, 404, 403) other than a conflict",
+      "meaning": "The write will never be accepted as it stands.",
+      "client": "Shown to the desk with the reason and the original entry: retrying it automatically would only hide it."
+    },
+    "deferred": {
+      "status": "503, 504, any other 5xx, or a timeout",
+      "meaning": "The cloud tier is not reachable, or the server failed in a way that says nothing about the write. A bare 500 is the server’s problem rather than a verdict on the request.",
+      "client": "The operation keeps its place in the queue, and the queue keeps its order. Retrying is safe because every queued write carries an Idempotency-Key."
+    }
+  },
+  "problemTypes": {
+    "dizi.bed-occupied": {
+      "title": "That bed is already in use",
+      "when": "The bed claim loses to another node",
+      "client": "Send the admission desk back to the bed board; the bed holds one patient"
+    },
+    "dizi.dose-already-signed": {
+      "title": "This dose has already been signed",
+      "when": "Two nodes sign the same administration slot",
+      "client": "Refuse locally and name who signed it and when — this one is a double-dose risk, not a merge"
+    },
+    "dizi.duplicate-operation": {
+      "title": "This write was already applied",
+      "when": "The Idempotency-Key has been seen before",
+      "client": "Treat as success — drop the outbox entry, do not resend"
+    },
+    "dizi.duplicate-patient": {
+      "title": "This patient may already be registered",
+      "when": "A registration matches an existing record on the tunable duplicate rules",
+      "client": "Show the candidates with their evidence; registering anyway needs an acknowledgement"
+    },
+    "dizi.forbidden": {
+      "title": "Your role cannot do this",
+      "when": "The token lacks the role the operation needs",
+      "client": "Hide or disable the action rather than offering it and refusing it"
+    },
+    "dizi.not-found": {
+      "title": "Not found here",
+      "when": "The record exists on another node or does not exist",
+      "client": "Say which node last saw it when the replica knows — search the branch register, do not dead-end"
+    },
+    "dizi.number-block-exhausted": {
+      "title": "This node has run out of reserved numbers",
+      "when": "A node draws a number with no block left",
+      "client": "Stop issuing that series and say so; registering with a made-up number is worse than waiting"
+    },
+    "dizi.offline-not-allowed": {
+      "title": "This action needs the network",
+      "when": "The operation is `online-only` and the cloud tier is unreachable",
+      "client": "Explain before the action is attempted, not after — the row shows why it cannot be queued"
+    },
+    "dizi.slot-taken": {
+      "title": "That slot has just been taken",
+      "when": "Another node holds the appointment slot",
+      "client": "Offer the alternatives in the response; never silently move the appointment"
+    },
+    "dizi.stale-version": {
+      "title": "Someone changed this record while you were looking at it",
+      "when": "The write carries an older `version` than the canonical record",
+      "client": "Show both values side by side; the desk decides, the server does not guess"
+    },
+    "dizi.unauthenticated": {
+      "title": "Your session has ended",
+      "when": "Missing or expired token (Keycloak, P0-205)",
+      "client": "Re-authenticate and replay: the outbox survives a session ending"
+    },
+    "dizi.unavailable": {
+      "title": "The cloud is unreachable",
+      "when": "The database, or the uplink, or the cloud tier is down",
+      "client": "Keep the write queued and keep working; the sync pill already says how long it has been"
+    },
+    "dizi.validation-failed": {
+      "title": "Some fields need attention",
+      "when": "A required or ill-formed field",
+      "client": "Mark the fields from `errors`; keep everything the desk typed"
+    }
+  },
+  "duplicateRules": {
+    "description": "How two records are decided to be the same person. The rule set is data, not code: a branch tunes the weights and the thresholds in Setup, and the register screen and the API read the same set. Two screens checking different rules is how a duplicate comes in through the front door and a false match is flagged at the back. Nothing here merges. A rule can only raise a candidate, and a person decides.",
+    "configuredIn": "Setup → Registration → duplicate rules, per branch, with the defaults below",
+    "combination": "score = min(1, the sum of the weights of the rules that matched). A rule with `veto: true` is excluded from that sum and can never contribute to a block. At or above `block` the write is refused with 409 and the candidates; at or above `warn` the desk is shown them and may continue; below `warn` nothing is shown, because a desk warned about everything is warned about nothing.",
+    "thresholds": {
+      "warn": 0.4,
+      "block": 0.85,
+      "note": "Raising `block` lets more duplicates through; lowering it starts refusing real new patients, and a phone number shared by a household must never block on its own (0.8 < 0.85) — it warns. One of those is a branch-level judgement, so it belongs to the branch, not to a developer."
+    },
+    "rules": [
+      {
+        "id": "identity.mrn-exact",
+        "signal": "mrn",
+        "weight": 1,
+        "veto": false,
+        "label": "Same MRN",
+        "when": "The MRN matches an existing record exactly. This is not a duplicate to review: it is the same patient, so the existing record is opened instead of a second one being created.",
+        "evidence": [
+          "already exists"
+        ],
+        "implementedBy": [
+          "apps/web/lib/patient-import.ts"
+        ]
+      },
+      {
+        "id": "identity.phone-normalised",
+        "signal": "phone",
+        "weight": 0.8,
+        "veto": false,
+        "label": "Same phone number",
+        "when": "The digits match after stripping spaces, dashes and the country code. A household often shares one number, so this raises a candidate rather than deciding anything.",
+        "evidence": [
+          "Same phone number as",
+          "p.phone === values.phone"
+        ],
+        "implementedBy": [
+          "apps/web/lib/patient-import.ts",
+          "apps/web/app/patients/new/page.tsx"
+        ]
+      },
+      {
+        "id": "identity.national-id-suffix",
+        "signal": "nationalId",
+        "weight": 0.7,
+        "veto": false,
+        "label": "National ID ending matches",
+        "when": "The last four digits of the national ID match the tail of an existing identifier. A partial match that a complete national-ID field would make unnecessary, kept because the register already contains one.",
+        "evidence": [
+          "nationalId"
+        ],
+        "implementedBy": [
+          "apps/web/app/patients/new/page.tsx"
+        ]
+      },
+      {
+        "id": "identity.name-age-sex",
+        "signal": "name",
+        "weight": 0.6,
+        "veto": false,
+        "label": "Same name, age and sex",
+        "when": "Three fields agree. Where names repeat as often as they do here, that is more than a coincidence and still less than a certainty.",
+        "evidence": [
+          "Same name, age and sex as"
+        ],
+        "implementedBy": [
+          "apps/web/lib/patient-import.ts"
+        ]
+      },
+      {
+        "id": "identity.dob-exact",
+        "signal": "dob",
+        "weight": 0.5,
+        "veto": false,
+        "label": "Same date of birth",
+        "when": "The full date of birth agrees. Weaker than it looks: the first of January is a placeholder for an unknown date in this register.",
+        "evidence": [
+          "dateOfBirth"
+        ],
+        "implementedBy": []
+      },
+      {
+        "id": "identity.name-fuzzy",
+        "signal": "name",
+        "weight": 0.45,
+        "veto": false,
+        "label": "Name within one edit",
+        "when": "The names differ by a single insertion, deletion or substitution — the commonest transcription error at a busy desk, and the one a typo-by-typo search never finds.",
+        "evidence": [
+          "similarity"
+        ],
+        "implementedBy": []
+      },
+      {
+        "id": "identity.sex-conflict",
+        "signal": "sex",
+        "weight": 0,
+        "veto": true,
+        "label": "Sex disagrees",
+        "when": "The records differ on sex, so they are two people. This vetoes a block outright however alike the names look, which is the difference between a duplicate check the desk trusts and one it learns to click past.",
+        "evidence": [
+          "sex"
+        ],
+        "implementedBy": []
+      }
+    ]
+  },
+  "conventions": {
+    "idempotency": "Every operation whose `x-dizi.idempotency` is `required` carries an `Idempotency-Key`. A replay of the same key returns the original response and status, so draining a queue twice is safe — which is the whole reason a queue can exist.",
+    "authority": "`cloud` means the canonical record lives in the cloud tier and an edge write is a proposal replayed on reconnect. `edge` means the node that owns the record answers: reads come from the replica, and slots belong to the branch that took the booking.",
+    "conflictIsNotAnError": "A 409 is a decision for a person, never a failure to hide. The response carries both values and who wrote them, and the app routes it to the review queue rather than retrying in a loop.",
+    "errors": "Every failure is RFC 9457 `application/problem+json`. No endpoint returns a bare string or an HTML error page — an offline desk showing `500 Internal Server Error` is a support call.",
+    "audit": "Every write marked `audit: true` appends an audit entry in the same transaction as the write. The ledger is hash-chained (P0-208): each entry carries the hash of the previous one on its node’s chain, so an edit in the middle of it is detectable rather than merely discouraged. An offline write carries the node that performed it, so the ledger names the device as well as the person, and the chains are reconciled when the node drains.",
+    "time": "Every timestamp is an ISO 8601 instant with an offset. Duration fields hold a duration, never a formatted time — the screens format for Dhaka, the API does not."
+  }
+}

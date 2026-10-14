@@ -6,13 +6,21 @@
   "description": "DiziHospital platform API contract — OpenAPI 3.1 with the offline, authority, idempotency and conflict metadata the client is driven from (P0-207)",
   "files": [
     "openapi.json",
+    "dist",
     "README.md"
   ],
   "exports": {
+    "./client": "./dist/client.ts",
+    "./capabilities.json": "./dist/capabilities.json",
     "./openapi.json": "./openapi.json"
   },
   "scripts": {
-    "check": "node check.mjs",
-    "self-test": "node check.mjs --self-test"
+    "build": "node build.mjs",
+    "check": "node check.mjs && node build.mjs --check",
+    "self-test": "node check.mjs --self-test",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
   }
 }

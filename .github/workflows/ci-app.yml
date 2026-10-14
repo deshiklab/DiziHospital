@@ -42,12 +42,12 @@ jobs:
 
       # The contract gate has no dependencies either. It checks the API contract's shape and, more importantly,
       # that its conflict policies still agree with the ones apps/web/lib/sync.ts enforces; the self-test then
-      # mutates the contract 24 ways and fails if any mutation slips through, because a guardrail that cannot
+      # mutates the contract 33 ways and fails if any mutation slips through, because a guardrail that cannot
       # fail is not a guardrail.
       - name: The API contract conforms and agrees with the app
         run: npm run contract:check
 
-      - name: The contract guardrail catches its 24 mutations
+      - name: The contract guardrail catches its 33 mutations
         run: npm run contract:test
 
       # The generator has no dependencies, so no install step is needed for the gates below.
@@ -96,6 +96,12 @@ jobs:
 
       - name: Typecheck
         run: npm run typecheck --workspace @dizi/web
+
+      # P0-207's acceptance is that the generated client builds. It is generated from the contract by a
+      # dependency-free generator and committed, so compiling it here is what stops the contract and the client
+      # from drifting apart in a way the JSON checks cannot see.
+      - name: The generated API client typechecks
+        run: npm run typecheck --workspace @dizi/contracts
 
       - name: Build (default dist directory — no dev server is running here)
         run: npm run build --workspace @dizi/web

@@ -17,6 +17,7 @@
     "tokens:check": "npm run check --workspace @dizi/tokens",
     "clean-room": "node tools/ci/clean-room.mjs",
     "check:classes": "node tools/ci/display-order.mjs",
+    "contract:build": "npm run build --workspace @dizi/contracts",
     "contract:check": "npm run check --workspace @dizi/contracts",
     "contract:test": "npm run self-test --workspace @dizi/contracts",
     "verify": "npm run contract:check && npm run contract:test && npm run clean-room && npm run tokens:check && npm run check:classes",

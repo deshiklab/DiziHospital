@@ -2822,9 +2822,9 @@
       "client": "Shown to the desk with the reason and the original entry: retrying it automatically would only hide it."
     },
     "deferred": {
-      "status": "503, 504 or a timeout",
-      "meaning": "The cloud tier is not reachable.",
-      "client": "The operation keeps its place in the queue, and the queue keeps its order."
+      "status": "503, 504, any other 5xx, or a timeout",
+      "meaning": "The cloud tier is not reachable, or the server failed in a way that says nothing about the write. A bare 500 is the server’s problem rather than a verdict on the request.",
+      "client": "The operation keeps its place in the queue, and the queue keeps its order. Retrying is safe because every queued write carries an Idempotency-Key."
     }
   },
   "x-dizi-problem-types": {
