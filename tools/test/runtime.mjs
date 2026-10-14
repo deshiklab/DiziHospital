@@ -13,9 +13,19 @@
  *     someone's browser overlay. `copyText()` in `@dizi/ui` is built for exactly this and is expected to report
  *     failure rather than throw.
  *
- * Needs the dev server on :3000 and one dev-only package:
+ * Needs a server on `DIZI_BASE` (the dev server on :3000 by default) and one dev-only package:
  *
  *     npm i --no-save jsdom && npm run test:runtime
+ *
+ * Each route is waited on until the shell reports itself hydrated (`data-nav` on <html>, written by an effect and
+ * absent from the server's HTML), with `DIZI_READY_MS` as the ceiling — twenty seconds, because a cold `next dev`
+ * compiles a route on its first request and four at once can be slow. A route that reaches the ceiling is reported
+ * as a problem instead of as a dead button.
+ *
+ * Routes are checked a few at a time (`DIZI_CONCURRENCY`, four by default): each one is an independent page load
+ * in its own jsdom, and thirty of them one after another is fifteen minutes — fine on a workstation, too long for
+ * CI, where a job that overruns is killed mid-run and reported as a cancellation rather than as a failure. The
+ * output is still printed in route order, so a diff of two runs reads the same as before.
  *
  * jsdom has no layout or CSS engine, so nothing here is a visual check; that is `npm run test:shell` and, later,
  * the P0 browser checks.
@@ -130,10 +140,25 @@ async function check(route) {
     },
   });
 
-  await new Promise((r) => setTimeout(r, 1800));
-
   const doc = dom.window.document;
   const press = (el) => el.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true, cancelable: true }));
+
+  /* Wait for hydration, not for a stopwatch.
+   *
+   * The shell sets `data-nav` on <html> from an effect, and the server's HTML never carries it — so the attribute
+   * appearing is the app's own signal that the tree is hydrated and the handlers are attached, rather than a guess
+   * about how long that takes. A fixed sleep is what made this harness flaky against `next dev`, which compiles a
+   * route on its first request: four routes at once, and the check was pressing a button whose handler had not
+   * been attached yet. Against a prebuilt server it returns in well under a second. */
+  const readyMs = Number(process.env.DIZI_READY_MS ?? 20_000);
+  const readyStarted = Date.now();
+  while (!doc.documentElement.dataset.nav && Date.now() - readyStarted < readyMs) {
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  const readyWait = Date.now() - readyStarted;
+  if (!doc.documentElement.dataset.nav) {
+    routeProblems.push(`the shell never hydrated: data-nav did not appear within ${Math.round(readyMs / 1000)}s`);
+  }
 
   // A tree that hydrated has live handlers: press the one control every screen shares.
   const trigger = doc.getElementById('mobile-nav-trigger');
@@ -179,34 +204,78 @@ async function check(route) {
 
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors: [...errors, ...routeProblems], handlers, copy, drill };
+  return { errors: [...errors, ...routeProblems], handlers, copy, drill, readyWait };
 }
 
+const CONCURRENCY = Math.max(1, Number(process.env.DIZI_CONCURRENCY ?? 4));
+const startedAt = Date.now();
+
 let problems = 0;
-console.log(`\nruntime — ${ROUTES.length} routes against ${BASE}\n`);
-for (const route of ROUTES) {
+console.log(`\nruntime — ${ROUTES.length} routes against ${BASE} (${CONCURRENCY} at a time)\n`);
+
+/** Run `worker` over `items`, at most `CONCURRENCY` at a time, preserving the order of the results. */
+async function pool(items, worker) {
+  const results = new Array(items.length);
+  let next = 0;
+  const runners = Array.from({ length: Math.min(CONCURRENCY, items.length) }, async () => {
+    for (;;) {
+      const i = next;
+      next += 1;
+      if (i >= items.length) return;
+      try {
+        results[i] = { ok: true, value: await worker(items[i]) };
+      } catch (error) {
+        results[i] = { ok: false, error };
+      }
+    }
+  });
+  await Promise.all(runners);
+  return results;
+}
+
+/* Warm the routes before checking them.
+ *
+ * `next dev` compiles a route the first time it is asked for, and that compile is by far the slowest part of a
+ * cold run — `/help` alone took over two minutes under four concurrent page loads, all of it compilation. Warming
+ * with plain fetches moves that cost out of the hydrated pass, so what follows measures hydration and errors
+ * rather than the compiler, and a first run after a restart is not twenty minutes long. Against a prebuilt server
+ * this costs a few hundred milliseconds and stays silent. */
+const warmStarted = Date.now();
+await pool(ROUTES, async (route) => {
   try {
-    // eslint-disable-next-line no-await-in-loop
-    const { errors, handlers, copy, drill } = await check(route);
-    const bad = errors.length > 0 || handlers === 'DEAD';
-    console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${drill === 'n/a' ? '' : `  drill=${drill}`}`);
-    if (handlers === 'DEAD') {
-      console.log('      the shared control did not respond after hydration');
-      problems += 1;
-    }
-    for (const e of errors.slice(0, 6)) {
-      console.log(`      ${e}`);
-      problems += 1;
-    }
-    if (errors.length > 6) {
-      console.log(`      … ${errors.length - 6} more`);
-      problems += 1;
-    }
-  } catch (error) {
-    console.log(`  ✗ ${route.padEnd(22)} could not load: ${error.message}`);
+    await fetch(`${BASE}${route}`, { redirect: 'follow' });
+  } catch {
+    // A route that will not load at all is reported by the check itself, with the error the page load produced.
+  }
+});
+const warmMs = Date.now() - warmStarted;
+if (warmMs > 2000) console.log(`  warmed ${ROUTES.length} routes in ${(warmMs / 1000).toFixed(1)}s (the server compiles on first request)\n`);
+
+const outcomes = await pool(ROUTES, check);
+outcomes.forEach((outcome, i) => {
+  const route = ROUTES[i];
+  if (!outcome.ok) {
+    console.log(`  ✗ ${route.padEnd(22)} could not load: ${outcome.error.message}`);
+    problems += 1;
+    return;
+  }
+  const { errors, handlers, copy, drill, readyWait } = outcome.value;
+  const bad = errors.length > 0 || handlers === 'DEAD';
+  const slow = readyWait !== undefined && readyWait > 2000 ? `  ready=${(readyWait / 1000).toFixed(1)}s` : '';
+  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${drill === 'n/a' ? '' : `  drill=${drill}`}${slow}`);
+  if (handlers === 'DEAD') {
+    console.log('      the shared control did not respond after hydration');
     problems += 1;
   }
-}
+  for (const e of errors.slice(0, 6)) {
+    console.log(`      ${e}`);
+    problems += 1;
+  }
+  if (errors.length > 6) {
+    console.log(`      … ${errors.length - 6} more`);
+    problems += 1;
+  }
+});
 
 for (const u of unhandled) {
   console.log(`  ✗ unhandled rejection: ${u}`);
@@ -214,7 +283,11 @@ for (const u of unhandled) {
 }
 
 if (problems) {
-  console.log(`\n${problems} problem(s)\n`);
+  console.log(`\n${problems} problem(s) — ${ROUTES.length} routes in ${((Date.now() - startedAt) / 1000).toFixed(1)}s\n`);
   process.exit(1);
 }
-console.log('\nno console errors, no uncaught exceptions, no unhandled rejections\n');
+console.log(`\nno console errors, no uncaught exceptions, no unhandled rejections — ${ROUTES.length} routes in ${((Date.now() - startedAt) / 1000).toFixed(1)}s\n`);
+// Exit explicitly: jsdom keeps windows and timers alive after a check finishes, so the process would otherwise
+// print its verdict and then sit there until something outside killed it — which is what turned a fifty-second
+// run into a fifteen-minute timeout, and, in CI, into a cancelled job rather than a pass or a failure.
+process.exit(0);

@@ -117,11 +117,12 @@ Rules that keep the mirror *reference material* rather than product material:
 | `NEXT_DIST_DIR=.next-build npx next build apps/web` | the production build — the alternate dist directory keeps a running dev server intact |
 | `python3 tools/docs/check_links.py` | every relative link and image in `docs/` resolves |
 | `npm run test:shell` | the shell's navigation, driven for real: five width/pointer scenarios, the drawer opening *and* closing from the bar, the rail collapsing *and* expanding, and the built stylesheet carrying the mode rules |
-| `npm run test:runtime` | every route hydrates with no server/client mismatch and no console error, uncaught exception or unhandled rejection — with the clipboard deliberately rejecting, which is what an embedded frame does. On `/sync` it also presses *Run the drill* and asserts the engine reported zero lost writes (needs the dev server on :3000) |
+| `npm run test:runtime` | every route hydrates with no server/client mismatch and no console error, uncaught exception or unhandled rejection — with the clipboard deliberately rejecting, which is what an embedded frame does. On `/sync` it also presses *Run the drill* and asserts the engine reported zero lost writes. It reads `DIZI_BASE` (the dev server on :3000 by default), waits on the app's own hydration signal rather than on a stopwatch, and checks four routes at a time: 8 s against a production build, half a minute against a warm dev server |
 
-Both `test:` commands need `npm i --no-save jsdom esbuild`; they render the real components in jsdom, so they
-prove state, handlers and class names but nothing about pixels — jsdom has no layout engine. They are deliberately
-not part of `npm run verify`, because CI installs nothing today; wiring them in belongs with the P0 CI hardening.
+Both `test:` commands need `npm i --no-save jsdom esbuild` and accept `DIZI_BASE`; they render the real components
+in jsdom, so they prove state, handlers and class names but nothing about pixels — jsdom has no layout engine. They
+are deliberately not part of `npm run verify`, which stays dependency-free; they run as their own CI job, against
+the production build, so the artefact that ships is the artefact that is tested.
 The reports screen's as-of stamps are plain dates for the same reason: a wall clock read while rendering is one
 value on the server and another in the browser, and React throws the rendered tree away when the two disagree.
 

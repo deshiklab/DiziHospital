@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import {
   Button,
@@ -78,7 +78,13 @@ export default function DiagnosticsPage() {
   const [readBack, setReadBack] = useState(false);
 
   const qc = useMemo(() => generateQc(day), [day]);
-  const now = stamp();
+  /* The turnaround column is the only thing on this screen that depends on the time of day, and the clock is set
+   * from an effect rather than read while rendering. `/diagnostics` is prerendered at build time: a clock read
+   * during render is the build machine's minute in the HTML and the browser's minute on the first client render,
+   * and React throws the server tree away — error #418, a console error on a screen that looks correct. Until the
+   * effect has run (one frame), the column shows the due time, which comes from the order itself. */
+  const [now, setNow] = useState<string | null>(null);
+  useEffect(() => setNow(stamp()), []);
   const current = orders.find((o) => o.id === open?.id) ?? null;
 
   const patch = (id: string, updater: (o: DiagnosticOrder) => DiagnosticOrder) =>
@@ -147,6 +153,10 @@ export default function DiagnosticsPage() {
       header: 'Turnaround',
       hideBelow: 'md',
       render: (o) => {
+        if (!now) {
+          // Before the effect: the deadline itself, which is data, rather than a relative label that needs a clock.
+          return <span className="text-xs text-text-tertiary">{o.dueAt.slice(11, 16)}</span>;
+        }
         const tat = tatStatus(o, now);
         return (
           <span className={cx('text-xs', tat.tone === 'critical' ? 'text-safety-critical' : tat.tone === 'warning' ? 'text-safety-warning' : 'text-text-secondary')}>

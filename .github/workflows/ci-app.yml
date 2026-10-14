@@ -67,7 +67,9 @@ jobs:
   runtime:
     name: production build, thirty routes hydrated, shell driven
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # The harness checks thirty routes and each one is a page load; the pool keeps it to a few minutes, and this
+    # is the ceiling that keeps a slow runner from being killed mid-run.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
 
@@ -111,6 +113,7 @@ jobs:
         run: npm run test:runtime
         env:
           DIZI_BASE: http://127.0.0.1:3000
+          DIZI_CONCURRENCY: '4'
 
       - name: Server log
         if: failure()
