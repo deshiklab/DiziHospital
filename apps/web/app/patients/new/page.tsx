@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Button, FieldSection, SafetyBanner, SelectField, TextAreaField, TextField } from '@dizi/ui';
 import { useShell } from '@/lib/shell';
-import { t } from '@/lib/i18n';
+import { t } from '@/lib/nav';
 import { patients } from '@/lib/mock';
 
 /* Patient registration (legacy screen 001 — a 19-field modal).

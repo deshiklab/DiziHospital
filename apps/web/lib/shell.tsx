@@ -1,27 +1,32 @@
 'use client';
 
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { SyncState } from '@dizi/ui';
+import { usePersistentState } from '@dizi/ui';
 
 /* -----------------------------------------------------------------------------
- * Shell state: node, density, language and the simulated sync layer.
+ * Shell state: layout preferences (sidebar mode, zoom, text size), identity (role, language, density)
+ * and the simulated sync layer.
  *
- * The sync layer here is a stand-in for the real one (P0-210/P0-211): it exists so the shell can demonstrate
- * every state the plan requires (02 §11) — live, LAN-only, queued, syncing, conflict — without pretending the
- * sync engine is finished. It also carries the queued-write count, which is what makes the "Saved here" versus
- * "Saved" distinction real rather than cosmetic.
+ * The sync layer stands in for the real engine (P0-210/211) so every state the plan requires (02 §11) can be
+ * reviewed in the shell — including the "saved here" versus "saved" distinction, which is the whole reason the
+ * queued-write list exists.
  */
 
 export type Density = 'comfortable' | 'compact';
 export type Locale = 'en' | 'bn';
 export type Role = 'receptionist' | 'doctor' | 'pharmacist' | 'billing' | 'admin';
 export type SiteMode = 'edge-authoritative' | 'cloud-direct';
+export type SidebarMode = 'full' | 'half' | 'hidden';
 
 export interface QueuedWrite {
   id: string;
   label: string;
   at: string;
 }
+
+export const ZOOM_STEPS = [0.8, 0.9, 1, 1.1, 1.25, 1.5] as const;
+export const TEXT_STEPS = [0.875, 1, 1.125, 1.25] as const;
 
 interface ShellState {
   density: Density;
@@ -37,52 +42,116 @@ interface ShellState {
   queued: QueuedWrite[];
   queueWrite: (label: string) => void;
   flushQueue: () => void;
+  /** Sidebar: full (labels + icons), half (icon rail) or hidden. Persisted. */
+  sidebarMode: SidebarMode;
+  setSidebarMode: (m: SidebarMode) => void;
+  toggleSidebar: () => void;
+  /** Mobile drawer state (never remembered between sessions by design). */
+  mobileNavOpen: boolean;
+  setMobileNavOpen: (open: boolean) => void;
+  zoom: number;
+  setZoom: (z: number) => void;
+  textScale: number;
+  setTextScale: (s: number) => void;
+  fullscreen: boolean;
+  toggleFullscreen: () => void;
+  version: string;
+  buildStamp: string;
 }
 
 const ShellContext = createContext<ShellState | null>(null);
 
-const STORAGE_KEYS = { density: 'dizi.density', locale: 'dizi.locale', role: 'dizi.role' };
-
-function readStored<T extends string>(key: string, fallback: T): T {
-  if (typeof window === 'undefined') return fallback;
-  return (window.localStorage.getItem(key) as T) || fallback;
-}
+export const APP_VERSION = '0.1.0';
+export const APP_PHASE = 'Phase 0 · shell';
 
 export function ShellProvider({ children }: { children: React.ReactNode }) {
-  const [density, setDensityState] = useState<Density>(() => readStored(STORAGE_KEYS.density, 'comfortable'));
-  const [locale, setLocaleState] = useState<Locale>(() => readStored(STORAGE_KEYS.locale, 'en'));
-  const [role, setRoleState] = useState<Role>(() => readStored(STORAGE_KEYS.role, 'receptionist'));
+  const [density, setDensityState] = usePersistentState<Density>('dizi.density', 'comfortable');
+  const [locale, setLocaleState] = usePersistentState<Locale>('dizi.locale', 'en');
+  const [role, setRoleState] = usePersistentState<Role>('dizi.role', 'receptionist');
+  const [sidebarMode, setSidebarModeState] = usePersistentState<SidebarMode>('dizi.sidebar', 'full');
+  const [zoom, setZoomState] = usePersistentState<number>('dizi.zoom', 1);
+  const [textScale, setTextScaleState] = usePersistentState<number>('dizi.textScale', 1);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [fullscreen, setFullscreen] = useState(false);
   const [sync, setSync] = useState<SyncState>('live');
   const [siteMode, setSiteMode] = useState<SiteMode>('edge-authoritative');
   const [queued, setQueued] = useState<QueuedWrite[]>([]);
+  const [buildStamp] = useState(() => new Date().toISOString().slice(0, 10));
 
-  const applyDensity = useCallback((d: Density) => {
-    setDensityState(d);
-    window.localStorage.setItem(STORAGE_KEYS.density, d);
-    document.documentElement.dataset.density = d;
+  /* ---- side effects that touch the document -------------------------------------------------- */
+  const applyDensity = useCallback(
+    (d: Density) => {
+      setDensityState(d);
+      document.documentElement.dataset.density = d;
+    },
+    [setDensityState],
+  );
+
+  const applyLocale = useCallback(
+    (l: Locale) => {
+      setLocaleState(l);
+      document.documentElement.lang = l;
+    },
+    [setLocaleState],
+  );
+
+  const applySidebar = useCallback(
+    (m: SidebarMode) => {
+      setSidebarModeState(m);
+      document.documentElement.dataset.sidebar = m;
+    },
+    [setSidebarModeState],
+  );
+
+  /** Text size is a separate control from zoom: it changes type only, not the layout grid (02 §10). */
+  const applyTextScale = useCallback(
+    (scale: number) => {
+      setTextScaleState(scale);
+      document.documentElement.style.fontSize = `${14 * scale}px`;
+    },
+    [setTextScaleState],
+  );
+
+  const setZoom = useCallback(
+    (z: number) => {
+      setZoomState(z);
+      document.documentElement.style.setProperty('--dizi-zoom', String(z));
+    },
+    [setZoomState],
+  );
+
+  useEffect(() => {
+    document.documentElement.dataset.density = density;
+    document.documentElement.dataset.sidebar = sidebarMode;
+    document.documentElement.lang = locale;
+    document.documentElement.style.fontSize = `${14 * textScale}px`;
+    document.documentElement.style.setProperty('--dizi-zoom', String(zoom));
+  }, [density, sidebarMode, locale, textScale, zoom]);
+
+  const toggleSidebar = useCallback(() => {
+    applySidebar(sidebarMode === 'full' ? 'half' : 'full');
+  }, [sidebarMode, applySidebar]);
+
+  const toggleFullscreen = useCallback(() => {
+    if (typeof document === 'undefined') return;
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.().then(() => setFullscreen(true)).catch(() => setFullscreen(false));
+    } else {
+      document.exitFullscreen?.().then(() => setFullscreen(false)).catch(() => setFullscreen(false));
+    }
   }, []);
 
-  const applyLocale = useCallback((l: Locale) => {
-    setLocaleState(l);
-    window.localStorage.setItem(STORAGE_KEYS.locale, l);
-    document.documentElement.lang = l;
+  useEffect(() => {
+    const onChange = () => setFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
   }, []);
 
-  const applyRole = useCallback((r: Role) => {
-    setRoleState(r);
-    window.localStorage.setItem(STORAGE_KEYS.role, r);
-  }, []);
-
-  /** Queues a write locally — the "Saved here, will sync" path. */
   const queueWrite = useCallback((label: string) => {
-    setQueued((q) => [
-      ...q,
-      { id: `q-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, label, at: new Date().toLocaleTimeString() },
-    ]);
+    setQueued((q) => [...q, { id: `q-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, label, at: new Date().toLocaleTimeString() }]);
     setSync('queued');
   }, []);
 
-  /** Drains the queue as the real engine would after the connection returns. */
   const flushQueue = useCallback(() => {
     setQueued([]);
     setSync('live');
@@ -95,7 +164,7 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
       locale,
       setLocale: applyLocale,
       role,
-      setRole: applyRole,
+      setRole: setRoleState,
       sync,
       setSync,
       siteMode,
@@ -103,8 +172,25 @@ export function ShellProvider({ children }: { children: React.ReactNode }) {
       queued,
       queueWrite,
       flushQueue,
+      sidebarMode,
+      setSidebarMode: applySidebar,
+      toggleSidebar,
+      mobileNavOpen,
+      setMobileNavOpen,
+      zoom,
+      setZoom,
+      textScale,
+      setTextScale: applyTextScale,
+      fullscreen,
+      toggleFullscreen,
+      version: APP_VERSION,
+      buildStamp,
     }),
-    [density, locale, role, sync, siteMode, queued, applyDensity, applyLocale, applyRole, queueWrite, flushQueue],
+    [
+      density, applyDensity, locale, applyLocale, role, setRoleState, sync, siteMode, queued, queueWrite, flushQueue,
+      sidebarMode, applySidebar, toggleSidebar, mobileNavOpen, zoom, setZoom, textScale, applyTextScale, fullscreen,
+      toggleFullscreen, buildStamp,
+    ],
   );
 
   return <ShellContext.Provider value={value}>{children}</ShellContext.Provider>;

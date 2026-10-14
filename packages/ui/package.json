@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "DiziHospital design system primitives (plan 02 §5)",
+  "description": "DiziHospital design system primitives (plan 02 \u00a75)",
   "exports": {
     ".": "./src/index.ts"
   },
@@ -12,6 +12,7 @@
     "react-dom": ">=19"
   },
   "dependencies": {
-    "@dizi/tokens": "*"
+    "@dizi/tokens": "*",
+    "lucide-react": "^1.56.0"
   }
 }

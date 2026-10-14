@@ -12,6 +12,10 @@ const nextConfig = {
   // Clinical data never leaves the infrastructure: no telemetry, no third-party fonts, no remote images.
   ...(process.env.DIZI_TELEMETRY === 'off' ? {} : {}),
   eslint: { ignoreDuringBuilds: true },
+
+  // `next build` and `next dev` must not share a directory: running a build while the dev server is up
+  // invalidates its module map and every route 500s. CI still uses the default path.
+  distDir: process.env.NEXT_DIST_DIR ?? '.next',
 };
 
 export default nextConfig;

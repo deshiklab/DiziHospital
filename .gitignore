@@ -11,3 +11,5 @@ apps/*/dist/
 services/*/dist/
 .env
 .env.local
+# production build output when built beside a running dev server
+.next-build/

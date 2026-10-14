@@ -14,6 +14,7 @@
 :root {
   --dizi-density-row-height: var(--dizi-density-comfortable-row-height);
   --dizi-density-field-height: var(--dizi-density-comfortable-field-height);
+  --dizi-zoom: 1;
 }
 html[data-density='compact'] {
   --dizi-density-row-height: var(--dizi-density-compact-row-height);
@@ -22,7 +23,8 @@ html[data-density='compact'] {
 
 html {
   font-family: var(--dizi-typography-family-ui);
-  font-size: var(--dizi-typography-size-base);
+  /* The base size is set from the shell's text-size control (default 14px), so type scales independently of zoom. */
+  font-size: 14px;
   line-height: var(--dizi-typography-line-height-normal);
   background: var(--dizi-color-surface-canvas);
   color: var(--dizi-color-text-primary);
@@ -44,11 +46,83 @@ html[lang='bn'] {
   outline-offset: 2px;
 }
 
+/* Keyboard users need to see where they are inside a table row. */
+tbody tr:focus-within {
+  outline: 2px solid var(--dizi-color-brand-300);
+  outline-offset: -2px;
+}
+
+/* The grid scrolls itself; the page still needs a comfortable scrollbar on touch devices. */
+@media (pointer: coarse) {
+  * {
+    scrollbar-width: thin;
+  }
+}
+
+/* Touch devices get no hover-only affordances: the pencil in editable cells is always visible there. */
+@media (hover: none) {
+  .group-hover\:opacity-100 {
+    opacity: 1 !important;
+  }
+}
+
+/* ------------------------------------------------------------------------------ print
+ * Printing must work with the uplink down, so nothing here depends on the network. The shell chrome is
+ * hidden, the working area is expanded, and tables print with their borders.
+ */
 @media print {
+  header,
+  footer,
+  aside,
+  nav,
   .no-print {
     display: none !important;
   }
-  /* Printing must work with the uplink down (plan 02 §11), so nothing depends on the network here. */
+
+  body,
+  html {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Zoom is a screen preference; printing always uses 100 %. */
+  #content {
+    zoom: 1 !important;
+    padding: 0 !important;
+  }
+
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+
+  th,
+  td {
+    border: 1px solid #999 !important;
+    padding: 3px 5px !important;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr {
+    break-inside: avoid;
+  }
+
+  /* Tables print in full rather than scrolled: the fixed height only applies to the screen. */
+  .overflow-auto {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
   a[href]::after {
     content: '';
   }
