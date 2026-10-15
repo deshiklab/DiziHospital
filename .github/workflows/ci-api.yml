@@ -1,0 +1,148 @@
+name: ci-api
+
+# The API service's own job, and the only place in this repository where PHP and Composer can run.
+#
+# That is not an oversight in the development environment; it is the environment. Packagist is reachable from GitHub
+# Actions and nowhere else, so the service is written against PHP 8.4 and proved here rather than on somebody's
+# laptop. `services/api/README.md` states the same limitation, and tools/ci/php-lint.mjs is what keeps a syntax error
+# from costing a CI round trip: it parses every file with PHP compiled to WebAssembly.
+on:
+  push:
+    branches:
+      - main
+      - 'arena/**'
+    paths:
+      - 'services/**'
+      - 'packages/contracts/**'
+      - 'tools/ci/php-lint.mjs'
+      - '.github/workflows/ci-api.yml'
+  pull_request:
+    paths:
+      - 'services/**'
+      - 'packages/contracts/**'
+      - 'tools/ci/php-lint.mjs'
+      - '.github/workflows/ci-api.yml'
+
+concurrency:
+  group: ci-api-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  api:
+    name: php 8.4, style, contract and rules
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: services/api
+    steps:
+      - uses: actions/checkout@v4
+
+      # php 8.4 because that is what composer.json pins, and the extensions are the ones this service actually
+      # uses: mbstring for the Bangla name comparison and the length checks, the SQLite pair for the test suite,
+      # and the Postgres pair because the production database is Postgres and a driver that is missing from the
+      # image must be a setup failure here rather than a 500 on a ward.
+      - name: PHP 8.4 with the extensions this service uses
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, pdo_sqlite, sqlite3, pgsql, pdo_pgsql, openssl, tokenizer, dom, xml, curl
+          tools: composer:v2
+          coverage: none
+
+      - name: Install the service's dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      # The lock file cannot be generated outside Actions — composer needs packagist, which only this runner can
+      # reach — so the first install resolves it here. Uploading it is how it gets committed once and reused, so
+      # the second run of this job installs exactly what the first proved.
+      - name: Keep the resolved versions so they can be committed
+        if: hashFiles('services/api/composer.lock') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: composer-lock
+          path: services/api/composer.lock
+          retention-days: 30
+
+      # Every file, one at a time, before anything heavier: a parse error reported by name is a minute; the same
+      # parse error found by PHPUnit is a stack trace about an autoloader.
+      - name: Every PHP file parses
+        run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
+
+      - name: Pint — the style rules this repository pins
+        run: vendor/bin/pint --test
+
+      # The suite runs against SQLite in memory, which needs no service container, and the assertions the product
+      # cares about are about rules rather than about the engine: which numbers a node may mint, what a stale version
+      # does, what a replayed key does, and whether an altered ledger entry can be found. The Postgres-specific half —
+      # the module schemas and the row locks — is the second job below, because SQLite cannot prove it.
+      - name: The contract, the rules and the ledger
+        run: vendor/bin/phpunit --display-warnings
+
+      - name: Server log on failure
+        if: failure()
+        run: ls -la storage/logs && tail -100 storage/logs/*.log || true
+
+  # `ModuleSchema` creates one Postgres schema per module, so on Postgres the tests' `registration_patients` is
+  # `registration.patients`. That difference is exactly the part of the production DDL SQLite cannot check, and it is
+  # the part that would fail on the first deployment of the first module. This job migrates a real Postgres 18 from
+  # empty and then from scratch again.
+  schema:
+    name: the module schemas migrate on postgres
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: services/api
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: dizihospital
+          POSTGRES_USER: dizi
+          POSTGRES_PASSWORD: secret
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DB_CONNECTION: pgsql
+      DB_HOST: 127.0.0.1
+      DB_PORT: '5432'
+      DB_DATABASE: dizihospital
+      DB_USERNAME: dizi
+      DB_PASSWORD: secret
+      NODE_SECRET: ci-node-secret
+      AUTH_PREVIEW_SECRET: ci-auth-secret
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: PHP 8.4 with the extensions this service uses
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, pgsql, pdo_pgsql, pdo_sqlite, sqlite3, openssl, tokenizer, dom, xml, curl
+          tools: composer:v2
+          coverage: none
+
+      - name: Install the service's dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Migrate an empty Postgres
+        run: php artisan migrate --force
+
+      - name: Every implemented module has its schema and its tables
+        run: php artisan dizi:modules --check
+
+      # `migrate:refresh`, not `migrate:fresh`: fresh wipes the schema Laravel knows about (public) and would leave
+      # `registration`, `sync` and `audit` standing, so the second migrate would fail on a table that already exists.
+      # Refresh walks every migration's `down()`, which drops the module schemas — so this step proves the rollback
+      # path as well as the migrate path, and the README says the same thing for anybody doing it by hand.
+      - name: Migrate back down and up again
+        run: php artisan migrate:refresh --force
+
+      - name: ... and the modules are there after the round trip
+        run: php artisan dizi:modules --check

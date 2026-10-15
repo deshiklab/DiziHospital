@@ -1,0 +1,170 @@
+# services/api — the cloud tier
+
+The API the built screens write through, and the tier the edge nodes drain into. It is a **Laravel 13 application on
+PHP 8.4** serving the operations `packages/contracts/openapi.json` declares — the same contract the generated client
+in `packages/contracts/dist/client.ts` is built from, and the same one `apps/web` queues its writes against.
+
+This is the P0-207 / P0-301 slice: the skeleton that proves the shape. It is a service that answers, refuses and
+records; it is not yet a service that runs a hospital.
+
+## What it serves
+
+Seven of the contract's ninety-three operations, one route each, at the contract's own paths (no `/api` segment, no
+prettier alias):
+
+| Operation | Route | Middleware |
+|---|---|---|
+| `health` | `GET /health` | — (deliberately unauthenticated: it is the call that decides whether the screen says "connected") |
+| `listPatients` | `GET /patients` | `dizi.auth:read` |
+| `createPatient` | `POST /patients` | `dizi.auth:write` + `dizi.idempotency` |
+| `getPatient` | `GET /patients/{mrn}` | `dizi.auth:read` |
+| `updatePatient` | `PATCH /patients/{mrn}` | `dizi.auth:write` + `dizi.idempotency` |
+| `listPatientDuplicates` | `GET /patients/{mrn}/duplicates` | `dizi.auth:read` |
+| `listNumberBlocks` | `GET /node/number-blocks` | `dizi.auth:write` |
+| `appendAuditEntry` | `POST /audit` | `dizi.auth:write` + `dizi.idempotency` |
+
+`tests/Contract/ContractTest.php` checks that list both ways round: every registered route is an operation the contract
+declares, at the contract's path and method, with the contract's own placeholder names — and every operation this
+service claims is a route that exists.
+
+## The four rules this slice is built around
+
+**A number is drawn, not invented.** `POST /patients` mints an MRN from a range the cloud reserved to *this node*
+(`GET /node/number-blocks`, which issues the range on the spot because a node must be able to come online in the
+morning and then work with the uplink down). A number a client supplies is accepted only if the cloud can find the
+range it belongs to. A node with nothing left gets `409 dizi.number-block-exhausted` — a made-up MRN is a number
+another branch may also make up, and two patients sharing one is found months later on a results screen.
+
+**Duplicates are advice with evidence, never a silent decision.** The rule set is *data*: weights, the veto and the two
+thresholds are read out of the contract's `x-dizi-duplicate-rules`, which is the same table
+`apps/web/lib/duplicate-rules.ts` reads through the generated client, so a branch that tunes a weight tunes it for the
+desk form and for the API at once. A match at or above `block` is `409 dizi.duplicate-patient` carrying the candidates
+and which rules matched; the desk may register anyway with `duplicateAcknowledged: true`, and who dismissed what is
+written on the record. A rule the service does not know how to compute is a `503`, not a rule quietly skipped.
+
+**A conflict is offered, not merged.** `PATCH /patients/{mrn}` carries the `version` the desk read and a required
+`reason`. Different fields merge automatically; the same field is offered back with both values, who set the other one
+and when (`409 dizi.stale-version`, `conflict.fields[].yours`/`theirs`/`theirsActor`/`theirsAt`) — and nothing is
+written, including the fields that were free, because a refusal that had already applied half a correction makes the
+desk's next click a decision about something they cannot see.
+
+**A queued write is applied once.** `Idempotency-Key` (8–128 characters, `nodeId:seq` or a UUID) is the primary key of
+`sync.operations`; a replay returns the first response with `X-Dizi-Replay: true`, the same key with a *different* body
+is refused rather than answered with the older response, and the key's uniqueness is what settles two retries arriving
+at once. Only 2xx responses are recorded, so a 500 stays retryable.
+
+Every write also appends to the audit ledger: one row per action, hash-chained per node, `prevHash` → `hash`, and
+`HashChainLedger::verify()` recomputes the chain rather than trusting it — an altered row and a deleted row are both
+found, which is what `tests/Feature/AuditLedgerTest.php` proves by tampering with the table directly.
+
+## The modules and their seams
+
+Ten modules, one Postgres schema each, named in `App\Modules\Modules` — the same ten names the contract's tags and
+`apps/web/lib/sync.ts` use. A module reaches another only through a named seam, and the seams are bound in
+`app/Providers/ModuleServiceProvider.php`:
+
+| Seam | Implementation | State |
+|---|---|---|
+| `Sync\NodePolicy` | `app/Modules/Sync/ReservedBlocks.php` | built — number ranges, leases derived with HKDF over the node's secret |
+| `Registration\DuplicateRules` | `app/Modules/Registration/ContractDuplicateRules.php` | built — read from the contract, cached per process |
+| `Audit\Ledger` | `app/Modules/Audit/HashChainLedger.php` | built — append-only, hash-chained per node |
+| **`Billing\Ledger`** | **`app/Modules/Billing/Ledger.php`** | **not built** — the billing module owes it, and this slice serves no money |
+
+The seam a slice does not build is named in this table on purpose: `ContractTest` fails if a pending seam stops being
+mentioned here, so the gap cannot quietly become a memory.
+
+## Running it
+
+```bash
+cd services/api
+composer install
+cp .env.example .env && php artisan key:generate
+php artisan migrate          # creates the schemas, then the tables
+php artisan dizi:modules     # what this service is made of, and whether it is in the database
+php artisan serve            # http://127.0.0.1:8000
+```
+
+`php artisan dizi:modules --check` exits non-zero when a module this service claims to implement has no schema or no
+tables — the state a half-run deployment is in, and the state in which one endpoint answers 500s while the next
+answers 200s.
+
+**`migrate:fresh` is not the way to start over here.** Fresh wipes the schema Laravel knows about — `public` — and
+leaves `registration`, `sync` and `audit` standing, so the next `migrate` fails on tables that already exist. Use
+`php artisan migrate:refresh` (which walks each migration's `down()`, and those drop the schemas) or drop the schemas
+by hand. Each module's migration is what creates its schema, so nothing else has to know where they live.
+
+### Configuration
+
+`.env.example` names every variable; the ones worth knowing about:
+
+* `NODE_SECRET` — the node's own secret, the HKDF key behind the leases on the number blocks reserved to it. Per node,
+  never shared between branches: two branches with one secret is one branch that can mint the other's MRNs.
+* `DIZI_NODE_ID` / `DIZI_BRANCH` — the default identity of this deployment. Writes are attributed to the *token's*
+  node, not to these, because one cloud tier serves every branch.
+* `AUTH_PREVIEW_SECRET` + `DIZI_AUTH_DRIVER` — see the honest gap below.
+* `DIZI_CONTRACT_PATH` — where `openapi.json` is. The duplicate rules are read from it at runtime, and a missing or
+  malformed contract is a `503` rather than a built-in default: the register must not admit patients against rules
+  nobody configured.
+* `CACHE_STORE=array` — the rate limiter is the only thing that caches, and this service ships no cache table, so the
+  600-per-minute `api` limit is per worker. A shared store is a deployment decision that arrives with the load
+  balancer.
+
+## The honest gaps in this slice
+
+* **Keycloak is not wired.** `App\Modules\Identity\TokenVerifier` names ticket **#24** as the destination and ships a
+  `preview` driver in the meantime: `<base64url(payload)>.<base64url(HMAC-SHA256)>` over `{sub, name, role, branch,
+  node, exp}`, verified with `hash_equals` and a real expiry. It is not a bypass — the middleware, the role table and
+  every role test exercise the same path #24 plugs into — but it does not federate, refresh, or verify an RS256
+  signature against a JWKS, and the `keycloak` driver refuses with a `503` that says so rather than pretending.
+* **The sync change feed is not here.** P0-210 (cursors, batch signatures, the drain protocol) and P0-311 (nightly
+  reconciliation) are the next slices. What exists is the part a node cannot start without: the reserved ranges, the
+  idempotency table, and the ledger the reconciliation will walk.
+* **The suite runs on SQLite.** The module schemas are Postgres-only, so `App\Support\ModuleSchema` spells them as
+  prefixes on SQLite (`registration_patients`) and the tests keep working without a database container. The
+  Postgres-specific half — schema creation and grants — is proved by the `schema` job in
+  [`.github/workflows/ci-api.yml`](../../.github/workflows/ci-api.yml), which migrates a real Postgres 18, checks the
+  modules, then walks every migration back down and up again. Row locks and partial-index behaviour are not covered by
+  either.
+* **Every test uses the file's own node.** Nothing here proves two nodes draining the same MRN range, or two nodes
+  correcting the same patient over the wire; what is proved is what one node does when it is told about it.
+* **No Octane, Horizon, Reverb or Pulse**, by decision rather than omission (P0-301): the service is a queue-driven
+  worker later, and the sync engine's own protocol comes first.
+
+## Working on it in this repository
+
+**PHP and Composer cannot be run from this repository's development environment.** Packagist is reachable from GitHub
+Actions and nowhere else, so `composer install` happens in CI and the limitation is a fact about the environment
+rather than a preference. What that means in practice:
+
+```bash
+npm run api:lint      # parses every file in services/api with PHP compiled to WebAssembly (needs `npm i --no-save php-wasm`)
+npm run api:style     # the rules pint.json pins, checked without PHP (no dependencies; runs in the ci-app job)
+```
+
+`tools/ci/php-lint.mjs` is a syntax gate: it catches a typo in a second instead of a CI round trip. It loads no
+framework and touches no database, so **types, behaviour and the contract are proved by the `ci-api` job** — PHP 8.4
+via `shivammathur/setup-php`, `php -l` over every file, `vendor/bin/pint --test` and `vendor/bin/phpunit`.
+
+`pint.json` pins the rules rather than taking a whole preset: a style gate that reformats unrelated files when Pint
+upgrades is a surprise rather than a gate, and the pinned list is small enough to read. Widening it is a deliberate
+change, and the local half of it — unused imports, import order, quoting, `!` spacing, the `declare` prologue, file
+endings — is checked by [`tools/ci/php-style.mjs`](../../tools/ci/php-style.mjs), which needs no dependencies and runs
+in the `ci-app` job on every pull request as well as here. The rules that need a real parser are left to Pint rather
+than approximated, because a second implementation that disagrees with Pint is worse than no check at all.
+
+Because no lock file can be generated outside Actions, the `ci-api` job uploads the `composer.lock` it resolves as an
+artifact: the first run of that job is what pins the versions, and committing that file is the follow-up.
+
+## Layout
+
+```
+app/Console/Commands/ModulesCommand.php   php artisan dizi:modules
+app/Exceptions/ProblemRenderer.php        every failure as RFC 9457 application/problem+json
+app/Http/Controllers/                     one class per contract resource; no rules live here
+app/Http/Middleware/                      trace id, token + role, idempotency key
+app/Modules/Modules.php                   the ten modules, their schemas, their entities, their seams
+app/Modules/{Identity,Sync,Registration,Audit}/   what this slice builds
+app/Support/                              ApiTime, Trace, ProblemException, ModuleSchema
+database/migrations/                      one migration per module: the schema, then its tables
+tests/{Unit,Feature,Contract}/            the rules, the operations, and the agreement with the contract
+```

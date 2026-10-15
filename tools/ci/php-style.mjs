@@ -1,0 +1,157 @@
+#!/usr/bin/env node
+/**
+ * The PHP style rules this repository pins, checked without PHP.
+ *
+ * `pint.json` in `services/api` is the authority, and `ci-api` runs the real thing: `vendor/bin/pint --test` on PHP
+ * 8.4. This tool exists because that job only runs when `services/**` changes, and because the development
+ * environment has no PHP at all — so the rules that can be checked by reading a file are checked here, on every pull
+ * request, in a second and with no dependencies.
+ *
+ * It checks exactly the rules `pint.json` pins, no more: unused imports, import order, quoting, `!` spacing, the
+ * `declare(strict_types=1)` prologue, comment and brace conventions, and the whitespace/encoding rules. A rule that
+ * needs a real parser — anything about types, docblocks or trailing commas in calls — is deliberately left to Pint
+ * rather than approximated here, because an approximation that disagrees with Pint is worse than no check at all.
+ *
+ * Exits non-zero and prints file:line for each finding, so it can gate a build.
+ */
+import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { join, relative, resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const here = dirname(fileURLToPath(import.meta.url));
+const root = resolve(here, '../..');
+const target = process.argv[2] ?? join(root, 'services/api');
+
+/** Every `.php` file under a directory, skipping what a checkout never tracks. */
+function phpFiles(dir) {
+  const skip = new Set(['vendor', 'node_modules', '.git']);
+  const out = [];
+  const walk = (path) => {
+    for (const entry of readdirSync(path)) {
+      const full = join(path, entry);
+      if (skip.has(entry)) continue;
+      if (statSync(full).isDirectory()) walk(full);
+      else if (entry.endsWith('.php')) out.push(full);
+    }
+  };
+  walk(dir);
+  return out.sort();
+}
+
+/**
+ * The lines of a file, each with a flag saying whether it is inside a comment.
+ *
+ * Comments matter here: prose may quote things (`the sentence says "connected"`), and a rule about string literals
+ * must not fire on it. Tracking block comments is enough — this is not a tokenizer and does not pretend to be.
+ */
+function annotatedLines(text) {
+  const out = [];
+  let inBlock = false;
+  text.split('\n').forEach((line, index) => {
+    const stripped = line.trim();
+    if (inBlock) {
+      out.push({ number: index + 1, line, comment: true });
+      if (stripped.includes('*/')) inBlock = false;
+      return;
+    }
+    if (stripped.startsWith('/*')) {
+      out.push({ number: index + 1, line, comment: true });
+      if (!stripped.slice(2).includes('*/')) inBlock = true;
+      return;
+    }
+    out.push({ number: index + 1, line, comment: stripped.startsWith('*') || stripped.startsWith('//') || stripped.startsWith('#') });
+  });
+  return out;
+}
+
+const findings = [];
+const files = phpFiles(target);
+
+for (const file of files) {
+  const rel = relative(root, file);
+  const text = readFileSync(file, 'utf8');
+  const lines = text.split('\n');
+  const annotated = annotatedLines(text);
+
+  const report = (line, rule, detail) => findings.push({ rel, line, rule, detail });
+  const rule = (name, detail, predicate) => {
+    for (const { number, line, comment } of annotated) {
+      if (!comment && predicate(line, number)) report(number, name, detail(line));
+    }
+  };
+
+  // declare_strict_types — the prologue, after at most a file docblock.
+  if (!text.slice(0, 4000).includes('declare(strict_types=1);')) {
+    report(1, 'declare_strict_types', 'missing declare(strict_types=1)');
+  }
+
+  // single_blank_line_at_eof, no_trailing_whitespace, no_whitespace_in_blank_line, indentation_type, line_ending.
+  if (!text.endsWith('\n')) report(lines.length, 'single_blank_line_at_eof', 'no newline at end of file');
+  if (text.endsWith('\n\n')) report(lines.length, 'single_blank_line_at_eof', 'blank line(s) at end of file');
+  if (text.includes('\r')) report(1, 'line_ending', 'CRLF line ending');
+  rule('indentation_type', () => 'tab character', (line) => line.includes('\t'));
+  rule('no_trailing_whitespace', (line) => `trailing whitespace after ${JSON.stringify(line.trim().slice(-30))}`, (line) => line !== line.replace(/\s+$/, ''));
+
+  // no_closing_tag, full_opening_tag.
+  if (/^[ \t]*\?>/m.test(text)) report(1, 'no_closing_tag', 'a PHP closing tag');
+  if (!text.startsWith('<?php')) report(1, 'full_opening_tag', 'does not open with <?php');
+
+  // blank_line_after_namespace.
+  annotated.forEach(({ number, line, comment }, index) => {
+    if (comment) return;
+    if (!/^namespace\s+[^;]+;$/.test(line.trim())) return;
+    const next = lines[index + 1];
+    if (next === undefined || next.trim() !== '') report(number, 'blank_line_after_namespace', 'no blank line after the namespace');
+    else if (lines[index + 2] !== undefined && lines[index + 2].trim() === '') report(number, 'blank_line_after_namespace', 'more than one blank line after the namespace');
+  });
+
+  // not_operator_with_successor_space, single_quote, braces.
+  rule('not_operator_with_successor_space', (line) => line.trim().slice(0, 70), (line) => /!(?=[A-Za-z_$([\]]|\\)/.test(line.replace(/!=/g, ' ')));
+  rule('single_quote', (line) => `double-quoted string with nothing to interpolate: ${line.trim().slice(0, 60)}`, (line) => {
+    for (const match of line.matchAll(/"((?:[^"\\]|\\.)*)"/g)) {
+      const body = match[1];
+      // A `$` or an escape means the double quote is doing work; an inner single quote means converting would need one.
+      if (!body.includes('$') && !body.includes('\\') && !body.includes("'")) return true;
+    }
+    return false;
+  });
+  rule('braces', (line) => line.trim().slice(0, 70), (line) => line.trim() === 'else {' || /^else\s+if\b/.test(line.trim()));
+
+  // no_unused_imports, ordered_imports — top-level imports only: a `use Trait;` inside a class body is not an import.
+  const uses = [];
+  for (const { number, line, comment } of annotated) {
+    if (comment || /^[ \t]/.test(line)) continue;
+    if (/^(final\s+|abstract\s+)?(class|trait|interface|enum)\s/.test(line)) break;
+    const match = /^use\s+([^;]+);/.exec(line.trim());
+    if (match && !match[1].includes('(')) uses.push({ number, target: match[1] });
+  }
+  for (const { number, target: importTarget } of uses) {
+    const name = importTarget.split(' as ').pop().trim().split('\\').pop();
+    const body = lines.filter((_, i) => i + 1 !== number).join('\n');
+    if (!new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(body)) {
+      report(number, 'no_unused_imports', name);
+    }
+  }
+  const order = uses.map((u) => u.target.toLowerCase());
+  const sorted = [...order].sort();
+  if (order.length > 1 && order.join('\u0000') !== sorted.join('\u0000')) {
+    report(uses[0].number, 'ordered_imports', uses.map((u) => u.target.split('\\').pop()).join(' -> '));
+  }
+}
+
+if (findings.length) {
+  const byRule = new Map();
+  for (const finding of findings) {
+    if (!byRule.has(finding.rule)) byRule.set(finding.rule, []);
+    byRule.get(finding.rule).push(finding);
+  }
+  for (const [rule, list] of [...byRule].sort()) {
+    console.error(`${rule} (${list.length})`);
+    for (const { rel, line, detail } of list.slice(0, 15)) console.error(`  ${rel}:${line} ${detail}`);
+  }
+  console.error(`\nPHP STYLE FAILED: ${findings.length} finding(s) in ${files.length} file(s).`);
+  console.error('The rules are pinned in services/api/pint.json, where the real Pint run reads them.');
+  process.exit(1);
+}
+
+console.log(`php style passed (${files.length} file(s) checked against the rules pinned in services/api/pint.json)`);

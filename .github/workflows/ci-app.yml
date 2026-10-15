@@ -62,6 +62,12 @@ jobs:
       - name: No class list carries two base display utilities
         run: npm run check:classes
 
+      # The API service's PHP style, checked without PHP. The real gate is `vendor/bin/pint --test` in ci-api, which
+      # only runs when services/ changes; this one runs on every pull request and checks the same pinned rules, so a
+      # stray unused import in a service file is a second rather than a job that did not trigger.
+      - name: The API service's PHP follows the pinned rules
+        run: npm run api:style
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'

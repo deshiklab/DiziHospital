@@ -1,0 +1,19 @@
+{
+    "rules": {
+        "declare_strict_types": true,
+        "encoding": true,
+        "full_opening_tag": true,
+        "no_closing_tag": true,
+        "line_ending": true,
+        "indentation_type": true,
+        "no_trailing_whitespace": true,
+        "no_whitespace_in_blank_line": true,
+        "single_blank_line_at_eof": true,
+        "blank_line_after_namespace": true,
+        "braces": true,
+        "not_operator_with_successor_space": true,
+        "single_quote": true,
+        "ordered_imports": { "sort_algorithm": "alpha" },
+        "no_unused_imports": true
+    }
+}

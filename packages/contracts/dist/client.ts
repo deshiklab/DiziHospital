@@ -4145,7 +4145,7 @@ export const problemTypes = {
 
 export const duplicateRules = {
   "description": "How two records are decided to be the same person. The rule set is data, not code: a branch tunes the weights and the thresholds in Setup, and the register screen and the API read the same set. Two screens checking different rules is how a duplicate comes in through the front door and a false match is flagged at the back. Nothing here merges. A rule can only raise a candidate, and a person decides.",
-  "configuredIn": "Setup → Registration → duplicate rules, per branch, with the defaults below. The client reads the weights and the thresholds from here through the generated client, so a branch that tunes them is tuning the one table both the desk form and the import read.",
+  "configuredIn": "Setup → Registration → duplicate rules, per branch, with the defaults below. The client reads the weights and the thresholds from here through the generated client, so a branch that tunes them is tuning the one table both the desk form and the API read.",
   "combination": "score = min(1, the sum of the weights of the rules that matched). A rule with `veto: true` is excluded from that sum, and a vetoing match also caps the verdict at `warn`: two records whose sex disagrees are two people, so nothing may be refused on likeness alone. The one exception is the MRN, which is identity rather than likeness — two records carrying one number is a data error and a desk has to look at it whatever else disagrees. At or above `block` the write is refused with 409 and the candidates; at or above `warn` the desk is shown them and may continue; below `warn` nothing is shown, because a desk warned about everything is warned about nothing.",
   "thresholds": {
     "warn": 0.4,
@@ -4164,7 +4164,8 @@ export const duplicateRules = {
         "identity.mrn-exact"
       ],
       "implementedBy": [
-        "apps/web/lib/duplicate-rules.ts"
+        "apps/web/lib/duplicate-rules.ts",
+        "services/api/app/Modules/Registration/DuplicateScorer.php"
       ]
     },
     {
@@ -4178,7 +4179,8 @@ export const duplicateRules = {
         "identity.phone-normalised"
       ],
       "implementedBy": [
-        "apps/web/lib/duplicate-rules.ts"
+        "apps/web/lib/duplicate-rules.ts",
+        "services/api/app/Modules/Registration/DuplicateScorer.php"
       ]
     },
     {
@@ -4192,7 +4194,8 @@ export const duplicateRules = {
         "identity.national-id-suffix"
       ],
       "implementedBy": [
-        "apps/web/lib/duplicate-rules.ts"
+        "apps/web/lib/duplicate-rules.ts",
+        "services/api/app/Modules/Registration/DuplicateScorer.php"
       ]
     },
     {
@@ -4206,7 +4209,8 @@ export const duplicateRules = {
         "identity.name-age-sex"
       ],
       "implementedBy": [
-        "apps/web/lib/duplicate-rules.ts"
+        "apps/web/lib/duplicate-rules.ts",
+        "services/api/app/Modules/Registration/DuplicateScorer.php"
       ]
     },
     {
@@ -4220,7 +4224,8 @@ export const duplicateRules = {
         "identity.dob-exact"
       ],
       "implementedBy": [
-        "apps/web/lib/duplicate-rules.ts"
+        "apps/web/lib/duplicate-rules.ts",
+        "services/api/app/Modules/Registration/DuplicateScorer.php"
       ]
     },
     {
@@ -4234,7 +4239,8 @@ export const duplicateRules = {
         "identity.name-fuzzy"
       ],
       "implementedBy": [
-        "apps/web/lib/duplicate-rules.ts"
+        "apps/web/lib/duplicate-rules.ts",
+        "services/api/app/Modules/Registration/DuplicateScorer.php"
       ]
     },
     {
@@ -4248,7 +4254,8 @@ export const duplicateRules = {
         "identity.sex-conflict"
       ],
       "implementedBy": [
-        "apps/web/lib/duplicate-rules.ts"
+        "apps/web/lib/duplicate-rules.ts",
+        "services/api/app/Modules/Registration/DuplicateScorer.php"
       ]
     }
   ]

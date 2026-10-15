@@ -4,9 +4,9 @@
     "title": "DiziHospital platform API",
     "version": "0.1.0-p8",
     "summary": "The P0 slice and the P8 slice: the endpoints the built screens write through, each with the offline and conflict behaviour it is allowed.",
-    "description": "One contract with three consumers. The web app reads the per-operation metadata to decide what it may queue while the uplink is down; the API service has to satisfy it; the conformance harness fails the build when the two drift apart.\n\nThe `x-dizi` extension is not documentation. It is the input the client is generated from. `offline` says whether the app may serve a read from the replica (`cache`), queue a write and replay it (`queue`), or must refuse the action with an explanation (`online-only`). `authority` names the tier that owns the record, which decides whose value wins when two nodes disagree. `idempotency` and `audit` say what a request must carry. `because` is the sentence shown to staff when the app refuses something: the reason in their words, not an error code.\n\nNothing in here is invented for the API\u2019s benefit. Each operation exists because a screen that is already built writes through it, and each policy is the one `apps/web/lib/sync.ts` has been enforcing since P0-201.",
+    "description": "One contract with three consumers. The web app reads the per-operation metadata to decide what it may queue while the uplink is down; the API service has to satisfy it; the conformance harness fails the build when the two drift apart.\n\nThe `x-dizi` extension is not documentation. It is the input the client is generated from. `offline` says whether the app may serve a read from the replica (`cache`), queue a write and replay it (`queue`), or must refuse the action with an explanation (`online-only`). `authority` names the tier that owns the record, which decides whose value wins when two nodes disagree. `idempotency` and `audit` say what a request must carry. `because` is the sentence shown to staff when the app refuses something: the reason in their words, not an error code.\n\nNothing in here is invented for the API’s benefit. Each operation exists because a screen that is already built writes through it, and each policy is the one `apps/web/lib/sync.ts` has been enforcing since P0-201.",
     "license": {
-      "name": "Proprietary \u2014 internal platform",
+      "name": "Proprietary — internal platform",
       "identifier": "LicenseRef-Proprietary"
     },
     "contact": {
@@ -16,7 +16,7 @@
   "servers": [
     {
       "url": "https://{branch}.dizi.internal/api/v1",
-      "description": "Branch edge node \u2014 the origin for every write made in that branch, and the replica the screens read from",
+      "description": "Branch edge node — the origin for every write made in that branch, and the replica the screens read from",
       "variables": {
         "branch": {
           "default": "main"
@@ -25,7 +25,7 @@
     },
     {
       "url": "https://cloud.dizi.internal/api/v1",
-      "description": "Cloud tier \u2014 the canonical record, the replica source, and the only tier that reserves number blocks"
+      "description": "Cloud tier — the canonical record, the replica source, and the only tier that reserves number blocks"
     }
   ],
   "tags": [
@@ -59,7 +59,7 @@
     },
     {
       "name": "registry",
-      "description": "The vital-events register \u2014 births and deaths, as notifications to the state (P6 read, P7 write)"
+      "description": "The vital-events register — births and deaths, as notifications to the state (P6 read, P7 write)"
     },
     {
       "name": "front-office",
@@ -67,19 +67,19 @@
     },
     {
       "name": "admin",
-      "description": "Branch console and platform settings \u2014 masters and configuration (P7)"
+      "description": "Branch console and platform settings — masters and configuration (P7)"
     },
     {
       "name": "telemedicine",
-      "description": "Live consultation and live meeting \u2014 the room, the waiting list and the outcome (P8)"
+      "description": "Live consultation and live meeting — the room, the waiting list and the outcome (P8)"
     },
     {
       "name": "content",
-      "description": "The Download Centre \u2014 content types, uploads and the share list (P8)"
+      "description": "The Download Centre — content types, uploads and the share list (P8)"
     },
     {
       "name": "records",
-      "description": "Certificates and identity cards \u2014 the numbered documents a hospital hands over (P8)"
+      "description": "Certificates and identity cards — the numbered documents a hospital hands over (P8)"
     },
     {
       "name": "engagement",
@@ -87,7 +87,7 @@
     },
     {
       "name": "cms",
-      "description": "The Front CMS \u2014 the pages the public website is built from (P8)"
+      "description": "The Front CMS — the pages the public website is built from (P8)"
     },
     {
       "name": "messaging",
@@ -95,7 +95,7 @@
     },
     {
       "name": "portal",
-      "description": "The patient portal \u2014 what a patient may read and do through their own login (P8)"
+      "description": "The patient portal — what a patient may read and do through their own login (P8)"
     },
     {
       "name": "printing",
@@ -103,7 +103,7 @@
     },
     {
       "name": "reporting",
-      "description": "Report schedules as data: which report goes out, to whom, when, and what the server\u2019s run recorded (P6 leftovers)"
+      "description": "Report schedules as data: which report goes out, to whom, when, and what the server’s run recorded (P6 leftovers)"
     }
   ],
   "paths": {
@@ -143,7 +143,7 @@
           "idempotency": "none",
           "audit": false,
           "because": "The edge node polls this to decide whether it is online, in which case the UI must not claim a write reached the cloud. Nothing here may be cached.",
-          "notes": "Deliberately online-only: a stale answer to \u201cam I connected?\u201d is worse than no answer, because the whole point of the call is to tell the screen whether a write reached the cloud."
+          "notes": "Deliberately online-only: a stale answer to “am I connected?” is worse than no answer, because the whole point of the call is to tell the screen whether a write reached the cloud."
         }
       }
     },
@@ -240,7 +240,7 @@
             }
           },
           "409": {
-            "description": "Possible duplicate \u2014 the response carries the candidates",
+            "description": "Possible duplicate — the response carries the candidates",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -405,7 +405,7 @@
             }
           },
           "409": {
-            "description": "Field-level conflict \u2014 both values are returned",
+            "description": "Field-level conflict — both values are returned",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -507,7 +507,7 @@
             }
           },
           "409": {
-            "description": "Field-level conflict \u2014 both values are returned",
+            "description": "Field-level conflict — both values are returned",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -680,7 +680,7 @@
             }
           },
           "409": {
-            "description": "Slot taken \u2014 alternatives are returned",
+            "description": "Slot taken — alternatives are returned",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -726,7 +726,7 @@
           "authority": "edge",
           "idempotency": "required",
           "audit": true,
-          "because": "The branch where the patient is standing owns the slot. If two branches book the last slot, the origin that took the booking keeps it and the other is refused with the alternative times \u2014 a booking desk that cannot say who has the slot is worse than a busy signal."
+          "because": "The branch where the patient is standing owns the slot. If two branches book the last slot, the origin that took the booking keeps it and the other is refused with the alternative times — a booking desk that cannot say who has the slot is worse than a busy signal."
         },
         "parameters": [
           {
@@ -787,7 +787,7 @@
             }
           },
           "409": {
-            "description": "Slot taken \u2014 alternatives are returned",
+            "description": "Slot taken — alternatives are returned",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1007,7 +1007,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "A bed holds one patient. Two nodes admitting into the same bed is not a merge \u2014 the second arrival needs another bed, so the claim is refused and the admission desk is told which beds are free."
+          "because": "A bed holds one patient. Two nodes admitting into the same bed is not a merge — the second arrival needs another bed, so the claim is refused and the admission desk is told which beds are free."
         }
       }
     },
@@ -1285,7 +1285,7 @@
             }
           },
           "409": {
-            "description": "Already signed \u2014 refused rather than merged",
+            "description": "Already signed — refused rather than merged",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1420,7 +1420,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "Invoices are reversed and reissued, never edited \u2014 so two nodes produce two documents and a credit note rather than one merged figure. The number comes from a block reserved to this node, which is what keeps two branches from issuing the same receipt."
+          "because": "Invoices are reversed and reissued, never edited — so two nodes produce two documents and a credit note rather than one merged figure. The number comes from a block reserved to this node, which is what keeps two branches from issuing the same receipt."
         },
         "parameters": [
           {
@@ -1606,7 +1606,7 @@
             }
           },
           "503": {
-            "description": "Cloud tier unreachable \u2014 start the day online first",
+            "description": "Cloud tier unreachable — start the day online first",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1686,7 +1686,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 an unknown head, a reversal with no original voucher, or an amount of zero",
+            "description": "Validation failed — an unknown head, a reversal with no original voucher, or an amount of zero",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1770,7 +1770,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 the approval ladder, a cash payment above the counter limit, or a self-approval",
+            "description": "Validation failed — the approval ladder, a cash payment above the counter limit, or a self-approval",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1786,7 +1786,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "Accounts records what it paid when it paid it, and the approval ladder is checked before the voucher leaves the desk \u2014 a payment that cannot be approved is refused at the source rather than found missing a signature a week later."
+          "because": "Accounts records what it paid when it paid it, and the approval ladder is checked before the voucher leaves the desk — a payment that cannot be approved is refused at the source rather than found missing a signature a week later."
         },
         "parameters": [
           {
@@ -1844,7 +1844,7 @@
             }
           },
           "409": {
-            "description": "This invoice is already claimed with this payer \u2014 the response names the claim that holds it",
+            "description": "This invoice is already claimed with this payer — the response names the claim that holds it",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1854,7 +1854,7 @@
             }
           },
           "422": {
-            "description": "Pre-authorisation is missing above the payer\u2019s threshold, a required document is absent, or the payer has no agreement on file",
+            "description": "Pre-authorisation is missing above the payer’s threshold, a required document is absent, or the payer has no agreement on file",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1928,7 +1928,7 @@
             }
           },
           "409": {
-            "description": "This claim already carries an answer \u2014 a second one is a correction, and a correction is a reversing entry, not an overwrite",
+            "description": "This claim already carries an answer — a second one is a correction, and a correction is a reversing entry, not an overwrite",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2135,7 +2135,7 @@
         },
         "responses": {
           "201": {
-            "description": "Recorded, with the employee number drawn from the node\u2019s block",
+            "description": "Recorded, with the employee number drawn from the node’s block",
             "content": {
               "application/json": {
                 "schema": {
@@ -2175,7 +2175,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 a designation that does not exist, a licence number with no expiry, or a basic pay of zero",
+            "description": "Validation failed — a designation that does not exist, a licence number with no expiry, or a basic pay of zero",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2191,7 +2191,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "A new joiner is recorded at the desk where the paperwork was signed, which may well be the branch with the worse uplink. Queue it: the employee number is drawn from the node\u2019s own block, so the record is complete when it is written rather than when it reaches the cloud."
+          "because": "A new joiner is recorded at the desk where the paperwork was signed, which may well be the branch with the worse uplink. Queue it: the employee number is drawn from the node’s own block, so the record is complete when it is written rather than when it reaches the cloud."
         },
         "parameters": [
           {
@@ -2262,7 +2262,7 @@
             }
           },
           "409": {
-            "description": "Stale version \u2014 the record changed since it was read, so both values are returned instead of a blind merge",
+            "description": "Stale version — the record changed since it was read, so both values are returned instead of a blind merge",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2272,7 +2272,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 an unknown field, or a correction with no reason",
+            "description": "Validation failed — an unknown field, or a correction with no reason",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2341,7 +2341,7 @@
             }
           },
           "409": {
-            "description": "The reader has already seen this punch \u2014 the same code at the same second is one punch, not two",
+            "description": "The reader has already seen this punch — the same code at the same second is one punch, not two",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2351,7 +2351,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 an unregistered device, an unknown staff code, or a punch with no state",
+            "description": "Validation failed — an unregistered device, an unknown staff code, or a punch with no state",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2435,7 +2435,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 no supervisor named, no reason, or a day that is in a locked payroll month",
+            "description": "Validation failed — no supervisor named, no reason, or a day that is in a locked payroll month",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2451,7 +2451,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "A card left in a pocket and a reader that died are both real, and the payroll that runs on bad attendance pays somebody the wrong amount. The adjustment is a record of its own naming the supervisor, the reason and the time \u2014 it never overwrites the punch it corrects."
+          "because": "A card left in a pocket and a reader that died are both real, and the payroll that runs on bad attendance pays somebody the wrong amount. The adjustment is a record of its own naming the supervisor, the reason and the time — it never overwrites the punch it corrects."
         },
         "parameters": [
           {
@@ -2519,7 +2519,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 no entitlement left, notice shorter than the type allows, or a sick leave over two days with no certificate",
+            "description": "Validation failed — no entitlement left, notice shorter than the type allows, or a sick leave over two days with no certificate",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2606,7 +2606,7 @@
             }
           },
           "409": {
-            "description": "Already decided \u2014 the decision on the record stands, and the second one is refused with it",
+            "description": "Already decided — the decision on the record stands, and the second one is refused with it",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2616,7 +2616,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 a refusal with no reason, or an approval with no cover against a minimum-staffing rule",
+            "description": "Validation failed — a refusal with no reason, or an approval with no cover against a minimum-staffing rule",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2639,7 +2639,7 @@
     "/payroll/runs": {
       "post": {
         "operationId": "runPayroll",
-        "summary": "Compute a month\u2019s payroll for a branch",
+        "summary": "Compute a month’s payroll for a branch",
         "tags": [
           "people"
         ],
@@ -2685,7 +2685,7 @@
             }
           },
           "409": {
-            "description": "This branch has already run this month \u2014 the second run is refused with the first, rather than merged",
+            "description": "This branch has already run this month — the second run is refused with the first, rather than merged",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2695,7 +2695,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 attendance after the cut-off, an unpaid leave day beyond the entitlement, or a month that has not finished",
+            "description": "Validation failed — attendance after the cut-off, an unpaid leave day beyond the entitlement, or a month that has not finished",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2792,7 +2792,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 a run with no lines, or lines with a negative net",
+            "description": "Validation failed — a run with no lines, or lines with a negative net",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2802,7 +2802,7 @@
             }
           },
           "503": {
-            "description": "The cloud ledger cannot be reached, so an approval cannot be recorded \u2014 the run stays awaiting approval",
+            "description": "The cloud ledger cannot be reached, so an approval cannot be recorded — the run stays awaiting approval",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2818,15 +2818,15 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "This is the signature that releases money to every employee of a branch at once, and it is the one action in this module that may not be taken on a disconnected device: an approval that exists only in a queue is a signature nobody can verify against the ledger, and payroll is the one place where \u201cprobably approved\u201d is not a state.",
-          "notes": "Deliberately online-only: the approval is what the bank file is generated from, and a queued approval would let a branch pay a month the cloud ledger does not yet know about \u2014 which is the one discrepancy that cannot be reconciled afterwards without asking a person to repay money."
+          "because": "This is the signature that releases money to every employee of a branch at once, and it is the one action in this module that may not be taken on a disconnected device: an approval that exists only in a queue is a signature nobody can verify against the ledger, and payroll is the one place where “probably approved” is not a state.",
+          "notes": "Deliberately online-only: the approval is what the bank file is generated from, and a queued approval would let a branch pay a month the cloud ledger does not yet know about — which is the one discrepancy that cannot be reconciled afterwards without asking a person to repay money."
         }
       }
     },
     "/vital-events": {
       "get": {
         "operationId": "listVitalEvents",
-        "summary": "Read the day\u2019s births and deaths",
+        "summary": "Read the day’s births and deaths",
         "tags": [
           "registry"
         ],
@@ -2891,7 +2891,7 @@
         },
         "responses": {
           "201": {
-            "description": "Recorded, with the register number from this node\u2019s block",
+            "description": "Recorded, with the register number from this node’s block",
             "content": {
               "application/json": {
                 "schema": {
@@ -2931,7 +2931,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 a stillbirth carrying a live-birth registration number or an Apgar score, a caesarean with no indication, or a birth with no attendant",
+            "description": "Validation failed — a stillbirth carrying a live-birth registration number or an Apgar score, a caesarean with no indication, or a birth with no attendant",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2947,7 +2947,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "A birth happens at three in the morning with one midwife on the floor, and the register number comes from this node\u2019s own block so the entry is complete when it is written. Queue it: the notification to the registrar can wait for an uplink, but the record cannot wait for one."
+          "because": "A birth happens at three in the morning with one midwife on the floor, and the register number comes from this node’s own block so the entry is complete when it is written. Queue it: the notification to the registrar can wait for an uplink, but the record cannot wait for one."
         },
         "parameters": [
           {
@@ -3015,7 +3015,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 a certificate number with no cause, an unnatural death with no referral, or a body released with neither paper nor police",
+            "description": "Validation failed — a certificate number with no cause, an unnatural death with no referral, or a body released with neither paper nor police",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3059,7 +3059,7 @@
         },
         "responses": {
           "201": {
-            "description": "Signed in, with a badge number from the node\u2019s own block",
+            "description": "Signed in, with a badge number from the node’s own block",
             "content": {
               "application/json": {
                 "schema": {
@@ -3089,7 +3089,7 @@
             }
           },
           "409": {
-            "description": "This visitor is already inside on an open pass \u2014 the second badge is refused with the first",
+            "description": "This visitor is already inside on an open pass — the second badge is refused with the first",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3099,7 +3099,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 no purpose, no host, or a ward-side visit with no patient named",
+            "description": "Validation failed — no purpose, no host, or a ward-side visit with no patient named",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3186,7 +3186,7 @@
             }
           },
           "409": {
-            "description": "Already closed \u2014 the pass on the record stands",
+            "description": "Already closed — the pass on the record stands",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3196,7 +3196,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 a closing time before the pass opened, or a badge reported returned that was never issued",
+            "description": "Validation failed — a closing time before the pass opened, or a badge reported returned that was never issued",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3219,7 +3219,7 @@
     "/branches/{branch}/settings": {
       "patch": {
         "operationId": "updateBranchSetting",
-        "summary": "Change a branch\u2019s own settings",
+        "summary": "Change a branch’s own settings",
         "tags": [
           "admin"
         ],
@@ -3268,7 +3268,7 @@
             }
           },
           "403": {
-            "description": "The role in the token may not change this branch\u2019s settings",
+            "description": "The role in the token may not change this branch’s settings",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3278,7 +3278,7 @@
             }
           },
           "409": {
-            "description": "Stale version \u2014 the setting changed since it was read, so both values are returned",
+            "description": "Stale version — the setting changed since it was read, so both values are returned",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3288,7 +3288,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 an unknown key, or a value outside the range the key declares",
+            "description": "Validation failed — an unknown key, or a value outside the range the key declares",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3304,7 +3304,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "Branch settings are the things that differ between sites on purpose \u2014 the receipt header, the day-book start, the visiting hours \u2014 and the branch that changes one is the branch that has to live with it. Queue it with the version, so two administrators changing different keys merge and the same key is a question rather than a race."
+          "because": "Branch settings are the things that differ between sites on purpose — the receipt header, the day-book start, the visiting hours — and the branch that changes one is the branch that has to live with it. Queue it with the version, so two administrators changing different keys merge and the same key is a question rather than a race."
         }
       }
     },
@@ -3370,7 +3370,7 @@
             }
           },
           "409": {
-            "description": "Stale version \u2014 somebody else saved this key first, and their value is on the record",
+            "description": "Stale version — somebody else saved this key first, and their value is on the record",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3380,7 +3380,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 an unknown key, or a value that would break a screen that reads it",
+            "description": "Validation failed — an unknown key, or a value that would break a screen that reads it",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3390,7 +3390,7 @@
             }
           },
           "503": {
-            "description": "The cloud is unreachable, so the setting cannot be saved \u2014 nothing is changed locally",
+            "description": "The cloud is unreachable, so the setting cannot be saved — nothing is changed locally",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3406,8 +3406,8 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "A platform setting is hospital-wide configuration \u2014 a leave type, an online-appointment rule, a print header \u2014 and every branch reads it from the same row. Saving one offline would apply it to one node and to nobody else, which is how two branches end up enforcing two different policies without anyone deciding to.",
-          "notes": "Deliberately online-only: this row is the single source for every branch, and a queued save would leave one branch running the old policy for however long the uplink is down \u2014 a difference nobody would notice until an audit found two answers to one question."
+          "because": "A platform setting is hospital-wide configuration — a leave type, an online-appointment rule, a print header — and every branch reads it from the same row. Saving one offline would apply it to one node and to nobody else, which is how two branches end up enforcing two different policies without anyone deciding to.",
+          "notes": "Deliberately online-only: this row is the single source for every branch, and a queued save would leave one branch running the old policy for however long the uplink is down — a difference nobody would notice until an audit found two answers to one question."
         }
       }
     },
@@ -3565,7 +3565,7 @@
             }
           },
           "409": {
-            "description": "The slot or the room is already taken \u2014 `dizi.slot-taken`, with the alternatives the patient or the doctor can actually take",
+            "description": "The slot or the room is already taken — `dizi.slot-taken`, with the alternatives the patient or the doctor can actually take",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3575,7 +3575,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 no patient on a consultation, no doctor, or a start time in the past outside the late-booking window",
+            "description": "Validation failed — no patient on a consultation, no doctor, or a start time in the past outside the late-booking window",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3601,7 +3601,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "The room is opened at the desk that booked it and the slot is held by that node\u2019s own row, so a consultation can be booked while the uplink is down; a slot that two nodes both claimed is refused when the queue drains rather than double-booked."
+          "because": "The room is opened at the desk that booked it and the slot is held by that node’s own row, so a consultation can be booked while the uplink is down; a slot that two nodes both claimed is refused when the queue drains rather than double-booked."
         }
       }
     },
@@ -3648,7 +3648,7 @@
             }
           },
           "409": {
-            "description": "Someone else already opened this room \u2014 `dizi.stale-version`, with who started it and when",
+            "description": "Someone else already opened this room — `dizi.stale-version`, with who started it and when",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3731,7 +3731,7 @@
             }
           },
           "409": {
-            "description": "This session was already ended elsewhere \u2014 `dizi.stale-version`, with both outcomes shown to the desk",
+            "description": "This session was already ended elsewhere — `dizi.stale-version`, with both outcomes shown to the desk",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3878,7 +3878,7 @@
             }
           },
           "409": {
-            "description": "That key or label is already in use \u2014 `dizi.name-taken`, with the record that holds it",
+            "description": "That key or label is already in use — `dizi.name-taken`, with the record that holds it",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3888,7 +3888,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 a key that is not lower-case words and dashes, or a retention period that makes no sense",
+            "description": "Validation failed — a key that is not lower-case words and dashes, or a retention period that makes no sense",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -3971,7 +3971,7 @@
             }
           },
           "409": {
-            "description": "Someone edited this type first, or the key is already used by another \u2014 `dizi.stale-version` or `dizi.name-taken`",
+            "description": "Someone edited this type first, or the key is already used by another — `dizi.stale-version` or `dizi.name-taken`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4156,7 +4156,7 @@
             }
           },
           "409": {
-            "description": "The same bytes are already here under another row \u2014 `dizi.duplicate-operation`, and the screen offers to open the existing upload instead of storing it twice",
+            "description": "The same bytes are already here under another row — `dizi.duplicate-operation`, and the screen offers to open the existing upload instead of storing it twice",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4166,7 +4166,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 an unknown content type, an empty file, or a hash that does not match the bytes",
+            "description": "Validation failed — an unknown content type, an empty file, or a hash that does not match the bytes",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4192,7 +4192,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "The bytes land in the node\u2019s own store before anything is asked of the cloud, so a file can be uploaded and shared with the ward while the uplink is down. The row drains with the hash, and the hash is what stops a replay from attaching different bytes to it."
+          "because": "The bytes land in the node’s own store before anything is asked of the cloud, so a file can be uploaded and shared with the ward while the uplink is down. The row drains with the hash, and the hash is what stops a replay from attaching different bytes to it."
         }
       }
     },
@@ -4249,7 +4249,7 @@
             }
           },
           "409": {
-            "description": "Someone changed this item while you were looking at it \u2014 `dizi.stale-version`, with both values shown",
+            "description": "Someone changed this item while you were looking at it — `dizi.stale-version`, with both values shown",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4342,7 +4342,7 @@
             }
           },
           "409": {
-            "description": "The item has not been approved for its audience \u2014 `dizi.content-not-approved`",
+            "description": "The item has not been approved for its audience — `dizi.content-not-approved`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4352,7 +4352,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 an unknown recipient, or a patient recipient on an internal file",
+            "description": "Validation failed — an unknown recipient, or a patient recipient on an internal file",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4435,7 +4435,7 @@
             }
           },
           "409": {
-            "description": "That share is already withdrawn \u2014 `dizi.duplicate-operation`, so a replay is not a second withdrawal",
+            "description": "That share is already withdrawn — `dizi.duplicate-operation`, so a replay is not a second withdrawal",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4445,7 +4445,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 no reason given",
+            "description": "Validation failed — no reason given",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4528,7 +4528,7 @@
             }
           },
           "409": {
-            "description": "The item is already decided \u2014 `dizi.duplicate-operation` or `dizi.stale-version`, with the decision already on the record",
+            "description": "The item is already decided — `dizi.duplicate-operation` or `dizi.stale-version`, with the decision already on the record",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4555,7 +4555,7 @@
           "idempotency": "required",
           "audit": true,
           "because": "This is the moment a document stops being an internal file and becomes something a patient can be shown. The approval has to be one decision that every branch and the portal see at the same time; a queued approval would let two branches release two different versions of one discharge summary.",
-          "notes": "Deliberately online-only: the approval is what the patient portal and the public website read from, and an approval that exists only in a queue is an unpublished decision that the approver believes is published \u2014 which is the one failure mode of a document that leaves the hospital."
+          "notes": "Deliberately online-only: the approval is what the patient portal and the public website read from, and an approval that exists only in a queue is an unpublished decision that the approver believes is published — which is the one failure mode of a document that leaves the hospital."
         }
       }
     },
@@ -4716,7 +4716,7 @@
             }
           },
           "409": {
-            "description": "This node has run out of certificate numbers \u2014 `dizi.number-block-exhausted`; the screen stops issuing rather than printing a made-up number",
+            "description": "This node has run out of certificate numbers — `dizi.number-block-exhausted`; the screen stops issuing rather than printing a made-up number",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4726,7 +4726,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 no purpose, no subject, or a template that does not fit the certificate type",
+            "description": "Validation failed — no purpose, no subject, or a template that does not fit the certificate type",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4736,7 +4736,7 @@
             }
           },
           "201": {
-            "description": "Issued, with a number from this node\u2019s reserved block",
+            "description": "Issued, with a number from this node’s reserved block",
             "content": {
               "application/json": {
                 "schema": {
@@ -4809,7 +4809,7 @@
             }
           },
           "409": {
-            "description": "Already revoked or superseded \u2014 `dizi.duplicate-operation`, so a replay does not revoke twice",
+            "description": "Already revoked or superseded — `dizi.duplicate-operation`, so a replay does not revoke twice",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4819,7 +4819,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 no reason given",
+            "description": "Validation failed — no reason given",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4845,7 +4845,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "A certificate in a patient\u2019s hand is revoked by recording that it is, not by editing it: the register has to be able to say that a document that exists was withdrawn and why."
+          "because": "A certificate in a patient’s hand is revoked by recording that it is, not by editing it: the register has to be able to say that a document that exists was withdrawn and why."
         }
       }
     },
@@ -4946,7 +4946,7 @@
           "authority": "edge",
           "idempotency": "none",
           "audit": false,
-          "because": "The card desk needs to answer \u201cis this card still valid\u201d in front of the person holding it, and the node keeps the rows for the cards it printed."
+          "because": "The card desk needs to answer “is this card still valid” in front of the person holding it, and the node keeps the rows for the cards it printed."
         }
       },
       "post": {
@@ -4992,7 +4992,7 @@
             }
           },
           "409": {
-            "description": "This node has run out of card numbers \u2014 `dizi.number-block-exhausted`; the card desk waits for a new block instead of writing a number it invented",
+            "description": "This node has run out of card numbers — `dizi.number-block-exhausted`; the card desk waits for a new block instead of writing a number it invented",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5002,7 +5002,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 no photograph on a card that must have one, or a validity date in the past",
+            "description": "Validation failed — no photograph on a card that must have one, or a validity date in the past",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5012,7 +5012,7 @@
             }
           },
           "201": {
-            "description": "Issued, with a card number from this node\u2019s series",
+            "description": "Issued, with a card number from this node’s series",
             "content": {
               "application/json": {
                 "schema": {
@@ -5028,7 +5028,7 @@
           "authority": "edge",
           "idempotency": "required",
           "audit": true,
-          "because": "The card is printed where the person is standing, so the number has to come from this node\u2019s own series and the register entry is queued behind it. Re-issuing appends a new card and supersedes the old one; no card row is ever edited."
+          "because": "The card is printed where the person is standing, so the number has to come from this node’s own series and the register entry is queued behind it. Re-issuing appends a new card and supersedes the old one; no card row is ever edited."
         }
       }
     },
@@ -5085,7 +5085,7 @@
             }
           },
           "409": {
-            "description": "Already revoked or superseded \u2014 `dizi.duplicate-operation`",
+            "description": "Already revoked or superseded — `dizi.duplicate-operation`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5095,7 +5095,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 no reason chosen",
+            "description": "Validation failed — no reason chosen",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5260,7 +5260,7 @@
             }
           },
           "409": {
-            "description": "A form with that title already exists \u2014 `dizi.name-taken`, with the existing form offered for editing",
+            "description": "A form with that title already exists — `dizi.name-taken`, with the existing form offered for editing",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5270,7 +5270,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 no questions, a scale with one end, or a choice question with no options",
+            "description": "Validation failed — no questions, a scale with one end, or a choice question with no options",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5353,7 +5353,7 @@
             }
           },
           "409": {
-            "description": "Someone edited this form first, or it has answers already and the change would invalidate them \u2014 `dizi.stale-version` or `dizi.form-closed`",
+            "description": "Someone edited this form first, or it has answers already and the change would invalidate them — `dizi.stale-version` or `dizi.form-closed`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5436,7 +5436,7 @@
             }
           },
           "403": {
-            "description": "Only the form\u2019s author or the survey administrator may publish it",
+            "description": "Only the form’s author or the survey administrator may publish it",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5446,7 +5446,7 @@
             }
           },
           "409": {
-            "description": "Already published or closed \u2014 `dizi.duplicate-operation`",
+            "description": "Already published or closed — `dizi.duplicate-operation`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5483,7 +5483,7 @@
           "idempotency": "required",
           "audit": true,
           "because": "Publishing is what puts a form in front of patients through the portal and the public website, both of which are served from the cloud. A publication that exists only on one node would show part of the audience a form the hospital has not actually released.",
-          "notes": "Deliberately online-only: the portal and the public site are cloud-served, so a queued publication is a form that is live in one branch\u2019s head and nowhere a patient can reach it. The author is told before they press it, not after."
+          "notes": "Deliberately online-only: the portal and the public site are cloud-served, so a queued publication is a form that is live in one branch’s head and nowhere a patient can reach it. The author is told before they press it, not after."
         }
       }
     },
@@ -5540,7 +5540,7 @@
             }
           },
           "409": {
-            "description": "Already assigned to that person and not yet answered \u2014 `dizi.duplicate-operation`",
+            "description": "Already assigned to that person and not yet answered — `dizi.duplicate-operation`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5550,7 +5550,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 no assignees, or staff who are not at this branch",
+            "description": "Validation failed — no assignees, or staff who are not at this branch",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5576,7 +5576,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "Assigning a survey is how a supervisor asks twenty people to answer something this week. It is queued because it happens in bulk at the end of a shift, and each assignee is a separate row so one person\u2019s row can be withdrawn without touching the others."
+          "because": "Assigning a survey is how a supervisor asks twenty people to answer something this week. It is queued because it happens in bulk at the end of a shift, and each assignee is a separate row so one person’s row can be withdrawn without touching the others."
         }
       }
     },
@@ -5624,7 +5624,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "One form\u2019s assignments, for the response count on the form screen"
+            "description": "One form’s assignments, for the response count on the form screen"
           },
           {
             "name": "page",
@@ -5730,7 +5730,7 @@
             }
           },
           "409": {
-            "description": "The form closed before this answer arrived \u2014 `dizi.form-closed`; the answer is kept as a draft and the person who wrote it is told",
+            "description": "The form closed before this answer arrived — `dizi.form-closed`; the answer is kept as a draft and the person who wrote it is told",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5740,7 +5740,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 a required question left blank, or an answer to a question that is not on the form",
+            "description": "Validation failed — a required question left blank, or an answer to a question that is not on the form",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5911,7 +5911,7 @@
             }
           },
           "409": {
-            "description": "That path is already served by another page \u2014 `dizi.name-taken`, with the existing page offered for editing",
+            "description": "That path is already served by another page — `dizi.name-taken`, with the existing page offered for editing",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5921,7 +5921,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 a path that is not lower-case words and slashes, or a title that is empty",
+            "description": "Validation failed — a path that is not lower-case words and slashes, or a title that is empty",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -5947,7 +5947,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "Page drafts are written by people who work on them between other jobs, and a draft is invisible to the public until it is published. Queuing the draft means writing a page does not depend on the uplink, and publishing \u2014 the part that matters \u2014 is a separate online decision."
+          "because": "Page drafts are written by people who work on them between other jobs, and a draft is invisible to the public until it is published. Queuing the draft means writing a page does not depend on the uplink, and publishing — the part that matters — is a separate online decision."
         }
       }
     },
@@ -6004,7 +6004,7 @@
             }
           },
           "409": {
-            "description": "Someone else edited this page first \u2014 `dizi.stale-version`, with both revisions shown side by side",
+            "description": "Someone else edited this page first — `dizi.stale-version`, with both revisions shown side by side",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -6097,7 +6097,7 @@
             }
           },
           "409": {
-            "description": "Already in that state \u2014 `dizi.duplicate-operation`",
+            "description": "Already in that state — `dizi.duplicate-operation`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -6134,7 +6134,7 @@
           "idempotency": "required",
           "audit": true,
           "because": "The public website is served from the cloud and is the same page for every visitor, including the patient reading it on a phone in another district. Publishing has to be one act in one place: a page published on a branch node only is a page that does not exist.",
-          "notes": "Deliberately online-only: the website is one site served from one place, and a queued publication would tell the editor that a page is live while the public still sees yesterday\u2019s version \u2014 the kind of difference nobody notices until the wrong notice is on the front page."
+          "notes": "Deliberately online-only: the website is one site served from one place, and a queued publication would tell the editor that a page is live while the public still sees yesterday’s version — the kind of difference nobody notices until the wrong notice is on the front page."
         }
       }
     },
@@ -6280,7 +6280,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 no recipients, an empty body, or an urgent notice with no reason",
+            "description": "Validation failed — no recipients, an empty body, or an urgent notice with no reason",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -6306,7 +6306,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "A notice that a ward is short of a nurse tonight is worth sending the moment somebody notices, and the recipients are all staff on this branch\u2019s replica. Queuing it means the notice reaches the node even when the uplink does not."
+          "because": "A notice that a ward is short of a nurse tonight is worth sending the moment somebody notices, and the recipients are all staff on this branch’s replica. Queuing it means the notice reaches the node even when the uplink does not."
         }
       }
     },
@@ -6353,7 +6353,7 @@
             }
           },
           "409": {
-            "description": "Already receipted \u2014 `dizi.duplicate-operation`, and a replay is not a second read",
+            "description": "Already receipted — `dizi.duplicate-operation`, and a replay is not a second read",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -6417,7 +6417,7 @@
             }
           },
           "403": {
-            "description": "The role may not message patients, and the patient must be on this hospital\u2019s record",
+            "description": "The role may not message patients, and the patient must be on this hospital’s record",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -6427,7 +6427,7 @@
             }
           },
           "409": {
-            "description": "No consent for this channel \u2014 `dizi.consent-missing`; the screen offers the printed copy instead of sending",
+            "description": "No consent for this channel — `dizi.consent-missing`; the screen offers the printed copy instead of sending",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -6437,7 +6437,7 @@
             }
           },
           "502": {
-            "description": "The gateway is unreachable and nothing was sent \u2014 the screen says so rather than showing a tick",
+            "description": "The gateway is unreachable and nothing was sent — the screen says so rather than showing a tick",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -6471,7 +6471,7 @@
     "/portal/me": {
       "get": {
         "operationId": "getPortalProfile",
-        "summary": "The patient\u2019s own record, as the portal shows it",
+        "summary": "The patient’s own record, as the portal shows it",
         "tags": [
           "portal"
         ],
@@ -6503,14 +6503,14 @@
           "authority": "cloud",
           "idempotency": "none",
           "audit": false,
-          "because": "The portal header is the first thing that loads and the phone may be on a hospital\u2019s guest network or on none. A replica read of the patient\u2019s own demographics is enough to open the app."
+          "because": "The portal header is the first thing that loads and the phone may be on a hospital’s guest network or on none. A replica read of the patient’s own demographics is enough to open the app."
         }
       }
     },
     "/portal/appointments": {
       "get": {
         "operationId": "listPortalAppointments",
-        "summary": "The patient\u2019s appointments",
+        "summary": "The patient’s appointments",
         "tags": [
           "portal"
         ],
@@ -6574,7 +6574,7 @@
           "authority": "cloud",
           "idempotency": "none",
           "audit": false,
-          "because": "The patient checks their own appointment times far more often than they change them, usually on a mobile connection. The portal is served by the cloud, so the replica it reads is the cloud\u2019s own."
+          "because": "The patient checks their own appointment times far more often than they change them, usually on a mobile connection. The portal is served by the cloud, so the replica it reads is the cloud’s own."
         }
       },
       "post": {
@@ -6620,7 +6620,7 @@
             }
           },
           "409": {
-            "description": "That slot went while the patient was choosing \u2014 `dizi.slot-taken`, with the alternatives the patient can take instead",
+            "description": "That slot went while the patient was choosing — `dizi.slot-taken`, with the alternatives the patient can take instead",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -6630,7 +6630,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 a doctor who does not hold that clinic, or a time outside the booking window",
+            "description": "Validation failed — a doctor who does not hold that clinic, or a time outside the booking window",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -6713,7 +6713,7 @@
             }
           },
           "409": {
-            "description": "The appointment was already seen or already cancelled \u2014 `dizi.duplicate-operation`, with what happened to it",
+            "description": "The appointment was already seen or already cancelled — `dizi.duplicate-operation`, with what happened to it",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -6723,7 +6723,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 cancelling inside the cut-off window, which needs a phone call to the desk instead",
+            "description": "Validation failed — cancelling inside the cut-off window, which needs a phone call to the desk instead",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -6756,7 +6756,7 @@
     "/portal/prescriptions": {
       "get": {
         "operationId": "listPortalPrescriptions",
-        "summary": "The patient\u2019s prescriptions",
+        "summary": "The patient’s prescriptions",
         "tags": [
           "portal"
         ],
@@ -6833,7 +6833,7 @@
     "/portal/results": {
       "get": {
         "operationId": "listPortalResults",
-        "summary": "The patient\u2019s released results",
+        "summary": "The patient’s released results",
         "tags": [
           "portal"
         ],
@@ -6970,7 +6970,7 @@
             }
           },
           "410": {
-            "description": "The share has lapsed \u2014 `dizi.document-expired`; the patient is offered a fresh request instead of an old copy",
+            "description": "The share has lapsed — `dizi.document-expired`; the patient is offered a fresh request instead of an old copy",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -6980,7 +6980,7 @@
             }
           },
           "201": {
-            "description": "Recorded, so the hospital can answer \u201cdid they get it\u201d without asking",
+            "description": "Recorded, so the hospital can answer “did they get it” without asking",
             "content": {
               "application/json": {
                 "schema": {
@@ -6996,14 +6996,14 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "A download is a fact about a patient opening their own clinical document, and it is recorded on the device it happened on. If the uplink is out, the record drains later \u2014 the patient still gets their report, because the document itself is already on the device."
+          "because": "A download is a fact about a patient opening their own clinical document, and it is recorded on the device it happened on. If the uplink is out, the record drains later — the patient still gets their report, because the document itself is already on the device."
         }
       }
     },
     "/portal/bills": {
       "get": {
         "operationId": "listPortalBills",
-        "summary": "The patient\u2019s bills",
+        "summary": "The patient’s bills",
         "tags": [
           "portal"
         ],
@@ -7070,14 +7070,14 @@
           "authority": "cloud",
           "idempotency": "none",
           "audit": false,
-          "because": "A patient who is being discharged wants to see what the bill is before standing at the counter, and the counter is where the queue is. The portal reads the cloud\u2019s own records, so what it shows is what the cashier will see."
+          "because": "A patient who is being discharged wants to see what the bill is before standing at the counter, and the counter is where the queue is. The portal reads the cloud’s own records, so what it shows is what the cashier will see."
         }
       }
     },
     "/portal/payments": {
       "get": {
         "operationId": "listPortalPayments",
-        "summary": "The patient\u2019s payments",
+        "summary": "The patient’s payments",
         "tags": [
           "portal"
         ],
@@ -7183,7 +7183,7 @@
             }
           },
           "409": {
-            "description": "The bill is already settled or was written off while the patient was paying \u2014 `dizi.duplicate-operation` or `dizi.stale-version`, and no money is taken twice",
+            "description": "The bill is already settled or was written off while the patient was paying — `dizi.duplicate-operation` or `dizi.stale-version`, and no money is taken twice",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7193,7 +7193,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 an amount above the balance, or a method that is not enabled for this hospital",
+            "description": "Validation failed — an amount above the balance, or a method that is not enabled for this hospital",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7203,7 +7203,7 @@
             }
           },
           "502": {
-            "description": "The gateway did not answer and nothing was charged \u2014 the screen says so, because a patient who believes they have paid will not come back to the counter",
+            "description": "The gateway did not answer and nothing was charged — the screen says so, because a patient who believes they have paid will not come back to the counter",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7229,15 +7229,15 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "Money over a mobile wallet settles in seconds or not at all, and the hospital\u2019s record of it has to come from the gateway\u2019s answer rather than from the patient\u2019s phone. The payment is written once, when the gateway confirms it.",
-          "notes": "Deliberately online-only: there is no payment gateway integration in this build (bKash, Nagad and card acquiring are separate commercial arrangements), so the operation refuses with a plain explanation and the patient is pointed at the counter or the desk\u2019s own `recordPayment`. A queued payment would be a promise about money, which is the one thing an offline queue must never hold."
+          "because": "Money over a mobile wallet settles in seconds or not at all, and the hospital’s record of it has to come from the gateway’s answer rather than from the patient’s phone. The payment is written once, when the gateway confirms it.",
+          "notes": "Deliberately online-only: there is no payment gateway integration in this build (bKash, Nagad and card acquiring are separate commercial arrangements), so the operation refuses with a plain explanation and the patient is pointed at the counter or the desk’s own `recordPayment`. A queued payment would be a promise about money, which is the one thing an offline queue must never hold."
         }
       }
     },
     "/portal/feedback": {
       "get": {
         "operationId": "listPortalFeedback",
-        "summary": "The patient\u2019s own feedback",
+        "summary": "The patient’s own feedback",
         "tags": [
           "portal"
         ],
@@ -7348,7 +7348,7 @@
             }
           },
           "422": {
-            "description": "Validation failed \u2014 a complaint with no description, or a phone number that is not a number",
+            "description": "Validation failed — a complaint with no description, or a phone number that is not a number",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7374,7 +7374,7 @@
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "People write complaints at night, on the way home, when the ward is behind them. It is appended on the device and drained, so the feedback exists from the moment it was written \u2014 and it is never edited afterwards, because editing a complaint is not a thing a hospital should be able to do."
+          "because": "People write complaints at night, on the way home, when the ward is behind them. It is appended on the device and drained, so the feedback exists from the moment it was written — and it is never edited afterwards, because editing a complaint is not a thing a hospital should be able to do."
         }
       }
     },
@@ -7490,7 +7490,7 @@
             }
           },
           "404": {
-            "description": "No such template \u2014 `dizi.not-found`",
+            "description": "No such template — `dizi.not-found`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7500,7 +7500,7 @@
             }
           },
           "409": {
-            "description": "That version has already been published \u2014 `dizi.duplicate-operation`",
+            "description": "That version has already been published — `dizi.duplicate-operation`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7510,7 +7510,7 @@
             }
           },
           "422": {
-            "description": "The layout breaks the printer\u2019s own rules \u2014 `dizi.layout-refused`, naming the block",
+            "description": "The layout breaks the printer’s own rules — `dizi.layout-refused`, naming the block",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7537,7 +7537,7 @@
           "idempotency": "required",
           "audit": true,
           "because": "A branch changes its own receipt without a release, and printing is the one thing that has to work with the uplink down. The version is appended at the node and carried to the cloud as an event, so the receipt a family was handed on a date stays reproducible.",
-          "notes": "The layout is validated before it is queued: a layout refused by the printer\u2019s own rules is refused at the node, because a queued version that will be rejected later is a version somebody has been told is live."
+          "notes": "The layout is validated before it is queued: a layout refused by the printer’s own rules is refused at the node, because a queued version that will be rejected later is a version somebody has been told is live."
         }
       }
     },
@@ -7596,14 +7596,14 @@
           "authority": "edge",
           "idempotency": "none",
           "audit": false,
-          "because": "Who receives which report, and when, is a fact about the branch rather than about the cloud: the schedule screen, the delivery list and the file\u2019s own preamble all read it, and a branch whose uplink is down still has to know who the morning sheet goes to."
+          "because": "Who receives which report, and when, is a fact about the branch rather than about the cloud: the schedule screen, the delivery list and the file’s own preamble all read it, and a branch whose uplink is down still has to know who the morning sheet goes to."
         }
       }
     },
     "/reports/schedules/{id}": {
       "put": {
         "operationId": "saveReportSchedule",
-        "summary": "Save a branch\u2019s schedule for a report",
+        "summary": "Save a branch’s schedule for a report",
         "tags": [
           "reporting"
         ],
@@ -7643,7 +7643,7 @@
             }
           },
           "403": {
-            "description": "Only the report\u2019s owner, the branch administrator or the medical superintendent may change who receives a management report",
+            "description": "Only the report’s owner, the branch administrator or the medical superintendent may change who receives a management report",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7653,7 +7653,7 @@
             }
           },
           "404": {
-            "description": "No such schedule \u2014 `dizi.not-found`",
+            "description": "No such schedule — `dizi.not-found`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7663,7 +7663,7 @@
             }
           },
           "409": {
-            "description": "This save has already been applied \u2014 `dizi.duplicate-operation`",
+            "description": "This save has already been applied — `dizi.duplicate-operation`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7673,7 +7673,7 @@
             }
           },
           "422": {
-            "description": "The schedule could not go out as written \u2014 `dizi.schedule-refused` or `dizi.channel-cannot-carry-a-file`, naming the part to change",
+            "description": "The schedule could not go out as written — `dizi.schedule-refused` or `dizi.channel-cannot-carry-a-file`, naming the part to change",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7746,7 +7746,7 @@
             }
           },
           "403": {
-            "description": "Only the report\u2019s owner or the medical superintendent may run a report off its schedule",
+            "description": "Only the report’s owner or the medical superintendent may run a report off its schedule",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7756,7 +7756,7 @@
             }
           },
           "404": {
-            "description": "No such schedule \u2014 `dizi.not-found`",
+            "description": "No such schedule — `dizi.not-found`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7766,7 +7766,7 @@
             }
           },
           "409": {
-            "description": "This run has already been sent \u2014 `dizi.duplicate-operation`",
+            "description": "This run has already been sent — `dizi.duplicate-operation`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7776,7 +7776,7 @@
             }
           },
           "422": {
-            "description": "The schedule cannot run as written \u2014 `dizi.schedule-refused`, naming the part to change",
+            "description": "The schedule cannot run as written — `dizi.schedule-refused`, naming the part to change",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7803,7 +7803,7 @@
           "idempotency": "required",
           "audit": true,
           "because": "A run is a delivery: it renders the file, sends it to each recipient and records a receipt, which is the only evidence a management report arrived rather than merely left.",
-          "notes": "Deliberately online-only: a node cannot send mail, and a queued send would tell a manager the morning\u2019s sheet is on its way while it sits in an outbox on a disconnected machine. Until the API service exists nothing goes out on its own \u2014 the schedule screen builds the same file at the desk, says what it contains, and the history records that a person took it."
+          "notes": "Deliberately online-only: a node cannot send mail, and a queued send would tell a manager the morning’s sheet is on its way while it sits in an outbox on a disconnected machine. Until the API service exists nothing goes out on its own — the schedule screen builds the same file at the desk, says what it contains, and the history records that a person took it."
         }
       }
     },
@@ -7868,7 +7868,7 @@
             }
           },
           "403": {
-            "description": "The report\u2019s own owner names the roles that may read it, and the API checks them",
+            "description": "The report’s own owner names the roles that may read it, and the API checks them",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7878,7 +7878,7 @@
             }
           },
           "404": {
-            "description": "No such report \u2014 `dizi.not-found`",
+            "description": "No such report — `dizi.not-found`",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -7905,7 +7905,7 @@
           "idempotency": "none",
           "audit": false,
           "because": "A management report is read by several desks to argue with each other, so the figure has to be the same one: computed once against the register, at a named watermark, instead of once per browser over whatever each client happens to hold.",
-          "notes": "Cached rather than live: the answer is the register read at `registerAt`, and a reader who needs to know whether the 14:05 admission is in it reads that stamp rather than guessing. A node with the uplink down answers from its own replica, says `computedBy: edge`, and names the watermark it holds \u2014 which is the difference the screen prints rather than hiding."
+          "notes": "Cached rather than live: the answer is the register read at `registerAt`, and a reader who needs to know whether the 14:05 admission is in it reads that stamp rather than guessing. A node with the uplink down answers from its own replica, says `computedBy: edge`, and names the watermark it holds — which is the difference the screen prints rather than hiding."
         }
       }
     }
@@ -7990,7 +7990,7 @@
           },
           "conflict": {
             "type": "object",
-            "description": "Present on 409 \u2014 the decision a person has to make",
+            "description": "Present on 409 — the decision a person has to make",
             "required": [],
             "properties": {
               "entity": {
@@ -8088,8 +8088,8 @@
             "type": "string",
             "enum": [
               "Self pay",
-              "Corporate \u2014 BRAC",
-              "Insurance \u2014 MetLife",
+              "Corporate — BRAC",
+              "Insurance — MetLife",
               "Govt. scheme"
             ]
           },
@@ -8156,8 +8156,8 @@
             "type": "string",
             "enum": [
               "Self pay",
-              "Corporate \u2014 BRAC",
-              "Insurance \u2014 MetLife",
+              "Corporate — BRAC",
+              "Insurance — MetLife",
               "Govt. scheme"
             ]
           },
@@ -8167,7 +8167,7 @@
           },
           "duplicateAcknowledged": {
             "type": "boolean",
-            "description": "Set after a person has seen and dismissed the duplicate candidates \u2014 an unacknowledged match is a 409, not a silent insert"
+            "description": "Set after a person has seen and dismissed the duplicate candidates — an unacknowledged match is a 409, not a silent insert"
           }
         }
       },
@@ -8189,7 +8189,7 @@
           },
           "reason": {
             "type": "string",
-            "description": "Why the record was corrected \u2014 part of the audit entry, not optional"
+            "description": "Why the record was corrected — part of the audit entry, not optional"
           }
         }
       },
@@ -8255,7 +8255,7 @@
           "asOf": {
             "type": "string",
             "format": "date-time",
-            "description": "When the replica this page came from was last synced \u2014 the screen stamps it rather than implying the data is live"
+            "description": "When the replica this page came from was last synced — the screen stamps it rather than implying the data is live"
           }
         }
       },
@@ -8294,7 +8294,7 @@
             "items": {
               "type": "string"
             },
-            "description": "Which rules matched \u2014 \u201csame phone\u201d, \u201cname within one edit\u201d, \u201csame date of birth\u201d"
+            "description": "Which rules matched — “same phone”, “name within one edit”, “same date of birth”"
           }
         }
       },
@@ -8365,7 +8365,7 @@
           },
           "origin": {
             "type": "string",
-            "description": "The branch that owns the slot \u2014 the appointment lives where it was taken"
+            "description": "The branch that owns the slot — the appointment lives where it was taken"
           },
           "queued": {
             "type": "boolean",
@@ -8602,7 +8602,7 @@
           "values": {
             "type": "object",
             "additionalProperties": true,
-            "description": "The measured set \u2014 blood pressure, pulse, temperature, saturations and so on"
+            "description": "The measured set — blood pressure, pulse, temperature, saturations and so on"
           },
           "earlyWarningScore": {
             "type": "integer",
@@ -8701,7 +8701,7 @@
           },
           "witness": {
             "type": "string",
-            "description": "Required for a controlled drug \u2014 the second signature is the control"
+            "description": "Required for a controlled drug — the second signature is the control"
           },
           "reason": {
             "type": "string",
@@ -8863,7 +8863,7 @@
           },
           "reference": {
             "type": "string",
-            "description": "Required for anything but cash \u2014 the drawer is reconciled against receipts"
+            "description": "Required for anything but cash — the drawer is reconciled against receipts"
           },
           "at": {
             "type": "string",
@@ -8917,7 +8917,7 @@
           },
           "sequence": {
             "type": "integer",
-            "description": "Monotonic within this node\u2019s chain, so a gap is visible"
+            "description": "Monotonic within this node’s chain, so a gap is visible"
           },
           "at": {
             "type": "string",
@@ -8949,11 +8949,11 @@
           },
           "hash": {
             "type": "string",
-            "description": "SHA-256 over this entry\u2019s canonical form together with `prevHash`. Recomputing it is how tampering is detected \u2014 and the reason a ledger row is never updated."
+            "description": "SHA-256 over this entry’s canonical form together with `prevHash`. Recomputing it is how tampering is detected — and the reason a ledger row is never updated."
           },
           "prevHash": {
             "type": "string",
-            "description": "The hash of the previous entry on this node\u2019s chain. The chains are per node, because a node keeps appending while it is disconnected; the cloud tier reconciles them on drain and the nightly job (P0-311) checks the result."
+            "description": "The hash of the previous entry on this node’s chain. The chains are per node, because a node keeps appending while it is disconnected; the cloud tier reconciles them on drain and the nightly job (P0-311) checks the result."
           }
         }
       },
@@ -9062,7 +9062,7 @@
           },
           "replicaLagSeconds": {
             "type": "integer",
-            "description": "How far behind the cloud the edge replica is \u2014 the number the screen stamps on cached reads"
+            "description": "How far behind the cloud the edge replica is — the number the screen stamps on cached reads"
           }
         }
       },
@@ -9156,7 +9156,7 @@
           },
           "sequence": {
             "type": "integer",
-            "description": "Position in this node\u2019s ledger \u2014 gapless per node, which is what makes a missing voucher visible."
+            "description": "Position in this node’s ledger — gapless per node, which is what makes a missing voucher visible."
           },
           "recordedBy": {
             "type": "string"
@@ -9317,33 +9317,33 @@
             "type": "string",
             "enum": [
               "Self pay",
-              "Insurance \u2014 MetLife",
-              "Corporate \u2014 BRAC",
+              "Insurance — MetLife",
+              "Corporate — BRAC",
               "Govt. scheme"
             ]
           },
           "claimed": {
             "type": "number",
-            "description": "The payer\u2019s share after the agreed discount, in taka"
+            "description": "The payer’s share after the agreed discount, in taka"
           },
           "preAuth": {
             "type": [
               "string",
               "null"
             ],
-            "description": "The pre-authorisation number. Required above the threshold the payer\u2019s agreement records, because the threshold is the payer\u2019s, not the hospital\u2019s"
+            "description": "The pre-authorisation number. Required above the threshold the payer’s agreement records, because the threshold is the payer’s, not the hospital’s"
           },
           "treatedOn": {
             "type": "string",
             "format": "date",
-            "description": "The treatment date the policy is checked against \u2014 a claim is judged on eligibility on that day, not on the day it is filed"
+            "description": "The treatment date the policy is checked against — a claim is judged on eligibility on that day, not on the day it is filed"
           },
           "documents": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "What is attached. The payer\u2019s agreement names what it requires, and a claim missing one is refused here rather than weeks later on a remittance advice"
+            "description": "What is attached. The payer’s agreement names what it requires, and a claim missing one is refused here rather than weeks later on a remittance advice"
           },
           "admissionId": {
             "type": [
@@ -9394,8 +9394,8 @@
             "type": "string",
             "enum": [
               "Self pay",
-              "Insurance \u2014 MetLife",
-              "Corporate \u2014 BRAC",
+              "Insurance — MetLife",
+              "Corporate — BRAC",
               "Govt. scheme"
             ]
           },
@@ -9418,7 +9418,7 @@
           },
           "patientShare": {
             "type": "number",
-            "description": "What moved to the patient\u2019s account: a co-payment or an excluded item, and never a loss"
+            "description": "What moved to the patient’s account: a co-payment or an excluded item, and never a loss"
           },
           "absorbed": {
             "type": "number",
@@ -9477,7 +9477,7 @@
               "null"
             ],
             "format": "date-time",
-            "description": "When the clock started. Ageing is measured from here against the payer\u2019s promised period, and a query does not stop it"
+            "description": "When the clock started. Ageing is measured from here against the payer’s promised period, and a query does not stop it"
           },
           "respondedAt": {
             "type": [
@@ -9507,7 +9507,7 @@
           },
           "overdueDays": {
             "type": "integer",
-            "description": "Days past the payer\u2019s own settlement period. The oldest of these is what a finance manager works from"
+            "description": "Days past the payer’s own settlement period. The oldest of these is what a finance manager works from"
           },
           "notes": {
             "type": "array",
@@ -9542,7 +9542,7 @@
               "duplicate",
               null
             ],
-            "description": "The payer\u2019s reason vocabulary. A short payment recorded as \u201cother\u201d cannot be argued with the payer or learned from"
+            "description": "The payer’s reason vocabulary. A short payment recorded as “other” cannot be argued with the payer or learned from"
           },
           "rejectionReason": {
             "type": [
@@ -9556,14 +9556,14 @@
               "string",
               "null"
             ],
-            "description": "The person accepting the hospital\u2019s share. Left null, the claim stays open rather than being tidied away"
+            "description": "The person accepting the hospital’s share. Left null, the claim stays open rather than being tidied away"
           },
           "reference": {
             "type": [
               "string",
               "null"
             ],
-            "description": "The remittance advice number and line, so the claim can be traced back to the payer\u2019s own document"
+            "description": "The remittance advice number and line, so the claim can be traced back to the payer’s own document"
           },
           "answeredAt": {
             "type": "string",
@@ -9643,7 +9643,7 @@
               "string",
               "null"
             ],
-            "description": "The referrer\u2019s statement for the period, attached to the payment"
+            "description": "The referrer’s statement for the period, attached to the payment"
           }
         }
       },
@@ -9746,7 +9746,7 @@
           },
           "code": {
             "type": "string",
-            "description": "The hospital\u2019s own employee number \u2014 one series, never reused, and the key a payroll file is paid against"
+            "description": "The hospital’s own employee number — one series, never reused, and the key a payroll file is paid against"
           },
           "name": {
             "type": "string"
@@ -9803,7 +9803,7 @@
           },
           "licenceNo": {
             "type": "string",
-            "description": "Registration number for a clinical designation, with its expiry \u2014 a lapsed licence is a duty the roster must not fill"
+            "description": "Registration number for a clinical designation, with its expiry — a lapsed licence is a duty the roster must not fill"
           },
           "licenceExpires": {
             "type": "string",
@@ -9911,7 +9911,7 @@
           },
           "reason": {
             "type": "string",
-            "description": "Why the record was corrected \u2014 part of the audit entry, not optional"
+            "description": "Why the record was corrected — part of the audit entry, not optional"
           }
         }
       },
@@ -9934,7 +9934,7 @@
           "asOf": {
             "type": "string",
             "format": "date-time",
-            "description": "The replica\u2019s age: a roster read from a cached page says how old the cache is"
+            "description": "The replica’s age: a roster read from a cached page says how old the cache is"
           }
         }
       },
@@ -10000,7 +10000,7 @@
           },
           "verifiedBy": {
             "type": "string",
-            "description": "Required for a manual override: the supervisor\u2019s name, because a punch nobody can be asked about is not evidence"
+            "description": "Required for a manual override: the supervisor’s name, because a punch nobody can be asked about is not evidence"
           },
           "reason": {
             "type": "string"
@@ -10210,7 +10210,7 @@
           },
           "coverNote": {
             "type": "string",
-            "description": "Who covers the ward while this leave runs \u2014 the condition on which most rostered leave is granted"
+            "description": "Who covers the ward while this leave runs — the condition on which most rostered leave is granted"
           }
         }
       },
@@ -10245,7 +10245,7 @@
           },
           "employerCost": {
             "type": "number",
-            "description": "Gross plus the employer\u2019s own contributions: the figure the branch actually spends, which is not the figure the employee sees"
+            "description": "Gross plus the employer’s own contributions: the figure the branch actually spends, which is not the figure the employee sees"
           },
           "absentDays": {
             "type": "number"
@@ -10282,7 +10282,7 @@
         "properties": {
           "month": {
             "type": "string",
-            "description": "YYYY-MM. A run is per month and per branch; there is no such thing as half a month\u2019s salary."
+            "description": "YYYY-MM. A run is per month and per branch; there is no such thing as half a month’s salary."
           },
           "branch": {
             "type": "string"
@@ -10394,7 +10394,7 @@
           },
           "registerNo": {
             "type": "string",
-            "description": "The hospital\u2019s own series, drawn from the node\u2019s number block: gapless and never reused, which is what makes a missing entry visible"
+            "description": "The hospital’s own series, drawn from the node’s number block: gapless and never reused, which is what makes a missing entry visible"
           },
           "at": {
             "type": "string",
@@ -10574,7 +10574,7 @@
           },
           "informant": {
             "type": "string",
-            "description": "Who brought the family in to register the birth, and their relationship \u2014 the name the registrar reads out"
+            "description": "Who brought the family in to register the birth, and their relationship — the name the registrar reads out"
           },
           "note": {
             "type": "string"
@@ -10638,8 +10638,8 @@
             "type": "string",
             "enum": [
               "Natural",
-              "Unnatural \u2014 referred to police",
-              "Unknown \u2014 referred to police"
+              "Unnatural — referred to police",
+              "Unknown — referred to police"
             ]
           },
           "policeStation": {
@@ -10718,8 +10718,8 @@
             "type": "string",
             "enum": [
               "Natural",
-              "Unnatural \u2014 referred to police",
-              "Unknown \u2014 referred to police"
+              "Unnatural — referred to police",
+              "Unknown — referred to police"
             ]
           },
           "policeStation": {
@@ -11077,7 +11077,7 @@
           },
           "outcome": {
             "type": "string",
-            "description": "What the doctor decided \u2014 free text, because the alternatives are not a closed list"
+            "description": "What the doctor decided — free text, because the alternatives are not a closed list"
           },
           "followUpOn": {
             "type": "string",
@@ -11281,7 +11281,7 @@
         "properties": {
           "key": {
             "type": "string",
-            "description": "The identity of the type: lower-case words separated by dashes. Required when creating, ignored when editing \u2014 a key is what old uploads point at and it is never rewritten"
+            "description": "The identity of the type: lower-case words separated by dashes. Required when creating, ignored when editing — a key is what old uploads point at and it is never rewritten"
           },
           "label": {
             "type": "string"
@@ -11489,7 +11489,7 @@
           },
           "nodeId": {
             "type": "string",
-            "description": "The node that holds the bytes \u2014 named in the audit entry, because the ledger records the device as well as the person"
+            "description": "The node that holds the bytes — named in the audit entry, because the ledger records the device as well as the person"
           }
         }
       },
@@ -11755,7 +11755,7 @@
           },
           "purpose": {
             "type": "string",
-            "description": "To whom it is addressed and what for \u2014 this is what makes a certificate a specific document rather than a template"
+            "description": "To whom it is addressed and what for — this is what makes a certificate a specific document rather than a template"
           },
           "body": {
             "type": "string"
@@ -11932,7 +11932,7 @@
         "properties": {
           "cardNo": {
             "type": "string",
-            "description": "From the node\u2019s card series \u2014 the number is on the card before the cloud sees it"
+            "description": "From the node’s card series — the number is on the card before the cloud sees it"
           },
           "subject": {
             "type": "string",
@@ -12063,7 +12063,7 @@
           },
           "photoRef": {
             "type": "string",
-            "description": "A photograph already on the node. A card without one is printed with an explicit \u201cno photograph\u201d block rather than a placeholder face"
+            "description": "A photograph already on the node. A card without one is printed with an explicit “no photograph” block rather than a placeholder face"
           },
           "templateKey": {
             "type": "string"
@@ -12475,7 +12475,7 @@
           },
           "respondentRef": {
             "type": "string",
-            "description": "Empty for an anonymous form \u2014 an anonymous response that names its author is worse than no anonymity at all"
+            "description": "Empty for an anonymous form — an anonymous response that names its author is worse than no anonymity at all"
           },
           "answers": {
             "type": "array",
@@ -12607,7 +12607,7 @@
           },
           "body": {
             "type": "string",
-            "description": "The page as text with the block markers the site renders \u2014 headings, paragraphs, lists and links, and nothing that only one renderer understands"
+            "description": "The page as text with the block markers the site renders — headings, paragraphs, lists and links, and nothing that only one renderer understands"
           },
           "bodyBn": {
             "type": "string"
@@ -12726,7 +12726,7 @@
           },
           "note": {
             "type": "string",
-            "description": "Why the page came down, if it did \u2014 the news list shows it to the editor who takes the next shift"
+            "description": "Why the page came down, if it did — the news list shows it to the editor who takes the next shift"
           }
         }
       },
@@ -12850,7 +12850,7 @@
           },
           "relatedTo": {
             "type": "string",
-            "description": "An MRN, an admission, a rota \u2014 so a message can be found from the thing it is about"
+            "description": "An MRN, an admission, a rota — so a message can be found from the thing it is about"
           },
           "recipientCount": {
             "type": "integer"
@@ -12940,7 +12940,7 @@
           },
           "to": {
             "type": "string",
-            "description": "The number or address as it is recorded on the patient\u2019s own record, not as typed into a dialog"
+            "description": "The number or address as it is recorded on the patient’s own record, not as typed into a dialog"
           },
           "patientMrn": {
             "type": "string"
@@ -13101,7 +13101,7 @@
           },
           "instructionsBn": {
             "type": "string",
-            "description": "Bangla instructions as the prescriber wrote them \u2014 the portal does not translate clinical instructions itself"
+            "description": "Bangla instructions as the prescriber wrote them — the portal does not translate clinical instructions itself"
           },
           "dispensedAt": {
             "type": "string",
@@ -13133,7 +13133,7 @@
           },
           "encounter": {
             "type": "string",
-            "description": "OPD visit, discharge or emergency \u2014 the patient needs to know which visit this belongs to"
+            "description": "OPD visit, discharge or emergency — the patient needs to know which visit this belongs to"
           },
           "items": {
             "type": "array",
@@ -13837,26 +13837,26 @@
             "items": {
               "type": "string"
             },
-            "description": "`HH:MM` on the branch\u2019s own clock; a sheet sent twice a day carries both times"
+            "description": "`HH:MM` on the branch’s own clock; a sheet sent twice a day carries both times"
           },
           "weekdays": {
             "type": "array",
             "items": {
               "type": "integer"
             },
-            "description": "Weekly: 0\u20136 with Sunday as 0, the week this branch works"
+            "description": "Weekly: 0–6 with Sunday as 0, the week this branch works"
           },
           "day": {
             "type": "integer",
-            "description": "Monthly: 1\u201328. Beyond that a month is skipped, which is refused rather than accepted"
+            "description": "Monthly: 1–28. Beyond that a month is skipped, which is refused rather than accepted"
           },
           "firstWorkingDay": {
             "type": "boolean",
-            "description": "Monthly: the first day that is neither a weekend nor a gazetted holiday, read from the branch\u2019s calendar"
+            "description": "Monthly: the first day that is neither a weekend nor a gazetted holiday, read from the branch’s calendar"
           },
           "because": {
             "type": "string",
-            "description": "Why that time, in the branch\u2019s words \u2014 the register\u2019s own sentence where it has one"
+            "description": "Why that time, in the branch’s words — the register’s own sentence where it has one"
           }
         }
       },
@@ -13977,7 +13977,7 @@
           },
           "dryRun": {
             "type": "boolean",
-            "description": "Render the file and report what it holds without sending it \u2014 what the schedule screen does at the desk"
+            "description": "Render the file and report what it holds without sending it — what the schedule screen does at the desk"
           }
         }
       },
@@ -14050,7 +14050,7 @@
                 },
                 "receipt": {
                   "type": "string",
-                  "description": "The mail relay\u2019s own id, or the counter and the name against the print-out"
+                  "description": "The mail relay’s own id, or the counter and the name against the print-out"
                 },
                 "failed": {
                   "type": "string"
@@ -14208,7 +14208,7 @@
             "items": {
               "type": "string"
             },
-            "description": "The days actually read \u2014 `min(the range asked for, what the data holds)`, named rather than implied"
+            "description": "The days actually read — `min(the range asked for, what the data holds)`, named rather than implied"
           },
           "rangeNote": {
             "type": "string"
@@ -14244,7 +14244,7 @@
                 }
               }
             },
-            "description": "Branches that cannot answer this report at all, with the reason \u2014 printed instead of a row of zeros"
+            "description": "Branches that cannot answer this report at all, with the reason — printed instead of a row of zeros"
           },
           "closing": {
             "type": "string",
@@ -14297,7 +14297,7 @@
     "bed.state": {
       "policy": "exclusive",
       "label": "Bed state",
-      "why": "A bed holds one patient. Two nodes admitting into the same bed is not a merge \u2014 the second arrival needs another bed, so the server refuses the claim."
+      "why": "A bed holds one patient. Two nodes admitting into the same bed is not a merge — the second arrival needs another bed, so the server refuses the claim."
     },
     "mar.dose": {
       "policy": "exclusive",
@@ -14322,7 +14322,7 @@
     "invoice": {
       "policy": "append-only",
       "label": "Invoice",
-      "why": "Invoices are reversed and reissued, never edited \u2014 so two nodes produce two documents and a credit note, not one merged figure."
+      "why": "Invoices are reversed and reissued, never edited — so two nodes produce two documents and a credit note, not one merged figure."
     },
     "payment": {
       "policy": "append-only",
@@ -14352,7 +14352,7 @@
     "commission.payout": {
       "policy": "append-only",
       "label": "Commission payout",
-      "why": "A payout is an event: a voucher number, an amount, a withholding, a reference and two names. Nothing about it is edited afterwards \u2014 a mistake is corrected by a reversing voucher, and the bank statement shows both."
+      "why": "A payout is an event: a voucher number, an amount, a withholding, a reference and two names. Nothing about it is edited afterwards — a mistake is corrected by a reversing voucher, and the bank statement shows both."
     },
     "staff.member": {
       "policy": "field-level",
@@ -14362,7 +14362,7 @@
     "leave.request": {
       "policy": "exclusive",
       "label": "Leave request",
-      "why": "A leave application is one person\u2019s days, decided once. Two approvers deciding the same application is two answers to one question \u2014 the second is refused with the decision already on the record."
+      "why": "A leave application is one person’s days, decided once. Two approvers deciding the same application is two answers to one question — the second is refused with the decision already on the record."
     },
     "attendance.punch": {
       "policy": "append-only",
@@ -14382,7 +14382,7 @@
     "visitor.pass": {
       "policy": "exclusive",
       "label": "Visitor pass",
-      "why": "One badge, one visitor, one desk. A visitor who is already inside cannot be signed in again at another desk \u2014 the second attempt is refused with the pass that already holds them."
+      "why": "One badge, one visitor, one desk. A visitor who is already inside cannot be signed in again at another desk — the second attempt is refused with the pass that already holds them."
     },
     "branch.setting": {
       "policy": "field-level",
@@ -14412,7 +14412,7 @@
     "certificate.issue": {
       "policy": "append-only",
       "label": "Issued certificate",
-      "why": "A certificate carries a number that is already printed on paper and handed to a person. It is issued, and if the hospital was wrong it issues a superseding certificate \u2014 it does not edit the one in the patient\u2019s hand."
+      "why": "A certificate carries a number that is already printed on paper and handed to a person. It is issued, and if the hospital was wrong it issues a superseding certificate — it does not edit the one in the patient’s hand."
     },
     "identity.card": {
       "policy": "append-only",
@@ -14432,7 +14432,7 @@
     "survey.response": {
       "policy": "append-only",
       "label": "Survey response",
-      "why": "An answer is what somebody said at a time. It is appended and never corrected \u2014 correcting a survey destroys the only thing a survey is for."
+      "why": "An answer is what somebody said at a time. It is appended and never corrected — correcting a survey destroys the only thing a survey is for."
     },
     "cms.page": {
       "policy": "field-level",
@@ -14467,21 +14467,21 @@
     "report.schedule": {
       "policy": "field-level",
       "label": "Report schedule",
-      "why": "Two administrators can edit one schedule at once: a new receiver and a changed hour merge, and the same field changed twice is offered to a person \u2014 because a delivery list that quietly keeps one of two answers is a report somebody stops receiving without anybody deciding that."
+      "why": "Two administrators can edit one schedule at once: a new receiver and a changed hour merge, and the same field changed twice is offered to a person — because a delivery list that quietly keeps one of two answers is a report somebody stops receiving without anybody deciding that."
     },
     "report.run": {
       "policy": "append-only",
       "label": "Report run",
-      "why": "A run is a fact: the file was rendered, sent to these people, and a receipt came back. It is appended and never corrected \u2014 a re-send is another run, and the two together are what shows a report that keeps failing to arrive."
+      "why": "A run is a fact: the file was rendered, sent to these people, and a receipt came back. It is appended and never corrected — a re-send is another run, and the two together are what shows a report that keeps failing to arrive."
     }
   },
   "x-dizi-conventions": {
-    "idempotency": "Every operation whose `x-dizi.idempotency` is `required` carries an `Idempotency-Key`. A replay of the same key returns the original response and status, so draining a queue twice is safe \u2014 which is the whole reason a queue can exist.",
+    "idempotency": "Every operation whose `x-dizi.idempotency` is `required` carries an `Idempotency-Key`. A replay of the same key returns the original response and status, so draining a queue twice is safe — which is the whole reason a queue can exist.",
     "authority": "`cloud` means the canonical record lives in the cloud tier and an edge write is a proposal replayed on reconnect. `edge` means the node that owns the record answers: reads come from the replica, and slots belong to the branch that took the booking.",
     "conflictIsNotAnError": "A 409 is a decision for a person, never a failure to hide. The response carries both values and who wrote them, and the app routes it to the review queue rather than retrying in a loop.",
-    "errors": "Every failure is RFC 9457 `application/problem+json`. No endpoint returns a bare string or an HTML error page \u2014 an offline desk showing `500 Internal Server Error` is a support call.",
-    "audit": "Every write marked `audit: true` appends an audit entry in the same transaction as the write. The ledger is hash-chained (P0-208): each entry carries the hash of the previous one on its node\u2019s chain, so an edit in the middle of it is detectable rather than merely discouraged. An offline write carries the node that performed it, so the ledger names the device as well as the person, and the chains are reconciled when the node drains.",
-    "time": "Every timestamp is an ISO 8601 instant with an offset. Duration fields hold a duration, never a formatted time \u2014 the screens format for Dhaka, the API does not."
+    "errors": "Every failure is RFC 9457 `application/problem+json`. No endpoint returns a bare string or an HTML error page — an offline desk showing `500 Internal Server Error` is a support call.",
+    "audit": "Every write marked `audit: true` appends an audit entry in the same transaction as the write. The ledger is hash-chained (P0-208): each entry carries the hash of the previous one on its node’s chain, so an edit in the middle of it is detectable rather than merely discouraged. An offline write carries the node that performed it, so the ledger names the device as well as the person, and the chains are reconciled when the node drains.",
+    "time": "Every timestamp is an ISO 8601 instant with an offset. Duration fields hold a duration, never a formatted time — the screens format for Dhaka, the API does not."
   },
   "x-dizi-drain-outcomes": {
     "applied": {
@@ -14506,7 +14506,7 @@
     },
     "deferred": {
       "status": "503, 504, any other 5xx, or a timeout",
-      "meaning": "The cloud tier is not reachable, or the server failed in a way that says nothing about the write. A bare 500 is the server\u2019s problem rather than a verdict on the request.",
+      "meaning": "The cloud tier is not reachable, or the server failed in a way that says nothing about the write. A bare 500 is the server’s problem rather than a verdict on the request.",
       "client": "The operation keeps its place in the queue, and the queue keeps its order. Retrying is safe because every queued write carries an Idempotency-Key."
     }
   },
@@ -14519,12 +14519,12 @@
     "dizi.dose-already-signed": {
       "title": "This dose has already been signed",
       "when": "Two nodes sign the same administration slot",
-      "client": "Refuse locally and name who signed it and when \u2014 this one is a double-dose risk, not a merge"
+      "client": "Refuse locally and name who signed it and when — this one is a double-dose risk, not a merge"
     },
     "dizi.duplicate-operation": {
       "title": "This write was already applied",
       "when": "The Idempotency-Key has been seen before",
-      "client": "Treat as success \u2014 drop the outbox entry, do not resend"
+      "client": "Treat as success — drop the outbox entry, do not resend"
     },
     "dizi.duplicate-patient": {
       "title": "This patient may already be registered",
@@ -14539,7 +14539,7 @@
     "dizi.not-found": {
       "title": "Not found here",
       "when": "The record exists on another node or does not exist",
-      "client": "Say which node last saw it when the replica knows \u2014 search the branch register, do not dead-end"
+      "client": "Say which node last saw it when the replica knows — search the branch register, do not dead-end"
     },
     "dizi.number-block-exhausted": {
       "title": "This node has run out of reserved numbers",
@@ -14549,7 +14549,7 @@
     "dizi.offline-not-allowed": {
       "title": "This action needs the network",
       "when": "The operation is `online-only` and the cloud tier is unreachable",
-      "client": "Explain before the action is attempted, not after \u2014 the row shows why it cannot be queued"
+      "client": "Explain before the action is attempted, not after — the row shows why it cannot be queued"
     },
     "dizi.slot-taken": {
       "title": "That slot has just been taken",
@@ -14578,23 +14578,23 @@
     },
     "dizi.name-taken": {
       "title": "That name is already used",
-      "when": "A key that has to be unique hospital-wide \u2014 a content type key, a website page path \u2014 already exists",
+      "when": "A key that has to be unique hospital-wide — a content type key, a website page path — already exists",
       "client": "Show the existing record and offer to open it. Never save alongside it and let two records carry one name."
     },
     "dizi.consent-missing": {
       "title": "This patient has not agreed to be messaged",
       "when": "An outbound SMS, WhatsApp or email is asked for and the patient has no consent on file for that channel",
-      "client": "Refuse the send and name the missing consent. Offer the printed or in-person route instead \u2014 sending first and asking afterwards cannot be undone."
+      "client": "Refuse the send and name the missing consent. Offer the printed or in-person route instead — sending first and asking afterwards cannot be undone."
     },
     "dizi.form-closed": {
       "title": "This form has closed",
       "when": "An answer arrives for a survey that was published, closed or withdrawn while the answer was being written",
-      "client": "Keep what the person wrote as a draft and tell them the form closed \u2014 never discard an answer because the clock ran out while they typed."
+      "client": "Keep what the person wrote as a draft and tell them the form closed — never discard an answer because the clock ran out while they typed."
     },
     "dizi.content-not-approved": {
       "title": "This file has not been approved yet",
       "when": "An upload of a patient-facing content type is shared before an approver has released it",
-      "client": "Name the missing approval and offer the approver\u2019s screen \u2014 the upload itself is fine, it is the audience that is not."
+      "client": "Name the missing approval and offer the approver’s screen — the upload itself is fine, it is the audience that is not."
     },
     "dizi.document-expired": {
       "title": "This share has lapsed",
@@ -14603,28 +14603,28 @@
     },
     "dizi.layout-refused": {
       "title": "That layout cannot be printed",
-      "when": "A published layout breaks the printer\u2019s own rules \u2014 off the sheet, inside the margin with something that matters, a data block with no field behind it, an empty text block, a table with no rows, or no hospital name",
+      "when": "A published layout breaks the printer’s own rules — off the sheet, inside the margin with something that matters, a data block with no field behind it, an empty text block, a table with no rows, or no hospital name",
       "client": "The designer names the block and the rule, and keeps the edit as an unpublished draft"
     },
     "dizi.schedule-refused": {
       "title": "This schedule cannot run as written",
-      "when": "A report schedule is saved with nobody to send to, a period wider than the report\u2019s data, a monthly day that skips February, or a report that is read live rather than sent",
-      "client": "Point at the part to change \u2014 the recipient list, the period or the cadence \u2014 and say what would have happened: a file sent before the drawers were counted, a heading over a shorter period, a month with no run"
+      "when": "A report schedule is saved with nobody to send to, a period wider than the report’s data, a monthly day that skips February, or a report that is read live rather than sent",
+      "client": "Point at the part to change — the recipient list, the period or the cadence — and say what would have happened: a file sent before the drawers were counted, a heading over a shorter period, a month with no run"
     },
     "dizi.channel-cannot-carry-a-file": {
       "title": "That channel cannot carry a report",
-      "when": "A recipient is on a channel that carries a message rather than a file \u2014 WhatsApp today \u2014 or on a mailbox outside the hospital while the sheet names people",
-      "client": "Offer the hospital\u2019s own mail or a counter that picks the sheet up, and say why: a file that has left the building cannot be recalled"
+      "when": "A recipient is on a channel that carries a message rather than a file — WhatsApp today — or on a mailbox outside the hospital while the sheet names people",
+      "client": "Offer the hospital’s own mail or a counter that picks the sheet up, and say why: a file that has left the building cannot be recalled"
     }
   },
   "x-dizi-duplicate-rules": {
     "description": "How two records are decided to be the same person. The rule set is data, not code: a branch tunes the weights and the thresholds in Setup, and the register screen and the API read the same set. Two screens checking different rules is how a duplicate comes in through the front door and a false match is flagged at the back. Nothing here merges. A rule can only raise a candidate, and a person decides.",
-    "configuredIn": "Setup \u2192 Registration \u2192 duplicate rules, per branch, with the defaults below. The client reads the weights and the thresholds from here through the generated client, so a branch that tunes them is tuning the one table both the desk form and the import read.",
-    "combination": "score = min(1, the sum of the weights of the rules that matched). A rule with `veto: true` is excluded from that sum, and a vetoing match also caps the verdict at `warn`: two records whose sex disagrees are two people, so nothing may be refused on likeness alone. The one exception is the MRN, which is identity rather than likeness \u2014 two records carrying one number is a data error and a desk has to look at it whatever else disagrees. At or above `block` the write is refused with 409 and the candidates; at or above `warn` the desk is shown them and may continue; below `warn` nothing is shown, because a desk warned about everything is warned about nothing.",
+    "configuredIn": "Setup → Registration → duplicate rules, per branch, with the defaults below. The client reads the weights and the thresholds from here through the generated client, so a branch that tunes them is tuning the one table both the desk form and the API read.",
+    "combination": "score = min(1, the sum of the weights of the rules that matched). A rule with `veto: true` is excluded from that sum, and a vetoing match also caps the verdict at `warn`: two records whose sex disagrees are two people, so nothing may be refused on likeness alone. The one exception is the MRN, which is identity rather than likeness — two records carrying one number is a data error and a desk has to look at it whatever else disagrees. At or above `block` the write is refused with 409 and the candidates; at or above `warn` the desk is shown them and may continue; below `warn` nothing is shown, because a desk warned about everything is warned about nothing.",
     "thresholds": {
       "warn": 0.4,
       "block": 0.85,
-      "note": "Raising `block` lets more duplicates through; lowering it starts refusing real new patients, and a phone number shared by a household must never block on its own (0.8 < 0.85) \u2014 it warns. One of those is a branch-level judgement, so it belongs to the branch, not to a developer."
+      "note": "Raising `block` lets more duplicates through; lowering it starts refusing real new patients, and a phone number shared by a household must never block on its own (0.8 < 0.85) — it warns. One of those is a branch-level judgement, so it belongs to the branch, not to a developer."
     },
     "rules": [
       {
@@ -14638,7 +14638,8 @@
           "identity.mrn-exact"
         ],
         "implementedBy": [
-          "apps/web/lib/duplicate-rules.ts"
+          "apps/web/lib/duplicate-rules.ts",
+          "services/api/app/Modules/Registration/DuplicateScorer.php"
         ]
       },
       {
@@ -14652,7 +14653,8 @@
           "identity.phone-normalised"
         ],
         "implementedBy": [
-          "apps/web/lib/duplicate-rules.ts"
+          "apps/web/lib/duplicate-rules.ts",
+          "services/api/app/Modules/Registration/DuplicateScorer.php"
         ]
       },
       {
@@ -14666,7 +14668,8 @@
           "identity.national-id-suffix"
         ],
         "implementedBy": [
-          "apps/web/lib/duplicate-rules.ts"
+          "apps/web/lib/duplicate-rules.ts",
+          "services/api/app/Modules/Registration/DuplicateScorer.php"
         ]
       },
       {
@@ -14680,7 +14683,8 @@
           "identity.name-age-sex"
         ],
         "implementedBy": [
-          "apps/web/lib/duplicate-rules.ts"
+          "apps/web/lib/duplicate-rules.ts",
+          "services/api/app/Modules/Registration/DuplicateScorer.php"
         ]
       },
       {
@@ -14694,7 +14698,8 @@
           "identity.dob-exact"
         ],
         "implementedBy": [
-          "apps/web/lib/duplicate-rules.ts"
+          "apps/web/lib/duplicate-rules.ts",
+          "services/api/app/Modules/Registration/DuplicateScorer.php"
         ]
       },
       {
@@ -14703,12 +14708,13 @@
         "weight": 0.45,
         "veto": false,
         "label": "Name within one edit",
-        "when": "The names differ by a single insertion, deletion or substitution \u2014 the commonest transcription error at a busy desk, and the one a typo-by-typo search never finds.",
+        "when": "The names differ by a single insertion, deletion or substitution — the commonest transcription error at a busy desk, and the one a typo-by-typo search never finds.",
         "evidence": [
           "identity.name-fuzzy"
         ],
         "implementedBy": [
-          "apps/web/lib/duplicate-rules.ts"
+          "apps/web/lib/duplicate-rules.ts",
+          "services/api/app/Modules/Registration/DuplicateScorer.php"
         ]
       },
       {
@@ -14722,7 +14728,8 @@
           "identity.sex-conflict"
         ],
         "implementedBy": [
-          "apps/web/lib/duplicate-rules.ts"
+          "apps/web/lib/duplicate-rules.ts",
+          "services/api/app/Modules/Registration/DuplicateScorer.php"
         ]
       }
     ]
