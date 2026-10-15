@@ -79,8 +79,17 @@ jobs:
       # cares about are about rules rather than about the engine: which numbers a node may mint, what a stale version
       # does, what a replayed key does, and whether an altered ledger entry can be found. The Postgres-specific half —
       # the module schemas and the row locks — is the second job below, because SQLite cannot prove it.
+      # The failure list is echoed as an annotation rather than left in the log alone: a check run's annotations are
+      # what a contributor — or an agent working in a sandbox that cannot download Actions logs — can read back.
       - name: The contract, the rules and the ledger
-        run: vendor/bin/phpunit --display-warnings
+        run: |
+          set +e
+          vendor/bin/phpunit --display-warnings 2>&1 | tee /tmp/phpunit.log
+          status=${PIPESTATUS[0]}
+          if [ "$status" -ne 0 ]; then
+            sed -n '/^There w/,$p' /tmp/phpunit.log | head -60 | sed 's/^/::error ::/'
+          fi
+          exit "$status"
 
       - name: Server log on failure
         if: failure()
