@@ -21,6 +21,7 @@ import {
   niceTime,
   portalDigest,
   tr,
+  branchLabel,
 } from '@/lib/portal';
 import { todayIso } from '@/lib/appointments';
 
@@ -76,6 +77,10 @@ export default function PortalHomePage() {
               <div>
                 <dt className="text-text-tertiary">{t(STR.room)}</dt>
                 <dd className="text-text-primary">{next.room}</dd>
+              </div>
+              <div>
+                <dt className="text-text-tertiary">{t(STR.branch)}</dt>
+                <dd className="text-text-primary">{branchLabel(next.branch, locale)}</dd>
               </div>
               <div>
                 <dt className="text-text-tertiary">{t(STR.token)}</dt>

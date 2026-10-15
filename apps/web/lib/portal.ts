@@ -93,14 +93,30 @@ export const APPOINTMENTS: PortalAppointment[] = [
   { id: 'ap-6', on: '2026-06-18', time: '10:15', department: 'Medicine', departmentBn: 'মেডিসিন', doctor: 'Dr. S. Rahman', room: 'OPD-1', branch: 'Main Campus', token: 'M-11', state: 'missed', canCancelUntil: '2026-06-18 08:15', fee: 800 },
 ];
 
-/** The clinics a patient may book into, with the days they run. From the OPD timetable, not typed. */
+/**
+ * The clinics a patient may book into, with the days they run and the branch each one meets at.
+ *
+ * The branch is on the clinic rather than assumed from the patient's card, because the hospital has more than one
+ * and a patient who books into the diabetes clinic without noticing it meets at Uttara arrives at the wrong gate
+ * — with the appointment already given away. Where a clinic meets away from the branch the card is registered at,
+ * the booking says so before it is sent (see `checkBooking`).
+ */
 export const PORTAL_CLINICS = [
-  { id: 'anc', department: 'Antenatal (obstetrics)', departmentBn: 'প্রসূতি (এএনসি)', doctor: 'Dr. R. Akter', days: 'Every day', times: ['09:00', '10:00', '11:00'], room: 'OPD-4', fee: 800 },
-  { id: 'med', department: 'Medicine', departmentBn: 'মেডিসিন', doctor: 'Dr. S. Rahman', days: 'Sunday, Tuesday, Thursday', times: ['09:00', '09:30', '10:15'], room: 'OPD-1', fee: 800 },
-  { id: 'paed', department: 'Child health', departmentBn: 'শিশু স্বাস্থ্য', doctor: 'Dr. T. Hossain', days: 'Saturday to Wednesday', times: ['09:30', '10:30'], room: 'OPD-3', fee: 500 },
-  { id: 'diab', department: 'Diabetes and foot clinic', departmentBn: 'ডায়াবেটিস ও ফুট ক্লিনিক', doctor: 'Dr. N. Islam', days: 'Tuesday', times: ['14:00', '15:00'], room: 'OPD-2', fee: 800 },
-  { id: 'eye', department: 'Eye clinic', departmentBn: 'চোখের ক্লিনিক', doctor: 'Dr. K. Barua', days: 'Monday', times: ['10:00'], room: 'OPD-5', fee: 800 },
+  { id: 'anc', department: 'Antenatal (obstetrics)', departmentBn: 'প্রসূতি (এএনসি)', doctor: 'Dr. R. Akter', days: 'Every day', times: ['09:00', '10:00', '11:00'], room: 'OPD-4', branch: 'Main Campus', fee: 800 },
+  { id: 'med', department: 'Medicine', departmentBn: 'মেডিসিন', doctor: 'Dr. S. Rahman', days: 'Sunday, Tuesday, Thursday', times: ['09:00', '09:30', '10:15'], room: 'OPD-1', branch: 'Main Campus', fee: 800 },
+  { id: 'paed', department: 'Child health', departmentBn: 'শিশু স্বাস্থ্য', doctor: 'Dr. T. Hossain', days: 'Saturday to Wednesday', times: ['09:30', '10:30'], room: 'OPD-3', branch: 'Main Campus', fee: 500 },
+  { id: 'diab', department: 'Diabetes and foot clinic', departmentBn: 'ডায়াবেটিস ও ফুট ক্লিনিক', doctor: 'Dr. N. Islam', days: 'Tuesday', times: ['14:00', '15:00'], room: 'OPD-2', branch: 'Uttara Branch', fee: 800 },
+  { id: 'eye', department: 'Eye clinic', departmentBn: 'চোখের ক্লিনিক', doctor: 'Dr. K. Barua', days: 'Monday', times: ['10:00'], room: 'OPD-5', branch: 'Uttara Branch', fee: 800 },
 ];
+
+/** The hospital's branches in the patient's own language, for the clinics that meet away from their card's one. */
+export const BRANCH_BN: Record<string, string> = {
+  'Main Campus': 'প্রধান ক্যাম্পাস',
+  'Uttara Branch': 'উত্তরা শাখা',
+  'Mirpur Branch': 'মিরপুর শাখা',
+};
+export const branchLabel = (branch: string, locale: PortalLocale): string =>
+  locale === 'bn' ? (BRANCH_BN[branch] ?? branch) : branch;
 
 /** Slots already gone, so the refusal can offer the ones that are not. */
 export const TAKEN_SLOTS = ['2026-10-22 11:00', '2026-10-23 10:00', '2026-10-23 09:00', '2026-10-27 09:00'];
@@ -344,6 +360,13 @@ export function checkBooking(choice: { clinicId: string; on: string; time: strin
       messageBn: `অনলাইনে ${BOOKING_WINDOW_DAYS} দিন পর্যন্ত সময় নেওয়া যায়। এর চেয়ে দূরের তারিখের জন্য ডেস্কে ফোন করুন।`,
     });
   }
+  if (clinic.branch !== PATIENT.branch) {
+    warnings.push({
+      code: 'another-branch',
+      message: `This clinic meets at ${clinic.branch}, not at ${PATIENT.branch} where your card is registered. Allow for the journey, and come early.`,
+      messageBn: `এই ক্লিনিকটি ${branchLabel(clinic.branch, 'bn')}-এ বসে, আপনার কার্ডের ${branchLabel(PATIENT.branch, 'bn')}-এ নয়। যাতায়াতের সময় ধরে নিয়ে একটু আগে আসুন।`,
+    });
+  }
   if (TAKEN_SLOTS.includes(`${choice.on} ${choice.time}`)) {
     const alternatives = PORTAL_CLINICS.flatMap((c) => c.times.map((time) => ({ c, time })))
       .map(({ c, time }) => ({ clinic: c, time, on: choice.on }))
@@ -574,6 +597,7 @@ export const STR = {
   day: { bn: 'দিন', en: 'Day' },
   time: { bn: 'সময়', en: 'Time' },
   room: { bn: 'রুম', en: 'Room' },
+  branch: { bn: 'শাখা', en: 'Branch' },
   myReports: { bn: 'আমার রিপোর্ট', en: 'My reports' },
   ready: { bn: 'দেখা যাবে', en: 'Ready to see' },
   waitingResult: { bn: 'এখনো আসেনি', en: 'Still in the laboratory' },

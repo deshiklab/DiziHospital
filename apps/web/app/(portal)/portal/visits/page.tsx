@@ -8,6 +8,7 @@ import {
   APPOINTMENTS,
   CANCEL_CUTOFF_HOURS,
   PORTAL_CLINICS,
+  branchLabel,
   STR,
   TAKEN_SLOTS,
   bnDigits,
@@ -92,7 +93,7 @@ export default function PortalVisitsPage() {
     const id = `ap-new-${appointments.length + 1}`;
     setAppointments((list) => [
       ...list,
-      { id, on: choice.on, time: choice.time, department: clinic.department, departmentBn: clinic.departmentBn, doctor: clinic.doctor, room: clinic.room, branch: 'Main Campus', token: '—', state: 'booked', bring: locale === 'bn' ? 'সামনের ভিজিটের সময় কী আনতে হবে, তা এখানে লেখা থাকবে।' : 'Whatever you need to bring will be written here before the visit.', canCancelUntil: `${choice.on} 09:00`, fee: clinic.fee },
+      { id, on: choice.on, time: choice.time, department: clinic.department, departmentBn: clinic.departmentBn, doctor: clinic.doctor, room: clinic.room, branch: clinic.branch, token: '—', state: 'booked', bring: locale === 'bn' ? 'সামনের ভিজিটের সময় কী আনতে হবে, তা এখানে লেখা থাকবে।' : 'Whatever you need to bring will be written here before the visit.', canCancelUntil: `${choice.on} 09:00`, fee: clinic.fee },
     ]);
     const wrote = send(`Booking request — ${clinic.department} on ${choice.on}`, `ভিজিটের আবেদন — ${choice.on} তারিখে ${clinic.departmentBn}`, {
       id: 'bookPortalAppointment',
@@ -299,8 +300,8 @@ export default function PortalVisitsPage() {
                 const chosen = PORTAL_CLINICS.find((c) => c.id === e.target.value);
                 setChoice((c) => ({ ...c, clinicId: e.target.value, time: chosen?.times[0] ?? c.time }));
               }}
-              options={PORTAL_CLINICS.map((c) => ({ value: c.id, label: locale === 'bn' ? `${c.departmentBn} — ${c.doctor}` : `${c.department} — ${c.doctor}` }))}
-              hint={locale === 'bn' ? `${clinic.days} খোলা · ${clinic.room} · কাউন্টারে ${moneyIn(clinic.fee, 'bn')}` : `Open ${clinic.days} · ${clinic.room} · ${moneyIn(clinic.fee, 'en')} at the counter`}
+              options={PORTAL_CLINICS.map((c) => ({ value: c.id, label: locale === 'bn' ? `${c.departmentBn} — ${c.doctor} · ${branchLabel(c.branch, 'bn')}` : `${c.department} — ${c.doctor} · ${c.branch}` }))}
+              hint={locale === 'bn' ? `${clinic.days} খোলা · ${branchLabel(clinic.branch, 'bn')} · ${clinic.room} · কাউন্টারে ${moneyIn(clinic.fee, 'bn')}` : `Open ${clinic.days} · ${clinic.branch} · ${clinic.room} · ${moneyIn(clinic.fee, 'en')} at the counter`}
             />
             <SelectField
               label={t(STR.chooseDay)}

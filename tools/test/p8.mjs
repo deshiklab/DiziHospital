@@ -304,6 +304,13 @@ try {
   const taken = PT.checkBooking({ clinicId: PT.PORTAL_CLINICS[0].id, on: takenSlot[0], time: takenSlot[1] }, pctx);
   pass('a slot that went while the patient was choosing is refused, and the next free times are offered', codes(taken).includes('dizi.slot-taken') && taken.reasons[0].message.includes('Nothing has been booked'), taken.reasons[0].message.replace(/  +/g, ' ').slice(0, 120) + '…');
   pass('every portal refusal is written in Bangla as well as in English', taken.reasons.every((r) => hasBengali(r.messageBn)) && PT.checkBooking({ clinicId: '', on: '', time: '' }, pctx).reasons.every((r) => hasBengali(r.messageBn)));
+  /* The hospital has more than one branch, and a patient who books into a clinic at another one without noticing
+   * arrives at the wrong gate — with the appointment already given away. */
+  const away = PT.PORTAL_CLINICS.find((c) => c.branch !== PT.PATIENT.branch);
+  const here = PT.PORTAL_CLINICS.find((c) => c.branch === PT.PATIENT.branch);
+  const awayCheck = PT.checkBooking({ clinicId: away.id, on: PT.ADD_DAYS ? PT.ADD_DAYS(pctx.today, 3) : '2026-10-20', time: away.times[0] }, pctx);
+  const hereCheck = PT.checkBooking({ clinicId: here.id, on: PT.ADD_DAYS ? PT.ADD_DAYS(pctx.today, 3) : '2026-10-20', time: here.times[0] }, pctx);
+  pass('a clinic that meets at another branch says so before the booking is sent, and one at the patient’s own branch does not', awayCheck.ok && awayCheck.warnings.some((w) => w.code === 'another-branch' && w.messageBn.includes('শাখা')) && !hereCheck.warnings.some((w) => w.code === 'another-branch'), awayCheck.warnings.map((w) => w.code).join(', ') || 'no warning');
   pass('booking in the past, or further ahead than the window, is refused with the window named', codes(PT.checkBooking({ clinicId: PT.PORTAL_CLINICS[0].id, on: '2026-09-01', time: '10:00' }, pctx)).includes('in-the-past') && codes(PT.checkBooking({ clinicId: PT.PORTAL_CLINICS[0].id, on: '2027-03-01', time: '10:00' }, pctx)).includes('too-far'));
   const busy = [{ id: 'x1', state: 'booked', on: '2026-10-29', time: '09:00', department: 'other' }, { id: 'x2', state: 'booked', on: '2026-10-30', time: '09:00', department: 'other' }, { id: 'x3', state: 'booked', on: '2026-10-31', time: '09:00', department: 'other' }];
   pass('a fourth open appointment is refused before a fifth is taken', codes(PT.checkBooking({ clinicId: PT.PORTAL_CLINICS[1].id, on: '2026-10-29', time: PT.PORTAL_CLINICS[1].times[0] }, { ...pctx, appointments: busy })).includes('too-many-open'));
