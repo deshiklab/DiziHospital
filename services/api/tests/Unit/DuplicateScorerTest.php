@@ -79,7 +79,9 @@ final class DuplicateScorerTest extends TestCase
     {
         /* `identity.name-age-sex` is the name *exactly*, the age and the sex — the contract's own sentence, and the
            implementation `apps/web/lib/duplicate-rules.ts` shares. 0.6 alone is a warning rather than a refusal: the
-           rule's own words are "more than a coincidence and still less than a certainty". */
+           rule's own words are "more than a coincidence and still less than a certainty". The one-edit rule does not
+           also fire here, which is the difference between warning about this patient and refusing them: an exact name
+           that counted twice would be 1.05 on one name alone. */
         $agree = $this->score(
             ['name' => 'Rahima Begum', 'sex' => 'Female', 'phone' => '01711000001', 'age' => 34],
             ['name' => 'Rahima Begum', 'sex' => 'Female', 'phone' => '01811000002', 'age' => 34],
@@ -88,6 +90,7 @@ final class DuplicateScorerTest extends TestCase
         $this->assertSame('warn', $agree['verdict']);
         $this->assertSame(0.6, $agree['score']);
         $this->assertContains('identity.name-age-sex', $agree['evidence']);
+        $this->assertNotContains('identity.name-fuzzy', $agree['evidence']);
     }
 
     public function test_a_name_one_edit_apart_matches_and_two_edits_apart_does_not(): void
@@ -133,12 +136,23 @@ final class DuplicateScorerTest extends TestCase
 
     public function test_the_last_four_digits_of_a_national_id_are_enough_to_warn(): void
     {
+        /* Both records carry an identifier: the last four digits agreeing is a partial match, which is all the rule
+           claims — the register is full of partial identifiers and this is the signal they give up. */
         $result = $this->score(
             ['name' => 'Rahima Begum', 'sex' => 'Female', 'phone' => '01711000001', 'age' => 34, 'nationalId' => '1990123456789'],
             ['name' => 'Rahima Begum', 'sex' => 'Female', 'phone' => '01811000002', 'age' => 34, 'nationalId' => '2000999876789'],
         );
 
         $this->assertContains('identity.national-id-suffix', $result['evidence']);
+
+        /* And the identifier this register was built on: the MRN a record was filed under, which is what the desk form
+           checks and what the API reads under the same rule id. */
+        $byMrnTail = $this->score(
+            ['mrn' => 'SH-2106789', 'name' => 'Nasrin Akter', 'sex' => 'Female'],
+            ['name' => 'Nasrin Akhter', 'sex' => 'Female', 'phone' => '01811000002', 'age' => 29, 'nationalId' => '1990123456789'],
+        );
+
+        $this->assertContains('identity.national-id-suffix', $byMrnTail['evidence']);
     }
 
     public function test_a_rule_this_service_cannot_compute_is_refused_rather_than_skipped(): void

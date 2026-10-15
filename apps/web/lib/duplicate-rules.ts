@@ -65,6 +65,19 @@ export const DUPLICATE_RULE_IDS: string[] = duplicateRules.rules.map((rule) => r
 
 const digits = (value: unknown): string => String(value ?? '').replace(/\D/g, '');
 
+/**
+ * A phone number as the digits that decide, with the two ways one number is written two ways taken off: the country
+ * code, and the leading zero a Dhaka number carries locally. `01711 000 101` and `+880 1711 000 101` are one number,
+ * and the API — which holds the same rule, under the same id in the contract — normalises them the same way. Fewer
+ * than ten digits is not a number anybody can be reached on, so it matches nothing.
+ */
+const normalisePhone = (value: unknown): string => {
+  let phone = digits(value);
+  if (phone.startsWith('880') && phone.length > 10) phone = phone.slice(3);
+  if (phone.startsWith('0') && phone.length === 11) phone = phone.slice(1);
+  return phone.length >= 10 ? phone : '';
+};
+
 /** Spaces collapsed, case folded, Bangla left alone — `Md. Selim` and `MD SELIM` are the same person. */
 const flat = (value: unknown): string =>
   String(value ?? '')
@@ -127,8 +140,8 @@ function fire(ruleId: string, candidate: DuplicateIdentity, record: DuplicateIde
     }
 
     case 'identity.phone-normalised': {
-      const phone = digits(candidate.phone);
-      if (phone.length < 10 || phone !== digits(record.phone)) return null;
+      const phone = normalisePhone(candidate.phone);
+      if (phone === '' || phone !== normalisePhone(record.phone)) return null;
       return `Same phone number as ${record.name ?? record.mrn ?? 'another record'} (${record.mrn ?? '—'})`;
     }
 
@@ -137,10 +150,12 @@ function fire(ruleId: string, candidate: DuplicateIdentity, record: DuplicateIde
       if (id.length < 4) return null;
       const tail = id.slice(-4);
       const mrn = flat(record.mrn);
-      // The register already holds partial identifiers, so the tail is matched against the MRN — which is what
-      // the desk form did before this rule had a name.
-      if (!mrn.endsWith(tail)) return null;
-      return `National ID ending ${tail} matches ${record.mrn ?? 'an existing record'}`;
+      // The register already holds partial identifiers, and this rule reads both kinds: the MRN a record was filed
+      // under — which is what the desk form checked before the rule had a name — and, where a branch keeps one, the
+      // record's own national-ID field. The API reads the same two.
+      if (mrn.endsWith(tail)) return `National ID ending ${tail} matches ${record.mrn ?? 'an existing record'}`;
+      if (digits(record.nationalId).endsWith(tail)) return `National ID ending ${tail} matches the national ID on ${record.mrn ?? 'an existing record'}`;
+      return null;
     }
 
     case 'identity.name-age-sex': {

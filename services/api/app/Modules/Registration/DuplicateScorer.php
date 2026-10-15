@@ -89,15 +89,14 @@ final class DuplicateScorer
     private function matches(array $rule, array $a, array $b): bool
     {
         return match ($rule['id']) {
-            'identity.mrn-exact' => $this->present($a, 'mrn') && strcasecmp((string) $a['mrn'], (string) ($b['mrn'] ?? '')) === 0,
-            'identity.phone-normalised' => $this->phone($a['phone'] ?? null) !== '' && $this->phone($a['phone'] ?? null) === $this->phone($b['phone'] ?? null),
-            'identity.national-id-suffix' => $this->nationalIdTail($a) !== '' && $this->nationalIdTail($a) === $this->nationalIdTail($b),
+            'identity.mrn-exact' => $this->present($a, 'mrn') && $this->present($b, 'mrn') && $this->flat($a['mrn']) === $this->flat($b['mrn']),
+            'identity.phone-normalised' => $this->phoneOf($b) !== '' && $this->phoneOf($b) === $this->phoneOf($a),
+            'identity.national-id-suffix' => $this->idTailOf($b) !== '' && $this->identifierEndsWith($a, $this->idTailOf($b)),
             'identity.name-age-sex' => $this->sameNameAgeSex($a, $b),
-            'identity.dob-exact' => $this->present($a, 'dateOfBirth') && ($a['dateOfBirth'] ?? null) === ($b['dateOfBirth'] ?? null),
-            'identity.name-fuzzy' => $this->present($a, 'name')
-                && $this->present($b, 'name')
-                && $this->sameName((string) $a['name'], (string) $b['name'], $this->nameFuzzyAllowance()),
-            'identity.sex-conflict' => $this->present($a, 'sex') && $this->present($b, 'sex') && $a['sex'] !== $b['sex'],
+            'identity.dob-exact' => $this->present($a, 'dateOfBirth') && $this->present($b, 'dateOfBirth')
+                && $this->flat($a['dateOfBirth']) === $this->flat($b['dateOfBirth']),
+            'identity.name-fuzzy' => $this->nearName($a, $b),
+            'identity.sex-conflict' => $this->sexOf($a) !== null && $this->sexOf($b) !== null && $this->sexOf($a) !== $this->sexOf($b),
             default => throw ProblemException::of(
                 'dizi.unavailable',
                 'A duplicate rule this service cannot compute',
@@ -107,36 +106,173 @@ final class DuplicateScorer
         };
     }
 
-    /** @param array<string, mixed> $a @param array<string, mixed> $b */
+    /**
+     * The three fields rule, read the way the desk form reads it: the arriving record has all three, the record in the
+     * register has a name and an age, and the sex is a sex this register recognises rather than a blank.
+     *
+     * Sex is compared as a *word* rather than as a string — `M`, `Male` and `পুরুষ` are one answer, and a difference in
+     * capitalisation is not a disagreement about a person. `apps/web/lib/duplicate-rules.ts` folds it the same way,
+     * because the rule has one sentence in the contract and two implementations that have to agree on it.
+     *
+     * @param  array<string, mixed>  $a  the record in the register
+     * @param  array<string, mixed>  $b  what is arriving
+     */
     private function sameNameAgeSex(array $a, array $b): bool
+    {
+        if (! $this->present($a, 'name') || ! $this->present($b, 'name') || ! $this->present($b, 'age') || ! $this->present($a, 'age')) {
+            return false;
+        }
+
+        if ($this->sexOf($a) === null || $this->sexOf($b) === null || $this->sexOf($a) !== $this->sexOf($b)) {
+            return false;
+        }
+
+        if ((int) $a['age'] !== (int) $b['age']) {
+            return false;
+        }
+
+        return $this->flat($a['name']) === $this->flat($b['name']);
+    }
+
+    /**
+     * The one-edit rule, with the exact match excluded.
+     *
+     * The rule's own words are "the names **differ** by a single insertion, deletion or substitution", and the
+     * exclusion is load-bearing rather than pedantic: an identical name that counted here as well as in the
+     * three-fields rule would take that rule's 0.6 to 1.05 on one name alone and refuse a patient the contract says
+     * should only be shown a candidate. The desk form excludes it too — `withinOneEdit` returns false for two equal
+     * strings, under the comment "an exact match is another rule's job".
+     *
+     * @param  array<string, mixed>  $a
+     * @param  array<string, mixed>  $b
+     */
+    private function nearName(array $a, array $b): bool
     {
         if (! $this->present($a, 'name') || ! $this->present($b, 'name')) {
             return false;
         }
 
-        if (! $this->sameAge($a, $b)) {
+        $record = $this->flat($a['name']);
+        $arriving = $this->flat($b['name']);
+
+        /* A name of three letters or fewer is not compared by edit distance at all: one edit in `Ali` is a different
+           name rather than a misspelling, and the desk's own search is what catches that one. */
+        if (mb_strlen($arriving) < 4 || $arriving === $record) {
             return false;
         }
 
-        if ($this->present($a, 'sex') && $this->present($b, 'sex') && $a['sex'] !== $b['sex']) {
-            return false;
-        }
-
-        return $this->sameName((string) $a['name'], (string) $b['name'], 0);
+        return $this->withinOneEdit($arriving, $record);
     }
 
-    /** @param array<string, mixed> $a @param array<string, mixed> $b */
-    private function sameAge(array $a, array $b): bool
+    /**
+     * One insertion, deletion or substitution apart — over characters, not bytes.
+     *
+     * Compared by code points, which is not a detail: in Bangla a single letter is three bytes, and a byte-wise
+     * distance would read a one-letter difference as a three-edit one and let two spellings of one name through.
+     *
+     * The two strings arrive already case-folded and space-collapsed, so a difference in spacing is a difference of one
+     * character here and a difference of one character on the desk form, which walks the same two strings the same way.
+     */
+    private function withinOneEdit(string $a, string $b): bool
     {
-        if ($this->present($a, 'age') && $this->present($b, 'age')) {
-            return (int) $a['age'] === (int) $b['age'];
+        $left = mb_str_split($a);
+        $right = mb_str_split($b);
+        $allowance = $this->nameFuzzyAllowance();
+        $shorter = min(count($left), count($right));
+        $longer = max(count($left), count($right));
+
+        if ($longer - $shorter > $allowance) {
+            return false;
         }
 
-        if ($this->present($a, 'dateOfBirth') && $this->present($b, 'dateOfBirth')) {
-            return $a['dateOfBirth'] === $b['dateOfBirth'];
+        $i = 0;
+        $j = 0;
+        $edits = 0;
+
+        while ($i < count($left) && $j < count($right)) {
+            if ($left[$i] === $right[$j]) {
+                $i++;
+                $j++;
+
+                continue;
+            }
+
+            $edits++;
+            if ($edits > $allowance) {
+                return false;
+            }
+
+            if (count($left) > count($right)) {
+                $i++;
+            } elseif (count($right) > count($left)) {
+                $j++;
+            } else {
+                $i++;
+                $j++;
+            }
         }
 
-        return false;
+        if ($i < count($left) || $j < count($right)) {
+            $edits++;
+        }
+
+        return $edits <= $allowance;
+    }
+
+    /**
+     * The sex a register recognises, as one of three words — or `null` when the field is missing or says something this
+     * service has no reading for. Missing is not a disagreement: a record with no sex recorded cannot conflict with
+     * anything, and treating the blank as a fourth value would veto every block against the oldest rows in the register.
+     *
+     * @param  array<string, mixed>  $record
+     */
+    private function sexOf(array $record): ?string
+    {
+        if (! $this->present($record, 'sex')) {
+            return null;
+        }
+
+        $sex = $this->flat($record['sex']);
+
+        if (str_starts_with($sex, 'm') || $sex === 'পুরুষ') {
+            return 'male';
+        }
+
+        if (str_starts_with($sex, 'f') || $sex === 'মহিলা') {
+            return 'female';
+        }
+
+        return $sex === 'other' ? 'other' : null;
+    }
+
+    /**
+     * The last four digits of the national ID a desk typed — or an empty string when there are fewer than four.
+     *
+     * @param  array<string, mixed>  $record
+     */
+    private function idTailOf(array $record): string
+    {
+        $digits = preg_replace('/\D+/', '', (string) ($record['nationalId'] ?? '')) ?? '';
+
+        return strlen($digits) >= 4 ? substr($digits, -4) : '';
+    }
+
+    /**
+     * Whether an existing record already carries that tail as one of its identifiers.
+     *
+     * The contract's sentence names "the tail of an existing identifier", and this register holds two kinds: the MRN
+     * the record was filed under, and — where a branch has one — the record's own national-ID field. Either counts;
+     * the rule only ever raises a candidate for a person to look at.
+     *
+     * @param  array<string, mixed>  $record
+     */
+    private function identifierEndsWith(array $record, string $tail): bool
+    {
+        if (str_ends_with($this->flat($record['mrn'] ?? ''), $tail)) {
+            return true;
+        }
+
+        return $this->idTailOf($record) !== '' && $this->idTailOf($record) === $tail;
     }
 
     /** @param array<string, mixed> $record */
@@ -146,42 +282,17 @@ final class DuplicateScorer
     }
 
     /**
-     * A name within one edit — the commonest transcription error at a busy desk.
+     * A value as a comparison sees it: trimmed, case-folded, runs of whitespace collapsed to one space.
      *
-     * Compared by code points rather than bytes, which is not a detail: in Bangla a single letter is three bytes, and
-     * a byte-wise distance would report a one-letter difference as a three-edit one and let two spellings of the same
-     * name through. The comparison is case-folded first, because nobody at a registration desk cares about capitals.
+     * This is `flat()` in `apps/web/lib/duplicate-rules.ts`, deliberately character for character: the two
+     * implementations of this rule set serve one desk — `Md.  Selim` typed at the counter and `MD SELIM` on a referral
+     * note are one person, and it must not matter which side decided that.
      */
-    private function sameName(string $a, string $b, int $maxEdits): bool
+    private function flat(mixed $value): string
     {
-        $left = $this->letters(mb_strtolower($a));
-        $right = $this->letters(mb_strtolower($b));
+        $text = preg_replace('/\s+/u', ' ', trim((string) $value)) ?? (string) $value;
 
-        $short = min(count($left), count($right));
-        $long = max(count($left), count($right));
-        if ($long - $short > $maxEdits) {
-            return false;
-        }
-
-        /* Classic dynamic-programming edit distance with an early exit: the row can never improve by more than the
-           best value in it, so a row whose minimum already exceeds the allowance cannot end below it. */
-        $previous = range(0, count($right));
-        foreach ($left as $i => $letter) {
-            $current = [$i + 1];
-            foreach ($right as $j => $other) {
-                $current[] = min(
-                    $current[$j] + 1,
-                    $previous[$j + 1] + 1,
-                    $previous[$j] + ($letter === $other ? 0 : 1),
-                );
-            }
-            if (min($current) > $maxEdits) {
-                return false;
-            }
-            $previous = $current;
-        }
-
-        return $previous[count($right)] <= $maxEdits;
+        return mb_strtolower($text);
     }
 
     /**
@@ -196,18 +307,17 @@ final class DuplicateScorer
         return 1;
     }
 
-    /** @return list<string> */
-    private function letters(string $text): array
+    /**
+     * The digits of a phone number, with the two ways one number is written two ways taken off: the country code, and
+     * the leading zero a Dhaka number carries locally. `01711…` and `+8801711…` are one number, and treating them as
+     * two is how a duplicate check reports nothing all day.
+     *
+     * @param  array<string, mixed>  $record
+     */
+    private function phoneOf(array $record): string
     {
-        return array_values(array_filter(mb_str_split($text), static fn (string $c): bool => $c !== ' '));
-    }
+        $digits = preg_replace('/\D+/', '', (string) ($record['phone'] ?? '')) ?? '';
 
-    private function phone(?string $value): string
-    {
-        $digits = preg_replace('/\D+/', '', (string) $value) ?? '';
-
-        /* The country code, and the leading zero a Dhaka number carries locally: 01711… and +8801711… are one number
-           written two ways, and treating them as two is how a duplicate check reports nothing all day. */
         if (str_starts_with($digits, '880') && strlen($digits) > 10) {
             $digits = substr($digits, 3);
         }
@@ -215,19 +325,8 @@ final class DuplicateScorer
             $digits = substr($digits, 1);
         }
 
-        return $digits;
-    }
-
-    /**
-     * The tail of a national ID, which is what the register holds when it holds one at all.
-     *
-     * @param  array<string, mixed>  $record
-     */
-    private function nationalIdTail(array $record): string
-    {
-        $value = (string) ($record['nationalId'] ?? '');
-        $digits = preg_replace('/\D+/', '', $value) ?? '';
-
-        return strlen($digits) >= 4 ? substr($digits, -4) : '';
+        /* Fewer than ten digits is not a number anybody can be reached on — it is a year, a bed number, or half a
+           number typed in a hurry — and matching those against each other raises candidates the desk has to dismiss. */
+        return strlen($digits) >= 10 ? $digits : '';
     }
 }

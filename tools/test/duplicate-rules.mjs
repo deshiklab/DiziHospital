@@ -119,12 +119,42 @@ try {
       existing: [{ mrn: 'SH-210009', name: 'Kamrul Hossai' }],
       expect: { score: 0.45, verdict: 'warn' },
     },
+    // The country code and the leading zero come off before the digits are compared: one number typed two ways by two
+    // desks is still one number, and the API's copy of this rule does the same.
+    {
+      rule: 'identity.phone-normalised',
+      candidate: { phone: '+880 1711 000101' },
+      existing: [{ mrn: 'SH-210001', name: 'Abul Kalam', phone: '01711000101' }],
+      expect: { score: 0.8, verdict: 'warn' },
+    },
+    // A name that matches exactly is `name-age-sex`'s business, not the one-edit rule's: counting it twice would take
+    // 0.6 past the block threshold on one name alone and refuse a patient the rule set says to only warn about.
+    {
+      rule: 'identity.name-age-sex',
+      candidate: { name: 'Rahima Begum', age: 34, sex: 'M' },
+      existing: [{ mrn: 'SH-210005', name: 'RAHIMA  BEGUM', age: '34', sex: 'Male' }],
+      expect: { score: 0.6, verdict: 'warn' },
+    },
+    // The tail is matched against the identifiers the register already holds — the MRN a record was filed under, or
+    // the record's own national-ID field.
+    {
+      rule: 'identity.national-id-suffix',
+      candidate: { nationalId: '2000 9998 76789' },
+      existing: [{ mrn: 'SH-210010', nationalId: '1990 1234 56789' }],
+      expect: { score: 0.7, verdict: 'warn' },
+    },
   ];
 
   for (const testCase of CASES) {
     const found = engine.findDuplicates(testCase.candidate, testCase.existing);
     const top = found[0] ? summary(found[0]) : null;
-    const ok = top && top.rules.includes(testCase.rule) && top.score === testCase.expect.score && top.verdict === testCase.expect.verdict;
+    // One rule fired and only one: a case that matches several would make the weight it is meant to document unreadable.
+    const ok =
+      top &&
+      top.rules.includes(testCase.rule) &&
+      top.rules.length === 1 &&
+      top.score === testCase.expect.score &&
+      top.verdict === testCase.expect.verdict;
     pass(
       `${testCase.rule.padEnd(28)} → score ${testCase.expect.score}, ${testCase.expect.verdict}`,
       ok,
