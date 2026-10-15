@@ -61,12 +61,19 @@ jobs:
         run: composer install --no-interaction --prefer-dist --no-progress
 
       # `composer.lock` cannot be produced outside Actions — composer needs packagist, which only this runner can
-      # reach — so the runner that resolved it commits it. The step runs only while the file is missing and only
-      # touches that one file, which makes it a bootstrap rather than a bot: after the lock has landed it is a no-op
-      # for every later run.
+      # reach — so the runner that resolved it commits it: once, while the file is untracked, touching nothing but that
+      # file. After the lock has landed this is a no-op for every later run, which is what makes it a bootstrap rather
+      # than a bot. Only on a push, because on a pull request the checkout is the merge commit and appending to it
+      # would put a branch nobody asked for in the history.
       - name: Commit the resolved versions, once
-        if: github.event_name == 'push' && hashFiles('services/api/composer.lock') == ''
+        if: github.event_name == 'push'
         run: |
+          # Asked of git rather than of the working tree: `composer install` above has just written the file, so a
+          # check for its absence here would always be false and the step would never run.
+          if git ls-files --error-unmatch composer.lock > /dev/null 2>&1; then
+            echo 'composer.lock is committed already — nothing to do.'
+            exit 0
+          fi
           git config user.name 'ci-api'
           git config user.email 'ci-api@users.noreply.github.com'
           git add composer.lock
