@@ -11,6 +11,7 @@ on:
       - 'services/**'
       - 'tools/ci/**'
       - 'tools/test/**'
+      - 'tools/perf/**'
       - 'package.json'
       - 'docs/plan/design-tokens.json'
       - '.github/workflows/ci-app.yml'
@@ -21,6 +22,7 @@ on:
       - 'services/**'
       - 'tools/ci/**'
       - 'tools/test/**'
+      - 'tools/perf/**'
       - 'package.json'
       - 'docs/plan/design-tokens.json'
       - '.github/workflows/ci-app.yml'
@@ -113,6 +115,18 @@ jobs:
       # case per rule through it, which is the only way to see a rule that stopped firing.
       - name: The duplicate rule set behaves as the contract says
         run: npm run test:rules
+
+      # The grid's own rules: a page is a query rather than a slice, a view is a named query whose active state is
+      # derived, the address carries the window, and the export walks the whole filtered set and says how much of it
+      # it wrote. It drives the real component in jsdom, which is why it needs the harness dependencies above.
+      - name: The grid pages, views and exports what it says it does
+        run: npm run test:grid
+
+      # P0-204's acceptance line, measured: a hundred thousand records behind a source, through the real component.
+      # The budget is 1 s for the first page on the *development* build of React, which is the slower of the two — so
+      # a green run here is a green run in production with room to spare.
+      - name: A hundred thousand rows still render a page inside the budget
+        run: npm run perf:grid
 
       # The approval ladder, withholding, and the three verdicts a reconciliation can reach: a book that agrees,
       # a difference the queue explains, and a short drawer nobody can explain.

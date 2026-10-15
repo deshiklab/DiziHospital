@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Button, DataGrid, EmptyState, KpiTile, Panel, SafetyBanner, Sheet, Tabs, cx, useToast, type Column } from '@dizi/ui';
+import { Button, DataGrid, EmptyState, KpiTile, Panel, SafetyBanner, Sheet, Tabs, cx, useGrid, useToast, type Column, type GridQuery, type GridView } from '@dizi/ui';
 import { BadgeCheck, FileWarning, Landmark, Send, ShieldAlert, TriangleAlert, Undo2 } from 'lucide-react';
 import { ListView } from '@/components/ListView';
 import { todayIso } from '@/lib/appointments';
@@ -43,6 +43,28 @@ const TONE_TEXT: Record<string, string> = {
   critical: 'text-safety-critical',
 };
 
+/**
+ * The receivables register, as views rather than a `switch`.
+ *
+ * Each of these is what the ledger is worked through in a morning: the open book, what the payer has not answered,
+ * what came back short, what is past its settlement period, and everything. They used to be a chain of `view === '…'`
+ * comparisons inside the filter function — which worked, and which meant the list of views lived in two places: the
+ * labels passed to the grid and the comparisons inside it. As `GridView`s the label, the query and the filter are one
+ * record, and the desk can keep its own alongside them.
+ */
+const DEFAULT_QUERY: GridQuery = { page: 1, pageSize: 25 };
+
+const VIEWS: GridView[] = [
+  { id: 'open', name: 'Open register', hint: 'Final bills still in the payer’s hands', query: { ...DEFAULT_QUERY, filters: { view: 'open' } } },
+  { id: 'pre-auth', name: 'Awaiting pre-authorisation', query: { ...DEFAULT_QUERY, filters: { view: 'pre-auth' } } },
+  { id: 'short-paid', name: 'Short-paid or rejected', query: { ...DEFAULT_QUERY, filters: { view: 'short-paid' } } },
+  { id: 'overdue', name: 'Overdue', query: { ...DEFAULT_QUERY, filters: { view: 'overdue' } } },
+  { id: 'everything', name: 'Everything', query: { ...DEFAULT_QUERY } },
+];
+
+/** The view an empty or unknown `view` filter falls back to: the one the desk works the book from. */
+const DEFAULT_VIEW = VIEWS[0].id;
+
 export default function TpaPage() {
   const { queueWrite, syncEngine } = useShell();
   const { push } = useToast();
@@ -55,10 +77,7 @@ export default function TpaPage() {
   /* The register is a receivables ledger, not a day list: two hundred-odd claims on one page is not a screen
    * anybody works from. So it is queried like the production grid will be — a page, a page size, a search and a
    * saved view — and the preview does the slicing the server will do. */
-  const [view, setView] = useState('Open register');
   const [query, setQuery] = useState('');
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(25);
   const [openNo, setOpenNo] = useState<string | null>(null);
   const [settling, setSettling] = useState<Claim | null>(null);
   const [allowed, setAllowed] = useState('');
@@ -71,20 +90,41 @@ export default function TpaPage() {
     [generated, answered],
   );
   const snapshot = useMemo(() => claimsSnapshot(claims), [claims]);
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    const inView = claims.filter((c) =>
-      view === 'Open register' ? CLAIM_OPEN.includes(c.status) && c.basis === 'Final bill'
-        : view === 'Awaiting pre-authorisation' ? c.status === 'Pre-auth requested' || c.status === 'Pre-auth approved'
-          : view === 'Short-paid or rejected' ? c.disallowed > 0
-            : view === 'Overdue' ? c.overdueDays > 0
-              : true);
-    const searched = q
-      ? inView.filter((c) => [c.claimNo, c.invoiceNo, c.mrn, c.patientName, c.payer, c.tpa ?? '', c.preAuth ?? '', c.status].some((f) => f.toLowerCase().includes(q)))
-      : inView;
-    return searched;
-  }, [claims, view, query]);
-  const pageRows = filtered.slice((page - 1) * pageSize, page * pageSize);
+  /**
+   * One window of the register, filtered the way the view says.
+   *
+   * This is the function that becomes a request when `listClaims` exists in the contract: it already takes the
+   * window, the view and the search and returns a page with a total, which is the shape the grid is written against.
+   */
+  const register = useGrid<Claim>({
+    id: 'tpa-claims',
+    defaults: DEFAULT_QUERY,
+    filterKeys: ['view'],
+    sortKeys: ['claimNo', 'invoiceNo', 'patientName', 'payer', 'claimed', 'allowed', 'status'],
+    builtinViews: VIEWS,
+    /* The register is inside a tab on a screen that also carries an `?claim=` deep link, so the query stays in the
+       grid's own state rather than fighting for the address bar. */
+    url: false,
+    source: ({ page, pageSize, q, filters }) => {
+      const view = filters?.view || DEFAULT_VIEW;
+      const inView = claims.filter((c) =>
+        view === 'open' ? CLAIM_OPEN.includes(c.status) && c.basis === 'Final bill'
+          : view === 'pre-auth' ? c.status === 'Pre-auth requested' || c.status === 'Pre-auth approved'
+            : view === 'short-paid' ? c.disallowed > 0
+              : view === 'overdue' ? c.overdueDays > 0
+                : true);
+
+      const needle = (q ?? '').trim().toLowerCase();
+      const searched = needle
+        ? inView.filter((c) => [c.claimNo, c.invoiceNo, c.mrn, c.patientName, c.payer, c.tpa ?? '', c.preAuth ?? '', c.status].some((f) => f.toLowerCase().includes(needle)))
+        : inView;
+
+      const start = (page - 1) * pageSize;
+      return { rows: searched.slice(start, start + pageSize), total: searched.length };
+    },
+  });
+
+  const viewLabel = register.views.find((v) => v.id === register.activeViewId)?.name ?? 'Open register';
   const open = claims.find((c) => c.claimNo === openNo) ?? null;
   const agreement = open ? payerAgreement(open.payer) : null;
   const unassigned = claims.filter((c) => c.disallowed > 0 && c.absorbed > 0 && !c.absorbedBy);
@@ -105,6 +145,9 @@ export default function TpaPage() {
       return;
     }
     setAnswered((rows) => ({ ...rows, [claim.claimNo]: { ...claim, status: 'Submitted' as ClaimStatus, submittedAt: `${day} 11:30`, ageDays: 0, overdueDays: 0 } }));
+    /* The register is queried, not held: a write that changes a row has to tell the grid to read again, or the desk
+       sees the answer it sent and not the state it left behind. */
+    register.reload();
     push({
       title: `${claim.claimNo} submitted — ${money(claim.claimed)} claimed`,
       description: `${claim.documents.length} document(s) with it${claim.preAuth ? `, pre-authorisation ${claim.preAuth}` : ''}. The clock now runs against ${agreement?.settlementDays ?? 30} days, and it is measured from today, not from the query.`,
@@ -142,6 +185,7 @@ export default function TpaPage() {
       notes: [...settling.notes, line.because],
     };
     setAnswered((rows) => ({ ...rows, [settling.claimNo]: next }));
+    register.reload();
     const outcome = queueWrite(`Claim ${settling.claimNo}: payer answered ${money(line.allowed)} of ${money(settling.claimed)}`, {
       id: 'recordClaimResponse',
       recordId: settling.claimNo,
@@ -241,19 +285,13 @@ export default function TpaPage() {
       {tab === 'pipeline' && (
         <Panel>
           <DataGrid<Claim>
+            {...register.gridProps}
             id="tpa-claims"
-            caption={`Payer claims — ${view.toLowerCase()}, ${filtered.length} of ${claims.length} in the register`}
+            caption={`Payer claims — ${viewLabel.toLowerCase()}, ${register.total} of ${claims.length} in the register`}
             columns={columns}
-            rows={pageRows}
-            total={filtered.length}
-            page={Math.min(page, Math.max(1, Math.ceil(filtered.length / pageSize)))}
-            pageSize={pageSize}
-            onQuery={(q) => { setPage(q.page); setPageSize(q.pageSize); }}
-            quickSearch={{ value: query, onChange: (v) => { setQuery(v); setPage(1); }, placeholder: 'Claim, bill, MRN, patient, payer, pre-authorisation…' }}
-            savedViews={['Open register', 'Awaiting pre-authorisation', 'Short-paid or rejected', 'Overdue', 'Everything']}
-            activeView={view}
-            onViewChange={(v) => { setView(v); setPage(1); }}
-            printMeta={`Branch: Main Campus · ${view} · ${day}`}
+            quickSearch={{ value: query, onChange: (v) => { setQuery(v); register.setSearch(v); }, placeholder: 'Claim, bill, MRN, patient, payer, pre-authorisation…' }}
+            onRetry={register.reload}
+            printMeta={`Branch: Main Campus · ${viewLabel} · ${day}`}
             exportFileName={`claims-${day}`}
             rowId={(c) => c.claimNo}
             height="28rem"

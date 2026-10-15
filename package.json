@@ -29,6 +29,8 @@
     "test:admin": "node tools/test/admin.mjs",
     "test:p8": "node tools/test/p8.mjs",
     "api:lint": "node tools/ci/php-lint.mjs",
-    "api:style": "node tools/ci/php-style.mjs"
+    "api:style": "node tools/ci/php-style.mjs",
+    "test:grid": "node tools/test/grid.mjs",
+    "perf:grid": "node tools/perf/grid.mjs"
   }
 }

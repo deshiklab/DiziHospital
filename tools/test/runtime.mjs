@@ -339,6 +339,64 @@ async function check(route) {
     }
   }
 
+  /* The register is the grid every other list is measured against, so its three promises are driven here rather
+   * than trusted: the source is asked for one page (not the whole table), turning the page asks it again, and the
+   * query the desk is looking at is the one in the address bar — a link copied out of it has to come back to the
+   * same rows. Runs before the copy press below, which is a shared control and not part of this claim. */
+  let register = 'n/a';
+  if (route === '/patients') {
+    const rowsNow = () => [...doc.querySelectorAll('tbody tr')];
+    /* The whole first row, not its first cell: the register opens with a selection column, so cell zero is an empty
+       checkbox and two different pages would look identical. */
+    const firstKey = () => (rowsNow()[0]?.textContent ?? '').replace(/\s+/g, ' ').trim();
+    const settle = async (until) => {
+      for (let i = 0; i < 40 && !until(); i += 1) await new Promise((r) => setTimeout(r, 100));
+      await new Promise((r) => setTimeout(r, 150));
+    };
+
+    await settle(() => rowsNow().length > 0);
+    if (rowsNow().length === 0) {
+      register = 'NO ROWS';
+      routeProblems.push('the patient register rendered no rows — the grid never reached its source');
+    } else {
+      const pageSize = Number(doc.querySelector('select[aria-label="Rows per page"]')?.value ?? 25);
+      const firstPageRows = rowsNow().length;
+      const firstPageFirst = firstKey();
+      const next = doc.querySelector('button[aria-label="Next page"]');
+      if (!next) {
+        register = 'NO PAGER';
+        routeProblems.push('the patient register has no pager');
+      } else {
+        press(next);
+        await settle(() => firstKey() !== firstPageFirst && firstKey() !== '');
+        const turned = firstKey() !== '' && firstKey() !== firstPageFirst;
+        const urlPage = /[?&]page=2(&|$)/.test(dom.window.location.search);
+        const oversize = rowsNow().length > pageSize;
+
+        // Sorting through the source, not in the browser: the header asks again and the address follows.
+        const nameHeader = [...doc.querySelectorAll('th')].find((th) => /^Patient$/.test((th.textContent ?? '').trim()));
+        const sortButton = nameHeader?.querySelector('button');
+        let sorted = 'no sort button';
+        if (sortButton) {
+          const beforeSort = firstKey();
+          press(sortButton);
+          /* Either direction counts: the register opens sorted by MRN, so the first press is ascending. */
+          await settle(() => /[?&]sort=name(:|%3A)(asc|desc)/.test(dom.window.location.search));
+          const ordered = /[?&]sort=name(:|%3A)(asc|desc)/.test(dom.window.location.search);
+          sorted = `${ordered ? 'in the address' : 'NOT IN THE ADDRESS'}${firstKey() !== beforeSort ? ' · rows reordered' : ' · SAME ORDER'}`;
+          if (!ordered) routeProblems.push('sorting the register did not travel in the address');
+          if (firstKey() === beforeSort) routeProblems.push('sorting the register did not reorder the rows it renders');
+        }
+
+        register = `${firstPageRows} row(s) · ${turned ? 'page 2 differs' : 'STUCK ON PAGE 1'} · ${urlPage ? 'page 2 in the address' : 'NO ADDRESS'} · sorted ${sorted}`;
+        if (!turned) routeProblems.push('turning the page did not ask the source for the next one');
+        if (!urlPage) routeProblems.push('the page number is not in the address, so the view cannot be shared');
+        if (sorted === 'no sort button') routeProblems.push('the register has no sortable header to drive');
+        if (oversize) routeProblems.push(`the register put ${rowsNow().length} rows on screen for a page size of ${pageSize}`);
+      }
+    }
+  }
+
   // The sync console runs the outage drill from this harness. The verdict it prints is the plan's exit criterion,
   // so it is asserted rather than eyeballed — and the click goes through the real engine, not a stub.
   let drill = 'n/a';
@@ -926,7 +984,7 @@ async function check(route) {
 
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors: [...errors, ...routeProblems], shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, design, schedules, readyWait };
+  return { errors: [...errors, ...routeProblems], shell, handlers, copy, register, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, design, schedules, readyWait };
 }
 
 const CONCURRENCY = Math.max(1, Number(process.env.DIZI_CONCURRENCY ?? 4));
@@ -981,10 +1039,10 @@ outcomes.forEach((outcome, i) => {
     problems += 1;
     return;
   }
-  const { errors, shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, design, schedules, readyWait } = outcome.value;
+  const { errors, shell, handlers, copy, register, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, design, schedules, readyWait } = outcome.value;
   const bad = errors.length > 0 || handlers === 'DEAD';
   const slow = readyWait !== undefined && readyWait > 2000 ? `  ready=${(readyWait / 1000).toFixed(1)}s` : '';
-  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} shell=${shell ?? 'none'}  handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${suite === 'n/a' ? '' : `  suite=${suite}`}${viewPress === 'n/a' ? '' : `  view=${viewPress}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${report === 'n/a' ? '' : `  report=${report}`}${design === 'n/a' ? '' : `  design=${design}`}${schedules === 'n/a' ? '' : `  schedules=${schedules}`}${slow}`);
+  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} shell=${shell ?? 'none'}  handlers=${handlers}  copy=${copy}${register === 'n/a' ? '' : `  register=${register}`}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${suite === 'n/a' ? '' : `  suite=${suite}`}${viewPress === 'n/a' ? '' : `  view=${viewPress}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${report === 'n/a' ? '' : `  report=${report}`}${design === 'n/a' ? '' : `  design=${design}`}${schedules === 'n/a' ? '' : `  schedules=${schedules}`}${slow}`);
   if (handlers === 'DEAD') {
     console.log('      the shared control did not respond after hydration');
     problems += 1;

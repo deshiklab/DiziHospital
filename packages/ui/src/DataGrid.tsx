@@ -1,24 +1,34 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Columns3, Download, Filter, Pencil, Printer, RotateCcw, Search, X } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { AlertTriangle, ArrowDown, ArrowUp, BookmarkPlus, Check, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Columns3, Download, Filter, Loader2, MoreVertical, Pencil, Printer, RotateCcw, Search, X } from 'lucide-react';
 import { cx } from './cx';
 import { Button } from './Button';
 import { Menu, MenuTriggerIcon, type MenuItem } from './Menu';
 import { Tooltip } from './Tooltip';
 import { usePersistentState } from './hooks';
+import { csvFileName, downloadCsv, localDay, toCsv } from './csv';
+import type { GridView } from './grid';
 
 /* --------------------------------------------------------------------------- DataGrid
- * The workhorse that replaces the 597 legacy grids. What it adds over a plain table, and why:
+ * The workhorse that replaces the 597 legacy grids (P0-204). What it adds over a plain table, and why:
  *
+ *  - **it is paged by whoever owns the rows.** The grid is handed a page and a total and asks for another window
+ *    through `onQuery`; it never sorts or filters an array itself. That is what makes a hundred-thousand-row register
+ *    the same screen as a ten-row one, and `tools/perf/grid.mjs` measures exactly that claim.
+ *  - **views are named queries.** A view carries its own `GridQuery` (see `grid.ts`), the current one is derived by
+ *    comparing rather than remembered, and a desk can save its own without a developer. Chips across the top are the
+ *    one-click ones; the caret on a saved chip is where it is renamed or deleted.
+ *  - **export is the whole filtered set, not the page.** `onExport` walks the source in windows and the file says how
+ *    many rows it has; when there are more than it will fetch, the screen is told rather than quietly short-changed.
  *  - **fixed height with its own scroll + sticky header**: a ward screen stays still while the data moves, and
  *    the page bar is always reachable — the legacy grid grew the page instead.
- *  - **advanced search and filtering**: a quick search plus an expanding filter panel and removable chips,
- *    so a clerk can see *why* the list is short rather than guessing.
- *  - **pagination with page size and jump**: the counters deal in "page 3 of 12 at 50 rows", not infinite scroll.
+ *  - **row keyboard navigation**: Tab reaches the table, ↑/↓ walk the rows, Enter opens the focused one, Home/End jump
+ *    to the ends, Escape hands focus back. A grid that can only be used with a mouse is a grid a ward clerk cannot use
+ *    at speed.
  *  - **inline edit** for the two or three fields a clerk actually fixes (phone, status, note), without a modal.
  *  - **3-dot row menu** for the long tail of actions, so the row does not grow eight buttons.
- *  - **print / export / sort / column show-hide**, all persisted per table.
+ *  - **print / sort / column show-hide**, all persisted per table.
  *  - **tooltips only where a real pointer exists**, because on a phone they are worse than nothing.
  */
 
@@ -37,6 +47,13 @@ export interface Column<T> {
   /** Long-form explanation shown on hover on desktop only — never the only place information lives. */
   tooltip?: string;
   render?: (row: T) => React.ReactNode;
+  /**
+   * What this cell is when it is written to a file, when that is not the raw field.
+   *
+   * A `render` column draws a chip or a link; exporting the raw field is then either blank or unreadable. This is the
+   * one line that keeps the spreadsheet matching the screen.
+   */
+  exportValue?: (row: T) => string | number | null | undefined;
   /** Excluded from the print view (e.g. action columns). */
   printable?: boolean;
 }
@@ -74,9 +91,33 @@ export interface DataGridProps<T> {
   filters?: React.ReactNode;
   activeFilters?: Array<{ id: string; label: string; onRemove: () => void }>;
   onClearFilters?: () => void;
-  savedViews?: string[];
-  activeView?: string;
-  onViewChange?: (view: string) => void;
+  /**
+   * The views over this list: the screen's built-ins and the desk's own, as named queries.
+   *
+   * A plain `string[]` used to be enough here and was the bug: a name with no query behind it is a chip that can only
+   * lie about what it filters. `useGrid` builds these.
+   */
+  views?: GridView[];
+  /** The view the current query *is*. Derived from the query, so editing a filter releases the chip. */
+  activeViewId?: string;
+  onViewApply?: (id: string) => void;
+  /** Save the current query under a name. Saving a name that exists replaces it, which the form says out loud. */
+  onViewSave?: (name: string) => void;
+  onViewRename?: (id: string, name: string) => void;
+  onViewDelete?: (id: string) => void;
+  /**
+   * Every row the current filters match, for the export button.
+   *
+   * When it is absent the export writes the rows on screen and says so, because a screen made of local data has no
+   * "rest of the set" to fetch — and a button that implies one would be the dishonest half of a feature.
+   */
+  onExport?: () => Promise<{ rows: T[]; total: number; complete: boolean }>;
+  onExportLabel?: string;
+  /** A source that refused: shown instead of an empty table, with a retry if the screen can offer one. */
+  error?: string | null;
+  onRetry?: () => void;
+  /** Row-level ↑/↓/Enter/Home/End. On by default; off is for a grid nested in another keyboard surface. */
+  rowKeyboard?: boolean;
   toolbar?: React.ReactNode;
   bulkActions?: Array<{ label: string; onSelect: (ids: string[]) => void }>;
   selected?: string[];
@@ -114,9 +155,17 @@ export function DataGrid<T>({
   filters,
   activeFilters = [],
   onClearFilters,
-  savedViews = [],
-  activeView,
-  onViewChange,
+  views = [],
+  activeViewId,
+  onViewApply,
+  onViewSave,
+  onViewRename,
+  onViewDelete,
+  onExport,
+  onExportLabel,
+  error = null,
+  onRetry,
+  rowKeyboard = true,
   toolbar,
   bulkActions = [],
   selected = [],
@@ -193,23 +242,123 @@ export function DataGrid<T>({
   };
 
   /* ------------------------------------------------------------------------- export */
-  const exportCsv = () => {
-    const escape = (v: unknown) => {
-      const s = v == null ? '' : String(v);
-      return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-    };
-    const csv = [
-      printableCols.map((c) => escape(c.header)).join(','),
-      ...rows.map((r) => printableCols.map((c) => escape(c.render ? '' : (r as Record<string, unknown>)[c.key])).join(',')),
-    ].join('\n');
-    const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${exportFileName}-${new Date().toISOString().slice(0, 10)}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
+  const [exporting, setExporting] = useState(false);
+  const [exportNote, setExportNote] = useState<string | null>(null);
+
+  const csvColumns = useMemo(
+    () =>
+      printableCols.map((c) => ({
+        header: c.header,
+        key: String(c.key),
+        value: c.exportValue ? (row: T) => c.exportValue?.(row) : undefined,
+      })),
+    [printableCols],
+  );
+
+  /**
+   * Write the file, and say what went into it.
+   *
+   * The note is not decoration. An export of a filtered list is the number somebody puts in a meeting, so the screen
+   * has to say whether it wrote every matching row or stopped at a ceiling — and if the write itself failed, that the
+   * file was not written at all rather than leaving a person believing it was.
+   */
+  const exportCsv = async () => {
+    setExportNote(null);
+
+    if (!onExport) {
+      downloadCsv(toCsv(csvColumns, rows), csvFileName(exportFileName, localDay()));
+      setExportNote(`Wrote the ${rows.length.toLocaleString()} row(s) on screen — this list is not queried from a server.`);
+      return;
+    }
+
+    setExporting(true);
+    try {
+      const result = await onExport();
+      downloadCsv(toCsv(csvColumns, result.rows), csvFileName(exportFileName, localDay()));
+      setExportNote(
+        result.complete
+          ? `Wrote all ${result.total.toLocaleString()} matching row(s).`
+          : `Wrote ${result.rows.length.toLocaleString()} of ${result.total.toLocaleString()} matching rows — narrow the filters to export the rest.`,
+      );
+    } catch (cause) {
+      setExportNote(`The export failed and no file was written: ${cause instanceof Error ? cause.message : 'the list could not be read'}.`);
+    } finally {
+      setExporting(false);
+    }
   };
+
+  /* -------------------------------------------------------------- views and the keyboard */
+  const [viewForm, setViewForm] = useState<{ mode: 'save' | 'rename'; id?: string } | null>(null);
+  const [viewName, setViewName] = useState('');
+  const [focusedRow, setFocusedRow] = useState<string | null>(null);
+  const scroller = useRef<HTMLDivElement>(null);
+  const tbody = useRef<HTMLTableSectionElement>(null);
+
+  const openViewForm = (mode: 'save' | 'rename', view?: GridView) => {
+    setViewForm(mode === 'rename' ? { mode, ...(view ? { id: view.id } : {}) } : { mode });
+    setViewName(mode === 'rename' ? (view?.name ?? '') : '');
+  };
+
+  const submitViewForm = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!viewForm || !viewName.trim()) return;
+    if (viewForm.mode === 'save') onViewSave?.(viewName);
+    else if (viewForm.id) onViewRename?.(viewForm.id, viewName);
+    setViewForm(null);
+    setViewName('');
+  };
+
+  /** Move row focus by index. Focus, not selection: the browser's own focus ring is what a keyboard user follows. */
+  const focusRowAt = useCallback(
+    (index: number) => {
+      const node = tbody.current;
+      if (!node) return;
+      const trs = Array.from(node.querySelectorAll<HTMLTableRowElement>('tr[data-row-id]'));
+      if (trs.length === 0) return;
+      const target = trs[Math.max(0, Math.min(index, trs.length - 1))];
+      setFocusedRow(target.dataset.rowId ?? null);
+      target.focus();
+    },
+    [],
+  );
+
+  const onRowKeyDown = (event: React.KeyboardEvent<HTMLTableRowElement>, row: T) => {
+    if (!rowKeyboard) return;
+    const index = rows.findIndex((r) => rowId(r) === rowId(row));
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        focusRowAt(index + 1);
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        focusRowAt(index - 1);
+        break;
+      case 'Home':
+        event.preventDefault();
+        focusRowAt(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        focusRowAt(rows.length - 1);
+        break;
+      case 'Enter':
+        if (onRowClick) {
+          event.preventDefault();
+          onRowClick(row);
+        }
+        break;
+      case 'Escape':
+        setFocusedRow(null);
+        scroller.current?.focus();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const canManage = (view: GridView) => !view.builtin && Boolean(onViewRename || onViewDelete);
 
   /* -------------------------------------------------------------------------- print */
   const print = () => {
@@ -295,24 +444,100 @@ export function DataGrid<T>({
           </Button>
         )}
 
-        {savedViews.length > 0 && (
-          <div className="flex flex-wrap gap-1" role="group" aria-label="Saved views">
-            {savedViews.map((v) => (
-              <button
-                key={v}
-                type="button"
-                onClick={() => onViewChange?.(v)}
-                aria-pressed={activeView === v}
-                className={cx(
-                  'rounded-full border px-3 py-1 text-xs',
-                  activeView === v
-                    ? 'border-brand-500 bg-brand-50 text-brand-700'
-                    : 'border-border-subtle bg-surface-raised text-text-secondary hover:border-brand-300 hover:text-brand-600',
-                )}
-              >
-                {v}
-              </button>
-            ))}
+        {(views.length > 0 || onViewSave) && (
+          <div className="flex flex-wrap items-center gap-1" role="group" aria-label="Saved views">
+            {views.map((v) => {
+              const active = activeViewId === v.id;
+              return (
+                <span
+                  key={v.id}
+                  className={cx(
+                    'inline-flex items-stretch overflow-hidden rounded-full border',
+                    active ? 'border-brand-500 bg-brand-50 text-brand-700' : 'border-border-subtle bg-surface-raised text-text-secondary',
+                  )}
+                >
+                  <button
+                    type="button"
+                    onClick={() => onViewApply?.(v.id)}
+                    aria-pressed={active}
+                    title={v.hint ?? (v.builtin ? undefined : 'One of your saved views')}
+                    className="px-3 py-1 text-xs hover:text-brand-600"
+                  >
+                    {v.name}
+                  </button>
+                  {active && canManage(v) && (
+                    <Menu
+                      label={`Manage the view ${v.name}`}
+                      align="right"
+                      trigger={({ toggle, ref, open }) => (
+                        <button
+                          ref={ref}
+                          type="button"
+                          onClick={toggle}
+                          aria-expanded={open}
+                          aria-haspopup="menu"
+                          aria-label={`Manage the view ${v.name}`}
+                          className="grid w-6 place-items-center border-l border-current/20"
+                        >
+                          <MoreVertical className="size-3" aria-hidden />
+                        </button>
+                      )}
+                      items={[
+                        ...(onViewRename ? [{ label: 'Rename…', onSelect: () => openViewForm('rename', v) }] : []),
+                        ...(onViewDelete
+                          ? [{ label: 'Delete this view', danger: true, separated: true, onSelect: () => onViewDelete(v.id) }]
+                          : []),
+                      ]}
+                    />
+                  )}
+                </span>
+              );
+            })}
+
+            {viewForm ? (
+              <form onSubmit={submitViewForm} className="inline-flex items-center gap-1">
+                <label className="sr-only" htmlFor={`${id}-view-name`}>
+                  {viewForm.mode === 'save' ? 'Name for this view' : 'New name for this view'}
+                </label>
+                <input
+                  id={`${id}-view-name`}
+                  value={viewName}
+                  autoFocus
+                  onChange={(e) => setViewName(e.target.value)}
+                  placeholder="e.g. Unpaid this week"
+                  maxLength={60}
+                  className="h-7 w-44 rounded-full border border-brand-500 bg-surface-default px-3 text-xs"
+                />
+                <Button size="sm" type="submit" disabled={!viewName.trim()}>
+                  <Check className="size-3.5" aria-hidden />
+                  {viewForm.mode === 'save' ? 'Save view' : 'Rename'}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  type="button"
+                  onClick={() => {
+                    setViewForm(null);
+                    setViewName('');
+                  }}
+                >
+                  Cancel
+                </Button>
+              </form>
+            ) : (
+              onViewSave && (
+                <Tooltip title="Save a view" content="Saves the filters, search, sort and column order you are looking at, so tomorrow starts where today ended. Saving a name that exists replaces it.">
+                  <button
+                    type="button"
+                    onClick={() => openViewForm('save')}
+                    className="inline-flex items-center gap-1 rounded-full border border-dashed border-border-default px-3 py-1 text-xs text-text-secondary hover:border-brand-300 hover:text-brand-600"
+                  >
+                    <BookmarkPlus className="size-3" aria-hidden />
+                    Save view
+                  </button>
+                </Tooltip>
+              )
+            )}
           </div>
         )}
 
@@ -413,10 +638,19 @@ export function DataGrid<T>({
               </div>
             )}
           </div>
-          <Button size="sm" onClick={exportCsv} className="gap-1.5">
-            <Download className="size-3.5" aria-hidden />
-            Export
-          </Button>
+          <Tooltip
+            title="Export CSV"
+            content={
+              onExport
+                ? `Writes every row matching the current filters, not just this page — ${total.toLocaleString()} row(s) before the ceiling.`
+                : 'Writes the rows on screen. This list is held in memory rather than queried, so that is all of it.'
+            }
+          >
+            <Button size="sm" onClick={() => void exportCsv()} disabled={exporting} className="gap-1.5">
+              {exporting ? <Loader2 className="size-3.5 animate-spin" aria-hidden /> : <Download className="size-3.5" aria-hidden />}
+              {exporting ? 'Exporting…' : 'Export'}
+            </Button>
+          </Tooltip>
           <Tooltip title="Print" content="Prints the current view: filters, visible columns and the row count.">
             <Button size="sm" onClick={print} className="gap-1.5">
               <Printer className="size-3.5" aria-hidden />
@@ -425,6 +659,12 @@ export function DataGrid<T>({
           </Tooltip>
         </div>
       </div>
+
+      {exportNote && (
+        <p role="status" className="no-print text-xs text-text-secondary">
+          {exportNote}
+        </p>
+      )}
 
       {/* ------------------------------------------------------------ filter panel */}
       {filters && filtersOpen && (
@@ -476,9 +716,38 @@ export function DataGrid<T>({
         </div>
       )}
 
+      {/* Screen readers get the same thing the pagination bar shows a sighted reader: how many, which page, in what
+          order. The grid's own state is not announced by a table, and "23 rows" is the first question asked of it. */}
+      <p role="status" aria-live="polite" className="sr-only">
+        {loading
+          ? 'Loading records'
+          : `${total.toLocaleString()} record${total === 1 ? '' : 's'}, page ${page} of ${pages}${
+              sort ? `, sorted by ${visible.find((c) => c.key === sort.key)?.header ?? sort.key} ${sort.dir === 'asc' ? 'ascending' : 'descending'}` : ''
+            }`}
+      </p>
+
       {/* ------------------------------------------------------------------- table */}
       <div className="overflow-hidden rounded-lg border border-border-subtle bg-surface-default">
-        <div className="overflow-auto" style={{ maxHeight: height }}>
+        <div
+          ref={scroller}
+          /* Focusable because it scrolls: a keyboard user has to be able to reach the region and then move inside it
+             with the arrow keys, which is what the row handler below does. */
+          {...(rowKeyboard ? { tabIndex: 0, role: 'region', 'aria-label': `${caption} — use the arrow keys to move between rows` } : {})}
+          className="overflow-auto focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-brand-500"
+          style={{ maxHeight: height }}
+          onKeyDown={(event) => {
+            if (!rowKeyboard) return;
+            if (event.target !== event.currentTarget) return;
+            if (event.key === 'ArrowDown' || event.key === 'Home') {
+              event.preventDefault();
+              focusRowAt(0);
+            }
+            if (event.key === 'ArrowUp' || event.key === 'End') {
+              event.preventDefault();
+              focusRowAt(rows.length - 1);
+            }
+          }}
+        >
           <table className="w-full border-separate border-spacing-0 text-left">
             <caption className="sr-only">{caption}</caption>
             <thead className="sticky top-0 z-10">
@@ -545,7 +814,7 @@ export function DataGrid<T>({
                 )}
               </tr>
             </thead>
-            <tbody>
+            <tbody ref={tbody}>
               {loading &&
                 Array.from({ length: 6 }).map((_, i) => (
                   <tr key={`sk-${i}`}>
@@ -555,7 +824,25 @@ export function DataGrid<T>({
                   </tr>
                 ))}
 
-              {!loading && rows.length === 0 && (
+              {/* A source that threw is not an empty list. Showing "nothing matches" over a failed request is how a
+                 desk concludes a patient does not exist. */}
+              {!loading && error && (
+                <tr>
+                  <td colSpan={columnCount} className="px-3 py-10 text-center">
+                    <p className="inline-flex items-center gap-2 text-sm text-safety-critical">
+                      <AlertTriangle className="size-4" aria-hidden />
+                      {error}
+                    </p>
+                    {onRetry && (
+                      <Button size="sm" className="mt-3" onClick={onRetry}>
+                        Try again
+                      </Button>
+                    )}
+                  </td>
+                </tr>
+              )}
+
+              {!loading && !error && rows.length === 0 && (
                 <tr>
                   <td colSpan={columnCount} className="px-3 py-10 text-center text-sm text-text-tertiary">
                     {emptyLabel}
@@ -564,6 +851,7 @@ export function DataGrid<T>({
               )}
 
               {!loading &&
+                !error &&
                 rows.map((row) => {
                   const rid = rowId(row);
                   const isSelected = selected.includes(rid);
@@ -571,11 +859,15 @@ export function DataGrid<T>({
                   return (
                     <tr
                       key={rid}
+                      data-row-id={rid}
                       onClick={() => onRowClick?.(row)}
+                      onKeyDown={(event) => onRowKeyDown(event, row)}
+                      {...(rowKeyboard ? { tabIndex: focusedRow === rid ? 0 : -1 } : {})}
                       className={cx(
                         'h-[var(--dizi-density-row-height)]',
                         onRowClick && 'cursor-pointer',
                         isSelected ? 'bg-brand-50' : 'hover:bg-surface-sunken',
+                        rowKeyboard && 'focus:outline-2 focus:outline-offset-[-2px] focus:outline-brand-500',
                       )}
                     >
                       {onSelectedChange && (

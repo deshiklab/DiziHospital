@@ -2,7 +2,20 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Button, DataGrid, Panel, SafetyBanner, Tabs, copyText, useToast, type Column, type RowAction } from '@dizi/ui';
+import {
+  Button,
+  DataGrid,
+  Panel,
+  SafetyBanner,
+  Tabs,
+  copyText,
+  useGrid,
+  useToast,
+  type Column,
+  type GridQuery,
+  type GridView,
+  type RowAction,
+} from '@dizi/ui';
 import { branches, payers, queryPatients, type Patient } from '@/lib/mock';
 import { useShell } from '@/lib/shell';
 
@@ -15,31 +28,69 @@ import { useShell } from '@/lib/shell';
 
 const DUPES: Array<{ a: Patient; b: Patient; reason: string }> = [];
 
+/** The window a patient register opens on: numbered the way the register is filed, 25 to a page. */
+const DEFAULT_QUERY: GridQuery = { page: 1, pageSize: 25, sort: { key: 'mrn', dir: 'asc' } };
+
+/** The filters the address and a saved view may carry. Anything else in a URL is ignored rather than forwarded. */
+const FILTER_KEYS = ['branch', 'status', 'payer'] as const;
+
+/**
+ * The views the counter works through, each one a query rather than a label.
+ *
+ * The screen used to offer four names — “Chronic care”, “Outstanding balance” and so on — that filtered nothing,
+ * because the data behind them did not exist. A view that does not change the list is worse than no view: it teaches
+ * the desk that the chips are decoration. These are the views the register can actually answer today, and the ones
+ * that need a clinical register or a ledger arrive with those.
+ */
+const VIEWS: GridView[] = [
+  { id: 'today', name: 'Every patient', hint: 'The register as filed', query: { ...DEFAULT_QUERY } },
+  { id: 'active', name: 'Active', query: { ...DEFAULT_QUERY, filters: { status: 'Active' } } },
+  { id: 'follow-up', name: 'Follow-up', query: { ...DEFAULT_QUERY, filters: { status: 'Follow-up' } } },
+  { id: 'admitted', name: 'Admitted now', query: { ...DEFAULT_QUERY, filters: { status: 'Admitted' } } },
+  { id: 'main-campus', name: 'Main Campus', query: { ...DEFAULT_QUERY, filters: { branch: 'Main Campus' } } },
+  { id: 'cash', name: 'Cash payers', query: { ...DEFAULT_QUERY, filters: { payer: 'Cash' } } },
+];
+
 export default function PatientsPage() {
   const { locale, sync } = useShell();
   const { push } = useToast();
 
   const [tab, setTab] = useState('search');
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(25);
-  const [sort, setSort] = useState<{ key: string; dir: 'asc' | 'desc' }>({ key: 'mrn', dir: 'asc' });
-  const [search, setSearch] = useState('');
-  const [branch, setBranch] = useState('');
-  const [status, setStatus] = useState('');
-  const [payer, setPayer] = useState('');
-  const [view, setView] = useState<string>('');
   const [selected, setSelected] = useState<string[]>([]);
   const [rowsOverride, setRowsOverride] = useState<Record<string, Partial<Patient>>>({});
 
-  const result = useMemo(
-    () => queryPatients({ page, pageSize, sort, search, branch, status }),
-    [page, pageSize, sort, search, branch, status],
-  );
+  /* The register is a *queried* list: the grid is handed one page and a total, and the address carries the window, so
+     “admitted patients at Main Campus, third page” is a link a colleague can open. `queryPatients` is the preview's
+     half of that contract; in production the same query is the fetch, and nothing above this line changes. */
+  const patients = useGrid<Patient>({
+    id: 'patients',
+    defaults: DEFAULT_QUERY,
+    filterKeys: FILTER_KEYS,
+    sortKeys: ['mrn', 'name', 'age', 'sex', 'phone', 'branch', 'payer', 'lastVisit', 'status'],
+    builtinViews: VIEWS,
+    source: (query) =>
+      queryPatients({
+        page: query.page,
+        pageSize: query.pageSize,
+        ...(query.sort ? { sort: query.sort } : {}),
+        ...(query.q ? { search: query.q } : {}),
+        branch: query.filters?.branch ?? '',
+        status: query.filters?.status ?? '',
+        payer: query.filters?.payer ?? '',
+      }),
+  });
 
   const rows = useMemo(
-    () => result.rows.map((r) => ({ ...r, ...rowsOverride[r.mrn] })) as Patient[],
-    [result.rows, rowsOverride],
+    () => patients.rows.map((r) => ({ ...r, ...rowsOverride[r.mrn] })) as Patient[],
+    [patients.rows, rowsOverride],
   );
+
+  const filters = patients.query.filters ?? {};
+  const branch = filters.branch ?? '';
+  const status = filters.status ?? '';
+  const payer = filters.payer ?? '';
+  const search = patients.query.q ?? '';
+  const setFilter = patients.setFilter;
 
   const columns: Array<Column<Patient>> = [
     { key: 'mrn', header: 'MRN', width: '9rem', tooltip: 'Medical record number. Legacy numbers are preserved; new patients continue the same series.' },
@@ -100,10 +151,10 @@ export default function PatientsPage() {
   ];
 
   const activeFilters = [
-    ...(branch ? [{ id: 'branch', label: `Branch: ${branch}`, onRemove: () => setBranch('') }] : []),
-    ...(status ? [{ id: 'status', label: `Status: ${status}`, onRemove: () => setStatus('') }] : []),
-    ...(payer ? [{ id: 'payer', label: `Payer: ${payer}`, onRemove: () => setPayer('') }] : []),
-    ...(search ? [{ id: 'q', label: `Search: “${search}”`, onRemove: () => setSearch('') }] : []),
+    ...(branch ? [{ id: 'branch', label: `Branch: ${branch}`, onRemove: () => setFilter('branch', '') }] : []),
+    ...(status ? [{ id: 'status', label: `Status: ${status}`, onRemove: () => setFilter('status', '') }] : []),
+    ...(payer ? [{ id: 'payer', label: `Payer: ${payer}`, onRemove: () => setFilter('payer', '') }] : []),
+    ...(search ? [{ id: 'q', label: `Search: “${search}”`, onRemove: () => patients.setSearch('') }] : []),
   ];
 
   const onInlineEdit = async (rowId: string, key: string, value: string) => {
@@ -137,7 +188,7 @@ export default function PatientsPage() {
 
       <Tabs
         items={[
-          { id: 'search', label: 'Search', count: result.total },
+          { id: 'search', label: 'Search', count: patients.total },
           { id: 'duplicates', label: 'Possible duplicates', count: 14 },
           { id: 'merges', label: 'Recently merged', count: 3 },
         ]}
@@ -146,49 +197,37 @@ export default function PatientsPage() {
       >
         {tab === 'search' && (
           <DataGrid<Patient>
+            {...patients.gridProps}
             id="patients"
-            caption="Patient register"
+            caption={`Patient register — ${patients.total.toLocaleString()} record(s) matching`}
             columns={columns}
-            rows={rows}
-            total={result.total}
-            page={page}
-            pageSize={pageSize}
-            sort={sort}
             rowId={(p) => p.mrn}
             selected={selected}
             onSelectedChange={setSelected}
-            onQuery={(q) => {
-              setPage(q.page);
-              setPageSize(q.pageSize);
-              if (q.sort) setSort(q.sort);
-            }}
             quickSearch={{
               value: search,
-              onChange: (v) => {
-                setSearch(v);
-                setPage(1);
-              },
+              onChange: patients.setSearch,
               placeholder: 'Name, Bangla name, MRN or phone…',
             }}
             filters={
               <>
                 <div className="flex flex-col gap-1">
                   <label htmlFor="f-branch" className="text-sm text-text-secondary">Branch</label>
-                  <select id="f-branch" value={branch} onChange={(e) => { setBranch(e.target.value); setPage(1); }} className="h-[var(--dizi-density-field-height)] rounded-md border border-border-default bg-surface-default px-2 text-base">
+                  <select id="f-branch" value={branch} onChange={(e) => setFilter('branch', e.target.value)} className="h-[var(--dizi-density-field-height)] rounded-md border border-border-default bg-surface-default px-2 text-base">
                     <option value="">All branches</option>
                     {branches.map((b) => <option key={b}>{b}</option>)}
                   </select>
                 </div>
                 <div className="flex flex-col gap-1">
                   <label htmlFor="f-status" className="text-sm text-text-secondary">Status</label>
-                  <select id="f-status" value={status} onChange={(e) => { setStatus(e.target.value); setPage(1); }} className="h-[var(--dizi-density-field-height)] rounded-md border border-border-default bg-surface-default px-2 text-base">
+                  <select id="f-status" value={status} onChange={(e) => setFilter('status', e.target.value)} className="h-[var(--dizi-density-field-height)] rounded-md border border-border-default bg-surface-default px-2 text-base">
                     <option value="">Any status</option>
                     {['Active', 'Follow-up', 'Admitted', 'Discharged'].map((s) => <option key={s}>{s}</option>)}
                   </select>
                 </div>
                 <div className="flex flex-col gap-1">
                   <label htmlFor="f-payer" className="text-sm text-text-secondary">Payer</label>
-                  <select id="f-payer" value={payer} onChange={(e) => { setPayer(e.target.value); setPage(1); }} className="h-[var(--dizi-density-field-height)] rounded-md border border-border-default bg-surface-default px-2 text-base">
+                  <select id="f-payer" value={payer} onChange={(e) => setFilter('payer', e.target.value)} className="h-[var(--dizi-density-field-height)] rounded-md border border-border-default bg-surface-default px-2 text-base">
                     <option value="">Any payer</option>
                     {payers.map((p) => <option key={p}>{p}</option>)}
                   </select>
@@ -209,16 +248,21 @@ export default function PatientsPage() {
                   </div>
                 </div>
                 <div className="flex items-end gap-2">
-                  <Button variant="secondary" onClick={() => { setBranch(''); setStatus(''); setPayer(''); setSearch(''); setPage(1); }}>Clear</Button>
-                  <Button variant="primary" onClick={() => push({ title: 'Filters applied', tone: 'info' })}>Apply</Button>
+                  <Button variant="secondary" onClick={() => { patients.clearFilters(); }}>Clear</Button>
+                  <Button variant="primary" onClick={() => push({ title: 'Filters applied', description: 'The address carries them, so this view can be shared as a link.', tone: 'info' })}>Apply</Button>
                 </div>
               </>
             }
             activeFilters={activeFilters}
-            onClearFilters={() => { setBranch(''); setStatus(''); setPayer(''); setSearch(''); }}
-            savedViews={['My desk today', 'New this week', 'Chronic care', 'Outstanding balance']}
-            activeView={view}
-            onViewChange={(v) => { setView(v); push({ title: `View: ${v}`, description: 'Saved views keep their filters and columns.', tone: 'info' }); }}
+            onClearFilters={patients.clearFilters}
+            onRetry={patients.reload}
+            views={patients.views}
+            activeViewId={patients.activeViewId}
+            onViewApply={patients.applyView}
+            onViewSave={patients.saveView}
+            onViewRename={patients.renameView}
+            onViewDelete={patients.deleteView}
+            onExport={patients.exportAll}
             rowActions={rowActions}
             onInlineEdit={onInlineEdit}
             bulkActions={[

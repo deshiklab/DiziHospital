@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Button, DataGrid, KpiTile, Panel, SafetyBanner, Segmented, SelectField, Tooltip, copyText, cx, useToast, type Column } from '@dizi/ui';
+import { Button, DataGrid, KpiTile, Panel, SafetyBanner, Segmented, SelectField, Tooltip, copyText, cx, useToast, type Column, type GridView } from '@dizi/ui';
 import { ArrowLeft, CalendarClock, Info, Printer, RotateCcw, Table2, TriangleAlert } from 'lucide-react';
 import { todayIso } from '@/lib/appointments';
 import { money } from '@/lib/billing';
@@ -65,6 +65,27 @@ export function ReportScreen({ topic }: { topic: string }) {
   const cadenceSentence = schedule ? describeCadence(schedule.cadence) : '';
   const views = def.views ?? [];
   const activeView = views.find((v) => v.label === view);
+
+  /**
+   * The report's views as grid views.
+   *
+   * A report's views are predicates over its own rows ("expense heads", "this month"), so the query carries the view's
+   * id and the screen reads it back — which is the same bargain every other grid makes: the chip and the filter are one
+   * record, and when the rows come from the server the id is what the request carries.
+   */
+  const gridViews: GridView[] = useMemo(
+    () => [
+      { id: 'everything', name: 'Everything', query: { page: 1, pageSize: 25 } },
+      ...views.map((v, index) => ({
+        id: `view-${index}`,
+        name: v.label,
+        ...(v.hint ? { hint: v.hint } : {}),
+        query: { page: 1, pageSize: 25, filters: { view: `view-${index}` } },
+      })),
+    ],
+    [views],
+  );
+  const activeViewId = view ? gridViews.find((v) => v.name === view)?.id : 'everything';
 
   const rows = useMemo<Row[]>(
     () =>
@@ -226,10 +247,11 @@ export function ReportScreen({ topic }: { topic: string }) {
                 setPage(q.page);
                 setPageSize(q.pageSize);
               }}
-              savedViews={['Everything', ...views.map((v) => v.label)]}
-              activeView={view ?? 'Everything'}
-              onViewChange={(v) => {
-                setView(v === 'Everything' ? undefined : v);
+              views={gridViews}
+              activeViewId={activeViewId}
+              onViewApply={(id) => {
+                const applied = gridViews.find((v) => v.id === id);
+                setView(applied && applied.id !== 'everything' ? applied.name : undefined);
                 setPage(1);
               }}
               quickSearch={{

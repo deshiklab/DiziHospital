@@ -18,6 +18,7 @@ import {
   cx,
   useToast,
   type Column,
+  type GridView,
 } from '@dizi/ui';
 import { Coins, History, Link2, Pencil, Plus, ShieldAlert, TriangleAlert } from 'lucide-react';
 import { ListView } from '@/components/ListView';
@@ -111,6 +112,23 @@ const suggested = (category: CategoryCoverage['category']): HeadDraft => {
   return { ...blankHead(day, 'Income', category), code: 'INC-IMAG', label: 'Diagnostics — imaging', group: 'Operating' };
 };
 
+/**
+ * The head register's views, as queries.
+ *
+ * The six filters used to be an `if` chain keyed on the label shown in the chip, which is the shape that breaks the
+ * moment a label is edited. Each one is now a `GridView`: the name the desk reads, the query behind it and the id the
+ * filter reads — one record, so they cannot disagree.
+ */
+const HEAD_VIEWS: GridView[] = [
+  { id: 'all', name: 'Every head', query: { page: 1, pageSize: 25 } },
+  { id: 'income', name: 'Income heads', query: { page: 1, pageSize: 25, filters: { view: 'income' } } },
+  { id: 'expense', name: 'Expense heads', query: { page: 1, pageSize: 25, filters: { view: 'expense' } } },
+  { id: 'categorised', name: 'Billed to a category', query: { page: 1, pageSize: 25, filters: { view: 'categorised' } } },
+  { id: 'withheld', name: 'What we withhold on', query: { page: 1, pageSize: 25, filters: { view: 'withheld' } } },
+  { id: 'capital', name: 'Capital', query: { page: 1, pageSize: 25, filters: { view: 'capital' } } },
+  { id: 'quotable', name: 'Quoted purchases', query: { page: 1, pageSize: 25, filters: { view: 'quotable' } } },
+];
+
 export default function SetupFinancePage() {
   const { queueWrite, syncEngine } = useShell();
   const { push } = useToast();
@@ -118,7 +136,9 @@ export default function SetupFinancePage() {
 
   const [heads, setHeads] = useState<HeadDraft[]>(() => SEED_HEADS.map((h) => ({ ...h, categories: [...h.categories] })));
   const [tab, setTab] = useState('heads');
-  const [view, setView] = useState('Every head');
+  /* The views are named queries, so the label and the filter behind it cannot drift apart: the id in the query is the
+     one `registered` below reads. */
+  const [view, setView] = useState(HEAD_VIEWS[0].id);
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
@@ -246,12 +266,12 @@ export default function SetupFinancePage() {
 
   const registered = useMemo(() => {
     const byView = heads.filter((h) => {
-      if (view === 'Income heads') return h.kind === 'Income';
-      if (view === 'Expense heads') return h.kind === 'Expense';
-      if (view === 'Capital') return h.kind === 'Expense' && h.group === 'Capital';
-      if (view === 'What we withhold on') return h.aitPct != null || h.vatPct != null;
-      if (view === 'Quoted purchases') return h.kind === 'Expense' && h.quotable;
-      if (view === 'Billed to a category') return h.kind === 'Income' && h.categories.length > 0;
+      if (view === 'income') return h.kind === 'Income';
+      if (view === 'expense') return h.kind === 'Expense';
+      if (view === 'capital') return h.kind === 'Expense' && h.group === 'Capital';
+      if (view === 'withheld') return h.aitPct != null || h.vatPct != null;
+      if (view === 'quotable') return h.kind === 'Expense' && h.quotable;
+      if (view === 'categorised') return h.kind === 'Income' && h.categories.length > 0;
       return true;
     });
     if (!query.trim()) return byView;
@@ -382,7 +402,7 @@ export default function SetupFinancePage() {
         <Panel>
           <DataGrid<HeadDraft>
             id="setup-heads"
-            caption={`Income and expense heads — ${view.toLowerCase()}, ${registered.length} of ${heads.length}`}
+            caption={`Income and expense heads — ${(HEAD_VIEWS.find((v) => v.id === view)?.name ?? 'Every head').toLowerCase()}, ${registered.length} of ${heads.length}`}
             columns={columns}
             rows={pageRows}
             total={registered.length}
@@ -390,10 +410,10 @@ export default function SetupFinancePage() {
             pageSize={pageSize}
             onQuery={(q) => { setPage(q.page); setPageSize(q.pageSize); }}
             quickSearch={{ value: query, onChange: (v) => { setQuery(v); setPage(1); }, placeholder: 'Head, code, group or billing category…' }}
-            savedViews={['Every head', 'Income heads', 'Expense heads', 'Billed to a category', 'What we withhold on', 'Capital', 'Quoted purchases']}
-            activeView={view}
-            onViewChange={(v) => { setView(v); setPage(1); }}
-            printMeta={`Branch: Main Campus · ${view} · ${day}`}
+            views={HEAD_VIEWS}
+            activeViewId={view}
+            onViewApply={(id) => { setView(id); setPage(1); }}
+            printMeta={`Branch: Main Campus · ${HEAD_VIEWS.find((v) => v.id === view)?.name ?? 'Every head'} · ${day}`}
             exportFileName={`heads-${day}`}
             rowId={(h) => `${h.kind}-${h.code}`}
             height="26rem"

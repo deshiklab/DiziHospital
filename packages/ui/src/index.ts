@@ -11,6 +11,26 @@ export type { TextFieldProps, SelectFieldProps, TextAreaFieldProps, CheckboxFiel
 export { DataGrid } from './DataGrid';
 export type { Column, DataGridProps, RowAction } from './DataGrid';
 
+/* The query layer a server-paged grid is wired through: the query, the views over it, and the hook that fetches a
+   window and puts the query in the address. */
+export {
+  useGrid,
+  decodeGridQuery,
+  encodeGridQuery,
+  sameGridQuery,
+  describeGridQuery,
+  viewsStorageKey,
+  viewId,
+  GRID_PAGE_SIZES,
+  GRID_EXPORT_LIMIT,
+  GRID_EXPORT_WINDOW,
+} from './grid';
+export type { GridController, GridPage, GridQuery, GridSort, GridSource, GridView } from './grid';
+
+/* CSV writing, separated from the grid so the escaping is testable without a browser. */
+export { toCsv, csvFileName, downloadCsv, localDay } from './csv';
+export type { CsvColumn } from './csv';
+
 export { Tabs } from './Tabs';
 export type { TabItem, TabsProps } from './Tabs';
 

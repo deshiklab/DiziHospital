@@ -75,7 +75,13 @@ export interface Page<T> {
   total: number;
 }
 
-/** Server-shaped query: filter → sort → page. The real API will do exactly this, server-side. */
+/**
+ * Server-shaped query: filter → sort → page. The real API will do exactly this, server-side.
+ *
+ * Every parameter here is a filter the grid's *query* can carry (see `@dizi/ui`'s `grid.ts`), which is what makes the
+ * patient register a saved view rather than a label: a view named "Admitted at Main Campus" is the two filters below
+ * and can be applied, shared as a link and — when this function is replaced by a fetch — sent to the server unchanged.
+ */
 export function queryPatients(params: {
   page: number;
   pageSize: number;
@@ -83,8 +89,9 @@ export function queryPatients(params: {
   search?: string;
   branch?: string;
   status?: string;
+  payer?: string;
 }): Page<Patient> {
-  const { page, pageSize, sort, search, branch, status } = params;
+  const { page, pageSize, sort, search, branch, status, payer } = params;
   let rows = patients;
 
   if (search) {
@@ -99,6 +106,7 @@ export function queryPatients(params: {
   }
   if (branch) rows = rows.filter((p) => p.branch === branch);
   if (status) rows = rows.filter((p) => p.status === status);
+  if (payer) rows = rows.filter((p) => p.payer === payer);
 
   if (sort) {
     const { key, dir } = sort;
