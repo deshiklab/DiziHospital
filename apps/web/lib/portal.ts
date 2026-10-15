@@ -18,6 +18,8 @@
  * with a one-time code that is displayed instead of sent, and the screen says so in the patient's own language.
  */
 
+import { BOOKING_FEE, CANCEL_CUTOFF_HOURS as FEE_CUTOFF_HOURS } from '@/lib/appointment-billing';
+
 export type PortalLocale = 'bn' | 'en';
 
 /** Every string the portal shows, in both languages. Bangla first: it is the language of the person reading it. */
@@ -78,6 +80,14 @@ export interface PortalAppointment {
   state: AppointmentState;
   /** Set when the patient is being told what to bring — the sentence the desk would say on the telephone. */
   bring?: string;
+  /**
+   * How long before the slot the patient cancelled, in hours, written when the cancellation happens.
+   *
+   * The booking fee's rule is about *when* somebody cancelled, not that they did, so a cancelled appointment that
+   * does not remember the hour cannot be asked what the fee did — and a screen that answered “refunded” anyway
+   * would be telling the patient something the hospital has not decided.
+   */
+  cancelledBeforeHours?: number;
   cancelledReason?: string;
   canCancelUntil: string;
   /** The fee the counter will ask for, from the billing master list rather than typed here. */
@@ -204,6 +214,195 @@ export const RESULTS: PortalResult[] = [
   { id: 'rs-4', panel: 'Blood group and antibody screen', panelBn: 'রক্তের গ্রুপ ও অ্যান্টিবডি', category: 'laboratory', takenOn: '2026-08-14', state: 'released', releasedOn: '2026-08-15 10:05', headline: 'Blood group B positive, and nothing that needs treatment.', summary: 'Your group is B positive. The antibody screen is negative, which is what the delivery team needs to know.', reportRef: 'lab-group-SH102355.pdf', downloadExpiresOn: '2027-02-15', ask: 'The antenatal desk, 02 9876 540.' },
   { id: 'rs-5', panel: 'Genetic screening — first trimester', panelBn: 'জেনেটিক স্ক্রিনিং — প্রথম ত্রৈমাসিক', category: 'laboratory', takenOn: '2026-09-05', state: 'withheld', withheldReason: 'The doctor wants to explain this one in person rather than let you read it on a phone. The result itself is ready. Nothing here says you must come in urgently.', ask: 'Telephone the antenatal desk, 02 9876 540, any time between 08:00 and 20:00, and ask for Dr. R. Akter’s chamber. You do not need an appointment to ask.' },
 ];
+
+/* ------------------------------------------------------------------ what is inside a report
+ *
+ * A released report is not a paragraph and a verdict: it is a set of numbers with a range beside each one, and the
+ * patient is entitled to the numbers. What the portal must not do is print them bare. A haemoglobin of 10.4 means
+ * nothing without “the range is 11.0 to 14.0, and this is why the iron tablet was started”, so every value carries
+ * its unit, its range, and a sentence in the patient's own words when it falls outside — and `checkValues` refuses a
+ * flagged value that has no sentence, because a number the hospital cannot explain is a number it should not post.
+ *
+ * The flag is computed from the value and its range rather than stored, so a result cannot be filed as `normal`
+ * while its own arithmetic says otherwise.
+ */
+export interface LabValue {
+  kind: 'number';
+  key: string;
+  label: string;
+  labelBn: string;
+  value: number;
+  unit: string;
+  low: number;
+  high: number;
+  /** Filled in only where the range is not the laboratory's default — pregnancy, age, sex. */
+  rangeBecause?: string;
+  rangeBecauseBn?: string;
+  /** One sentence, shown only when the value is outside the range. */
+  meaning?: string;
+  meaningBn?: string;
+}
+
+/**
+ * Some findings are words rather than numbers — a blood group, a screen that is negative. They are their own shape
+ * on purpose: a group printed as a number between two equal numbers would look like a range that passed, which is
+ * the sort of thing that reads as an answer without being one.
+ */
+export interface LabText {
+  kind: 'text';
+  key: string;
+  label: string;
+  labelBn: string;
+  value: string;
+  valueBn?: string;
+  /** The sentence that turns a word into something a patient can use. */
+  meaning: string;
+  meaningBn: string;
+}
+
+export type ReportLine = LabValue | LabText;
+
+export const valueFlag = (v: LabValue): 'normal' | 'low' | 'high' => (v.value < v.low ? 'low' : v.value > v.high ? 'high' : 'normal');
+export const outsideRange = (lines: ReportLine[]): LabValue[] => lines.filter((l): l is LabValue => l.kind === 'number' && valueFlag(l) !== 'normal');
+export const rangeText = (v: LabValue): string => `${v.low}–${v.high} ${v.unit}`;
+
+/** The lines a released report shows. A report that is not released has no entry here, and the screen asks for none. */
+export const LAB_VALUES: Record<string, ReportLine[]> = {
+  'rs-2': [
+    {
+      kind: 'number', key: 'hb', label: 'Haemoglobin', labelBn: 'হিমোগ্লোবিন', value: 10.4, unit: 'g/dL', low: 11, high: 14,
+      rangeBecause: 'The range is the one for pregnancy, which is lower than for other adults.',
+      rangeBecauseBn: 'এই সীমাটি গর্ভাবস্থার জন্য — অন্য বয়সের সীমার চেয়ে কম।',
+      meaning: 'This is why the iron tablet was started, and it is why the blood count is checked again at your next visit.',
+      meaningBn: 'এই কারণেই আয়রনের ট্যাবলেট শুরু করা হয়েছে, এবং পরের ভিজিটে আবার রক্তের গণনা করা হবে।',
+    },
+    { kind: 'number', key: 'plt', label: 'Platelets', labelBn: 'প্লেটলেট', value: 2.1, unit: 'lakh/µL', low: 1.5, high: 4 },
+    { kind: 'number', key: 'wbc', label: 'White cells', labelBn: 'শ্বেতকণিকা', value: 8400, unit: '/µL', low: 4000, high: 11000 },
+  ],
+  'rs-4': [
+    {
+      kind: 'text', key: 'group', label: 'Blood group', labelBn: 'রক্তের গ্রুপ', value: 'B positive (B+)', valueBn: 'বি পজিটিভ (বি+)',
+      meaning: 'This is the group the delivery team checks against, and it is already written on your record. Nothing further is needed for it.',
+      meaningBn: 'ডেলিভারির সময় এই গ্রুপটিই মিলিয়ে দেখা হয়, আর এটি আপনার নথিতে লেখা আছে। এ নিয়ে আর কিছু করার নেই।',
+    },
+    {
+      kind: 'text', key: 'antibody', label: 'Antibody screen', labelBn: 'অ্যান্টিবডি স্ক্রিন', value: 'Negative', valueBn: 'নেগেটিভ',
+      meaning: 'A negative screen is the ordinary result. It means no extra injection is needed for this pregnancy.',
+      meaningBn: 'নেগেটিভ হওয়াই স্বাভাবিক। এর অর্থ এই গর্ভাবস্থায় বাড়তি ইনজেকশনের দরকার নেই।',
+    },
+  ],
+};
+
+export const reportLinesFor = (resultId: string): ReportLine[] => LAB_VALUES[resultId] ?? [];
+
+/* ------------------------------------------------------------------ what a visit left behind
+ *
+ * An attended visit is not a date on a list: something was established, something was asked of the patient, and
+ * something happens next. This is what the doctor releases to the portal — the same rule as a report, so a visit
+ * carries `releasedOn` and a visit whose note has not been released says so rather than leaving the patient looking
+ * at a blank page. The advice lines are the ones the patient was told, not the clinical note, and a visit that did
+ * not take place has no note at all: nothing was recorded, because nothing happened.
+ */
+export interface VisitNote {
+  appointment: string;
+  seenBy: string;
+  whatWasFound: string;
+  whatWasFoundBn: string;
+  advice: string[];
+  adviceBn: string[];
+  testsOrdered: string[];
+  testsOrderedBn: string[];
+  nextStep: string;
+  nextStepBn: string;
+  writtenOn: string;
+  /** Set when the doctor released the summary to the portal. Unset means it is written but not shown yet. */
+  releasedOn?: string;
+}
+
+export const VISIT_NOTES: VisitNote[] = [
+  {
+    appointment: 'ap-3',
+    seenBy: 'Dr. R. Akter',
+    whatWasFound: 'Your pregnancy is at 20 weeks and everything measured as it should. Your blood count was low at 10.4, which is common in pregnancy.',
+    whatWasFoundBn: 'গর্ভাবস্থা ২০ সপ্তাহে আছে এবং সব মাপ ঠিক আছে। রক্তের গণনা ১০.৪, যা গর্ভাবস্থায় সাধারণ ব্যাপার।',
+    advice: [
+      'Take one iron tablet every morning, after food.',
+      'Come to the antenatal clinic — the desk can be telephoned for anything between visits.',
+      'Walk for a few minutes daily rather than resting all day.',
+    ],
+    adviceBn: [
+      'প্রতিদিন সকালে খাবারের পর একটি আয়রনের ট্যাবলেট খাবেন।',
+      'প্রসূতি ক্লিনিকে আসুন — ভিজিটের মাঝে কোনো কিছু জানতে হলে ডেস্কে ফোন করা যাবে।',
+      'সারাদিন শুয়ে না থেকে প্রতিদিন কিছুক্ষণ হাঁটবেন।',
+    ],
+    testsOrdered: ['Blood count (CBC) in four weeks', 'Ultrasound at 22 weeks'],
+    testsOrderedBn: ['চার সপ্তাহ পরে রক্তের গণনা (সিবিসি)', '২২ সপ্তাহে আল্ট্রাসাউন্ড'],
+    nextStep: 'The 22-week ultrasound, on 14 October. You do not need an appointment for the scan — come with the slip from the desk.',
+    nextStepBn: '২২ সপ্তাহের আল্ট্রাসাউন্ড, ১৪ অক্টোবর। স্ক্যানের জন্য আলাদা সময় নিতে হবে না — ডেস্কের স্লিপ নিয়ে আসুন।',
+    writtenOn: '2026-09-12',
+    releasedOn: '2026-09-13',
+  },
+  {
+    appointment: 'ap-4',
+    seenBy: 'Dr. R. Akter',
+    whatWasFound: 'The pregnancy is at 16 weeks, and it is progressing normally. The blood group was checked and needs nothing further.',
+    whatWasFoundBn: 'গর্ভাবস্থা ১৬ সপ্তাহে, স্বাভাবিকভাবে এগোচ্ছে। রক্তের গ্রুপ পরীক্ষা হয়েছে, এতে আর কিছু করার নেই।',
+    advice: ['Start folic acid and calcium as written on the slip.', 'Come back in four weeks.'],
+    adviceBn: ['স্লিপে লেখা মতো ফলিক অ্যাসিড ও ক্যালসিয়াম শুরু করুন।', 'চার সপ্তাহ পরে আবার আসবেন।'],
+    testsOrdered: ['Blood count (CBC) at 20 weeks'],
+    testsOrderedBn: ['২০ সপ্তাহে রক্তের গণনা (সিবিসি)'],
+    nextStep: 'The 20-week antenatal visit, on 12 September.',
+    nextStepBn: '২০ সপ্তাহের প্রসূতি ভিজিট, ১২ সেপ্টেম্বর।',
+    writtenOn: '2026-08-14',
+    releasedOn: '2026-08-15',
+  },
+  {
+    appointment: 'ap-5',
+    seenBy: 'Dr. S. Rahman',
+    whatWasFound: 'Your blood pressure was higher than it should be at this stage, and you said you had been having headaches in the morning.',
+    whatWasFoundBn: 'এই সময়ে আপনার রক্তচাপ স্বাভাবিকের চেয়ে বেশি ছিল, আর আপনি বলেছিলেন সকালে মাথা ব্যথা করছিল।',
+    advice: [
+      'Take the blood-pressure tablet at the same time every day, even on days you feel well.',
+      'Less salt in food, and no extra salt on the plate.',
+      'If the headache comes with blurred vision or swelling of the face, come to the hospital the same day — do not wait for the clinic.',
+    ],
+    adviceBn: [
+      'রক্তচাপের ট্যাবলেট প্রতিদিন একই সময়ে খাবেন, ভালো লাগলেও খাবেন।',
+      'খাবারে লবণ কম, প্লেটে আলাদা লবণ নয়।',
+      'মাথা ব্যথার সঙ্গে চোখে ঝাপসা দেখা বা মুখ ফুলে গেলে সেদিনই হাসপাতালে আসবেন — ক্লিনিকের জন্য অপেক্ষা করবেন না।',
+    ],
+    testsOrdered: ['Blood pressure written down at the pharmacy each time you collect medicine'],
+    testsOrderedBn: ['ঔষধ নিতে এলে প্রতিবার ফার্মেসিতে রক্তচাপ লিখে রাখা হবে'],
+    nextStep: 'The antenatal clinic in two weeks, where the blood pressure is checked again.',
+    nextStepBn: 'দুই সপ্তাহ পরে প্রসূতি ক্লিনিক, সেখানে আবার রক্তচাপ দেখা হবে।',
+    writtenOn: '2026-07-02',
+    releasedOn: '2026-07-03',
+  },
+];
+
+export const visitNote = (appointmentId: string): VisitNote | undefined => VISIT_NOTES.find((n) => n.appointment === appointmentId);
+export const appointmentById = (id: string): PortalAppointment | undefined => APPOINTMENTS.find((a) => a.id === id);
+export const resultById = (id: string): PortalResult | undefined => RESULTS.find((r) => r.id === id);
+
+/**
+ * The booking fee is the desk's, not the portal's: a booking fee is a commitment. It is adjusted against the
+ * consultation when the patient comes, refunded when they cancel before the hospital's own cut-off, and retained
+ * when they simply do not turn up. The portal states the outcome in the patient's language and never invents an
+ * amount, so the number on the phone and the number at the counter cannot drift apart.
+ */
+export type BookingFeeOutcome = 'adjusted' | 'refunded' | 'retained' | 'held';
+export const bookingFeeOutcome = (a: PortalAppointment): BookingFeeOutcome => {
+  if (a.state === 'attended') return 'adjusted';
+  if (a.state === 'missed') return 'retained';
+  if (a.state === 'cancelled') {
+    // Refunded only when the patient cancelled with more than the hospital's notice. A cancellation whose hour was
+    // never recorded is retained rather than refunded: the fee is money, and a guess that favours the patient is
+    // still a guess the desk has to honour.
+    return a.cancelledBeforeHours !== undefined && a.cancelledBeforeHours >= FEE_CUTOFF_HOURS ? 'refunded' : 'retained';
+  }
+  return 'held';
+};
+export { BOOKING_FEE, FEE_CUTOFF_HOURS };
 
 /* ------------------------------------------------------------------ bills and payments */
 
@@ -395,6 +594,10 @@ export function checkBooking(choice: { clinicId: string; on: string; time: strin
   return { ok: reasons.length === 0, reasons, warnings };
 }
 
+/** How long until the appointment, in hours, on the counter's clock. Negative once the hour has passed. */
+export const hoursUntil = (a: PortalAppointment, ctx: PortalContext): number =>
+  (Date.parse(`${a.on}T${a.time}:00Z`) - Date.parse(`${ctx.today}T00:00:00Z`)) / 3_600_000 - ctx.nowMinute / 60;
+
 export function checkCancellation(appointment: PortalAppointment, ctx: PortalContext): PortalCheck {
   const reasons: PortalIssue[] = [];
   const warnings: PortalIssue[] = [];
@@ -404,7 +607,7 @@ export function checkCancellation(appointment: PortalAppointment, ctx: PortalCon
   if (appointment.state === 'attended' || appointment.state === 'missed') {
     reasons.push({ code: 'already-seen', message: 'That visit is in the past and cannot be cancelled.', messageBn: 'সেই ভিজিট অতীতের — বাতিল করা যাবে না।' });
   }
-  const minutesUntil = Math.round((Date.parse(`${appointment.on}T${appointment.time}:00Z`) - Date.parse(`${ctx.today}T00:00:00Z`)) / 60_000) - ctx.nowMinute;
+  const minutesUntil = Math.round(hoursUntil(appointment, ctx) * 60);
   if (minutesUntil >= 0 && minutesUntil < CANCEL_CUTOFF_HOURS * 60) {
     reasons.push({
       code: 'inside-cutoff',
@@ -413,7 +616,19 @@ export function checkCancellation(appointment: PortalAppointment, ctx: PortalCon
     });
   }
   if (appointment.fee > 0 && minutesUntil < 24 * 60 && minutesUntil > CANCEL_CUTOFF_HOURS * 60) {
-    warnings.push({ code: 'short-notice', message: 'This is short notice. The desk is told, and the slot is offered to the people waiting — that is why saying so matters even at short notice.', messageBn: 'সময় কম। ডেস্ককে জানানো হবে এবং অপেক্ষমাণ রোগীদের সময়টি দেওয়া হবে।' });
+    /* Two windows, and they are not the same one: the portal stops cancelling inside two hours, and the hospital
+     * refunds the booking fee only when there was more than four hours' notice. A patient cancelling in between is
+     * doing something allowed that costs them the fee, so the screen says so before they do it. */
+    const feeGoes = minutesUntil < FEE_CUTOFF_HOURS * 60;
+    warnings.push({
+      code: 'short-notice',
+      message: feeGoes
+        ? `This is short notice: there are less than ${FEE_CUTOFF_HOURS} hours to go, so the ${BOOKING_FEE} taka booking fee is kept and the slot goes to somebody waiting. Cancelling is still the right thing to do — telephoning the desk is better.`
+        : 'This is short notice. The desk is told, and the slot is offered to the people waiting — that is why saying so matters even at short notice.',
+      messageBn: feeGoes
+        ? `সময় খুব কম: ${FEE_CUTOFF_HOURS} ঘণ্টারও কম বাকি, তাই ভিজিট নেওয়ার অগ্রিমটি রাখা হয় এবং সময়টি অপেক্ষমাণ রোগীদের দেওয়া হয়। তবুও জানানো ভালো — ডেস্কে ফোন করলে আরও ভালো।`
+        : 'সময় কম। ডেস্ককে জানানো হবে এবং অপেক্ষমাণ রোগীদের সময়টি দেওয়া হবে।',
+    });
   }
   return { ok: reasons.length === 0, reasons, warnings };
 }
@@ -636,4 +851,66 @@ export const STR = {
   sentToHospital: { bn: 'হাসপাতালে পাঠানো হয়েছে।', en: 'Sent to the hospital.' },
   status: { bn: 'অবস্থা', en: 'Status' },
   everything: { bn: 'সব', en: 'Everything' },
+
+  /* ---------------------------------------------------------------- one visit, one report */
+  back: { bn: 'ফিরে যান', en: 'Back' },
+  notFoundVisit: { bn: 'এই ভিজিটটি খুঁজে পাওয়া যায়নি', en: 'That visit is not on your record' },
+  notFoundVisitWhy: {
+    bn: 'লিংকটি হয়তো পুরনো, অথবা এই ভিজিটটি আপনার নথিতে নেই। আপনার ভিজিটের তালিকা থেকেই সব দেখা যায়।',
+    en: 'The link may be an old one, or the visit may not be on your record. Everything is reachable from your list of visits.',
+  },
+  notFoundReport: { bn: 'এই রিপোর্টটি খুঁজে পাওয়া যায়নি', en: 'That report is not on your record' },
+  notFoundReportWhy: {
+    bn: 'লিংকটি হয়তো পুরনো। আপনার রিপোর্টের তালিকা থেকেই সব দেখা যায়।',
+    en: 'The link may be an old one. Everything is reachable from your list of reports.',
+  },
+  whatTheDoctorWrote: { bn: 'ডাক্তার যা লিখেছেন', en: 'What the doctor wrote' },
+  whatYouWereTold: { bn: 'আপনাকে যা বলা হয়েছে', en: 'What you were told' },
+  testsOrdered: { bn: 'যে পরীক্ষা দেওয়া হয়েছে', en: 'Tests ordered' },
+  whatHappensNext: { bn: 'এর পরে কী হবে', en: 'What happens next' },
+  notReleasedYet: { bn: 'সারসংক্ষেপ এখনো ছাড়া হয়নি', en: 'Not released yet' },
+  notReleasedYetWhy: {
+    bn: 'ভিজিটের সারসংক্ষেপ চিকিৎসক ছাড়ার পরে এখানে দেখা যায় — রিপোর্টের মতোই। না দেখালে জিজ্ঞেস করার দরকার নেই, নিজে থেকেই আসবে।',
+    en: 'A visit summary appears here once the doctor releases it, exactly as a report does. There is nothing to ask for; it comes by itself.',
+  },
+  whatHappened: { bn: 'ভিজিটে যা হয়েছিল', en: 'What happened at the visit' },
+  didNotAttend: { bn: 'এই ভিজিটে আপনি আসেননি', en: 'You did not attend this visit' },
+  didNotAttendWhy: {
+    bn: 'আসা না হলে ভিজিটের কিছু লেখা হয় না — তাই এখানে কিছু নেই। শরীর খারাপ থাকলে বা সময় না থাকলে ডেস্কে ফোন করলে সময়টি বদলে দেওয়া যায়।',
+    en: 'Nothing is written for a visit that did not happen, so there is nothing here. If something came up, telephoning the desk moves the appointment instead of losing it.',
+  },
+  bookAgain: { bn: 'নতুন সময় নিন', en: 'Book a new time' },
+  moneyForThisVisit: { bn: 'এই ভিজিটের টাকা', en: 'Money for this visit' },
+  consultationFee: { bn: 'ডাক্তার দেখানোর ফি', en: 'Consultation fee' },
+  bookingFee: { bn: 'ভিজিট নেওয়ার সময়ের অগ্রিম', en: 'Booking fee' },
+  atTheCounter: { bn: 'কাউন্টারে দিতে হবে', en: 'Payable at the counter' },
+  feeAdjusted: { bn: 'বিলের সঙ্গে মিলিয়ে দেওয়া হয়েছে', en: 'Adjusted against your bill' },
+  feeRefunded: { bn: 'ফেরত দেওয়া হয়েছে', en: 'Refunded' },
+  feeRetained: { bn: 'সময়টি খালি ছিল বলে রাখা হয়েছে', en: 'Retained, because the slot went unused' },
+  feeHeld: { bn: 'ভিজিটের দিনে বিলের সঙ্গে মিলিয়ে দেওয়া হবে', en: 'Credited against your bill when you come' },
+  feeRule: {
+    bn: 'অগ্রিমটি হাসপাতালের নিয়ম মেনে চলে: এলে বিল থেকে কেটে নেওয়া হয়, সময়ের চার ঘণ্টার বেশি আগে বাতিল করলে ফেরত দেওয়া হয়, আর না এলে সময়টি খালি পড়ে থাকায় তা রাখা হয়।',
+    en: 'The booking fee follows the hospital’s own rule: it comes off your bill when you attend, it is refunded if you cancel more than four hours before the slot, and it is retained when the slot goes unused because nobody came.',
+  },
+  valuesInThisReport: { bn: 'রিপোর্টের ফলাফল', en: 'The results in this report' },
+  resultsRange: { bn: 'সাধারণ সীমা', en: 'Usual range' },
+  resultsFound: { bn: 'যা পাওয়া গেছে', en: 'What was found' },
+  outsideRangeOne: { bn: 'একটি ফলাফল সাধারণ সীমার বাইরে', en: 'One result is outside the usual range' },
+  outsideRangeMany: { bn: 'কিছু ফলাফল সাধারণ সীমার বাইরে', en: 'Some results are outside the usual range' },
+  everythingInRange: { bn: 'সব ফলাফল সাধারণ সীমার মধ্যে', en: 'Every result is inside the usual range' },
+  outsideRangeWhy: {
+    bn: 'সীমার বাইরে মানে এই নয় যে সমস্যা হয়েছে — বোঝা যায় ডাক্তার কী দেখে সিদ্ধান্ত নিয়েছেন। কোনটি কেন, সেটি পাশে লেখা আছে।',
+    en: 'A number outside the range is not a diagnosis: it is how a doctor decides what to do next. Where one is outside, the sentence beside it says what it meant.',
+  },
+  numberOnlyAfterRelease: {
+    bn: 'চিকিৎসক ছাড়ার পরেই এই ফলাফলগুলো দেখা যায়।',
+    en: 'These results are shown only once the doctor has released the report.',
+  },
+  askAboutThisReport: { bn: 'এই রিপোর্ট নিয়ে জিজ্ঞেস করতে', en: 'If you want to ask about this report' },
+  reportStaysUntil: { bn: 'এখানে কতদিন থাকবে', en: 'Available here until' },
+  downloadedOn: { bn: 'নামানোর তারিখ', en: 'Downloaded on' },
+  printOrSave: { bn: 'প্রিন্ট বা সেভ করে রাখুন', en: 'Print it or save a copy' },
+  contactBlock: { bn: 'যোগাযোগ', en: 'Contact' },
+  seeOnMap: { bn: 'কোথায় আসবেন', en: 'Where to come' },
+  comeEarly: { bn: '১৫ মিনিট আগে এলে কাউন্টারে জমা পড়া সহজ হয়।', en: 'Coming 15 minutes early keeps the queue moving.' },
 } as const satisfies Record<string, PortalText>;

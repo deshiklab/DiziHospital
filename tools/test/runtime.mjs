@@ -131,7 +131,13 @@ const ROUTES = [
   '/admin/messaging',
   '/portal',
   '/portal/visits',
+  '/portal/visits/ap-3',
+  '/portal/visits/ap-6',
+  '/portal/visits/not-a-visit',
   '/portal/reports',
+  '/portal/reports/rs-2',
+  '/portal/reports/rs-5',
+  '/portal/reports/not-a-report',
   '/portal/prescriptions',
   '/portal/bills',
   '/portal/payments',
@@ -689,9 +695,66 @@ async function check(route) {
     }
   }
 
+  /* The one claim a report detail screen has to keep: the patient gets the numbers, with their ranges, and a
+   * withheld report shows nothing but the reason. The portal is Bangla by default, so the claim is read in Bangla
+   * first and then again after pressing the English switch — the screen has to say the same thing in both, and a
+   * value that only survives in one of them is a value half the patients cannot read.
+   */
+  let report = 'n/a';
+  const textNow = () => doc.body.textContent ?? '';
+  const toEnglish = () => {
+    const english = [...doc.querySelectorAll('button')].find((b) => (b.textContent ?? '').trim() === 'English');
+    if (english) press(english);
+  };
+  if (route === '/portal/reports/rs-2' || route === '/portal/reports/rs-5') {
+    /* The flag is a word in its own element, so the element is what is checked — the spans sit next to each other
+     * with no whitespace between them, which is exactly why a text search for “Low” alone would be a guess. */
+    const banglaFlag = />কম</.test(doc.body.innerHTML);
+    toEnglish();
+    await new Promise((r) => setTimeout(r, 250));
+    const text = textNow();
+    const hasRange = /Usual range 11–14 g\/dL/.test(text);
+    const hasValue = /10\.4/.test(text);
+    const flagged = banglaFlag && />Low</.test(doc.body.innerHTML);
+    const explained = /why the iron tablet was started/.test(text);
+    if (route === '/portal/reports/rs-5') {
+      report = `${hasValue || hasRange ? 'LEAKED THE NUMBER' : 'withheld'} · ${/not shown on a phone/.test(text) ? 'reason given' : 'NO REASON'}`;
+      if (hasValue || hasRange) routeProblems.push('a withheld report showed its own values on the portal');
+    } else {
+      report = `${hasValue ? 'value' : 'NO VALUE'} · ${hasRange ? 'range' : 'NO RANGE'} · ${flagged ? 'flagged' : 'NOT FLAGGED'} · ${explained ? 'explained' : 'NOT EXPLAINED'}`;
+      if (!hasValue || !hasRange) routeProblems.push('a released report did not show its values with their ranges');
+      if (!flagged) routeProblems.push('a value outside its range was not shown as outside it');
+      if (!explained) routeProblems.push('a value outside its range carried no sentence saying what it meant');
+    }
+  }
+  if (route === '/portal/visits/ap-3') {
+    const bangla = /আয়রনের ট্যাবলেট খাবেন/.test(textNow()) && /ভিজিট নেওয়ার সময়ের অগ্রিম/.test(textNow());
+    if (!bangla) routeProblems.push('the visit detail did not show the advice, or the booking fee, in Bangla');
+    toEnglish();
+    await new Promise((r) => setTimeout(r, 250));
+    const text = textNow();
+    const advice = /Take one iron tablet every morning/.test(text);
+    const next = /The 22-week ultrasound, on 14 October/.test(text);
+    const money = /Booking fee/.test(text) && /Adjusted against your bill/.test(text);
+    report = `${advice ? 'advice' : 'NO ADVICE'} · ${next ? 'next step' : 'NO NEXT STEP'} · ${money ? 'fee explained' : 'NO FEE LINE'}`;
+    if (!advice || !next || !money) routeProblems.push('the visit detail did not show what the doctor released, or what the money did');
+  }
+  if (route === '/portal/visits/ap-6') {
+    const text = textNow();
+    report = /আসা না হলে ভিজিটের কিছু লেখা হয় না/.test(text) ? 'not attended, said so' : 'NOT SAID';
+    if (report === 'NOT SAID') routeProblems.push('a visit that did not happen did not say why there is nothing behind it');
+  }
+  if (route.endsWith('not-a-visit') || route.endsWith('not-a-report')) {
+    const text = textNow();
+    const kind = route.includes('visits') ? 'visit' : 'report';
+    const said = /খুঁজে পাওয়া যায়নি/.test(text);
+    report = said ? `${kind} not found, said so` : 'NOT SAID';
+    if (!said) routeProblems.push('an address that is not on the register did not say so on the portal');
+  }
+
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors: [...errors, ...routeProblems], shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, readyWait };
+  return { errors: [...errors, ...routeProblems], shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, readyWait };
 }
 
 const CONCURRENCY = Math.max(1, Number(process.env.DIZI_CONCURRENCY ?? 4));
@@ -746,10 +809,10 @@ outcomes.forEach((outcome, i) => {
     problems += 1;
     return;
   }
-  const { errors, shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
+  const { errors, shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, readyWait } = outcome.value;
   const bad = errors.length > 0 || handlers === 'DEAD';
   const slow = readyWait !== undefined && readyWait > 2000 ? `  ready=${(readyWait / 1000).toFixed(1)}s` : '';
-  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} shell=${shell ?? 'none'}  handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${suite === 'n/a' ? '' : `  suite=${suite}`}${viewPress === 'n/a' ? '' : `  view=${viewPress}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
+  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} shell=${shell ?? 'none'}  handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${suite === 'n/a' ? '' : `  suite=${suite}`}${viewPress === 'n/a' ? '' : `  view=${viewPress}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${report === 'n/a' ? '' : `  report=${report}`}${slow}`);
   if (handlers === 'DEAD') {
     console.log('      the shared control did not respond after hydration');
     problems += 1;

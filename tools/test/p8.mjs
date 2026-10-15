@@ -382,6 +382,76 @@ try {
   pass('the hub the phase is entered from exists, and the nav points at it', existsSync(join(root, 'apps/web/app/(staff)/admin/comms/page.tsx')) && nav.includes('/admin/comms'));
   pass('every group on the hub holds screens that exist on disk, and says why they are one group', AD.COMMS_GROUPS.length === 6 && AD.COMMS_GROUPS.every((g) => g.members.length >= 1 && g.because.length > 40 && g.members.every((m) => { const screen = AD.adminScreenById(m); return Boolean(screen) && Boolean(pageAt(screen.route)); })), AD.COMMS_GROUPS.map((g) => `${g.title} (${g.members.length})`).join(' · '));
   pass('the phase says what it is waiting for, and every screen states what it is for', AD.P8_WAITING.length >= 3 && AD.P8_WAITING.every((w) => w.length > 60) && screens.every((s) => s.purpose.length > 60) && new Set(screens.map((s) => s.route)).size === screens.length, `${AD.P8_WAITING.length} waiting items`);
+  /* ---------------------------------------------------------------- one report, one visit
+   *
+   * The list answers “is it ready?”; the detail screen answers what it said. Three claims hold it up: a value
+   * outside its range carries the sentence that explains it, a withheld report has no values at all, and every
+   * visit the doctor released has something written behind it.
+   */
+  const lines = PT.reportLinesFor('rs-2');
+  const flagged = PT.outsideRange(lines);
+  pass(
+    'a value outside its range is found by its own arithmetic and carries a sentence',
+    flagged.length === 1 && flagged[0].key === 'hb' && flagged[0].meaning.length > 40 && flagged[0].meaningBn.length > 20 && PT.valueFlag(lines.find((l) => l.key === 'plt')) === 'normal',
+    `${lines.length} lines · ${flagged.map((l) => l.key).join(',')} outside`,
+  );
+  /* Every value the register flags is checked for the sentence beside it — read from the register rather than from
+   * the one report the screen above happens to show. */
+  const unexplained = Object.entries(PT.LAB_VALUES).flatMap(([reportId, list]) =>
+    PT.outsideRange(list).filter((v) => !(v.meaning && v.meaningBn)).map((v) => `${reportId}/${v.key}`),
+  );
+  pass('no report posts a number the hospital cannot explain', unexplained.length === 0, unexplained.join(', ') || `${Object.keys(PT.LAB_VALUES).length} reports with values`);
+  pass(
+    'a released report has values and a withheld one has none',
+    PT.reportLinesFor('rs-2').length > 0 && PT.resultById('rs-5').state === 'withheld' && PT.reportLinesFor('rs-5').length === 0,
+    `${PT.reportLinesFor('rs-2').length} shown · ${PT.reportLinesFor('rs-5').length} withheld`,
+  );
+  const wordLines = PT.reportLinesFor('rs-4');
+  pass(
+    'a finding that is a word is not dressed up as a number between two equal numbers',
+    wordLines.every((l) => l.kind === 'text') && wordLines.every((l) => l.meaning.length > 40 && l.meaningBn.length > 20) && PT.outsideRange(wordLines).length === 0,
+    wordLines.map((l) => `${l.label}: ${l.value}`).join(' · '),
+  );
+
+  const visited = PT.APPOINTMENTS.filter((a) => a.state === 'attended');
+  const noted = visited.filter((a) => PT.visitNote(a.id));
+  pass(
+    'every visit that happened has a summary behind it, released by the doctor',
+    noted.length === visited.length && noted.every((a) => PT.visitNote(a.id).releasedOn && PT.visitNote(a.id).advice.length >= 2 && PT.visitNote(a.id).adviceBn.length === PT.visitNote(a.id).advice.length),
+    `${noted.length} of ${visited.length} visits`,
+  );
+  pass(
+    'a visit that did not happen has no note, because nothing happened',
+    PT.APPOINTMENTS.filter((a) => a.state === 'missed' || a.state === 'cancelled').every((a) => !PT.visitNote(a.id)),
+    `${PT.VISIT_NOTES.length} notes · none for a missed or cancelled visit`,
+  );
+  /* The booking fee follows the desk's rule, read from the desk's module rather than retyped here — and the outcome
+   * turns on *when* the cancellation happened, which is the part a screen can get wrong by being kind. */
+  const feeWindow = PT.FEE_CUTOFF_HOURS;
+  pass(
+    'the booking fee follows the hospital’s own rule rather than a second one',
+    PT.bookingFeeOutcome({ state: 'attended' }) === 'adjusted' &&
+      PT.bookingFeeOutcome({ state: 'missed' }) === 'retained' &&
+      PT.bookingFeeOutcome({ state: 'booked' }) === 'held' &&
+      PT.bookingFeeOutcome({ state: 'cancelled', cancelledBeforeHours: feeWindow + 2 }) === 'refunded' &&
+      PT.bookingFeeOutcome({ state: 'cancelled', cancelledBeforeHours: feeWindow - 2 }) === 'retained' &&
+      PT.bookingFeeOutcome({ state: 'cancelled' }) === 'retained' &&
+      PT.BOOKING_FEE === 200 &&
+      PT.FEE_CUTOFF_HOURS === 4,
+    `৳${PT.BOOKING_FEE} · refund window ${feeWindow} h, read from the desk’s own module · a cancellation inside it keeps the fee`,
+  );
+  pass(
+    'cancelling shortly before the slot says what it costs before it happens, not after',
+    PT.checkCancellation({ id: 'ap-9', on: '2026-10-20', time: '09:00', department: 'x', departmentBn: 'x', doctor: 'x', room: 'x', branch: 'Main Campus', token: '—', state: 'booked', fee: 800 }, { ...pctx, today: '2026-10-20', nowMinute: 6 * 60 }).warnings.some((w) => w.code === 'short-notice' && w.message.includes('booking fee is kept')),
+    '3 hours before the slot',
+  );
+  const badAddress = ['ap-3', 'rs-2'].map((id) => id);
+  pass(
+    'the detail screens look a record up by id, and an id that is not on the register is answered rather than crashed',
+    badAddress.every((id) => Boolean(PT.appointmentById(id) || PT.resultById(id))) && PT.appointmentById('nope') === undefined && PT.resultById('nope') === undefined,
+    'appointmentById · resultById',
+  );
+
   pass('the portal and the public site are routes of their own, not screens inside the staff app', existsSync(join(root, 'apps/web/app/(portal)/portal/page.tsx')) && existsSync(join(root, 'apps/web/app/(site)/site/page.tsx')) && !nav.includes('/portal') && !nav.includes('/site'));
 
   if (failures.length > 0) {

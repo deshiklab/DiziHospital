@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { Button, Panel, SafetyBanner, Segmented, cx, useToast } from '@dizi/ui';
+import Link from 'next/link';
 import { Download, Phone } from 'lucide-react';
 import { usePortal, usePortalLocale } from '@/components/PortalShell';
 import { RESULTS, STR, bnDigits, niceDate, tr, type PortalResult } from '@/lib/portal';
@@ -27,7 +28,7 @@ const STATE_LABEL: Record<PortalResult['state'], { bn: string; en: string }> = {
 
 export default function PortalReportsPage() {
   const locale = usePortalLocale();
-  const { send } = usePortal();
+  const { send, downloaded, markDownloaded } = usePortal();
   const { push } = useToast();
   const t = (text: { bn: string; en: string }) => tr(text, locale);
   const day = todayIso();
@@ -43,7 +44,7 @@ export default function PortalReportsPage() {
       recordId: result.id,
       fields: { result: result.id, report: result.reportRef ?? '', at: day },
     });
-    setResults((list) => list.map((r) => (r.id === result.id ? r : r)));
+    markDownloaded(result.id);
     push({
       title: wrote.queued ? (locale === 'bn' ? 'রিপোর্টটি আপনার কাছে' : 'The report is on your phone') : locale === 'bn' ? 'নামানো যায়নি' : 'It could not be downloaded',
       description: wrote.queued
@@ -117,13 +118,21 @@ export default function PortalReportsPage() {
                   {locale === 'bn' ? `চিকিৎসক ছেড়ে দিয়েছেন ${niceDate((r.releasedOn ?? r.takenOn).slice(0, 10), 'bn')}` : `Released by the doctor on ${niceDate((r.releasedOn ?? r.takenOn).slice(0, 10), 'en')}`}
                 </p>
                 <div className="mt-2 flex flex-wrap items-center gap-2">
-                  <Button variant="secondary" onClick={() => download(r)}>
+                  <Link href={`/portal/reports/${r.id}`}>
+                    <Button variant="secondary">{locale === 'bn' ? 'পুরো রিপোর্ট দেখুন' : 'Read the whole report'}</Button>
+                  </Link>
+                  <Button variant="ghost" onClick={() => download(r)}>
                     <Download className="size-4" aria-hidden /> {t(STR.downloadReport)}
                   </Button>
                   <span className="text-xs text-text-tertiary">
                     {locale === 'bn' ? `এখানে থাকবে ${niceDate(r.downloadExpiresOn ?? day, 'bn')} পর্যন্ত` : `Available here until ${niceDate(r.downloadExpiresOn ?? day, 'en')}`}
                   </span>
                 </div>
+                {downloaded[r.id] && (
+                  <p className="mt-1 text-xs text-text-secondary">
+                    {t(STR.downloadedOn)} {niceDate(downloaded[r.id], locale)}
+                  </p>
+                )}
               </>
             )}
 
@@ -137,6 +146,11 @@ export default function PortalReportsPage() {
 
             {r.state === 'withheld' && (
               <>
+                <div className="mt-2">
+                  <Link href={`/portal/reports/${r.id}`}>
+                    <Button variant="ghost">{locale === 'bn' ? 'বিস্তারিত' : 'More about this'}</Button>
+                  </Link>
+                </div>
                 <p className="mt-2 text-sm text-text-secondary">{r.withheldReason}</p>
                 <p className="mt-1 text-sm text-text-secondary">{r.ask}</p>
                 <a href="tel:+88029876540" className="mt-2 inline-block">

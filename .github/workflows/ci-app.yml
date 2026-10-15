@@ -70,14 +70,14 @@ jobs:
         run: python3 tools/docs/check_links.py
 
   # The shell and runtime harnesses were written and run by hand for months, which meant the strongest check in
-  # the repository — ninety-four routes hydrating with no console error, and the navigation driven at five
+  # the repository — a hundred routes hydrating with no console error, and the navigation driven at five
   # widths — was the one check that did not run on a pull request. They need jsdom and esbuild, which the product
   # does not depend on, so this job installs them without saving them and serves the production build: the same
   # artefact that ships, minified stylesheet included.
   runtime:
     name: production build, every route hydrated, shell driven
     runs-on: ubuntu-latest
-    # The harness checks ninety-four routes and each one is a page load; the pool keeps it to a few minutes, and
+    # The harness checks a hundred routes and each one is a page load; the pool keeps it to a few minutes, and
     # this is the ceiling that keeps a slow runner from being killed mid-run.
     timeout-minutes: 45
     steps:

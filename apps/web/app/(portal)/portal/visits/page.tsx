@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { Button, FieldSection, Panel, SafetyBanner, Segmented, SelectField, Sheet, TextAreaField, cx, useToast } from '@dizi/ui';
 import { CalendarPlus, Clock, MapPin } from 'lucide-react';
 import { usePortal, usePortalLocale } from '@/components/PortalShell';
@@ -14,6 +15,7 @@ import {
   bnDigits,
   checkBooking,
   checkCancellation,
+  hoursUntil,
   moneyIn,
   niceDate,
   niceTime,
@@ -118,7 +120,8 @@ export default function PortalVisitsPage() {
       push({ title: locale === 'bn' ? 'বাতিল করা গেল না' : 'It was not cancelled', description: cancelVerdict.reasons[0].message, tone: 'critical' });
       return;
     }
-    setAppointments((list) => list.map((a) => (a.id === cancelling.id ? { ...a, state: 'cancelled', cancelledReason: reason, bring: undefined } : a)));
+    const hoursBefore = Math.max(0, Math.round(hoursUntil(cancelling, { today: day, nowMinute: 8 * 60, appointments, bills: [], gatewayConnected: false }) * 10) / 10);
+    setAppointments((list) => list.map((a) => (a.id === cancelling.id ? { ...a, state: 'cancelled', cancelledReason: reason, cancelledBeforeHours: hoursBefore, bring: undefined } : a)));
     const wrote = send(`Cancel the visit on ${cancelling.on}`, `${cancelling.on} তারিখের ভিজিট বাতিল`, {
       id: 'cancelPortalAppointment',
       recordId: cancelling.id,
@@ -205,13 +208,16 @@ export default function PortalVisitsPage() {
                 <p className="mt-1 text-xs text-text-secondary">
                   {locale === 'bn' ? `কাউন্টারে দিতে হবে ${moneyIn(a.fee, 'bn')}` : `${moneyIn(a.fee, 'en')} is payable at the counter`}
                 </p>
-                {a.state === 'booked' && (
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    <Button variant="secondary" onClick={() => { setCancelling(a); setReason(''); setNote(''); }}>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <Link href={`/portal/visits/${a.id}`}>
+                    <Button variant="secondary">{t(STR.whatHappened)}</Button>
+                  </Link>
+                  {a.state === 'booked' && (
+                    <Button variant="ghost" onClick={() => { setCancelling(a); setReason(''); setNote(''); }}>
                       {t(STR.cancelVisit)}
                     </Button>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
               <span className="rounded-full border border-current px-2 py-0.5 text-xs font-medium">{t(a.state === 'booked' ? STR.confirmed : a.state === 'attended' ? STR.attended : a.state === 'cancelled' ? STR.cancelled : STR.missed)}</span>
             </div>

@@ -22,6 +22,8 @@ import { PATIENT, PORTAL_AUTH, type PortalLocale } from '@/lib/portal';
  *    thumb, and they are opened one-handed while waiting. A hamburger drawer in a patient portal is a staff habit.
  *  - **Safe areas are respected.** The bar sits above the home indicator rather than under it, and the content has
  *    room to scroll clear of the bar.
+ *  - **The phone remembers what it has shown.** A report the patient opened carries the day they opened it, and that
+ *    fact survives going back to the list: it is the patient's own copy of what the hospital recorded.
  *  - **Writes are held on the phone and sent when there is a signal.** A booking made on a moving bus is a booking
  *    the patient believes happened, so the portal records it in its own outbox and says plainly that it has not
  *    reached the hospital yet. The outbox checks each write against the same contract metadata the desk uses — a
@@ -43,6 +45,15 @@ interface PortalContextValue {
   /** Record a write. Returns what happened, in the same shape the desk's queue returns. */
   send: (label: string, labelBn: string, write: { id: string; recordId: string; fields?: Record<string, string | number | null> }) => { queued: boolean; because?: string };
   flush: () => void;
+  /**
+   * The reports this phone has opened, by result id, and the day it happened.
+   *
+   * The record lives on the shell rather than on one screen because a patient opens a report from the list, reads
+   * it, and goes back: a note that vanished on the way back would be a lie about what the hospital knows. The write
+   * itself goes through the contract like every other write — this is the copy the patient can see.
+   */
+  downloaded: Record<string, string>;
+  markDownloaded: (resultId: string) => void;
 }
 
 const PortalContext = createContext<PortalContextValue>({
@@ -51,6 +62,8 @@ const PortalContext = createContext<PortalContextValue>({
   pending: [],
   send: () => ({ queued: false, because: 'The portal outbox is not mounted.' }),
   flush: () => undefined,
+  downloaded: {},
+  markDownloaded: () => undefined,
 });
 
 export function PortalProviders({ children }: { children: React.ReactNode }) {
@@ -95,7 +108,16 @@ export function PortalProviders({ children }: { children: React.ReactNode }) {
 
   const flush = useCallback(() => setPending([]), []);
 
-  const value = useMemo(() => ({ locale, setLocale, pending, send, flush }), [locale, setLocale, pending, send, flush]);
+  const [downloaded, setDownloaded] = useState<Record<string, string>>({});
+  const markDownloaded = useCallback((resultId: string) => {
+    const at = new Date().toISOString().slice(0, 10);
+    setDownloaded((list) => ({ ...list, [resultId]: at }));
+  }, []);
+
+  const value = useMemo(
+    () => ({ locale, setLocale, pending, send, flush, downloaded, markDownloaded }),
+    [locale, setLocale, pending, send, flush, downloaded, markDownloaded],
+  );
   return <PortalContext.Provider value={value}>{children}</PortalContext.Provider>;
 }
 
