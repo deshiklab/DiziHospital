@@ -503,6 +503,350 @@ export interface CommissionPayout {
   readonly accrualIds?: Array<string>;
 }
 
+export interface StaffMember {
+  readonly id: string;
+  /** The hospital’s own employee number — one series, never reused, and the key a payroll file is paid against */
+  readonly code: string;
+  readonly name: string;
+  readonly nameBn?: string;
+  readonly designation: string;
+  readonly department: string;
+  readonly grade?: string;
+  readonly branch: string;
+  readonly phone: string;
+  readonly email?: string;
+  readonly employment: "Permanent" | "Contract" | "Part-time" | "Intern" | "Outsourced";
+  readonly status: "Active" | "On leave" | "Suspended" | "Resigned" | "Retired";
+  readonly joined: string;
+  /** Monthly basic pay. Allowances are derived from it rather than stored beside it, so a revision cannot leave two figures disagreeing. */
+  readonly basic?: number;
+  /** Registration number for a clinical designation, with its expiry — a lapsed licence is a duty the roster must not fill */
+  readonly licenceNo?: string;
+  readonly licenceExpires?: string;
+  readonly wardId?: string;
+  readonly competencies?: Array<string>;
+  readonly updatedAt?: string;
+  /** Optimistic concurrency: a write carrying a stale version is refused with both values rather than merged blindly */
+  readonly version?: number;
+}
+
+export interface StaffMemberCreate {
+  readonly name: string;
+  readonly nameBn?: string;
+  readonly designation: string;
+  readonly department: string;
+  readonly grade?: string;
+  readonly branch: string;
+  readonly phone: string;
+  readonly email?: string;
+  readonly employment: string;
+  readonly joined: string;
+  readonly basic: number;
+  readonly licenceNo?: string;
+  readonly licenceExpires?: string;
+  readonly wardId?: string;
+  readonly competencies?: Array<string>;
+}
+
+export interface StaffMemberPatch {
+  /** Only the fields being changed, so there is something for a field-level merge to merge */
+  readonly fields: Record<string, unknown>;
+  readonly version: number;
+  /** Why the record was corrected — part of the audit entry, not optional */
+  readonly reason: string;
+}
+
+export interface StaffPage {
+  readonly rows: Array<StaffMember>;
+  readonly total: number;
+  /** The replica’s age: a roster read from a cached page says how old the cache is */
+  readonly asOf?: string;
+}
+
+export interface AttendancePunch {
+  readonly id: string;
+  readonly staffId: string;
+  readonly staffCode: string;
+  readonly at: string;
+  readonly shift?: "Morning" | "Evening" | "Night";
+  readonly kind: "QR" | "Biometric" | "Face" | "Manual override";
+  readonly deviceId: string;
+  readonly branch: string;
+  /** A punch opens or closes a stint; the register is built from the pairs, and an unpaired In is what the register reports as an exception */
+  readonly state: "In" | "Out";
+  readonly lateMinutes?: number;
+  /** Required for a manual override: the supervisor’s name, because a punch nobody can be asked about is not evidence */
+  readonly verifiedBy?: string;
+  readonly reason?: string;
+  readonly note?: string;
+}
+
+export interface AttendancePunchCreate {
+  readonly staffCode: string;
+  readonly at: string;
+  readonly kind: string;
+  readonly deviceId: string;
+  readonly state: "In" | "Out";
+  /** A QR code is a shared secret on a wall, so the person is confirmed by something only they carry */
+  readonly pin?: string;
+}
+
+export interface AttendanceAdjustmentCreate {
+  readonly staffCode: string;
+  readonly day: string;
+  readonly state: "In" | "Out";
+  readonly at: string;
+  readonly reason: string;
+  readonly verifiedBy: string;
+}
+
+export interface LeaveRequest {
+  readonly id: string;
+  readonly staffId: string;
+  readonly staffCode: string;
+  readonly typeCode: string;
+  readonly from: string;
+  readonly to: string;
+  readonly days: number;
+  readonly paid?: boolean;
+  readonly reason?: string;
+  readonly state: "Applied" | "Approved" | "Refused" | "Cancelled";
+  readonly decidedBy?: string;
+  readonly decidedAt?: string;
+  readonly decision?: string;
+  /** The medical certificate or maternity paper attached, where the leave type requires one */
+  readonly documentNo?: string;
+}
+
+export interface LeaveRequestCreate {
+  readonly staffCode: string;
+  readonly typeCode: string;
+  readonly from: string;
+  readonly to: string;
+  readonly days: number;
+  readonly reason?: string;
+  readonly documentNo?: string;
+}
+
+export interface LeaveDecision {
+  readonly decision: "Approved" | "Refused" | "Cancelled";
+  readonly by: string;
+  /** A refusal states why, because it is the sentence the person reads and the one the review will read later */
+  readonly reason: string;
+  /** Who covers the ward while this leave runs — the condition on which most rostered leave is granted */
+  readonly coverNote?: string;
+}
+
+export interface PayrollLine {
+  readonly staffId: string;
+  readonly staffCode: string;
+  readonly basic: number;
+  readonly gross: number;
+  readonly deductions: number;
+  readonly net: number;
+  /** Gross plus the employer’s own contributions: the figure the branch actually spends, which is not the figure the employee sees */
+  readonly employerCost?: number;
+  readonly absentDays?: number;
+  readonly unpaidLeaveDays?: number;
+  readonly overtimeHours?: number;
+  readonly advance?: number;
+  readonly notes?: Array<string>;
+}
+
+export interface PayrollRun {
+  /** YYYY-MM. A run is per month and per branch; there is no such thing as half a month’s salary. */
+  readonly month: string;
+  readonly branch: string;
+  readonly lines: Array<PayrollLine>;
+  readonly gross: number;
+  readonly deductions: number;
+  readonly net: number;
+  readonly employerCost: number;
+  readonly state: "Draft" | "Awaiting approval" | "Approved" | "Paid";
+  /** The attendance cut-off the run was computed from. Attendance after it belongs to the next month, which is why it is on the run and not in a comment. */
+  readonly cutOff?: string;
+  readonly bankFileName?: string;
+  readonly approvedBy?: string;
+  readonly approvedAt?: string;
+}
+
+export interface PayrollRunCreate {
+  readonly month: string;
+  readonly branch: string;
+  readonly cutOff?: string;
+  readonly note?: string;
+}
+
+export interface PayrollApproval {
+  readonly by: string;
+  /** The total the approver is signing for. It is sent back with the approval so the amount approved is the amount on the run, not an amount somebody remembered. */
+  readonly net: number;
+  readonly linesCount: number;
+  readonly note?: string;
+}
+
+export interface BirthEvent {
+  readonly id: string;
+  /** The hospital’s own series, drawn from the node’s number block: gapless and never reused, which is what makes a missing entry visible */
+  readonly registerNo: string;
+  readonly at: string;
+  readonly kind: "birth";
+  readonly outcome: "Live birth" | "Stillbirth";
+  readonly sex: "Male" | "Female" | "Indeterminate";
+  readonly motherMrn?: string;
+  readonly motherName: string;
+  readonly gestationWeeks?: number;
+  readonly type?: "Normal vaginal" | "Assisted vaginal" | "Caesarean";
+  /** Required for a caesarean: the next pregnancy is planned around it */
+  readonly indication?: string;
+  readonly weightGrams?: number;
+  readonly apgar?: { oneMin: number; fiveMin: number };
+  readonly attendedBy: string;
+  readonly vitaminKGiven?: boolean;
+  readonly bcgGiven?: boolean;
+  readonly complications?: Array<string>;
+  readonly civilState?: "Number issued" | "Filed, number awaited" | "Started online" | "Not yet filed" | "Not applicable";
+  readonly civilNumber?: string;
+}
+
+export interface BirthEventCreate {
+  readonly at: string;
+  readonly outcome: "Live birth" | "Stillbirth";
+  readonly sex: "Male" | "Female" | "Indeterminate";
+  readonly motherMrn?: string;
+  readonly motherName?: string;
+  readonly wardId?: string;
+  readonly gestationWeeks?: number;
+  readonly type: "Normal vaginal" | "Assisted vaginal" | "Caesarean";
+  readonly indication?: string;
+  readonly weightGrams?: number;
+  readonly apgarOneMin?: number;
+  readonly apgarFiveMin?: number;
+  readonly attendedBy: string;
+  readonly vitaminKGiven?: boolean;
+  readonly bcgGiven?: boolean;
+  readonly firstFeedAt?: string;
+  readonly complications?: Array<string>;
+  readonly civilState?: string;
+  readonly civilNumber?: string;
+  /** Who brought the family in to register the birth, and their relationship — the name the registrar reads out */
+  readonly informant?: string;
+  readonly note?: string;
+}
+
+export interface DeathEvent {
+  readonly id: string;
+  readonly registerNo: string;
+  readonly at: string;
+  readonly kind: "death";
+  readonly patientMrn?: string;
+  readonly patientName?: string;
+  readonly deathKind?: "In-patient" | "Brought in dead" | "Died in the emergency room";
+  readonly immediateCause?: string;
+  readonly antecedentCause?: string;
+  readonly underlyingCause?: string;
+  readonly icdCode?: string;
+  readonly manner: "Natural" | "Unnatural — referred to police" | "Unknown — referred to police";
+  readonly policeStation?: string;
+  readonly postMortemReferred?: boolean;
+  readonly certifiedBy?: string;
+  readonly certificateNo?: string;
+  readonly certificateState: string;
+  readonly releasedAt?: string;
+  readonly releasedTo?: string;
+  readonly releasedRelation?: string;
+  readonly civilState?: string;
+}
+
+export interface DeathEventCreate {
+  readonly at: string;
+  readonly deathKind: "In-patient" | "Brought in dead" | "Died in the emergency room";
+  readonly patientMrn?: string;
+  readonly patientName?: string;
+  readonly admittedAt?: string;
+  readonly immediateCause?: string;
+  readonly antecedentCause?: string;
+  readonly underlyingCause?: string;
+  readonly icdCode?: string;
+  readonly manner: "Natural" | "Unnatural — referred to police" | "Unknown — referred to police";
+  readonly policeStation?: string;
+  readonly policeOfficer?: string;
+  readonly referredAt?: string;
+  readonly postMortemReferred?: boolean;
+  readonly certifiedBy?: string;
+  readonly certificateNo?: string;
+  readonly releasedAt?: string;
+  readonly releasedTo?: string;
+  readonly releasedRelation?: string;
+  readonly civilState?: string;
+  readonly note?: string;
+}
+
+export interface VitalEventPage {
+  readonly day: string;
+  readonly births?: Array<BirthEvent>;
+  readonly deaths?: Array<DeathEvent>;
+  readonly asOf?: string;
+}
+
+export interface VisitorPass {
+  readonly id: string;
+  readonly passNo: string;
+  readonly visitorName: string;
+  readonly visitorPhone?: string;
+  readonly visitorAddress?: string;
+  readonly idType?: string;
+  readonly idNumber?: string;
+  readonly purpose: string;
+  /** Who they came to see. A visitor register without a host is a list of strangers in a building. */
+  readonly hostName: string;
+  readonly patientMrn?: string;
+  readonly wardId?: string;
+  readonly badgeNo?: string;
+  readonly itemsCarried?: string;
+  readonly openedAt: string;
+  readonly closedAt?: string;
+  readonly state: "Inside" | "Left" | "Refused" | "Overdue";
+  readonly refusalReason?: string;
+}
+
+export interface VisitorPassCreate {
+  readonly visitorName: string;
+  readonly visitorPhone?: string;
+  readonly visitorAddress?: string;
+  readonly idType?: "National ID" | "Passport" | "Driving licence" | "Employee card" | "None shown";
+  readonly idNumber?: string;
+  readonly purpose: string;
+  readonly hostName: string;
+  readonly patientMrn?: string;
+  readonly wardId?: string;
+  readonly itemsCarried?: string;
+  readonly accompanying?: number;
+  readonly at?: string;
+}
+
+export interface VisitorPassClose {
+  readonly at: string;
+  readonly by: string;
+  readonly badgeReturned?: boolean;
+  readonly note?: string;
+}
+
+export interface BranchSettingPatch {
+  readonly fields: Record<string, unknown>;
+  readonly version: number;
+  readonly reason: string;
+}
+
+export interface PlatformSetting {
+  readonly key: string;
+  readonly value: unknown;
+  readonly scope: "hospital-wide" | "branch";
+  readonly updatedAt: string;
+  readonly updatedBy?: string;
+  readonly version?: number;
+}
+
 
 /* ------------------------------------------------------------- operations */
 
@@ -1090,6 +1434,358 @@ export const operations = {
     needsNetwork: false,
     requiresIdempotencyKey: true,
   },
+  listStaff: {
+    id: "listStaff",
+    method: "get",
+    path: "/staff",
+    tag: "people",
+    summary: "Search the staff register",
+    entity: "staff.member",
+    offline: "cache",
+    authority: "cloud",
+    idempotency: "none",
+    audit: false,
+    because: "The roster is read at 06:50 by whoever is handing over, and a roster that needs the cloud to open is a roster that is wrong exactly when the link is down. Serve it from the branch replica and stamp how old the page is.",
+    notes: null,
+    request: null,
+    responses: { "200": "StaffPage", "400": null },
+    problemResponses: ["400"],
+    statuses: [200, 400],
+    mayQueue: false,
+    servesFromReplica: true,
+    needsNetwork: false,
+    requiresIdempotencyKey: false,
+  },
+  createStaffRecord: {
+    id: "createStaffRecord",
+    method: "post",
+    path: "/staff",
+    tag: "people",
+    summary: "Add a staff member",
+    entity: "staff.member",
+    offline: "queue",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "A new joiner is recorded at the desk where the paperwork was signed, which may well be the branch with the worse uplink. Queue it: the employee number is drawn from the node’s own block, so the record is complete when it is written rather than when it reaches the cloud.",
+    notes: null,
+    request: "StaffMemberCreate",
+    responses: { "201": "StaffMember", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  updateStaffRecord: {
+    id: "updateStaffRecord",
+    method: "patch",
+    path: "/staff/{staffId}",
+    tag: "people",
+    summary: "Correct a staff record",
+    entity: "staff.member",
+    offline: "queue",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "Corrections to a designation, a phone number or a licence expiry happen at the desk and are false for as long as they sit on one node. Queue them with the field list and the version, so two desks correcting different fields merge and two correcting the same field are offered both values.",
+    notes: null,
+    request: "StaffMemberPatch",
+    responses: { "200": "StaffMember", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [200, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  recordAttendancePunch: {
+    id: "recordAttendancePunch",
+    method: "post",
+    path: "/attendance/punches",
+    tag: "people",
+    summary: "Record an attendance punch",
+    entity: "attendance.punch",
+    offline: "queue",
+    authority: "edge",
+    idempotency: "required",
+    audit: true,
+    because: "The punch happens at a door in this building, to a reader mounted on the wall, and the door does not care whether the uplink is up. It is queued from the branch node in the order the reader saw it, because two punches out of order are two punches nobody can pair into a shift.",
+    notes: null,
+    request: "AttendancePunchCreate",
+    responses: { "201": "AttendancePunch", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  recordAttendanceAdjustment: {
+    id: "recordAttendanceAdjustment",
+    method: "post",
+    path: "/attendance/adjustments",
+    tag: "people",
+    summary: "Correct an attendance day by hand",
+    entity: "attendance.punch",
+    offline: "queue",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "A card left in a pocket and a reader that died are both real, and the payroll that runs on bad attendance pays somebody the wrong amount. The adjustment is a record of its own naming the supervisor, the reason and the time — it never overwrites the punch it corrects.",
+    notes: null,
+    request: "AttendanceAdjustmentCreate",
+    responses: { "201": "AttendancePunch", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  createLeaveRequest: {
+    id: "createLeaveRequest",
+    method: "post",
+    path: "/leave-requests",
+    tag: "people",
+    summary: "Apply for leave",
+    entity: "leave.request",
+    offline: "queue",
+    authority: "edge",
+    idempotency: "required",
+    audit: true,
+    because: "Leave is applied for in the ward office by somebody who is about to be short-staffed, and the ward needs the application on the board whether or not the cloud can be reached. Queue it and show it as awaiting approval, which is a state the roster can already cope with.",
+    notes: null,
+    request: "LeaveRequestCreate",
+    responses: { "201": "LeaveRequest", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  decideLeaveRequest: {
+    id: "decideLeaveRequest",
+    method: "post",
+    path: "/leave-requests/{id}/decision",
+    tag: "people",
+    summary: "Approve or refuse a leave application",
+    entity: "leave.request",
+    offline: "queue",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "The decision is made by a person looking at a roster, and it has to reach the ward the same way the application did. A refusal carries its reason and an approval carries who covers the shift, because that is the sentence the roster and the payroll both read.",
+    notes: null,
+    request: "LeaveDecision",
+    responses: { "200": "LeaveRequest", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [200, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  runPayroll: {
+    id: "runPayroll",
+    method: "post",
+    path: "/payroll/runs",
+    tag: "people",
+    summary: "Compute a month’s payroll for a branch",
+    entity: "payroll.run",
+    offline: "queue",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "A payroll run is arithmetic over attendance that already exists on this node, so it is computed here and queued as a whole: the lines, the totals and the cut-off it was computed from. Nothing about it needs the cloud to be reachable at the minute somebody presses the button.",
+    notes: null,
+    request: "PayrollRunCreate",
+    responses: { "201": "PayrollRun", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  approvePayrollRun: {
+    id: "approvePayrollRun",
+    method: "post",
+    path: "/payroll/runs/{month}/approval",
+    tag: "people",
+    summary: "Approve a payroll run for payment",
+    entity: "payroll.run",
+    offline: "online-only",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "This is the signature that releases money to every employee of a branch at once, and it is the one action in this module that may not be taken on a disconnected device: an approval that exists only in a queue is a signature nobody can verify against the ledger, and payroll is the one place where “probably approved” is not a state.",
+    notes: "Deliberately online-only: the approval is what the bank file is generated from, and a queued approval would let a branch pay a month the cloud ledger does not yet know about — which is the one discrepancy that cannot be reconciled afterwards without asking a person to repay money.",
+    request: "PayrollApproval",
+    responses: { "200": "PayrollRun", "401": null, "403": null, "409": null, "422": null, "503": null },
+    problemResponses: ["401", "403", "409", "422", "503"],
+    statuses: [200, 401, 403, 409, 422, 503],
+    mayQueue: false,
+    servesFromReplica: false,
+    needsNetwork: true,
+    requiresIdempotencyKey: true,
+  },
+  listVitalEvents: {
+    id: "listVitalEvents",
+    method: "get",
+    path: "/vital-events",
+    tag: "registry",
+    summary: "Read the day’s births and deaths",
+    entity: "vital.event",
+    offline: "cache",
+    authority: "edge",
+    idempotency: "none",
+    audit: false,
+    because: "The register is read at the desk where a family is standing, and the report that summarises it is read by the branch that wrote it. Serve the day from the node that recorded it, cached, rather than from a cloud page that may be a shift behind.",
+    notes: null,
+    request: null,
+    responses: { "200": "VitalEventPage", "400": null },
+    problemResponses: ["400"],
+    statuses: [200, 400],
+    mayQueue: false,
+    servesFromReplica: true,
+    needsNetwork: false,
+    requiresIdempotencyKey: false,
+  },
+  recordBirth: {
+    id: "recordBirth",
+    method: "post",
+    path: "/vital-events/births",
+    tag: "registry",
+    summary: "Record a birth",
+    entity: "vital.event",
+    offline: "queue",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "A birth happens at three in the morning with one midwife on the floor, and the register number comes from this node’s own block so the entry is complete when it is written. Queue it: the notification to the registrar can wait for an uplink, but the record cannot wait for one.",
+    notes: null,
+    request: "BirthEventCreate",
+    responses: { "201": "BirthEvent", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  recordDeath: {
+    id: "recordDeath",
+    method: "post",
+    path: "/vital-events/deaths",
+    tag: "registry",
+    summary: "Record a death",
+    entity: "vital.event",
+    offline: "queue",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "The death record is written by the clinician who was there, in the hour it happened, and the mortuary reads it before the body moves. It is queued as an immutable event: a certificate number issued against a cause, and a referral to the police recorded with its station and time.",
+    notes: null,
+    request: "DeathEventCreate",
+    responses: { "201": "DeathEvent", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  openVisitorPass: {
+    id: "openVisitorPass",
+    method: "post",
+    path: "/visitor-passes",
+    tag: "front-office",
+    summary: "Sign a visitor in",
+    entity: "visitor.pass",
+    offline: "queue",
+    authority: "edge",
+    idempotency: "required",
+    audit: true,
+    because: "The gate is a desk with a queue behind it, and the register has to be written before the visitor walks in regardless of what the network is doing. Queue it at the node and print the badge from the local series, because an unbadged visitor is somebody the security guard cannot account for at eight in the evening.",
+    notes: null,
+    request: "VisitorPassCreate",
+    responses: { "201": "VisitorPass", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  closeVisitorPass: {
+    id: "closeVisitorPass",
+    method: "post",
+    path: "/visitor-passes/{id}/close",
+    tag: "front-office",
+    summary: "Sign a visitor out",
+    entity: "visitor.pass",
+    offline: "queue",
+    authority: "edge",
+    idempotency: "required",
+    audit: true,
+    because: "Signing out happens at the same gate as signing in, at the end of visiting hours, and it is the half of the register that says who is still in the building. Queue it at the node: a pass left open is a receptionist walking the wards looking for somebody who went home an hour ago.",
+    notes: null,
+    request: "VisitorPassClose",
+    responses: { "200": "VisitorPass", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [200, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  updateBranchSetting: {
+    id: "updateBranchSetting",
+    method: "patch",
+    path: "/branches/{branch}/settings",
+    tag: "admin",
+    summary: "Change a branch’s own settings",
+    entity: "branch.setting",
+    offline: "queue",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "Branch settings are the things that differ between sites on purpose — the receipt header, the day-book start, the visiting hours — and the branch that changes one is the branch that has to live with it. Queue it with the version, so two administrators changing different keys merge and the same key is a question rather than a race.",
+    notes: null,
+    request: "BranchSettingPatch",
+    responses: { "200": "PlatformSetting", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [200, 401, 403, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  savePlatformSetting: {
+    id: "savePlatformSetting",
+    method: "put",
+    path: "/settings/{key}",
+    tag: "admin",
+    summary: "Save a platform setting",
+    entity: "platform.setting",
+    offline: "online-only",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "A platform setting is hospital-wide configuration — a leave type, an online-appointment rule, a print header — and every branch reads it from the same row. Saving one offline would apply it to one node and to nobody else, which is how two branches end up enforcing two different policies without anyone deciding to.",
+    notes: "Deliberately online-only: this row is the single source for every branch, and a queued save would leave one branch running the old policy for however long the uplink is down — a difference nobody would notice until an audit found two answers to one question.",
+    request: "PlatformSetting",
+    responses: { "200": "PlatformSetting", "401": null, "403": null, "409": null, "422": null, "503": null },
+    problemResponses: ["401", "403", "409", "422", "503"],
+    statuses: [200, 401, 403, 409, 422, 503],
+    mayQueue: false,
+    servesFromReplica: false,
+    needsNetwork: true,
+    requiresIdempotencyKey: true,
+  },
 } as const satisfies Record<string, OperationMeta>;
 
 export type OperationId = keyof typeof operations;
@@ -1174,6 +1870,46 @@ export const entityPolicies = {
     "policy": "append-only",
     "label": "Commission payout",
     "why": "A payout is an event: a voucher number, an amount, a withholding, a reference and two names. Nothing about it is edited afterwards — a mistake is corrected by a reversing voucher, and the bank statement shows both."
+  },
+  "staff.member": {
+    "policy": "field-level",
+    "label": "Staff record",
+    "why": "Two desks may both correct a designation, a phone number or a bank account. Different fields merge; the same field needs HR, because one of the two values is the one a salary is paid into."
+  },
+  "leave.request": {
+    "policy": "exclusive",
+    "label": "Leave request",
+    "why": "A leave application is one person’s days, decided once. Two approvers deciding the same application is two answers to one question — the second is refused with the decision already on the record."
+  },
+  "attendance.punch": {
+    "policy": "append-only",
+    "label": "Attendance punch",
+    "why": "A punch is a fact about a body being in a building at a time. A correction is a second record naming who corrected it and why, never an edit of the first."
+  },
+  "payroll.run": {
+    "policy": "exclusive",
+    "label": "Payroll run",
+    "why": "A month is paid once per branch. Two nodes running the same month is two bank files for the same salary, so the second is refused rather than merged."
+  },
+  "vital.event": {
+    "policy": "append-only",
+    "label": "Birth or death record",
+    "why": "These are notifications to the state as well as clinical records. Nothing about a birth or a death is edited after the fact: a correction is an amended entry naming what it changes."
+  },
+  "visitor.pass": {
+    "policy": "exclusive",
+    "label": "Visitor pass",
+    "why": "One badge, one visitor, one desk. A visitor who is already inside cannot be signed in again at another desk — the second attempt is refused with the pass that already holds them."
+  },
+  "branch.setting": {
+    "policy": "field-level",
+    "label": "Branch setting",
+    "why": "Two administrators may each change a different branch setting. Different keys merge; the same key needs a person, because the day book and the receipt header cannot read two values."
+  },
+  "platform.setting": {
+    "policy": "field-level",
+    "label": "Platform setting",
+    "why": "Configuration is edited by more than one administrator, and most keys are independent. Different keys merge; the same key is the one case where somebody has to choose, since the next patient sees only one of the two."
   }
 } as const;
 

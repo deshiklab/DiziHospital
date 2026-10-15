@@ -59,6 +59,14 @@ export type EntityKind =
   | 'ledger.expense'
   | 'claim'
   | 'commission.payout'
+  | 'staff.member'
+  | 'leave.request'
+  | 'attendance.punch'
+  | 'payroll.run'
+  | 'vital.event'
+  | 'visitor.pass'
+  | 'branch.setting'
+  | 'platform.setting'
   | 'audit';
 
 /** How two writers on different nodes are allowed to collide on this entity. */
@@ -134,6 +142,46 @@ export const ENTITY_POLICY: Record<EntityKind, { policy: ConflictPolicy; label: 
     policy: 'append-only',
     label: 'Commission payout',
     why: 'A payout is an event: a voucher number, an amount, a withholding, a reference and two names. Nothing about it is edited afterwards — a mistake is corrected by a reversing voucher, and the bank statement shows both.',
+  },
+  'staff.member': {
+    policy: 'field-level',
+    label: 'Staff record',
+    why: 'Two desks may both correct a designation, a phone number or a bank account. Different fields merge; the same field needs HR, because one of the two values is the one a salary is paid into.',
+  },
+  'leave.request': {
+    policy: 'exclusive',
+    label: 'Leave request',
+    why: 'A leave application is one person’s days, decided once. Two approvers deciding the same application is two answers to one question — the second is refused with the decision already on the record.',
+  },
+  'attendance.punch': {
+    policy: 'append-only',
+    label: 'Attendance punch',
+    why: 'A punch is a fact about a body being in a building at a time. A correction is a second record naming who corrected it and why, never an edit of the first.',
+  },
+  'payroll.run': {
+    policy: 'exclusive',
+    label: 'Payroll run',
+    why: 'A month is paid once per branch. Two nodes running the same month is two bank files for the same salary, so the second is refused rather than merged.',
+  },
+  'vital.event': {
+    policy: 'append-only',
+    label: 'Birth or death record',
+    why: 'These are notifications to the state as well as clinical records. Nothing about a birth or a death is edited after the fact: a correction is an amended entry naming what it changes.',
+  },
+  'visitor.pass': {
+    policy: 'exclusive',
+    label: 'Visitor pass',
+    why: 'One badge, one visitor, one desk. A visitor who is already inside cannot be signed in again at another desk — the second attempt is refused with the pass that already holds them.',
+  },
+  'branch.setting': {
+    policy: 'field-level',
+    label: 'Branch setting',
+    why: 'Two administrators may each change a different branch setting. Different keys merge; the same key needs a person, because the day book and the receipt header cannot read two values.',
+  },
+  'platform.setting': {
+    policy: 'field-level',
+    label: 'Platform setting',
+    why: 'Configuration is edited by more than one administrator, and most keys are independent. Different keys merge; the same key is the one case where somebody has to choose, since the next patient sees only one of the two.',
   },
   audit: {
     policy: 'append-only',
