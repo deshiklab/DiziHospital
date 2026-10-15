@@ -22,9 +22,7 @@ use App\Support\ProblemException;
  */
 final class DuplicateScorer
 {
-    public function __construct(private readonly DuplicateRules $rules)
-    {
-    }
+    public function __construct(private readonly DuplicateRules $rules) {}
 
     /**
      * @param  array<string, mixed>  $existing  the record already in the register
@@ -221,7 +219,7 @@ final class DuplicateScorer
     /**
      * The tail of a national ID, which is what the register holds when it holds one at all.
      *
-     * @param array<string, mixed> $record
+     * @param  array<string, mixed>  $record
      */
     private function nationalIdTail(array $record): string
     {

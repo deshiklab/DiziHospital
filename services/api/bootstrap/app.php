@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The application's wiring, in one readable place.
  *
@@ -18,6 +19,8 @@ declare(strict_types=1);
 
 use App\Exceptions\ProblemRenderer;
 use App\Http\Middleware\AttachTraceId;
+use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\RequireIdempotencyKey;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -33,8 +36,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withCommands()
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'dizi.auth' => App\Http\Middleware\Authenticate::class,
-            'dizi.idempotency' => App\Http\Middleware\RequireIdempotencyKey::class,
+            'dizi.auth' => Authenticate::class,
+            'dizi.idempotency' => RequireIdempotencyKey::class,
         ]);
         $middleware->append(AttachTraceId::class);
     })

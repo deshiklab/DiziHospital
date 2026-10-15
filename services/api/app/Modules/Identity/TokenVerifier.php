@@ -25,8 +25,7 @@ final class TokenVerifier
         private readonly string $driver,
         private readonly string $secret,
         private readonly int $leewaySeconds,
-    ) {
-    }
+    ) {}
 
     public function verify(string $token): Actor
     {

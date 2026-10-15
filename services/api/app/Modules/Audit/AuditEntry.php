@@ -7,6 +7,7 @@ namespace App\Modules\Audit;
 use App\Support\ApiTime;
 use App\Support\HasModuleTable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * One link in a node's chain.
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $node
  * @property int $sequence
- * @property \Illuminate\Support\Carbon $at
+ * @property Carbon $at
  * @property string $actor
  * @property string $action
  * @property string $entity

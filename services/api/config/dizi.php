@@ -1,4 +1,5 @@
 <?php
+
 /**
  * What this node is, and the two things a node cannot borrow.
  *

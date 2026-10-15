@@ -18,9 +18,7 @@ use Illuminate\Http\Request;
  */
 final class AuditController
 {
-    public function __construct(private readonly Ledger $ledger)
-    {
-    }
+    public function __construct(private readonly Ledger $ledger) {}
 
     public function store(Request $request): JsonResponse
     {

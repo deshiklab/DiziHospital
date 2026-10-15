@@ -32,8 +32,7 @@ final class ReservedBlocks implements NodePolicy
         private readonly array $prefixes,
         /** @var list<string> */
         private readonly array $series,
-    ) {
-    }
+    ) {}
 
     /**
      * The blocks in force for a node, issuing the ones it has none of.

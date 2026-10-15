@@ -19,9 +19,7 @@ use Illuminate\Http\Request;
  */
 final class PatientController
 {
-    public function __construct(private readonly Register $register)
-    {
-    }
+    public function __construct(private readonly Register $register) {}
 
     public function index(Request $request): JsonResponse
     {

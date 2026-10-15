@@ -7,6 +7,7 @@ namespace App\Modules\Sync;
 use App\Support\ApiTime;
 use App\Support\HasModuleTable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * A range of numbers reserved to one node for one series, with the lease it was issued under.
@@ -22,8 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $to_value
  * @property int $next_value
  * @property string $lease
- * @property \Illuminate\Support\Carbon $issued_at
- * @property \Illuminate\Support\Carbon $expires_at
+ * @property Carbon $issued_at
+ * @property Carbon $expires_at
  */
 final class NumberBlock extends Model
 {

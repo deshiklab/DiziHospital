@@ -24,9 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class Authenticate
 {
-    public function __construct(private readonly TokenVerifier $verifier)
-    {
-    }
+    public function __construct(private readonly TokenVerifier $verifier) {}
 
     public function handle(Request $request, Closure $next, string ...$abilities): Response
     {

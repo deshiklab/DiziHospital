@@ -22,9 +22,7 @@ use Illuminate\Http\JsonResponse;
  */
 final class NodeNumberBlockController
 {
-    public function __construct(private readonly ReservedBlocks $blocks)
-    {
-    }
+    public function __construct(private readonly ReservedBlocks $blocks) {}
 
     public function __invoke(): JsonResponse
     {

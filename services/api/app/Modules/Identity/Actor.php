@@ -18,8 +18,7 @@ final class Actor
         public readonly string $role,
         public readonly string $branch,
         public readonly string $node,
-    ) {
-    }
+    ) {}
 
     /** The role an operation needs, checked here rather than in each controller. */
     public function may(string $ability): bool

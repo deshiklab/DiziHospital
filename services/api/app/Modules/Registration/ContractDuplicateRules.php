@@ -21,9 +21,7 @@ final class ContractDuplicateRules implements DuplicateRules
     /** @var array{rules: list<array<string, mixed>>, thresholds: array{warn: float, block: float}}|null */
     private ?array $loaded = null;
 
-    public function __construct(private readonly string $path)
-    {
-    }
+    public function __construct(private readonly string $path) {}
 
     public function thresholds(): array
     {

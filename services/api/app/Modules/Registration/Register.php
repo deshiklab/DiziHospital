@@ -9,6 +9,7 @@ use App\Modules\Identity\Actor;
 use App\Modules\Sync\ReservedBlocks;
 use App\Support\ApiTime;
 use App\Support\ProblemException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -45,8 +46,7 @@ final class Register
         private readonly ReservedBlocks $blocks,
         private readonly DuplicateScorer $scorer,
         private readonly Ledger $ledger,
-    ) {
-    }
+    ) {}
 
     /**
      * A page of the register.
@@ -89,7 +89,7 @@ final class Register
         return ['rows' => array_values($rows), 'total' => $total, 'page' => $page, 'pageSize' => $pageSize];
     }
 
-    /** @throws \Illuminate\Database\Eloquent\ModelNotFoundException */
+    /** @throws ModelNotFoundException */
     public function find(string $mrn): Patient
     {
         return Patient::query()->findOrFail($mrn);
