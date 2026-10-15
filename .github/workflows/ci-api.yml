@@ -32,6 +32,10 @@ jobs:
     name: php 8.4, style, contract and rules
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # Write access for exactly one step: committing the lock file, while there is not one. It comes off again in the
+    # commit after that lands, and until then no other step pushes anything.
+    permissions:
+      contents: write
     defaults:
       run:
         working-directory: services/api
@@ -51,21 +55,23 @@ jobs:
           coverage: none
 
       # No composer.lock is committed yet, and it cannot be resolved outside Actions: packagist is reachable only
-      # from this runner. Composer resolves the versions on the first install and writes the lock, which the next
-      # step keeps — so the job is reproducible from the second run onwards rather than from the first.
+      # from this runner. Composer resolves the versions on the first install and writes the lock, which the step
+      # below commits — so the job is reproducible from the second run onwards rather than from the first.
       - name: Install the service's dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
-      # The lock file cannot be generated outside Actions — composer needs packagist, which only this runner can
-      # reach — so the first install resolves it here. Uploading it is how it gets committed once and reused, so
-      # the second run of this job installs exactly what the first proved.
-      - name: Keep the resolved versions so they can be committed
-        if: hashFiles('services/api/composer.lock') != ''
-        uses: actions/upload-artifact@v4
-        with:
-          name: composer-lock
-          path: services/api/composer.lock
-          retention-days: 30
+      # `composer.lock` cannot be produced outside Actions — composer needs packagist, which only this runner can
+      # reach — so the runner that resolved it commits it. The step runs only while the file is missing and only
+      # touches that one file, which makes it a bootstrap rather than a bot: after the lock has landed it is a no-op
+      # for every later run.
+      - name: Commit the resolved versions, once
+        if: github.event_name == 'push' && hashFiles('services/api/composer.lock') == ''
+        run: |
+          git config user.name 'ci-api'
+          git config user.email 'ci-api@users.noreply.github.com'
+          git add composer.lock
+          git commit -m 'chore(api): the resolved versions, as composer resolved them'
+          git push origin "HEAD:${{ github.ref_name }}"
 
       # Every file, one at a time, before anything heavier: a parse error reported by name is a minute; the same
       # parse error found by PHPUnit is a stack trace about an autoloader.
@@ -73,7 +79,6 @@ jobs:
         run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
 
       - name: Pint — the style rules this repository pins
-        continue-on-error: true
         run: |
           set +e
           vendor/bin/pint --test -v > /tmp/pint.log 2>&1
@@ -94,7 +99,6 @@ jobs:
       # The failure list is echoed as an annotation rather than left in the log alone: a check run's annotations are
       # what a contributor — or an agent working in a sandbox that cannot download Actions logs — can read back.
       - name: The contract, the rules and the ledger
-        continue-on-error: true
         run: |
           set +e
           vendor/bin/phpunit --display-warnings 2>&1 | tee /tmp/phpunit.log

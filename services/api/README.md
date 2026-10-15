@@ -154,8 +154,10 @@ can check without a parser — unused imports, import order, quoting, `!` spacin
 `ci-app` job on every pull request as well as here. The rest is left to Pint rather than approximated, because a second
 implementation that disagrees with Pint is worse than no check at all.
 
-Because no lock file can be generated outside Actions, the `ci-api` job uploads the `composer.lock` it resolves as an
-artifact: the first run of that job is what pins the versions, and committing that file is the follow-up.
+No lock file can be generated outside Actions — packagist is reachable from the `ci-api` runner and from nowhere
+else — so that runner resolves one and commits it, in a step that runs only while `services/api/composer.lock` is
+missing. Once the file is in the repository every install after that gets the versions the green run was proved
+against; regenerating it means a machine that can reach packagist, or re-adding that bootstrap step.
 
 ## Layout
 
