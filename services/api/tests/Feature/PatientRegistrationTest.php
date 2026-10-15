@@ -51,7 +51,7 @@ final class PatientRegistrationTest extends TestCase
     {
         $this->reserve();
 
-        $this->asRole()->postJson('/patients', $this->body() + ['mrn' => 'MRN-099999'], ['Idempotency-Key' => $this->key()])
+        $this->asRole()->postJson('/patients', array_merge($this->body(), ['mrn' => 'MRN-099999']), ['Idempotency-Key' => $this->key()])
             ->assertStatus(409)
             ->assertJsonPath('title', 'That number was not reserved to this node');
 
@@ -62,7 +62,7 @@ final class PatientRegistrationTest extends TestCase
     {
         $this->reserve();
 
-        $this->asRole()->postJson('/patients', $this->body() + ['mrn' => 'MRN-000003'], ['Idempotency-Key' => $this->key()])
+        $this->asRole()->postJson('/patients', array_merge($this->body(), ['mrn' => 'MRN-000003']), ['Idempotency-Key' => $this->key()])
             ->assertCreated()
             ->assertJsonPath('mrn', 'MRN-000003');
     }
@@ -73,11 +73,13 @@ final class PatientRegistrationTest extends TestCase
 
         $this->asRole()->postJson('/patients', $this->body(), ['Idempotency-Key' => $this->key('0001')])->assertCreated();
 
-        /* Same phone and same date of birth: 0.8 + 0.5, over the 0.85 block threshold. */
-        $response = $this->asRole()->postJson('/patients', $this->body() + [
+        /* The same phone written the other way and the same date of birth: 0.8 + 0.5, over the 0.85 block threshold,
+           before even the one-edit name is counted. `array_merge` rather than `+`, because the union operator keeps the
+           left operand's value for a key that is already there and this body is meant to *override* two of them. */
+        $response = $this->asRole()->postJson('/patients', array_merge($this->body(), [
             'name' => 'Rahima Bagum',
             'phone' => '+880 1711 000 001',
-        ], ['Idempotency-Key' => $this->key('0002')]);
+        ]), ['Idempotency-Key' => $this->key('0002')]);
 
         $response->assertStatus(409)
             ->assertJsonPath('title', 'This patient may already be registered')
@@ -96,10 +98,10 @@ final class PatientRegistrationTest extends TestCase
         $this->reserve();
         $this->asRole('reception')->postJson('/patients', $this->body(), ['Idempotency-Key' => $this->key('0001')])->assertCreated();
 
-        $this->asRole()->postJson('/patients', $this->body() + [
+        $this->asRole()->postJson('/patients', array_merge($this->body(), [
             'phone' => '01711000001',
             'duplicateAcknowledged' => true,
-        ], ['Idempotency-Key' => $this->key('0002')])
+        ]), ['Idempotency-Key' => $this->key('0002')])
             ->assertCreated()
             ->assertJsonPath('mrn', 'MRN-000002');
 
@@ -150,7 +152,10 @@ final class PatientRegistrationTest extends TestCase
 
         $this->asRole()->postJson('/patients', $this->body(), $headers)->assertCreated();
 
-        $this->asRole()->postJson('/patients', $this->body() + ['name' => 'Somebody Else'], $headers)
+        /* `array_merge`, not `+`: the union operator would keep the first body's name and send an identical body, and
+           an identical body under the same key is a *replay* — which returns 201, the opposite of what is being tested
+           here. */
+        $this->asRole()->postJson('/patients', array_merge($this->body(), ['name' => 'Somebody Else']), $headers)
             ->assertStatus(422)
             ->assertJsonPath('errors.0.field', 'Idempotency-Key');
 

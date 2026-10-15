@@ -97,10 +97,11 @@ jobs:
           vendor/bin/phpunit --display-warnings 2>&1 | tee /tmp/phpunit.log
           status=${PIPESTATUS[0]}
           if [ "$status" -ne 0 ]; then
-            # The failure names and the assertion lines, as one annotation. A check run's annotations are limited, so
-            # this is the index rather than the whole diff: enough to say which test and which expectation failed.
+            # The failure names, the assertion sentences and this service's own messages — one line each, as one
+            # annotation. A check run's annotations are limited and its diffs are not worth the room: what is needed
+            # from outside the log is which test failed and what it expected.
             sed -n '/^There w/,$p' /tmp/phpunit.log \
-              | grep -E '^[0-9]+\) |^Failed asserting|^Expected |^[A-Za-z]+(Error|Exception):|^Tests: ' \
+              | grep -vE '^(\s|[-+]|\$)' \
               | head -50 | sed 's/%/%25/g' | sed -z 's/\n/%0A/g' | sed 's/^/::error ::/'
           fi
           exit "$status"
