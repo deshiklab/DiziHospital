@@ -2,8 +2,12 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "dizihospital/api",
     "type": "project",
-    "description": "DiziHospital hospital platform API — the cloud tier the edge nodes drain into (P0-301)",
-    "keywords": ["hospital", "api", "laravel"],
+    "description": "DiziHospital hospital platform API \u2014 the cloud tier the edge nodes drain into (P0-301)",
+    "keywords": [
+        "hospital",
+        "api",
+        "laravel"
+    ],
     "license": "proprietary",
     "require": {
         "php": "^8.4",
@@ -11,6 +15,7 @@
     },
     "require-dev": {
         "laravel/pint": "^1.27",
+        "mockery/mockery": "^1.6",
         "phpunit/phpunit": "^12.5.12"
     },
     "autoload": {

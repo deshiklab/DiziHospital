@@ -32,6 +32,9 @@ jobs:
     name: php 8.4, style, contract and rules
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # Temporary, for the diagnostic push below. Goes back to the default read-only token with it.
+    permissions:
+      contents: write
     defaults:
       run:
         working-directory: services/api
@@ -69,15 +72,18 @@ jobs:
       - name: Every PHP file parses
         run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
 
-      - name: Pint — the style rules this repository pins
-        continue-on-error: true
+      - name: Pint — the style rules this repository pins (temporary: fixes and pushes)
+        if: github.event_name == 'push'
         run: |
-          set +e
-          output=$(vendor/bin/pint --test 2>&1)
-          status=$?
-          printf '%s\n' "$output"
-          printf '%s\n' "$output" | grep -Ev '^$' | head -10 | sed 's/^/::error ::/'
-          exit "$status"
+          vendor/bin/pint
+          git config user.name 'ci-api'
+          git config user.email 'ci-api@users.noreply.github.com'
+          if ! git diff --quiet; then
+            git add -u .
+            git commit -m "style: pint applied the preset this repository pins"
+            git push origin "HEAD:${{ github.ref_name }}"
+          fi
+          vendor/bin/pint --test
 
       # The suite runs against SQLite in memory, which needs no service container, and the assertions the product
       # cares about are about rules rather than about the engine: which numbers a node may mint, what a stale version
@@ -90,7 +96,8 @@ jobs:
           output=$(vendor/bin/phpunit --display-warnings 2>&1)
           status=$?
           printf '%s\n' "$output"
-          printf '%s\n' "$output" | grep -E '^[0-9]+\)|FAILURES|ERRORS|Tests:|Failed asserting|Error:' | head -10 | sed 's/^/::error ::/'
+          printf '%s\n' "$output" | grep -E '^[0-9]+\)|^Tests: |Failed asserting' | head -10 | sed 's/^/::error ::/'
+          printf '%s\n' "$output" | tail -12 | sed 's/^/::error ::/'
           exit "$status"
 
       - name: Server log on failure
