@@ -73,7 +73,17 @@ jobs:
         run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
 
       - name: Pint — the style rules this repository pins
-        run: vendor/bin/pint --test
+        run: |
+          set +e
+          vendor/bin/pint --test -v > /tmp/pint.log 2>&1
+          status=$?
+          cat /tmp/pint.log
+          if [ "$status" -ne 0 ]; then
+            # The diff, as one annotation: a style failure has to be readable from a check run rather than only from
+            # the log, for the same reason the PHPUnit failures are echoed above.
+            echo "::error ::$(sed 's/%/%25/g' /tmp/pint.log | sed -z 's/\n/%0A/g' | head -c 60000)"
+          fi
+          exit "$status"
 
       # The suite runs against SQLite in memory, which needs no service container, and the assertions the product
       # cares about are about rules rather than about the engine: which numbers a node may mint, what a stale version

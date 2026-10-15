@@ -7,8 +7,9 @@
  * environment has no PHP at all — so the rules that can be checked by reading a file are checked here, on every pull
  * request, in a second and with no dependencies.
  *
- * It checks exactly the rules `pint.json` pins, no more: unused imports, import order, quoting, `!` spacing, the
- * `declare(strict_types=1)` prologue, comment and brace conventions, and the whitespace/encoding rules. A rule that
+ * It checks the half of that style a reader can check without a parser: unused imports, import order, quoting, `!`
+ * spacing, the `declare(strict_types=1)` prologue, comment and brace conventions, and the whitespace and encoding
+ * rules. A rule that
  * needs a real parser — anything about types, docblocks or trailing commas in calls — is deliberately left to Pint
  * rather than approximated here, because an approximation that disagrees with Pint is worse than no check at all.
  *

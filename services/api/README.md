@@ -9,7 +9,7 @@ records; it is not yet a service that runs a hospital.
 
 ## What it serves
 
-Seven of the contract's ninety-three operations, one route each, at the contract's own paths (no `/api` segment, no
+Eight of the contract's ninety-three operations, one route each, at the contract's own paths (no `/api` segment, no
 prettier alias):
 
 | Operation | Route | Middleware |
@@ -145,12 +145,14 @@ npm run api:style     # the rules pint.json pins, checked without PHP (no depend
 framework and touches no database, so **types, behaviour and the contract are proved by the `ci-api` job** — PHP 8.4
 via `shivammathur/setup-php`, `php -l` over every file, `vendor/bin/pint --test` and `vendor/bin/phpunit`.
 
-`pint.json` pins the rules rather than taking a whole preset: a style gate that reformats unrelated files when Pint
-upgrades is a surprise rather than a gate, and the pinned list is small enough to read. Widening it is a deliberate
-change, and the local half of it — unused imports, import order, quoting, `!` spacing, the `declare` prologue, file
-endings — is checked by [`tools/ci/php-style.mjs`](../../tools/ci/php-style.mjs), which needs no dependencies and runs
-in the `ci-app` job on every pull request as well as here. The rules that need a real parser are left to Pint rather
-than approximated, because a second implementation that disagrees with Pint is worse than no check at all.
+`pint.json` names both halves of the style that judges this code: the `laravel` preset as the base, and the rules this
+service pins on top of it — including `braces`, whose default position differs from the preset's and is the reason
+methods here open on the next line. Naming them keeps the rules a block a reviewer can argue with rather than a
+default that moves when the tool does, and `composer.lock` pins the Pint version that applies them. The half a reader
+can check without a parser — unused imports, import order, quoting, `!` spacing, the `declare` prologue, file endings
+— is checked by [`tools/ci/php-style.mjs`](../../tools/ci/php-style.mjs), which needs no dependencies and runs in the
+`ci-app` job on every pull request as well as here. The rest is left to Pint rather than approximated, because a second
+implementation that disagrees with Pint is worse than no check at all.
 
 Because no lock file can be generated outside Actions, the `ci-api` job uploads the `composer.lock` it resolves as an
 artifact: the first run of that job is what pins the versions, and committing that file is the follow-up.
