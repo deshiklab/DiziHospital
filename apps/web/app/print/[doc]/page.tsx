@@ -23,6 +23,10 @@ import {
   type PurchaseOrder,
 } from '@/lib/inventory';
 import { patients } from '@/lib/mock';
+import { birthDeathDay } from '@/lib/birthdeath';
+import { allowancesFor, monthDays, monthOf, payrollLine, staffDirectory, type PayrollAttendance } from '@/lib/hr';
+import { REGISTER_CODES, attendanceRegister, payrollAttendance, type RegisterCode } from '@/lib/attendance';
+import { purposeByCode, visitorDay } from '@/lib/visitors';
 import { BED_CHARGE, generateInpatient, wardName } from '@/lib/ward';
 
 /* Print templates.
@@ -48,7 +52,15 @@ type DocKind =
   | 'purchase-order'
   | 'discharge-summary'
   | 'id-card'
-  | 'day-list';
+  | 'day-list'
+  /* P7 — the people, the registers and the branches. Added when the administration hub shipped: a printing
+     settings screen whose templates cannot be opened is a list of promises. */
+  | 'birth-record'
+  | 'death-record'
+  | 'payslip'
+  | 'attendance-sheet'
+  | 'visitor-badge'
+  | 'imaging-report';
 
 const DOC_META: Record<DocKind, { title: string; paper: string; page: string; note: string; param?: string }> = {
   'registration-slip': { title: 'Registration slip', paper: 'A5', page: 'A5 portrait', note: 'Handed to the patient at the counter.', param: 'mrn' },
@@ -63,6 +75,12 @@ const DOC_META: Record<DocKind, { title: string; paper: string; page: string; no
   'specimen-label': { title: 'Specimen label', paper: '50 × 25 mm', page: '50mm 25mm', note: 'Two-line label for tubes; the barcode is what the lab scans.', param: 'spec' },
   'id-card': { title: 'Patient ID card', paper: 'CR80 card', page: 'A4 portrait', note: 'Crop marks shown for card printers.', param: 'mrn' },
   'day-list': { title: 'Appointment day list', paper: 'A4 landscape', page: 'A4 landscape', note: 'What the desk prints at the start of a shift.' },
+  'birth-record': { title: 'Birth record', paper: 'A4', page: 'A4 portrait', note: 'The hospital’s own record of a birth. The civil certificate is the corporation’s, and this print says so.', param: 'reg' },
+  'death-record': { title: 'Death record', paper: 'A4', page: 'A4 portrait', note: 'Cause of death in the three-part form, with the certificate state and the police referral where there is one.', param: 'reg' },
+  payslip: { title: 'Payslip', paper: 'A5', page: 'A5 portrait', note: 'Every deduction printed with the rule that produced it, and the attendance the month was paid on.', param: 'emp' },
+  'attendance-sheet': { title: 'Attendance sheet', paper: 'A4 landscape', page: 'A4 landscape', note: 'The month as a matrix for a shift manager to sign, with the exceptions named underneath.', param: 'month' },
+  'visitor-badge': { title: 'Visitor badge', paper: 'Thermal 80 mm', page: '80mm auto', note: 'Prints the areas the visitor may not enter on the badge itself, because the door is busy.', param: 'pass' },
+  'imaging-report': { title: 'Imaging report', paper: 'A4', page: 'A4 portrait', note: 'Findings and impression, with the radiologist who reported it.', param: 'spec' },
 };
 
 /** Deterministic bar pattern from a string — stands in for Code 128 until the real encoder lands (P4). */
@@ -88,7 +106,7 @@ export default function PrintPage({
   searchParams,
 }: {
   params: Promise<{ doc: string }>;
-  searchParams: Promise<{ id?: string; mrn?: string; enc?: string; inv?: string; dsp?: string; spec?: string; po?: string; dsc?: string }>;
+  searchParams: Promise<{ id?: string; mrn?: string; enc?: string; inv?: string; dsp?: string; spec?: string; po?: string; dsc?: string; reg?: string; emp?: string; month?: string; pass?: string }>;
 }) {
   const { doc } = use(params);
   const query = use(searchParams);
@@ -137,6 +155,22 @@ export default function PrintPage({
   const dischargeBed = inpatient.beds.find((b) => b.id === discharge?.bedId);
 
   const specimenId = query.spec ?? `SP-${appointment?.token ?? '000'}1`;
+
+  /* The P7 documents read the same modules the administration screens read, which is what makes a payslip print
+     match the payroll screen it was generated from. */
+  const vital = birthDeathDay(day);
+  const birth = vital.births.find((b) => b.registerNo === query.reg) ?? vital.births[0];
+  const death = vital.deaths.find((d) => d.registerNo === query.reg) ?? vital.deaths[0];
+  const directory = staffDirectory(day);
+  const staff = directory.find((s) => s.code === query.emp) ?? directory.find((s) => s.code === 'EMP-1002') ?? directory[0];
+  const payrollMonth = query.month ? `${query.month}-01`.slice(0, 7) : monthOf(day);
+  const register = attendanceRegister(payrollMonth, directory);
+  const attendanceFor: PayrollAttendance =
+    payrollAttendance(register)[staff.code] ?? { staffCode: staff.code, workedDays: 0, absentDays: 0, halfDays: 0, paidLeaveDays: 0, unpaidLeaveDays: 0, lateMarks: 0, overtimeHours: 0, holidays: 0, daysInMonth: monthDays(payrollMonth).length };
+  const payslip = payrollLine(staff, attendanceFor);
+  const visitorPass = visitorDay(day).passes.find((p) => p.passNo === query.pass) ?? visitorDay(day).passes[0];
+  const imagingOrder = diagnosticOrders.find((o) => o.testCode !== undefined && testByCode(o.testCode)?.kind === 'imaging' && o.report) ?? diagnosticOrders.find((o) => testByCode(o.testCode)?.kind === 'imaging') ?? diagnosticOrders[0];
+  const imagingTest = testByCode(imagingOrder.testCode);
 
   const header = (title: string, subtitle?: string) => (
     <header className="mb-3 border-b border-black pb-2">
@@ -810,6 +844,270 @@ export default function PrintPage({
               </div>
             </div>
             <p className="mt-2 text-[10px]">Printed {new Date().toLocaleString()} · patient copy · bring this sheet to every follow-up</p>
+          </div>
+        );
+      }
+
+      case 'birth-record':
+        return (
+          <div className="w-[210mm] bg-white p-6 text-black">
+            {header('Birth record', birth ? `Register no. ${birth.registerNo}` : 'No birth recorded today')}
+            {!birth ? (
+              <p className="text-sm">No birth was recorded on {day}. The register prints an empty form rather than a sample: a record with somebody else’s baby on it is worse than a blank one.</p>
+            ) : (
+              <>
+                <div className="grid grid-cols-2 gap-4 text-xs">
+                  <div>
+                    <p><span className="font-semibold">Mother:</span> {birth.mother.name} ({birth.mother.mrn})</p>
+                    <p><span className="font-semibold">Age:</span> {birth.mother.age} years</p>
+                    <p><span className="font-semibold">Gravida / para:</span> {birth.gravidaPara}</p>
+                    <p><span className="font-semibold">Ward and bed:</span> {birth.wardId} · {birth.bedId}</p>
+                    <p><span className="font-semibold">Delivered by:</span> {birth.attendedBy}</p>
+                  </div>
+                  <div>
+                    <p><span className="font-semibold">Date and time of birth:</span> {birth.at}</p>
+                    <p><span className="font-semibold">Gestation:</span> {birth.gestationWeeks} weeks</p>
+                    <p><span className="font-semibold">Delivery:</span> {birth.type}</p>
+                    <p><span className="font-semibold">Outcome:</span> {birth.outcome}</p>
+                    <p><span className="font-semibold">Sex and weight:</span> {birth.sex} · {birth.weightGrams} g</p>
+                  </div>
+                </div>
+                <section className="mt-3 text-xs">
+                  <p className="font-semibold">Newborn</p>
+                  <p>Apgar {birth.apgar.oneMin} at one minute, {birth.apgar.fiveMin} at five.{birth.outcome === 'Stillbirth' ? ' A stillbirth carries no Apgar score, which is the register’s own rule: the score is what a living baby is assessed by.' : ''}</p>
+                  <p>Vitamin K {birth.vitaminKGiven ? 'given' : 'not given'} · BCG {birth.bcgGiven ? 'given' : 'not given'}{birth.firstFeedAt ? ` · first feed ${birth.firstFeedAt.slice(11)}` : ' · first feed not recorded'}</p>
+                  {birth.complications.length > 0 && <p><span className="font-semibold">Labour:</span> {birth.complications.join(' · ')}</p>}
+                </section>
+                <section className="mt-3 border border-black p-2 text-xs">
+                  <p className="font-semibold">Civil registration: {birth.civil.state}{birth.civil.number ? ` — ${birth.civil.number}` : ''}</p>
+                  <p>This is the hospital’s own record of the birth. The birth certificate is issued by the city corporation’s registrar, and this document is what the family takes there.</p>
+                </section>
+                {birth.note && <p className="mt-3 text-xs">{birth.note}</p>}
+              </>
+            )}
+            <p className="mt-4 text-[10px]">Printed {new Date().toLocaleString()} · {birth ? birth.registerNo : 'blank form'} · hospital copy</p>
+          </div>
+        );
+
+      case 'death-record':
+        return (
+          <div className="w-[210mm] bg-white p-6 text-black">
+            {header('Death record', death ? `Register no. ${death.registerNo}` : 'No death recorded today')}
+            {!death ? (
+              <p className="text-sm">No death was recorded on {day}. The register prints an empty form rather than a sample.</p>
+            ) : (
+              <>
+                <div className="grid grid-cols-2 gap-4 text-xs">
+                  <div>
+                    <p><span className="font-semibold">Name:</span> {death.patient?.name ?? 'Not registered'} {death.patient ? `(${death.patient.mrn})` : ''}</p>
+                    <p><span className="font-semibold">Age and sex:</span> {death.patient ? `${death.patient.age} years · ${death.patient.sex}` : '—'}</p>
+                    <p><span className="font-semibold">Came in as:</span> {death.kind}</p>
+                    <p><span className="font-semibold">Ward:</span> {death.wardId ?? 'not admitted'}</p>
+                    <p><span className="font-semibold">Date and time of death:</span> {death.at}</p>
+                  </div>
+                  <div>
+                    <p><span className="font-semibold">Immediate cause:</span> {death.cause.immediate || 'not stated'}</p>
+                    <p><span className="font-semibold">Antecedent cause:</span> {death.cause.antecedent || '—'}</p>
+                    <p><span className="font-semibold">Underlying cause:</span> {death.cause.underlying || '—'}</p>
+                    <p><span className="font-semibold">ICD:</span> {death.cause.icd || '—'}</p>
+                    <p><span className="font-semibold">Manner:</span> {death.manner}</p>
+                  </div>
+                </div>
+                <section className="mt-3 text-xs">
+                  <p className="font-semibold">Certification</p>
+                  <p>{death.certifiedBy ? `Certified by ${death.certifiedBy}${death.certifiedAt ? ` at ${death.certifiedAt}` : ''}.` : 'Not yet certified: the register refuses to print a certificate for a death without a cause on it.'} {death.certificateNo ? `Certificate no. ${death.certificateNo}.` : ''}</p>
+                  {death.police && <p><span className="font-semibold">Referred to police:</span> {death.police.station}, informed {death.police.referredAt}.{death.postMortemReferred ? ' Post-mortem referred.' : ''}</p>}
+                </section>
+                <section className="mt-3 border border-black p-2 text-xs">
+                  <p className="font-semibold">Release of the body: {death.releasedAt ? `${death.releasedAt} → ${death.releasedTo}` : 'still with the hospital'}</p>
+                  <p><span className="font-semibold">Civil registration: {death.civil.state}{death.civil.number ? ` — ${death.civil.number}` : ''}</span></p>
+                  <p>This is the hospital’s record. The death certificate is issued by the city corporation’s registrar; a death that is never filed is invisible to every district statistic, including the ones that decide where a maternity unit is built.</p>
+                </section>
+                {death.note && <p className="mt-3 text-xs">{death.note}</p>}
+              </>
+            )}
+            <p className="mt-4 text-[10px]">Printed {new Date().toLocaleString()} · {death ? death.registerNo : 'blank form'} · hospital copy</p>
+          </div>
+        );
+
+      case 'payslip':
+        return (
+          <div className="w-[148mm] bg-white p-4 text-black">
+            {header('Payslip', `${monthOf(`${payrollMonth}-01`)} · ${staff.code}`)}
+            <div className="grid grid-cols-2 gap-2 text-[11px]">
+              <div>
+                <p className="text-sm font-bold">{staff.name}</p>
+                <p>{staff.designation} · {staff.departmentId}</p>
+                <p>Joined {staff.joined} · {staff.employment}</p>
+              </div>
+              <div className="text-right">
+                <p>Grade {staff.gradeCode} · basic {staff.basic.toLocaleString('en-IN')}</p>
+                <p>{staff.bank?.verified ? `Bank ${staff.bank.bank} · ${staff.bank.masked}` : 'Bank details not verified — paid by hand'}</p>
+                <p>{staff.wardId ? `Ward ${staff.wardId}` : 'Non-clinical'}</p>
+              </div>
+            </div>
+            <table className="mt-3 w-full border-collapse text-[11px]">
+              <thead>
+                <tr>
+                  <th className="border border-black px-1 py-0.5 text-left">Earnings</th>
+                  <th className="border border-black px-1 py-0.5 text-right">Taka</th>
+                  <th className="border border-black px-1 py-0.5 text-left">Deductions</th>
+                  <th className="border border-black px-1 py-0.5 text-right">Taka</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array.from({ length: Math.max(payslip.earnings.length, payslip.deductions.length) }).map((_, i) => {
+                  const earning = payslip.earnings[i];
+                  const deduction = payslip.deductions[i];
+                  return (
+                    <tr key={i}>
+                      <td className="border border-black px-1 py-0.5">{earning ? `${earning.label}` : ''}</td>
+                      <td className="border border-black px-1 py-0.5 text-right font-mono">{earning ? earning.amount.toLocaleString('en-IN') : ''}</td>
+                      <td className="border border-black px-1 py-0.5">{deduction ? `${deduction.label}` : ''}</td>
+                      <td className="border border-black px-1 py-0.5 text-right font-mono">{deduction ? deduction.amount.toLocaleString('en-IN') : ''}</td>
+                    </tr>
+                  );
+                })}
+                <tr>
+                  <td className="border border-black px-1 py-0.5 font-semibold">Gross</td>
+                  <td className="border border-black px-1 py-0.5 text-right font-mono font-semibold">{payslip.gross.toLocaleString('en-IN')}</td>
+                  <td className="border border-black px-1 py-0.5 font-semibold">Total deductions</td>
+                  <td className="border border-black px-1 py-0.5 text-right font-mono font-semibold">{payslip.deductionsTotal.toLocaleString('en-IN')}</td>
+                </tr>
+                <tr>
+                  <td className="border border-black px-1 py-0.5 font-bold" colSpan={2}>Net payable</td>
+                  <td className="border border-black px-1 py-0.5 font-bold text-right font-mono" colSpan={2}>{payslip.net.toLocaleString('en-IN')}</td>
+                </tr>
+              </tbody>
+            </table>
+            <section className="mt-2 text-[10px]">
+              <p className="font-semibold">The month the salary was paid on</p>
+              <p>
+                Worked {attendanceFor.workedDays} · paid leave {attendanceFor.paidLeaveDays} · unpaid {attendanceFor.unpaidLeaveDays} · absent {attendanceFor.absentDays} · half days {attendanceFor.halfDays} ·
+                late marks {attendanceFor.lateMarks} · overtime {attendanceFor.overtimeHours} h · holidays {attendanceFor.holidays} of {attendanceFor.daysInMonth} days.
+              </p>
+              <p className="mt-1">Every deduction above is a rule, not a decision: {allowancesFor(staff).map((a) => a.label).join(', ')} are the allowances the grade carries, and the attendance figures are the register’s own.</p>
+              <p className="mt-1">Employer cost {payslip.employerCost.toLocaleString('en-IN')} including the hospital’s provident fund share and group insurance.</p>
+              {payslip.notes.length > 0 && <ul className="mt-1 list-disc pl-4">{payslip.notes.map((n, i) => (<li key={i}>{n}</li>))}</ul>}
+            </section>
+            <p className="mt-3 text-[9px]">Printed {new Date().toLocaleString()} · computer generated · queries to HR within 30 days</p>
+          </div>
+        );
+
+      case 'attendance-sheet': {
+        const codes = Object.keys(REGISTER_CODES) as RegisterCode[];
+        return (
+          <div className="w-[297mm] bg-white p-4 text-black">
+            {header('Attendance sheet', `${register.month} · Main Campus · ${register.rows.length} on the register`)}
+            <table className="w-full border-collapse text-[8px]">
+              <thead>
+                <tr>
+                  <th className="border border-black px-0.5 py-0.5 text-left">Code</th>
+                  <th className="border border-black px-0.5 py-0.5 text-left">Name</th>
+                  {register.days.map((d) => (
+                    <th key={d} className="border border-black px-0 py-0.5">{Number(d.slice(8, 10))}</th>
+                  ))}
+                  <th className="border border-black px-0.5 py-0.5">OT</th>
+                </tr>
+              </thead>
+              <tbody>
+                {register.rows.map((row) => (
+                  <tr key={row.staffCode}>
+                    <td className="border border-black px-0.5 font-mono">{row.staffCode}</td>
+                    <td className="border border-black px-0.5">{row.name}</td>
+                    {row.days.map((d) => (
+                      <td key={d.day} className="border border-black px-0 text-center font-mono" title={REGISTER_CODES[d.code].label}>{d.code}</td>
+                    ))}
+                    <td className="border border-black px-0.5 text-right font-mono">{row.summary.otHours ? row.summary.otHours.toFixed(1) : ''}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <section className="mt-2 text-[9px]">
+              <p className="font-semibold">Codes</p>
+              <p>{codes.map((c) => `${c} — ${REGISTER_CODES[c].label}`).join(' · ')}</p>
+              <p className="mt-1 font-semibold">Exceptions this month ({register.exceptions.length})</p>
+              {register.exceptions.length === 0 ? (
+                <p>None. Every day is a punch, a leave record or a weekly off.</p>
+              ) : (
+                <ul className="mt-0.5 list-disc pl-4">
+                  {register.exceptions.slice(0, 24).map((e, i) => (<li key={i}>{e.day} · {e.name} — {e.text}</li>))}
+                </ul>
+              )}
+              <p className="mt-1">
+                {register.stats.staff} people · {register.stats.presentDays} present days · {register.stats.absentDays} absent · {register.stats.leaveDays} leave · {register.stats.unpaidDays} unpaid ·
+                {register.stats.lateMarks} late marks · {register.stats.halfDays} half days · {register.stats.otHours} overtime hours.
+              </p>
+              <p className="mt-1">A punch is never edited: every correction on this sheet is a second record naming the supervisor and the reason, and the payroll reads the register rather than the reader.</p>
+              <div className="mt-4 flex justify-between">
+                <p>Shift manager ______________________</p>
+                <p>HR ______________________</p>
+                <p>Date ______________________</p>
+              </div>
+            </section>
+            <p className="mt-2 text-[8px]">Printed {new Date().toLocaleString()} · {register.month} · signature copy</p>
+          </div>
+        );
+      }
+
+      case 'visitor-badge':
+        return (
+          <div className="w-[76mm] bg-white p-3 font-mono text-black">
+            <p className="text-[9px] uppercase tracking-wide">Shaheed Suhrawardy General Hospital</p>
+            <p className="mt-1 text-sm font-bold uppercase">{visitorPass?.name ?? 'Visitor'}</p>
+            <p className="text-[10px]">{visitorPass ? purposeByCode(visitorPass.purpose)?.label ?? visitorPass.purpose : '—'}</p>
+            <p className="mt-1 text-[11px] font-bold">{visitorPass?.passNo ?? 'VP-2026-0000'}</p>
+            <p className="text-[10px]">Seen by: {visitorPass?.hostName ?? '—'} ({visitorPass?.hostCode ?? '—'})</p>
+            <p className="text-[10px]">Issued {visitorPass?.issuedAt ?? '—'} · valid until {visitorPass?.validUntil ?? '—'}</p>
+            <p className="mt-2 border-t border-dashed border-black pt-1 text-[9px] font-bold uppercase">May not enter</p>
+            <p className="text-[9px]">
+              {visitorPass && visitorPass.badgeKind === 'Delivery'
+                ? 'Any ward, laboratory or theatre area. Deliveries are received at the store.'
+                : 'Theatre suite, HDU and the laboratory bench area. Escorted areas are named at the gate.'}
+            </p>
+            {visitorPass && visitorPass.areas.length > 0 && <p className="mt-1 text-[9px]">May reach: {visitorPass.areas.join(', ')}</p>}
+            <p className="mt-2 text-[8px]">Wear this badge where it can be seen. Return it at the gate on the way out — an open pass is somebody the guard has to find.</p>
+            <div className="mt-2 flex justify-center">
+              <BarCode value={visitorPass?.passNo ?? 'VP-2026-0000'} height={26} />
+            </div>
+          </div>
+        );
+
+      case 'imaging-report': {
+        const radiologyPatient = patients.find((p) => p.mrn === imagingOrder.patient.mrn) ?? patients[0];
+        return (
+          <div className="w-[210mm] bg-white p-6 text-black">
+            {header('Imaging report', `${imagingTest?.modality ?? 'Imaging'} · ${imagingOrder.id}`)}
+            <div className="grid grid-cols-2 gap-4 text-xs">
+              <div>
+                <p><span className="font-semibold">Patient:</span> {imagingOrder.patient.name} ({imagingOrder.patient.mrn})</p>
+                <p><span className="font-semibold">Age and sex:</span> {radiologyPatient.age} · {radiologyPatient.sex}</p>
+                <p><span className="font-semibold">Referred by:</span> {imagingOrder.encounterId ?? 'Out-patient clinic'}</p>
+              </div>
+              <div>
+                <p><span className="font-semibold">Study:</span> {imagingTest?.name ?? imagingOrder.testCode}</p>
+                <p><span className="font-semibold">Ordered:</span> {imagingOrder.orderedAt}</p>
+                <p><span className="font-semibold">Reported:</span> {imagingOrder.resultedAt ?? '—'}</p>
+              </div>
+            </div>
+            <section className="mt-4 text-xs">
+              <p className="font-semibold">Findings</p>
+              <p className="mt-1 whitespace-pre-line">{imagingOrder.report ?? 'No report text was recorded against this study.'}</p>
+            </section>
+            <section className="mt-4 border border-black p-2 text-xs">
+              <p className="font-semibold">Impression</p>
+              <p className="mt-1">{imagingOrder.report ? 'Stated in the findings above. The impression is on its own line on every report: it is the part clinicians read.' : 'No impression recorded. A study released without one is a picture, not a report.'}</p>
+            </section>
+            <section className="mt-4 text-xs">
+              <p className="font-semibold">Reported by</p>
+              <p>{imagingOrder.verifiedBy ?? imagingOrder.resultedBy ?? 'Not yet verified. A report without a verifier is a printout, not a report.'}</p>
+              {imagingOrder.callback && (
+                <p className="mt-2 border border-black p-2">
+                  <span className="font-semibold">Critical finding — called back:</span> {imagingOrder.callback.toWhom} at {imagingOrder.callback.at}, by {imagingOrder.callback.by}.{imagingOrder.callback.readBack ? ' Read back and confirmed.' : ' NOT read back.'} {imagingOrder.callback.note ?? ''}
+                </p>
+              )}
+            </section>
+            <p className="mt-4 text-[10px]">Printed {new Date().toLocaleString()} · {imagingOrder.id} · this report is one page of the patient’s record</p>
           </div>
         );
       }

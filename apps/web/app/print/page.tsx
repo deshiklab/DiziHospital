@@ -21,6 +21,12 @@ const TEMPLATES = [
   { doc: 'specimen-label', title: 'Specimen label', paper: '50 × 25 mm', when: 'Applied to sample tubes at collection; the lab scans the barcode.' },
   { doc: 'id-card', title: 'Patient ID card', paper: 'CR80 card', when: 'Optional, for long-term patients and corporate schemes.' },
   { doc: 'day-list', title: 'Appointment day list', paper: 'A4 landscape', when: 'Printed at the start of a shift, and again after a change of plan.' },
+  { doc: 'birth-record', title: 'Birth record', paper: 'A4', when: 'Printed from the birth register. The hospital’s own record — the civil certificate is issued by the corporation.' },
+  { doc: 'death-record', title: 'Death record', paper: 'A4', when: 'Printed from the death register, with the certificate state and the police referral where there is one.' },
+  { doc: 'payslip', title: 'Payslip', paper: 'A5', when: 'Printed for the person, by HR or from the payroll screen. Every deduction with the rule that produced it.' },
+  { doc: 'attendance-sheet', title: 'Attendance sheet', paper: 'A4 landscape', when: 'The month as a matrix for a shift manager to sign, printed from the same register the payroll reads.' },
+  { doc: 'visitor-badge', title: 'Visitor badge', paper: 'Thermal 80 mm', when: 'Printed at the gate on issue. Carries the areas the visitor may not enter, because the door is busy.' },
+  { doc: 'imaging-report', title: 'Imaging report', paper: 'A4', when: 'Released after the radiologist verifies it; findings and impression on separate lines.' },
 ];
 
 export default function PrintIndexPage() {
@@ -35,8 +41,9 @@ export default function PrintIndexPage() {
       </header>
 
       <SafetyBanner severity="info" title="Preview templates, sample data">
-        These render real layouts with sample patients. Each preview is opened in its own tab so the desk can print
-        without losing what they were doing.
+        These render real layouts with sample patients and the day’s own registers. Each preview is opened in its own tab so the desk can print
+        without losing what they were doing. Add a query parameter (<span className="font-numeric">?mrn=</span>, <span className="font-numeric">?reg=</span>,
+        <span className="font-numeric">?emp=</span>, <span className="font-numeric">?pass=</span>) to print a real record instead of the sample.
       </SafetyBanner>
 
       <Panel title={`${TEMPLATES.length} templates`}>

@@ -153,7 +153,7 @@ export default function PrintHeaderFooterPage() {
             </div>
           </div>
           <p className="mt-2 text-xs text-text-tertiary">
-            The specimen shows the values <span className="font-medium">the branch is running on</span>. Editing the fields above changes the draft and not this
+            Open <Link href={chosen.route} className="underline">{chosen.route}</Link> to print this document with a real record instead of the specimen. The specimen shows the values <span className="font-medium">the branch is running on</span>. Editing the fields above changes the draft and not this
             specimen, because a settings preview that shows unsaved text is how a document gets printed from a screen that was never saved.
           </p>
         </Panel>
@@ -169,7 +169,7 @@ export default function PrintHeaderFooterPage() {
             emptyLabel="No template matches that search."
             height="22rem"
             columns={[
-              { key: 'label', header: 'Template', render: (t) => (<span><span className="font-medium">{t.label}</span><span className="font-numeric block text-xs text-text-tertiary">{t.legacy}</span></span>) },
+              { key: 'label', header: 'Template', render: (t) => (<span><span className="font-medium">{t.label}</span><Link href={t.route} className="font-numeric block text-xs text-brand-700 underline">{t.route}</Link></span>) },
               { key: 'paper', header: 'Paper', width: '9.5rem', render: (t) => <span className="font-numeric">{t.paper}</span> },
               { key: 'prints', header: 'Prints', hideBelow: 'md', render: (t) => t.prints.join(' · ') },
               { key: 'authoredIn', header: 'Authored', width: '8rem', hideBelow: 'lg', render: (t) => t.authoredIn },

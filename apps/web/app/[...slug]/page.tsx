@@ -6,6 +6,10 @@ import { Button, Panel, SafetyBanner } from '@dizi/ui';
 
 /* Placeholder for modules that are not built yet — and, in the meantime, the *launcher*.
  *
+ * Administration no longer has an entry here: P7 built `/admin` as a real hub with eighteen routes under it, so a
+ * launcher pointing at the legacy settings screen would be a second answer to a question that now has one. What
+ * remains below is the list of modules whose own phase has not shipped.
+ *
  * With no vendor source we cannot route inside the legacy system (plan 08 §1), so the honest thing to show a
  * clerk is which system currently owns the module. This page reads from the same module-ownership registry the
  * team maintains, so it can never disagree with the plan.
@@ -18,7 +22,6 @@ const MODULES: Record<string, { title: string; phase: string; owner: 'legacy' | 
   billing: { title: 'Billing', phase: 'P2', owner: 'legacy', legacyPath: '/admin/bill', note: 'Billing needs a two-week parallel run before it is allowed to own money.' },
   inventory: { title: 'Inventory', phase: 'P3', owner: 'legacy', legacyPath: '/admin/item', note: 'Per-location stock ledgers replace the global counters.' },
   reports: { title: 'Reports', phase: 'P6', owner: 'legacy', legacyPath: '/admin/report', note: 'All 17 reports are rebuilt once the modules they read are migrated.' },
-  admin: { title: 'Administration', phase: 'P7', owner: 'legacy', legacyPath: '/admin/setting', note: 'Users, roles, masters and print templates.' },
   help: { title: 'Help', phase: 'P0', owner: 'new', note: 'The help drawer in the header already links to the mirrored help library.' },
 };
 
