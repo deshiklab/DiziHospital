@@ -115,6 +115,30 @@ const ROUTES = [
   '/admin/setup/zoom',
   '/admin/setup/human-resource',
   '/admin/setup/custom-fields',
+  // P8 — communication, content, records, the portal and the public site.
+  '/admin/comms',
+  '/admin/live/consultation',
+  '/admin/live/meeting',
+  '/admin/content/upload',
+  '/admin/content/types',
+  '/admin/content/shared',
+  '/admin/certificates',
+  '/admin/id-cards/staff',
+  '/admin/id-cards/patient',
+  '/admin/surveys',
+  '/admin/surveys/mine',
+  '/admin/website',
+  '/admin/messaging',
+  '/portal',
+  '/portal/visits',
+  '/portal/reports',
+  '/portal/prescriptions',
+  '/portal/bills',
+  '/portal/payments',
+  '/portal/feedback',
+  '/site',
+  '/site/about',
+  '/site/news/blood-donation-camp',
   '/print',
   '/print/birth-record',
   '/print/death-record',
@@ -236,19 +260,22 @@ async function check(route) {
 
   /* Wait for hydration, not for a stopwatch.
    *
-   * The shell sets `data-nav` on <html> from an effect, and the server's HTML never carries it — so the attribute
-   * appearing is the app's own signal that the tree is hydrated and the handlers are attached, rather than a guess
-   * about how long that takes. A fixed sleep is what made this harness flaky against `next dev`, which compiles a
+   * Each shell sets `data-shell` on <html> from an effect, and the server's HTML never carries it — so the
+   * attribute appearing is the app's own signal that the tree is hydrated and the handlers are attached, rather
+   * than a guess about how long that takes. It used to be the staff shell's `data-nav`, which meant every portal
+   * and public-site route was reported as a page that never hydrated: those shells have no navigation rail, and a
+   * check that waits on one shell's marker reads the other two as failures. A fixed sleep is what made this harness flaky against `next dev`, which compiles a
    * route on its first request: four routes at once, and the check was pressing a button whose handler had not
    * been attached yet. Against a prebuilt server it returns in well under a second. */
   const readyMs = Number(process.env.DIZI_READY_MS ?? 20_000);
   const readyStarted = Date.now();
-  while (!doc.documentElement.dataset.nav && Date.now() - readyStarted < readyMs) {
+  while (!doc.documentElement.dataset.shell && Date.now() - readyStarted < readyMs) {
     await new Promise((r) => setTimeout(r, 100));
   }
   const readyWait = Date.now() - readyStarted;
-  if (!doc.documentElement.dataset.nav) {
-    routeProblems.push(`the shell never hydrated: data-nav did not appear within ${Math.round(readyMs / 1000)}s`);
+  const shell = doc.documentElement.dataset.shell;
+  if (!shell) {
+    routeProblems.push(`the shell never hydrated: data-shell did not appear within ${Math.round(readyMs / 1000)}s`);
   }
 
   // A tree that hydrated has live handlers: press the one control every screen shares.
@@ -664,7 +691,7 @@ async function check(route) {
 
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors: [...errors, ...routeProblems], handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, readyWait };
+  return { errors: [...errors, ...routeProblems], shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, readyWait };
 }
 
 const CONCURRENCY = Math.max(1, Number(process.env.DIZI_CONCURRENCY ?? 4));
@@ -719,10 +746,10 @@ outcomes.forEach((outcome, i) => {
     problems += 1;
     return;
   }
-  const { errors, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
+  const { errors, shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, readyWait } = outcome.value;
   const bad = errors.length > 0 || handlers === 'DEAD';
   const slow = readyWait !== undefined && readyWait > 2000 ? `  ready=${(readyWait / 1000).toFixed(1)}s` : '';
-  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${suite === 'n/a' ? '' : `  suite=${suite}`}${viewPress === 'n/a' ? '' : `  view=${viewPress}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
+  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} shell=${shell ?? 'none'}  handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${suite === 'n/a' ? '' : `  suite=${suite}`}${viewPress === 'n/a' ? '' : `  view=${viewPress}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${slow}`);
   if (handlers === 'DEAD') {
     console.log('      the shared control did not respond after hydration');
     problems += 1;

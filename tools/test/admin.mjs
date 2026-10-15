@@ -60,6 +60,12 @@ function pass(what, ok, detail = '') {
 const sum = (rows, pick) => rows.reduce((n, r) => n + (pick(r) ?? 0), 0);
 const close = (a, b, tolerance = 0.51) => Math.abs(a - b) <= tolerance;
 const failCodes = (check) => (check.reasons ?? []).map((r) => r.code).join(',');
+/** Route groups are not part of the URL: the staff app lives under `app/(staff)/admin/…`, the portal and the
+ * public site under their own groups. A screen registered at `/admin/visitors` is a file two levels down. */
+const pageAt = (route) =>
+  ['(staff)', '(portal)', '(site)', '']
+    .map((group) => join(root, 'apps/web/app', group, route.replace(/^\//, ''), 'page.tsx'))
+    .find((path) => existsSync(path));
 
 try {
   await esbuild.build({
@@ -488,22 +494,25 @@ try {
     return { title: cells[1].replace(/\*\*/g, ''), legacy: cells[2].replace(/`/g, ''), size: cells[3], fields: Number(cells[4]), grids: Number(cells[5]), maxCols: Number(cells[6]), dialogs: Number(cells[8]) };
   });
   pass('the plan names sixteen screens for the phase', planRows.length === 16, `${planRows.length} rows`);
-  const screens = AD.ADMIN_SCREENS.filter((s) => s.kind === 'screen');
-  const subs = AD.ADMIN_SCREENS.filter((s) => s.kind === 'sub');
+  /* This section is the P7 diff, so it reads P7's own screens: the register also carries P8's twelve, and a count
+   * that included them would have to be raised every time another phase is written. */
+  const inPhase = AD.ADMIN_SCREENS.filter((s) => s.phase === 'P7');
+  const screens = inPhase.filter((s) => s.kind === 'screen');
+  const subs = inPhase.filter((s) => s.kind === 'sub');
   pass('the registry is sixteen screens and the two the plan counts apart', screens.length === 16 && subs.length === 2 && AD.ADMIN_SCREEN_COUNT.screens === 16 && AD.ADMIN_SCREEN_COUNT.subs === 2, `${screens.length} + ${subs.length}`);
   const driftedFromPlan = planRows.filter((row) => {
-    const found = AD.ADMIN_SCREENS.find((s) => s.legacy === row.legacy);
+    const found = inPhase.find((s) => s.legacy === row.legacy);
     return !found || found.title !== row.title || found.size !== row.size || found.fields !== row.fields || found.grids !== row.grids || found.maxCols !== row.maxCols || found.dialogs !== row.dialogs;
   });
   pass('the registry matches the plan field by field', driftedFromPlan.length === 0, driftedFromPlan.map((r) => r.title).join(' · ') || 'title, size, fields, grids, columns and dialogs all agree with the screen map');
   pass('the sub-screens the plan names by id are the two on the register', /17-staff-attendance-register/.test(p7) && /18-payroll/.test(p7) && subs.map((s) => s.id).sort().join(',') === 'payroll,staff-attendance-register');
-  const missing = AD.ADMIN_SCREENS.filter((s) => !existsSync(join(root, 'apps/web/app', s.route.replace(/^\//, ''), 'page.tsx')));
+  const missing = inPhase.filter((s) => !pageAt(s.route));
   pass('every registered screen has a page behind it', missing.length === 0, missing.map((s) => s.route).join(', ') || `${AD.ADMIN_SCREENS.length} routes on disk`);
   const runtime = readFileSync(join(root, 'tools/test/runtime.mjs'), 'utf8');
-  const unvisited = AD.ADMIN_SCREENS.filter((s) => !runtime.includes(`'${s.route}'`));
+  const unvisited = inPhase.filter((s) => !runtime.includes(`'${s.route}'`));
   pass('every registered screen is visited by the runtime harness', unvisited.length === 0, unvisited.map((s) => s.route).join(', ') || 'rendered, hydrated and read for console errors');
   pass('the hub says what the phase is waiting for', AD.ADMIN_WAITING.length >= 3 && AD.ADMIN_WAITING.every((w) => w.length > 60), `${AD.ADMIN_WAITING.length} items`);
-  pass('every group on the hub holds something a person can open', AD.ADMIN_GROUPS.length === 4 && AD.ADMIN_GROUPS.every((g) => g.members.length >= 3 && g.members.every((m) => Boolean(AD.adminScreenById(m)) && existsSync(join(root, 'apps/web/app', AD.adminScreenById(m).route.replace(/^\//, ''), 'page.tsx'))) && g.because.length > 40), AD.ADMIN_GROUPS.map((g) => `${g.title} (${g.members.length})`).join(' · '));
+  pass('every group on the hub holds something a person can open', AD.ADMIN_GROUPS.length === 4 && AD.ADMIN_GROUPS.every((g) => g.members.length >= 3 && g.members.every((m) => Boolean(AD.adminScreenById(m)) && Boolean(pageAt(AD.adminScreenById(m).route))) && g.because.length > 40), AD.ADMIN_GROUPS.map((g) => `${g.title} (${g.members.length})`).join(' · '));
   pass('every screen states what it is for, and every route is unique', AD.ADMIN_SCREENS.every((s) => s.purpose.length > 60) && new Set(AD.ADMIN_SCREENS.map((s) => s.route)).size === AD.ADMIN_SCREENS.length);
 
   /* ===================================================== 11. the settings and the printing */
@@ -518,7 +527,7 @@ try {
   pass('every custom field names the entity, the validation and who may see it', AD.CUSTOM_FIELDS.length > 0 && AD.CUSTOM_FIELDS.every((f) => AD.CUSTOM_ENTITIES.includes(f.entity) && f.key.length > 2 && f.label.length > 2 && f.visibleTo.length > 0), `${AD.CUSTOM_FIELDS.length} fields over ${AD.CUSTOM_ENTITIES.length} entities`);
   const duplicate = AD.checkCustomField(AD.CUSTOM_FIELDS, { entity: AD.CUSTOM_FIELDS[0].entity, key: AD.CUSTOM_FIELDS[0].key, label: 'Another question', kind: 'text', options: [], visibleTo: ['admin'] });
   pass('a key already used on that entity is refused, by name', !duplicate.ok && (duplicate.problem ?? '').includes(AD.CUSTOM_FIELDS[0].key), duplicate.problem);
-  const printDoc = readFileSync(join(root, 'apps/web/app/print/[doc]/page.tsx'), 'utf8');
+  const printDoc = readFileSync(pageAt('/print/[doc]'), 'utf8');
   pass('twelve print templates, and every one of them renders a document', AD.PRINT_TEMPLATES.length === 12 && AD.PRINT_TEMPLATES.every((t) => t.route.startsWith('/print/') && printDoc.includes(`'${t.route.split('/').pop()}'`)), AD.PRINT_TEMPLATES.map((t) => t.route.split('/').pop()).join(' '));
   pass('every template names the paper it wants, what it prints and which legacy screen it replaces', AD.PRINT_TEMPLATES.every((t) => t.paper && t.prints.length > 0 && t.note.length > 40 && t.legacy.startsWith('/admin')));
 

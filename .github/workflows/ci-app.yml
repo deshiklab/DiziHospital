@@ -70,14 +70,14 @@ jobs:
         run: python3 tools/docs/check_links.py
 
   # The shell and runtime harnesses were written and run by hand for months, which meant the strongest check in
-  # the repository — seventy-one routes hydrating with no console error, and the navigation driven at five
+  # the repository — ninety-four routes hydrating with no console error, and the navigation driven at five
   # widths — was the one check that did not run on a pull request. They need jsdom and esbuild, which the product
   # does not depend on, so this job installs them without saving them and serves the production build: the same
   # artefact that ships, minified stylesheet included.
   runtime:
     name: production build, every route hydrated, shell driven
     runs-on: ubuntu-latest
-    # The harness checks seventy-one routes and each one is a page load; the pool keeps it to a few minutes, and
+    # The harness checks ninety-four routes and each one is a page load; the pool keeps it to a few minutes, and
     # this is the ceiling that keeps a slow runner from being killed mid-run.
     timeout-minutes: 45
     steps:
@@ -126,6 +126,14 @@ jobs:
       # screen map in docs/plan.
       - name: The payroll pays the register, and the registers refuse what they must
         run: npm run test:admin
+
+      # The communication phase's arithmetic and its refusals: the survey forms and their refusals, the answer
+      # side that keeps what a person typed when the round closes underneath them, the CMS body parser the editor
+      # and the public site share, the noticeboard that works with the uplink down against the outward channels
+      # that cannot, the numbered documents drawn from this node's own block, the portal's own arithmetic and its
+      # Bangla refusals, and the twelve registered screens diffed against the screen map.
+      - name: The forms answer, the notices queue, and the portal refuses in the patient's words
+        run: npm run test:p8
 
       - name: Build (default dist directory — no dev server is running here)
         run: npm run build --workspace @dizi/web
