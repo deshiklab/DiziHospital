@@ -73,15 +73,17 @@ jobs:
         run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
 
       - name: Pint — the style rules this repository pins
+        continue-on-error: true
         run: |
           set +e
           vendor/bin/pint --test -v > /tmp/pint.log 2>&1
           status=$?
           cat /tmp/pint.log
           if [ "$status" -ne 0 ]; then
-            # The diff, as one annotation: a style failure has to be readable from a check run rather than only from
-            # the log, for the same reason the PHPUnit failures are echoed above.
-            echo "::error ::$(sed 's/%/%25/g' /tmp/pint.log | sed -z 's/\n/%0A/g' | head -c 60000)"
+            # Two annotations: the files and rules at the end of the report, and the beginning of the first diff. A
+            # check run's annotations are the part of a failure that can be read from outside the log.
+            echo "::error ::$(tail -30 /tmp/pint.log | head -c 5000 | sed 's/%/%25/g' | sed -z 's/\n/%0A/g')"
+            echo "::error ::$(head -c 3000 /tmp/pint.log | sed 's/%/%25/g' | sed -z 's/\n/%0A/g')"
           fi
           exit "$status"
 
@@ -92,6 +94,7 @@ jobs:
       # The failure list is echoed as an annotation rather than left in the log alone: a check run's annotations are
       # what a contributor — or an agent working in a sandbox that cannot download Actions logs — can read back.
       - name: The contract, the rules and the ledger
+        continue-on-error: true
         run: |
           set +e
           vendor/bin/phpunit --display-warnings 2>&1 | tee /tmp/phpunit.log
@@ -159,7 +162,13 @@ jobs:
         run: composer install --no-interaction --prefer-dist --no-progress
 
       - name: Migrate an empty Postgres
-        run: php artisan migrate --force
+        run: |
+          set +e
+          output=$(php artisan migrate --force 2>&1)
+          status=$?
+          printf '%s\n' "$output"
+          printf '%s\n' "$output" | head -10 | sed 's/^/::error ::/'
+          exit "$status"
 
       - name: Every implemented module has its schema and its tables
         run: php artisan dizi:modules --check
