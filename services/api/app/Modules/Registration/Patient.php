@@ -55,6 +55,10 @@ final class Patient extends Model
         'age' => 'integer',
         'version' => 'integer',
         'duplicate_ack_at' => 'datetime',
+        /* What the desk was shown when it decided two records were two people. `json` in the migration, and this cast is
+           what makes it a value: without it the array is bound to the column as-is and the insert dies on "Array to
+           string conversion" — a 500 on the one write that has to succeed carefully. */
+        'duplicate_ack_evidence' => 'array',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
