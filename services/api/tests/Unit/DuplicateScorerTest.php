@@ -75,15 +75,33 @@ final class DuplicateScorerTest extends TestCase
         $this->assertContains('identity.sex-conflict', $result['evidence']);
     }
 
+    public function test_three_fields_agreeing_is_the_strongest_likeness_rule(): void
+    {
+        /* `identity.name-age-sex` is the name *exactly*, the age and the sex — the contract's own sentence, and the
+           implementation `apps/web/lib/duplicate-rules.ts` shares. 0.6 alone is a warning rather than a refusal: the
+           rule's own words are "more than a coincidence and still less than a certainty". */
+        $agree = $this->score(
+            ['name' => 'Rahima Begum', 'sex' => 'Female', 'phone' => '01711000001', 'age' => 34],
+            ['name' => 'Rahima Begum', 'sex' => 'Female', 'phone' => '01811000002', 'age' => 34],
+        );
+
+        $this->assertSame('warn', $agree['verdict']);
+        $this->assertSame(0.6, $agree['score']);
+        $this->assertContains('identity.name-age-sex', $agree['evidence']);
+    }
+
     public function test_a_name_one_edit_apart_matches_and_two_edits_apart_does_not(): void
     {
+        /* One edit and the same age is *not* three fields agreeing — the name has to be identical for that rule — so
+           this is the fuzzy rule on its own: 0.45, a warning. */
         $oneEdit = $this->score(
             ['name' => 'Rahima Begum', 'sex' => 'Female', 'phone' => '01711000001', 'age' => 34],
             ['name' => 'Rahima Bagum', 'sex' => 'Female', 'phone' => '01811000002', 'age' => 34],
         );
 
-        $this->assertContains('identity.name-age-sex', $oneEdit['evidence']);
-        $this->assertSame('block', $oneEdit['verdict']);
+        $this->assertContains('identity.name-fuzzy', $oneEdit['evidence']);
+        $this->assertNotContains('identity.name-age-sex', $oneEdit['evidence']);
+        $this->assertSame('warn', $oneEdit['verdict']);
 
         $twoEdits = $this->score(
             ['name' => 'Rahima Begum', 'sex' => 'Female', 'phone' => '01711000001', 'age' => 34],

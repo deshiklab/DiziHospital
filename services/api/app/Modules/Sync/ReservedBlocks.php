@@ -75,7 +75,9 @@ final class ReservedBlocks implements NodePolicy
 
     public function lease(string $nodeId, string $series, int $from, int $to): string
     {
-        return hash_hkdf('sha256', $this->nodeSecret, 32, "dizi:block:{$nodeId}:{$series}:{$from}:{$to}");
+        /* Hex rather than the raw 32 bytes: `hash_hkdf` returns binary, which is not a string a database column,
+           a log line or a support ticket can carry. */
+        return bin2hex(hash_hkdf('sha256', $this->nodeSecret, 32, "dizi:block:{$nodeId}:{$series}:{$from}:{$to}"));
     }
 
     public function verifyLease(string $lease, string $nodeId, string $series, int $from, int $to): bool

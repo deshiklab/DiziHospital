@@ -68,7 +68,9 @@ final class DuplicateScorer
         return [
             'score' => round($score, 2),
             'verdict' => $verdict,
-            'evidence' => array_keys($matched) + ($vetoed !== null ? [$vetoed['id']] : []),
+            /* `array_merge`, not `+`: both operands are lists, and the union operator keeps the left operand's keys, so
+               a veto would be silently dropped from the evidence whenever any other rule had matched. */
+            'evidence' => array_merge(array_keys($matched), $vetoed !== null ? [$vetoed['id']] : []),
         ];
     }
 

@@ -239,11 +239,14 @@ final class PatientRegistrationTest extends TestCase
     {
         $this->reserve();
         $this->asRole()->postJson('/patients', $this->body(), ['Idempotency-Key' => $this->key('0001')])->assertCreated();
+        /* Registered anyway, with an acknowledgement: the rule matched, and a person decided it is a different
+           person. The duplicate check below is then answering a question about two records that both exist. */
         $this->asRole()->postJson('/patients', [
             'name' => 'Rahima Bagum',
             'sex' => 'Female',
             'phone' => '01711000001',
             'dateOfBirth' => '1990-05-05',
+            'duplicateAcknowledged' => true,
         ], ['Idempotency-Key' => $this->key('0002'), 'X-Trace-Id' => 'trace-two'])->assertCreated();
 
         $this->asRole()->getJson('/patients/MRN-000002/duplicates')

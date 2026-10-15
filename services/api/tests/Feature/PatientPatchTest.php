@@ -20,7 +20,7 @@ final class PatientPatchTest extends TestCase
             'fields' => ['phone' => '01811000009'],
             'version' => 1,
             'reason' => 'The number on the card was the husband’s',
-        ])->assertOk()
+        ], ['Idempotency-Key' => $this->key('p01')])->assertOk()
             ->assertJsonPath('phone', '01811000009')
             ->assertJsonPath('version', 2)
             ->assertJsonPath('merged', ['phone']);
@@ -45,7 +45,7 @@ final class PatientPatchTest extends TestCase
             'fields' => ['phone' => '01811000009'],
             'version' => 1,
             'reason' => 'Number corrected from the card',
-        ])->assertOk();
+        ], ['Idempotency-Key' => $this->key('p02')])->assertOk();
 
         /* Desk B, still holding version 1, corrects the same field differently. */
         $response = $this->asRole('nurse', ['sub' => 'staff-9', 'name' => 'Nurse Ayesha'])
@@ -53,7 +53,7 @@ final class PatientPatchTest extends TestCase
                 'fields' => ['phone' => '01999000000'],
                 'version' => 1,
                 'reason' => 'The patient gave a new number',
-            ]);
+            ], ['Idempotency-Key' => $this->key('p03')]);
 
         $response->assertStatus(409)
             ->assertJsonPath('title', 'Someone changed this record while you were looking at it')
@@ -76,7 +76,7 @@ final class PatientPatchTest extends TestCase
             'fields' => ['phone' => '01811000009'],
             'version' => 1,
             'reason' => 'Number corrected from the card',
-        ])->assertOk();
+        ], ['Idempotency-Key' => $this->key('p04')])->assertOk();
 
         /* Desk B is fixing the address, which nobody touched. Being refused because a colleague fixed a phone number
            is the behaviour that makes people stop trusting a queue. */
@@ -85,7 +85,7 @@ final class PatientPatchTest extends TestCase
                 'fields' => ['address' => 'House 9, Uttara Sector 7'],
                 'version' => 1,
                 'reason' => 'Address collected at the counter',
-            ])->assertOk()
+            ], ['Idempotency-Key' => $this->key('p05')])->assertOk()
             ->assertJsonPath('merged', ['address'])
             ->assertJsonPath('address', 'House 9, Uttara Sector 7')
             ->assertJsonPath('version', 3);
@@ -98,13 +98,13 @@ final class PatientPatchTest extends TestCase
             'fields' => ['phone' => '01811000009'],
             'version' => 1,
             'reason' => 'Number corrected from the card',
-        ])->assertOk();
+        ], ['Idempotency-Key' => $this->key('p06')])->assertOk();
 
         $this->asRole()->patchJson('/patients/MRN-000001', [
             'fields' => ['phone' => '01999000000', 'address' => 'House 9, Uttara'],
             'version' => 1,
             'reason' => 'Both at once',
-        ])->assertStatus(409);
+        ], ['Idempotency-Key' => $this->key('p07')])->assertStatus(409);
 
         /* All or nothing: a 409 that had already applied the address would make the desk's next click a decision
            about a change they cannot see. */
@@ -121,7 +121,7 @@ final class PatientPatchTest extends TestCase
             'fields' => ['mrn' => 'MRN-000002'],
             'version' => 1,
             'reason' => 'Attempting to change the identity',
-        ])->assertStatus(422)
+        ], ['Idempotency-Key' => $this->key('p08')])->assertStatus(422)
             ->assertJsonPath('errors.0.field', 'mrn');
     }
 
@@ -134,7 +134,7 @@ final class PatientPatchTest extends TestCase
         $this->asRole()->patchJson('/patients/MRN-000001', [
             'fields' => ['address' => 'House 9, Uttara'],
             'version' => 1,
-        ])->assertStatus(422)
+        ], ['Idempotency-Key' => $this->key('p09')])->assertStatus(422)
             ->assertJsonPath('errors.0.field', 'reason');
     }
 
@@ -146,7 +146,7 @@ final class PatientPatchTest extends TestCase
             'fields' => ['phone' => '01711000001'],
             'version' => 1,
             'reason' => 'Retry of the same correction',
-        ])->assertOk()
+        ], ['Idempotency-Key' => $this->key('p10')])->assertOk()
             ->assertJsonPath('merged', [])
             ->assertJsonPath('version', 1);
 
