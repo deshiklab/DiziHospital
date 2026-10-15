@@ -32,9 +32,6 @@ jobs:
     name: php 8.4, style, contract and rules
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    # Temporary, for the diagnostic push below. Goes back to the default read-only token with it.
-    permissions:
-      contents: write
     defaults:
       run:
         working-directory: services/api
@@ -53,6 +50,9 @@ jobs:
           tools: composer:v2
           coverage: none
 
+      # No composer.lock is committed yet, and it cannot be resolved outside Actions: packagist is reachable only
+      # from this runner. Composer resolves the versions on the first install and writes the lock, which the next
+      # step keeps — so the job is reproducible from the second run onwards rather than from the first.
       - name: Install the service's dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
@@ -72,33 +72,15 @@ jobs:
       - name: Every PHP file parses
         run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
 
-      - name: Pint — the style rules this repository pins (temporary — fixes and pushes)
-        if: github.event_name == 'push'
-        run: |
-          vendor/bin/pint
-          git config user.name 'ci-api'
-          git config user.email 'ci-api@users.noreply.github.com'
-          if ! git diff --quiet; then
-            git add -u .
-            git commit -m "style: pint applied the preset this repository pins"
-            git push origin "HEAD:${{ github.ref_name }}"
-          fi
-          vendor/bin/pint --test
+      - name: Pint — the style rules this repository pins
+        run: vendor/bin/pint --test
 
       # The suite runs against SQLite in memory, which needs no service container, and the assertions the product
       # cares about are about rules rather than about the engine: which numbers a node may mint, what a stale version
       # does, what a replayed key does, and whether an altered ledger entry can be found. The Postgres-specific half —
       # the module schemas and the row locks — is the second job below, because SQLite cannot prove it.
       - name: The contract, the rules and the ledger
-        continue-on-error: true
-        run: |
-          set +e
-          output=$(vendor/bin/phpunit --display-warnings 2>&1)
-          status=$?
-          printf '%s\n' "$output"
-          printf '%s\n' "$output" | grep -E '^[0-9]+\)|^Tests: |Failed asserting' | head -10 | sed 's/^/::error ::/'
-          printf '%s\n' "$output" | tail -12 | sed 's/^/::error ::/'
-          exit "$status"
+        run: vendor/bin/phpunit --display-warnings
 
       - name: Server log on failure
         if: failure()
@@ -153,13 +135,7 @@ jobs:
         run: composer install --no-interaction --prefer-dist --no-progress
 
       - name: Migrate an empty Postgres
-        run: |
-          set +e
-          output=$(php artisan migrate --force 2>&1)
-          status=$?
-          printf '%s\n' "$output"
-          printf '%s\n' "$output" | head -10 | sed 's/^/::error ::/'
-          exit "$status"
+        run: php artisan migrate --force
 
       - name: Every implemented module has its schema and its tables
         run: php artisan dizi:modules --check
