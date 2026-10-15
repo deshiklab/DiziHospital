@@ -32,10 +32,10 @@ jobs:
     name: php 8.4, style, contract and rules
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    # Write access for exactly one step: committing the lock file, while there is not one. It comes off again in the
-    # commit after that lands, and until then no other step pushes anything.
+    # The default token, which is read-only. Nothing in this job writes to the repository: the one step that did —
+    # committing the lock file on the run that resolved it — landed that file and has been removed with it.
     permissions:
-      contents: write
+      contents: read
     defaults:
       run:
         working-directory: services/api
@@ -54,31 +54,10 @@ jobs:
           tools: composer:v2
           coverage: none
 
-      # No composer.lock is committed yet, and it cannot be resolved outside Actions: packagist is reachable only
-      # from this runner. Composer resolves the versions on the first install and writes the lock, which the step
-      # below commits — so the job is reproducible from the second run onwards rather than from the first.
+      # Installed from the committed `composer.lock`, so this job gets the versions the last green run was proved
+      # against rather than whatever packagist resolved this morning.
       - name: Install the service's dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
-
-      # `composer.lock` cannot be produced outside Actions — composer needs packagist, which only this runner can
-      # reach — so the runner that resolved it commits it: once, while the file is untracked, touching nothing but that
-      # file. After the lock has landed this is a no-op for every later run, which is what makes it a bootstrap rather
-      # than a bot. Only on a push, because on a pull request the checkout is the merge commit and appending to it
-      # would put a branch nobody asked for in the history.
-      - name: Commit the resolved versions, once
-        if: github.event_name == 'push'
-        run: |
-          # Asked of git rather than of the working tree: `composer install` above has just written the file, so a
-          # check for its absence here would always be false and the step would never run.
-          if git ls-files --error-unmatch composer.lock > /dev/null 2>&1; then
-            echo 'composer.lock is committed already — nothing to do.'
-            exit 0
-          fi
-          git config user.name 'ci-api'
-          git config user.email 'ci-api@users.noreply.github.com'
-          git add composer.lock
-          git commit -m 'chore(api): the resolved versions, as composer resolved them'
-          git push origin "HEAD:${{ github.ref_name }}"
 
       # Every file, one at a time, before anything heavier: a parse error reported by name is a minute; the same
       # parse error found by PHPUnit is a stack trace about an autoloader.

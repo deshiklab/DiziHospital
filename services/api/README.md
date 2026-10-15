@@ -154,10 +154,10 @@ can check without a parser — unused imports, import order, quoting, `!` spacin
 `ci-app` job on every pull request as well as here. The rest is left to Pint rather than approximated, because a second
 implementation that disagrees with Pint is worse than no check at all.
 
-No lock file can be generated outside Actions — packagist is reachable from the `ci-api` runner and from nowhere
-else — so that runner resolves one and commits it, in a step that runs only while `services/api/composer.lock` is
-missing. Once the file is in the repository every install after that gets the versions the green run was proved
-against; regenerating it means a machine that can reach packagist, or re-adding that bootstrap step.
+`composer.lock` is committed. It was resolved by the `ci-api` runner — the only place in this project that can reach
+packagist — and committed by that same job, once, in a step that then came back out along with the write-scoped token
+it needed; every install since is from the lock, so the versions a green run was proved against are the versions the
+next one gets. Regenerating the lock means a machine that can reach packagist, or restoring that bootstrap.
 
 ## Layout
 
