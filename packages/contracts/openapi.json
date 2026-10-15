@@ -100,6 +100,10 @@
     {
       "name": "printing",
       "description": "Print templates as data: the layout a branch prints from, its paper, and the version it published (P7)"
+    },
+    {
+      "name": "reporting",
+      "description": "Report schedules as data: which report goes out, to whom, when, and what the server\u2019s run recorded (P6 leftovers)"
     }
   ],
   "paths": {
@@ -7536,6 +7540,272 @@
           "notes": "The layout is validated before it is queued: a layout refused by the printer\u2019s own rules is refused at the node, because a queued version that will be rejected later is a version somebody has been told is live."
         }
       }
+    },
+    "/reports/schedules": {
+      "get": {
+        "operationId": "listReportSchedules",
+        "summary": "The report schedules this branch runs, and the next run of each",
+        "tags": [
+          "reporting"
+        ],
+        "responses": {
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Every schedule this node knows about, with its recipients and its next runs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ReportSchedule"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "pageSize": {
+                      "type": "integer"
+                    },
+                    "asOf": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "report.schedule",
+          "offline": "cache",
+          "authority": "edge",
+          "idempotency": "none",
+          "audit": false,
+          "because": "Who receives which report, and when, is a fact about the branch rather than about the cloud: the schedule screen, the delivery list and the file\u2019s own preamble all read it, and a branch whose uplink is down still has to know who the morning sheet goes to."
+        }
+      }
+    },
+    "/reports/schedules/{id}": {
+      "put": {
+        "operationId": "saveReportSchedule",
+        "summary": "Save a branch\u2019s schedule for a report",
+        "tags": [
+          "reporting"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportSchedule"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Schedule id, as the register spells it",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Only the report\u2019s owner, the branch administrator or the medical superintendent may change who receives a management report",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such schedule \u2014 `dizi.not-found`",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "This save has already been applied \u2014 `dizi.duplicate-operation`",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The schedule could not go out as written \u2014 `dizi.schedule-refused` or `dizi.channel-cannot-carry-a-file`, naming the part to change",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Saved: the schedule this branch will run, held on the node and queued for the cloud",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportSchedule"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "report.schedule",
+          "offline": "queue",
+          "authority": "edge",
+          "idempotency": "required",
+          "audit": true,
+          "because": "The list of who gets the morning sheet is edited at the branch, usually on the day somebody joins or leaves. Saving it here and queueing it to the cloud means a receiver is added on a node whose uplink is down, and the queue replays once rather than once per retry."
+        }
+      }
+    },
+    "/reports/schedules/{id}/runs": {
+      "post": {
+        "operationId": "runReportSchedule",
+        "summary": "Run a schedule now: render the file, send it, and record a receipt per recipient",
+        "tags": [
+          "reporting"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportRunRequest"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Schedule id to run",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Only the report\u2019s owner or the medical superintendent may run a report off its schedule",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such schedule \u2014 `dizi.not-found`",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "This run has already been sent \u2014 `dizi.duplicate-operation`",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The schedule cannot run as written \u2014 `dizi.schedule-refused`, naming the part to change",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "The run, with what it rendered and the receipt for each recipient",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "report.run",
+          "offline": "online-only",
+          "authority": "cloud",
+          "idempotency": "required",
+          "audit": true,
+          "because": "A run is a delivery: it renders the file, sends it to each recipient and records a receipt, which is the only evidence a management report arrived rather than merely left.",
+          "notes": "Deliberately online-only: a node cannot send mail, and a queued send would tell a manager the morning\u2019s sheet is on its way while it sits in an outbox on a disconnected machine. Until the API service exists nothing goes out on its own \u2014 the schedule screen builds the same file at the desk, says what it contains, and the history records that a person took it."
+        }
+      }
     }
   },
   "components": {
@@ -13443,6 +13713,250 @@
             "type": "string"
           }
         }
+      },
+      "ScheduleCadence": {
+        "type": "object",
+        "required": [
+          "id",
+          "times"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly"
+            ],
+            "description": "How often, and the weekday or day of the month below carries the rest"
+          },
+          "times": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "`HH:MM` on the branch\u2019s own clock; a sheet sent twice a day carries both times"
+          },
+          "weekdays": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Weekly: 0\u20136 with Sunday as 0, the week this branch works"
+          },
+          "day": {
+            "type": "integer",
+            "description": "Monthly: 1\u201328. Beyond that a month is skipped, which is refused rather than accepted"
+          },
+          "firstWorkingDay": {
+            "type": "boolean",
+            "description": "Monthly: the first day that is neither a weekend nor a gazetted holiday, read from the branch\u2019s calendar"
+          },
+          "because": {
+            "type": "string",
+            "description": "Why that time, in the branch\u2019s words \u2014 the register\u2019s own sentence where it has one"
+          }
+        }
+      },
+      "ScheduleRecipient": {
+        "type": "object",
+        "required": [
+          "name",
+          "channel"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "print-desk",
+              "hospital-mail",
+              "public-mail",
+              "whatsapp"
+            ]
+          },
+          "address": {
+            "type": "string",
+            "description": "Where the channel needs one; a counter that picks the sheet up has none"
+          }
+        }
+      },
+      "ReportSchedule": {
+        "type": "object",
+        "required": [
+          "id",
+          "topic",
+          "scope",
+          "range",
+          "cadence",
+          "format",
+          "recipients",
+          "action",
+          "sendWhen",
+          "owner",
+          "enabled"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string",
+            "description": "A topic the report register holds; an invented one is refused"
+          },
+          "scope": {
+            "type": "string",
+            "description": "A branch, or `All branches` for the consolidated figure"
+          },
+          "range": {
+            "type": "string",
+            "enum": [
+              "today",
+              "week",
+              "month"
+            ]
+          },
+          "cadence": {
+            "$ref": "#/components/schemas/ScheduleCadence"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "csv",
+              "print"
+            ]
+          },
+          "recipients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScheduleRecipient"
+            }
+          },
+          "action": {
+            "type": "string",
+            "description": "What the receiver does with it; a report nobody acts on is a report nobody reads"
+          },
+          "sendWhen": {
+            "type": "string",
+            "enum": [
+              "always",
+              "when-there-is-a-row"
+            ]
+          },
+          "owner": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "A paused schedule keeps its settings, its place and its history"
+          },
+          "savedAt": {
+            "type": "string"
+          },
+          "savedBy": {
+            "type": "string"
+          }
+        }
+      },
+      "ReportRunRequest": {
+        "type": "object",
+        "required": [
+          "day"
+        ],
+        "properties": {
+          "day": {
+            "type": "string",
+            "description": "The branch day the report is read for"
+          },
+          "dryRun": {
+            "type": "boolean",
+            "description": "Render the file and report what it holds without sending it \u2014 what the schedule screen does at the desk"
+          }
+        }
+      },
+      "ReportRun": {
+        "type": "object",
+        "required": [
+          "id",
+          "scheduleId",
+          "day",
+          "startedAt",
+          "rows",
+          "recipients"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "scheduleId": {
+            "type": "string"
+          },
+          "day": {
+            "type": "string"
+          },
+          "startedAt": {
+            "type": "string"
+          },
+          "finishedAt": {
+            "type": "string"
+          },
+          "dryRun": {
+            "type": "boolean"
+          },
+          "rows": {
+            "type": "integer"
+          },
+          "bytes": {
+            "type": "integer"
+          },
+          "file": {
+            "type": "string",
+            "description": "The name the file went out under"
+          },
+          "skipped": {
+            "type": "string",
+            "description": "The sentence the run was skipped with, when the schedule says it only goes out with something to report"
+          },
+          "recipients": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "channel"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "channel": {
+                  "type": "string",
+                  "enum": [
+                    "print-desk",
+                    "hospital-mail",
+                    "public-mail",
+                    "whatsapp"
+                  ]
+                },
+                "sentAt": {
+                  "type": "string"
+                },
+                "receipt": {
+                  "type": "string",
+                  "description": "The mail relay\u2019s own id, or the counter and the name against the print-out"
+                },
+                "failed": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -13636,6 +14150,16 @@
       "policy": "append-only",
       "label": "Print template",
       "why": "A published layout is what a family was handed on a date: two branches may each change their own receipt, and both versions are true. Editing a published layout instead of appending the next one destroys the only evidence of what the paper said."
+    },
+    "report.schedule": {
+      "policy": "field-level",
+      "label": "Report schedule",
+      "why": "Two administrators can edit one schedule at once: a new receiver and a changed hour merge, and the same field changed twice is offered to a person \u2014 because a delivery list that quietly keeps one of two answers is a report somebody stops receiving without anybody deciding that."
+    },
+    "report.run": {
+      "policy": "append-only",
+      "label": "Report run",
+      "why": "A run is a fact: the file was rendered, sent to these people, and a receipt came back. It is appended and never corrected \u2014 a re-send is another run, and the two together are what shows a report that keeps failing to arrive."
     }
   },
   "x-dizi-conventions": {
@@ -13768,6 +14292,16 @@
       "title": "That layout cannot be printed",
       "when": "A published layout breaks the printer\u2019s own rules \u2014 off the sheet, inside the margin with something that matters, a data block with no field behind it, an empty text block, a table with no rows, or no hospital name",
       "client": "The designer names the block and the rule, and keeps the edit as an unpublished draft"
+    },
+    "dizi.schedule-refused": {
+      "title": "This schedule cannot run as written",
+      "when": "A report schedule is saved with nobody to send to, a period wider than the report\u2019s data, a monthly day that skips February, or a report that is read live rather than sent",
+      "client": "Point at the part to change \u2014 the recipient list, the period or the cadence \u2014 and say what would have happened: a file sent before the drawers were counted, a heading over a shorter period, a month with no run"
+    },
+    "dizi.channel-cannot-carry-a-file": {
+      "title": "That channel cannot carry a report",
+      "when": "A recipient is on a channel that carries a message rather than a file \u2014 WhatsApp today \u2014 or on a mailbox outside the hospital while the sheet names people",
+      "client": "Offer the hospital\u2019s own mail or a counter that picks the sheet up, and say why: a file that has left the building cannot be recalled"
     }
   },
   "x-dizi-duplicate-rules": {

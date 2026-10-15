@@ -68,6 +68,7 @@ export const NAV: NavItem[] = [
     { key: 'nav.reports.appointment', href: '/reports/appointment' },
     { key: 'nav.reports.opd', href: '/reports/opd' },
     { key: 'nav.reports.ipd', href: '/reports/ipd' },
+    { key: 'nav.reports.schedules', href: '/reports/schedules' },
   ] },
   { key: 'nav.sync', href: '/sync', icon: 'sync', roles: ['admin'], owner: 'new', phase: 'P0' },
   { key: 'nav.admin', href: '/admin', icon: 'shield', roles: ['admin'], owner: 'legacy', phase: 'P7', children: [
@@ -128,6 +129,7 @@ export const strings: Record<string, { en: string; bn: string }> = {
   'nav.reports.appointment': { en: 'Appointments', bn: 'অ্যাপয়েন্টমেন্ট' },
   'nav.reports.opd': { en: 'Out-patient', bn: 'ওপিডি' },
   'nav.reports.ipd': { en: 'In-patient beds', bn: 'ইনডোর বেড' },
+  'nav.reports.schedules': { en: 'Scheduled exports', bn: 'নির্ধারিত রফতানি' },
   'nav.sync': { en: 'Sync console', bn: 'সিঙ্ক কনসোল' },
   'nav.admin': { en: 'Admin', bn: 'অ্যাডমিন' },
   'nav.admin.staff': { en: 'Human resource', bn: 'মানবসম্পদ' },

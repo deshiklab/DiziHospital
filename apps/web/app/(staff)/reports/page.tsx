@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Button, KpiTile, Panel, SafetyBanner, Segmented, Tabs, cx, useToast } from '@dizi/ui';
-import { Printer } from 'lucide-react';
+import { CalendarClock, Printer } from 'lucide-react';
 import {
   RANGES,
   SCHEDULED_REPORTS,
@@ -408,10 +408,19 @@ export default function ReportsPage() {
         {tab === 'quality' && qualityTab}
       </Tabs>
 
-      <Panel title="Scheduled reports">
+      <Panel
+        title="Scheduled reports"
+        actions={
+          <Link href="/reports/schedules">
+            <Button variant="secondary" size="sm">
+              <CalendarClock className="size-4" aria-hidden /> Open the schedules
+            </Button>
+          </Link>
+        }
+      >
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <caption className="sr-only">Reports that will be scheduled when the server lands</caption>
+            <caption className="sr-only">Which report goes out, to whom and when — the schedules this branch runs</caption>
             <thead className="bg-surface-sunken text-xs text-text-secondary">
               <tr>
                 <th scope="col" className="px-2 py-1.5">Report</th>
@@ -434,7 +443,12 @@ export default function ReportsPage() {
             </tbody>
           </table>
         </div>
-        <p className="mt-2 text-xs text-text-tertiary">{SCHEDULING_NEEDS_SERVER}</p>
+        <p className="mt-2 text-xs text-text-secondary">
+          These rows are the schedules themselves, not a description of them: the register, the recipients, the cadence
+          and the refusals live in <span className="font-numeric">lib/report-schedules.ts</span>, and the schedule
+          screen edits the same objects this table is built from.
+        </p>
+        <p className="mt-1 text-xs text-text-tertiary">{SCHEDULING_NEEDS_SERVER}</p>
       </Panel>
     </div>
   );

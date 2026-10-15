@@ -1605,6 +1605,72 @@ export interface PrintTemplateVersion {
   readonly publishedBy: string;
 }
 
+export interface ScheduleCadence {
+  /** How often, and the weekday or day of the month below carries the rest */
+  readonly id: "daily" | "weekly" | "monthly";
+  /** `HH:MM` on the branch’s own clock; a sheet sent twice a day carries both times */
+  readonly times: Array<string>;
+  /** Weekly: 0–6 with Sunday as 0, the week this branch works */
+  readonly weekdays?: Array<number>;
+  /** Monthly: 1–28. Beyond that a month is skipped, which is refused rather than accepted */
+  readonly day?: number;
+  /** Monthly: the first day that is neither a weekend nor a gazetted holiday, read from the branch’s calendar */
+  readonly firstWorkingDay?: boolean;
+  /** Why that time, in the branch’s words — the register’s own sentence where it has one */
+  readonly because?: string;
+}
+
+export interface ScheduleRecipient {
+  readonly name: string;
+  readonly role?: string;
+  readonly channel: "print-desk" | "hospital-mail" | "public-mail" | "whatsapp";
+  /** Where the channel needs one; a counter that picks the sheet up has none */
+  readonly address?: string;
+}
+
+export interface ReportSchedule {
+  readonly id: string;
+  /** A topic the report register holds; an invented one is refused */
+  readonly topic: string;
+  /** A branch, or `All branches` for the consolidated figure */
+  readonly scope: string;
+  readonly range: "today" | "week" | "month";
+  readonly cadence: ScheduleCadence;
+  readonly format: "csv" | "print";
+  readonly recipients: Array<ScheduleRecipient>;
+  /** What the receiver does with it; a report nobody acts on is a report nobody reads */
+  readonly action: string;
+  readonly sendWhen: "always" | "when-there-is-a-row";
+  readonly owner: string;
+  /** A paused schedule keeps its settings, its place and its history */
+  readonly enabled: boolean;
+  readonly savedAt?: string;
+  readonly savedBy?: string;
+}
+
+export interface ReportRunRequest {
+  /** The branch day the report is read for */
+  readonly day: string;
+  /** Render the file and report what it holds without sending it — what the schedule screen does at the desk */
+  readonly dryRun?: boolean;
+}
+
+export interface ReportRun {
+  readonly id: string;
+  readonly scheduleId: string;
+  readonly day: string;
+  readonly startedAt: string;
+  readonly finishedAt?: string;
+  readonly dryRun?: boolean;
+  readonly rows: number;
+  readonly bytes?: number;
+  /** The name the file went out under */
+  readonly file?: string;
+  /** The sentence the run was skipped with, when the schedule says it only goes out with something to report */
+  readonly skipped?: string;
+  readonly recipients: Array<{ name: string; channel: "print-desk" | "hospital-mail" | "public-mail" | "whatsapp"; sentAt: string; receipt: string; failed: string }>;
+}
+
 
 /* ------------------------------------------------------------- operations */
 
@@ -3600,6 +3666,72 @@ export const operations = {
     needsNetwork: false,
     requiresIdempotencyKey: true,
   },
+  listReportSchedules: {
+    id: "listReportSchedules",
+    method: "get",
+    path: "/reports/schedules",
+    tag: "reporting",
+    summary: "The report schedules this branch runs, and the next run of each",
+    entity: "report.schedule",
+    offline: "cache",
+    authority: "edge",
+    idempotency: "none",
+    audit: false,
+    because: "Who receives which report, and when, is a fact about the branch rather than about the cloud: the schedule screen, the delivery list and the file’s own preamble all read it, and a branch whose uplink is down still has to know who the morning sheet goes to.",
+    notes: null,
+    request: null,
+    responses: { "200": null, "401": null },
+    problemResponses: ["401"],
+    statuses: [200, 401],
+    mayQueue: false,
+    servesFromReplica: true,
+    needsNetwork: false,
+    requiresIdempotencyKey: false,
+  },
+  saveReportSchedule: {
+    id: "saveReportSchedule",
+    method: "put",
+    path: "/reports/schedules/{id}",
+    tag: "reporting",
+    summary: "Save a branch’s schedule for a report",
+    entity: "report.schedule",
+    offline: "queue",
+    authority: "edge",
+    idempotency: "required",
+    audit: true,
+    because: "The list of who gets the morning sheet is edited at the branch, usually on the day somebody joins or leaves. Saving it here and queueing it to the cloud means a receiver is added on a node whose uplink is down, and the queue replays once rather than once per retry.",
+    notes: null,
+    request: "ReportSchedule",
+    responses: { "200": "ReportSchedule", "401": null, "403": null, "404": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "404", "409", "422"],
+    statuses: [200, 401, 403, 404, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
+  runReportSchedule: {
+    id: "runReportSchedule",
+    method: "post",
+    path: "/reports/schedules/{id}/runs",
+    tag: "reporting",
+    summary: "Run a schedule now: render the file, send it, and record a receipt per recipient",
+    entity: "report.run",
+    offline: "online-only",
+    authority: "cloud",
+    idempotency: "required",
+    audit: true,
+    because: "A run is a delivery: it renders the file, sends it to each recipient and records a receipt, which is the only evidence a management report arrived rather than merely left.",
+    notes: "Deliberately online-only: a node cannot send mail, and a queued send would tell a manager the morning’s sheet is on its way while it sits in an outbox on a disconnected machine. Until the API service exists nothing goes out on its own — the schedule screen builds the same file at the desk, says what it contains, and the history records that a person took it.",
+    request: "ReportRunRequest",
+    responses: { "201": null, "401": null, "403": null, "404": null, "409": null, "422": null },
+    problemResponses: ["201", "401", "403", "404", "409", "422"],
+    statuses: [201, 401, 403, 404, 409, 422],
+    mayQueue: false,
+    servesFromReplica: false,
+    needsNetwork: true,
+    requiresIdempotencyKey: true,
+  },
 } as const satisfies Record<string, OperationMeta>;
 
 export type OperationId = keyof typeof operations;
@@ -3794,6 +3926,16 @@ export const entityPolicies = {
     "policy": "append-only",
     "label": "Print template",
     "why": "A published layout is what a family was handed on a date: two branches may each change their own receipt, and both versions are true. Editing a published layout instead of appending the next one destroys the only evidence of what the paper said."
+  },
+  "report.schedule": {
+    "policy": "field-level",
+    "label": "Report schedule",
+    "why": "Two administrators can edit one schedule at once: a new receiver and a changed hour merge, and the same field changed twice is offered to a person — because a delivery list that quietly keeps one of two answers is a report somebody stops receiving without anybody deciding that."
+  },
+  "report.run": {
+    "policy": "append-only",
+    "label": "Report run",
+    "why": "A run is a fact: the file was rendered, sent to these people, and a receipt came back. It is appended and never corrected — a re-send is another run, and the two together are what shows a report that keeps failing to arrive."
   }
 } as const;
 
@@ -3920,6 +4062,16 @@ export const problemTypes = {
     "title": "That layout cannot be printed",
     "when": "A published layout breaks the printer’s own rules — off the sheet, inside the margin with something that matters, a data block with no field behind it, an empty text block, a table with no rows, or no hospital name",
     "client": "The designer names the block and the rule, and keeps the edit as an unpublished draft"
+  },
+  "dizi.schedule-refused": {
+    "title": "This schedule cannot run as written",
+    "when": "A report schedule is saved with nobody to send to, a period wider than the report’s data, a monthly day that skips February, or a report that is read live rather than sent",
+    "client": "Point at the part to change — the recipient list, the period or the cadence — and say what would have happened: a file sent before the drawers were counted, a heading over a shorter period, a month with no run"
+  },
+  "dizi.channel-cannot-carry-a-file": {
+    "title": "That channel cannot carry a report",
+    "when": "A recipient is on a channel that carries a message rather than a file — WhatsApp today — or on a mailbox outside the hospital while the sheet names people",
+    "client": "Offer the hospital’s own mail or a counter that picks the sheet up, and say why: a file that has left the building cannot be recalled"
   }
 } as const;
 

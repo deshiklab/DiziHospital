@@ -24,7 +24,7 @@
  *
  * Exit code 0 when every case passes, 1 otherwise.
  */
-import { mkdtempSync, rmSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -53,7 +53,11 @@ const num = (v) => (typeof v === 'number' ? v : 0);
 
 try {
   await esbuild.build({
-    entryPoints: [join(root, 'apps/web/lib/report-suite.ts'), join(root, 'apps/web/lib/birthdeath.ts')],
+    entryPoints: [
+      join(root, 'apps/web/lib/report-suite.ts'),
+      join(root, 'apps/web/lib/birthdeath.ts'),
+      join(root, 'apps/web/lib/report-schedules.ts'),
+    ],
     outdir: work,
     bundle: true,
     format: 'cjs',
@@ -66,7 +70,9 @@ try {
 
   const R = await import(pathToFileURL(join(work, 'report-suite.js')).href);
   const V = await import(pathToFileURL(join(work, 'birthdeath.js')).href);
-  const { buildReport, REPORTS, PLANNED_REPORTS, REPORT_SUITE_TOTAL, REPORT_GROUPS, branches, CONSOLIDATED, SCOPES } = R;
+  const SCH = await import(pathToFileURL(join(work, 'report-schedules.js')).href);
+  const contract = JSON.parse(readFileSync(join(root, 'packages/contracts/openapi.json'), 'utf8'));
+  const { buildReport, reportByTopic, REPORTS, PLANNED_REPORTS, REPORT_SUITE_TOTAL, REPORT_GROUPS, branches, CONSOLIDATED, SCOPES } = R;
   const build = (topic, scope, range = 'week') => buildReport(topic, { day: DAY, range, scope });
 
   /**
@@ -350,6 +356,165 @@ try {
   pass('the ambulance report’s average response is the fleet screen’s own figure, not a second opinion',
     ambQuoted !== null && Number(ambQuoted[1]) === ambClosed.totals.avgResponse,
     `the closing quotes ${ambQuoted?.[1] ?? 'nothing measurable'} and the table totals ${ambClosed.totals.avgResponse} min`);
+
+  /* ===================================================== the scheduled exports
+   *
+   * The schedules are the register's own sentences made operable, so what is checked here is agreement: the hour in
+   * the schedule is the hour in the report's sentence, the file it would send is built from the report's own
+   * generator with the figures as numbers, the working day comes from the branch's calendar, and the places where the
+   * register contradicts itself are stated rather than smoothed over.
+   */
+  console.log('\n  the scheduled exports');
+  const SD = '2026-10-16';
+  const tableFor = (sc, day = SD) => buildReport(sc.topic, { day, range: sc.range, scope: sc.scope });
+  const sendable = REPORTS.filter((r) => !(r.topic in SCH.NOT_SENDABLE));
+  pass(
+    'one schedule for every report the register says is sent, and the live board left out with the register\u2019s own reason',
+    SCH.SCHEDULES.length === sendable.length &&
+      SCH.SCHEDULES.every((sc) => REPORTS.some((r) => r.topic === sc.topic)) &&
+      new Set(SCH.SCHEDULES.map((sc) => sc.topic)).size === SCH.SCHEDULES.length &&
+      Object.keys(SCH.NOT_SENDABLE).length === REPORTS.length - sendable.length,
+    `${SCH.SCHEDULES.length} schedules over ${REPORTS.length} reports \u00b7 ${Object.keys(SCH.NOT_SENDABLE).join(', ')} is read live and never sent`,
+  );
+
+  /* The register's sentence is the specification: every time it names has to be a time the schedule runs. */
+  const timesFromProse = (text) => [...text.matchAll(/\b([01]\d|2[0-3]):[0-5]\d\b/g)].map((m) => m[0]);
+  const timingDisagreements = SCH.SCHEDULES.flatMap((sc) => {
+    const def = reportByTopic(sc.topic);
+    return timesFromProse(def.schedule)
+      .filter((t) => !sc.cadence.times.includes(t))
+      .map((t) => `${sc.topic}: ${t}`);
+  });
+  const weeklyNamedMonday = SCH.SCHEDULES.filter((sc) => /Monday/.test(reportByTopic(sc.topic).schedule) && sc.cadence.id === 'weekly');
+  pass(
+    'every hour the register names is an hour the schedule runs, and a weekly sentence names its weekday',
+    timingDisagreements.length === 0 && weeklyNamedMonday.every((sc) => (sc.cadence.weekdays ?? []).includes(1)),
+    timingDisagreements.length === 0 ? `${SCH.SCHEDULES.length} sentences read, no hour invented` : timingDisagreements.join(' \u00b7 '),
+  );
+
+  const finance = SCH.SCHEDULES.find((sc) => sc.topic === 'finance');
+  const financeRuns = SCH.nextRuns(finance.cadence, SD, 4);
+  const financeCheck = SCH.checkSchedule(finance, SD);
+  pass(
+    'the next runs are real days with their weekdays printed, in order, and today\u2019s run included',
+    financeRuns.length === 4 &&
+      financeRuns.every((r, i) => i === 0 || r > financeRuns[i - 1]) &&
+      financeRuns[0].startsWith(SD) &&
+      SCH.describeRun(financeRuns[0]) === 'Friday 16 October 2026 at 21:00',
+    financeRuns.map((r) => SCH.describeRun(r)).join(' \u00b7 '),
+  );
+  pass(
+    'the day-book sheet is flagged against the counters\u2019 own closing time, and the branch is left to settle it',
+    financeCheck.ok &&
+      financeCheck.warnings.some((w) => /before the counters close/.test(w.title) && w.message.includes('21:00') && w.message.includes(SCH.COUNTERS_CLOSE)),
+    financeCheck.warnings.find((w) => /counters close/.test(w.title))?.message.slice(0, 90) ?? 'no warning',
+  );
+
+  /* The first working day: New Year's Day 2027 is a Friday, so the monthly reading moves to the Sunday after it. */
+  const log = SCH.SCHEDULES.find((sc) => sc.topic === 'log');
+  const logRuns = SCH.nextRuns(log.cadence, SD, 4);
+  const january = logRuns.find((r) => r.startsWith('2027-01'));
+  const logCheck = SCH.checkSchedule(log, SD);
+  pass(
+    'a monthly run that names the first working day skips the weekend, and says when the calendar stops',
+    logRuns[0].startsWith('2026-11-01') &&
+      logRuns[1].startsWith('2026-12-01') &&
+      january?.startsWith('2027-01-03') &&
+      !SCH.isWorkingDay('2027-01-01') &&
+      !SCH.isWorkingDay('2027-01-02') &&
+      SCH.isWorkingDay('2027-01-03') &&
+      logCheck.warnings.some((w) => /calendar stops before this run/.test(w.title) && w.message.includes(SCH.CALENDAR_YEARS[0])),
+    `${logRuns.map((r) => r.slice(0, 10)).join(' \u00b7 ')} \u00b7 2027-01-01 is a Friday, so the reading moves to the Sunday`,
+  );
+
+  /* The register's own contradictions, and the ones a branch creates. */
+  const clone = (patch) => ({ ...SCH.SCHEDULES[3], ...patch });
+  const live = SCH.checkSchedule(clone({ topic: 'live_consultation' }), SD);
+  const whatsapp = SCH.checkSchedule(clone({ recipients: [{ name: 'OPD manager', role: 'OPD manager', channel: 'whatsapp', address: '+8801700000000' }] }), SD);
+  const nobody = SCH.checkSchedule(clone({ recipients: [] }), SD);
+  const thirtyFirst = SCH.checkSchedule(clone({ cadence: { ...SCH.SCHEDULES[2].cadence, day: 31 } }), SD);
+  const tooWide = SCH.checkSchedule(clone({ topic: 'log', range: 'month' }), SD);
+  pass(
+    'a live board, a WhatsApp recipient, an empty recipient list, a thirty-first and a period wider than the data are each refused with the reason',
+    !live.ok &&
+      !whatsapp.ok &&
+      !nobody.ok &&
+      !thirtyFirst.ok &&
+      !tooWide.ok &&
+      whatsapp.reasons[0].code === 'dizi.channel-cannot-carry-a-file' &&
+      live.reasons.some((r) => /read live/.test(r.title)) &&
+      tooWide.reasons.some((r) => /wider than the data/.test(r.title)),
+    [live.reasons[0].title, whatsapp.reasons[0].title, nobody.reasons[0].title, thirtyFirst.reasons[0].title, tooWide.reasons[0].title].join(' \u00b7 '),
+  );
+  pass(
+    'the audit committee\u2019s monthly extract cannot be built from a one-day trail, and the schedule says so rather than sending a thirty-day heading over it',
+    !logCheck.ok && logCheck.reasons.some((r) => r.field === 'range' && r.message.includes('1 day')),
+    logCheck.reasons[0]?.message.slice(0, 120) ?? 'no refusal',
+  );
+
+  /* What would actually go out today, and the rule that stops a quiet day being sent as an empty sheet. */
+  const appointment = SCH.SCHEDULES.find((sc) => sc.topic === 'appointment');
+  const appointmentTable = tableFor(appointment);
+  const rowSkipped = SCH.wouldSend(appointment, { ...appointmentTable, rows: [] });
+  const rowSent = SCH.wouldSend(appointment, appointmentTable);
+  pass(
+    'a schedule that only sends with something to report is skipped on an empty day, and says why rather than going quiet',
+    rowSkipped.send === false && /skipped/.test(rowSkipped.because) && rowSent.send === true && SCH.wouldSend({ ...appointment, enabled: false }, appointmentTable).send === false,
+    rowSkipped.because.slice(0, 100),
+  );
+
+  const exported = SCH.exportReport(finance, SD);
+  const lines = exported.text.split('\n');
+  const bodyStart = lines.findIndex((l) => l.startsWith('Dimension,'));
+  const body = lines.slice(bodyStart + 1);
+  const totalLine = body[body.length - 1];
+  const financeTable = tableFor(finance);
+  pass(
+    'the file is built from the report\u2019s own generator, named for the branch and the day, and counted in bytes',
+    bodyStart > 0 &&
+      exported.rows === financeTable.rows.length &&
+      exported.name === 'income-and-expense-by-head-all-branches-2026-10-16.csv' &&
+      exported.bytes === new TextEncoder().encode(exported.text).length,
+    `${exported.name} \u00b7 ${exported.rows} rows \u00b7 ${exported.bytes} bytes`,
+  );
+  pass(
+    'the figures are numbers a spreadsheet can add up, with the unit in the heading rather than in the cell',
+    lines.some((l) => l.includes('(BDT)')) && !body.some((l) => l.includes('\u09f3')) && /^Total,.*-?\d/.test(totalLine),
+    totalLine.slice(0, 90),
+  );
+  pass(
+    'the total row is the table\u2019s own totals, and a consolidated file carries each branch\u2019s own column',
+    totalLine.split(',').map(Number).includes(Math.round(financeTable.totals.amount)) && lines[bodyStart].includes('Main Campus') && body.some((l) => /,-?\d+(,|$)/.test(l)),
+    `total line: ${totalLine.slice(0, 70)}`,
+  );
+  pass(
+    'the file says where it came from: the period actually read, the control total it answers to, and that the records are synthetic',
+    exported.text.includes('Control total,') && exported.text.includes('preview build') && exported.text.includes('Period,') && exported.text.includes('Source,') && exported.text.includes('Built,'),
+    exported.preamble[3]?.slice(0, 80) ?? '',
+  );
+
+  /* The screen and the contract: the register is editable, the save queues, and the run is the server's. */
+  const schedulePage = ['(staff)', '(portal)', '(site)', ''].map((g) => join(root, 'apps/web/app', g, '/reports/schedules/page.tsx')).find((f) => existsSync(f));
+  const ops = Object.fromEntries(Object.entries(contract.paths).flatMap(([path, item]) => Object.entries(item).map(([method, op]) => [op.operationId, { path, method, op }])));
+  pass(
+    'the schedules have a screen, the register reads cached at the node, and the save queues with an idempotency key',
+    Boolean(schedulePage) &&
+      ops.listReportSchedules?.op['x-dizi'].offline === 'cache' &&
+      ops.saveReportSchedule?.op['x-dizi'].offline === 'queue' &&
+      ops.saveReportSchedule?.op['x-dizi'].idempotency === 'required' &&
+      ops.saveReportSchedule?.op['x-dizi'].entity === 'report.schedule',
+    `${ops.listReportSchedules?.method.toUpperCase()} ${ops.listReportSchedules?.path} \u00b7 ${ops.saveReportSchedule?.method.toUpperCase()} ${ops.saveReportSchedule?.path}`,
+  );
+  pass(
+    'a run is online-only and says why, the two entities carry the policies the client implements, and each refusal has a problem type',
+    ops.runReportSchedule?.op['x-dizi'].offline === 'online-only' &&
+      (ops.runReportSchedule?.op['x-dizi'].notes ?? '').length > 120 &&
+      contract['x-dizi-entities']['report.schedule'].policy === 'field-level' &&
+      contract['x-dizi-entities']['report.run'].policy === 'append-only' &&
+      Boolean(contract['x-dizi-problem-types']['dizi.schedule-refused']) &&
+      Boolean(contract['x-dizi-problem-types']['dizi.channel-cannot-carry-a-file']),
+    `${ops.runReportSchedule?.method.toUpperCase()} ${ops.runReportSchedule?.path} \u2014 ${ops.runReportSchedule?.op['x-dizi'].authority}`,
+  );
 
   const otClosed = build('ot', CONSOLIDATED);
   const otQuoted = otClosed.closing.match(/lists plan ([0-9]+) % of the four theatres/);

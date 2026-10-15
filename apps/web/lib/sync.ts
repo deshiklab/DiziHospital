@@ -77,6 +77,8 @@ export type EntityKind =
   | 'survey.response'
   | 'cms.page'
   | 'print.template'
+  | 'report.schedule'
+  | 'report.run'
   | 'message.notice'
   | 'portal.feedback'
   | 'prescription'
@@ -251,6 +253,16 @@ export const ENTITY_POLICY: Record<EntityKind, { policy: ConflictPolicy; label: 
     policy: 'append-only',
     label: 'Print template',
     why: 'A published layout is what a family was handed on a date: two branches may each change their own receipt, and both versions are true. Editing a published layout instead of appending the next one destroys the only evidence of what the paper said.',
+  },
+  'report.schedule': {
+    policy: 'field-level',
+    label: 'Report schedule',
+    why: 'Two administrators can edit one schedule at once: a new receiver and a changed hour merge, and the same field changed twice is offered to a person — because a delivery list that quietly keeps one of two answers is a report somebody stops receiving without anybody deciding that.',
+  },
+  'report.run': {
+    policy: 'append-only',
+    label: 'Report run',
+    why: 'A run is a fact: the file was rendered, sent to these people, and a receipt came back. It is appended and never corrected — a re-send is another run, and the two together are what shows a report that keeps failing to arrive.',
   },
   'message.notice': {
     policy: 'field-level',

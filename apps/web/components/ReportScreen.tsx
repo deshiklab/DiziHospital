@@ -1,12 +1,14 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Button, DataGrid, KpiTile, Panel, SafetyBanner, Segmented, SelectField, Tooltip, copyText, cx, useToast, type Column } from '@dizi/ui';
 import { ArrowLeft, CalendarClock, Info, Printer, Table2, TriangleAlert } from 'lucide-react';
 import { todayIso } from '@/lib/appointments';
 import { money } from '@/lib/billing';
 import { SCHEDULING_NEEDS_SERVER } from '@/lib/reports';
+import { SCHEDULES } from '@/lib/report-schedules';
+import { describeCadence, schedulesForNode } from '@/lib/report-schedules';
 import { BRANCH_NOTE, CONSOLIDATED, RANGES, REPORT_SUITE_NOTE, SCOPES, buildReport, type RangeId, type Scope } from '@/lib/report-suite';
 
 /* One Reports › … screen for every report in the suite.
@@ -34,8 +36,17 @@ export function ReportScreen({ topic }: { topic: string }) {
   /** The saved view, by label, plus the plain table. `undefined` means “Everything”. */
   const [view, setView] = useState<string | undefined>(undefined);
 
+  /* This node's own schedule copies, read after mount: the register is the server's version, and a branch that has
+     edited its delivery list must not be told the old one. */
+  useEffect(() => setSchedules(schedulesForNode()), []);
+
   const table = useMemo(() => buildReport(topic, { day, range, scope }), [topic, day, range, scope]);
   const def = table.def;
+  /* The schedule this report has at the branch — this node's own copy, read after mount, so the hour the register
+     asks for and the hour somebody has actually set are shown as the two things they are. */
+  const [schedules, setSchedules] = useState(SCHEDULES);
+  const schedule = schedules.find((s) => s.topic === def.topic);
+  const cadenceSentence = schedule ? describeCadence(schedule.cadence) : '';
   const views = def.views ?? [];
   const activeView = views.find((v) => v.label === view);
 
@@ -278,11 +289,27 @@ export function ReportScreen({ topic }: { topic: string }) {
             )}
           </Panel>
 
-          <Panel title="Scheduled delivery">
+          <Panel
+            title="Scheduled delivery"
+            actions={
+              <Link href="/reports/schedules">
+                <Button variant="ghost" size="sm">
+                  <CalendarClock className="size-4" aria-hidden /> The schedules
+                </Button>
+              </Link>
+            }
+          >
             <p className="flex items-start gap-2 text-sm text-text-secondary">
               <CalendarClock className="mt-0.5 size-4 shrink-0 text-brand-600" aria-hidden />
               {def.schedule}
             </p>
+            {schedule && (
+              <p className="mt-2 border-t border-border-subtle pt-2 text-xs text-text-secondary">
+                The branch runs this as <span className="font-medium text-text-primary">{cadenceSentence}</span> to{' '}
+                {schedule.recipients.map((r) => r.name).join(' · ') || 'nobody yet'}
+                {schedule.savedAt ? ` · last saved ${schedule.savedAt}` : ' · not edited at this branch yet'}.
+              </p>
+            )}
             <p className="mt-2 text-xs text-text-tertiary">{SCHEDULING_NEEDS_SERVER}</p>
           </Panel>
 

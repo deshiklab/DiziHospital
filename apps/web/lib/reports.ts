@@ -23,6 +23,8 @@ import { controlledRegister, generateBatches, generateDispenses, generateLedger,
 import { dayEnd, generateInvoices, totals, type Invoice } from './billing';
 import { expiringBatches, generateInventory, stockValue, usableQty } from './inventory';
 import { patients } from './mock';
+import { SCHEDULES, channelById, describeSchedule } from './report-schedules';
+import { reportByTopic } from './report-suite';
 
 export type RangeId = 'today' | 'week' | 'month';
 
@@ -494,6 +496,15 @@ export function overviewMetrics(s: ReportsSnapshot): Metric[] {
 
 /* ------------------------------------------------------------------ scheduled reports */
 
+/**
+ * The schedules, read from the module that runs them.
+ *
+ * This list used to be prose: five rows describing what would be scheduled once a server existed. The schedules are
+ * real now — `lib/report-schedules.ts` holds one per report the register says is sent, with the recipients, the
+ * cadence and the refusals — so this projection exists to stop the hub and the schedule screen disagreeing about
+ * who gets the morning sheet. Nothing here is a second copy: `name`, `cadence` and `goesTo` are read off the
+ * schedule itself.
+ */
 export interface ScheduledReport {
   id: string;
   name: string;
@@ -504,13 +515,21 @@ export interface ScheduledReport {
   action: string;
 }
 
-export const SCHEDULED_REPORTS: ScheduledReport[] = [
-  { id: 'sr-dayend', name: 'Day-end collection and cash reconciliation', cadence: 'Daily, 22:00 (after the counters close)', goesTo: 'Hospital administrator · accounts', channel: 'Print at the billing counter + email', action: 'Counters sign the cash sheet; a difference is explained the same evening, not at month end' },
-  { id: 'sr-stock', name: 'Stock valuation and expiry', cadence: 'Weekly, Sunday 08:00', goesTo: 'Store manager · pharmacy manager', channel: 'Print in the store + email', action: 'Short-dated stock goes to the front of the shelf or back to the supplier' },
-  { id: 'sr-lab', name: 'Laboratory turnaround and quality control', cadence: 'Weekly, Tuesday 09:00', goesTo: 'Pathologist · laboratory in-charge', channel: 'Email', action: 'The week’s out-of-range controls and overdue specimens are the agenda for the lab meeting' },
-  { id: 'sr-clinical', name: 'Clinical activity and case mix', cadence: 'Monthly, first working day', goesTo: 'Medical director · clinical leads', channel: 'Print + email', action: 'Case mix, no-show rate and uncoded diagnoses by doctor' },
-  { id: 'sr-revenue', name: 'Revenue by payer and discount approvals', cadence: 'Monthly, first working day', goesTo: 'Accounts · internal audit', channel: 'Email (the auditor gets the same file, not a summary of it)', action: 'Every discount above the limit is checked against its approver' },
-];
+export const SCHEDULED_REPORTS: ScheduledReport[] = SCHEDULES.map((s) => ({
+  id: s.id,
+  name: reportByTopic(s.topic)?.title ?? s.topic,
+  cadence: describeSchedule(s),
+  goesTo: s.recipients.map((r) => r.name).join(' · ') || 'Nobody yet',
+  channel: [...new Set(s.recipients.map((r) => channelById(r.channel).label))].join(' + ') || '—',
+  action: s.action,
+}));
 
-/** A scheduled report needs the server; the preview lists them rather than pretending to send them. */
-export const SCHEDULING_NEEDS_SERVER = 'Scheduling, rendering and delivery run on the hospital server (P6); this list is the specification, not a job runner.';
+/**
+ * What the schedule screen can do without a server, and what it cannot.
+ *
+ * The three operations are in the contract and the screen names them: a read the node caches, a save that queues,
+ * and a run that is deliberately online-only. The sentence is printed wherever a reader might otherwise assume a
+ * report went out by itself.
+ */
+export const SCHEDULING_NEEDS_SERVER =
+  'A run is the server\u2019s job and is in the contract as `POST /reports/schedules/{id}/runs` — it renders the file, sends it and records a receipt per recipient. Until the API service exists nothing goes out on its own: the schedule screen builds the same file on the desk that asked for it, and records who took it.';

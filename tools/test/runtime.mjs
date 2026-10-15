@@ -87,6 +87,7 @@ const ROUTES = [
   '/setup/finance',
   '/setup/referral-commission',
   '/reports',
+  '/reports/schedules',
   '/reports/finance',
   '/reports/tpa',
   '/reports/patient',
@@ -780,6 +781,73 @@ async function check(route) {
     if (!said) routeProblems.push('an address that is not on the register did not say so on the portal');
   }
 
+  /* The scheduled exports, driven: a schedule is edited, saved through the contract's own operation, and today's
+   * sheet is built and taken. A screen that only reproduces the register's own sentences is a table; this is the
+   * round trip — the hour changed here, the file built here, both recorded where the branch can read them.
+   *
+   * The text field is driven the way a browser drives it: React keeps its own value tracker on the element, so the
+   * value is set through the native setter and an `input` event is dispatched, which is what a keystroke ends in. */
+  let schedules = 'n/a';
+  if (route === '/reports/schedules') {
+    const textOf = () => doc.body.textContent ?? '';
+    const buttonBy = (re) => [...doc.querySelectorAll('button')].find((b) => re.test((b.textContent ?? '').trim()));
+    const type = (el, value) => {
+      const setter = Object.getOwnPropertyDescriptor(el.constructor.prototype, 'value')?.set;
+      if (setter) setter.call(el, value);
+      else el.value = value;
+      el.dispatchEvent(new dom.window.Event('input', { bubbles: true }));
+    };
+    const read = (key) => {
+      try {
+        return JSON.parse(doc.defaultView?.localStorage.getItem(key) ?? 'null');
+      } catch {
+        return null;
+      }
+    };
+
+    const rows = doc.querySelectorAll('[aria-label*=", next "]').length;
+    const hour = doc.querySelector('input[name="schedule-times"]');
+    const save = buttonBy(/^save this schedule$/i);
+    const take = buttonBy(/^download today’s sheet$/i);
+    if (!hour || !save || !take) {
+      schedules = `${rows} schedules · ${!hour ? 'NO HOUR FIELD' : ''}${!save ? ' NO SAVE' : ''}${!take ? ' NO DOWNLOAD' : ''}`;
+      routeProblems.push('the schedule screen is missing the hour field, the save or the download');
+    } else {
+      type(hour, '06:15, 18:45');
+      await new Promise((r) => setTimeout(r, 80));
+      press(save);
+      await new Promise((r) => setTimeout(r, 300));
+
+      const stored = read('dizi.report.schedules') ?? [];
+      const kept = stored.find((sc) => sc.id === 'sch-finance');
+      const queued = (read('dizi.outbox.v1')?.pending ?? []).filter((op) => op.operationId === 'saveReportSchedule');
+      const named = /saveReportSchedule/.test(textOf());
+
+      press(take);
+      await new Promise((r) => setTimeout(r, 300));
+      const taken = (read('dizi.report.downloads') ?? []).find((r) => r.scheduleId === 'sch-finance');
+
+      /* The register's own contradiction is on another schedule, so it is read the way a person reads it: by
+         opening the audit committee's monthly extract and finding the refusal, not by hoping it is on screen. */
+      const audit = [...doc.querySelectorAll('[aria-label^="Audit log,"]')][0];
+      let refused = false;
+      if (audit) {
+        press(audit);
+        await new Promise((r) => setTimeout(r, 300));
+        refused = /The period is wider than the data/.test(textOf()) && /reads \d+ day\(s\) of data/.test(textOf());
+      }
+      const runs = /Friday 16 October 2026 at/.test(textOf()) || /at \d\d:\d\d/.test(textOf());
+      schedules = `${rows} schedules · ${(kept?.cadence?.times ?? []).join('/') || 'NOT SAVED'} · ${queued.length === 1 ? 'queued as saveReportSchedule' : `queued=${queued.length}`} · ${taken ? `took ${taken.name}` : 'NOT TAKEN'} · ${refused ? 'refusal stated' : audit ? 'NO REFUSAL' : 'NO AUDIT ROW'}`;
+      if (rows !== 16) routeProblems.push(`the schedule register drew ${rows} schedules, not one per report the register says is sent`);
+      if ((kept?.cadence?.times ?? []).join('/') !== '06:15/18:45') routeProblems.push('saving a schedule did not keep the hour on this node');
+      if (queued.length !== 1) routeProblems.push(`saving a schedule did not reach the saved queue as \`saveReportSchedule\` (${queued.length} matching operations)`);
+      if (!named) routeProblems.push('the save did not name the contract operation it went through');
+      if (!taken) routeProblems.push('downloading today’s sheet recorded nothing on the node');
+      if (!refused) routeProblems.push('the register’s own contradiction — a monthly extract of a one-day trail — was not stated on the screen');
+      if (!runs) routeProblems.push('the schedule screen did not print the next runs as days');
+    }
+  }
+
   /* The designer, driven: a block is dragged with the pointer, the position is read back off the sheet, and the
    * version is published through the contract's own operation. A designer whose blocks only move in a screenshot is
    * a canvas, not a designer. */
@@ -847,7 +915,7 @@ async function check(route) {
 
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors: [...errors, ...routeProblems], shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, design, readyWait };
+  return { errors: [...errors, ...routeProblems], shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, design, schedules, readyWait };
 }
 
 const CONCURRENCY = Math.max(1, Number(process.env.DIZI_CONCURRENCY ?? 4));
@@ -902,10 +970,10 @@ outcomes.forEach((outcome, i) => {
     problems += 1;
     return;
   }
-  const { errors, shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, design, readyWait } = outcome.value;
+  const { errors, shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, design, schedules, readyWait } = outcome.value;
   const bad = errors.length > 0 || handlers === 'DEAD';
   const slow = readyWait !== undefined && readyWait > 2000 ? `  ready=${(readyWait / 1000).toFixed(1)}s` : '';
-  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} shell=${shell ?? 'none'}  handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${suite === 'n/a' ? '' : `  suite=${suite}`}${viewPress === 'n/a' ? '' : `  view=${viewPress}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${report === 'n/a' ? '' : `  report=${report}`}${design === 'n/a' ? '' : `  design=${design}`}${slow}`);
+  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} shell=${shell ?? 'none'}  handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${suite === 'n/a' ? '' : `  suite=${suite}`}${viewPress === 'n/a' ? '' : `  view=${viewPress}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${report === 'n/a' ? '' : `  report=${report}`}${design === 'n/a' ? '' : `  design=${design}`}${schedules === 'n/a' ? '' : `  schedules=${schedules}`}${slow}`);
   if (handlers === 'DEAD') {
     console.log('      the shared control did not respond after hydration');
     problems += 1;
