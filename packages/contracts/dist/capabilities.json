@@ -1,7 +1,7 @@
 {
   "contract": {
     "title": "DiziHospital platform API",
-    "version": "0.1.0-p0",
+    "version": "0.1.0-p8",
     "openapi": "3.1.0",
     "source": "packages/contracts/openapi.json"
   },
@@ -1542,6 +1542,1638 @@
       "servesFromReplica": false,
       "needsNetwork": true,
       "requiresIdempotencyKey": true
+    },
+    "listTeleSessions": {
+      "id": "listTeleSessions",
+      "method": "get",
+      "path": "/telemedicine/sessions",
+      "tag": "telemedicine",
+      "summary": "List consultations and meetings",
+      "entity": "telemedicine.session",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "The waiting list is the screen a doctor opens first, and a doctor on a ward with a flaky uplink still needs to see who is waiting. It is a replica read, so the screen stamps how old it is.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "TeleSessionPage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "bookTeleSession": {
+      "id": "bookTeleSession",
+      "method": "post",
+      "path": "/telemedicine/sessions",
+      "tag": "telemedicine",
+      "summary": "Book a consultation or a meeting",
+      "entity": "telemedicine.session",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "The room is opened at the desk that booked it and the slot is held by that node’s own row, so a consultation can be booked while the uplink is down; a slot that two nodes both claimed is refused when the queue drains rather than double-booked.",
+      "notes": null,
+      "request": "TeleSessionCreate",
+      "responses": {
+        "201": "TeleSession",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "startTeleSession": {
+      "id": "startTeleSession",
+      "method": "post",
+      "path": "/telemedicine/sessions/{id}/start",
+      "tag": "telemedicine",
+      "summary": "Start a session",
+      "entity": "telemedicine.session",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "The doctor presses start when both people are in the room, and the moment it happened is what the register is for. Recording it on the node in front of the doctor means the start time does not depend on the uplink coming back.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "TeleSession",
+        "401": null,
+        "403": null,
+        "409": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        409
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "endTeleSession": {
+      "id": "endTeleSession",
+      "method": "post",
+      "path": "/telemedicine/sessions/{id}/end",
+      "tag": "telemedicine",
+      "summary": "End a session and record the outcome",
+      "entity": "telemedicine.session",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "The outcome is written while the doctor still remembers the consultation. If the session was ended at another node meanwhile, the two outcomes are both kept and the desk decides which one belongs in the record.",
+      "notes": null,
+      "request": "TeleSessionEnd",
+      "responses": {
+        "200": "TeleSession",
+        "401": null,
+        "403": null,
+        "409": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        409
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "listContentTypes": {
+      "id": "listContentTypes",
+      "method": "get",
+      "path": "/content/types",
+      "tag": "content",
+      "summary": "List content types",
+      "entity": "content.type",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "Every upload dialog needs the type list, and it is a small table the node already holds. Serving it from the replica keeps the upload screen usable with the uplink down.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "ContentTypePage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "createContentType": {
+      "id": "createContentType",
+      "method": "post",
+      "path": "/content/types",
+      "tag": "content",
+      "summary": "Add a content type",
+      "entity": "content.type",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "A taxonomy row is small, typed once and wanted immediately, so it is queued like everything else the desk does; the uniqueness rule is enforced when the queue drains and a clash is reported rather than merged.",
+      "notes": null,
+      "request": "ContentTypeWrite",
+      "responses": {
+        "201": "ContentType",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "updateContentType": {
+      "id": "updateContentType",
+      "method": "patch",
+      "path": "/content/types/{key}",
+      "tag": "content",
+      "summary": "Edit a content type",
+      "entity": "content.type",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Renaming a label or changing whether uploads of this type need approval is an office job nobody schedules; it is queued with the version it was based on, and a stale edit is refused rather than guessed at.",
+      "notes": null,
+      "request": "ContentTypeWrite",
+      "responses": {
+        "200": "ContentType",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "listContentItems": {
+      "id": "listContentItems",
+      "method": "get",
+      "path": "/content/items",
+      "tag": "content",
+      "summary": "List uploaded content",
+      "entity": "content.item",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "The Download Centre is browsed far more often than it is written to, and the node holds the rows for the files that live on it. A cached page with its age stamped beats an empty screen at a desk.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "ContentItemPage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "uploadContent": {
+      "id": "uploadContent",
+      "method": "post",
+      "path": "/content/items",
+      "tag": "content",
+      "summary": "Upload a file",
+      "entity": "content.item",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "The bytes land in the node’s own store before anything is asked of the cloud, so a file can be uploaded and shared with the ward while the uplink is down. The row drains with the hash, and the hash is what stops a replay from attaching different bytes to it.",
+      "notes": null,
+      "request": "ContentUpload",
+      "responses": {
+        "201": "ContentItem",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "updateContentItem": {
+      "id": "updateContentItem",
+      "method": "patch",
+      "path": "/content/items/{id}",
+      "tag": "content",
+      "summary": "Edit an upload",
+      "entity": "content.item",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Tags, titles and expiry dates are corrected from whichever desk noticed, and two desks editing different fields are both right. The same field twice is refused with both values rather than silently overwritten.",
+      "notes": null,
+      "request": "ContentItemPatch",
+      "responses": {
+        "200": "ContentItem",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "shareContent": {
+      "id": "shareContent",
+      "method": "post",
+      "path": "/content/items/{id}/shares",
+      "tag": "content",
+      "summary": "Share an upload",
+      "entity": "content.item",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Sharing a discharge scan with the ward happens at the moment somebody needs it, and the recipients are rows this node can write. A share to a patient is queued too, but it only becomes visible in the portal after the drain and the approval check.",
+      "notes": null,
+      "request": "ContentShareCreate",
+      "responses": {
+        "201": "ContentShare",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "revokeContentShare": {
+      "id": "revokeContentShare",
+      "method": "post",
+      "path": "/content/items/{id}/revocations",
+      "tag": "content",
+      "summary": "Withdraw a share",
+      "entity": "content.item",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Taking a document back from somebody is not a quiet edit: it is a decision with a reason and a name attached, and it is recorded on the node where it was made so that a share cannot be quietly withdrawn and re-made while the uplink is down.",
+      "notes": null,
+      "request": "ContentRevocation",
+      "responses": {
+        "201": "ContentShare",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "approveContentItem": {
+      "id": "approveContentItem",
+      "method": "post",
+      "path": "/content/items/{id}/approval",
+      "tag": "content",
+      "summary": "Approve or return an upload",
+      "entity": "content.item",
+      "offline": "online-only",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "This is the moment a document stops being an internal file and becomes something a patient can be shown. The approval has to be one decision that every branch and the portal see at the same time; a queued approval would let two branches release two different versions of one discharge summary.",
+      "notes": "Deliberately online-only: the approval is what the patient portal and the public website read from, and an approval that exists only in a queue is an unpublished decision that the approver believes is published — which is the one failure mode of a document that leaves the hospital.",
+      "request": "ContentApproval",
+      "responses": {
+        "200": "ContentItem",
+        "401": null,
+        "403": null,
+        "409": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        409
+      ],
+      "mayQueue": false,
+      "servesFromReplica": false,
+      "needsNetwork": true,
+      "requiresIdempotencyKey": true
+    },
+    "listCertificates": {
+      "id": "listCertificates",
+      "method": "get",
+      "path": "/certificates",
+      "tag": "records",
+      "summary": "List issued certificates",
+      "entity": "certificate.issue",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "Patients come back for a copy of a certificate they lost, and the register has to answer from the node in front of the clerk. The page carries its age so nobody mistakes a replica for the register of record.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "CertificatePage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "issueCertificate": {
+      "id": "issueCertificate",
+      "method": "post",
+      "path": "/certificates",
+      "tag": "records",
+      "summary": "Issue a certificate",
+      "entity": "certificate.issue",
+      "offline": "queue",
+      "authority": "edge",
+      "idempotency": "required",
+      "audit": true,
+      "because": "A patient who has been seen and discharged walks to the desk and waits for a piece of paper. The number is drawn from a block already reserved to this node, so the certificate can be printed now and the register entry drains later, without ever reusing a number.",
+      "notes": null,
+      "request": "CertificateIssue",
+      "responses": {
+        "201": "Certificate",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "revokeCertificate": {
+      "id": "revokeCertificate",
+      "method": "post",
+      "path": "/certificates/{certificateNo}/revocations",
+      "tag": "records",
+      "summary": "Revoke a certificate",
+      "entity": "certificate.issue",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "A certificate in a patient’s hand is revoked by recording that it is, not by editing it: the register has to be able to say that a document that exists was withdrawn and why.",
+      "notes": null,
+      "request": "CertificateRevocation",
+      "responses": {
+        "201": "Certificate",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "listIdCards": {
+      "id": "listIdCards",
+      "method": "get",
+      "path": "/id-cards",
+      "tag": "records",
+      "summary": "List identity cards",
+      "entity": "identity.card",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "The card desk needs to answer “is this card still valid” in front of the person holding it, and the node keeps the rows for the cards it printed.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "IdentityCardPage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "issueIdCard": {
+      "id": "issueIdCard",
+      "method": "post",
+      "path": "/id-cards",
+      "tag": "records",
+      "summary": "Issue an identity card",
+      "entity": "identity.card",
+      "offline": "queue",
+      "authority": "edge",
+      "idempotency": "required",
+      "audit": true,
+      "because": "The card is printed where the person is standing, so the number has to come from this node’s own series and the register entry is queued behind it. Re-issuing appends a new card and supersedes the old one; no card row is ever edited.",
+      "notes": null,
+      "request": "IdentityCardIssue",
+      "responses": {
+        "201": "IdentityCard",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "revokeIdCard": {
+      "id": "revokeIdCard",
+      "method": "post",
+      "path": "/id-cards/{cardNo}/revocations",
+      "tag": "records",
+      "summary": "Revoke an identity card",
+      "entity": "identity.card",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "A lost staff card is a security matter, not a filing matter: the register has to show it dead from the moment the desk is told, and the security gate reads the same row when the queue drains.",
+      "notes": null,
+      "request": "IdentityCardRevocation",
+      "responses": {
+        "201": "IdentityCard",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "listSurveyForms": {
+      "id": "listSurveyForms",
+      "method": "get",
+      "path": "/survey/forms",
+      "tag": "engagement",
+      "summary": "List survey forms",
+      "entity": "survey.form",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "Forms are read to be handed out and answered, which happens at a desk and often without a working uplink. The page is a replica read and says how old it is.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "SurveyFormPage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "createSurveyForm": {
+      "id": "createSurveyForm",
+      "method": "post",
+      "path": "/survey/forms",
+      "tag": "engagement",
+      "summary": "Create a survey form",
+      "entity": "survey.form",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Writing a form is slow, careful work that nobody wants to lose to a dropped connection, and a draft is not sent to anybody until it is published. The draft is queued and reviewed by its author before it can reach a patient.",
+      "notes": null,
+      "request": "SurveyFormWrite",
+      "responses": {
+        "201": "SurveyForm",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "updateSurveyForm": {
+      "id": "updateSurveyForm",
+      "method": "patch",
+      "path": "/survey/forms/{id}",
+      "tag": "engagement",
+      "summary": "Edit a survey form",
+      "entity": "survey.form",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Questions are drafted over days by more than one person, so the edit is queued with the version it was based on and a stale edit is refused with both versions rather than merged into a form nobody designed.",
+      "notes": null,
+      "request": "SurveyFormWrite",
+      "responses": {
+        "200": "SurveyForm",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "publishSurveyForm": {
+      "id": "publishSurveyForm",
+      "method": "post",
+      "path": "/survey/forms/{id}/publication",
+      "tag": "engagement",
+      "summary": "Publish or close a form",
+      "entity": "survey.form",
+      "offline": "online-only",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Publishing is what puts a form in front of patients through the portal and the public website, both of which are served from the cloud. A publication that exists only on one node would show part of the audience a form the hospital has not actually released.",
+      "notes": "Deliberately online-only: the portal and the public site are cloud-served, so a queued publication is a form that is live in one branch’s head and nowhere a patient can reach it. The author is told before they press it, not after.",
+      "request": "SurveyPublication",
+      "responses": {
+        "200": "SurveyForm",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": false,
+      "servesFromReplica": false,
+      "needsNetwork": true,
+      "requiresIdempotencyKey": true
+    },
+    "assignSurveyForm": {
+      "id": "assignSurveyForm",
+      "method": "post",
+      "path": "/survey/forms/{id}/assignments",
+      "tag": "engagement",
+      "summary": "Assign a form",
+      "entity": "survey.assignment",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Assigning a survey is how a supervisor asks twenty people to answer something this week. It is queued because it happens in bulk at the end of a shift, and each assignee is a separate row so one person’s row can be withdrawn without touching the others.",
+      "notes": null,
+      "request": "SurveyAssignmentCreate",
+      "responses": {
+        "201": "SurveyAssignment",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "listSurveyAssignments": {
+      "id": "listSurveyAssignments",
+      "method": "get",
+      "path": "/survey/assignments",
+      "tag": "engagement",
+      "summary": "List my survey assignments",
+      "entity": "survey.assignment",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "The staff survey screen is opened to fill something in, often from a ward workstation with a poor connection. The replica holds the assignments for this branch, so the list is there even when the uplink is not.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "SurveyAssignmentPage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "submitSurveyResponse": {
+      "id": "submitSurveyResponse",
+      "method": "post",
+      "path": "/survey/assignments/{id}/responses",
+      "tag": "engagement",
+      "summary": "Submit answers",
+      "entity": "survey.response",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "An answer is written once by somebody who has just spent five minutes on it, and losing it because the uplink dropped would be the worst possible outcome for the one data set the hospital collects voluntarily. It is appended on the node and drained.",
+      "notes": null,
+      "request": "SurveyResponseWrite",
+      "responses": {
+        "201": "SurveyResponse",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "listCmsPages": {
+      "id": "listCmsPages",
+      "method": "get",
+      "path": "/cms/pages",
+      "tag": "cms",
+      "summary": "List website pages",
+      "entity": "cms.page",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "The Front CMS is edited in the same app as everything else, and the editor opens on the page list. A replica read keeps the screen working while the cloud is being patched at night.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "CmsPagePage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "createCmsPage": {
+      "id": "createCmsPage",
+      "method": "post",
+      "path": "/cms/pages",
+      "tag": "cms",
+      "summary": "Create a website page",
+      "entity": "cms.page",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Page drafts are written by people who work on them between other jobs, and a draft is invisible to the public until it is published. Queuing the draft means writing a page does not depend on the uplink, and publishing — the part that matters — is a separate online decision.",
+      "notes": null,
+      "request": "CmsPageWrite",
+      "responses": {
+        "201": "CmsPage",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "updateCmsPage": {
+      "id": "updateCmsPage",
+      "method": "patch",
+      "path": "/cms/pages/{slug}",
+      "tag": "cms",
+      "summary": "Edit a website page",
+      "entity": "cms.page",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Two editors working on the same page is normal on a content team, and the merge is by field: a headline edit and a body edit are both wanted, while the same paragraph twice has to be looked at by a person.",
+      "notes": null,
+      "request": "CmsPageWrite",
+      "responses": {
+        "200": "CmsPage",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "publishCmsPage": {
+      "id": "publishCmsPage",
+      "method": "post",
+      "path": "/cms/pages/{slug}/publication",
+      "tag": "cms",
+      "summary": "Publish or unpublish a page",
+      "entity": "cms.page",
+      "offline": "online-only",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "The public website is served from the cloud and is the same page for every visitor, including the patient reading it on a phone in another district. Publishing has to be one act in one place: a page published on a branch node only is a page that does not exist.",
+      "notes": "Deliberately online-only: the website is one site served from one place, and a queued publication would tell the editor that a page is live while the public still sees yesterday’s version — the kind of difference nobody notices until the wrong notice is on the front page.",
+      "request": "CmsPublication",
+      "responses": {
+        "200": "CmsPage",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": false,
+      "servesFromReplica": false,
+      "needsNetwork": true,
+      "requiresIdempotencyKey": true
+    },
+    "listNotifications": {
+      "id": "listNotifications",
+      "method": "get",
+      "path": "/notifications",
+      "tag": "messaging",
+      "summary": "List notices",
+      "entity": "message.notice",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "Notices are read at the start of a shift, from whichever workstation is free, and the ones already read have to stay read while the uplink is out. The page is a replica read with its age stamped on it.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "NoticePage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "sendNotice": {
+      "id": "sendNotice",
+      "method": "post",
+      "path": "/notifications",
+      "tag": "messaging",
+      "summary": "Send an internal notice",
+      "entity": "message.notice",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "A notice that a ward is short of a nurse tonight is worth sending the moment somebody notices, and the recipients are all staff on this branch’s replica. Queuing it means the notice reaches the node even when the uplink does not.",
+      "notes": null,
+      "request": "NoticeSend",
+      "responses": {
+        "201": "Notice",
+        "401": null,
+        "403": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "recordNoticeReceipt": {
+      "id": "recordNoticeReceipt",
+      "method": "post",
+      "path": "/notifications/{id}/receipts",
+      "tag": "messaging",
+      "summary": "Record that a notice was read",
+      "entity": "message.notice",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Read receipts are what turn a noticeboard into something a hospital can point at when it matters. They are recorded on the node the person is reading from, and drained with the rest of the outbox.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "201": "NoticeReceipt",
+        "401": null,
+        "403": null,
+        "409": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "sendPatientMessage": {
+      "id": "sendPatientMessage",
+      "method": "post",
+      "path": "/notifications/outbound",
+      "tag": "messaging",
+      "summary": "Message a patient by SMS, WhatsApp or email",
+      "entity": "message.notice",
+      "offline": "online-only",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "An SMS that leaves the hospital cannot be called back, and the gateway is a third party that may be down, may reject the number or may deliver tomorrow. The moment of sending is the one moment this module has to know the answer to.",
+      "notes": "Deliberately online-only: the outbound channels go through a third-party gateway and carry patient information outside the hospital, so the app refuses the send when it cannot get a receipt. The internal noticeboard is unaffected, and the screen says which of the two it is about.",
+      "request": "OutboundMessage",
+      "responses": {
+        "201": "Notice",
+        "401": null,
+        "403": null,
+        "409": null,
+        "502": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "502"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        502
+      ],
+      "mayQueue": false,
+      "servesFromReplica": false,
+      "needsNetwork": true,
+      "requiresIdempotencyKey": true
+    },
+    "getPortalProfile": {
+      "id": "getPortalProfile",
+      "method": "get",
+      "path": "/portal/me",
+      "tag": "portal",
+      "summary": "The patient’s own record, as the portal shows it",
+      "entity": "patient.demographic",
+      "offline": "cache",
+      "authority": "cloud",
+      "idempotency": "none",
+      "audit": false,
+      "because": "The portal header is the first thing that loads and the phone may be on a hospital’s guest network or on none. A replica read of the patient’s own demographics is enough to open the app.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "PortalProfile",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "listPortalAppointments": {
+      "id": "listPortalAppointments",
+      "method": "get",
+      "path": "/portal/appointments",
+      "tag": "portal",
+      "summary": "The patient’s appointments",
+      "entity": "appointment",
+      "offline": "cache",
+      "authority": "cloud",
+      "idempotency": "none",
+      "audit": false,
+      "because": "The patient checks their own appointment times far more often than they change them, usually on a mobile connection. The portal is served by the cloud, so the replica it reads is the cloud’s own.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "AppointmentPage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "bookPortalAppointment": {
+      "id": "bookPortalAppointment",
+      "method": "post",
+      "path": "/portal/appointments",
+      "tag": "portal",
+      "summary": "Book an appointment from the portal",
+      "entity": "appointment",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Patients book from phones on the move, and a booking that fails because the signal dropped mid-press is a booking the patient believes happened. It is queued with an idempotency key and confirmed on the drain, and a slot taken meanwhile is refused with alternatives rather than silently moved.",
+      "notes": null,
+      "request": "AppointmentCreate",
+      "responses": {
+        "201": "Appointment",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "cancelPortalAppointment": {
+      "id": "cancelPortalAppointment",
+      "method": "post",
+      "path": "/portal/appointments/{id}/cancellation",
+      "tag": "portal",
+      "summary": "Cancel an appointment from the portal",
+      "entity": "appointment",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "A patient who cannot come should be able to say so at eleven at night, which is when they find out. The cancellation is queued and the slot is released when the queue drains, which is still long before the clinic.",
+      "notes": null,
+      "request": "AppointmentCancellation",
+      "responses": {
+        "200": "Appointment",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        409,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "listPortalPrescriptions": {
+      "id": "listPortalPrescriptions",
+      "method": "get",
+      "path": "/portal/prescriptions",
+      "tag": "portal",
+      "summary": "The patient’s prescriptions",
+      "entity": "prescription",
+      "offline": "cache",
+      "authority": "cloud",
+      "idempotency": "none",
+      "audit": false,
+      "because": "Patients are told to bring their prescriptions to the pharmacy and the follow-up desk, and they look them up from wherever they are. It is a read of a record the cloud owns.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "PortalPrescriptionPage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "listPortalResults": {
+      "id": "listPortalResults",
+      "method": "get",
+      "path": "/portal/results",
+      "tag": "portal",
+      "summary": "The patient’s released results",
+      "entity": "lab.result",
+      "offline": "cache",
+      "authority": "cloud",
+      "idempotency": "none",
+      "audit": false,
+      "because": "Results are the reason many patients open the portal at all, and they open it repeatedly on the day a report is due. A pending result is shown as pending rather than hidden, because a silence the patient cannot interpret is worse than a status.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "PortalResultPage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "recordResultDownload": {
+      "id": "recordResultDownload",
+      "method": "post",
+      "path": "/portal/results/{id}/downloads",
+      "tag": "portal",
+      "summary": "Record that a report was downloaded",
+      "entity": "lab.result",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "A download is a fact about a patient opening their own clinical document, and it is recorded on the device it happened on. If the uplink is out, the record drains later — the patient still gets their report, because the document itself is already on the device.",
+      "notes": null,
+      "request": "ResultDownload",
+      "responses": {
+        "201": "ResultDownload",
+        "401": null,
+        "403": null,
+        "410": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "410"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        410
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
+    },
+    "listPortalBills": {
+      "id": "listPortalBills",
+      "method": "get",
+      "path": "/portal/bills",
+      "tag": "portal",
+      "summary": "The patient’s bills",
+      "entity": "invoice",
+      "offline": "cache",
+      "authority": "cloud",
+      "idempotency": "none",
+      "audit": false,
+      "because": "A patient who is being discharged wants to see what the bill is before standing at the counter, and the counter is where the queue is. The portal reads the cloud’s own records, so what it shows is what the cashier will see.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "PortalBillPage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "listPortalPayments": {
+      "id": "listPortalPayments",
+      "method": "get",
+      "path": "/portal/payments",
+      "tag": "portal",
+      "summary": "The patient’s payments",
+      "entity": "payment",
+      "offline": "cache",
+      "authority": "cloud",
+      "idempotency": "none",
+      "audit": false,
+      "because": "Receipts are what a patient checks when an insurance claim or an employer asks for proof, and they check months later. A replica read of the receipts the cloud holds is exactly the right answer for that.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "PortalPaymentPage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "payPortalBill": {
+      "id": "payPortalBill",
+      "method": "post",
+      "path": "/portal/payments",
+      "tag": "portal",
+      "summary": "Pay a bill from the portal",
+      "entity": "payment",
+      "offline": "online-only",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "Money over a mobile wallet settles in seconds or not at all, and the hospital’s record of it has to come from the gateway’s answer rather than from the patient’s phone. The payment is written once, when the gateway confirms it.",
+      "notes": "Deliberately online-only: there is no payment gateway integration in this build (bKash, Nagad and card acquiring are separate commercial arrangements), so the operation refuses with a plain explanation and the patient is pointed at the counter or the desk’s own `recordPayment`. A queued payment would be a promise about money, which is the one thing an offline queue must never hold.",
+      "request": "PortalPaymentRequest",
+      "responses": {
+        "201": "Payment",
+        "401": null,
+        "403": null,
+        "409": null,
+        "422": null,
+        "502": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "409",
+        "422",
+        "502"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        409,
+        422,
+        502
+      ],
+      "mayQueue": false,
+      "servesFromReplica": false,
+      "needsNetwork": true,
+      "requiresIdempotencyKey": true
+    },
+    "listPortalFeedback": {
+      "id": "listPortalFeedback",
+      "method": "get",
+      "path": "/portal/feedback",
+      "tag": "portal",
+      "summary": "The patient’s own feedback",
+      "entity": "portal.feedback",
+      "offline": "cache",
+      "authority": "cloud",
+      "idempotency": "none",
+      "audit": false,
+      "because": "A patient who complained last week wants to see whether anybody answered, which is exactly the thing that decides whether they complain again. It is their own list, read from the cloud.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "PortalFeedbackPage",
+        "401": null
+      },
+      "problemResponses": [
+        "401"
+      ],
+      "statuses": [
+        200,
+        401
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
+    "submitPortalFeedback": {
+      "id": "submitPortalFeedback",
+      "method": "post",
+      "path": "/portal/feedback",
+      "tag": "portal",
+      "summary": "Send feedback",
+      "entity": "portal.feedback",
+      "offline": "queue",
+      "authority": "cloud",
+      "idempotency": "required",
+      "audit": true,
+      "because": "People write complaints at night, on the way home, when the ward is behind them. It is appended on the device and drained, so the feedback exists from the moment it was written — and it is never edited afterwards, because editing a complaint is not a thing a hospital should be able to do.",
+      "notes": null,
+      "request": "PortalFeedbackWrite",
+      "responses": {
+        "201": "PortalFeedback",
+        "401": null,
+        "403": null,
+        "422": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "422"
+      ],
+      "statuses": [
+        201,
+        401,
+        403,
+        422
+      ],
+      "mayQueue": true,
+      "servesFromReplica": false,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": true
     }
   },
   "operationOrder": [
@@ -1585,7 +3217,53 @@
     "openVisitorPass",
     "closeVisitorPass",
     "updateBranchSetting",
-    "savePlatformSetting"
+    "savePlatformSetting",
+    "listTeleSessions",
+    "bookTeleSession",
+    "startTeleSession",
+    "endTeleSession",
+    "listContentTypes",
+    "createContentType",
+    "updateContentType",
+    "listContentItems",
+    "uploadContent",
+    "updateContentItem",
+    "shareContent",
+    "revokeContentShare",
+    "approveContentItem",
+    "listCertificates",
+    "issueCertificate",
+    "revokeCertificate",
+    "listIdCards",
+    "issueIdCard",
+    "revokeIdCard",
+    "listSurveyForms",
+    "createSurveyForm",
+    "updateSurveyForm",
+    "publishSurveyForm",
+    "assignSurveyForm",
+    "listSurveyAssignments",
+    "submitSurveyResponse",
+    "listCmsPages",
+    "createCmsPage",
+    "updateCmsPage",
+    "publishCmsPage",
+    "listNotifications",
+    "sendNotice",
+    "recordNoticeReceipt",
+    "sendPatientMessage",
+    "getPortalProfile",
+    "listPortalAppointments",
+    "bookPortalAppointment",
+    "cancelPortalAppointment",
+    "listPortalPrescriptions",
+    "listPortalResults",
+    "recordResultDownload",
+    "listPortalBills",
+    "listPortalPayments",
+    "payPortalBill",
+    "listPortalFeedback",
+    "submitPortalFeedback"
   ],
   "byEntity": {
     "patient.demographic": [
@@ -1593,7 +3271,8 @@
       "createPatient",
       "getPatient",
       "updatePatient",
-      "listPatientDuplicates"
+      "listPatientDuplicates",
+      "getPortalProfile"
     ],
     "patient.contact": [
       "updatePatientContact"
@@ -1602,7 +3281,10 @@
       "listAppointments",
       "createAppointment",
       "updateAppointment",
-      "checkInAppointment"
+      "checkInAppointment",
+      "listPortalAppointments",
+      "bookPortalAppointment",
+      "cancelPortalAppointment"
     ],
     "bed.state": [
       "claimBed"
@@ -1620,10 +3302,13 @@
       "signDose"
     ],
     "invoice": [
-      "createInvoice"
+      "createInvoice",
+      "listPortalBills"
     ],
     "payment": [
-      "recordPayment"
+      "recordPayment",
+      "listPortalPayments",
+      "payPortalBill"
     ],
     "audit": [
       "appendAuditEntry",
@@ -1673,6 +3358,71 @@
     ],
     "platform.setting": [
       "savePlatformSetting"
+    ],
+    "telemedicine.session": [
+      "listTeleSessions",
+      "bookTeleSession",
+      "startTeleSession",
+      "endTeleSession"
+    ],
+    "content.type": [
+      "listContentTypes",
+      "createContentType",
+      "updateContentType"
+    ],
+    "content.item": [
+      "listContentItems",
+      "uploadContent",
+      "updateContentItem",
+      "shareContent",
+      "revokeContentShare",
+      "approveContentItem"
+    ],
+    "certificate.issue": [
+      "listCertificates",
+      "issueCertificate",
+      "revokeCertificate"
+    ],
+    "identity.card": [
+      "listIdCards",
+      "issueIdCard",
+      "revokeIdCard"
+    ],
+    "survey.form": [
+      "listSurveyForms",
+      "createSurveyForm",
+      "updateSurveyForm",
+      "publishSurveyForm"
+    ],
+    "survey.assignment": [
+      "assignSurveyForm",
+      "listSurveyAssignments"
+    ],
+    "survey.response": [
+      "submitSurveyResponse"
+    ],
+    "cms.page": [
+      "listCmsPages",
+      "createCmsPage",
+      "updateCmsPage",
+      "publishCmsPage"
+    ],
+    "message.notice": [
+      "listNotifications",
+      "sendNotice",
+      "recordNoticeReceipt",
+      "sendPatientMessage"
+    ],
+    "prescription": [
+      "listPortalPrescriptions"
+    ],
+    "lab.result": [
+      "listPortalResults",
+      "recordResultDownload"
+    ],
+    "portal.feedback": [
+      "listPortalFeedback",
+      "submitPortalFeedback"
     ]
   },
   "queueable": [
@@ -1706,7 +3456,32 @@
     "recordDeath",
     "openVisitorPass",
     "closeVisitorPass",
-    "updateBranchSetting"
+    "updateBranchSetting",
+    "bookTeleSession",
+    "startTeleSession",
+    "endTeleSession",
+    "createContentType",
+    "updateContentType",
+    "uploadContent",
+    "updateContentItem",
+    "shareContent",
+    "revokeContentShare",
+    "issueCertificate",
+    "revokeCertificate",
+    "issueIdCard",
+    "revokeIdCard",
+    "createSurveyForm",
+    "updateSurveyForm",
+    "assignSurveyForm",
+    "submitSurveyResponse",
+    "createCmsPage",
+    "updateCmsPage",
+    "sendNotice",
+    "recordNoticeReceipt",
+    "bookPortalAppointment",
+    "cancelPortalAppointment",
+    "recordResultDownload",
+    "submitPortalFeedback"
   ],
   "servedFromReplica": [
     "listPatients",
@@ -1714,13 +3489,34 @@
     "listPatientDuplicates",
     "listAppointments",
     "listStaff",
-    "listVitalEvents"
+    "listVitalEvents",
+    "listTeleSessions",
+    "listContentTypes",
+    "listContentItems",
+    "listCertificates",
+    "listIdCards",
+    "listSurveyForms",
+    "listSurveyAssignments",
+    "listCmsPages",
+    "listNotifications",
+    "getPortalProfile",
+    "listPortalAppointments",
+    "listPortalPrescriptions",
+    "listPortalResults",
+    "listPortalBills",
+    "listPortalPayments",
+    "listPortalFeedback"
   ],
   "onlineOnly": [
     "health",
     "listNumberBlocks",
     "approvePayrollRun",
-    "savePlatformSetting"
+    "savePlatformSetting",
+    "approveContentItem",
+    "publishSurveyForm",
+    "publishCmsPage",
+    "sendPatientMessage",
+    "payPortalBill"
   ],
   "idempotencyHeader": {
     "name": "Idempotency-Key",
@@ -1757,7 +3553,37 @@
       "openVisitorPass",
       "closeVisitorPass",
       "updateBranchSetting",
-      "savePlatformSetting"
+      "savePlatformSetting",
+      "bookTeleSession",
+      "startTeleSession",
+      "endTeleSession",
+      "createContentType",
+      "updateContentType",
+      "uploadContent",
+      "updateContentItem",
+      "shareContent",
+      "revokeContentShare",
+      "approveContentItem",
+      "issueCertificate",
+      "revokeCertificate",
+      "issueIdCard",
+      "revokeIdCard",
+      "createSurveyForm",
+      "updateSurveyForm",
+      "publishSurveyForm",
+      "assignSurveyForm",
+      "submitSurveyResponse",
+      "createCmsPage",
+      "updateCmsPage",
+      "publishCmsPage",
+      "sendNotice",
+      "recordNoticeReceipt",
+      "sendPatientMessage",
+      "bookPortalAppointment",
+      "cancelPortalAppointment",
+      "recordResultDownload",
+      "payPortalBill",
+      "submitPortalFeedback"
     ]
   },
   "entities": {
@@ -1875,6 +3701,71 @@
       "policy": "field-level",
       "label": "Platform setting",
       "why": "Configuration is edited by more than one administrator, and most keys are independent. Different keys merge; the same key is the one case where somebody has to choose, since the next patient sees only one of the two."
+    },
+    "telemedicine.session": {
+      "policy": "field-level",
+      "label": "Live consultation or meeting",
+      "why": "A session is opened by a doctor and ended by whoever is still in the room, and the two may be on different nodes. A correction to the outcome merges by field; two ends are the same end."
+    },
+    "content.item": {
+      "policy": "field-level",
+      "label": "Shared file",
+      "why": "The file itself never changes, but its title, its tags and who may see it do. Two nodes retitling the same upload merge by field, and the bytes are addressed by hash so they cannot diverge."
+    },
+    "content.type": {
+      "policy": "field-level",
+      "label": "Content type",
+      "why": "A content type is a taxonomy row every branch reads and one administrator edits. A merge by field is right; the key is the identity and is never rewritten."
+    },
+    "certificate.issue": {
+      "policy": "append-only",
+      "label": "Issued certificate",
+      "why": "A certificate carries a number that is already printed on paper and handed to a person. It is issued, and if the hospital was wrong it issues a superseding certificate — it does not edit the one in the patient’s hand."
+    },
+    "identity.card": {
+      "policy": "append-only",
+      "label": "Issued identity card",
+      "why": "A card is a physical object with a number on it. Re-issuing because a photograph was wrong appends a new card and revokes the old one; the register has to be able to say which card was in circulation when."
+    },
+    "survey.form": {
+      "policy": "field-level",
+      "label": "Survey form",
+      "why": "A form is drafted by one person and reviewed by another, both of whom may edit different questions on different nodes. Field-level merging keeps both edits; the question list is compared as one field."
+    },
+    "survey.assignment": {
+      "policy": "field-level",
+      "label": "Survey assignment",
+      "why": "An assignment is issued to a person who answers it, and the person who issued it may withdraw it. Field-level: the answer state and the withdrawal are different fields and both are true."
+    },
+    "survey.response": {
+      "policy": "append-only",
+      "label": "Survey response",
+      "why": "An answer is what somebody said at a time. It is appended and never corrected — correcting a survey destroys the only thing a survey is for."
+    },
+    "cms.page": {
+      "policy": "field-level",
+      "label": "Website page",
+      "why": "A page is edited by the content team and the branch administrator, usually in different places. Field-level merging keeps both edits, and the publication state is decided once and separately."
+    },
+    "message.notice": {
+      "policy": "field-level",
+      "label": "Notice or message",
+      "why": "The text of a notice is written once, but its delivery state and the read receipts change as people open it. Two nodes updating different recipients of the same notice are both right."
+    },
+    "portal.feedback": {
+      "policy": "append-only",
+      "label": "Patient feedback",
+      "why": "Feedback is what a patient said. It is appended and never edited, and the acknowledgement that follows is a separate record, not a rewrite of the complaint."
+    },
+    "prescription": {
+      "policy": "append-only",
+      "label": "Prescription",
+      "why": "A prescription was written by a named prescriber at a time and the pharmacy dispensed against it. The portal reads it; nothing in this app edits it."
+    },
+    "lab.result": {
+      "policy": "append-only",
+      "label": "Released investigation result",
+      "why": "A result is released to a patient, once, by a person. It is append-only because a released result that can be edited afterwards is a released result nobody can rely on."
     }
   },
   "drainOutcomes": {
@@ -1969,6 +3860,31 @@
       "title": "Some fields need attention",
       "when": "A required or ill-formed field",
       "client": "Mark the fields from `errors`; keep everything the desk typed"
+    },
+    "dizi.name-taken": {
+      "title": "That name is already used",
+      "when": "A key that has to be unique hospital-wide — a content type key, a website page path — already exists",
+      "client": "Show the existing record and offer to open it. Never save alongside it and let two records carry one name."
+    },
+    "dizi.consent-missing": {
+      "title": "This patient has not agreed to be messaged",
+      "when": "An outbound SMS, WhatsApp or email is asked for and the patient has no consent on file for that channel",
+      "client": "Refuse the send and name the missing consent. Offer the printed or in-person route instead — sending first and asking afterwards cannot be undone."
+    },
+    "dizi.form-closed": {
+      "title": "This form has closed",
+      "when": "An answer arrives for a survey that was published, closed or withdrawn while the answer was being written",
+      "client": "Keep what the person wrote as a draft and tell them the form closed — never discard an answer because the clock ran out while they typed."
+    },
+    "dizi.content-not-approved": {
+      "title": "This file has not been approved yet",
+      "when": "An upload of a patient-facing content type is shared before an approver has released it",
+      "client": "Name the missing approval and offer the approver’s screen — the upload itself is fine, it is the audience that is not."
+    },
+    "dizi.document-expired": {
+      "title": "This share has lapsed",
+      "when": "A patient opens a shared document, or a result, after the date the hospital said it would be available for",
+      "client": "Say the share has lapsed and offer to request it again from the department. Never show a clinical document the hospital has stopped standing behind."
     }
   },
   "duplicateRules": {

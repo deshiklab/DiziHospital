@@ -67,6 +67,19 @@ export type EntityKind =
   | 'visitor.pass'
   | 'branch.setting'
   | 'platform.setting'
+  | 'telemedicine.session'
+  | 'content.item'
+  | 'content.type'
+  | 'certificate.issue'
+  | 'identity.card'
+  | 'survey.form'
+  | 'survey.assignment'
+  | 'survey.response'
+  | 'cms.page'
+  | 'message.notice'
+  | 'portal.feedback'
+  | 'prescription'
+  | 'lab.result'
   | 'audit';
 
 /** How two writers on different nodes are allowed to collide on this entity. */
@@ -187,6 +200,71 @@ export const ENTITY_POLICY: Record<EntityKind, { policy: ConflictPolicy; label: 
     policy: 'append-only',
     label: 'Audit entry',
     why: 'The ledger of who did what is the one thing that must never be merged away.',
+  },
+  'telemedicine.session': {
+    policy: 'field-level',
+    label: 'Live consultation or meeting',
+    why: 'A session is opened by a doctor and ended by whoever is still in the room, and the two may be on different nodes. A correction to the outcome merges by field; two ends are the same end.',
+  },
+  'content.item': {
+    policy: 'field-level',
+    label: 'Shared file',
+    why: 'The file itself never changes, but its title, its tags and who may see it do. Two nodes retitling the same upload merge by field, and the bytes are addressed by hash so they cannot diverge.',
+  },
+  'content.type': {
+    policy: 'field-level',
+    label: 'Content type',
+    why: 'A content type is a taxonomy row every branch reads and one administrator edits. A merge by field is right; the key is the identity and is never rewritten.',
+  },
+  'certificate.issue': {
+    policy: 'append-only',
+    label: 'Issued certificate',
+    why: 'A certificate carries a number that is already printed on paper and handed to a person. It is issued, and if the hospital was wrong it issues a superseding certificate — it does not edit the one in the patient’s hand.',
+  },
+  'identity.card': {
+    policy: 'append-only',
+    label: 'Issued identity card',
+    why: 'A card is a physical object with a number on it. Re-issuing because a photograph was wrong appends a new card and revokes the old one; the register has to be able to say which card was in circulation when.',
+  },
+  'survey.form': {
+    policy: 'field-level',
+    label: 'Survey form',
+    why: 'A form is drafted by one person and reviewed by another, both of whom may edit different questions on different nodes. Field-level merging keeps both edits; the question list is compared as one field.',
+  },
+  'survey.assignment': {
+    policy: 'field-level',
+    label: 'Survey assignment',
+    why: 'An assignment is issued to a person who answers it, and the person who issued it may withdraw it. Field-level: the answer state and the withdrawal are different fields and both are true.',
+  },
+  'survey.response': {
+    policy: 'append-only',
+    label: 'Survey response',
+    why: 'An answer is what somebody said at a time. It is appended and never corrected — correcting a survey destroys the only thing a survey is for.',
+  },
+  'cms.page': {
+    policy: 'field-level',
+    label: 'Website page',
+    why: 'A page is edited by the content team and the branch administrator, usually in different places. Field-level merging keeps both edits, and the publication state is decided once and separately.',
+  },
+  'message.notice': {
+    policy: 'field-level',
+    label: 'Notice or message',
+    why: 'The text of a notice is written once, but its delivery state and the read receipts change as people open it. Two nodes updating different recipients of the same notice are both right.',
+  },
+  'portal.feedback': {
+    policy: 'append-only',
+    label: 'Patient feedback',
+    why: 'Feedback is what a patient said. It is appended and never edited, and the acknowledgement that follows is a separate record, not a rewrite of the complaint.',
+  },
+  prescription: {
+    policy: 'append-only',
+    label: 'Prescription',
+    why: 'A prescription was written by a named prescriber at a time and the pharmacy dispensed against it. The portal reads it; nothing in this app edits it.',
+  },
+  'lab.result': {
+    policy: 'append-only',
+    label: 'Released investigation result',
+    why: 'A result is released to a patient, once, by a person. It is append-only because a released result that can be edited afterwards is a released result nobody can rely on.',
   },
 };
 
