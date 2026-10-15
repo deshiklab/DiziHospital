@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { cx } from '@dizi/ui';
-import { ADMIN_GROUPS, adminScreenById, type AdminScreen } from '@/lib/admin';
+import { groupsFor, adminScreenById, type AdminScreen } from '@/lib/admin';
 
 /* The P7 screens' shared header and section navigation.
  *
@@ -31,7 +31,7 @@ export function AdminHeader({
 }) {
   const screen: AdminScreen | undefined = screenId ? adminScreenById(screenId) : undefined;
   const heading = title ?? screen?.title ?? 'Administration';
-  const group = ADMIN_GROUPS.find((g) => g.members.includes(screen?.id ?? ''));
+  const group = groupsFor(screen?.id ?? '');
 
   return (
     <header className="flex flex-wrap items-start justify-between gap-3">
@@ -59,7 +59,7 @@ export function AdminHeader({
 /** The sibling screens of this one, so a section reads as a section rather than a URL. */
 export function AdminSiblings({ screenId }: { screenId: string }) {
   const screen = adminScreenById(screenId);
-  const group = ADMIN_GROUPS.find((g) => g.members.includes(screenId));
+  const group = groupsFor(screenId);
   if (!screen || !group) return null;
   return (
     <nav aria-label="Screens in this section" className="flex flex-wrap items-center gap-1 text-xs">

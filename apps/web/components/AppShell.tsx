@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Ambulance, Banknote, BedDouble, Bell, CalendarClock, CalendarDays, ChartColumn, Check, CircleHelp, Command, Droplet, FlaskConical, Footprints, Keyboard, LayoutDashboard, LogOut, Maximize, Menu as MenuIcon, Minimize, Package, PanelLeftClose, PanelLeftOpen, Pill, Plus, Receipt, RefreshCw, Scissors, Search, Settings2, ShieldCheck, Stethoscope, Type, Users, X, ZoomIn, ZoomOut } from 'lucide-react';
+import { Ambulance, Banknote, Globe2, Megaphone, Smartphone, BedDouble, Bell, CalendarClock, CalendarDays, ChartColumn, Check, CircleHelp, Command, Droplet, FlaskConical, Footprints, Keyboard, LayoutDashboard, LogOut, Maximize, Menu as MenuIcon, Minimize, Package, PanelLeftClose, PanelLeftOpen, Pill, Plus, Receipt, RefreshCw, Scissors, Search, Settings2, ShieldCheck, Stethoscope, Type, Users, X, ZoomIn, ZoomOut } from 'lucide-react';
 import {
   Button,
   Menu,
@@ -66,13 +66,16 @@ const ICONS: Record<string, React.ReactNode> = {
   chart: <ChartColumn className="size-4" aria-hidden />,
   shield: <ShieldCheck className="size-4" aria-hidden />,
   help: <CircleHelp className="size-4" aria-hidden />,
+  megaphone: <Megaphone className="size-4" aria-hidden />,
+  globe: <Globe2 className="size-4" aria-hidden />,
+  smartphone: <Smartphone className="size-4" aria-hidden />,
 };
 
 /** Sidebar sections: the legacy product had one flat list of 30 items; grouping is the cheapest usability win. */
 const SECTIONS: Array<{ id: string; label: { en: string; bn: string }; keys: string[] }> = [
   { id: 'care', label: { en: 'Care', bn: 'সেবা' }, keys: ['nav.dashboard', 'nav.patients', 'nav.appointments', 'nav.clinical', 'nav.ward', 'nav.round', 'nav.duty', 'nav.diagnostics', 'nav.bloodbank', 'nav.ot'] },
   { id: 'ops', label: { en: 'Operations', bn: 'পরিচালনা' }, keys: ['nav.pharmacy', 'nav.billing', 'nav.finance', 'nav.inventory', 'nav.ambulance'] },
-  { id: 'system', label: { en: 'Insight & system', bn: 'বিশ্লেষণ ও সিস্টেম' }, keys: ['nav.reports', 'nav.setup', 'nav.admin', 'nav.sync', 'nav.help'] },
+  { id: 'system', label: { en: 'Insight & system', bn: 'বিশ্লেষণ ও সিস্টেম' }, keys: ['nav.reports', 'nav.setup', 'nav.admin', 'nav.comms', 'nav.sync', 'nav.help'] },
 ];
 
 const WIKI_TOPICS = [
@@ -125,6 +128,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const coarsePointer = useMediaQuery('(pointer: coarse)');
   const navMode: 'rail' | 'drawer' = wideLayout && !coarsePointer ? 'rail' : 'drawer';
   useEffect(() => {
+    // Two markers, on purpose. `data-nav` is this shell's own decision and the stylesheet reads it; `data-shell` is
+    // the one thing all three shells write, so a harness (or a person) can tell a hydrated page from a page whose
+    // markup arrived and whose handlers never did — the portal and the site have their own chrome and no `nav`.
+    document.documentElement.dataset.shell = 'app';
     document.documentElement.dataset.nav = navMode;
     // Crossing into the rail hides the drawer: leaving it open would leave an invisible panel capturing the
     // keyboard (and the next Escape would go to a drawer nobody can see).

@@ -39,7 +39,11 @@ export interface AdminScreen {
   /** `screen` for the sixteen, `sub` for the two the plan counts apart. */
   kind: 'screen' | 'sub';
   owner: 'legacy' | 'new';
-  phase: 'P7';
+  /**
+   * The phase the screen was built in. The registry is one list so that a route cannot be on a hub and missing
+   * from the harness; the phase is what lets each harness diff its own slice of the screen map.
+   */
+  phase: 'P7' | 'P8';
   /** The one sentence the hub shows under the title: what this screen is for. */
   purpose: string;
   /** What this screen is still waiting for, if anything — printed, not implied. */
@@ -67,10 +71,30 @@ export const ADMIN_SCREENS: AdminScreen[] = [
   S({ id: 'qr-attendance', title: 'QR Code Attendance › Attendance', legacy: '/admin/qrattendance/attendance/index', route: '/admin/attendance', size: 'S', fields: 5, grids: 0, maxCols: 0, dialogs: 1, kind: 'screen', owner: 'new', phase: 'P7', purpose: 'Today as the readers saw it: who is in, who is late, whose stint is still open, and the correction a shift manager makes with their name against it.' }),
   S({ id: 'staff-attendance-register', title: 'Staff attendance register', legacy: '/admin/qrattendance/attendance', route: '/admin/staff/attendance', size: 'S', fields: 5, grids: 1, maxCols: 32, dialogs: 1, kind: 'sub', owner: 'new', phase: 'P7', purpose: 'The month as a matrix: one row per person, one column per day, every exception named — and the same figures the payroll is computed from.' }),
   S({ id: 'payroll', title: 'Payroll', legacy: '/admin/staff/payroll', route: '/admin/payroll', size: 'M', fields: 7, grids: 1, maxCols: 8, dialogs: 1, kind: 'sub', owner: 'new', phase: 'P7', purpose: 'The month’s salary, line by line and deduction by deduction, run by one person and approved by another.' }),
+
+  /* ---------------------------------------------------------------- P8: communication, content and records */
+
+  S({ id: 'live-consultation', title: 'Live Consultation › Live Consultation', legacy: '/admin/zoom_conference/consult', route: '/admin/live/consultation', size: 'M', fields: 40, grids: 1, maxCols: 9, dialogs: 2, kind: 'screen', owner: 'new', phase: 'P8', purpose: 'The telemedicine room: who is waiting, for how long, which doctor is in which room, what the patient was told before it opened, and the outcome that goes on the follow-up list.' }),
+  S({ id: 'live-meeting', title: 'Live Consultation › Live Meeting', legacy: '/admin/zoom_conference/meeting', route: '/admin/live/meeting', size: 'M', fields: 26, grids: 1, maxCols: 8, dialogs: 2, kind: 'screen', owner: 'new', phase: 'P8', purpose: 'Staff meetings and the committees that take decisions: an agenda before the room opens, a host, a quorum that is recorded rather than assumed, and minutes that name who decided what.' }),
+  S({ id: 'content-upload', title: 'Download Center › Upload /Share Content', legacy: '/admin/content/upload', route: '/admin/content/upload', size: 'M', fields: 31, grids: 1, maxCols: 8, dialogs: 2, kind: 'screen', owner: 'new', phase: 'P8', purpose: 'The Download Centre’s writing side: a file lands in this node’s own store, the row carries its hash, and sharing it is a decision per recipient with an audience and an approval behind it.' }),
+  S({ id: 'staff-id-card', title: 'Certificate › Staff ID Card', legacy: '/admin/generatestaffidcard/', route: '/admin/id-cards/staff', size: 'M', fields: 8, grids: 1, maxCols: 11, dialogs: 1, kind: 'screen', owner: 'new', phase: 'P8', purpose: 'The staff card register: eleven fields per card, a number from this node’s own series, and a print run that is recorded because a card in a pocket is a security claim.' }),
+  S({ id: 'content-type', title: 'Download Center › Content Type', legacy: '/admin/contenttype/', route: '/admin/content/types', size: 'M', fields: 7, grids: 1, maxCols: 3, dialogs: 2, kind: 'screen', owner: 'new', phase: 'P8', purpose: 'The taxonomy the whole Download Centre hangs from: what each type is for, who may see it by default, whether a patient-facing file needs approval, and how long a share of it stays open.' }),
+  S({ id: 'survey-forms', title: 'Survey Forms › Survey Forms', legacy: '/admin/survey', route: '/admin/surveys', size: 'M', fields: 5, grids: 2, maxCols: 5, dialogs: 1, kind: 'screen', owner: 'new', phase: 'P8', purpose: 'The forms the hospital asks with: the questions, who they are for, whether they are anonymous, and the answer counts — with the rule that an anonymous form may not ask who you are.' }),
+  S({ id: 'certificate', title: 'Certificate › Certificate', legacy: '/admin/generatecertificate', route: '/admin/certificates', size: 'S', fields: 9, grids: 1, maxCols: 6, dialogs: 1, kind: 'screen', owner: 'new', phase: 'P8', purpose: 'The numbered documents a hospital hands over: what each kind of certificate may say, who may issue it, and the register that can say afterwards which certificate a patient is holding.' }),
+  S({ id: 'patient-id-card', title: 'Certificate › Patient ID Card', legacy: '/admin/generatepatientidcard/', route: '/admin/id-cards/patient', size: 'M', fields: 8, grids: 1, maxCols: 7, dialogs: 1, kind: 'screen', owner: 'new', phase: 'P8', purpose: 'The patient card: seven fields, the MRN as the identity, an expiry the patient can read, and a re-issue that supersedes rather than edits.' }),
+  S({ id: 'content-share-list', title: 'Download Center › Content Share List', legacy: '/admin/content/list', route: '/admin/content/shared', size: 'S', fields: 5, grids: 1, maxCols: 7, dialogs: 1, kind: 'screen', owner: 'new', phase: 'P8', purpose: 'What has been shared, with whom, until when and whether anybody opened it — including the withdrawal, with a reason and a name against it.' }),
+  S({ id: 'my-survey-forms', title: 'Survey Forms › My Survey Forms', legacy: '/admin/survey/staff_forms', route: '/admin/surveys/mine', size: 'S', fields: 5, grids: 1, maxCols: 5, dialogs: 1, kind: 'screen', owner: 'new', phase: 'P8', purpose: 'The forms assigned to me, answered at a desk: an answer is appended and never corrected, and a form that closes while somebody is typing keeps what they wrote.' }),
+  S({ id: 'front-cms', title: 'Front CMS', legacy: '/admin/front/page', route: '/admin/website', size: 'S', fields: 5, grids: 1, maxCols: 4, dialogs: 1, kind: 'screen', owner: 'new', phase: 'P8', purpose: 'The pages the public website is made of: a path, a Bangla title and an English one, the text in a shape the site renders, and a publication that is one act in one place.' }),
+  S({ id: 'messaging', title: 'Messaging', legacy: '/admin/notification', route: '/admin/messaging', size: 'S', fields: 5, grids: 0, maxCols: 0, dialogs: 1, kind: 'screen', owner: 'new', phase: 'P8', purpose: 'Internal notices that work with the uplink down, read receipts that make a noticeboard accountable, and the outbound channels kept deliberately apart because a message that has left cannot be recalled.' }),
 ];
+
+/** The phase’s own count, kept apart from P7’s so each hub can state its own denominator without arithmetic. */
+export const P8_SCREEN_COUNT = { screens: 12, subs: 0 };
 
 export const ADMIN_SCREEN_COUNT = { screens: 16, subs: 2 };
 export const adminScreenById = (id: string): AdminScreen | undefined => ADMIN_SCREENS.find((s) => s.id === id);
+/** The screens of one phase, in the order the registry keeps them. */
+export const adminScreensIn = (phase: 'P7' | 'P8'): AdminScreen[] => ADMIN_SCREENS.filter((s) => s.phase === phase);
 export const adminScreenByRoute = (route: string): AdminScreen | undefined => ADMIN_SCREENS.find((s) => s.route === route);
 
 /** The hub's groups: the phase reads as four jobs rather than eighteen links in a row. */
@@ -79,6 +103,32 @@ export const ADMIN_GROUPS: Array<{ id: string; title: string; because: string; m
   { id: 'front', title: 'Front office', because: 'The gate is the only place that knows who is in the building, and the register it keeps is the one a security guard is held to.', members: ['front-office', 'setup-front-office', 'birth-record', 'death-record'] },
   { id: 'branches', title: 'Branches', because: 'Two satellites and a main campus disagree about beds, money and services on purpose. The console’s job is to make the disagreement visible rather than to average it away.', members: ['multibranch-overview', 'multibranch-settings', 'multibranch-report'] },
   { id: 'config', title: 'Calendar and configuration', because: 'A holiday, a print header and a custom field are all read by screens somebody else is responsible for, so each one says who reads it and what breaks.', members: ['annual-calendar', 'print-header-footer', 'setup-custom-fields', 'setup-zoom', 'setup-appointment'] },
+];
+
+/**
+ * P8’s groups: the twelve screens read as six jobs. They stay separate from P7’s four because a group is a claim
+ * about why screens belong together, and lumping the Download Centre in with the payroll would be a claim nobody
+ * could defend.
+ */
+export const COMMS_GROUPS: Array<{ id: string; title: string; because: string; members: string[] }> = [
+  { id: 'live', title: 'Live rooms', because: 'A consultation and a meeting are one record with two sets of rules: the room, the waiting list and the outcome are shared, and what differs is who is in it and what has to be written down.', members: ['live-consultation', 'live-meeting'] },
+  { id: 'files', title: 'Download Centre', because: 'Three screens over one decision: what a file is (its type), where it came from (the upload), and who may see it (the share list). Split any other way and the audience rule ends up in two places.', members: ['content-upload', 'content-type', 'content-share-list'] },
+  { id: 'records', title: 'Certificates and cards', because: 'Both are numbered documents a person walks out holding, both take their number from a block reserved to this node, and both are revoked by appending rather than by editing what is already in a pocket.', members: ['certificate', 'staff-id-card', 'patient-id-card'] },
+  { id: 'surveys', title: 'Surveys', because: 'The form and the answer are two halves of one act: the hospital writes questions, somebody answers them, and the count on the form is the same count the answer screen produces.', members: ['survey-forms', 'my-survey-forms'] },
+  { id: 'site', title: 'The website', because: 'The Front CMS is not a page builder with a preview attached — the site is rendered from the same page records this screen edits, so the two cannot disagree about what the public reads.', members: ['front-cms'] },
+  { id: 'notices', title: 'Messaging', because: 'The noticeboard works with the uplink down and the outbound channels do not, and the difference is the whole design: one is a record, the other is a message that has already left the hospital.', members: ['messaging'] },
+];
+
+/** Every group, whichever phase it belongs to — the header and the sibling nav search all of them. */
+export const ALL_GROUPS = [...ADMIN_GROUPS, ...COMMS_GROUPS];
+export const groupsFor = (screenId: string) => ALL_GROUPS.find((g) => g.members.includes(screenId));
+
+/** P8’s waiting list, printed on the comms hub rather than discovered later. */
+export const P8_WAITING: string[] = [
+  'Joining a live room needs the cloud: room names, invitations and the waiting list are this node’s, but the call itself is the platform’s signalling work (P0-306), so the room shows the patient’s join state as “invited”.',
+  'Outbound SMS, WhatsApp and email refuse without a recorded consent and have no gateway in this build. The screen names the missing consent instead of pretending a message was sent — the vendor’s Twilio and Meta integrations need a commercial account, not code.',
+  'Paying a bill from the portal is refused the same way: no payment gateway is integrated, so the portal points at the counter and the desk’s own receipt, and never holds a queued promise about money.',
+  'The patient portal has no login yet (Keycloak, P0-205). The portal runs as a signed-in preview and says so on every screen rather than showing a sign-in form that cannot authenticate anybody.',
 ];
 
 /** What the phase is still waiting for, named on the hub rather than discovered later. */
@@ -389,11 +439,14 @@ export interface AdminPhaseStats {
   migrated: number;
 }
 
-export const adminPhaseStats = (): AdminPhaseStats => ({
-  screens: ADMIN_SCREENS.filter((s) => s.kind === 'screen').length,
-  subs: ADMIN_SCREENS.filter((s) => s.kind === 'sub').length,
-  fields: ADMIN_SCREENS.reduce((n, s) => n + s.fields, 0),
-  grids: ADMIN_SCREENS.reduce((n, s) => n + s.grids, 0),
-  dialogs: ADMIN_SCREENS.reduce((n, s) => n + s.dialogs, 0),
-  migrated: ADMIN_SCREENS.length,
-});
+export const adminPhaseStats = (phase: 'P7' | 'P8' = 'P7'): AdminPhaseStats => {
+  const list = adminScreensIn(phase);
+  return {
+    screens: list.filter((s) => s.kind === 'screen').length,
+    subs: list.filter((s) => s.kind === 'sub').length,
+    fields: list.reduce((n, s) => n + s.fields, 0),
+    grids: list.reduce((n, s) => n + s.grids, 0),
+    dialogs: list.reduce((n, s) => n + s.dialogs, 0),
+    migrated: list.length,
+  };
+};
