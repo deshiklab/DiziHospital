@@ -8,7 +8,6 @@ import {
   RANGES,
   SCHEDULED_REPORTS,
   SCHEDULING_NEEDS_SERVER,
-  buildSnapshot,
   overviewMetrics,
   type DataQualityFinding,
   type Metric,
@@ -18,6 +17,7 @@ import {
 import { todayIso } from '@/lib/appointments';
 import { useShell } from '@/lib/shell';
 import { PLANNED_REPORTS, REPORT_GROUPS, REPORT_SUITE_TOTAL, reportsInGroup } from '@/lib/report-suite';
+import { AGGREGATE_SEAM, NODE_REPLICA, nodeWatermark, snapshotFor } from '@/lib/report-aggregates';
 
 /* Reports and dashboards (legacy report screens replaced) — the P6 read side.
  *
@@ -114,7 +114,19 @@ export default function ReportsPage() {
   const [generatedAt, setGeneratedAt] = useState<string | null>(null);
   useEffect(() => setGeneratedAt(new Date().toLocaleTimeString()), []);
 
-  const snapshot = useMemo(() => buildSnapshot(range, today), [range, today]);
+  /* The dashboard's own figures, through the same seam the reports use: one key, one answer, and the cost printed
+     rather than implied. The hub is the aggregate most people read first, so it moves with the reports instead of
+     staying a per-browser walk through every register. */
+  const [reads, setReads] = useState(0);
+  const dashboard = useMemo(() => snapshotFor(range, today, { recompute: reads > 0 }), [range, today, reads]);
+  const snapshot = dashboard.snapshot;
+  const [mounted, setMounted] = useState(false);
+  /* The watermark in the node's own words, read after mount — see `NODE_REPLICA` in lib/report-aggregates.ts. */
+  const [watermark, setWatermark] = useState(NODE_REPLICA);
+  useEffect(() => {
+    setMounted(true);
+    setWatermark(nodeWatermark());
+  }, []);
   const metrics = useMemo(() => overviewMetrics(snapshot), [snapshot]);
   const rangeNote = RANGES.find((r) => r.id === range)?.note ?? '';
 
@@ -161,7 +173,36 @@ export default function ReportsPage() {
         <RankList title="Consultations per doctor" items={snapshot.clinical.byDoctor} />
       </div>
 
-      <Panel title={`Reports › … — ${builtCount} of ${REPORT_SUITE_TOTAL} built${builtCount === REPORT_SUITE_TOTAL ? ', the phase’s seventeen complete' : ''}`}>
+      <Panel
+        title="Where the dashboard’s figures were computed"
+        actions={
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs text-text-tertiary">{mounted ? `Read at ${watermark}` : ''}</span>
+            <Button variant="ghost" size="sm" onClick={() => setReads((n) => n + 1)}>
+              Read it again
+            </Button>
+          </div>
+        }
+      >
+        <p className="text-sm text-text-secondary">
+          {mounted ? (
+            <>
+              <span className={cx('mr-1.5 rounded-full px-2 py-0.5 text-[11px]', dashboard.cached ? 'bg-surface-sunken text-text-secondary' : 'bg-brand-50 text-brand-700')}>
+                {dashboard.cached ? 'from this tab’s cache' : `computed now · ${dashboard.ms} ms`}
+              </span>
+              {dashboard.because}
+            </>
+          ) : (
+            'Reading the registers…'
+          )}
+        </p>
+        <p className="mt-2 text-xs text-text-tertiary">
+          {AGGREGATE_SEAM.why} The operation is <span className="font-numeric">{AGGREGATE_SEAM.operationId}</span> (<span className="font-numeric">{AGGREGATE_SEAM.endpoint}</span>); until it
+          exists this screen computes the snapshot here and prints what that cost.
+        </p>
+      </Panel>
+
+          <Panel title={`Reports › … — ${builtCount} of ${REPORT_SUITE_TOTAL} built${builtCount === REPORT_SUITE_TOTAL ? ', the phase’s seventeen complete' : ''}`}>
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {REPORT_GROUPS.map((group) => {
             const built = reportsInGroup(group);

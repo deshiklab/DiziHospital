@@ -502,7 +502,18 @@ async function check(route) {
       await new Promise((r) => setTimeout(r, 350));
       const restored = /Consolidated — /.test(textOf());
       const back = buttonBy(/^All$/);
-      suite = `${refused ? 'refused with a reason' : 'NO REASON'} · ${scoped ? 'branch scope' : 'NO BRANCH SCOPE'} · ${restored ? 'consolidated again' : 'STUCK'}`;
+      /* The seam, on the screen: the panel names where the figures came from, and “read it again” recomputes rather
+         than serving what the tab already had. A provenance line that never changes proves nothing. */
+      const again = buttonBy(/^read it again$/i);
+      const provenance = /Where these figures were computed/.test(textOf());
+      if (again) {
+        press(again);
+        await new Promise((r) => setTimeout(r, 350));
+      }
+      const recomputed = /computed now · \d+ ms/.test(textOf());
+      suite = `${refused ? 'refused with a reason' : 'NO REASON'} · ${scoped ? 'branch scope' : 'NO BRANCH SCOPE'} · ${restored ? 'consolidated again' : 'STUCK'} · ${provenance ? 'seam named' : 'NO SEAM PANEL'}${recomputed ? ' · recomputes on demand' : ' · NO RECOMPUTE'}`;
+      if (!provenance) routeProblems.push('the report does not say where its figures were computed');
+      if (!recomputed) routeProblems.push('“read it again” did not recompute the report through the aggregate seam');
       if (!refused) routeProblems.push('a branch with no ledger of its own was shown a figure anyway');
       if (!scoped) routeProblems.push('a branch scope did not read that branch’s own records');
       if (!restored) routeProblems.push('the report did not come back to the consolidated view');

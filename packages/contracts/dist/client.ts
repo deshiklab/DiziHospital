@@ -1671,6 +1671,52 @@ export interface ReportRun {
   readonly recipients: Array<{ name: string; channel: "print-desk" | "hospital-mail" | "public-mail" | "whatsapp"; sentAt: string; receipt: string; failed: string }>;
 }
 
+export interface ReportColumn {
+  readonly key: string;
+  readonly header: string;
+  readonly align?: "left" | "right";
+  readonly width?: string;
+  readonly kind?: "money" | "count" | "text" | "percent";
+  /** How the column adds up across rows and branches; an age stays a maximum */
+  readonly aggregate?: "sum" | "max";
+  readonly percentOf?: { part: string; whole: string };
+  readonly avgOf?: { total: string; count: string; suffix: string };
+}
+
+export interface ReportRow {
+  readonly id: string;
+  readonly label: string;
+  readonly cells: Record<string, unknown>;
+  /** On a consolidated row: the figure each branch contributed, which is what makes the total checkable rather than asserted */
+  readonly from?: Record<string, number>;
+}
+
+export interface ReportAggregate {
+  readonly topic: string;
+  readonly title: string;
+  readonly scope: string;
+  readonly range: "today" | "week" | "month";
+  /** The branch day the report was read for */
+  readonly asOf: string;
+  /** The days actually read — `min(the range asked for, what the data holds)`, named rather than implied */
+  readonly daysRead: Array<string>;
+  readonly rangeNote?: string;
+  readonly columns: Array<ReportColumn>;
+  readonly rows: Array<ReportRow>;
+  readonly totals: Record<string, number>;
+  /** Branches that cannot answer this report at all, with the reason — printed instead of a row of zeros */
+  readonly unavailable?: Array<{ branch: string; because: string }>;
+  /** The control total the figures have to agree with, as the sentence the reader checks them against */
+  readonly closing: string;
+  /** How the consolidated figure was arrived at, branch by branch */
+  readonly reconciliation: string;
+  readonly computedAt: string;
+  /** Which tier answered: the canonical computation, or this branch's own replica while the uplink is down */
+  readonly computedBy: "cloud" | "edge";
+  /** The replication watermark the figures were read at, so a reader can tell whether the last admission is in them */
+  readonly registerAt: string;
+}
+
 
 /* ------------------------------------------------------------- operations */
 
@@ -3731,6 +3777,28 @@ export const operations = {
     servesFromReplica: false,
     needsNetwork: true,
     requiresIdempotencyKey: true,
+  },
+  reportAggregate: {
+    id: "reportAggregate",
+    method: "get",
+    path: "/reports/{topic}/aggregate",
+    tag: "reporting",
+    summary: "One report, computed once: the table, its totals and the sentence its figures answer to",
+    entity: null,
+    offline: "cache",
+    authority: "cloud",
+    idempotency: "none",
+    audit: false,
+    because: "A management report is read by several desks to argue with each other, so the figure has to be the same one: computed once against the register, at a named watermark, instead of once per browser over whatever each client happens to hold.",
+    notes: "Cached rather than live: the answer is the register read at `registerAt`, and a reader who needs to know whether the 14:05 admission is in it reads that stamp rather than guessing. A node with the uplink down answers from its own replica, says `computedBy: edge`, and names the watermark it holds — which is the difference the screen prints rather than hiding.",
+    request: null,
+    responses: { "200": "ReportAggregate", "401": null, "403": null, "404": null },
+    problemResponses: ["401", "403", "404"],
+    statuses: [200, 401, 403, 404],
+    mayQueue: false,
+    servesFromReplica: true,
+    needsNetwork: false,
+    requiresIdempotencyKey: false,
   },
 } as const satisfies Record<string, OperationMeta>;
 

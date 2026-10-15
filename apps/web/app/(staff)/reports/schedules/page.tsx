@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { Button, CheckboxField, Panel, SafetyBanner, Segmented, SelectField, TextField, Tooltip, cx, useToast } from '@dizi/ui';
 import { ArrowLeft, CalendarClock, Download, FileCheck2, Info, Pause, Play, Plus, Printer, Send, Trash2, TriangleAlert } from 'lucide-react';
 import { todayIso } from '@/lib/appointments';
-import { CONSOLIDATED, RANGES, REPORTS, SCOPES, buildReport, reportByTopic, type RangeId, type Scope } from '@/lib/report-suite';
+import { CONSOLIDATED, RANGES, REPORTS, SCOPES, reportByTopic, type RangeId, type Scope } from '@/lib/report-suite';
+import { aggregateFor } from '@/lib/report-aggregates';
 import { useShell } from '@/lib/shell';
 import {
   CHANNELS,
@@ -71,7 +72,9 @@ export default function ReportSchedulesPage() {
   const schedule = schedules.find((s) => s.id === selected) ?? schedules[0];
   const def = reportByTopic(schedule.topic);
   const check = useMemo(() => checkSchedule(schedule, day, { others: schedules }), [schedule, schedules, day]);
-  const today = useMemo(() => (def ? buildReport(schedule.topic, { day, range: schedule.range, scope: schedule.scope }) : null), [def, schedule.topic, schedule.range, schedule.scope, day]);
+  /* “Would it send today?” is answered from the report's own aggregate — the same seam the report screen reads, so
+     the row count this screen decides on and the table a reader would open cannot come from two different walks. */
+  const today = def ? aggregateFor({ topic: schedule.topic, scope: schedule.scope, range: schedule.range, day }).table : null;
   const verdict = today ? wouldSend(schedule, today) : { send: false, because: 'No report to build.' };
   const history = downloadsOf(schedule.id, downloads);
   const refused = schedules.filter((s) => !checkSchedule(s, day, { others: schedules }).ok);

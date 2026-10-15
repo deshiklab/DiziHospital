@@ -57,6 +57,7 @@ try {
       join(root, 'apps/web/lib/report-suite.ts'),
       join(root, 'apps/web/lib/birthdeath.ts'),
       join(root, 'apps/web/lib/report-schedules.ts'),
+      join(root, 'apps/web/lib/report-aggregates.ts'),
     ],
     outdir: work,
     bundle: true,
@@ -72,6 +73,7 @@ try {
   const V = await import(pathToFileURL(join(work, 'birthdeath.js')).href);
   const SCH = await import(pathToFileURL(join(work, 'report-schedules.js')).href);
   const contract = JSON.parse(readFileSync(join(root, 'packages/contracts/openapi.json'), 'utf8'));
+  const ops = Object.fromEntries(Object.entries(contract.paths).flatMap(([path, item]) => Object.entries(item).map(([method, op]) => [op.operationId, { path, method, op }])));
   const { buildReport, reportByTopic, REPORTS, PLANNED_REPORTS, REPORT_SUITE_TOTAL, REPORT_GROUPS, branches, CONSOLIDATED, SCOPES } = R;
   const build = (topic, scope, range = 'week') => buildReport(topic, { day: DAY, range, scope });
 
@@ -357,6 +359,78 @@ try {
     ambQuoted !== null && Number(ambQuoted[1]) === ambClosed.totals.avgResponse,
     `the closing quotes ${ambQuoted?.[1] ?? 'nothing measurable'} and the table totals ${ambClosed.totals.avgResponse} min`);
 
+  /* ===================================================== the aggregate seam
+   *
+   * The figures move to the server by moving one call, so what is worth testing is the seam itself: the same key is
+   * computed once, a recomputation is the caller's decision rather than an accident, the watermark and the cost are
+   * reported rather than implied, and every screen reads through it instead of walking the registers on its own.
+   * A seam that three screens have already gone round is not a seam.
+   */
+  console.log('\n  the aggregate seam');
+  const AGG = await import(pathToFileURL(join(work, 'report-aggregates.js')).href);
+  const seamKey = { topic: 'finance', scope: CONSOLIDATED, range: 'today', day: DAY };
+
+  const first = AGG.aggregateFor(seamKey);
+  AGG.aggregateFor(seamKey);
+  AGG.aggregateFor(seamKey);
+  const held = AGG.aggregateCacheSize();
+  pass(
+    'one key is computed once: the second and third reads of the same report, scope, period and day are the same table object',
+    first.cached === false && AGG.aggregateFor(seamKey).cached === true && AGG.aggregateFor(seamKey).table === first.table && held >= 1,
+    `${held} key(s) held · the first read took ${first.ms} ms`,
+  );
+  pass(
+    'the answer says how long it took, which register it read, and why the server is being asked to take the job',
+    Number.isFinite(first.ms) && first.ms >= 0 && first.registerAt.length > 10 && /reportAggregate/.test(first.because) && first.source === 'node',
+    `${first.ms} ms · source ${first.source} · read at ${first.registerAt.slice(0, 60)}`,
+  );
+  const other = AGG.aggregateFor({ ...seamKey, scope: 'Uttara Branch' });
+  pass(
+    'a different scope is a different key, and it reads the branch’s own records rather than the consolidated ones',
+    other.cached === false && other.table.scope === 'Uttara Branch' && /alone, read from its own records/.test(other.table.reconciliation),
+    `${other.table.rows.length} row(s) for Uttara against ${first.table.rows.length} consolidated`,
+  );
+  AGG.clearAggregates();
+  const afterClear = AGG.aggregateFor(seamKey);
+  pass(
+    'emptying the seam makes the next read recompute — the cache is a cache, not the record',
+    afterClear.cached === false && AGG.aggregateCacheSize() === 1,
+    `${AGG.aggregateCacheSize()} key(s) after a clear`,
+  );
+  const again = AGG.aggregateFor(seamKey, { recompute: true });
+  pass(
+    '“read it again” recomputes rather than serving what the tab already had, and reports itself as a computation',
+    again.cached === false && again.table.totals.amount === first.table.totals.amount,
+    `same total (${again.table.totals.amount}) either way, which is the point of one key: ${again.cached ? 'SERVED FROM CACHE' : 'recomputed'}`,
+  );
+  const hub = AGG.snapshotFor('week', DAY);
+  pass(
+    'the dashboard goes through the same seam, so the hub and the report it links to cannot come from two different walks',
+    hub.cached === false && AGG.snapshotFor('week', DAY).cached === true && AGG.snapshotFor('week', DAY).snapshot === hub.snapshot,
+    `${hub.ms} ms for the snapshot · the second read is the same object`,
+  );
+
+  /* The seam is only a seam if the screens use it. The check is structural on purpose: it is the thing that would
+     be undone by somebody adding one more `buildReport` call to a screen. */
+  const screenFiles = ['apps/web/components/ReportScreen.tsx', 'apps/web/app/(staff)/reports/page.tsx', 'apps/web/app/(staff)/reports/schedules/page.tsx'];
+  const readers = screenFiles.map((f) => ({ file: f, text: readFileSync(join(root, f), 'utf8') }));
+  const direct = readers.filter((r) => /buildReport\(|buildSnapshot\(/.test(r.text)).map((r) => r.file);
+  const through = readers.filter((r) => /aggregateFor\(|snapshotFor\(/.test(r.text)).map((r) => r.file);
+  pass(
+    'every screen that shows report figures reads them through the seam, and none of them walks the registers itself',
+    direct.length === 0 && through.length === 3,
+    through.map((f) => f.replace('apps/web/', '')).join(' · '),
+  );
+  const seamFile = readFileSync(join(root, 'apps/web/lib/report-aggregates.ts'), 'utf8');
+  pass(
+    'the seam names the operation, the endpoint and the two fields the API will add, so the swap is one file rather than a rewrite',
+    ops.reportAggregate?.op['x-dizi'].offline === 'cache' &&
+      ops.reportAggregate?.op['x-dizi'].authority === 'cloud' &&
+      (ops.reportAggregate?.op['x-dizi'].notes ?? '').includes('registerAt') &&
+      ['computedBy', 'registerAt', 'source'].every((f) => seamFile.includes(f)),
+    `${ops.reportAggregate?.method.toUpperCase()} ${ops.reportAggregate?.path} — cached, cloud-owned, with the watermark in the answer`,
+  );
+
   /* ===================================================== the scheduled exports
    *
    * The schedules are the register's own sentences made operable, so what is checked here is agreement: the hour in
@@ -495,7 +569,6 @@ try {
 
   /* The screen and the contract: the register is editable, the save queues, and the run is the server's. */
   const schedulePage = ['(staff)', '(portal)', '(site)', ''].map((g) => join(root, 'apps/web/app', g, '/reports/schedules/page.tsx')).find((f) => existsSync(f));
-  const ops = Object.fromEntries(Object.entries(contract.paths).flatMap(([path, item]) => Object.entries(item).map(([method, op]) => [op.operationId, { path, method, op }])));
   pass(
     'the schedules have a screen, the register reads cached at the node, and the save queues with an idempotency key',
     Boolean(schedulePage) &&

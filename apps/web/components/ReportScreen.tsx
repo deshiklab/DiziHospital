@@ -3,13 +3,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Button, DataGrid, KpiTile, Panel, SafetyBanner, Segmented, SelectField, Tooltip, copyText, cx, useToast, type Column } from '@dizi/ui';
-import { ArrowLeft, CalendarClock, Info, Printer, Table2, TriangleAlert } from 'lucide-react';
+import { ArrowLeft, CalendarClock, Info, Printer, RotateCcw, Table2, TriangleAlert } from 'lucide-react';
 import { todayIso } from '@/lib/appointments';
 import { money } from '@/lib/billing';
 import { SCHEDULING_NEEDS_SERVER } from '@/lib/reports';
 import { SCHEDULES } from '@/lib/report-schedules';
 import { describeCadence, schedulesForNode } from '@/lib/report-schedules';
-import { BRANCH_NOTE, CONSOLIDATED, RANGES, REPORT_SUITE_NOTE, SCOPES, buildReport, type RangeId, type Scope } from '@/lib/report-suite';
+import { BRANCH_NOTE, CONSOLIDATED, RANGES, REPORT_SUITE_NOTE, SCOPES, type RangeId, type Scope } from '@/lib/report-suite';
+import { AGGREGATE_SEAM, NODE_REPLICA, aggregateCacheSize, aggregateFor, nodeWatermark } from '@/lib/report-aggregates';
 
 /* One Reports › … screen for every report in the suite.
  *
@@ -40,8 +41,23 @@ export function ReportScreen({ topic }: { topic: string }) {
      edited its delivery list must not be told the old one. */
   useEffect(() => setSchedules(schedulesForNode()), []);
 
-  const table = useMemo(() => buildReport(topic, { day, range, scope }), [topic, day, range, scope]);
+  /* The figures come through the aggregate seam rather than straight out of `buildReport`, so a report is read once
+     per scope, period and day for as long as this tab is open, and so the screen can say where they came from and
+     what they cost. `reads` is the “read it again” counter, and the only thing that makes the seam recompute. */
+  const [reads, setReads] = useState(0);
+  const answer = useMemo(() => aggregateFor({ topic, scope, range, day }, { recompute: reads > 0 }), [topic, scope, range, day, reads]);
+  const table = answer.table;
   const def = table.def;
+  /* The provenance panel is drawn after mount: the milliseconds and the watermark are this machine’s, and a server
+     render cannot know them. The table above it is the same on both sides, which is what makes the split work. */
+  const [mounted, setMounted] = useState(false);
+  /* The watermark in the node's own words, read after mount: storage does not exist on the server, and a value taken
+     during render is the hydration mismatch `NODE_REPLICA` exists to avoid. */
+  const [watermark, setWatermark] = useState(NODE_REPLICA);
+  useEffect(() => {
+    setMounted(true);
+    setWatermark(nodeWatermark());
+  }, []);
   /* The schedule this report has at the branch — this node's own copy, read after mount, so the hour the register
      asks for and the hour somebody has actually set are shown as the two things they are. */
   const [schedules, setSchedules] = useState(SCHEDULES);
@@ -271,6 +287,36 @@ export function ReportScreen({ topic }: { topic: string }) {
 
           <Panel title="The control total">
             <p className="text-sm text-text-secondary">{table.closing}</p>
+          </Panel>
+
+          <Panel
+            title="Where these figures were computed"
+            actions={
+              <Tooltip content="Throw this tab’s answer away and walk the registers again">
+                <Button variant="ghost" size="sm" onClick={() => setReads((n) => n + 1)}>
+                  <RotateCcw className="size-4" aria-hidden /> Read it again
+                </Button>
+              </Tooltip>
+            }
+          >
+            {mounted ? (
+              <>
+                <p className="text-sm text-text-secondary">
+                  <span className={cx('mr-1.5 rounded-full px-2 py-0.5 text-[11px]', answer.cached ? 'bg-surface-sunken text-text-secondary' : 'bg-brand-50 text-brand-700')}>
+                    {answer.cached ? 'from this tab’s cache' : `computed now · ${answer.ms} ms`}
+                  </span>
+                  {answer.because}
+                </p>
+                <p className="mt-2 text-xs text-text-tertiary">
+                  Read at {watermark}. The contract’s own read is{' '}
+                  <span className="font-numeric">{AGGREGATE_SEAM.endpoint}</span> (<span className="font-numeric">{AGGREGATE_SEAM.operationId}</span>), which returns the
+                  same table with <span className="font-numeric">computedBy</span> and the watermark it was read at — the two things this panel is showing by hand until the API
+                  answers it. This tab is holding {aggregateCacheSize()} report{aggregateCacheSize() === 1 ? '' : 's'}.
+                </p>
+              </>
+            ) : (
+              <p className="text-sm text-text-tertiary">Reading this report…</p>
+            )}
           </Panel>
 
           <Panel title="Per branch and consolidated">

@@ -3361,6 +3361,42 @@
       "servesFromReplica": false,
       "needsNetwork": true,
       "requiresIdempotencyKey": true
+    },
+    "reportAggregate": {
+      "id": "reportAggregate",
+      "method": "get",
+      "path": "/reports/{topic}/aggregate",
+      "tag": "reporting",
+      "summary": "One report, computed once: the table, its totals and the sentence its figures answer to",
+      "entity": null,
+      "offline": "cache",
+      "authority": "cloud",
+      "idempotency": "none",
+      "audit": false,
+      "because": "A management report is read by several desks to argue with each other, so the figure has to be the same one: computed once against the register, at a named watermark, instead of once per browser over whatever each client happens to hold.",
+      "notes": "Cached rather than live: the answer is the register read at `registerAt`, and a reader who needs to know whether the 14:05 admission is in it reads that stamp rather than guessing. A node with the uplink down answers from its own replica, says `computedBy: edge`, and names the watermark it holds — which is the difference the screen prints rather than hiding.",
+      "request": null,
+      "responses": {
+        "200": "ReportAggregate",
+        "401": null,
+        "403": null,
+        "404": null
+      },
+      "problemResponses": [
+        "401",
+        "403",
+        "404"
+      ],
+      "statuses": [
+        200,
+        401,
+        403,
+        404
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
     }
   },
   "operationOrder": [
@@ -3455,7 +3491,8 @@
     "publishPrintTemplate",
     "listReportSchedules",
     "saveReportSchedule",
-    "runReportSchedule"
+    "runReportSchedule",
+    "reportAggregate"
   ],
   "byEntity": {
     "patient.demographic": [
@@ -3712,7 +3749,8 @@
     "listPortalPayments",
     "listPortalFeedback",
     "listPrintTemplates",
-    "listReportSchedules"
+    "listReportSchedules",
+    "reportAggregate"
   ],
   "onlineOnly": [
     "health",

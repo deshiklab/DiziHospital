@@ -345,8 +345,12 @@ try {
   const writes = ['bookTeleSession', 'startTeleSession', 'endTeleSession', 'createContentType', 'updateContentType', 'uploadContent', 'updateContentItem', 'shareContent', 'revokeContentShare', 'approveContentItem', 'issueCertificate', 'revokeCertificate', 'issueIdCard', 'revokeIdCard', 'createSurveyForm', 'updateSurveyForm', 'publishSurveyForm', 'assignSurveyForm', 'submitSurveyResponse', 'createCmsPage', 'updateCmsPage', 'publishCmsPage', 'sendNotice', 'recordNoticeReceipt', 'sendPatientMessage', 'bookPortalAppointment', 'cancelPortalAppointment', 'recordResultDownload', 'payPortalBill', 'submitPortalFeedback'];
   const missingOps = writes.filter((id) => !ops[id]);
   pass('every write the twelve screens and the portal queue is an operation the contract declares', missingOps.length === 0, missingOps.join(', ') || `${writes.length} operations`);
-  const badMeta = Object.entries(ops).filter(([, o]) => !['queue', 'cache', 'online-only'].includes(o.offline) || !o.authority || !o.because || (o.id !== 'health' && !o.entity));
-  pass('every operation states what it queues against, on whose authority, and why it exists', badMeta.length === 0, badMeta.map(([id]) => id).join(', ') || `${Object.keys(ops).length} operations`);
+  /* Two operations answer without naming a record, and both are computations rather than facts: `health` is the
+     liveness probe, and `reportAggregate` is a table built by reading the registers. They are listed rather than
+     exempted by method, so a read added later cannot quietly drop the entity it queues against. */
+  const noEntity = ['health', 'reportAggregate'];
+  const badMeta = Object.entries(ops).filter(([, o]) => !['queue', 'cache', 'online-only'].includes(o.offline) || !o.authority || !o.because || (!noEntity.includes(o.id) && !o.entity));
+  pass('every operation states what it queues against, on whose authority, and why it exists', badMeta.length === 0, badMeta.map(([id]) => id).join(', ') || `${Object.keys(ops).length} operations, ${noEntity.length} of them computations with no record`);
   pass('every reason is a sentence rather than a label', Object.values(ops).every((o) => o.because.length >= 80 && o.because.trim().endsWith('.')) && Object.values(ops).every((o) => (o.offline === 'online-only' ? (o.notes ?? '').length > 20 : true)), `shortest is ${Math.min(...Object.values(ops).map((o) => o.because.length))} characters`);
   const p8Tags = new Set(['telemedicine', 'content', 'records', 'engagement', 'cms', 'messaging', 'portal']);
   const p8Ops = Object.values(ops).filter((o) => p8Tags.has(o.tag));

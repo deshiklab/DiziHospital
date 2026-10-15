@@ -7806,6 +7806,108 @@
           "notes": "Deliberately online-only: a node cannot send mail, and a queued send would tell a manager the morning\u2019s sheet is on its way while it sits in an outbox on a disconnected machine. Until the API service exists nothing goes out on its own \u2014 the schedule screen builds the same file at the desk, says what it contains, and the history records that a person took it."
         }
       }
+    },
+    "/reports/{topic}/aggregate": {
+      "get": {
+        "operationId": "reportAggregate",
+        "summary": "One report, computed once: the table, its totals and the sentence its figures answer to",
+        "tags": [
+          "reporting"
+        ],
+        "parameters": [
+          {
+            "name": "topic",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Report topic, as the register spells it",
+            "required": true
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "A branch, or `All branches` for the consolidated figure",
+            "required": true
+          },
+          {
+            "name": "range",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "today",
+                "week",
+                "month"
+              ]
+            },
+            "required": true
+          },
+          {
+            "name": "day",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The branch day the report is read for",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The report\u2019s own owner names the roles that may read it, and the API checks them",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such report \u2014 `dizi.not-found`",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "The table as one tier computed it, with the watermark it was read at",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportAggregate"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": null,
+          "offline": "cache",
+          "authority": "cloud",
+          "idempotency": "none",
+          "audit": false,
+          "because": "A management report is read by several desks to argue with each other, so the figure has to be the same one: computed once against the register, at a named watermark, instead of once per browser over whatever each client happens to hold.",
+          "notes": "Cached rather than live: the answer is the register read at `registerAt`, and a reader who needs to know whether the 14:05 admission is in it reads that stamp rather than guessing. A node with the uplink down answers from its own replica, says `computedBy: edge`, and names the watermark it holds \u2014 which is the difference the screen prints rather than hiding."
+        }
+      }
     }
   },
   "components": {
@@ -13955,6 +14057,217 @@
                 }
               }
             }
+          }
+        }
+      },
+      "ReportColumn": {
+        "type": "object",
+        "required": [
+          "key",
+          "header"
+        ],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "header": {
+            "type": "string"
+          },
+          "align": {
+            "type": "string",
+            "enum": [
+              "left",
+              "right"
+            ]
+          },
+          "width": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "money",
+              "count",
+              "text",
+              "percent"
+            ]
+          },
+          "aggregate": {
+            "type": "string",
+            "enum": [
+              "sum",
+              "max"
+            ],
+            "description": "How the column adds up across rows and branches; an age stays a maximum"
+          },
+          "percentOf": {
+            "type": "object",
+            "properties": {
+              "part": {
+                "type": "string"
+              },
+              "whole": {
+                "type": "string"
+              }
+            }
+          },
+          "avgOf": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "string"
+              },
+              "count": {
+                "type": "string"
+              },
+              "suffix": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ReportRow": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "cells"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "cells": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "from": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            },
+            "description": "On a consolidated row: the figure each branch contributed, which is what makes the total checkable rather than asserted"
+          }
+        }
+      },
+      "ReportAggregate": {
+        "type": "object",
+        "required": [
+          "topic",
+          "title",
+          "scope",
+          "range",
+          "asOf",
+          "daysRead",
+          "columns",
+          "rows",
+          "totals",
+          "closing",
+          "reconciliation",
+          "computedAt",
+          "computedBy",
+          "registerAt"
+        ],
+        "properties": {
+          "topic": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "range": {
+            "type": "string",
+            "enum": [
+              "today",
+              "week",
+              "month"
+            ]
+          },
+          "asOf": {
+            "type": "string",
+            "description": "The branch day the report was read for"
+          },
+          "daysRead": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The days actually read \u2014 `min(the range asked for, what the data holds)`, named rather than implied"
+          },
+          "rangeNote": {
+            "type": "string"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReportColumn"
+            }
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReportRow"
+            }
+          },
+          "totals": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "unavailable": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "branch": {
+                  "type": "string"
+                },
+                "because": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Branches that cannot answer this report at all, with the reason \u2014 printed instead of a row of zeros"
+          },
+          "closing": {
+            "type": "string",
+            "description": "The control total the figures have to agree with, as the sentence the reader checks them against"
+          },
+          "reconciliation": {
+            "type": "string",
+            "description": "How the consolidated figure was arrived at, branch by branch"
+          },
+          "computedAt": {
+            "type": "string"
+          },
+          "computedBy": {
+            "type": "string",
+            "enum": [
+              "cloud",
+              "edge"
+            ],
+            "description": "Which tier answered: the canonical computation, or this branch's own replica while the uplink is down"
+          },
+          "registerAt": {
+            "type": "string",
+            "description": "The replication watermark the figures were read at, so a reader can tell whether the last admission is in them"
           }
         }
       }
