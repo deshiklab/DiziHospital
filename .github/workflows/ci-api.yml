@@ -72,7 +72,7 @@ jobs:
       - name: Every PHP file parses
         run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
 
-      - name: Pint — the style rules this repository pins (temporary: fixes and pushes)
+      - name: Pint — the style rules this repository pins (temporary — fixes and pushes)
         if: github.event_name == 'push'
         run: |
           vendor/bin/pint
