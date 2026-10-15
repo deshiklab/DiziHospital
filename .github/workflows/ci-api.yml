@@ -70,14 +70,28 @@ jobs:
         run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
 
       - name: Pint — the style rules this repository pins
-        run: vendor/bin/pint --test
+        continue-on-error: true
+        run: |
+          set +e
+          output=$(vendor/bin/pint --test 2>&1)
+          status=$?
+          printf '%s\n' "$output"
+          printf '%s\n' "$output" | grep -Ev '^$' | head -10 | sed 's/^/::error ::/'
+          exit "$status"
 
       # The suite runs against SQLite in memory, which needs no service container, and the assertions the product
       # cares about are about rules rather than about the engine: which numbers a node may mint, what a stale version
       # does, what a replayed key does, and whether an altered ledger entry can be found. The Postgres-specific half —
       # the module schemas and the row locks — is the second job below, because SQLite cannot prove it.
       - name: The contract, the rules and the ledger
-        run: vendor/bin/phpunit --display-warnings
+        continue-on-error: true
+        run: |
+          set +e
+          output=$(vendor/bin/phpunit --display-warnings 2>&1)
+          status=$?
+          printf '%s\n' "$output"
+          printf '%s\n' "$output" | grep -E '^[0-9]+\)|FAILURES|ERRORS|Tests:|Failed asserting|Error:' | head -10 | sed 's/^/::error ::/'
+          exit "$status"
 
       - name: Server log on failure
         if: failure()
@@ -132,7 +146,13 @@ jobs:
         run: composer install --no-interaction --prefer-dist --no-progress
 
       - name: Migrate an empty Postgres
-        run: php artisan migrate --force
+        run: |
+          set +e
+          output=$(php artisan migrate --force 2>&1)
+          status=$?
+          printf '%s\n' "$output"
+          printf '%s\n' "$output" | head -10 | sed 's/^/::error ::/'
+          exit "$status"
 
       - name: Every implemented module has its schema and its tables
         run: php artisan dizi:modules --check
