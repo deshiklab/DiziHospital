@@ -28,6 +28,8 @@ import { allowancesFor, monthDays, monthOf, payrollLine, staffDirectory, type Pa
 import { REGISTER_CODES, attendanceRegister, payrollAttendance, type RegisterCode } from '@/lib/attendance';
 import { purposeByCode, visitorDay } from '@/lib/visitors';
 import { BED_CHARGE, generateInpatient, wardName } from '@/lib/ward';
+import { PrintSheet } from '@/components/PrintCanvas';
+import { TEMPLATE_OF_DOC, nodeLayoutFor, type PrintLayout } from '@/lib/printing';
 
 /* Print templates.
  *
@@ -128,6 +130,20 @@ export default function PrintPage({
   const kind = (known ? doc : 'appointment-slip') as DocKind;
   const meta = DOC_META[kind];
   const day = todayIso();
+
+  /* A rendered layout, when this branch has published one for this document.
+   *
+   * The register's twelve are the documents the designer owns: the branch drags its receipt, publishes a version, and
+   * the next receipt prints that version. The store is read in an effect rather than during render, because the
+   * server has no localStorage and a document that renders one way on the server and another in the browser is a
+   * document with two layouts. A document with no published version prints from its code template as it always has.
+   */
+  const templateId = TEMPLATE_OF_DOC[kind];
+  const [published, setPublished] = useState<PrintLayout | undefined>(undefined);
+  useEffect(() => {
+    setPublished(templateId ? nodeLayoutFor(templateId) : undefined);
+  }, [templateId]);
+
 
   /* ------------------------------------------------------------------------------ data */
   const appointments = generateAppointments(day);
@@ -1195,15 +1211,30 @@ export default function PrintPage({
       </div>
 
       <div className="no-print mx-auto mb-4 max-w-4xl">
-        <SafetyBanner severity="info" title="Preview with sample data">
-          Templates render from the same data modules the screens use, so a slip printed from a record matches what
-          was on screen. Barcodes are drawn from the identifier itself until the laboratory module wires in a
-          certified encoder (P4).
-        </SafetyBanner>
+        {published ? (
+          <SafetyBanner severity="success" title={`Printing ${published.name} version ${published.version} from the designer`}>
+            This branch published this layout{published.publishedAt ? ` on ${published.publishedAt.slice(0, 10)}` : ''}
+            {published.publishedBy ? ` by ${published.publishedBy}` : ''}. It is drawn from the same millimetre layout the
+            designer shows, and the version before it is still readable. Take the version back and this document prints
+            from its code template again.{' '}
+            <Link href="/admin/printing/designer" className="font-medium underline">
+              Open the designer
+            </Link>
+          </SafetyBanner>
+        ) : (
+          <SafetyBanner severity="info" title="Preview with sample data">
+            Templates render from the same data modules the screens use, so a slip printed from a record matches what
+            was on screen. Barcodes are drawn from the identifier itself until the laboratory module wires in a
+            certified encoder (P4).{' '}
+            <Link href="/admin/printing/designer" className="font-medium underline">
+              Design this template
+            </Link>
+          </SafetyBanner>
+        )}
       </div>
 
       <div className="print-preview flex justify-center overflow-auto pb-8">
-        <div className="print-paper shadow-lg">{docContent()}</div>
+        {published ? <PrintSheet layout={published} /> : <div className="print-paper shadow-lg">{docContent()}</div>}
       </div>
     </div>
   );

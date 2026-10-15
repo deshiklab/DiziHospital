@@ -96,6 +96,10 @@
     {
       "name": "portal",
       "description": "The patient portal \u2014 what a patient may read and do through their own login (P8)"
+    },
+    {
+      "name": "printing",
+      "description": "Print templates as data: the layout a branch prints from, its paper, and the version it published (P7)"
     }
   ],
   "paths": {
@@ -7369,6 +7373,169 @@
           "because": "People write complaints at night, on the way home, when the ward is behind them. It is appended on the device and drained, so the feedback exists from the moment it was written \u2014 and it is never edited afterwards, because editing a complaint is not a thing a hospital should be able to do."
         }
       }
+    },
+    "/print/templates": {
+      "get": {
+        "operationId": "listPrintTemplates",
+        "summary": "The print templates and the version each is printed from",
+        "tags": [
+          "printing"
+        ],
+        "responses": {
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Every template, with the layout this node prints from",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PrintTemplate"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "pageSize": {
+                      "type": "integer"
+                    },
+                    "asOf": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "print.template",
+          "offline": "cache",
+          "authority": "edge",
+          "idempotency": "none",
+          "audit": false,
+          "because": "The designer and the print route both read the layouts this node prints from, and a branch with the uplink down still has to print a receipt. The replica holds them, so the answer does not depend on the cloud being reachable."
+        }
+      }
+    },
+    "/print/templates/{id}/versions": {
+      "post": {
+        "operationId": "publishPrintTemplate",
+        "summary": "Publish a new version of a print template",
+        "tags": [
+          "printing"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrintTemplateVersion"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Template id, as the print register spells it",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Only the print administrator or the branch administrator may publish a layout",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such template \u2014 `dizi.not-found`",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "That version has already been published \u2014 `dizi.duplicate-operation`",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The layout breaks the printer\u2019s own rules \u2014 `dizi.layout-refused`, naming the block",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Published: the version the branch prints from now, and the one it printed from before, still readable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrintTemplate"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "print.template",
+          "offline": "queue",
+          "authority": "edge",
+          "idempotency": "required",
+          "audit": true,
+          "because": "A branch changes its own receipt without a release, and printing is the one thing that has to work with the uplink down. The version is appended at the node and carried to the cloud as an event, so the receipt a family was handed on a date stays reproducible.",
+          "notes": "The layout is validated before it is queued: a layout refused by the printer\u2019s own rules is refused at the node, because a queued version that will be rejected later is a version somebody has been told is live."
+        }
+      }
     }
   },
   "components": {
@@ -13099,6 +13266,183 @@
             "description": "When the replica this page came from was last synced"
           }
         }
+      },
+      "PrintBlock": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "x",
+          "y",
+          "w",
+          "h"
+        ],
+        "description": "One block of a printed document, placed in millimetres from the top-left of the sheet. A block that reads a record names the field it reads; one that does not carries its own words.",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "hospital",
+              "title",
+              "patient",
+              "table",
+              "totals",
+              "signature",
+              "barcode",
+              "note",
+              "footer",
+              "watermark"
+            ]
+          },
+          "x": {
+            "type": "number",
+            "description": "Millimetres from the left edge"
+          },
+          "y": {
+            "type": "number",
+            "description": "Millimetres from the top edge"
+          },
+          "w": {
+            "type": "number",
+            "description": "Width in millimetres"
+          },
+          "h": {
+            "type": "number",
+            "description": "Height in millimetres"
+          },
+          "align": {
+            "type": "string",
+            "enum": [
+              "left",
+              "centre",
+              "right"
+            ]
+          },
+          "size": {
+            "type": "string",
+            "enum": [
+              "sm",
+              "md",
+              "lg"
+            ],
+            "description": "A type scale rather than pixels: the renderer decides what `md` is on a card and on a sheet"
+          },
+          "bold": {
+            "type": "boolean"
+          },
+          "text": {
+            "type": "string",
+            "description": "The words, for a block that carries its own"
+          },
+          "field": {
+            "type": "string",
+            "description": "The register field a data block reads; unset means the block would print its heading and a blank",
+            "enum": [
+              "patient.identity",
+              "patient.contact",
+              "patient.allergy",
+              "visit.identity",
+              "record.number",
+              "invoice.lines",
+              "invoice.totals",
+              "prescription.medicines",
+              "lab.results",
+              "discharge.course",
+              "birth.record",
+              "death.record",
+              "staff.member",
+              "attendance.month",
+              "pass.number"
+            ]
+          },
+          "rows": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many rows a table prints"
+          }
+        }
+      },
+      "PrintTemplate": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "paper",
+          "version"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "paper": {
+            "type": "string",
+            "enum": [
+              "a4-portrait",
+              "a4-landscape",
+              "a5-portrait",
+              "thermal-80",
+              "card-cr80",
+              "label-50x25"
+            ]
+          },
+          "version": {
+            "type": "integer",
+            "description": "The version this node prints from; zero means nothing has been published and the code template still prints"
+          },
+          "publishedAt": {
+            "type": "string"
+          },
+          "publishedBy": {
+            "type": "string"
+          },
+          "blocks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PrintBlock"
+            }
+          }
+        }
+      },
+      "PrintTemplateVersion": {
+        "type": "object",
+        "required": [
+          "paper",
+          "blocks",
+          "publishedBy"
+        ],
+        "properties": {
+          "paper": {
+            "type": "string",
+            "enum": [
+              "a4-portrait",
+              "a4-landscape",
+              "a5-portrait",
+              "thermal-80",
+              "card-cr80",
+              "label-50x25"
+            ]
+          },
+          "blocks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PrintBlock"
+            },
+            "description": "The whole layout, not a patch: a version is a sheet of paper, and half a sheet is not a version"
+          },
+          "note": {
+            "type": "string",
+            "description": "What changed, in the words of the person who changed it"
+          },
+          "publishedBy": {
+            "type": "string"
+          }
+        }
       }
     }
   },
@@ -13287,6 +13631,11 @@
       "policy": "append-only",
       "label": "Released investigation result",
       "why": "A result is released to a patient, once, by a person. It is append-only because a released result that can be edited afterwards is a released result nobody can rely on."
+    },
+    "print.template": {
+      "policy": "append-only",
+      "label": "Print template",
+      "why": "A published layout is what a family was handed on a date: two branches may each change their own receipt, and both versions are true. Editing a published layout instead of appending the next one destroys the only evidence of what the paper said."
     }
   },
   "x-dizi-conventions": {
@@ -13414,6 +13763,11 @@
       "title": "This share has lapsed",
       "when": "A patient opens a shared document, or a result, after the date the hospital said it would be available for",
       "client": "Say the share has lapsed and offer to request it again from the department. Never show a clinical document the hospital has stopped standing behind."
+    },
+    "dizi.layout-refused": {
+      "title": "That layout cannot be printed",
+      "when": "A published layout breaks the printer\u2019s own rules \u2014 off the sheet, inside the margin with something that matters, a data block with no field behind it, an empty text block, a table with no rows, or no hospital name",
+      "client": "The designer names the block and the rule, and keeps the edit as an unpublished draft"
     }
   },
   "x-dizi-duplicate-rules": {

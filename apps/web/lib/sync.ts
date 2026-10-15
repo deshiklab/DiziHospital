@@ -76,6 +76,7 @@ export type EntityKind =
   | 'survey.assignment'
   | 'survey.response'
   | 'cms.page'
+  | 'print.template'
   | 'message.notice'
   | 'portal.feedback'
   | 'prescription'
@@ -245,6 +246,11 @@ export const ENTITY_POLICY: Record<EntityKind, { policy: ConflictPolicy; label: 
     policy: 'field-level',
     label: 'Website page',
     why: 'A page is edited by the content team and the branch administrator, usually in different places. Field-level merging keeps both edits, and the publication state is decided once and separately.',
+  },
+  'print.template': {
+    policy: 'append-only',
+    label: 'Print template',
+    why: 'A published layout is what a family was handed on a date: two branches may each change their own receipt, and both versions are true. Editing a published layout instead of appending the next one destroys the only evidence of what the paper said.',
   },
   'message.notice': {
     policy: 'field-level',

@@ -105,6 +105,7 @@ const ROUTES = [
   '/admin/visitors',
   '/admin/holiday',
   '/admin/printing',
+  '/admin/printing/designer',
   '/admin/birthordeath',
   '/admin/birthordeath/death',
   '/admin/multibranch',
@@ -146,6 +147,7 @@ const ROUTES = [
   '/site/about',
   '/site/news/blood-donation-camp',
   '/print',
+  '/print/receipt',
   '/print/birth-record',
   '/print/death-record',
   '/print/payslip',
@@ -181,6 +183,25 @@ async function check(route) {
    * then look for it on screen. A stub that asserted "localStorage was read" would pass while the console rendered
    * an empty queue, and an empty queue after a reload is exactly the failure the ticket is about. */
   const seeded = route === '/sync';
+  /* A branch that has published a receipt layout: planted before the print page's scripts run, so what is checked is
+   * that the printed document really is the published layout rather than that a function was called. */
+  const seededLayout = route === '/print/receipt';
+  const SEEDED_LAYOUT = {
+    id: 'receipt',
+    name: 'Money receipt',
+    paper: 'thermal-80',
+    version: 3,
+    publishedAt: '2026-09-14',
+    publishedBy: 'S. Nahar, system administrator',
+    updatedAt: '2026-09-14',
+    updatedBy: 'S. Nahar, system administrator',
+    blocks: [
+      { id: 'b-hospital', kind: 'hospital', x: 3, y: 3, w: 74, h: 16, bold: true },
+      { id: 'b-1', kind: 'patient', x: 3, y: 24, w: 74, h: 14, field: 'patient.identity', size: 'sm' },
+      { id: 'b-2', kind: 'table', x: 3, y: 42, w: 74, h: 40, field: 'invoice.lines', rows: 5, size: 'sm' },
+      { id: 'b-footer', kind: 'footer', x: 3, y: 288, w: 74, h: 6, size: 'sm' },
+    ],
+  };
   const SEEDED_OPERATION = {
     id: 'edge-a:7',
     nodeId: 'edge-a',
@@ -203,6 +224,13 @@ async function check(route) {
     pretendToBeVisual: true,
     virtualConsole: vc,
     beforeParse(window) {
+      if (seededLayout) {
+        try {
+          window.localStorage.setItem('dizi.print.layouts', JSON.stringify({ receipt: SEEDED_LAYOUT }));
+        } catch {
+          // jsdom without storage: the check below reports it rather than passing quietly.
+        }
+      }
       if (seeded) {
         try {
           window.localStorage.setItem(
@@ -752,9 +780,74 @@ async function check(route) {
     if (!said) routeProblems.push('an address that is not on the register did not say so on the portal');
   }
 
+  /* The designer, driven: a block is dragged with the pointer, the position is read back off the sheet, and the
+   * version is published through the contract's own operation. A designer whose blocks only move in a screenshot is
+   * a canvas, not a designer. */
+  let design = 'n/a';
+  if (route === '/admin/printing/designer') {
+    const labelOf = (id) => doc.querySelector(`[data-block="${id}"]`)?.parentElement?.querySelector(`[aria-label^="Patient block"], [aria-label^="Document title"], [aria-label^="Footer"]`)?.getAttribute('aria-label') ?? '';
+    const surface = [...doc.querySelectorAll('[role="button"][aria-label*=" at "]')].find((el) => /Patient block at/.test(el.getAttribute('aria-label') ?? ''));
+    if (!surface) {
+      design = 'NO DRAG SURFACE';
+      routeProblems.push('the designer drew no draggable block for the specimen patient block');
+    } else {
+      const before = surface.getAttribute('aria-label');
+      const box = { x: 0, y: 0 };
+      /* jsdom has no PointerEvent in every version, and React only needs the event's own type: a MouseEvent named
+       * `pointerdown` reaches the same handler the tablet does. */
+      const pointer = (type, x, y) => surface.dispatchEvent(new dom.window.MouseEvent(type, { bubbles: true, cancelable: true, clientX: x, clientY: y }));
+      pointer('pointerdown', box.x + 10, box.y + 10);
+      await new Promise((r) => setTimeout(r, 30));
+      pointer('pointermove', box.x + 10 + 60, box.y + 10 + 20);
+      await new Promise((r) => setTimeout(r, 30));
+      pointer('pointerup', box.x + 10 + 60, box.y + 10 + 20);
+      await new Promise((r) => setTimeout(r, 120));
+      const after = doc.querySelector('[role="button"][aria-label*=" at "]')?.getAttribute('aria-label') ?? '';
+      const nums = [...(after.match(/-?\d+(\.\d+)?/g) ?? [])].map(Number);
+      const [x, y, w, h] = nums;
+      const onGrid = [x, y, w, h].every((n) => n !== undefined && Math.abs(n - Math.round(n / 2) * 2) < 0.001);
+      const moved = after !== before;
+      const publish = [...doc.querySelectorAll('button')].find((b) => /^Publish version/.test((b.textContent ?? '').trim()));
+      if (!publish) {
+        routeProblems.push('the designer offers no way to publish a version');
+      } else {
+        publish.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true, cancelable: true }));
+        await new Promise((r) => setTimeout(r, 250));
+        const text = doc.body.textContent ?? '';
+        const versioned = /version 1 published/.test(text) || /Version 1/.test(text);
+        const queued = /publishPrintTemplate/.test(text) || /queued/i.test(text);
+        const stored = (() => {
+          try {
+            return Boolean(doc.defaultView?.localStorage.getItem('dizi.print.layouts'));
+          } catch {
+            return false;
+          }
+        })();
+        design = `${moved ? 'dragged' : 'NOT DRAGGED'} · ${onGrid ? 'on the grid' : 'OFF THE GRID'} · ${versioned ? 'version published' : 'NOT PUBLISHED'} · ${stored ? 'kept on the node' : 'NOT STORED'}`;
+        if (!moved) routeProblems.push('dragging a block did not move it');
+        if (!onGrid) routeProblems.push('a dragged block left the grid');
+        if (!versioned) routeProblems.push('publishing did not record a version');
+        if (!stored) routeProblems.push('a published version was not kept where the printer reads it');
+      }
+    }
+  }
+
+  /* And the printed page really is the published layout: the banner names the version, and the sheet carries the
+   * blocks the designer draws rather than the code template's own markup. */
+  if (route === '/print/receipt') {
+    const text = doc.body.textContent ?? '';
+    const banner = /Printing Money receipt version 3 from the designer/.test(text);
+    const blocks = doc.querySelectorAll('[data-block]').length;
+    const specimen = /Fatema Begum/.test(text);
+    design = `${banner ? 'the designer’s version' : 'THE CODE TEMPLATE'} · ${blocks} blocks · ${specimen ? 'a real record' : 'NO RECORD'}`;
+    if (!banner) routeProblems.push('the printed page ignored the published layout');
+    if (blocks < 3) routeProblems.push('the printed page did not render the published blocks');
+    if (!specimen) routeProblems.push('the printed layout showed no specimen record');
+  }
+
   await new Promise((r) => setTimeout(r, 300));
   dom.window.close();
-  return { errors: [...errors, ...routeProblems], shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, readyWait };
+  return { errors: [...errors, ...routeProblems], shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, design, readyWait };
 }
 
 const CONCURRENCY = Math.max(1, Number(process.env.DIZI_CONCURRENCY ?? 4));
@@ -809,10 +902,10 @@ outcomes.forEach((outcome, i) => {
     problems += 1;
     return;
   }
-  const { errors, shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, readyWait } = outcome.value;
+  const { errors, shell, handlers, copy, ledger, claims, heads, suite, viewPress, drill, queue, persist, named, retry, refusal, report, design, readyWait } = outcome.value;
   const bad = errors.length > 0 || handlers === 'DEAD';
   const slow = readyWait !== undefined && readyWait > 2000 ? `  ready=${(readyWait / 1000).toFixed(1)}s` : '';
-  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} shell=${shell ?? 'none'}  handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${suite === 'n/a' ? '' : `  suite=${suite}`}${viewPress === 'n/a' ? '' : `  view=${viewPress}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${report === 'n/a' ? '' : `  report=${report}`}${slow}`);
+  console.log(`  ${bad ? '✗' : '✓'} ${route.padEnd(22)} shell=${shell ?? 'none'}  handlers=${handlers}  copy=${copy}${ledger === 'n/a' ? '' : `  ledger=${ledger}`}${claims === 'n/a' ? '' : `  claims=${claims}`}${heads === 'n/a' ? '' : `  heads=${heads}`}${suite === 'n/a' ? '' : `  suite=${suite}`}${viewPress === 'n/a' ? '' : `  view=${viewPress}`}${drill === 'n/a' ? '' : `  drill=${drill}`}${queue === 'n/a' ? '' : `  queue=${queue}`}${persist === 'n/a' ? '' : `  persist=${persist}`}${named === 'n/a' ? '' : `  named=${named}`}${retry === 'n/a' ? '' : `  retry=${retry}`}${refusal === 'n/a' ? '' : `  refusal=${refusal}`}${report === 'n/a' ? '' : `  report=${report}`}${design === 'n/a' ? '' : `  design=${design}`}${slow}`);
   if (handlers === 'DEAD') {
     console.log('      the shared control did not respond after hydration');
     problems += 1;

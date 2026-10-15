@@ -1561,6 +1561,50 @@ export interface PortalFeedbackPage {
   readonly asOf?: string;
 }
 
+/** One block of a printed document, placed in millimetres from the top-left of the sheet. A block that reads a record names the field it reads; one that does not carries its own words. */
+export interface PrintBlock {
+  readonly id: string;
+  readonly kind: "hospital" | "title" | "patient" | "table" | "totals" | "signature" | "barcode" | "note" | "footer" | "watermark";
+  /** Millimetres from the left edge */
+  readonly x: number;
+  /** Millimetres from the top edge */
+  readonly y: number;
+  /** Width in millimetres */
+  readonly w: number;
+  /** Height in millimetres */
+  readonly h: number;
+  readonly align?: "left" | "centre" | "right";
+  /** A type scale rather than pixels: the renderer decides what `md` is on a card and on a sheet */
+  readonly size?: "sm" | "md" | "lg";
+  readonly bold?: boolean;
+  /** The words, for a block that carries its own */
+  readonly text?: string;
+  /** The register field a data block reads; unset means the block would print its heading and a blank */
+  readonly field?: "patient.identity" | "patient.contact" | "patient.allergy" | "visit.identity" | "record.number" | "invoice.lines" | "invoice.totals" | "prescription.medicines" | "lab.results" | "discharge.course" | "birth.record" | "death.record" | "staff.member" | "attendance.month" | "pass.number";
+  /** How many rows a table prints */
+  readonly rows?: number;
+}
+
+export interface PrintTemplate {
+  readonly id: string;
+  readonly name: string;
+  readonly paper: "a4-portrait" | "a4-landscape" | "a5-portrait" | "thermal-80" | "card-cr80" | "label-50x25";
+  /** The version this node prints from; zero means nothing has been published and the code template still prints */
+  readonly version: number;
+  readonly publishedAt?: string;
+  readonly publishedBy?: string;
+  readonly blocks?: Array<PrintBlock>;
+}
+
+export interface PrintTemplateVersion {
+  readonly paper: "a4-portrait" | "a4-landscape" | "a5-portrait" | "thermal-80" | "card-cr80" | "label-50x25";
+  /** The whole layout, not a patch: a version is a sheet of paper, and half a sheet is not a version */
+  readonly blocks: Array<PrintBlock>;
+  /** What changed, in the words of the person who changed it */
+  readonly note?: string;
+  readonly publishedBy: string;
+}
+
 
 /* ------------------------------------------------------------- operations */
 
@@ -3512,6 +3556,50 @@ export const operations = {
     needsNetwork: false,
     requiresIdempotencyKey: true,
   },
+  listPrintTemplates: {
+    id: "listPrintTemplates",
+    method: "get",
+    path: "/print/templates",
+    tag: "printing",
+    summary: "The print templates and the version each is printed from",
+    entity: "print.template",
+    offline: "cache",
+    authority: "edge",
+    idempotency: "none",
+    audit: false,
+    because: "The designer and the print route both read the layouts this node prints from, and a branch with the uplink down still has to print a receipt. The replica holds them, so the answer does not depend on the cloud being reachable.",
+    notes: null,
+    request: null,
+    responses: { "200": null, "401": null },
+    problemResponses: ["401"],
+    statuses: [200, 401],
+    mayQueue: false,
+    servesFromReplica: true,
+    needsNetwork: false,
+    requiresIdempotencyKey: false,
+  },
+  publishPrintTemplate: {
+    id: "publishPrintTemplate",
+    method: "post",
+    path: "/print/templates/{id}/versions",
+    tag: "printing",
+    summary: "Publish a new version of a print template",
+    entity: "print.template",
+    offline: "queue",
+    authority: "edge",
+    idempotency: "required",
+    audit: true,
+    because: "A branch changes its own receipt without a release, and printing is the one thing that has to work with the uplink down. The version is appended at the node and carried to the cloud as an event, so the receipt a family was handed on a date stays reproducible.",
+    notes: "The layout is validated before it is queued: a layout refused by the printer’s own rules is refused at the node, because a queued version that will be rejected later is a version somebody has been told is live.",
+    request: "PrintTemplateVersion",
+    responses: { "201": "PrintTemplate", "401": null, "403": null, "404": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "404", "409", "422"],
+    statuses: [201, 401, 403, 404, 409, 422],
+    mayQueue: true,
+    servesFromReplica: false,
+    needsNetwork: false,
+    requiresIdempotencyKey: true,
+  },
 } as const satisfies Record<string, OperationMeta>;
 
 export type OperationId = keyof typeof operations;
@@ -3701,6 +3789,11 @@ export const entityPolicies = {
     "policy": "append-only",
     "label": "Released investigation result",
     "why": "A result is released to a patient, once, by a person. It is append-only because a released result that can be edited afterwards is a released result nobody can rely on."
+  },
+  "print.template": {
+    "policy": "append-only",
+    "label": "Print template",
+    "why": "A published layout is what a family was handed on a date: two branches may each change their own receipt, and both versions are true. Editing a published layout instead of appending the next one destroys the only evidence of what the paper said."
   }
 } as const;
 
@@ -3822,6 +3915,11 @@ export const problemTypes = {
     "title": "This share has lapsed",
     "when": "A patient opens a shared document, or a result, after the date the hospital said it would be available for",
     "client": "Say the share has lapsed and offer to request it again from the department. Never show a clinical document the hospital has stopped standing behind."
+  },
+  "dizi.layout-refused": {
+    "title": "That layout cannot be printed",
+    "when": "A published layout breaks the printer’s own rules — off the sheet, inside the margin with something that matters, a data block with no field behind it, an empty text block, a table with no rows, or no hospital name",
+    "client": "The designer names the block and the rule, and keeps the edit as an unpublished draft"
   }
 } as const;
 

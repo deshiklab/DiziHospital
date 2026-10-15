@@ -55,6 +55,9 @@ export default function PrintHeaderFooterPage() {
             <Link href="/admin/payroll">
               <Button variant="ghost">A payslip that prints</Button>
             </Link>
+            <Link href="/admin/printing/designer">
+              <Button variant="primary">Lay the templates out</Button>
+            </Link>
           </>
         }
       />

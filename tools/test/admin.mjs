@@ -69,7 +69,7 @@ const pageAt = (route) =>
 
 try {
   await esbuild.build({
-    entryPoints: ['admin', 'hr', 'attendance', 'registry', 'visitors', 'calendar', 'branches', 'ward', 'birthdeath'].map((n) => join(root, `apps/web/lib/${n}.ts`)),
+    entryPoints: ['admin', 'hr', 'attendance', 'registry', 'visitors', 'calendar', 'branches', 'ward', 'birthdeath', 'printing'].map((n) => join(root, `apps/web/lib/${n}.ts`)),
     outdir: work,
     bundle: true,
     format: 'cjs',
@@ -81,7 +81,7 @@ try {
   });
 
   const load = (name) => import(pathToFileURL(join(work, `${name}.js`)).href);
-  const [AD, HR, AT, RG, VS, CA, BR, WARD, BD] = await Promise.all(['admin', 'hr', 'attendance', 'registry', 'visitors', 'calendar', 'branches', 'ward', 'birthdeath'].map(load));
+  const [AD, HR, AT, RG, VS, CA, BR, WARD, BD, PT] = await Promise.all(['admin', 'hr', 'attendance', 'registry', 'visitors', 'calendar', 'branches', 'ward', 'birthdeath', 'printing'].map(load));
 
   console.log('\nadmin — the register, the month, the gate and the branches\n');
 
@@ -530,6 +530,91 @@ try {
   const printDoc = readFileSync(pageAt('/print/[doc]'), 'utf8');
   pass('twelve print templates, and every one of them renders a document', AD.PRINT_TEMPLATES.length === 12 && AD.PRINT_TEMPLATES.every((t) => t.route.startsWith('/print/') && printDoc.includes(`'${t.route.split('/').pop()}'`)), AD.PRINT_TEMPLATES.map((t) => t.route.split('/').pop()).join(' '));
   pass('every template names the paper it wants, what it prints and which legacy screen it replaces', AD.PRINT_TEMPLATES.every((t) => t.paper && t.prints.length > 0 && t.note.length > 40 && t.legacy.startsWith('/admin')));
+
+  /* ---------------------------------------------------------------- 12. the template designer
+   *
+   * The register has said `authoredIn: 'designer'` since the printing settings screen shipped, so what is worth
+   * checking is that the designer's language holds up: every template has a layout on the paper its own row names,
+   * every starting layout passes the printer's own rules, the rules refuse what would waste paper, and a published
+   * version is appended rather than edited.
+   */
+  const layouts = PT.LAYOUTS;
+  pass(
+    'every template the register tracks has a layout, on the paper its own row names',
+    layouts.length === AD.PRINT_TEMPLATES.length && AD.PRINT_TEMPLATES.every((t) => PT.layoutFor(t.id)?.name === t.label && PT.PAPERS[PT.layoutFor(t.id).paper].register === t.paper),
+    layouts.map((l) => `${l.id} ${PT.PAPERS[l.paper].register}`).join(' · '),
+  );
+  const layoutRefusals = layouts.filter((l) => !PT.checkLayout(l).ok);
+  const warnings = layouts.flatMap((l) => PT.checkLayout(l).warnings);
+  const offGrid = layouts.flatMap((l) => l.blocks.filter((b) => ![b.x, b.y, b.w, b.h].every(PT.onGrid)).map((b) => `${l.id}/${b.id}`));
+  pass(
+    'every starting layout passes the printer’s rules, with nothing to warn about and every edge on the grid',
+    layoutRefusals.length === 0 && warnings.length === 0 && offGrid.length === 0,
+    `${sum(layouts, (l) => l.blocks.length)} blocks over ${layouts.length} templates · ${offGrid.length} off the ${PT.GRID} mm grid`,
+  );
+  const bad = (patch) => PT.checkLayout({ ...PT.layoutFor('receipt'), blocks: PT.layoutFor('receipt').blocks.map((b) => (b.kind === 'patient' ? { ...b, ...patch } : b)) });
+  pass(
+    'a data block with no field behind it is refused, because it would print its heading and a blank line',
+    !bad({ field: undefined }).ok && bad({ field: undefined }).reasons.some((r) => r.code === 'dizi.layout-refused' && r.block),
+    bad({ field: undefined }).reasons[0].message.slice(0, 80),
+  );
+  const noRows = PT.checkLayout({ ...PT.layoutFor('receipt'), blocks: PT.layoutFor('receipt').blocks.map((b) => (b.kind === 'table' ? { ...b, rows: 0 } : b)) });
+  const offPaper = PT.checkLayout({ ...PT.layoutFor('receipt'), blocks: [...PT.layoutFor('receipt').blocks, { id: 'x', kind: 'note', x: 70, y: 290, w: 20, h: 12, text: 'Added at the edge' }] });
+  const noHeader = PT.checkLayout({ ...PT.layoutFor('receipt'), blocks: PT.layoutFor('receipt').blocks.filter((b) => b.kind !== 'hospital') });
+  pass(
+    'a table with no rows, a block off the sheet and a document with no hospital name are each refused by name',
+    failCodes(noRows) === 'dizi.layout-refused' && failCodes(offPaper) === 'dizi.layout-refused' && failCodes(noHeader) === 'dizi.layout-refused' && offPaper.reasons[0].block && noHeader.reasons[0].message.includes('hospital'),
+    `${noRows.reasons[0].block} · ${offPaper.reasons[0].block} · ${noHeader.reasons.length} for the missing header`,
+  );
+  const receipt = PT.layoutFor('receipt');
+  const room = PT.roomFor(receipt, 'note');
+  pass(
+    'a new block lands in the first gap rather than off the bottom of the sheet',
+    room.ok && room.y < PT.PAPERS[receipt.paper].h && PT.checkLayout({ ...receipt, blocks: receipt.blocks.map((b) => b).concat([{ id: 'n', kind: 'note', x: 4, y: room.y, w: 70, h: room.h, text: 'Hand this slip to the pharmacy counter.' }]) }).ok,
+    `a ${room.h} mm block fits at ${room.y} mm on a ${PT.PAPERS[receipt.paper].h} mm roll`,
+  );
+  const full = {
+    ...receipt,
+    blocks: [
+      { id: 'h', kind: 'hospital', x: 4, y: 4, w: 72, h: 30 },
+      { id: 'fill', kind: 'note', x: 4, y: 34, w: 72, h: 250, text: 'The whole sheet, head to foot' },
+      { id: 'f', kind: 'footer', x: 4, y: 286, w: 72, h: 6 },
+    ],
+  };
+  const noRoom = PT.roomFor(full, 'note');
+  pass(
+    'and when the sheet really is full it says so, naming what to do about it, instead of dropping a block on the floor',
+    !noRoom.ok && (noRoom.because ?? '').includes('Move a block') && (noRoom.because ?? '').length > 60,
+    noRoom.because ?? '',
+  );
+  const dragged = PT.editBlock({ id: 'd', kind: 'note', x: 4, y: 24, w: 40, h: 12, text: 'x' }, { dx: 7, dy: 5 }, 'thermal-80');
+  const tiny = PT.editBlock(dragged, { dw: -500, dh: -500 }, 'thermal-80');
+  const shoved = PT.editBlock({ id: 's', kind: 'note', x: 4, y: 280, w: 40, h: 12, text: 'x' }, { dx: 500, dy: 500 }, 'thermal-80');
+  pass(
+    'a dragged block snaps to the grid, never shrinks below the legible minimum, and cannot be shoved off the sheet',
+    PT.onGrid(dragged.x) && PT.onGrid(dragged.y) && dragged.x === 12 && dragged.y === 30 && tiny.w === PT.MIN_BLOCK.w && tiny.h === PT.MIN_BLOCK.h && shoved.x + shoved.w <= PT.PAPERS['thermal-80'].w && shoved.y + shoved.h <= PT.PAPERS['thermal-80'].h,
+    `7,5 mm drag → ${dragged.x},${dragged.y} · resized to ${tiny.w}×${tiny.h} · shoved to ${shoved.x},${shoved.y}`,
+  );
+  const before = PT.layoutFor('receipt');
+  const after = PT.publish(before, 'S. Nahar, system administrator', '2026-10-16 11:20');
+  pass(
+    'publishing appends a version and leaves the previous sheet untouched',
+    after.version === before.version + 1 && after.publishedBy === 'S. Nahar, system administrator' && after.publishedAt === '2026-10-16 11:20' && before.version === 0 && before.publishedAt === undefined && after.blocks === before.blocks,
+    `v${before.version} → v${after.version} · the previous layout is the same object it was`,
+  );
+  const mapped = Object.values(PT.TEMPLATE_OF_DOC);
+  const unmapped = AD.PRINT_TEMPLATES.filter((t) => !mapped.includes(t.id));
+  pass(
+    'the documents the designer owns are the register’s twelve, and the ones it does not own are named rather than silently missing',
+    mapped.length === 12 && new Set(mapped).size === 12 && unmapped.length === 0 && PT.DESIGNER_WAITING.some((w) => /registration slip/i.test(w)),
+    `${mapped.length} documents mapped · ${PT.DESIGNER_WAITING.length} things the designer still needs`,
+  );
+  const printRoute = readFileSync(pageAt('/print/[doc]'), 'utf8');
+  pass(
+    'the printed page renders a published layout when this node has one, and its own template when it has not',
+    /PrintSheet/.test(printRoute) && /nodeLayoutFor/.test(printRoute) && /TEMPLATE_OF_DOC\[kind\]/.test(printRoute) && PT.LAYOUT_RULES.length >= 5,
+    'one renderer for the designer and the printer',
+  );
 
   if (failures.length > 0) {
     console.log(`\n${failures.length} failure(s):\n${failures.map((f) => `  · ${f}`).join('\n')}\n`);

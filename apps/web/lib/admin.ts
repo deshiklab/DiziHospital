@@ -399,7 +399,7 @@ export interface PrintTemplate {
   legacy: string;
   /** The document the platform actually prints, which is what a settings screen has to be able to open. */
   route: string;
-  paper: 'A4' | 'A5' | 'Letter' | 'Thermal 80 mm' | '50 × 25 mm' | 'CR80 card';
+  paper: 'A4' | 'A4 landscape' | 'A5' | 'Letter' | 'Thermal 80 mm' | '50 × 25 mm' | 'CR80 card';
   /** Where the template is authored in the new designer. */
   authoredIn: 'designer' | 'code';
   prints: string[];
@@ -418,7 +418,7 @@ export const PRINT_TEMPLATES: PrintTemplate[] = [
   { id: 'birth-certificate', label: 'Birth record', legacy: '/admin/birthordeath/print', route: '/print/birth-record', paper: 'A4', authoredIn: 'designer', prints: ['Register number', 'Attendant', 'Outcome', 'Civil status'], note: 'The hospital’s own record. The civil certificate is issued by the corporation, and this print says so rather than imitating one.' },
   { id: 'death-certificate', label: 'Death record', legacy: '/admin/birthordeath/death/print', route: '/print/death-record', paper: 'A4', authoredIn: 'designer', prints: ['Cause', 'Certificate number', 'Who collected the body', 'Civil status'], note: 'Prints the certificate state and the police referral where there is one. It is not the civil death certificate, and it does not pretend to be.' },
   { id: 'payslip', label: 'Payslip', legacy: '/admin/staff/payslip', route: '/print/payslip', paper: 'A5', authoredIn: 'designer', prints: ['Earnings', 'Deductions by line', 'Attendance summary', 'Employer cost'], note: 'Every deduction printed with the rule that produced it, because a payslip that cannot be explained line by line is the reason people queue outside HR.' },
-  { id: 'attendance-sheet', label: 'Attendance sheet', legacy: '/admin/qrattendance/print', route: '/print/attendance-sheet', paper: 'A4', authoredIn: 'designer', prints: ['Month matrix', 'Exceptions', 'Late marks', 'Overtime'], note: 'The register as a sheet for a shift manager to sign, printed from the same generator the payroll reads.' },
+  { id: 'attendance-sheet', label: 'Attendance sheet', legacy: '/admin/qrattendance/print', route: '/print/attendance-sheet', paper: 'A4 landscape', authoredIn: 'designer', prints: ['Month matrix', 'Exceptions', 'Late marks', 'Overtime'], note: 'The register as a sheet for a shift manager to sign, printed from the same generator the payroll reads.' },
   { id: 'visitor-badge', label: 'Visitor badge', legacy: '/admin/visitors/badge', route: '/print/visitor-badge', paper: 'Thermal 80 mm', authoredIn: 'designer', prints: ['Name', 'Host', 'Pass number', 'Areas not to enter'], note: 'Prints the areas a visitor may not enter on the badge itself, because the door is busy.' },
 ];
 
