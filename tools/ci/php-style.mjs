@@ -14,7 +14,7 @@
  *
  * Exits non-zero and prints file:line for each finding, so it can gate a build.
  */
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -66,6 +66,34 @@ function annotatedLines(text) {
 
 const findings = [];
 const files = phpFiles(target);
+
+/*
+ * The service's manifest, first, because it is the one file whose failure mode is not a style nit: composer refuses to
+ * do anything at all when composer.json does not parse, and a namespace written with one backslash instead of two
+ * (`"App\": "app/"`) is a valid-looking line that JSON reads as an escaped quote. That is a CI round trip to discover
+ * and a second to prevent, so it is checked here — and the psr-4 keys are checked to end in a backslash, which is the
+ * mistake itself rather than a proxy for it.
+ */
+const manifestPath = join(target, 'composer.json');
+if (existsSync(manifestPath)) {
+  const manifest = readFileSync(manifestPath, 'utf8');
+  let parsed = null;
+  try {
+    parsed = JSON.parse(manifest);
+  } catch (error) {
+    findings.push({ rel: relative(root, manifestPath), line: 1, rule: 'valid_json', detail: `composer.json does not parse: ${error.message}` });
+  }
+  for (const section of ['autoload', 'autoload-dev']) {
+    for (const [namespace, dir] of Object.entries(parsed?.[section]?.['psr-4'] ?? {})) {
+      if (!namespace.endsWith('\\')) {
+        findings.push({ rel: relative(root, manifestPath), line: 1, rule: 'psr4_namespace', detail: `${section}.psr-4["${namespace}"] must end in a backslash (it is a namespace prefix)` });
+      }
+      if (!existsSync(join(target, dir))) {
+        findings.push({ rel: relative(root, manifestPath), line: 1, rule: 'psr4_namespace', detail: `${section}.psr-4["${namespace}"] points at ${dir}, which does not exist` });
+      }
+    }
+  }
+}
 
 for (const file of files) {
   const rel = relative(root, file);
