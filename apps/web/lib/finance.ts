@@ -780,8 +780,21 @@ export function dayBook(day: string, opts: DayBookOptions = {}): DayBook {
    * same either way, which is why they live here and not in a report.
    */
   const atPoint = (point: CollectionPoint) => bookedIncome.filter((v) => v.point === point && SETTLES_AT_COUNTER.includes(v.route));
+  /*
+   * What the counter took against an invoice, in the routes a counter settles: cash, card and mobile money.
+   *
+   * The till's own `collected` figure is every payment on the day's invoices, and it has to be, because it is the
+   * module's answer to "what was billed and paid". A cheque, a bank transfer and a corporate or insurer share are
+   * recorded at the counter and settle somewhere else — so comparing the counter's takings against the till's whole
+   * `collected` accuses the counter of a shortage that is a payer's promise. The two sides are counted the same way
+   * here, and the drawer keeps its own arithmetic below.
+   */
+  const counterTakings = sum(
+    generateInvoices(day).filter((i) => i.status !== 'Cancelled'),
+    (invoice) => sum(invoice.payments.filter((p) => SETTLES_AT_COUNTER.includes(routeOfPayment(p.method))), (p) => p.amount),
+  );
   const points: PointReconciliation[] = ([
-    { point: 'Billing counter' as CollectionPoint, expected: till.collected, counted: sum(atPoint('Billing counter').filter((v) => v.invoiceNo), (v) => v.amount), because: 'Every payment the billing counter took against an invoice, in any method. The payer’s share is not here: it was never collected at a window, and a certificate fee was never billed to one.' },
+    { point: 'Billing counter' as CollectionPoint, expected: counterTakings, counted: sum(atPoint('Billing counter').filter((v) => v.invoiceNo), (v) => v.amount), because: `Every payment the billing counter took against an invoice in a route the counter settles — cash, card and mobile money, ${money(counterTakings)} of the till’s ${money(till.collected)}. A cheque, a bank transfer and the payer’s share are recorded at the counter and settle elsewhere, so they are receivables rather than drawer money.` },
     { point: 'Pharmacy counter' as CollectionPoint, expected: sum(generateDispenses(day).filter((d) => d.status === 'Dispensed' && d.patient.payer === 'Self pay'), (d) => d.total), counted: sum(atPoint('Pharmacy counter'), (v) => v.amount), because: 'What pharmacy dispensed to self-paying patients. The insured share is billed to the payer, so it is a receivable rather than a collection.' },
     { point: 'Ambulance desk' as CollectionPoint, expected: sum(ambulanceDay(day).calls.filter((c) => c.state === 'Completed'), (c) => c.fare?.total ?? 0), counted: sum(atPoint('Ambulance desk'), (v) => v.amount), because: 'Fares for trips that actually completed. A call the vehicle never left the gate for is not billed.' },
   ]).map((row) => {

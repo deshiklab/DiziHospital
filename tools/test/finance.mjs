@@ -170,6 +170,31 @@ try {
     book.points.map((p) => `${p.point} ${money(p.recorded)}/${money(p.expected)}`).join(' · '),
   );
 
+  /* The reconciliation is a property of the generators, not of one date: both sides come off the same day's
+   * invoices, so the counters must agree on every day the branch can open on. It was checked on one date for two
+   * phases, and the day the check was finally run across a year it failed on a day whose invoices carried a
+   * corporate settlement — the payer's ৳800 was in the till's collected figure and nowhere in the drawer, so the
+   * screen accused a counter of a shortage that was somebody else's promise to pay. */
+  const daysOf2026 = (() => {
+    const out = [];
+    for (let month = 1; month <= 12; month += 1) {
+      const first = new Date(Date.UTC(2026, month - 1, 1));
+      const last = new Date(Date.UTC(2026, month, 0)).getUTCDate();
+      for (let d = 1; d <= last; d += 1) out.push(`2026-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`);
+    }
+    return out;
+  })();
+  const drifted = daysOf2026
+    .map((day) => ({ day, book: F.dayBook(day) }))
+    .filter(({ book: b }) => b.points.some((p) => p.variance !== 0) || b.verdict !== 'agrees');
+  pass(
+    'the counters reconcile on every day of the year, not only the day this was written',
+    drifted.length === 0,
+    drifted.length === 0
+      ? `${daysOf2026.length} days, every counter agrees on each`
+      : drifted.slice(0, 3).map(({ day, book: b }) => `${day}: ${b.points.filter((p) => p.variance !== 0).map((p) => `${p.point} ${money(p.variance)}`).join(', ')}`).join(' · '),
+  );
+
   pass(
     'a voucher waiting for a signature is not paid in the book',
     book.postedExpenses.every((v) => v.status === 'Posted') && book.awaiting.every((v) => v.refusals && v.refusals.length > 0),

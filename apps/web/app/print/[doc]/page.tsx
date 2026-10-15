@@ -1,6 +1,6 @@
 'use client';
 
-import { use } from 'react';
+import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button, SafetyBanner, Tooltip, cx } from '@dizi/ui';
 import { DOCTORS, doctorById, generateAppointments, timeLabel, todayIso } from '@/lib/appointments';
@@ -82,6 +82,20 @@ const DOC_META: Record<DocKind, { title: string; paper: string; page: string; no
   'visitor-badge': { title: 'Visitor badge', paper: 'Thermal 80 mm', page: '80mm auto', note: 'Prints the areas the visitor may not enter on the badge itself, because the door is busy.', param: 'pass' },
   'imaging-report': { title: 'Imaging report', paper: 'A4', page: 'A4 portrait', note: 'Findings and impression, with the radiologist who reported it.', param: 'spec' },
 };
+
+/**
+ * The stamp on every document: the moment it was printed.
+ *
+ * The clock is read *after* mount on purpose. A wall clock printed by the server and again by the browser is the
+ * one thing on these pages that can differ between the two, and a template that reforms itself mid-hydration is
+ * worse than a template whose stamp appears a moment late — the paper is already coming out of the printer by
+ * then, and a page that re-renders as it prints is a page with two dates on it.
+ */
+function PrintStamp() {
+  const [at, setAt] = useState('');
+  useEffect(() => setAt(new Date().toLocaleString()), []);
+  return <>{at || '—'}</>;
+}
 
 /** Deterministic bar pattern from a string — stands in for Code 128 until the real encoder lands (P4). */
 function BarCode({ value, height = 40, className }: { value: string; height?: number; className?: string }) {
@@ -200,7 +214,7 @@ export default function PrintPage({
               <div><dt className="text-xs">Mobile</dt><dd className="font-mono">{patient.phone}</dd></div>
               <div><dt className="text-xs">Branch</dt><dd>{patient.branch}</dd></div>
               <div><dt className="text-xs">Payer</dt><dd>{patient.payer}</dd></div>
-              <div className="col-span-2"><dt className="text-xs">Registered</dt><dd>{new Date().toLocaleString()}</dd></div>
+              <div className="col-span-2"><dt className="text-xs">Registered</dt><dd><PrintStamp /></dd></div>
             </dl>
             {patient.allergies && (
               <p className="mt-2 border border-black px-2 py-1 text-sm font-bold">ALLERGY: {patient.allergies.toUpperCase()}</p>
@@ -345,7 +359,7 @@ export default function PrintPage({
             <p>Invoice : {invoice.number}</p>
             <p>Patient: {invoice.patientName}</p>
             <p>MRN    : {invoice.mrn}</p>
-            <p>Date   : {new Date().toLocaleString()}</p>
+            <p>Date   : <PrintStamp /></p>
             <p className="my-1 border-t border-dashed border-black" />
             {invoice.lines.map((l) => (
               <p key={l.id} className="flex justify-between">
@@ -585,7 +599,7 @@ export default function PrintPage({
             </div>
 
             <div className="mt-8 flex justify-between text-xs">
-              <p>Printed {new Date().toLocaleString()} · Main Campus laboratory</p>
+              <p>Printed <PrintStamp /> · Main Campus laboratory</p>
               <div className="text-right">
                 <div className="mb-1 h-10 w-56 border-b border-black" />
                 <p>{report.verifiedBy ?? 'Verifier signature & registration number'}</p>
@@ -686,7 +700,7 @@ export default function PrintPage({
             </div>
 
             <div className="mt-4 flex items-end justify-between text-xs">
-              <p>Printed {new Date().toLocaleString()} · this is an order, not a tax invoice</p>
+              <p>Printed <PrintStamp /> · this is an order, not a tax invoice</p>
               <BarCode value={purchaseOrder.id} height={26} />
             </div>
           </div>
@@ -843,7 +857,7 @@ export default function PrintPage({
                 <p className="border-t border-black pt-1">Patient or attendant</p>
               </div>
             </div>
-            <p className="mt-2 text-[10px]">Printed {new Date().toLocaleString()} · patient copy · bring this sheet to every follow-up</p>
+            <p className="mt-2 text-[10px]">Printed <PrintStamp /> · patient copy · bring this sheet to every follow-up</p>
           </div>
         );
       }
@@ -885,7 +899,7 @@ export default function PrintPage({
                 {birth.note && <p className="mt-3 text-xs">{birth.note}</p>}
               </>
             )}
-            <p className="mt-4 text-[10px]">Printed {new Date().toLocaleString()} · {birth ? birth.registerNo : 'blank form'} · hospital copy</p>
+            <p className="mt-4 text-[10px]">Printed <PrintStamp /> · {birth ? birth.registerNo : 'blank form'} · hospital copy</p>
           </div>
         );
 
@@ -926,7 +940,7 @@ export default function PrintPage({
                 {death.note && <p className="mt-3 text-xs">{death.note}</p>}
               </>
             )}
-            <p className="mt-4 text-[10px]">Printed {new Date().toLocaleString()} · {death ? death.registerNo : 'blank form'} · hospital copy</p>
+            <p className="mt-4 text-[10px]">Printed <PrintStamp /> · {death ? death.registerNo : 'blank form'} · hospital copy</p>
           </div>
         );
 
@@ -990,7 +1004,7 @@ export default function PrintPage({
               <p className="mt-1">Employer cost {payslip.employerCost.toLocaleString('en-IN')} including the hospital’s provident fund share and group insurance.</p>
               {payslip.notes.length > 0 && <ul className="mt-1 list-disc pl-4">{payslip.notes.map((n, i) => (<li key={i}>{n}</li>))}</ul>}
             </section>
-            <p className="mt-3 text-[9px]">Printed {new Date().toLocaleString()} · computer generated · queries to HR within 30 days</p>
+            <p className="mt-3 text-[9px]">Printed <PrintStamp /> · computer generated · queries to HR within 30 days</p>
           </div>
         );
 
@@ -1045,7 +1059,7 @@ export default function PrintPage({
                 <p>Date ______________________</p>
               </div>
             </section>
-            <p className="mt-2 text-[8px]">Printed {new Date().toLocaleString()} · {register.month} · signature copy</p>
+            <p className="mt-2 text-[8px]">Printed <PrintStamp /> · {register.month} · signature copy</p>
           </div>
         );
       }
@@ -1107,7 +1121,7 @@ export default function PrintPage({
                 </p>
               )}
             </section>
-            <p className="mt-4 text-[10px]">Printed {new Date().toLocaleString()} · {imagingOrder.id} · this report is one page of the patient’s record</p>
+            <p className="mt-4 text-[10px]">Printed <PrintStamp /> · {imagingOrder.id} · this report is one page of the patient’s record</p>
           </div>
         );
       }
@@ -1141,7 +1155,7 @@ export default function PrintPage({
                 ))}
               </tbody>
             </table>
-            <p className="mt-2 text-[10px]">Printed {new Date().toLocaleString()} · {appointments.length} appointments · desk copy</p>
+            <p className="mt-2 text-[10px]">Printed <PrintStamp /> · {appointments.length} appointments · desk copy</p>
           </div>
         );
     }

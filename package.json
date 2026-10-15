@@ -25,6 +25,7 @@
     "test:runtime": "node tools/test/runtime.mjs",
     "test:rules": "node tools/test/duplicate-rules.mjs",
     "test:finance": "node tools/test/finance.mjs",
-    "test:reports": "node tools/test/reports.mjs"
+    "test:reports": "node tools/test/reports.mjs",
+    "test:admin": "node tools/test/admin.mjs"
   }
 }

@@ -70,15 +70,15 @@ jobs:
         run: python3 tools/docs/check_links.py
 
   # The shell and runtime harnesses were written and run by hand for months, which meant the strongest check in
-  # the repository — thirty routes hydrating with no console error, and the navigation driven at five widths —
-  # was the one check that did not run on a pull request. They need jsdom and esbuild, which the product does not
-  # depend on, so this job installs them without saving them and serves the production build: the same artefact
-  # that ships, minified stylesheet included.
+  # the repository — seventy-one routes hydrating with no console error, and the navigation driven at five
+  # widths — was the one check that did not run on a pull request. They need jsdom and esbuild, which the product
+  # does not depend on, so this job installs them without saving them and serves the production build: the same
+  # artefact that ships, minified stylesheet included.
   runtime:
     name: production build, every route hydrated, shell driven
     runs-on: ubuntu-latest
-    # The harness checks thirty routes and each one is a page load; the pool keeps it to a few minutes, and this
-    # is the ceiling that keeps a slow runner from being killed mid-run.
+    # The harness checks seventy-one routes and each one is a page load; the pool keeps it to a few minutes, and
+    # this is the ceiling that keeps a slow runner from being killed mid-run.
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
@@ -118,6 +118,14 @@ jobs:
       # printing zero. This is the check that keeps seventeen report screens honest at once.
       - name: Every report adds up per branch, and says where it cannot answer
         run: npm run test:reports
+
+      # The administration phase's arithmetic, which is where a wrong figure costs somebody money: the payroll
+      # recomputed from the attendance register the same month was walked on, every deduction rebuilt from the
+      # allowance and tax tables, the refusals in the birth, death, leave, visitor and holiday registers driven
+      # one by one, the branch console's totals re-added, and the eighteen registered screens diffed against the
+      # screen map in docs/plan.
+      - name: The payroll pays the register, and the registers refuse what they must
+        run: npm run test:admin
 
       - name: Build (default dist directory — no dev server is running here)
         run: npm run build --workspace @dizi/web

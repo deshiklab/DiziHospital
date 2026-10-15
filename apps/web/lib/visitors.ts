@@ -28,18 +28,20 @@ export const BADGE_KINDS: BadgeKind[] = ['Visitor', 'Patient attendant', 'Contra
 
 /** What somebody may come for. The gate asks this because the answer decides the host. */
 export const PURPOSES: Array<{ code: string; label: string; needsHost: boolean; areas: string[]; note: string }> = [
-  { code: 'VST-WARD', label: 'Visiting a patient', needsHost: true, areas: ['Wards', 'OPD waiting'], note: 'The common one. Visiting hours apply, and the ward is asked whether the patient may have visitors at all.' },
-  { code: 'VST-ATTEND', label: 'Attendant staying with a patient', needsHost: true, areas: ['Wards'], note: 'One attendant may stay, the ward names them on the bed, and the pass is valid as long as the admission is.' },
-  { code: 'VST-CLINIC', label: 'Attending a clinic', needsHost: false, areas: ['OPD waiting', 'Laboratory', 'Radiology'], note: 'A patient with an appointment rather than a visitor, but the gate still records them: the queue screen and the gate then agree about who is in the building.' },
-  { code: 'VST-REPORT', label: 'Collecting a report', needsHost: true, areas: ['OPD waiting', 'Administration'], note: 'Needs the patient’s number: a report handed to whoever asks is a report handed out twice.' },
-  { code: 'VST-MEET', label: 'Meeting a member of staff', needsHost: true, areas: ['Administration', 'OPD waiting'], note: 'Interviews, joining formalities, a supplier meeting. The host’s name is on the pass, which is how the meeting is found later.' },
-  { code: 'VST-SUPPLY', label: 'Delivering supplies', needsHost: true, areas: ['Store and kitchen', 'Loading bay'], note: 'Store or kitchen only. Nothing is received at a ward: it is received, weighed and entered in the store, from where the wards draw it.' },
-  { code: 'VST-SERVICE', label: 'Service or repair', needsHost: true, areas: ['Engineering', 'Store and kitchen'], note: 'Air-conditioning, lift, medical gas, generators. A contractor with tools goes where the job is and nowhere else.' },
-  { code: 'VST-VENDOR', label: 'Pharmaceutical or equipment representative', needsHost: true, areas: ['Administration'], note: 'Seen by appointment at administration or the store. Wards are reached by the pharmacy’s own stock, not by a bag carried in at eleven o’clock.' },
-  { code: 'VST-MORTUARY', label: 'Mortuary or death formalities', needsHost: true, areas: ['Mortuary', 'Administration'], note: 'The one visit that must not be made to wait at the gate. Recorded, escorted, and the register holds the release of the body the death record has.' },
-  { code: 'VST-AMB', label: 'A bystander or ambulance crew', needsHost: false, areas: ['Emergency', 'Wards', 'OPD waiting'], note: 'Arrives with a patient. Recorded after the patient has been taken in, never before: the gate does not delay an emergency to write a name.' },
+  { code: 'VST-WARD', label: 'Visiting a patient', needsHost: true, areas: ['wards', 'opd'], note: 'The common one. Visiting hours apply, and the ward is asked whether the patient may have visitors at all.' },
+  { code: 'VST-ATTEND', label: 'Attendant staying with a patient', needsHost: true, areas: ['wards'], note: 'One attendant may stay, the ward names them on the bed, and the pass is valid as long as the admission is.' },
+  { code: 'VST-CLINIC', label: 'Attending a clinic', needsHost: false, areas: ['opd', 'lab-desk'], note: 'A patient with an appointment rather than a visitor, but the gate still records them: the queue screen and the gate then agree about who is in the building. The sample desk and the radiology counter are part of it.' },
+  { code: 'VST-REPORT', label: 'Collecting a report', needsHost: true, areas: ['opd', 'admin'], note: 'Needs the patient’s number: a report handed to whoever asks is a report handed out twice.' },
+  { code: 'VST-MEET', label: 'Meeting a member of staff', needsHost: true, areas: ['admin', 'opd'], note: 'Interviews, joining formalities, a supplier meeting. The host’s name is on the pass, which is how the meeting is found later.' },
+  { code: 'VST-SUPPLY', label: 'Delivering supplies', needsHost: true, areas: ['store'], note: 'Store or kitchen only. Nothing is received at a ward: it is received, weighed and entered in the store, from where the wards draw it.' },
+  { code: 'VST-SERVICE', label: 'Service or repair', needsHost: true, areas: ['engineering', 'store'], note: 'Air-conditioning, lift, medical gas, generators. A contractor with tools goes where the job is and nowhere else.' },
+  { code: 'VST-VENDOR', label: 'Pharmaceutical or equipment representative', needsHost: true, areas: ['admin'], note: 'Seen by appointment at administration or the store. Wards are reached by the pharmacy’s own stock, not by a bag carried in at eleven o’clock.' },
+  { code: 'VST-MORTUARY', label: 'Mortuary or death formalities', needsHost: true, areas: ['mortuary', 'admin'], note: 'The one visit that must not be made to wait at the gate. Recorded, escorted, and the register holds the release of the body the death record has.' },
+  { code: 'VST-AMB', label: 'A bystander or ambulance crew', needsHost: false, areas: ['emergency', 'wards', 'opd'], note: 'Arrives with a patient. Recorded after the patient has been taken in, never before: the gate does not delay an emergency to write a name.' },
 ];
 
+/* Areas are held as ids and printed as labels: the badge prints the label, the rules read the id, and that is what
+   keeps a purpose and a badge kind arguing about the same room rather than about two spellings of its name. */
 export const purposeByCode = (code: string) => PURPOSES.find((p) => p.code === code);
 
 /** The areas a badge kind may reach, and where each one is stopped. */
@@ -47,13 +49,15 @@ export const VISIT_AREAS: Array<{ id: string; label: string; allows: BadgeKind[]
   { id: 'wards', label: 'Wards', allows: ['Visitor', 'Patient attendant'], note: 'Visiting hours only, except an attendant the ward has named on the bed.' },
   { id: 'opd', label: 'OPD waiting', allows: ['Visitor', 'Patient attendant', 'Vendor', 'Delivery', 'Contractor'], note: 'The waiting area is public: a patient, a relative, a delivery and a repair all pass through it.' },
   { id: 'icu', label: 'ICU and HDU', allows: ['Visitor'], note: 'Immediate family only, one at a time, escorted both ways, and never during a handover or a procedure.' },
+  { id: 'emergency', label: 'Emergency room', allows: ['Visitor', 'Patient attendant', 'Delivery', 'Contractor', 'Vendor'], note: 'A bystander who came in with a patient, and the crew who brought them. The pass is written after the patient has been taken in: the gate does not delay an emergency to record a name.' },
   { id: 'maternity', label: 'Maternity', allows: ['Visitor', 'Patient attendant'], note: 'The ward decides. A curtain is not a wall, and the woman next door did not agree to an audience.' },
   { id: 'theatre', label: 'Theatre corridor', allows: [], note: 'Nobody has a standing pass. Theatre is entered on a list that the suite keeps, not on a badge from the gate.' },
-  { id: 'lab', label: 'Laboratory and radiology', allows: ['Contractor', 'Vendor'], note: 'Service and calibration only, with the department’s engineer in attendance.' },
+  { id: 'lab', label: 'Laboratory and radiology bench', allows: ['Contractor', 'Vendor'], note: 'Service and calibration only, with the department’s engineer in attendance.' },
+  { id: 'lab-desk', label: 'Laboratory and radiology counter', allows: ['Visitor', 'Patient attendant', 'Delivery', 'Contractor'], note: 'The sample desk and the report counter: a patient, the person carrying the sample, and the courier who takes a specimen to the referral laboratory. The bench behind it is a different room with a different rule.' },
   { id: 'store', label: 'Store, kitchen and loading bay', allows: ['Delivery', 'Contractor', 'Vendor'], note: 'Goods are received here. A delivery walked to a ward is stock that never existed.' },
   { id: 'engineering', label: 'Engineering and plant rooms', allows: ['Contractor', 'Vendor'], note: 'A contractor with tools works here and is counted out at the end of the shift by the plant room’s own log.' },
   { id: 'admin', label: 'Administration', allows: ['Visitor', 'Vendor', 'Delivery', 'Contractor'], note: 'Offices. Meetings, joining formalities and representatives are seen here.' },
-  { id: 'mortuary', label: 'Mortuary', allows: ['Visitor'], note: 'Escorted, recorded, and the pass is signed out by the person who took the body, matching the death record.' },
+  { id: 'mortuary', label: 'Mortuary', allows: ['Visitor', 'Patient attendant'], note: 'Escorted, recorded, and the pass is signed out by the person who took the body, matching the death record.' },
 ];
 
 export const areaById = (id: string) => VISIT_AREAS.find((a) => a.id === id);

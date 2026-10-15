@@ -285,7 +285,11 @@ export function checkHoliday(draft: HolidayDraft): HolidayCheck {
 }
 
 export const addDays = (dayIso: string, delta: number): string => {
+  /* A date the form has not finished holding is not a crash: the screen refuses it with a sentence, and every
+     caller of this helper gets the value back unchanged rather than a `RangeError` from `toISOString`. */
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dayIso)) return dayIso;
   const date = new Date(`${dayIso}T00:00:00Z`);
+  if (Number.isNaN(date.getTime())) return dayIso;
   date.setUTCDate(date.getUTCDate() + delta);
   return date.toISOString().slice(0, 10);
 };
