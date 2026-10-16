@@ -36,6 +36,7 @@ source under jsdom, and holds these lines:
 | the branch's zone, not the browser's, turns instants into minutes of a day (midnight included) | that the day is the day the desk expected |
 | a closed day is drawn as the reason it is closed, not as twenty grey buttons | that a desk reads the reason rather than tapping a closed day again |
 | the preview refuses a double booking exactly as the service does | that the preview banner is noticed at all (**this is what T8 measures**) |
+| the moves the sheet offers are the contract's table — published as `x-dizi-scheduling.queueMoves`, enforced by the service and drawn by the screens — and a move the state does not allow is refused in the service's own sentence, in the preview as well as against the API | that a nurse reaches for the right move when the room is busy (T6) |
 | the grid marks every minute of a sitting's claim as taken, not just the first | — |
 
 The API's own behaviour is proved in CI (`services/api`, PHPUnit: 26 appointment cases) — **PHPUnit cannot run in this

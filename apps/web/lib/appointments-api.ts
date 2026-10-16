@@ -32,6 +32,9 @@ export const SCHEDULING = capabilities.scheduling as unknown as {
   horizonDays: number;
   closedOn: string[];
   defaultCapacity: number;
+  /** The queue's state machine, as the contract publishes it: what may move where, and what may be checked in. */
+  queueMoves: Record<string, string[]>;
+  checkInFrom: string[];
 };
 
 /** Where the API is: nowhere. The proxy in front of it is same-origin by design. */

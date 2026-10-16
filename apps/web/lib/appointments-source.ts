@@ -21,8 +21,10 @@
  */
 
 import {
+  CHECK_IN_FROM,
   DOCTORS,
   SLOT_MINUTES,
+  STATUS_FLOW,
   availability,
   doctorById,
   generateAppointments,
@@ -157,9 +159,33 @@ function previewDay(day: string): Appointment[] {
   return seeded;
 }
 
+/**
+ * The row a write is about, wherever the desk has it on screen.
+ *
+ * The preview holds one day at a time (each day is seeded the first time it is asked for), and the desk may be looking
+ * at tomorrow when it cancels something — so a write finds its row by id across the days that have been read rather
+ * than assuming today's. The service has no such notion: `PATCH /appointments/{id}` is the row, whichever day it is on.
+ */
+function previewFind(id: string): { day: string; rows: Appointment[]; row: Appointment } | null {
+  for (const [day, rows] of previewStore) {
+    const row = rows.find((candidate) => candidate.id === id);
+
+    if (row !== undefined) return { day, rows, row };
+  }
+
+  return null;
+}
+
 /** A refusal shaped exactly like the API's, so the screens have one kind of refusal to render. */
 function previewRefusal(code: string, title: string, detail: string, extras: Record<string, unknown> = {}): ApiProblem {
   return new ApiProblem(code, title, code === 'dizi.slot-taken' ? 409 : 422, detail, extras);
+}
+
+/** The moves a state allows, as the sentence the service writes them in. */
+function nextStepsOf(status: AppointmentStatus): string {
+  const moves = STATUS_FLOW[status] ?? [];
+
+  return moves.length === 0 ? 'nothing further — the desk books a new appointment for a patient who comes back' : `one of: ${moves.join(', ')}`;
 }
 
 /** The branch's weekday name, from the contract's zone rather than the browser's. */
@@ -328,31 +354,44 @@ export const previewSource: AppointmentsSource = {
   },
 
   async patch(id, input) {
-    const day = input.day ?? todayIso();
-    const rows = previewDay(day);
-    const found = rows.find((row) => row.id === id);
+    const held = previewFind(id);
 
-    if (found === undefined) {
-      throw new ApiProblem('dizi.not-found', 'Not found here', 404, `This preview has no appointment ${id} on ${day}.`);
+    if (held === null) {
+      throw new ApiProblem('dizi.not-found', 'Not found here', 404, `This preview has no appointment ${id}. It holds the days this browser has read, and nothing outside them.`);
     }
+
+    const { day, rows, row: found } = held;
 
     if (found.status === 'Cancelled') {
       throw previewRefusal('dizi.validation-failed', 'That appointment is already cancelled', `Token ${found.token} was cancelled. Its slot is free again and the calendar shows it that way.`);
     }
 
     if (input.start !== undefined && input.day !== undefined && input.status !== 'Cancelled') {
-      const others = rows.filter((row) => row.id !== id);
-      assertClaimable(found.doctorId, input.day, input.start, others);
+      const target = previewDay(input.day);
+      assertClaimable(found.doctorId, input.day, input.start, target);
       const moved: Appointment = { ...found, start: input.start, day: input.day, room: doctorById(found.doctorId).room, durationMin: claimOf(found.doctorId) * SLOT_MINUTES };
-      previewStore.set(input.day, [...others.filter((row) => row.day !== input.day || row.id !== id), moved]);
+      previewStore.set(input.day, [...target, moved]);
+      if (day !== input.day) previewStore.set(day, rows.filter((row) => row.id !== id));
 
       return moved;
     }
 
-    const updated: Appointment =
-      input.status === 'Cancelled'
-        ? { ...found, status: 'Cancelled' }
-        : { ...found, status: input.status === 'No show' ? 'No show' : input.status === 'Confirmed' ? 'Confirmed' : found.status };
+    /* The same machine the service enforces, and the same refusal when a move is not one the state allows.
+       Without this the preview *silently ignored* a queue move — the nurse tapped "Waiting" and the board kept saying
+       "Confirmed", which is the one thing a fallback must never do. The table is the contract's
+       (`x-dizi-scheduling.queueMoves`), so this refusing is the service's rule rather than a second opinion. */
+    if (!STATUS_FLOW[found.status].includes(input.status)) {
+      throw previewRefusal(
+        'dizi.validation-failed',
+        'That is not the next step for this appointment',
+        `Token ${found.token} is ${found.status}, and from there the diary records ${nextStepsOf(found.status)}. A cancelled appointment and a no-show are both finished: book a new appointment rather than moving this one backwards.`,
+        { status: found.status, token: found.token },
+      );
+    }
+
+    /* The reason a cancellation carries is the service's ledger entry, not a field on the row — `Appointment` in the
+       contract has no such property, and the preview must not grow one the API would never send back. */
+    const updated: Appointment = { ...found, status: input.status };
 
     previewStore.set(day, rows.map((row) => (row.id === id ? updated : row)));
 
@@ -360,12 +399,12 @@ export const previewSource: AppointmentsSource = {
   },
 
   async checkIn(id) {
-    const day = todayIso();
-    const rows = previewDay(day);
-    const found = rows.find((row) => row.id === id);
+    const held = previewFind(id);
 
-    if (found === undefined) throw new ApiProblem('dizi.not-found', 'Not found here', 404, `This preview has no appointment ${id} today.`);
-    if (found.status === 'Checked in' || found.status === 'Waiting' || found.status === 'In consultation') {
+    if (held === null) throw new ApiProblem('dizi.not-found', 'Not found here', 404, `This preview has no appointment ${id}.`);
+
+    const { day, rows, row: found } = held;
+    if (!CHECK_IN_FROM.includes(found.status) && found.status !== 'Cancelled' && found.status !== 'No show') {
       throw new ApiProblem('dizi.duplicate-operation', 'This patient is already checked in', 409, `Token ${found.token} was checked in and is ${found.status.toLowerCase()}. Check-in happens once per visit.`, { token: found.token });
     }
     if (found.status === 'Cancelled' || found.status === 'No show') {

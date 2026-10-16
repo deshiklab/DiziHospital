@@ -23,7 +23,7 @@ import { BookingSheet } from '@/components/BookingSheet';
 import {
   DOCTORS,
   QUEUE_COLUMNS,
-  STATUS_FLOW,
+  actionsFrom,
   doctorById,
   longDate,
   shiftDays,
@@ -372,9 +372,9 @@ export default function AppointmentsPage() {
       meta: [a.type, a.room ?? doctorById(a.doctorId).room],
       badge: a.priority === 'Routine' ? { label: a.status, tone: statusTone[a.status] } : { label: a.priority, tone: a.priority === 'Emergency' ? 'critical' : 'warning' },
       onOpen: () => setDetail(a),
-      transitions: STATUS_FLOW[a.status].map((to) => ({
+      transitions: actionsFrom(a.status).map((to) => ({
         to,
-        label: `Move to ${to}`,
+        label: to === 'Checked in' ? 'Check in' : `Move to ${to}`,
         danger: to === 'Cancelled' || to === 'No show',
       })),
     }));
@@ -708,13 +708,13 @@ export default function AppointmentsPage() {
             <div>
               <p className="mb-1 text-sm font-medium text-text-secondary">Move this appointment</p>
               <div className="flex flex-wrap gap-2">
-                {STATUS_FLOW[detail.status].length === 0 && (
+                {actionsFrom(detail.status).length === 0 && (
                   <p className="text-sm text-text-tertiary">
                     This appointment is {detail.status.toLowerCase()} — no further moves. A patient who comes back is a new
                     booking.
                   </p>
                 )}
-                {STATUS_FLOW[detail.status].map((to) => (
+                {actionsFrom(detail.status).map((to) => (
                   <Button
                     key={to}
                     size="sm"

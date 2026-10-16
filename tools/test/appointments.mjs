@@ -250,6 +250,65 @@ try {
 }
 pass('a date past the horizon is refused rather than promised', (beyond?.detail ?? '').includes('30 days ahead'), beyond?.detail?.slice(0, 40));
 
+/* ---- the queue, moved on the preview: the same machine, because the table is the contract's */
+
+/* The seeded day already holds slots, so a start is read off the grid rather than guessed — two of these tests are
+   about what a *free* block does when it is taken and given back. */
+const freeStarts = async (day, doctorId) => {
+  const grid = await previewSource.slots(day, doctorId);
+  return grid.slots
+    .filter((slot, index) => slot.state === 'free' && grid.slots.slice(index, index + grid.claimStarts).every((s) => s.state === 'free'))
+    .map((slot) => slot.minutes);
+};
+
+const firstFree = (await freeStarts('2026-11-05', 'dr-akter'))[0];
+const queued = await previewSource.book({ mrn: 'MRN-000010', doctorId: 'dr-akter', day: '2026-11-05', start: firstFree, type: 'New', priority: 'Routine', source: 'Walk-in', reason: 'Queue' });
+pass('a fresh booking is Confirmed, not yet in the queue', queued.status === 'Confirmed', `${queued.status} at ${firstFree}`);
+
+let tooEarly = null;
+try {
+  await previewSource.patch(queued.id, { status: 'Waiting', because: 'Put them in the line' });
+} catch (error) {
+  tooEarly = error;
+}
+/* Without the machine in the preview this call *silently returned the old status*, which is a board that lies: the
+   nurse taps "Waiting" and the row keeps saying "Confirmed". */
+pass('the preview refuses to queue a patient who never arrived', tooEarly?.code === 'dizi.validation-failed' && tooEarly?.status === 422, tooEarly?.code);
+pass('and the refusal names where the appointment is and what is allowed', (tooEarly?.detail ?? '').includes('is Confirmed, and from there the diary records one of: No show, Cancelled'), tooEarly?.detail?.slice(0, 108));
+
+const arrived = await previewSource.checkIn(queued.id);
+pass('check-in is an operation, and it arrives the patient', arrived.status === 'Checked in', arrived.status);
+
+const waiting = await previewSource.patch(queued.id, { status: 'Waiting', because: 'Nurse moved the token' });
+pass('and then the queue moves', waiting.status === 'Waiting', waiting.status);
+
+let skipped = null;
+try {
+  await previewSource.patch(queued.id, { status: 'Completed', because: 'Straight out' });
+} catch (error) {
+  skipped = error;
+}
+pass('a consultation that has not started cannot be completed', skipped?.status === 422 && (skipped?.detail ?? '').includes('is Waiting'), skipped?.detail?.slice(0, 60));
+
+const inRoom = await previewSource.patch(queued.id, { status: 'In consultation', because: 'Called in' });
+const done = await previewSource.patch(queued.id, { status: 'Completed', because: 'Through' });
+pass('the walk through the room works, one move at a time', inRoom.status === 'In consultation' && done.status === 'Completed', `${inRoom.status} → ${done.status}`);
+
+/* Cancelling releases the slot: that is the whole reason a cancellation is a record rather than a deletion. */
+const heldStart = (await freeStarts('2026-11-05', 'dr-akter'))[0];
+const held = await previewSource.book({ mrn: 'MRN-000011', doctorId: 'dr-akter', day: '2026-11-05', start: heldStart, type: 'New', priority: 'Routine', source: 'Walk-in', reason: 'To be cancelled' });
+const claim = held.steps ?? 2;
+
+const takenIn = (grid) => grid.slots.filter((slot) => slot.state !== 'free' && slot.minutes >= heldStart && slot.minutes < heldStart + claim * 15).length;
+const freeIn = (grid) => grid.slots.filter((slot) => slot.state === 'free' && slot.minutes >= heldStart && slot.minutes < heldStart + claim * 15).length;
+
+pass('a booked block reads as taken in the grid', takenIn(await previewSource.slots('2026-11-05', 'dr-akter')) === claim, `the claim of ${claim} steps is blocked, not one slot of it`);
+
+await previewSource.patch(held.id, { status: 'Cancelled', because: 'She telephoned' });
+
+const afterCancel = await previewSource.slots('2026-11-05', 'dr-akter');
+pass('cancelling gives the slot back', freeIn(afterCancel) === claim && takenIn(afterCancel) === 0, 'the block is free again');
+
 /* The preview seeds a plausible day (the generator has always drawn one), so what is asserted is the *change*: a
    booking made here must appear as a block in the grid it was taken from, and nowhere else. */
 const before = await previewSource.slots('2026-11-05', 'dr-hossain');

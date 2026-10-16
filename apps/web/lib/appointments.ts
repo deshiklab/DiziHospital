@@ -6,6 +6,7 @@
  * server — the screens keep importing the same shapes, so only the implementation of `book()` changes.
  */
 
+import capabilities from '@dizi/contracts/capabilities.json';
 import { patients, type Patient } from './mock';
 
 export const SLOT_MINUTES = 15;
@@ -128,19 +129,35 @@ function rng(seed: number) {
   };
 }
 
-export const STATUS_FLOW: Record<AppointmentStatus, AppointmentStatus[]> = {
-  /* The moves the service accepts, in the contract's own words, and `services/api` is where they are enforced. The
-     two terminal states are terminal: a cancelled appointment's slot is already free again and a no-show is a fact
-     about the day, so a patient who comes back is a *new* booking rather than this row dragged backwards. */
-  Cancelled: [],
-  'No show': [],
-  Requested: ['Confirmed', 'Cancelled'],
-  Confirmed: ['Checked in', 'No show', 'Cancelled'],
-  'Checked in': ['Waiting', 'In consultation', 'Cancelled'],
-  Waiting: ['In consultation', 'Cancelled'],
-  'In consultation': ['Completed'],
-  Completed: [],
+/* The moves the service accepts, read from the contract rather than written here.
+ *
+ * This used to be a second copy of the table, and it had already drifted: the service refuses a *patch* from `Confirmed`
+ * to `Checked in` (arriving is its own operation), while this list offered it as a move — so the screen and the service
+ * disagreed about what a move even is. The table now lives in `x-dizi-scheduling.queueMoves`, the screens draw it, and
+ * `services/api`'s own suite fails if the machine it enforces is not the machine the contract publishes. */
+const scheduling = capabilities.scheduling as unknown as {
+  queueMoves: Record<string, AppointmentStatus[]>;
+  checkInFrom: AppointmentStatus[];
 };
+
+export const STATUS_FLOW: Record<AppointmentStatus, AppointmentStatus[]> = scheduling.queueMoves as Record<
+  AppointmentStatus,
+  AppointmentStatus[]
+>;
+
+/** The states a patient may be *checked in* from — an operation, not a move. */
+export const CHECK_IN_FROM: AppointmentStatus[] = scheduling.checkInFrom;
+
+/**
+ * Everything the desk may do to an appointment in this state: the contract's moves, plus checking the patient in,
+ * which is an operation of its own and applies exactly where the contract says it does.
+ *
+ * Arriving comes first because it is what the desk usually does next to a booking that has not come in yet, and because
+ * the two are different acts: a move is a `PATCH`, a check-in is `POST /appointments/{id}/check-in`.
+ */
+export function actionsFrom(status: AppointmentStatus): AppointmentStatus[] {
+  return CHECK_IN_FROM.includes(status) ? ['Checked in', ...STATUS_FLOW[status]] : STATUS_FLOW[status];
+}
 
 export const statusTone: Record<AppointmentStatus, 'neutral' | 'info' | 'warning' | 'success' | 'critical'> = {
   Requested: 'warning',
