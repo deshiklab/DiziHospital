@@ -110,11 +110,16 @@ jobs:
         if: failure()
         run: |
           ls -la storage/logs || true
-          if compgen -G 'storage/logs/*.log' > /dev/null; then
-            # The JSON payload after the message is the whole stack trace plus a copy of the request; the head of the
-            # line is the sentence, and the sentence is what identifies the failure.
-            tail -c 20000 storage/logs/*.log | sed 's/ {"exception".*//' | tail -40 | cut -c1-160 \
-              | sed 's/%/%25/g' | sed -z 's/\n/%0A/g' | sed 's/^/::error ::/'
+          log=storage/logs/laravel.log
+          if [ -f "$log" ]; then
+            # The *first* line of the last three entries, and the frames immediately under each: the header carries the
+            # exception's own sentence — which is what identifies the failure — and the frames under it name the class
+            # in this service that threw it. Tail alone prints the deepest frames and loses the sentence, which is what
+            # the first version of this step did.
+            grep -an 'testing\.ERROR' "$log" | tail -3 | cut -d: -f1 | while read -r line; do
+              sed -n "${line},$((line + 6))p" "$log" | cut -c1-200
+              echo '---'
+            done | sed 's/%/%25/g' | sed -z 's/\n/%0A/g' | sed 's/^/::error ::/'
           fi
 
   # `ModuleSchema` creates one Postgres schema per module, so on Postgres the tests' `registration_patients` is
