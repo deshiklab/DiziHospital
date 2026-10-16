@@ -89,7 +89,7 @@ final class AppointmentController
             /* A start that is not a date-time is a form problem rather than a link problem, so this one is a 422. */
             'start' => ['required', 'date'],
             'type' => ['nullable', 'in:'.implode(',', Appointment::TYPES)],
-            'priority' => ['nullable', 'in:Routine,Urgent,Emergency'],
+            'priority' => ['nullable', 'in:'.implode(',', Appointment::PRIORITIES)],
             'source' => ['nullable', 'in:'.implode(',', Appointment::SOURCES)],
             'reason' => ['nullable', 'string', 'max:500'],
         ]);
@@ -121,7 +121,12 @@ final class AppointmentController
     {
         $actor = app(Actor::class);
         $data = $request->validate([
-            'status' => ['required', 'in:Confirmed,Cancelled,No show'],
+            /* The whole vocabulary, because the *moves* are the module's table and this field is only asking whether
+               the word is one the contract defines. Listing the three statuses this operation used to accept here was
+               a second copy of the enum, and it went stale the moment the contract's enum was widened: every queue
+               move — `Waiting`, `In consultation`, `Completed` — came back as a malformed field before the state
+               machine ever saw it. */
+            'status' => ['required', 'in:'.implode(',', Appointment::STATUSES)],
             'start' => ['nullable', 'date'],
             'because' => ['required', 'string', 'min:3', 'max:500'],
         ]);

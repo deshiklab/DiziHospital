@@ -484,6 +484,66 @@ function validate(doc, syncSource, options = {}) {
     if (!doc['x-dizi-conventions']?.[key]) fail('x-dizi-conventions', `missing \`${key}\``);
   }
 
+  /* The queue's state machine, published as data (P0-402). The service enforces it and the screens draw it, so it has
+   * to be *total* and *closed*: every status the patch operation accepts is a key, every target is one of those statuses,
+   * and the two finished states lead nowhere. A table with a hole in it is worse than no table — the screen reads it to
+   * decide what to offer, so a missing key means a board that silently offers nothing for a state, and a target outside
+   * the vocabulary is a button the service refuses. */
+  const queueMoves = doc['x-dizi-scheduling']?.queueMoves;
+  const statuses = doc.components?.schemas?.AppointmentPatch?.properties?.status?.enum ?? [];
+
+  if (!queueMoves || typeof queueMoves !== 'object') {
+    fail('x-dizi-scheduling', 'missing `queueMoves` — the queue is a state machine and the screens draw it');
+  } else {
+    for (const status of statuses) {
+      if (!Array.isArray(queueMoves[status])) {
+        fail('x-dizi-scheduling.queueMoves', `no entry for \`${status}\`, which the patch operation accepts — a hole in the table is a board that offers nothing from that state`);
+      }
+    }
+
+    for (const [from, targets] of Object.entries(queueMoves)) {
+      if (!statuses.includes(from)) {
+        fail('x-dizi-scheduling.queueMoves', `\`${from}\` is not a status the patch operation accepts`);
+      }
+      if (!Array.isArray(targets)) {
+        fail('x-dizi-scheduling.queueMoves', `\`${from}\` does not map to a list of moves`);
+        continue;
+      }
+      if (new Set(targets).size !== targets.length) {
+        fail('x-dizi-scheduling.queueMoves', `\`${from}\` lists a move twice — the refusal sentence would read badly`);
+      }
+      for (const to of targets) {
+        if (!statuses.includes(to)) {
+          fail('x-dizi-scheduling.queueMoves', `\`${from}\` may move to \`${to}\`, which is not a status the patch operation accepts`);
+        }
+      }
+    }
+
+    for (const finished of ['Cancelled', 'No show', 'Completed']) {
+      if ((queueMoves[finished] ?? []).length) {
+        fail('x-dizi-scheduling.queueMoves', `\`${finished}\` is finished and may move anywhere — a visit that is over is a record, not a state to be dragged out of`);
+      }
+    }
+
+    /* Checking in is an operation rather than a move, and the contract says which states it applies from. Getting this
+       list wrong is a desk that cannot check in the patient standing in front of it, or a patient queued who never
+       arrived. */
+    const checkInFrom = doc['x-dizi-scheduling'].checkInFrom;
+    if (!Array.isArray(checkInFrom) || !checkInFrom.length) {
+      fail('x-dizi-scheduling', 'missing `checkInFrom` — checking a patient in is an operation, and the states it applies from have to be published');
+    } else {
+      const impossible = ['Checked in', 'Waiting', 'In consultation', 'Completed', 'No show', 'Cancelled'];
+      for (const status of checkInFrom) {
+        if (!statuses.includes(status)) {
+          fail('x-dizi-scheduling.checkInFrom', `\`${status}\` is not a status the patch operation accepts`);
+        }
+        if (impossible.includes(status)) {
+          fail('x-dizi-scheduling.checkInFrom', `\`${status}\` cannot be checked in — either the patient is already in the queue or the visit is finished`);
+        }
+      }
+    }
+  }
+
   /* The ledger (P0-208). Its acceptance is that a tamper test fails as expected, which a chain only supports if
    * the entries carry the links — so if anything is audited, the entry schema has to be hash-chained. */
   const audited = operations.filter((o) => o.meta.audit === true).length;
@@ -851,6 +911,9 @@ const SELF_TEST_CASES = [
   { name: 'a client entity with no policy', mutate: (d, s) => s.replace("  'bed.state': {", "  'bed.state.typo': {"), expect: 'names this entity but declares no policy' },
   { name: 'a client policy changed under the contract', mutate: (d, s) => s.replace("policy: 'exclusive',\n    label: 'Bed state'", "policy: 'field-level',\n    label: 'Bed state'"), expect: 'policy disagrees with the client' },
   { name: 'a dropped convention', mutate: (d) => { delete d['x-dizi-conventions'].audit; }, expect: 'missing `audit`' },
+  { name: 'a hole in the queue’s state machine', mutate: (d) => { delete d['x-dizi-scheduling'].queueMoves.Waiting; }, expect: 'a hole in the table' },
+  { name: 'a finished visit that can be moved out of', mutate: (d) => { d['x-dizi-scheduling'].queueMoves.Completed.push('Waiting'); }, expect: 'may move anywhere' },
+  { name: 'a cancelled patient who can be checked in', mutate: (d) => { d['x-dizi-scheduling'].checkInFrom.push('Cancelled'); }, expect: 'cannot be checked in' },
   { name: 'duplicate thresholds that overlap', mutate: (d) => { d['x-dizi-duplicate-rules'].thresholds.warn = 0.9; }, expect: '`warn` must be below `block`' },
   { name: 'a rule attributed to a file that is not there', mutate: (d) => { d['x-dizi-duplicate-rules'].rules[0].implementedBy = ['apps/web/lib/gone.ts']; }, expect: 'does not exist' },
   { name: 'a rule whose evidence has left the code', mutate: (d) => { d['x-dizi-duplicate-rules'].rules[0].evidence = ['this string is not in any file']; }, expect: 'no longer contains any of the evidence' },

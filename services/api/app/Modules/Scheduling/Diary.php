@@ -183,23 +183,15 @@ final class Diary
          * and arrives with that module. The transitions are listed rather than derived so that adding a state means
          * deciding, here, what may lead into it.
          */
-        $allowed = [
-            'Requested' => ['Confirmed', 'No show'],
-            /* A patient who has confirmed and does not come is a no-show at the door; the desk cannot move them into
-               the queue, because only arriving does that. */
-            'Confirmed' => ['No show'],
-            'Checked in' => ['Waiting', 'In consultation', 'No show'],
-            'Waiting' => ['In consultation', 'No show'],
-            'In consultation' => ['Completed'],
-        ];
-
-        if (! in_array($status, $allowed[$appointment->status] ?? [], true)) {
+        /* The table is the module's (`Appointment::MOVES`), which is the contract's `x-dizi-scheduling.queueMoves`: one
+           machine, published, so a screen can offer exactly the moves the service will accept. */
+        if (! in_array($status, Appointment::MOVES[$appointment->status] ?? [], true)) {
             throw ProblemException::of(
                 'dizi.validation-failed',
                 'That is not the next step for this appointment',
                 422,
                 'Token '.$appointment->token.' is '.$appointment->status.', and from there the diary records '
-                .($this->nextSteps($allowed[$appointment->status] ?? []))
+                .($this->nextSteps(Appointment::MOVES[$appointment->status] ?? []))
                 .'. A cancelled appointment and a no-show are both finished: book a new appointment rather than moving this one backwards.',
             );
         }

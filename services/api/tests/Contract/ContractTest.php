@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Contract;
 
 use App\Modules\Modules;
+use App\Modules\Scheduling\Appointment;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route as RouteFacade;
@@ -248,6 +249,69 @@ final class ContractTest extends TestCase
                cannot act on, and it is exactly what a hand-written `detail` string drifts into. */
             $this->assertContains($code, $defined, "`{$code}` is raised by this service and is not a problem type in the contract.");
         }
+    }
+
+    /**
+     * The vocabularies the API validates against are the contract's own enums.
+     *
+     * This is a gate rather than a comment because it has already failed once in the other direction: the contract's
+     * `Appointment.status` enum was widened to the whole queue vocabulary, the state machine learned the new moves,
+     * and the controller went on validating the three statuses it had been written with. Every queue move was refused
+     * as a malformed field — a 422 saying "some fields need attention" for a request that was perfectly well formed —
+     * and only the CI suite saw it, because the modules' own tests exercise the module rather than the field list in
+     * front of it.
+     *
+     * A vocabulary kept in two places drifts, so what is asserted here is that there is one.
+     */
+    public function test_the_vocabularies_the_service_validates_against_are_the_contracts_own_enums(): void
+    {
+        $contract = $this->contract();
+
+        $this->assertSame(
+            $this->enumOf($contract, 'AppointmentPatch', 'status'),
+            Appointment::STATUSES,
+            'The statuses the service stores are not the statuses the contract lets a client send.',
+        );
+
+        $this->assertSame(
+            $contract['x-dizi-scheduling']['queueMoves'] ?? null,
+            Appointment::MOVES,
+            'The moves the service enforces are not the moves the contract publishes. The order matters too: the refusal lists them in it.',
+        );
+
+        $this->assertSame(
+            $contract['x-dizi-scheduling']['checkInFrom'] ?? null,
+            Appointment::CHECK_IN_FROM,
+            'The states the contract says a patient may be checked in from are not the states the service publishes.',
+        );
+
+        /* And the published list is what the guard in `checkIn()` adds up to: the statuses that hold a slot, minus the
+           ones that are already in the queue, minus the ones the visit is finished by. Written as that arithmetic
+           rather than as a second list, so a change to `IN_QUEUE` cannot leave this passing for the wrong reason. */
+        $this->assertSame(
+            Appointment::CHECK_IN_FROM,
+            array_values(array_diff(Appointment::HOLDING, Appointment::IN_QUEUE, Appointment::SETTLED)),
+            'The check-in guard and the states it is published under have drifted apart.',
+        );
+
+        $this->assertSame($this->enumOf($contract, 'AppointmentCreate', 'type'), Appointment::TYPES);
+        $this->assertSame($this->enumOf($contract, 'AppointmentCreate', 'priority'), Appointment::PRIORITIES);
+        $this->assertSame($this->enumOf($contract, 'AppointmentCreate', 'source'), Appointment::SOURCES);
+    }
+
+    /**
+     * The enum a contract schema declares for one of its properties.
+     *
+     * @param  array<string, mixed>  $contract
+     * @return list<string>
+     */
+    private function enumOf(array $contract, string $schema, string $property): array
+    {
+        $enum = $contract['components']['schemas'][$schema]['properties'][$property]['enum'] ?? null;
+
+        $this->assertIsArray($enum, "`{$schema}.{$property}` is not an enum in the contract, so there is nothing to compare.");
+
+        return array_values($enum);
     }
 
     /**

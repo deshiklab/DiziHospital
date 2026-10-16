@@ -46,12 +46,12 @@ jobs:
 
       # The contract gate has no dependencies either. It checks the API contract's shape and, more importantly,
       # that its conflict policies still agree with the ones apps/web/lib/sync.ts enforces; the self-test then
-      # mutates the contract 33 ways and fails if any mutation slips through, because a guardrail that cannot
+      # mutates the contract 36 ways and fails if any mutation slips through, because a guardrail that cannot
       # fail is not a guardrail.
       - name: The API contract conforms and agrees with the app
         run: npm run contract:check
 
-      - name: The contract guardrail catches its 33 mutations
+      - name: The contract guardrail catches its 36 mutations
         run: npm run contract:test
 
       # The generator has no dependencies, so no install step is needed for the gates below.

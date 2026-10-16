@@ -15511,12 +15511,47 @@
       "Friday"
     ],
     "defaultCapacity": 2,
+    "queueMoves": {
+      "Requested": [
+        "Confirmed",
+        "No show",
+        "Cancelled"
+      ],
+      "Confirmed": [
+        "No show",
+        "Cancelled"
+      ],
+      "Checked in": [
+        "Waiting",
+        "In consultation",
+        "No show",
+        "Cancelled"
+      ],
+      "Waiting": [
+        "In consultation",
+        "No show",
+        "Cancelled"
+      ],
+      "In consultation": [
+        "Completed",
+        "Cancelled"
+      ],
+      "Completed": [],
+      "No show": [],
+      "Cancelled": []
+    },
+    "checkInFrom": [
+      "Requested",
+      "Confirmed"
+    ],
     "rules": [
       "A slot is offered only if it lies inside the doctor's sitting window and on the slot grid: `start` is the window's opening time plus a whole number of steps.",
       "A consultation claims `capacity` consecutive steps from its start. The next slot that can be booked is the step after the last claimed one, and the calendar draws the claimed steps as one appointment rather than as three separate patients.",
       "A slot that is held by an appointment that is not cancelled is not offered. Cancelling releases it, which is the whole reason a cancellation is recorded with a reason rather than deleting a row.",
       "The day is closed (‘closedOn’) and the booking horizon is `horizonDays` ahead: a booking outside either is refused as a validation failure naming the day, because “come back on Sunday” is a sentence the desk can say and an empty calendar is not.",
-      "Bookings taken while offline are queued with the slot they claim, and the branch that took the booking owns it: a node that drains into a slot another node has since taken is refused with `dizi.slot-taken` and the alternatives, never merged."
+      "Bookings taken while offline are queued with the slot they claim, and the branch that took the booking owns it: a node that drains into a slot another node has since taken is refused with `dizi.slot-taken` and the alternatives, never merged.",
+      "The queue is a state machine the service owns, and `queueMoves` is the whole of it: a status may only move to one of the statuses listed for where it is now. Arriving is not a move — checking a patient in is its own operation (`POST /appointments/{id}/check-in`), which is why `Confirmed` does not list `Checked in`: the board counts arrivals, and a patient who never arrived must not be able to appear waiting. A status the table does not mention as a target is refused with `dizi.validation-failed` naming the moves that are allowed, and a screen must offer only what the table allows.",
+      "Checking a patient in is an operation rather than a move (`POST /appointments/{id}/check-in`), and `checkInFrom` is the whole of when it applies: a booking that has not arrived may be checked in, and nothing else may. A second check-in of the same token is refused as a duplicate (`dizi.duplicate-operation`), and a cancelled or no-show appointment is refused as a validation failure — a check-in against a visit nobody is expecting would put a patient in a queue whose doctor has not been told."
     ]
   }
 }

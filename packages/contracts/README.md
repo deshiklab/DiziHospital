@@ -92,7 +92,7 @@ disagree warns rather than blocks) and the MRN exception. A rule that stops firi
 
 ```bash
 npm run contract:check   # shape + agreement with apps/web/lib/sync.ts + the generated output is fresh
-npm run contract:test    # mutates the contract 33 ways and asserts every one is caught
+npm run contract:test    # mutates the contract 36 ways and asserts every one is caught
 ```
 
 The package owns its own check, the way `@dizi/tokens` does, and it has no dependencies — so it runs in the
@@ -108,7 +108,7 @@ A guardrail that cannot fail is not a guardrail, so the guardrail is itself test
 contract and the generated projection deliberately — a policy the client cannot honour, a queued write with no
 replay key, a cached write, a `$ref` that lands nowhere, an audit ledger that is not hash-chained, a duplicate
 rule attributed to a file that is gone, a vetoing rule scoring above the block threshold, an operation missing
-from the projection, a paraphrased `because`, a derived flag contradicting `offline` — and fails if any of the 33
+from the projection, a paraphrased `because`, a derived flag contradicting `offline` — and fails if any of the 36
 mutations slips through.
 
 ## The generated client

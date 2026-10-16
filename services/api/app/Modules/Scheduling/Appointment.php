@@ -59,6 +59,44 @@ final class Appointment extends Model
 
     public const TYPES = ['New', 'Follow-up', 'Report review', 'Procedure'];
 
+    /** How urgent the desk booked it. Routines fill the grid; urgent and emergency bookings are taken next. */
+    public const PRIORITIES = ['Routine', 'Urgent', 'Emergency'];
+
+    /**
+     * The queue's state machine: where a status may move to, in the contract's own order.
+     *
+     * This is `x-dizi-scheduling.queueMoves`, and `ContractTest` fails if the two ever differ — a copy of a rule is a rule
+     * that goes stale, and this one has already gone stale once in the opposite direction (the contract's enum was
+     * widened while the controller went on validating three statuses).
+     *
+     * Arriving is not in the table: checking a patient in is its own operation, because the board counts arrivals and a
+     * patient who never came must not be able to appear waiting. `Cancelled` is listed where the desk may cancel, and the
+     * cancellation itself releases the slot rather than being an ordinary move.
+     *
+     * @var array<string, list<string>>
+     */
+    /**
+     * The states a patient may be checked in from — `x-dizi-scheduling.checkInFrom`.
+     *
+     * Arriving is an operation and not a move, so it is stated separately rather than being a row in `MOVES`: a booking
+     * that has not arrived may be checked in, and nothing else may. `ContractTest` checks both that this is the
+     * contract's list and that it is what `checkIn()`'s own guards add up to.
+     *
+     * @var list<string>
+     */
+    public const CHECK_IN_FROM = ['Requested', 'Confirmed'];
+
+    public const MOVES = [
+        'Requested' => ['Confirmed', 'No show', 'Cancelled'],
+        'Confirmed' => ['No show', 'Cancelled'],
+        'Checked in' => ['Waiting', 'In consultation', 'No show', 'Cancelled'],
+        'Waiting' => ['In consultation', 'No show', 'Cancelled'],
+        'In consultation' => ['Completed', 'Cancelled'],
+        'Completed' => [],
+        'No show' => [],
+        'Cancelled' => [],
+    ];
+
     public const SOURCES = ['Walk-in', 'Phone', 'Online portal', 'Follow-up'];
 
     /** The statuses that still hold their slot: everything but a cancellation. */

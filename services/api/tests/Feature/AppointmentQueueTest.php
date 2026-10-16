@@ -138,9 +138,54 @@ final class AppointmentQueueTest extends TestCase
         }
 
         $this->assertDatabaseHas('scheduling_appointments', ['id' => $id, 'status' => 'Completed']);
-        /* Four steps in the ledger, from four writes: a board that reports timings nobody recorded is a board nobody
-           can audit. */
-        $this->assertSame(4, DB::table('audit_entries')->where('record_id', $id)->count());
+        /* Five steps in the ledger, in order: the booking itself and the four moves. A board that reports timings
+           nobody recorded is a board nobody can audit, so the *actions* are asserted rather than a count — a count of
+           five is also what a booking and four copies of one move would produce. */
+        $this->assertSame(
+            ['appointment.book', 'appointment.check-in', 'appointment.queue', 'appointment.queue', 'appointment.queue'],
+            DB::table('audit_entries')->where('record_id', $id)->orderBy('id')->pluck('action')->all(),
+        );
+    }
+
+    public function test_every_status_the_contract_allows_is_a_value_this_field_accepts(): void
+    {
+        $this->patient();
+        $id = $this->booked([], 'a01');
+
+        /* The words the contract's enum defines, and the two the machine will actually write on this row last: a
+           patch that is refused does not change the row, so every one of these can be asked of the same appointment —
+           which is what makes this a test of the *field* rather than of the state machine. */
+        $vocabulary = ['Requested', 'Confirmed', 'Checked in', 'Waiting', 'In consultation', 'Completed', 'Cancelled', 'No show'];
+
+        foreach ($vocabulary as $index => $status) {
+            $answer = $this->asRole()->patchJson('/appointments/'.$id, [
+                'status' => $status,
+                'because' => 'Checking the vocabulary',
+            ], ['Idempotency-Key' => $this->key('v'.$index)]);
+
+            $this->assertContains($answer->status(), [200, 422], "`{$status}` was not accepted as a word this field can carry.");
+
+            /* A 422 here must be the service's own refusal — a sentence about where the appointment is, or that it
+               is already finished — and never a field error: the contract says the word is valid, so a validation
+               failure that names `status` is the service disagreeing with its own contract. The refusal's *title* is
+               not asserted, because which sentence is right depends on where the row has got to by then; what is
+               asserted is that the field itself was never the problem. */
+            if ($answer->status() === 422) {
+                $named = array_filter(
+                    $answer->json('errors') ?? [],
+                    static fn (array $error): bool => ($error['field'] ?? null) === 'status',
+                );
+
+                $this->assertSame([], array_values($named), "`{$status}` is in the contract's enum and was refused as a malformed field.");
+            }
+        }
+
+        /* And a word nobody defined is a field error, which is the other half of the same rule. */
+        $this->asRole()
+            ->patchJson('/appointments/'.$id, ['status' => 'Paged', 'because' => 'Not a status'], ['Idempotency-Key' => $this->key('vbad')])
+            ->assertStatus(422)
+            ->assertJsonPath('title', 'Some fields need attention')
+            ->assertJsonPath('errors.0.field', 'status');
     }
 
     public function test_a_finished_appointment_is_not_moved_backwards(): void
