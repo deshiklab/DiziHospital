@@ -73,17 +73,20 @@ final class MeTest extends TestCase
 
     public function test_a_role_the_contract_does_not_declare_is_refused_rather_than_reported(): void
     {
-        $this->asKeycloak(['realm_access' => ['roles' => ['ward-clerk']]])
-            ->getJson('/me')
-            ->assertForbidden()
-            ->assertJsonPath('type', 'dizi.forbidden');
+        /* A code the contract declares, on a wire where the `type` is the contract's own URI for it: the last segment
+           is what a screen branches on, and every other refusal test in this suite reads it the same way. */
+        $response = $this->asKeycloak(['realm_access' => ['roles' => ['ward-clerk']]])->getJson('/me');
+
+        $response->assertForbidden();
+        $this->assertStringEndsWith('dizi.forbidden', (string) $response->json('type'));
     }
 
     public function test_no_token_is_a_session_that_has_ended_and_not_a_list_of_nothing(): void
     {
-        $this->getJson('/me')
-            ->assertUnauthorized()
-            ->assertJsonPath('type', 'dizi.unauthenticated');
+        $response = $this->getJson('/me');
+
+        $response->assertUnauthorized();
+        $this->assertStringEndsWith('dizi.unauthenticated', (string) $response->json('type'));
     }
 
     public function test_the_contract_declares_this_operation_like_any_other(): void

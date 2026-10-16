@@ -75,7 +75,7 @@ final class ContractTest extends TestCase
     ];
 
     /** A config namespace and not a problem type: the service reading its own configuration. */
-    private const CONFIG_NAMESPACES = ['dizi.node', 'dizi.auth', 'dizi.blocks', 'dizi.contract'];
+    private const CONFIG_NAMESPACES = ['dizi.node', 'dizi.auth', 'dizi.blocks', 'dizi.contract', 'dizi.oidc'];
 
     public function test_every_route_is_a_contract_operation_at_the_contracts_own_path(): void
     {
@@ -262,7 +262,12 @@ final class ContractTest extends TestCase
         ));
     }
 
-    /** `dizi.node.secret` is a config key; `dizi.forbidden` is a refusal. Only the second belongs in the contract. */
+    /**
+     * `dizi.node.secret` is a config key; `dizi.forbidden` is a refusal. Only the second belongs in the contract.
+     *
+     * `dizi.oidc` is on the list because the JWKS is cached under a key in that namespace: it is read from `config()`
+     * in the provider and written to the cache in the verifier, and neither is a sentence a screen could branch on.
+     */
     private function isConfigNamespace(string $code): bool
     {
         foreach (self::CONFIG_NAMESPACES as $namespace) {

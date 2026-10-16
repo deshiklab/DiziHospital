@@ -37,7 +37,8 @@ final class KeycloakSessionTest extends TestCase
         $this->asKeycloak(['realm_access' => ['roles' => ['receptionist']]])
             ->getJson('/patients')
             ->assertOk()
-            ->assertJsonPath('patients', []);
+            ->assertJsonPath('rows', [])
+            ->assertJsonPath('total', 0);
     }
 
     public function test_a_realm_token_registers_a_patient_and_the_ledger_names_the_person_and_the_node(): void
@@ -64,11 +65,11 @@ final class KeycloakSessionTest extends TestCase
            it: the app hides the action, the API refuses it, and the refusal says which role and which ability. */
         $this->reserveAsKeycloak();
 
-        $this->asKeycloak(['realm_access' => ['roles' => ['auditor']]])
-            ->postJson('/patients', ['name' => 'Nobody'], ['Idempotency-Key' => $this->key('0002')])
-            ->assertForbidden()
-            ->assertJsonPath('type', 'dizi.forbidden')
-            ->assertJsonPath('status', 403);
+        $response = $this->asKeycloak(['realm_access' => ['roles' => ['auditor']]])
+            ->postJson('/patients', ['name' => 'Nobody'], ['Idempotency-Key' => $this->key('0002')]);
+
+        $response->assertForbidden()->assertJsonPath('status', 403);
+        $this->assertStringEndsWith('dizi.forbidden', (string) $response->json('type'));
     }
 
     public function test_two_roles_add_up_rather_than_the_first_one_winning(): void
@@ -95,20 +96,19 @@ final class KeycloakSessionTest extends TestCase
         $this->reserve();
 
         $response = $this->asKeycloak(['realm_access' => ['roles' => ['night-supervisor']]])
-            ->getJson('/patients')
-            ->assertForbidden()
-            ->assertJsonPath('type', 'dizi.forbidden');
+            ->getJson('/patients');
 
+        $response->assertForbidden();
+        $this->assertStringEndsWith('dizi.forbidden', (string) $response->json('type'));
         $this->assertStringContainsString('night-supervisor', (string) $response->json('detail'));
     }
 
     public function test_an_expired_session_is_a_sign_in_prompt_and_not_a_server_error(): void
     {
-        $this->asKeycloak(['exp' => time() - 60])
-            ->getJson('/patients')
-            ->assertUnauthorized()
-            ->assertJsonPath('type', 'dizi.unauthenticated')
-            ->assertJsonPath('status', 401);
+        $response = $this->asKeycloak(['exp' => time() - 60])->getJson('/patients');
+
+        $response->assertUnauthorized()->assertJsonPath('status', 401);
+        $this->assertStringEndsWith('dizi.unauthenticated', (string) $response->json('type'));
     }
 
     public function test_the_preview_driver_still_works_when_it_is_the_configured_one(): void
@@ -138,7 +138,17 @@ final class KeycloakSessionTest extends TestCase
         ]);
         $this->app->forgetInstance(TokenVerifier::class);
 
-        $this->getJson('/patients')->assertStatus(503);
+        /* No token is the middleware's refusal, and it happens before any verifier is asked: who is asking is not a
+           question a request with no credentials needs answered. */
+        $this->getJson('/patients')->assertStatus(401);
+
+        /* A token, however shaped, does reach the verifier — and a verifier with no issuer cannot check a signature
+           against anything, so this is the 503 rather than a quiet fall back to the driver that trusts this service. */
+        $response = $this->withHeader('Authorization', 'Bearer somebody.said.this')
+            ->getJson('/patients');
+
+        $response->assertStatus(503);
+        $this->assertStringEndsWith('dizi.unavailable', (string) $response->json('type'));
     }
 
     public function test_a_forged_token_cannot_write_a_patient(): void
