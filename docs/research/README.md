@@ -11,6 +11,11 @@ deliberately plain markdown: every answer goes in the repo, in a diff, next to t
 | [`baseline-tasks.md`](baseline-tasks.md) | P0-102 | designer | The numbers the new UI must beat (\"≤ legacy − 30 %\") |
 | [`hardware.md`](hardware.md) | P0-004 | hospital IT | Reference devices for print/scanner work; the paper formats we must reproduce |
 
+Later in the pilot wave the same folder takes the instruments that are **run**, not just filled in:
+[`usability-01.md`](usability-01.md) (P0-408 — the booking desk's task set, timings and blocking findings;
+its empty tables are the acceptance evidence for P0-402) and the drill logs P0-404/P0-405 name. Those say
+"not run" until somebody runs them.
+
 Rules for anyone filling these in:
 
 1. **No patient-identifiable data.** Record roles, timings and patterns, never names, MRNs or phone numbers.

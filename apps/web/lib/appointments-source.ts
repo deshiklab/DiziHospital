@@ -36,6 +36,11 @@ import {
 } from './appointments';
 import { ApiProblem, SCHEDULING, apiBook, apiCheckIn, apiDay, apiPatch, apiSlots, attemptKey, instantFor, probeApi, type SlotDayView } from './appointments-api';
 
+/* The API-facing helpers a screen (or a harness) needs beside the source: the branch's clock, the rules the contract
+   publishes, and the refusal type. Re-exported here so an importer has one module to reach for rather than two. */
+export { ApiProblem, SCHEDULING, attemptKey, instantFor, localDay, localMinutes, probeApi } from './appointments-api';
+export type { SlotDayView, SlotView } from './appointments-api';
+
 /** The day, and the two filters the inbox and the board ask with. */
 export interface DayQuery {
   day: string;
@@ -57,7 +62,9 @@ export interface BookingInput {
 }
 
 export interface PatchInput {
-  status: 'Confirmed' | 'Cancelled' | 'No show';
+  /** Any state the service accepts as a move. The allowed transitions are the service's table, not this app's, and a
+      refusal names what *is* allowed. */
+  status: AppointmentStatus;
   /** A move: the new day and minute, when the desk is rescheduling rather than changing a state. */
   day?: string;
   start?: number;
@@ -260,6 +267,7 @@ function previewSlots(day: string, doctorId: string, excludeAppointmentId?: stri
     doctorId,
     room: doctor.room,
     slotMinutes: SCHEDULING.slotMinutes,
+    claimStarts: claimOf(doctorId),
     open,
     closedBecause: open ? null : `The clinic is closed on ${closed}s. Choose the next open day.`,
     window: SCHEDULING.window,

@@ -138,6 +138,13 @@ jobs:
       - name: The grid pages, views and exports what it says it does
         run: npm run test:grid
 
+      # The appointment screens against the API contract: the call is the operation the contract documents, a 409
+      # carrying alternatives survives as the refusal the sheet renders, the branch's zone (not the browser's) turns
+      # instants into minutes of the day, and the *shipping* booking sheet books a time a refusal offered — driven in
+      # jsdom with a source that refuses the first attempt, which is the half of P0-402's acceptance a machine can hold.
+      - name: The booking sheet books the time it was offered, and asks the contract's own path
+        run: npm run test:appointments
+
       # P0-204's acceptance line, measured: a hundred thousand records behind a source, through the real component.
       # The budget is 1 s for the first page on the *development* build of React, which is the slower of the two — so
       # a green run here is a green run in production with room to spare.

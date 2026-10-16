@@ -37,8 +37,10 @@ export const SCHEDULING = capabilities.scheduling as unknown as {
 /** Where the API is: nowhere. The proxy in front of it is same-origin by design. */
 const BASE = '/api/dizi';
 
-/** The header a queued write is replayed under, read from the contract rather than typed here. */
-const IDEMPOTENCY_HEADER = capabilities.idempotencyHeader as unknown as string;
+/** The header a write is replayed under, read from the contract rather than typed here. The contract publishes it as
+    an object (`{name, requiredOn}`), not a bare string — reading it as one put the object itself into the header name
+    and every write failed before it left the browser. */
+const IDEMPOTENCY_HEADER = (capabilities.idempotencyHeader as unknown as { name: string }).name;
 
 /** A refusal, in the contract's own vocabulary. */
 export class ApiProblem extends Error {
@@ -99,7 +101,9 @@ async function call<T>(operation: OperationMeta, options: CallOptions = {}): Pro
 
   const headers = new Headers({ accept: 'application/json' });
   if (options.body !== undefined) headers.set('content-type', 'application/json');
-  if (options.key !== undefined) headers.set(IDEMPOTENCY_HEADER, options.key);
+  /* The key goes on the writes the contract says it goes on (`requiresIdempotencyKey`), not on everything write-shaped:
+     it is the operation's own metadata that decides, so a new operation cannot be forgotten here. */
+  if (operation.requiresIdempotencyKey && options.key !== undefined) headers.set(IDEMPOTENCY_HEADER, options.key);
 
   const answer = await fetch(url, {
     method: operation.method.toUpperCase(),
@@ -263,6 +267,8 @@ export interface SlotDayView {
   doctorId: string;
   room: string;
   slotMinutes: number;
+  /** How many consecutive slots a consultation at this sitting claims. The sheet draws the block it will get. */
+  claimStarts: number;
   open: boolean;
   closedBecause: string | null;
   window: { from: number; to: number };
@@ -277,6 +283,7 @@ export async function apiSlots(day: string, doctorId: string, excludeAppointment
     doctorId: string;
     room: string;
     slotMinutes: number;
+    claimStarts: number;
     open: boolean;
     closedBecause?: string | null;
     window: { from: number; to: number };
