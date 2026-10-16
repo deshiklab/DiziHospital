@@ -239,9 +239,11 @@ final class NotificationDeliveryTest extends TestCase
            attempt rather than an edit of it. */
         $this->assertDatabaseHas('messaging_deliveries', ['id' => $failed->id, 'status' => 'failed', 'attempt' => 1]);
         $this->assertDatabaseHas('messaging_deliveries', ['id' => $retry['id'], 'status' => 'sent', 'attempt' => 2]);
-        /* Two rows, not one: the retry is an append, and the failed attempt keeps the gateway's own words. */
+        /* Two rows, not one: the retry is an append, and the failed attempt keeps the gateway's own words rather than
+           being edited into a success. */
         $this->assertNotSame($failed->id, $retry['id']);
-        $this->assertDatabaseCount('messaging_deliveries', 3);
+        $this->assertDatabaseCount('messaging_deliveries', 2);
+        $this->assertDatabaseHas('messaging_deliveries', ['id' => $failed->id, 'error_code' => 'dizi.unavailable', 'attempt' => 1]);
 
         $this->assertDatabaseHas('audit_entries', ['action' => 'message.retry', 'entity' => 'message.delivery', 'record_id' => $retry['id']]);
 

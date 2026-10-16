@@ -109,7 +109,10 @@ final class NotificationOutboxTest extends TestCase
         $this->assertSame('suppressed', $delivery->status);
         $this->assertSame('dizi.template-incomplete', $delivery->error_code);
         $this->assertStringContainsString('{{token}}', (string) $delivery->detail);
-        $this->assertNull($delivery->body, 'A suppression whose wording could not be filled says nothing rather than showing a sentence with a hole in it.');
+        /* The row carries no sentence: the service renders nothing rather than sending `{{token}}`, and the column
+           holds that as an empty body — the difference between "" and null is the database's, not the reader's. */
+        $this->assertStringNotContainsString('{{', (string) $delivery->body);
+        $this->assertSame('', trim((string) $delivery->body), 'A suppression whose wording could not be filled says nothing rather than showing a sentence with a hole in it.');
         $this->assertSame('', $delivery->to);
     }
 
@@ -261,7 +264,8 @@ final class NotificationOutboxTest extends TestCase
         } catch (ProblemException $refused) {
             $this->assertSame('dizi.validation-failed', $refused->type);
             $this->assertSame(422, $refused->status);
-            $this->assertStringContainsString('deliberately not notifiable', $refused->getMessage());
+            $this->assertStringContainsString('sends nothing, on purpose', $refused->getMessage());
+            $this->assertStringContainsString('the honest place for that decision is the producer', $refused->getMessage());
         }
 
         try {
