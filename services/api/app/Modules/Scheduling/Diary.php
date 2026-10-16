@@ -31,18 +31,25 @@ final class Diary
     ) {}
 
     /**
-     * A day's appointments, optionally for one doctor.
+     * A day's appointments, optionally for one doctor, one status or one source.
      *
      * The reads come from this node's own tables: the diary is the branch's, and the calendar draws it during an
      * outage from the replica rather than showing a gap where the morning used to be.
      *
+     * The status and source filters exist because two of this module's screens are one question each — the request
+     * inbox is "what did the portal take that we have not answered" and the queue board is "who is still to be
+     * seen" — and a question asked of a whole day and then sieved in the browser is a question that gets slower
+     * every month the branch is open.
+     *
      * @return array{rows: list<array<string, mixed>>, asOf: string}
      */
-    public function day(string $day, ?string $doctorId): array
+    public function day(string $day, ?string $doctorId, ?string $status = null, ?string $source = null): array
     {
         $rows = Appointment::query()
             ->where('day', $day)
             ->when($doctorId !== null && $doctorId !== '', fn ($query) => $query->where('doctor_id', $doctorId))
+            ->when($status !== null && $status !== '', fn ($query) => $query->where('status', $status))
+            ->when($source !== null && $source !== '', fn ($query) => $query->where('source', $source))
             ->orderBy('doctor_id')
             ->orderBy('start_minute')
             ->get()

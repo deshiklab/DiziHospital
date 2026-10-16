@@ -214,6 +214,81 @@ final class AppointmentBookingTest extends TestCase
             ->assertJsonPath('rows.0.durationMin', 60);
     }
 
+    public function test_the_day_list_carries_the_registers_projection_of_the_patient(): void
+    {
+        $this->patient();
+
+        $booked = $this->asRole()
+            ->postJson('/appointments', $this->booking(), ['Idempotency-Key' => $this->key('a01')])
+            ->assertCreated();
+
+        /* The booking answers with the same projection the day list does, so a screen that has just taken a slot can
+           print the name it was given without a second request. */
+        $this->assertSame('Rahima Begum', $booked->json('patient.name'));
+        $this->assertSame('রহিমা বেগম', $booked->json('patient.nameBn'));
+        $this->assertSame('MRN-000001', $booked->json('patient.mrn'));
+
+        $this->asRole()->getJson('/appointments?day='.self::TUESDAY)
+            ->assertOk()
+            ->assertJsonPath('rows.0.patient.name', 'Rahima Begum')
+            ->assertJsonPath('rows.0.patient.sex', 'Female')
+            ->assertJsonPath('rows.0.patient.phone', '01711000001')
+            /* Fields the register does not have are absent rather than invented: this patient has no allergy recorded
+               and the screen must be able to tell "none known" from "not asked". */
+            ->assertJsonPath('rows.0.patient.allergies', null);
+    }
+
+    public function test_the_inbox_query_asks_the_server_for_the_requests_nobody_has_answered(): void
+    {
+        $this->patient();
+        $taken = $this->booked([], 'a01');
+        $walkIn = $this->booked(['doctorId' => 'dr-islam', 'source' => 'Walk-in'], 'a02');
+
+        /* A portal request is an appointment in the contract's own `Requested` state with the portal as its source.
+           Only `POST /portal/appointments` creates one in production — it is the cloud's operation and this branch
+           does not serve it yet — so the suite writes the row the portal will write. */
+        $requested = $this->booked(['doctorId' => 'dr-hossain', 'source' => 'Online portal'], 'a03');
+        Appointment::query()->where('id', $requested)->update(['status' => 'Requested']);
+
+        $inbox = $this->asRole()->getJson('/appointments?day='.self::TUESDAY.'&source=Online portal&status=Requested')
+            ->assertOk()
+            ->assertJsonCount(1, 'rows')
+            ->assertJsonPath('rows.0.id', $requested)
+            ->assertJsonPath('rows.0.status', 'Requested')
+            ->assertJsonPath('rows.0.source', 'Online portal');
+
+        /* Two filters are two conditions, not one: the walk-in is in the day but not in the inbox, and the answered
+           booking is in neither. */
+        $this->assertNotSame('', $taken);
+        $this->assertNotSame('', $walkIn);
+        $this->asRole()->getJson('/appointments?day='.self::TUESDAY.'&status=Requested')
+            ->assertOk()
+            ->assertJsonCount(1, 'rows')
+            ->assertJsonPath('rows.0.id', $requested);
+    }
+
+    public function test_the_queue_board_asks_for_the_states_a_patient_is_actually_in_the_queue_for(): void
+    {
+        $this->patient();
+        $first = $this->booked([], 'a01');
+        $second = $this->booked(['start' => self::TUESDAY.'T11:00:00+06:00'], 'a02');
+
+        $this->asRole()->postJson('/appointments/'.$first.'/check-in', [], ['Idempotency-Key' => $this->key('k01')])->assertOk();
+
+        $this->asRole()->getJson('/appointments?day='.self::TUESDAY.'&status=Checked in')
+            ->assertOk()
+            ->assertJsonCount(1, 'rows')
+            ->assertJsonPath('rows.0.id', $first);
+
+        /* The board is more than one state, and a filter that took only a single word would be the wrong shape for
+           it — so the app asks per status and the API answers per status. What the API refuses to do is invent a
+           combined state the contract does not name. */
+        $this->asRole()->getJson('/appointments?day='.self::TUESDAY.'&status=Checked in,Waiting')
+            ->assertOk()
+            ->assertJsonCount(0, 'rows');
+        $this->assertNotSame('', $second);
+    }
+
     public function test_the_slot_list_draws_the_grid_and_marks_the_whole_claimed_block(): void
     {
         $this->patient();

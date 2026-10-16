@@ -684,6 +684,40 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Requested",
+                "Confirmed",
+                "Checked in",
+                "Waiting",
+                "In consultation",
+                "Completed",
+                "No show",
+                "Cancelled"
+              ]
+            },
+            "description": "Only appointments in this state. The online-request inbox asks for `Requested`; the queue board asks for the states a patient is in the queue for."
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Walk-in",
+                "Phone",
+                "Online portal",
+                "Follow-up"
+              ]
+            },
+            "description": "Where the booking came from. `Online portal` is what the request inbox is: everything the portal took that this branch has not answered yet."
           }
         ],
         "responses": {
@@ -8514,6 +8548,45 @@
           },
           "mrn": {
             "type": "string"
+          },
+          "patient": {
+            "type": "object",
+            "description": "A projection of the patient register, joined at the edge for the day list and the queue board. The register owns these fields; an appointment carries a copy only so a screen can print a name beside a token without a second request per row.",
+            "properties": {
+              "mrn": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "nameBn": {
+                "type": "string"
+              },
+              "age": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "sex": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "allergies": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "mrn",
+              "name",
+              "sex",
+              "phone"
+            ]
           },
           "doctorId": {
             "type": "string"

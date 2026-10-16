@@ -96,6 +96,45 @@ final class Register
     }
 
     /**
+     * The few fields a *list* of another module's records needs, keyed by MRN, in one query.
+     *
+     * A day list is thirty appointments and thirty names, and asking for them one at a time turns one page into
+     * thirty round trips to this table. What comes back is deliberately small — who the patient is and what a
+     * clinician must see before touching them — because it is a projection for a screen rather than a second copy of
+     * the register: nothing here is read back, edited or aged.
+     *
+     * An MRN with no row is simply absent from the answer. The caller decides what a missing patient means; this
+     * method does not invent a placeholder name for somebody who is not on the register.
+     *
+     * @param  list<string>  $mrns
+     * @return array<string, array<string, mixed>>
+     */
+    public function summaries(array $mrns): array
+    {
+        $wanted = array_values(array_unique(array_filter($mrns, static fn (string $mrn): bool => $mrn !== '')));
+
+        if ($wanted === []) {
+            return [];
+        }
+
+        $found = [];
+
+        Patient::query()->whereIn('mrn', $wanted)->get()->each(function (Patient $patient) use (&$found): void {
+            $found[(string) $patient->mrn] = [
+                'mrn' => (string) $patient->mrn,
+                'name' => (string) $patient->name,
+                'nameBn' => (string) ($patient->name_bn ?? ''),
+                'age' => $patient->age === null ? null : (int) $patient->age,
+                'sex' => (string) $patient->sex,
+                'phone' => (string) $patient->phone,
+                'allergies' => $patient->allergies === null ? null : (string) $patient->allergies,
+            ];
+        });
+
+        return $found;
+    }
+
+    /**
      * Register a patient.
      *
      * @param  array<string, mixed>  $input

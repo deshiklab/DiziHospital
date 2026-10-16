@@ -33,13 +33,32 @@ final class AppointmentController
         private readonly Register $register,
     ) {}
 
-    /** The day's diary, for the calendar and the queue board. */
+    /** The day's diary, for the calendar, the queue board and the online-request inbox. */
     public function index(Request $request): JsonResponse
     {
         $day = $this->day($request);
-        $doctorId = $request->query('doctorId');
+        $doctorId = $this->word($request, 'doctorId');
+        $status = $this->word($request, 'status');
+        $source = $this->word($request, 'source');
 
-        return new JsonResponse($this->diary->day($day, is_string($doctorId) && $doctorId !== '' ? $doctorId : null));
+        $page = $this->diary->day($day, $doctorId, $status, $source);
+
+        /* The register is *projected* onto the page here rather than inside the diary, and that is the module
+           boundary doing its job: `Scheduling` knows a booking's MRN and nothing about who carries it, so the join
+           happens at the edge, through registration's own seam, in one query for the whole page. A screen prints a
+           name beside a token from this, and the register is still the only place a name is edited. */
+        $summaries = $this->register->summaries(array_map(
+            static fn (array $row): string => (string) $row['mrn'],
+            $page['rows'],
+        ));
+
+        $page['rows'] = array_map(static function (array $row) use ($summaries): array {
+            $row['patient'] = $summaries[$row['mrn']] ?? null;
+
+            return $row;
+        }, $page['rows']);
+
+        return new JsonResponse($page);
     }
 
     /** The slots one doctor offers on one day, with what holds each of them. */
@@ -90,7 +109,11 @@ final class AppointmentController
             );
         }
 
-        return new JsonResponse($this->diary->book($data, $actor)->toApiArray(), 201);
+        $appointment = $this->diary->book($data, $actor);
+
+        return new JsonResponse($appointment->toApiArray() + [
+            'patient' => $this->register->summaries([(string) $data['mrn']])[(string) $data['mrn']] ?? null,
+        ], 201);
     }
 
     /** Confirm, reschedule, cancel or mark a no-show — the contract's `PATCH`, in one operation. */
@@ -111,6 +134,14 @@ final class AppointmentController
         $actor = app(Actor::class);
 
         return new JsonResponse($this->diary->checkIn($this->diary->find($id), $actor)->toApiArray());
+    }
+
+    /** A query word, or null when it was not sent. */
+    private function word(Request $request, string $name): ?string
+    {
+        $value = $request->query($name);
+
+        return is_string($value) && $value !== '' ? $value : null;
     }
 
     /** The day, refused as a malformed query string rather than as a validation failure. */

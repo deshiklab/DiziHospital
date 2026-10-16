@@ -114,6 +114,8 @@ export interface Appointment {
   readonly id: string;
   readonly token: string;
   readonly mrn?: string;
+  /** A projection of the patient register, joined at the edge for the day list and the queue board. The register owns these fields; an appointment carries a copy only so a screen can print a name beside a token without a second request per row. */
+  readonly patient?: { mrn: string; name: string; nameBn: string; age: unknown; sex: string; phone: string; allergies: unknown };
   readonly doctorId: string;
   readonly start: string;
   readonly durationMin?: number;
