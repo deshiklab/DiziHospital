@@ -112,12 +112,12 @@ jobs:
           ls -la storage/logs || true
           log=storage/logs/laravel.log
           if [ -f "$log" ]; then
-            # The *first* line of the last three entries, and the frames immediately under each: the header carries the
-            # exception's own sentence — which is what identifies the failure — and the frames under it name the class
-            # in this service that threw it. Tail alone prints the deepest frames and loses the sentence, which is what
-            # the first version of this step did.
-            grep -an 'testing\.ERROR' "$log" | tail -3 | cut -d: -f1 | while read -r line; do
-              sed -n "${line},$((line + 6))p" "$log" | cut -c1-200
+            # The last three entries that were *not* a product refusal: every refusal is logged too, and a run that
+            # proves the refusals log correctly buries the one entry that says what actually broke — which is what
+            # happened the first time this step ran. Each is printed from its header line (the exception's own
+            # sentence) down through the frames under it, which name the class in this service that threw it.
+            grep -an 'testing\.ERROR' "$log" | grep -av 'ProblemException' | tail -3 | cut -d: -f1 | while read -r line; do
+              sed -n "${line},$((line + 12))p" "$log" | sed 's/ {"exception".*//' | cut -c1-200
               echo '---'
             done | sed 's/%/%25/g' | sed -z 's/\n/%0A/g' | sed 's/^/::error ::/'
           fi
