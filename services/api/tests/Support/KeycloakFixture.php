@@ -110,6 +110,14 @@ trait KeycloakFixture
      */
     protected function keycloakToken(array $claims = [], array $headers = [], ?string $kid = null, bool $sign = true): string
     {
+        /* A key, before anything is signed with one. Tests write `$this->verifyKeycloak($this->keycloakToken())` all
+           the time, and PHP evaluates the argument first — so the mint has to be able to stand on its own. The first
+           CI run of this suite failed fourteen cases on `openssl_sign(): Supplied key param cannot be coerced into a
+           private key` because it could not. */
+        if ($sign && $this->realmPrivateKey === null) {
+            $this->generateRealmKey($this->realmKid);
+        }
+
         $header = array_merge(['alg' => 'RS256', 'typ' => 'JWT', 'kid' => $kid ?? $this->realmKid], $headers);
         $payload = array_merge([
             'iss' => $this->issuer,
@@ -126,26 +134,43 @@ trait KeycloakFixture
         ], $claims);
 
         $signingInput = $this->base64url((string) json_encode($header)).'.'.$this->base64url((string) json_encode($payload));
-        $signature = '';
 
         if ($sign) {
             openssl_sign($signingInput, $signature, $this->realmPrivateKey, OPENSSL_ALGO_SHA256);
+
+            return $signingInput.'.'.$this->base64url($signature);
         }
 
-        return $signingInput.'.'.$this->base64url($signature);
+        /* `sign: false` is the attacker's token — `alg: none`, or an HMAC signed with a public key — and it is framed
+           like a real one: three parts, the third one bytes somebody made up. An empty third part is refused earlier,
+           as a token that is not a token, which is a different refusal from the one these cases are about. */
+        return $signingInput.'.'.$this->base64url('not-a-signature');
     }
 
-    /** Drive the driver directly, for the cases that are about verification rather than about a request. */
-    protected function verifyKeycloak(string $token): Actor
+    /**
+     * Drive the driver directly, for the cases that are about verification rather than about a request.
+     *
+     * `$configure` is the difference between the two kinds of case in this suite. Most of them want a realm: a key,
+     * the key set published, the service pointed at it — that is the default. The four that build a realm of their
+     * own (a rotated key, a key set that answers 502, one that publishes nothing, one that carries only `x5c`) pass
+     * `configure: false`, because re-faking the default set would quietly replace the very thing they are testing.
+     */
+    protected function verifyKeycloak(string $token, bool $configure = true): Actor
     {
-        $this->useKeycloakDriver();
+        if ($configure) {
+            $this->useKeycloakDriver();
+        }
 
         return $this->app->make(TokenVerifier::class)->verify($token);
     }
 
-    /** The refusal a token produces, as a `ProblemException`, or null when it was accepted. */
-    protected function refusalFor(string $token): ?ProblemException
+    /** The refusal a token produces, as a `ProblemException`, or null when it was accepted. See `verifyKeycloak`. */
+    protected function refusalFor(string $token, bool $configure = true): ?ProblemException
     {
+        if ($configure) {
+            $this->useKeycloakDriver();
+        }
+
         try {
             $this->app->make(TokenVerifier::class)->verify($token);
         } catch (ProblemException $refusal) {

@@ -45,7 +45,8 @@ final class KeycloakTokenVerifierTest extends TestCase
         ]));
 
         $this->assertSame(['doctor', 'admin'], $actor->roles);
-        // The sentence a refusal prints names the widest role held, not the first one in the list.
+        // `role` is the token's first role, kept as a single word for a log line; the *abilities* are the union, and
+        // the app decides which shell to draw from the whole set (see `abilitiesFor`/`shellFor` in `lib/auth`).
         $this->assertSame('doctor', $actor->role);
     }
 
@@ -138,6 +139,19 @@ final class KeycloakTokenVerifierTest extends TestCase
         $this->assertStringContainsString('signed the way', $refusal->title);
     }
 
+    public function test_a_token_that_is_not_framed_like_one_is_refused_before_anything_is_read(): void
+    {
+        /* Two parts, or three with an empty one, is not a token; there is nothing to check a signature against and
+           nothing to read. Kept as a case of its own because it is what a request carrying a truncated token looks
+           like in the log, and because the first version of the unsigned-token case below was quietly testing this
+           instead of the algorithm pinning: an empty third part never reached the alg check. */
+        $refusal = $this->refusalFor('a-header.a-payload');
+
+        $this->assertNotNull($refusal);
+        $this->assertSame('dizi.unauthenticated', $refusal->type);
+        $this->assertStringContainsString('not a token', $refusal->title);
+    }
+
     public function test_a_key_id_the_realm_does_not_publish_is_refused(): void
     {
         $refusal = $this->refusalFor($this->keycloakToken([], ['kid' => 'a-key-from-elsewhere']));
@@ -174,7 +188,7 @@ final class KeycloakTokenVerifierTest extends TestCase
             $this->issuer.'/protocol/openid-connect/certs' => Http::response($rotated, 200),
         ]);
 
-        $actor = $this->verifyKeycloak($this->keycloakToken([], ['kid' => 'realm-key-2']));
+        $actor = $this->verifyKeycloak($this->keycloakToken([], ['kid' => 'realm-key-2']), configure: false);
 
         $this->assertSame(['receptionist'], $actor->roles);
     }
@@ -219,7 +233,7 @@ final class KeycloakTokenVerifierTest extends TestCase
             $this->issuer.'/protocol/openid-connect/certs' => Http::response('', 502),
         ]);
 
-        $refusal = $this->refusalFor($this->keycloakToken());
+        $refusal = $this->refusalFor($this->keycloakToken(), configure: false);
 
         $this->assertNotNull($refusal);
         $this->assertSame('dizi.unavailable', $refusal->type);
@@ -243,7 +257,7 @@ final class KeycloakTokenVerifierTest extends TestCase
             $this->issuer.'/protocol/openid-connect/certs' => Http::response(['keys' => []], 200),
         ]);
 
-        $refusal = $this->refusalFor($this->keycloakToken());
+        $refusal = $this->refusalFor($this->keycloakToken(), configure: false);
 
         $this->assertNotNull($refusal);
         $this->assertStringContainsString('published no keys', $refusal->title);
@@ -279,7 +293,7 @@ final class KeycloakTokenVerifierTest extends TestCase
             ]]], 200),
         ]);
 
-        $actor = $this->verifyKeycloak($this->keycloakToken());
+        $actor = $this->verifyKeycloak($this->keycloakToken(), configure: false);
 
         $this->assertSame('receptionist', $actor->role);
     }
