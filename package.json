@@ -21,7 +21,7 @@
     "contract:build": "npm run build --workspace @dizi/contracts",
     "contract:check": "npm run check --workspace @dizi/contracts",
     "contract:test": "npm run self-test --workspace @dizi/contracts",
-    "verify": "npm run contract:check && npm run contract:test && npm run clean-room && npm run tokens:check && npm run check:classes && npm run check:env",
+    "verify": "npm run contract:check && npm run contract:test && npm run clean-room && npm run tokens:check && npm run check:classes && npm run check:env && npm run api:calls",
     "test:shell": "node tools/test/shell-nav.mjs",
     "test:runtime": "node tools/test/runtime.mjs",
     "test:rules": "node tools/test/duplicate-rules.mjs",
@@ -33,6 +33,7 @@
     "api:style": "node tools/ci/php-style.mjs",
     "test:grid": "node tools/test/grid.mjs",
     "test:auth": "node tools/test/auth.mjs",
-    "perf:grid": "node tools/perf/grid.mjs"
+    "perf:grid": "node tools/perf/grid.mjs",
+    "api:calls": "node tools/ci/php-calls.mjs"
   }
 }

@@ -98,7 +98,7 @@ jobs:
               /^There w/ { list = 1 }
               list && /^[0-9]+\) / { name = $0; getline message; while (message ~ /^[[:space:]]*$/) getline message;
                                     printf "%s -- %s\n", name, message; next }
-            ' /tmp/phpunit.log | head -40 | cut -c1-150 \
+            ' /tmp/phpunit.log | head -40 | cut -c1-400 \
               | sed 's/%/%25/g' | sed -z 's/\n/%0A/g' | sed 's/^/::error ::/'
           fi
           exit "$status"
