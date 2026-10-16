@@ -80,6 +80,7 @@ export type EntityKind =
   | 'report.schedule'
   | 'report.run'
   | 'message.notice'
+  | 'message.delivery'
   | 'portal.feedback'
   | 'prescription'
   | 'lab.result'
@@ -89,6 +90,14 @@ export type EntityKind =
 export type ConflictPolicy = 'append-only' | 'field-level' | 'exclusive';
 
 export const ENTITY_POLICY: Record<EntityKind, { policy: ConflictPolicy; label: string; why: string }> = {
+  /* Nothing queues a delivery: a message that has left the hospital cannot be replayed later, so the retry is
+     online-only by contract. The policy is here because the entity is in the contract's registry and this table is
+     checked against it — and because "two nodes each appended an attempt" is a fact the log has to be able to show. */
+  'message.delivery': {
+    policy: 'append-only',
+    label: 'Notification delivery',
+    why: 'An attempt is a fact about a moment: which channel, which template, and the provider\u2019s own message id or its own error. A retry appends the next attempt rather than editing the one that failed.',
+  },
   'patient.demographic': {
     policy: 'field-level',
     label: 'Patient identity',

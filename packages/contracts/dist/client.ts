@@ -1789,6 +1789,67 @@ export interface AppointmentSlotDay {
   readonly asOf?: string;
 }
 
+/** One attempt to deliver one message. Appended, never edited: a retry is the next row, and the row before it keeps the provider’s words. */
+export interface NotificationDelivery {
+  readonly id: string;
+  readonly eventId?: string;
+  /** The event this message is about, as `x-dizi-notifications.events` names it. */
+  readonly topic: string;
+  readonly channel: "whatsapp" | "email";
+  readonly template: string;
+  readonly language: "bn" | "en";
+  /** The patient, when the event is about one. Staff notifications have none. */
+  readonly mrn?: unknown;
+  /** Where it went, masked: a delivery log is read by whoever is on duty, and a log full of phone numbers is a patient register in a second place. The last three characters are kept so a patient asking “did it go to the right number?” can be answered. */
+  readonly to: string;
+  /** `suppressed` is a policy refusal — no consent, no address, quiet hours, an unapproved template — and it is not a fault of the channel. `sent` means the provider accepted it; `delivered` and `read` come from the provider’s own receipts. */
+  readonly status: "queued" | "sent" | "delivered" | "read" | "failed" | "suppressed";
+  /** Which driver carried it: `meta-cloud`, `smtp`, or `preview` — and `preview` means nothing left this node. The delivery log says which is in force at the top rather than leaving a reader to infer it from the rows. */
+  readonly provider: string;
+  readonly providerMessageId?: unknown;
+  /** A `dizi.*` code when the attempt failed or was suppressed. */
+  readonly errorCode?: unknown;
+  /** The sentence a person reads: what happened, in the service’s or the provider’s own words. */
+  readonly detail?: unknown;
+  readonly attempt: number;
+  readonly at: string;
+  /** Whether a person may retry it: a failed attempt with attempts left. A suppression is not retryable — pressing retry does not create consent. */
+  readonly retryable: boolean;
+}
+
+export interface NotificationDeliveryPage {
+  readonly rows: Array<NotificationDelivery>;
+  readonly asOf: string;
+  /** Which driver is in force per channel. `preview` renders the message, records what it would have sent and touches no network — a log of preview rows is not evidence that anybody was told. */
+  readonly driver: { whatsapp: string; email: string };
+  /** Channels that are not delivering: at least `x-dizi-notifications.alerting.consecutiveFailures` failures inside the window. Suppressions do not count — a policy refusal is not a channel that is down. */
+  readonly alerts: Array<{ channel: string; failures: number; since: string; because: string }>;
+  /** How many of the returned rows are in each status, so a screen prints the shape of a morning without counting. A status with no rows is absent rather than zero. */
+  readonly counts?: Record<string, number>;
+}
+
+/** One template, in one language, for one channel. `x-dizi-notifications.templates` is the pilot’s default wording and this is what the branch’s own registry says. */
+export interface NotificationTemplate {
+  readonly event: string;
+  readonly template: string;
+  readonly channel: "whatsapp" | "email";
+  readonly language: "bn" | "en";
+  /** E-mail only; a WhatsApp template has no subject. */
+  readonly subject?: unknown;
+  readonly body: string;
+  readonly placeholders: Array<string>;
+  /** WhatsApp templates are approved by Meta per account; e-mail needs none. `pending` and `rejected` both refuse a send, with different sentences. */
+  readonly approval: "not-required" | "pending" | "approved" | "rejected";
+  readonly enabled: boolean;
+}
+
+export interface NotificationTemplatePage {
+  readonly rows: Array<NotificationTemplate>;
+  /** The catalogue, from the contract: every event the node notices, the template it is said in, and the events that are deliberately not notifiable. */
+  readonly events: Array<{ topic: string; template: unknown; channels: Array<string>; notifiable: boolean; means: string }>;
+  readonly asOf: string;
+}
+
 
 /* ------------------------------------------------------------- operations */
 
@@ -3432,6 +3493,72 @@ export const operations = {
     needsNetwork: true,
     requiresIdempotencyKey: true,
   },
+  listNotificationDeliveries: {
+    id: "listNotificationDeliveries",
+    method: "get",
+    path: "/notifications/deliveries",
+    tag: "messaging",
+    summary: "The delivery log",
+    entity: "message.delivery",
+    offline: "cache",
+    authority: "edge",
+    idempotency: "none",
+    audit: false,
+    because: "The log is read at the desk when a patient says they were never told, and that question does not wait for the uplink. The rows are already on this node — they were written by the drain that sent them.",
+    notes: null,
+    request: null,
+    responses: { "200": "NotificationDeliveryPage", "401": null },
+    problemResponses: ["401"],
+    statuses: [200, 401],
+    mayQueue: false,
+    servesFromReplica: true,
+    needsNetwork: false,
+    requiresIdempotencyKey: false,
+  },
+  listNotificationTemplates: {
+    id: "listNotificationTemplates",
+    method: "get",
+    path: "/notifications/templates",
+    tag: "messaging",
+    summary: "The templates, and which events are not notifiable",
+    entity: "message.delivery",
+    offline: "cache",
+    authority: "edge",
+    idempotency: "none",
+    audit: false,
+    because: "The wording is read on the messaging screen and by whoever is asked why a message said what it said. It is branch data, so it is readable during an outage like every other catalogue.",
+    notes: null,
+    request: null,
+    responses: { "200": "NotificationTemplatePage", "401": null },
+    problemResponses: ["401"],
+    statuses: [200, 401],
+    mayQueue: false,
+    servesFromReplica: true,
+    needsNetwork: false,
+    requiresIdempotencyKey: false,
+  },
+  retryNotificationDelivery: {
+    id: "retryNotificationDelivery",
+    method: "post",
+    path: "/notifications/deliveries/{id}/retry",
+    tag: "messaging",
+    summary: "Send one failed attempt again",
+    entity: "message.delivery",
+    offline: "online-only",
+    authority: "edge",
+    idempotency: "required",
+    audit: true,
+    because: "A retry is a message leaving the hospital, which is the one act that cannot be queued and replayed later: the gateway may have delivered the first attempt after all, and a queued retry would send a second message the desk has no way to see.",
+    notes: "Online only because the answer depends on the gateway being reachable *now*: queuing it would send tomorrow a message the desk expected to leave today, and the patient would be told twice about one appointment.",
+    request: null,
+    responses: { "201": "NotificationDelivery", "401": null, "403": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "409", "422"],
+    statuses: [201, 401, 403, 409, 422],
+    mayQueue: false,
+    servesFromReplica: false,
+    needsNetwork: true,
+    requiresIdempotencyKey: true,
+  },
   listNotifications: {
     id: "listNotifications",
     method: "get",
@@ -4091,6 +4218,11 @@ export const entityPolicies = {
     "label": "Notice or message",
     "why": "The text of a notice is written once, but its delivery state and the read receipts change as people open it. Two nodes updating different recipients of the same notice are both right."
   },
+  "message.delivery": {
+    "policy": "append-only",
+    "label": "Notification delivery",
+    "why": "A delivery attempt is a fact about a moment: which channel, which template, and the provider’s own message id or its own error. A retry appends the next attempt rather than editing the one that failed, and two nodes appending an attempt each is two attempts — which is exactly what the log has to show."
+  },
   "portal.feedback": {
     "policy": "append-only",
     "label": "Patient feedback",
@@ -4256,6 +4388,21 @@ export const problemTypes = {
     "title": "That channel cannot carry a report",
     "when": "A recipient is on a channel that carries a message rather than a file — WhatsApp today — or on a mailbox outside the hospital while the sheet names people",
     "client": "Offer the hospital’s own mail or a counter that picks the sheet up, and say why: a file that has left the building cannot be recalled"
+  },
+  "dizi.template-unapproved": {
+    "title": "That wording is not approved",
+    "when": "A WhatsApp template has not been approved for this Business account, or was rejected after somebody edited it",
+    "client": "Name the template and the account’s own state, and offer the e-mail wording meanwhile: the provider refuses an unapproved template, and a refusal the desk cannot see is a patient who is never told."
+  },
+  "dizi.recipient-missing": {
+    "title": "There is nowhere to send it",
+    "when": "The record carries no number or address for that channel, or the one it carried has been removed since it was given",
+    "client": "Say which channel has no address and where the address is edited. Do not fall back to another channel — consent is given per channel, and “they gave a number, so use it” is how a message goes out that nobody agreed to."
+  },
+  "dizi.quiet-hours": {
+    "title": "It is inside the quiet hours",
+    "when": "A patient-facing message is due between the hours the branch has set as quiet, when a household sleeping is the normal state of a household",
+    "client": "Record the delivery as suppressed and say when it will be sent — it is due again at the hour the window closes. Never send it late at night to be on time."
   }
 } as const;
 

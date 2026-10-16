@@ -6354,6 +6354,230 @@
         }
       }
     },
+    "/notifications/deliveries": {
+      "get": {
+        "operationId": "listNotificationDeliveries",
+        "summary": "The delivery log",
+        "tags": [
+          "messaging"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "queued",
+                "sent",
+                "delivered",
+                "read",
+                "failed",
+                "suppressed"
+              ]
+            },
+            "description": "Only rows in this state. `failed` is what the delivery screen opens on."
+          },
+          {
+            "name": "channel",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "whatsapp",
+                "email"
+              ]
+            },
+            "description": "Only this channel."
+          },
+          {
+            "name": "topic",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "One event’s messages: “did the appointment confirmations go out?” is a question about a topic."
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "Only attempts at or after this moment."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200
+            },
+            "description": "How many rows, most recent first."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationDeliveryPage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "message.delivery",
+          "offline": "cache",
+          "authority": "edge",
+          "idempotency": "none",
+          "audit": false,
+          "because": "The log is read at the desk when a patient says they were never told, and that question does not wait for the uplink. The rows are already on this node — they were written by the drain that sent them."
+        }
+      }
+    },
+    "/notifications/templates": {
+      "get": {
+        "operationId": "listNotificationTemplates",
+        "summary": "The templates, and which events are not notifiable",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationTemplatePage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "message.delivery",
+          "offline": "cache",
+          "authority": "edge",
+          "idempotency": "none",
+          "audit": false,
+          "because": "The wording is read on the messaging screen and by whoever is asked why a message said what it said. It is branch data, so it is readable during an outage like every other catalogue."
+        }
+      }
+    },
+    "/notifications/deliveries/{id}/retry": {
+      "post": {
+        "operationId": "retryNotificationDelivery",
+        "summary": "Send one failed attempt again",
+        "tags": [
+          "messaging"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The delivery attempt"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The next attempt, appended",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationDelivery"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already delivered, or a suppression — the attempt is returned as it stands",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Not retryable: no attempts left, or the attempt never failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role may not message patients",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        },
+        "x-dizi": {
+          "entity": "message.delivery",
+          "offline": "online-only",
+          "authority": "edge",
+          "idempotency": "required",
+          "audit": true,
+          "because": "A retry is a message leaving the hospital, which is the one act that cannot be queued and replayed later: the gateway may have delivered the first attempt after all, and a queued retry would send a second message the desk has no way to see.",
+          "notes": "Online only because the answer depends on the gateway being reachable *now*: queuing it would send tomorrow a message the desk expected to leave today, and the patient would be told twice about one appointment."
+        }
+      }
+    },
     "/notifications": {
       "get": {
         "operationId": "listNotifications",
@@ -14791,6 +15015,304 @@
             "format": "date-time"
           }
         }
+      },
+      "NotificationDelivery": {
+        "type": "object",
+        "description": "One attempt to deliver one message. Appended, never edited: a retry is the next row, and the row before it keeps the provider’s words.",
+        "required": [
+          "id",
+          "topic",
+          "channel",
+          "template",
+          "language",
+          "to",
+          "status",
+          "provider",
+          "attempt",
+          "at",
+          "retryable"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "eventId": {
+            "type": "string"
+          },
+          "topic": {
+            "type": "string",
+            "description": "The event this message is about, as `x-dizi-notifications.events` names it."
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "whatsapp",
+              "email"
+            ]
+          },
+          "template": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "bn",
+              "en"
+            ]
+          },
+          "mrn": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The patient, when the event is about one. Staff notifications have none."
+          },
+          "to": {
+            "type": "string",
+            "description": "Where it went, masked: a delivery log is read by whoever is on duty, and a log full of phone numbers is a patient register in a second place. The last three characters are kept so a patient asking “did it go to the right number?” can be answered."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "sent",
+              "delivered",
+              "read",
+              "failed",
+              "suppressed"
+            ],
+            "description": "`suppressed` is a policy refusal — no consent, no address, quiet hours, an unapproved template — and it is not a fault of the channel. `sent` means the provider accepted it; `delivered` and `read` come from the provider’s own receipts."
+          },
+          "provider": {
+            "type": "string",
+            "description": "Which driver carried it: `meta-cloud`, `smtp`, or `preview` — and `preview` means nothing left this node. The delivery log says which is in force at the top rather than leaving a reader to infer it from the rows."
+          },
+          "providerMessageId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "errorCode": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "A `dizi.*` code when the attempt failed or was suppressed."
+          },
+          "detail": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The sentence a person reads: what happened, in the service’s or the provider’s own words."
+          },
+          "attempt": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "retryable": {
+            "type": "boolean",
+            "description": "Whether a person may retry it: a failed attempt with attempts left. A suppression is not retryable — pressing retry does not create consent."
+          }
+        }
+      },
+      "NotificationDeliveryPage": {
+        "type": "object",
+        "required": [
+          "rows",
+          "asOf",
+          "driver",
+          "alerts"
+        ],
+        "properties": {
+          "rows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NotificationDelivery"
+            }
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "driver": {
+            "type": "object",
+            "description": "Which driver is in force per channel. `preview` renders the message, records what it would have sent and touches no network — a log of preview rows is not evidence that anybody was told.",
+            "required": [
+              "whatsapp",
+              "email"
+            ],
+            "properties": {
+              "whatsapp": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
+          },
+          "alerts": {
+            "type": "array",
+            "description": "Channels that are not delivering: at least `x-dizi-notifications.alerting.consecutiveFailures` failures inside the window. Suppressions do not count — a policy refusal is not a channel that is down.",
+            "items": {
+              "type": "object",
+              "required": [
+                "channel",
+                "failures",
+                "since",
+                "because"
+              ],
+              "properties": {
+                "channel": {
+                  "type": "string"
+                },
+                "failures": {
+                  "type": "integer"
+                },
+                "since": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "because": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "counts": {
+            "type": "object",
+            "description": "How many of the returned rows are in each status, so a screen prints the shape of a morning without counting. A status with no rows is absent rather than zero.",
+            "additionalProperties": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "NotificationTemplate": {
+        "type": "object",
+        "description": "One template, in one language, for one channel. `x-dizi-notifications.templates` is the pilot’s default wording and this is what the branch’s own registry says.",
+        "required": [
+          "event",
+          "template",
+          "channel",
+          "language",
+          "body",
+          "placeholders",
+          "approval",
+          "enabled"
+        ],
+        "properties": {
+          "event": {
+            "type": "string"
+          },
+          "template": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "whatsapp",
+              "email"
+            ]
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "bn",
+              "en"
+            ]
+          },
+          "subject": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "E-mail only; a WhatsApp template has no subject."
+          },
+          "body": {
+            "type": "string"
+          },
+          "placeholders": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "approval": {
+            "type": "string",
+            "enum": [
+              "not-required",
+              "pending",
+              "approved",
+              "rejected"
+            ],
+            "description": "WhatsApp templates are approved by Meta per account; e-mail needs none. `pending` and `rejected` both refuse a send, with different sentences."
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "NotificationTemplatePage": {
+        "type": "object",
+        "required": [
+          "rows",
+          "events",
+          "asOf"
+        ],
+        "properties": {
+          "rows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NotificationTemplate"
+            }
+          },
+          "events": {
+            "type": "array",
+            "description": "The catalogue, from the contract: every event the node notices, the template it is said in, and the events that are deliberately not notifiable.",
+            "items": {
+              "type": "object",
+              "required": [
+                "topic",
+                "template",
+                "channels",
+                "notifiable"
+              ],
+              "properties": {
+                "topic": {
+                  "type": "string"
+                },
+                "template": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "channels": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "notifiable": {
+                  "type": "boolean"
+                },
+                "means": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
       }
     }
   },
@@ -14965,6 +15487,11 @@
       "label": "Notice or message",
       "why": "The text of a notice is written once, but its delivery state and the read receipts change as people open it. Two nodes updating different recipients of the same notice are both right."
     },
+    "message.delivery": {
+      "policy": "append-only",
+      "label": "Notification delivery",
+      "why": "A delivery attempt is a fact about a moment: which channel, which template, and the provider’s own message id or its own error. A retry appends the next attempt rather than editing the one that failed, and two nodes appending an attempt each is two attempts — which is exactly what the log has to show."
+    },
     "portal.feedback": {
       "policy": "append-only",
       "label": "Patient feedback",
@@ -15136,6 +15663,21 @@
       "title": "That channel cannot carry a report",
       "when": "A recipient is on a channel that carries a message rather than a file — WhatsApp today — or on a mailbox outside the hospital while the sheet names people",
       "client": "Offer the hospital’s own mail or a counter that picks the sheet up, and say why: a file that has left the building cannot be recalled"
+    },
+    "dizi.template-unapproved": {
+      "title": "That wording is not approved",
+      "when": "A WhatsApp template has not been approved for this Business account, or was rejected after somebody edited it",
+      "client": "Name the template and the account’s own state, and offer the e-mail wording meanwhile: the provider refuses an unapproved template, and a refusal the desk cannot see is a patient who is never told."
+    },
+    "dizi.recipient-missing": {
+      "title": "There is nowhere to send it",
+      "when": "The record carries no number or address for that channel, or the one it carried has been removed since it was given",
+      "client": "Say which channel has no address and where the address is edited. Do not fall back to another channel — consent is given per channel, and “they gave a number, so use it” is how a message goes out that nobody agreed to."
+    },
+    "dizi.quiet-hours": {
+      "title": "It is inside the quiet hours",
+      "when": "A patient-facing message is due between the hours the branch has set as quiet, when a household sleeping is the normal state of a household",
+      "client": "Record the delivery as suppressed and say when it will be sent — it is due again at the hour the window closes. Never send it late at night to be on time."
     }
   },
   "x-dizi-duplicate-rules": {
@@ -15552,6 +16094,207 @@
       "Bookings taken while offline are queued with the slot they claim, and the branch that took the booking owns it: a node that drains into a slot another node has since taken is refused with `dizi.slot-taken` and the alternatives, never merged.",
       "The queue is a state machine the service owns, and `queueMoves` is the whole of it: a status may only move to one of the statuses listed for where it is now. Arriving is not a move — checking a patient in is its own operation (`POST /appointments/{id}/check-in`), which is why `Confirmed` does not list `Checked in`: the board counts arrivals, and a patient who never arrived must not be able to appear waiting. A status the table does not mention as a target is refused with `dizi.validation-failed` naming the moves that are allowed, and a screen must offer only what the table allows.",
       "Checking a patient in is an operation rather than a move (`POST /appointments/{id}/check-in`), and `checkInFrom` is the whole of when it applies: a booking that has not arrived may be checked in, and nothing else may. A second check-in of the same token is refused as a duplicate (`dizi.duplicate-operation`), and a cancelled or no-show appointment is refused as a validation failure — a check-in against a visit nobody is expecting would put a patient in a queue whose doctor has not been told."
+    ]
+  },
+  "x-dizi-notifications": {
+    "description": "How this node tells people things: the events it notices, the template each event is said in, and the two channels a message may leave by. The outbox is transactional — an event is written in the same database transaction as the record that caused it, so a booking and its confirmation cannot disagree about whether the booking happened — and a worker drains it (`php artisan dizi:notify`) with retries and a delivery log. Nothing here is a record the hospital keeps: a message that has left cannot be called back, which is why the log exists and why the log is not the message.",
+    "configuredIn": "Setup → Messaging → the wording of each template and which channels a branch may use; the WhatsApp Business account and the e-mail sender are deployment settings rather than product data. The bodies below are the pilot’s defaults, Bangla first, and a branch may put its own wording in their place without a release.",
+    "channels": {
+      "whatsapp": {
+        "driver": "meta-cloud",
+        "carries": "A template message only. Outside the 24-hour customer service window Meta refuses free-form text, and inside it the approved template is still what goes, so what the patient receives is what the hospital approved.",
+        "needs": "A recorded consent for WhatsApp, a number on the patient’s file, and a template this WhatsApp Business account has had approved. Consent for SMS is not consent for WhatsApp: the same patient often gives one and not the other.",
+        "refusedBy": "dizi.consent-missing without consent, dizi.recipient-missing with no number, dizi.template-unapproved for a template the account has not had approved."
+      },
+      "email": {
+        "driver": "smtp",
+        "carries": "A plain-text body. Never an attachment: a clinical document goes through the Download Centre, where the share can be withdrawn.",
+        "needs": "An address on the record and a recorded consent for e-mail.",
+        "refusedBy": "dizi.consent-missing and dizi.recipient-missing."
+      }
+    },
+    "events": {
+      "patient.registered": {
+        "means": "A patient has an MRN for the first time. It carries the number and nothing clinical: the desk has already said the rest out loud.",
+        "template": "patient-registered",
+        "channels": [
+          "whatsapp",
+          "email"
+        ],
+        "withinMinutes": 15,
+        "consent": true
+      },
+      "appointment.booked": {
+        "means": "A booking was taken at the desk, on the telephone or by the portal. It is the confirmation the patient is told to expect when they leave the counter.",
+        "template": "appointment-booked",
+        "channels": [
+          "whatsapp",
+          "email"
+        ],
+        "withinMinutes": 5,
+        "consent": true
+      },
+      "invoice.paid": {
+        "means": "Money was received against a bill. The message carries the receipt number, never the amount owed on any other bill.",
+        "template": "invoice-paid",
+        "channels": [
+          "whatsapp",
+          "email"
+        ],
+        "withinMinutes": 5,
+        "consent": true
+      },
+      "result.released": {
+        "means": "A verified report is ready. The message names the test and where to collect it and says nothing about the finding — a result reads badly on a lock screen, and a household shares a phone.",
+        "template": "result-released",
+        "channels": [
+          "whatsapp",
+          "email"
+        ],
+        "withinMinutes": 30,
+        "consent": true
+      },
+      "stock.low": {
+        "means": "An item is at or below its re-order level in a store. It goes to the store keeper, not to a patient, and the message names the store.",
+        "template": "stock-below-minimum",
+        "channels": [
+          "email"
+        ],
+        "withinMinutes": 60,
+        "consent": false
+      },
+      "sync.conflict.raised": {
+        "means": "Two nodes wrote the same record and the merge policy could not settle it. It goes to the platform desk, and it is the one notification that must never be quiet.",
+        "template": "sync-conflict-raised",
+        "channels": [
+          "email"
+        ],
+        "withinMinutes": 5,
+        "consent": false
+      },
+      "encounter.signed": {
+        "means": "A consultation was signed. It is deliberately **not notifiable**: the clinical record is not a message to the patient, and what the patient may see is decided by the portal’s own rules after they sign in.",
+        "template": null,
+        "channels": [],
+        "withinMinutes": 0,
+        "consent": false
+      }
+    },
+    "templates": {
+      "patient-registered": {
+        "whatsapp": {
+          "bn": "{{patient}} — আপনার নিবন্ধন সম্পন্ন হয়েছে। আপনার এমআরএন {{mrn}}। পরের সব ভিজিটে এই নম্বরটি নিন।",
+          "en": "{{patient}} — your registration is complete. Your MRN is {{mrn}}. Please bring this number to every visit."
+        },
+        "email": {
+          "subject": {
+            "bn": "আপনার নিবন্ধন সম্পন্ন হয়েছে",
+            "en": "Your registration is complete"
+          },
+          "body": {
+            "bn": "{{patient}}, আপনার এমআরএন {{mrn}}। পরের সব ভিজিটে এই নম্বরটি নিন। কোনো প্রশ্ন থাকলে {{branch}} শাখায় ফোন করুন।",
+            "en": "{{patient}}, your MRN is {{mrn}}. Please bring this number to every visit. Call {{branch}} if you have any questions."
+          }
+        }
+      },
+      "appointment-booked": {
+        "whatsapp": {
+          "bn": "{{patient}} — {{day}} তারিখে {{doctor}} এর সাথে আপনার সিরিয়াল {{token}}। স্থান: {{room}}।",
+          "en": "{{patient}} — your appointment with {{doctor}} on {{day}} is token {{token}}. Room: {{room}}."
+        },
+        "email": {
+          "subject": {
+            "bn": "আপনার সিরিয়াল নিশ্চিত হয়েছে",
+            "en": "Your appointment is confirmed"
+          },
+          "body": {
+            "bn": "{{patient}}, {{day}} তারিখে {{doctor}} ({{room}}) — টোকেন {{token}}। ১৫ মিনিট আগে এসে নিবন্ধন কাউন্টারে রিপোর্ট করুন।",
+            "en": "{{patient}}, your appointment with {{doctor}} ({{room}}) on {{day}} is token {{token}}. Please report to the registration counter fifteen minutes early."
+          }
+        }
+      },
+      "invoice-paid": {
+        "whatsapp": {
+          "bn": "{{patient}} — {{amount}} টাকা পেমেন্ট পাওয়া গেছে। রসিদ নম্বর {{receipt}}।",
+          "en": "{{patient}} — we have received your payment of BDT {{amount}}. Receipt number {{receipt}}."
+        },
+        "email": {
+          "subject": {
+            "bn": "পেমেন্টের রসিদ",
+            "en": "Payment received"
+          },
+          "body": {
+            "bn": "{{patient}}, {{amount}} টাকার পেমেন্ট পাওয়া গেছে। রসিদ নম্বর {{receipt}}। এই রসিদটি নিজের জন্য রাখুন।",
+            "en": "{{patient}}, we have received BDT {{amount}}. Receipt number {{receipt}}. Please keep this receipt for your own records."
+          }
+        }
+      },
+      "result-released": {
+        "whatsapp": {
+          "bn": "{{patient}} — আপনার {{test}} রিপোর্ট প্রস্তুত। {{day}} তারিখে {{place}} থেকে সংগ্রহ করুন। ফোনে রিপোর্ট বলা হয় না।",
+          "en": "{{patient}} — your {{test}} report is ready. Collect it at {{place}} on {{day}}. Results are not given over the phone."
+        },
+        "email": {
+          "subject": {
+            "bn": "আপনার রিপোর্ট প্রস্তুত",
+            "en": "Your report is ready"
+          },
+          "body": {
+            "bn": "{{patient}}, আপনার {{test}} রিপোর্ট প্রস্তুত। {{day}} তারিখে {{place}} থেকে সংগ্রহ করুন। ফোনে রিপোর্ট বলা হয় না।",
+            "en": "{{patient}}, your {{test}} report is ready. Collect it at {{place}} on {{day}}. Results are not given over the phone."
+          }
+        }
+      },
+      "stock-below-minimum": {
+        "email": {
+          "subject": {
+            "bn": "স্টোরে মজুদ কম",
+            "en": "An item is below its re-order level"
+          },
+          "body": {
+            "bn": "{{store}} স্টোরে {{item}} এর মজুদ {{onHand}}, যা পুনঃঅর্ডার সীমা {{reorderLevel}} এর সমান বা নিচে। অর্ডার প্রস্তুত করতে এই ইমেইলটি রাখুন।",
+            "en": "{{store}} holds {{onHand}} of {{item}}, at or below the re-order level of {{reorderLevel}}. Keep this e-mail to raise the order."
+          }
+        }
+      },
+      "sync-conflict-raised": {
+        "email": {
+          "subject": {
+            "bn": "সিঙ্ক সংঘাত — একজন মানুষের সিদ্ধান্ত দরকার",
+            "en": "A sync conflict needs a person"
+          },
+          "body": {
+            "bn": "{{node}} নোডের {{entity}} রেকর্ড {{recordId}} এ দুইটি লেখা মেলানো যায়নি ({{because}})। প্ল্যাটফর্ম ডেস্ক থেকে মীমাংসা করুন; দুইটি মানই সংরক্ষিত আছে।",
+            "en": "Two writes to {{entity}} {{recordId}} from node {{node}} could not be merged ({{because}}). Settle it from the platform desk; both values are kept."
+          }
+        }
+      }
+    },
+    "quietHours": {
+      "from": "21:00",
+      "to": "08:00",
+      "note": "An appointment reminder that arrives at 23:40 wakes a household for something that could have waited until morning. A message due inside these hours is not sent and not dropped: its delivery is recorded as suppressed and the event is due again at the hour the window closes."
+    },
+    "retry": {
+      "attempts": 3,
+      "backoffSeconds": [
+        30,
+        300,
+        1800
+      ],
+      "note": "Backoff between attempts on one channel. After the last attempt the delivery is failed and stays failed: it is in the log with the provider’s own words, and a person may retry it by hand. The backoff is what keeps a gateway that is down from being hammered by a morning’s events."
+    },
+    "alerting": {
+      "consecutiveFailures": 3,
+      "windowMinutes": 60,
+      "note": "Three failures on one channel inside an hour is a channel that is not delivering — not three unlucky patients — so the log says so at the top of the response and the delivery screen states it. A success clears the count; a suppressed delivery does not count as a failure, because a policy refusal is not a channel that is down."
+    },
+    "rules": [
+      "Every event names a template or is deliberately not notifiable. An event with no template and no reason would be a silent hole in the coverage, so the contract says which events are quiet and why.",
+      "A message is sent in the language on the patient’s record when that language has a template, and in Bangla otherwise — the portal is Bangla-first, and an English-only message to a Bangla-speaking household is a message that is not read.",
+      "A template placeholder with no value in the event refuses the delivery rather than sending a sentence with a hole in it: `{{day}}` reaching a patient is worse than no message.",
+      "Nothing clinical leaves by message. The events carry a test name, a time, a room and a receipt number; a result value, a diagnosis or a prescription never appears in one.",
+      "The delivery log is append-only: an attempt is a fact about a moment, and a retry appends a new attempt rather than editing the one that failed. The log is what the hospital can point at when a patient says they were never told."
     ]
   }
 }

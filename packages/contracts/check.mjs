@@ -25,7 +25,7 @@
  *     --contract packages/contracts/openapi.json      # override either input
  *     --sync apps/web/lib/sync.ts
  *
- * `--self-test` mutates a copy of the contract in 33 ways and asserts that each mutation is caught. A
+ * `--self-test` mutates a copy of the contract in forty ways and asserts that each mutation is caught. A
  * guardrail that cannot fail is not a guardrail, so the guardrail is itself tested.
  *
  * Exit code 0 when the contract conforms and agrees with the client, 1 otherwise.
@@ -556,6 +556,65 @@ function validate(doc, syncSource, options = {}) {
     }
   }
 
+  /* The notification catalogue (P0-403). Every event names a template that exists in the registry, every channel an
+   * event sends on is a declared channel, and every wording has both languages: a patient whose language is not there
+   * gets nothing, and the portal is Bangla-first. An event that sends nothing has to say why it does not, because an
+   * event that looks like an oversight is one. */
+  const notifications = doc['x-dizi-notifications'];
+
+  if (notifications === null || typeof notifications !== 'object') {
+    fail('x-dizi-notifications', 'missing — the outbox has to say what it notices and what each event is said in');
+  } else {
+    const channels = Object.keys(notifications.channels ?? {});
+    const templates = notifications.templates ?? {};
+
+    for (const [topic, event] of Object.entries(notifications.events ?? {})) {
+      const where = `x-dizi-notifications.events.${topic}`;
+      const sends = Array.isArray(event.channels) ? event.channels : [];
+
+      if (!event.means) fail(where, 'missing `means` — what the event is, in a sentence');
+      if (sends.length > 0 && !event.template) fail(where, 'sends on a channel and names no template — that is a message nobody wrote');
+      if (event.template && !(event.template in templates)) fail(where, `names template \`${event.template}\`, which is not in the templates`);
+      for (const channel of sends) {
+        if (!channels.includes(channel)) fail(where, `sends on \`${channel}\`, which is not a declared channel`);
+      }
+      if (sends.length === 0 && !/not notifiable/i.test(event.means)) {
+        fail(where, 'sends nothing and does not say why — an event that looks like an oversight is one');
+      }
+    }
+
+    /* A wording is either one piece of text (`{bn, en}`, which is what a WhatsApp template is) or named pieces
+       (`{subject: {bn, en}, body: {bn, en}}`, which is what an e-mail is). Both have to carry both languages. */
+    const pieces = (wording) =>
+      typeof wording?.bn === 'string' || typeof wording?.en === 'string'
+        ? [wording]
+        : Object.values(wording ?? {}).filter((part) => part !== null && typeof part === 'object');
+
+    for (const [key, template] of Object.entries(templates)) {
+      const where = `x-dizi-notifications.templates.${key}`;
+
+      for (const [channel, wording] of Object.entries(template)) {
+        if (!channels.includes(channel)) fail(where, `has a wording for \`${channel}\`, which is not a declared channel`);
+
+        const parts = pieces(wording);
+        if (parts.length === 0) fail(where, `has no wording for \`${channel}\``);
+        for (const language of ['bn', 'en']) {
+          const missing = parts.filter((part) => typeof part[language] !== 'string' || !part[language].trim());
+          if (missing.length > 0) {
+            fail(where, `has no \`${language}\` wording for \`${channel}\` — a patient whose language is not there gets nothing, and the portal is Bangla-first`);
+          }
+        }
+      }
+    }
+
+    for (const key of ['retry', 'alerting', 'quietHours']) {
+      if (!notifications[key] || typeof notifications[key] !== 'object') fail('x-dizi-notifications', `missing \`${key}\``);
+    }
+    if (!Array.isArray(notifications.rules) || notifications.rules.length === 0) {
+      fail('x-dizi-notifications', 'missing `rules` — the decisions a reader would otherwise have to guess at');
+    }
+  }
+
   /* The generated projection (P0-207). It is not a second contract — it is this one, projected. Anything that
    * paraphrases the contract instead of copying it goes stale in a way nobody notices until a desk is offline,
    * so the projection is checked against the contract rather than trusted. Its freshness is checked separately,
@@ -914,6 +973,10 @@ const SELF_TEST_CASES = [
   { name: 'a hole in the queue’s state machine', mutate: (d) => { delete d['x-dizi-scheduling'].queueMoves.Waiting; }, expect: 'a hole in the table' },
   { name: 'a finished visit that can be moved out of', mutate: (d) => { d['x-dizi-scheduling'].queueMoves.Completed.push('Waiting'); }, expect: 'may move anywhere' },
   { name: 'a cancelled patient who can be checked in', mutate: (d) => { d['x-dizi-scheduling'].checkInFrom.push('Cancelled'); }, expect: 'cannot be checked in' },
+  { name: 'an event that names a template nobody wrote', mutate: (d) => { d['x-dizi-notifications'].events['appointment.booked'].template = 'appointment-reminder'; }, expect: 'is not in the templates' },
+  { name: 'a patient message with no Bangla', mutate: (d) => { delete d['x-dizi-notifications'].templates['stock-below-minimum'].email.body.bn; }, expect: 'Bangla-first' },
+  { name: 'an event that sends nothing and does not say why', mutate: (d) => { d['x-dizi-notifications'].events['encounter.signed'].means = 'A consultation was signed.'; }, expect: 'oversight' },
+  { name: 'a message on a channel nobody carries', mutate: (d) => { d['x-dizi-notifications'].events['stock.low'].channels.push('smoke-signal'); }, expect: 'not a declared channel' },
   { name: 'duplicate thresholds that overlap', mutate: (d) => { d['x-dizi-duplicate-rules'].thresholds.warn = 0.9; }, expect: '`warn` must be below `block`' },
   { name: 'a rule attributed to a file that is not there', mutate: (d) => { d['x-dizi-duplicate-rules'].rules[0].implementedBy = ['apps/web/lib/gone.ts']; }, expect: 'does not exist' },
   { name: 'a rule whose evidence has left the code', mutate: (d) => { d['x-dizi-duplicate-rules'].rules[0].evidence = ['this string is not in any file']; }, expect: 'no longer contains any of the evidence' },

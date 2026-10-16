@@ -103,6 +103,7 @@ const capabilities = {
   problemTypes: doc['x-dizi-problem-types'] ?? {},
   duplicateRules: doc['x-dizi-duplicate-rules'] ?? {},
   scheduling: doc['x-dizi-scheduling'] ?? {},
+  notifications: doc['x-dizi-notifications'] ?? {},
   roles: doc['x-dizi-roles'] ?? {},
   conventions: doc['x-dizi-conventions'] ?? {},
 };
