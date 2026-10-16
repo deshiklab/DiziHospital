@@ -412,7 +412,7 @@ final class Outbox
      * A suppression row's body shows what would have gone; if the event could not fill it, the row says nothing rather
      * than showing a sentence with `{{day}}` still in it, which reads as a rendering bug and hides the real one.
      *
-     * @param array<string, string> $values
+     * @param  array<string, string>  $values
      */
     private function render(?string $text, array $values): ?string
     {

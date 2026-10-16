@@ -32,9 +32,7 @@ interface SendsMessages
      *
      * @return array{provider: string, messageId: string|null}
      *
-     * @throws ProblemException 502 when the gateway refused or could not be reached — the attempt is recorded before
-     *                           this is thrown, so "the gateway is down" is a row in the log and not only a sentence on
-     *                           a screen.
+     * @throws ProblemException 502 when the gateway refused or could not be reached; the failed attempt is recorded first
      */
     public function send(string $channel, string $to, ?string $subject, string $body, string $template = ''): array;
 }
