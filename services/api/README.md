@@ -112,6 +112,13 @@ by hand. Each module's migration is what creates its schema, so nothing else has
 * `DIZI_CONTRACT_PATH` — where `openapi.json` is. The duplicate rules are read from it at runtime, and a missing or
   malformed contract is a `503` rather than a built-in default: the register must not admit patients against rules
   nobody configured.
+* `APP_TIMEZONE` — **inert today, and named here so nobody assumes otherwise.** It is set to `Asia/Dhaka` in
+  `.env.example` and in `phpunit.xml`, but this service ships no `config/app.php`, and Laravel's own default for that
+  key is a literal `'UTC'` — so PHP runs in UTC whatever the variable says. Nothing depends on it: instants on the
+  wire are UTC (`ApiTime::iso`), the branch's clock is `x-dizi-scheduling.timezone`, and the diary writes its
+  timestamps in the zone Laravel reads them back in rather than in the zone it was handed. Making the variable real
+  means adding `config/app.php` with `'timezone' => env('APP_TIMEZONE', 'UTC')`, which is a change to every timestamp
+  this service stores and belongs to a slice that does it on purpose.
 * `CACHE_STORE=array` — the rate limiter is the only thing that caches, and this service ships no cache table, so the
   600-per-minute `api` limit is per worker. A shared store is a deployment decision that arrives with the load
   balancer.

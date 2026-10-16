@@ -92,11 +92,9 @@ final class Diary
             'room' => (string) $sitting->room,
             'day' => $day,
             'start_minute' => $minute,
-            /* `day` and `start_minute` are the branch's local reading; `start_at` is the same moment as an instant.
-               Both are written from the one input in one insert, so they cannot disagree, and storing the instant in
-               UTC means a node that reads the row back in another zone does not have to know the branch's zone to
-               know when the patient is due. */
-            'start_at' => $this->availability->slotStart($day, $minute)->utc(),
+            /* The same moment written three ways, in one insert, so they cannot disagree: the branch's local day and
+               minute, and the instant the column will read back as. */
+            'start_at' => $this->availability->stored($this->availability->slotStart($day, $minute)),
             'duration_min' => $steps * $this->availability->slotMinutes(),
             'steps' => $steps,
             'type' => (string) ($input['type'] ?? 'New'),
@@ -222,7 +220,7 @@ final class Diary
             DB::transaction(function () use ($appointment, $day, $minute, $steps, $key, $actor): void {
                 $appointment->day = $day;
                 $appointment->start_minute = $minute;
-                $appointment->start_at = $this->availability->slotStart($day, $minute)->utc();
+                $appointment->start_at = $this->availability->stored($this->availability->slotStart($day, $minute));
                 $appointment->duration_min = $steps * $this->availability->slotMinutes();
                 $appointment->steps = $steps;
                 $appointment->slot_key = $key;

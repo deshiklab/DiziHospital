@@ -103,9 +103,19 @@ jobs:
           fi
           exit "$status"
 
-      - name: Server log on failure
+      # The service's own log, echoed as an annotation rather than left in the log alone. When a case fails with a 500
+      # this is the line that says which exception it was — and a check run's annotations are the only part of a
+      # failure that can be read back from here (a sandboxed contributor cannot download Actions logs at all).
+      - name: What the service said
         if: failure()
-        run: ls -la storage/logs && tail -100 storage/logs/*.log || true
+        run: |
+          ls -la storage/logs || true
+          if compgen -G 'storage/logs/*.log' > /dev/null; then
+            # The JSON payload after the message is the whole stack trace plus a copy of the request; the head of the
+            # line is the sentence, and the sentence is what identifies the failure.
+            tail -c 20000 storage/logs/*.log | sed 's/ {"exception".*//' | tail -40 | cut -c1-160 \
+              | sed 's/%/%25/g' | sed -z 's/\n/%0A/g' | sed 's/^/::error ::/'
+          fi
 
   # `ModuleSchema` creates one Postgres schema per module, so on Postgres the tests' `registration_patients` is
   # `registration.patients`. That difference is exactly the part of the production DDL SQLite cannot check, and it is

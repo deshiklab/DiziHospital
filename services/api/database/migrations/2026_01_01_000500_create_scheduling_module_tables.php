@@ -51,6 +51,9 @@ return new class extends Migration
             $table->string('token');
             $table->string('mrn');
             $table->string('doctor_id');
+            /* The room as it was at booking time rather than as it is now: the desk has already told the patient
+               where to go, and a roster change later in the morning is not a reason to send them elsewhere. */
+            $table->string('room');
             $table->date('day');
             $table->unsignedSmallInteger('start_minute');
             $table->timestamp('start_at');

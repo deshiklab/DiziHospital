@@ -222,6 +222,20 @@ final class Availability
         return $this->rules->timezone();
     }
 
+    /**
+     * The instant as the column will read it back.
+     *
+     * Three ways of writing one moment, and each is the right one for where it goes: `day` and `start_minute` are the
+     * branch's own clock because that is what a desk says out loud, this is the service's clock because Laravel reads
+     * a datetime column back in `config('app.timezone')` and a different zone here would move every appointment by
+     * the difference, and `ApiTime::iso()` puts the offset on it for the wire. Nothing in this module reads the
+     * service's zone except this line, so the store and the read agree whichever zone the deployment runs in.
+     */
+    public function stored(Carbon $instant): Carbon
+    {
+        return $instant->setTimezone((string) config('app.timezone'));
+    }
+
     /** A minute-of-day as a clock face, for the sentences a refusal says out loud. */
     public function clock(int $minute): string
     {
