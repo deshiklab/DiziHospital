@@ -96,7 +96,7 @@ final class PatientRegistrationTest extends TestCase
     public function test_registering_anyway_is_a_decision_the_desk_makes_explicitly(): void
     {
         $this->reserve();
-        $this->asRole('reception')->postJson('/patients', $this->body(), ['Idempotency-Key' => $this->key('0001')])->assertCreated();
+        $this->asRole('receptionist')->postJson('/patients', $this->body(), ['Idempotency-Key' => $this->key('0001')])->assertCreated();
 
         $this->asRole()->postJson('/patients', array_merge($this->body(), [
             'phone' => '01711000001',

@@ -10,7 +10,10 @@ namespace App\Modules\Identity;
  * `roles` is a list, because a person may hold more than one: a consultant who is also the clinical lead is one
  * account with `doctor` and `admin`, and the abilities of both apply. The single `role` is kept for the sentences
  * that have to name one — a refusal reads better as "the role `receptionist` may not administer here" than as a
- * list — and it is the *widest* role held, so the sentence names the one that came closest to allowing it.
+ * list — and it is the first role the issuer listed, in the token's own order, because that order is the realm's and
+ * this value object has no business reordering it. Where a sentence has to name the role that came *closest* to
+ * allowing something, the ranking is done where the abilities are known: `Authenticate` for a refusal, and
+ * `MeController` for the `/me` screen.
  *
  * `branch` and `node` matter more than they look: every write this service accepts is attributed to a node and a
  * branch, and the audit ledger names both, so "who admitted this patient" is answerable with the device as well as

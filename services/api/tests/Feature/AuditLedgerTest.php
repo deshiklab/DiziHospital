@@ -117,7 +117,7 @@ final class AuditLedgerTest extends TestCase
 
     public function test_an_entry_needs_a_role_that_may_write(): void
     {
-        $this->asRole('viewer')->postJson('/audit', $this->entry('dose-1'), ['Idempotency-Key' => $this->key()])
+        $this->asRole('auditor')->postJson('/audit', $this->entry('dose-1'), ['Idempotency-Key' => $this->key()])
             ->assertStatus(403);
     }
 

@@ -14,7 +14,7 @@ final class NumberBlockTest extends TestCase
 
     public function test_a_node_is_given_a_range_to_mint_from(): void
     {
-        $response = $this->asRole('reception')->getJson('/node/number-blocks');
+        $response = $this->asRole('receptionist')->getJson('/node/number-blocks');
 
         $response->assertOk()->assertJsonCount(3, 'blocks');
 
@@ -45,9 +45,11 @@ final class NumberBlockTest extends TestCase
         $this->assertStringEndsWith('dizi.unauthenticated', (string) $response->json('type'));
     }
 
-    public function test_a_viewer_may_not_reserve_numbers(): void
+    public function test_a_read_only_role_may_not_reserve_numbers(): void
     {
-        $this->asRole('viewer')->getJson('/node/number-blocks')
+        /* `auditor` reads everything and writes nothing, so it is the contract's own word for the case this test is
+           about. A made-up role would be refused too — for a different reason, and one `/me` covers. */
+        $this->asRole('auditor')->getJson('/node/number-blocks')
             ->assertStatus(403)
             ->assertJsonPath('title', 'Your role cannot do this');
     }

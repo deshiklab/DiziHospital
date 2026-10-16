@@ -14,6 +14,10 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
  * tests: which node a write came from decides whether it is admitted as the canonical record, and which role the token
  * carries decides whether it is accepted at all. A test that has to build its own actor is a test that is checking
  * something else.
+ *
+ * The role ids are the contract's (`x-dizi-roles`), because the abilities are read from that table: `receptionist`,
+ * not the `reception` this suite used while the preview driver carried its own list, and a read-only case asks for
+ * the `auditor` role the contract declares rather than inventing a `viewer` the realm has never heard of.
  */
 abstract class TestCase extends BaseTestCase
 {
@@ -42,7 +46,7 @@ abstract class TestCase extends BaseTestCase
         return $this->app->make(TokenVerifier::class)->issue(array_merge([
             'sub' => 'staff-7',
             'name' => 'Rahima Begum',
-            'role' => 'reception',
+            'role' => 'receptionist',
             'branch' => 'Main Campus',
             'node' => 'node-test',
         ], $claims), $expiresAt);
@@ -53,7 +57,7 @@ abstract class TestCase extends BaseTestCase
      *
      * @param  array<string, mixed>  $claims
      */
-    protected function asRole(string $role = 'reception', array $claims = []): static
+    protected function asRole(string $role = 'receptionist', array $claims = []): static
     {
         return $this->withHeader('Authorization', 'Bearer '.$this->token(array_merge(['role' => $role], $claims)));
     }

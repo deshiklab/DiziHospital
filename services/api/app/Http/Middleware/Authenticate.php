@@ -51,12 +51,23 @@ final class Authenticate
          * it when the abilities are asked for, so a renamed realm role is an error somebody can read rather than an
          * empty screen.
          *
-         * Order matters in the message: the *widest* role the actor holds is named, because that is the one that
-         * came closest to allowing the action, and "your receptionist role may not administer" is a sentence that
-         * tells the person who to ask. */
+         * The role named in a refusal is the *widest* one the actor holds, by counting the abilities the table gives
+         * each: an admin who is also a receptionist is told their admin role may not administer, which is the sentence
+         * that says who to ask. Ties keep the token's own order, and a single-role token is unaffected — the token
+         * order is the realm's and only this sentence reorders anything. */
         $granted = [];
+        $named = $actor->role;
+        $reach = -1;
+
         foreach ($actor->roles as $role) {
-            foreach ($this->roles->abilitiesFor($role) as $ability) {
+            $abilitiesOfRole = $this->roles->abilitiesFor($role);
+
+            if (count($abilitiesOfRole) > $reach) {
+                $named = $role;
+                $reach = count($abilitiesOfRole);
+            }
+
+            foreach ($abilitiesOfRole as $ability) {
                 $granted[$ability] = true;
             }
         }
@@ -67,7 +78,7 @@ final class Authenticate
                     'dizi.forbidden',
                     'Your role cannot do this',
                     403,
-                    "The role `{$actor->role}` may not {$ability} here. The app hides actions a role cannot take; if this screen offered you one, that is a bug in the screen rather than a permission to grant.",
+                    "The role `{$named}` may not {$ability} here. The app hides actions a role cannot take; if this screen offered you one, that is a bug in the screen rather than a permission to grant.",
                 );
             }
         }

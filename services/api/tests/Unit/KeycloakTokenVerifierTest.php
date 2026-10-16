@@ -78,7 +78,7 @@ final class KeycloakTokenVerifierTest extends TestCase
 
         $this->assertNotNull($refusal);
         $this->assertSame(401, $refusal->status);
-        $this->assertStringContainsString('altered', $refusal->getMessage());
+        $this->assertStringContainsString('altered', $refusal->title);
     }
 
     public function test_an_expired_token_asks_the_person_to_sign_in_again(): void

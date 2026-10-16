@@ -111,7 +111,7 @@ final class KeycloakSessionTest extends TestCase
            only covered the new driver would be a suite that stops noticing when the old one breaks. */
         $this->reserve();
 
-        $this->asRole('reception')->getJson('/patients')->assertOk();
+        $this->asRole('receptionist')->getJson('/patients')->assertOk();
     }
 
     public function test_the_driver_in_force_is_named_rather_than_implied(): void

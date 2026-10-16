@@ -91,7 +91,9 @@ final class MeTest extends TestCase
         /* The house rule: a screen's write — and a screen's read — is a contract operation. A route that is not in
            the contract is one the generated client cannot call, so `/me` is checked here by name and in
            `tests/Contract/ContractTest.php` both ways round. */
-        $contract = json_decode((string) file_get_contents(dirname(__DIR__, 3).'/packages/contracts/openapi.json'), true);
+        /* Through the configuration, not a path built here: the API reads the contract at `dizi.contract.path`, and a
+           test that counts directories is a test that breaks the day the file moves. */
+        $contract = json_decode((string) file_get_contents((string) config('dizi.contract.path')), true);
 
         $this->assertSame('getMe', $contract['paths']['/me']['get']['operationId']);
         $this->assertSame('cache', $contract['paths']['/me']['get']['x-dizi']['offline']);
