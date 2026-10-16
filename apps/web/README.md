@@ -172,8 +172,10 @@ value on the server and another in the browser, and React throws the rendered tr
   on itself.
 * Row-level keyboard navigation (↑/↓/Home/End/Escape, announced through a live region) landed with `P0-204`; virtualisation is still ahead, and it is not what gives the register its speed — the grid asks its source for one page, so a 100 000-row register puts 25 rows in the document (`npm run perf:grid` measures it). The screens that still pass a plain array to `<DataGrid>` (`components/ListView.tsx` and the register screens not yet moved onto `useGrid`) hold the whole list in memory as before; moving them is a wiring change, and the grid is where the cost lives.
 * Clinical terminology is not translated yet — that needs the reviewed glossary (`docs/plan/02` §9).
-* Sign-in is a **preview**: no session is created and no password is checked. Keycloak/OIDC is `P0-205`, and the
-  screen says so on itself.
+* The **patient portal has no sign-in of its own**: staff sign in at the realm (`P0-205`), and a patient will sign
+  in with a phone number and a one-time code, which is portal work rather than staff single sign-on. Until then the
+  portal is a signed-in preview and says so on every screen (`lib/admin.ts` carries the sentence, so the comms hub
+  and the portal cannot drift apart).
 * Print templates render real layouts from synthetic data; the barcodes are drawn from the identifier itself, not
   from a certified encoder (a real Code 128/QR encoder lands with the analyser and label-printer integration, `P4`).
 * Help article feedback ("Was this helpful?") is inert — it needs the store and the editorial owner first.

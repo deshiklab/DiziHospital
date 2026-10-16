@@ -128,7 +128,7 @@ export const P8_WAITING: string[] = [
   'Joining a live room needs the cloud: room names, invitations and the waiting list are this node’s, but the call itself is the platform’s signalling work (P0-306), so the room shows the patient’s join state as “invited”.',
   'Outbound SMS, WhatsApp and email refuse without a recorded consent and have no gateway in this build. The screen names the missing consent instead of pretending a message was sent — the vendor’s Twilio and Meta integrations need a commercial account, not code.',
   'Paying a bill from the portal is refused the same way: no payment gateway is integrated, so the portal points at the counter and the desk’s own receipt, and never holds a queued promise about money.',
-  'The patient portal has no login yet (Keycloak, P0-205). The portal runs as a signed-in preview and says so on every screen rather than showing a sign-in form that cannot authenticate anybody.',
+  'The patient portal has no sign-in of its own yet. Staff sign in at the hospital’s Keycloak (P0-205); a patient will sign in with a phone number and a one-time code, which is portal work rather than staff single sign-on. Until then the portal runs as a signed-in preview and says so on every screen, rather than showing a form that cannot authenticate anybody.',
 ];
 
 /** What the phase is still waiting for, named on the hub rather than discovered later. */

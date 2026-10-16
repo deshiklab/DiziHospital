@@ -1754,6 +1754,8 @@ These screens are not menu entries but are reachable from the modules above (per
 
 Nine staff roles plus the patient portal. Each role gets its own dashboard and its own slice of the menu; the table below was produced by logging in as each role and reading the rendered sidebar.
 
+> **This section is the source of the platform's role table.** The screens-reachable column below is what `packages/contracts/openapi.json` → `x-dizi-roles` carries as `legacyScreens`, alongside each role's abilities, the shell it lands on in the new app, and the reason it has them. That table is what the Keycloak realm (`infra/keycloak/realm-dizihospital.json`), the app's navigation (`apps/web/lib/auth.ts`) and the API's ability check (`services/api/app/Modules/Identity/ContractRoles.php`) all read, so the mapping is checked by `packages/contracts/check.mjs` rather than kept in step by hand. The key decisions — recorded in the table rather than here, so they can be argued with — are: three of the nine roles (nurse, pathologist, radiologist) share the clinical shell because that is the work they do in the new platform; the two admin roles differ by the vendor's own screens, which the new platform does not have; and **every one of the nine requires MFA**, because every one of them reaches a clinical or a financial record (ADR 0003). `auditor` is not a legacy role: it is a read-only account for an inspection, and it exists as a role rather than as an exception in code.
+
 | Role | Demo user | Sections visible | Screens reachable | Landing page |
 |---|---|---|---|---|
 | **Super Admin** | `superadmin@gmail.com` | Core Operations, Clinical, Administration, Tools & Content, Reports & Setup | 76 | `/admin/admin/dashboard` |
