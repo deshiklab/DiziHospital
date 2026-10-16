@@ -355,7 +355,12 @@ try {
   const p8Tags = new Set(['telemedicine', 'content', 'records', 'engagement', 'cms', 'messaging', 'portal']);
   const p8Ops = Object.values(ops).filter((o) => p8Tags.has(o.tag));
   const p8Online = p8Ops.filter((o) => o.offline === 'online-only').map((o) => o.id);
-  pass('the acts a node cannot do alone are online-only, and they are the five the screens explain', p8Online.length === 5 && ['approveContentItem', 'publishSurveyForm', 'publishCmsPage', 'sendPatientMessage', 'payPortalBill'].every((id) => p8Online.includes(id)), p8Online.join(' · '));
+  /* Six, not five: `retryNotificationDelivery` arrived with P0-403's delivery log and is online-only for the same
+     reason `sendPatientMessage` is — an attempt that was recorded is a fact, and a retry queued for later sends
+     tomorrow a message the desk expected to leave today. The list is here rather than derived so that an operation
+     cannot become online-only without somebody writing down which act it is and why. */
+  const onlineActs = ['approveContentItem', 'publishSurveyForm', 'publishCmsPage', 'sendPatientMessage', 'retryNotificationDelivery', 'payPortalBill'];
+  pass('the acts a node cannot do alone are online-only, and they are the six the screens explain', p8Online.length === onlineActs.length && onlineActs.every((id) => p8Online.includes(id)), p8Online.join(' · '));
   pass('the P8 operations carry their idempotency key where the contract requires one', writes.every((id) => ops[id].requiresIdempotencyKey === true) && contract.idempotencyHeader.requiredOn.includes('submitSurveyResponse') && contract.idempotencyHeader.requiredOn.includes('payPortalBill'), `${p8Ops.filter((o) => o.offline === 'queue').length} queued, ${p8Ops.filter((o) => o.offline === 'cache').length} read from the replica`);
   const problems = Object.keys(contract.problemTypes ?? {});
   pass('the refusals the screens show are contract problem types rather than invented strings', ['dizi.form-closed', 'dizi.consent-missing', 'dizi.slot-taken', 'dizi.number-block-exhausted', 'dizi.duplicate-operation', 'dizi.offline-not-allowed'].every((c) => problems.includes(c)), `${problems.length} problem types`);
