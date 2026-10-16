@@ -24,8 +24,18 @@
  */
 
 import { staffDirectory, type HrStaff } from './hr';
+import { NOTIFICATIONS } from './messaging-api';
 
-export type Channel = 'board' | 'sms' | 'whatsapp' | 'email' | 'push';
+/**
+ * The channels this hospital uses: two that are records on this node and two that leave through somebody else's
+ * gateway.
+ *
+ * `sms` is deliberately absent. It is the channel the vendor's Twilio addon would carry and this node does not, so a
+ * choice of SMS here would be a screen offering a send that cannot happen — the contract's `x-dizi-notifications`
+ * names exactly two outbound channels, and this list is those two. WhatsApp and e-mail are **separate consents** for
+ * the same reason they are separate channels: a patient regularly gives one and not the other.
+ */
+export type Channel = 'board' | 'push' | 'whatsapp' | 'email';
 export type Priority = 'normal' | 'urgent';
 export type NoticeStatus = 'queued' | 'sent' | 'delivered' | 'failed' | 'cancelled';
 
@@ -44,9 +54,23 @@ export interface ChannelSpec {
 export const CHANNELS: ChannelSpec[] = [
   { channel: 'board', label: 'Noticeboard', kind: 'record', worksOffline: true, needs: 'Nothing beyond the branch replica: the notice is written here and read here.', refusedBy: 'A notice to a group nobody is in is refused, and the group counts come from the staff register rather than from the message.' },
   { channel: 'push', label: 'Push (the staff app)', kind: 'record', worksOffline: true, needs: 'A staff member with the app on a device this node has seen.', refusedBy: 'Falls back to the noticeboard: a push that cannot be delivered is still a notice, and the register shows both.' },
-  { channel: 'sms', label: 'SMS', kind: 'outbound', worksOffline: false, needs: 'A record of consent for SMS on the patient’s file, and a gateway that is reachable now.', refusedBy: 'dizi.consent-missing without consent, and the operation itself is online-only: a queued SMS is a message the hospital believes it sent.' },
-  { channel: 'whatsapp', label: 'WhatsApp', kind: 'outbound', worksOffline: false, needs: 'Consent for WhatsApp specifically — it is a different consent from SMS, and the same patient often gives one and not the other.', refusedBy: 'dizi.consent-missing, and the patient is offered the portal or the printed copy instead.' },
-  { channel: 'email', label: 'Email', kind: 'outbound', worksOffline: false, needs: 'An address on the record and consent for email. Attachments are never sent from here: a document goes through the Download Centre, where the share can be withdrawn.', refusedBy: 'The attachment is refused outright: email cannot un-share a clinical document.' },
+  {
+    channel: 'whatsapp',
+    label: 'WhatsApp',
+    kind: 'outbound',
+    worksOffline: false,
+    /* The contract's own sentence, in the contract's own words: `x-dizi-notifications.channels.whatsapp`. */
+    needs: NOTIFICATIONS.channels.whatsapp?.needs ?? 'A recorded consent for WhatsApp and a number on the patient’s file.',
+    refusedBy: NOTIFICATIONS.channels.whatsapp?.refusedBy ?? 'dizi.consent-missing, and the patient is offered the portal or the printed copy instead.',
+  },
+  {
+    channel: 'email',
+    label: 'Email',
+    kind: 'outbound',
+    worksOffline: false,
+    needs: NOTIFICATIONS.channels.email?.needs ?? 'An address on the record and a recorded consent for e-mail.',
+    refusedBy: NOTIFICATIONS.channels.email?.refusedBy ?? 'dizi.consent-missing and dizi.recipient-missing.',
+  },
 ];
 
 export const channelSpec = (channel: Channel): ChannelSpec => CHANNELS.find((c) => c.channel === channel) ?? CHANNELS[0];
@@ -129,8 +153,8 @@ export const NOTICES: Notice[] = [
   { id: 'nt-5', channel: 'board', priority: 'normal', audience: 'role:Physiotherapist', audienceLabel: 'Physiotherapist (everyone in the role)', subject: 'Physiotherapy huddle — nobody is in the audience', body: 'This notice was written for the physiotherapy team. The register holds nobody with that role at this branch, so this text is what the screen shows instead of sending it: a notice written to a role nobody holds is a message the sender believes went somewhere.', fromCode: 'EMP-1042', fromName: 'R. Howlader', sentAt: '2026-10-16 14:20', status: 'cancelled', recipientCount: 0, readCount: 0, relatedTo: '', refusedReason: 'No member of staff holds this role at this branch. The audience is not sent to, and the sender is told which audience has nobody in it rather than finding out later.' },
   { id: 'nt-6', channel: 'board', priority: 'normal', audience: 'department:med', audienceLabel: 'Department med', subject: 'Diabetic foot clinic moves to Tuesday afternoons', body: 'From next week the clinic runs Tuesday 14:00–17:00 in OPD-4 instead of Wednesday morning. Patients are being told at their appointments and through the portal. The dressing room stays where it is.', fromCode: 'EMP-1042', fromName: 'R. Howlader', sentAt: '2026-10-13 09:05', status: 'delivered', recipientCount: 38, readCount: 35, relatedTo: 'OPD timetable' },
   /* The outbound attempts: one that was refused, one that went out, and one still held. */
-  { id: 'nt-7', channel: 'sms', priority: 'normal', audience: 'patient:SH-102355', audienceLabel: 'Fatema Begum (SH-102355)', subject: 'Appointment reminder', body: 'Your antenatal check at Dizi Main Campus is tomorrow at 11:00 with Dr. R. Akter. Please bring your card. Dizi Hospital.', fromCode: 'EMP-1077', fromName: 'S. Ahmed', sentAt: '2026-10-15 18:00', status: 'delivered', recipientCount: 1, readCount: 1, relatedTo: 'SH-102355' },
-  { id: 'nt-8', channel: 'whatsapp', priority: 'normal', audience: 'patient:SH-102397', audienceLabel: 'Jahangir Alam (SH-102397)', subject: 'Report ready', body: 'Your ultrasound report is ready and can be seen in the patient portal. If you would prefer a printed copy, the records desk is open 08:00–20:00. Dizi Hospital.', fromCode: 'EMP-1042', fromName: 'R. Howlader', sentAt: '2026-10-16 15:02', status: 'failed', recipientCount: 1, readCount: 0, relatedTo: 'SH-102397', refusedReason: 'dizi.consent-missing — this patient has consented to SMS but not to WhatsApp, and the two are different consents. The report is in the portal already; the desk will telephone instead.' },
+  { id: 'nt-7', channel: 'whatsapp', priority: 'normal', audience: 'patient:SH-102355', audienceLabel: 'Fatema Begum (SH-102355)', subject: 'Appointment reminder', body: 'Your antenatal check at Dizi Main Campus is tomorrow at 11:00 with Dr. R. Akter. Please bring your card. Dizi Hospital.', fromCode: 'EMP-1077', fromName: 'S. Ahmed', sentAt: '2026-10-15 18:00', status: 'delivered', recipientCount: 1, readCount: 1, relatedTo: 'SH-102355' },
+  { id: 'nt-8', channel: 'whatsapp', priority: 'normal', audience: 'patient:SH-102397', audienceLabel: 'Jahangir Alam (SH-102397)', subject: 'Report ready', body: 'Your ultrasound report is ready and can be seen in the patient portal. If you would prefer a printed copy, the records desk is open 08:00–20:00. Dizi Hospital.', fromCode: 'EMP-1042', fromName: 'R. Howlader', sentAt: '2026-10-16 15:02', status: 'failed', recipientCount: 1, readCount: 0, relatedTo: 'SH-102397', refusedReason: 'dizi.consent-missing — this patient has consented to e-mail but not to WhatsApp, and the two are different consents. The report is in the portal already; the desk will telephone instead.' },
   { id: 'nt-9', channel: 'email', priority: 'normal', audience: 'patient:SH-102388', audienceLabel: 'Shahidul Islam (SH-102388)', subject: 'Discharge summary attached', body: 'Please find your discharge summary attached. Dizi Hospital.', fromCode: 'EMP-1042', fromName: 'R. Howlader', sentAt: '2026-10-16 15:20', status: 'cancelled', recipientCount: 1, readCount: 0, relatedTo: 'SH-102388', refusedReason: 'An attachment is refused: a clinical document goes through the Download Centre, where the share can be withdrawn and the opening is recorded. An email cannot un-share anything.' },
 ];
 
@@ -166,14 +190,14 @@ export interface Consent {
 }
 
 export const CONSENTS: Consent[] = [
-  { mrn: 'SH-102355', patientName: 'Fatema Begum', channel: 'sms', agreedOn: '2026-03-02', how: 'Registration form, ticked and signed' },
+  { mrn: 'SH-102355', patientName: 'Fatema Begum', channel: 'whatsapp', agreedOn: '2026-03-02', how: 'Registration form, ticked and signed' },
   { mrn: 'SH-102355', patientName: 'Fatema Begum', channel: 'email', agreedOn: '2026-03-02', how: 'Registration form, ticked and signed' },
-  { mrn: 'SH-102388', patientName: 'Shahidul Islam', channel: 'sms', agreedOn: '2026-10-13', how: 'Admission form at the ward desk' },
-  { mrn: 'SH-102397', patientName: 'Jahangir Alam', channel: 'sms', agreedOn: '2026-06-11', how: 'Registration form, ticked and signed' },
-  { mrn: 'SH-102398', patientName: 'Ayesha Siddika', channel: 'sms', agreedOn: '2026-09-30', how: 'Portal, agreed by the mother as guardian' },
+  { mrn: 'SH-102388', patientName: 'Shahidul Islam', channel: 'email', agreedOn: '2026-10-13', how: 'Admission form at the ward desk' },
+  { mrn: 'SH-102397', patientName: 'Jahangir Alam', channel: 'email', agreedOn: '2026-06-11', how: 'Registration form, ticked and signed' },
+  { mrn: 'SH-102398', patientName: 'Ayesha Siddika', channel: 'whatsapp', agreedOn: '2026-09-30', how: 'Portal, agreed by the mother as guardian' },
   { mrn: 'SH-102402', patientName: 'Kamrul Hossain', channel: 'whatsapp', agreedOn: '2026-09-20', how: 'Portal, agreed at the appointment reminder screen' },
   /* Withdrawn: the row is kept, because the hospital has to be able to show when consent ended. */
-  { mrn: 'SH-102341', patientName: 'Rafiqul Hasan', channel: 'sms', agreedOn: '2025-11-04', how: 'Registration form', withdrawnOn: '2026-08-12' },
+  { mrn: 'SH-102341', patientName: 'Rafiqul Hasan', channel: 'whatsapp', agreedOn: '2025-11-04', how: 'Registration form', withdrawnOn: '2026-08-12' },
 ];
 
 export const consentFor = (mrn: string, channel: Channel, consents: Consent[] = CONSENTS): Consent | undefined =>
@@ -277,8 +301,25 @@ export interface OutboundDraft {
   consent: Consent | undefined;
 }
 
-/** The quiet window the hospital holds itself to for patient messaging. */
-export const QUIET_HOURS = { from: 20 * 60, to: 8 * 60, note: 'Messages stop at 20:00 and start again at 08:00 unless the message is urgent. An appointment reminder that arrives at 23:40 wakes a household up for something that could have waited until the morning.' };
+/** Minutes past midnight, from the contract's own `HH:MM`. */
+const minutesOf = (clock: string): number => {
+  const [hours, minutes] = clock.split(':').map(Number);
+
+  return hours * 60 + minutes;
+};
+
+/**
+ * The quiet window, read from `x-dizi-notifications.quietHours` rather than typed here.
+ *
+ * This is the third place this rule has been written down in this repository's life — the screen had 20:00, the
+ * contract says 21:00 — and the lesson is the same one the contract gate exists for: a rule with two homes has a
+ * bug in one of them. The screen reads it; the service enforces it.
+ */
+export const QUIET_HOURS = {
+  from: minutesOf(NOTIFICATIONS.quietHours.from),
+  to: minutesOf(NOTIFICATIONS.quietHours.to),
+  note: NOTIFICATIONS.quietHours.note,
+};
 
 export function checkOutbound(draft: OutboundDraft, ctx: MessagingContext): MessageCheck {
   const reasons: MessageIssue[] = [];
@@ -304,13 +345,13 @@ export function checkOutbound(draft: OutboundDraft, ctx: MessagingContext): Mess
     reasons.push({ code: 'no-number', message: 'No number on the record to send to. The number on a message is the one the patient gave the hospital, never one typed into this sheet — a mistyped digit sends somebody else’s appointment to a stranger.' });
   }
   if (!draft.template.trim()) {
-    warnings.push({ code: 'free-text', message: 'This is free text rather than a template. Templates are approved once, carry the hospital’s name and the number to call, and cannot be edited at 23:00 by somebody in a hurry.' });
+    warnings.push({ code: 'free-text', message: 'This is free text rather than a template. Templates are approved once, carry the hospital’s name and the number to call, and cannot be edited at 23:00 by somebody in a hurry — and WhatsApp refuses anything that is not an approved template outside the 24-hour window, so the free text may not go at all.' });
   }
   if (draft.body.trim().length < 30) {
     reasons.push({ code: 'too-short', message: 'A patient message has to say what it is about and what to do next. “Report ready” from an unknown number is read as a scam, and patients are right to treat it that way.' });
   }
-  if (draft.channel === 'sms' && draft.body.length > 480) {
-    reasons.push({ code: 'too-long', message: `${draft.body.length} characters is ${Math.ceil(draft.body.length / 160)} SMS segments. Past about three, the message arrives in the wrong order on some handsets — send the summary and put the detail in the portal.` });
+  if (draft.channel === 'whatsapp' && draft.body.length > 480) {
+    reasons.push({ code: 'too-long', message: `${draft.body.length} characters is a letter on a telephone. A patient message says what it is about and what to do next, and anything longer belongs in the portal or on the printed copy — send the summary and point at the rest.` });
   }
   const inQuietHours = ctx.nowMinute >= QUIET_HOURS.from || ctx.nowMinute < QUIET_HOURS.to;
   if (inQuietHours) {
@@ -371,6 +412,6 @@ export const TEMPLATES: Array<{ key: string; label: string; body: string; when: 
 /** What the phase cannot do until the API exists, said on the screen. */
 export const MESSAGING_WAITING: string[] = [
   'The noticeboard is a record on this node and works with the uplink down — that is deliberate, because the failure people most often need to tell each other about is the uplink itself.',
-  'Outbound SMS, WhatsApp and email have no gateway in this build: the vendor addon needs a Twilio or Meta business account, which is a commercial arrangement rather than code. The refusal path, the consent check and the quiet hours are all implemented, so the day the gateway is configured the messages inherit the rules.',
-  'Delivery reports from a gateway arrive by webhook. Until there is a gateway there are no delivery states to reconcile, and the screen says “handed to the gateway” rather than “delivered” for anything it cannot verify.',
+  'The outbound half is served by the hospital server (P0-403): the send, the consent check, the quiet hours, the retry and the log all go through the contract’s own operations. No message has left this building from this repository: there is no Meta business account and no mail relay here, so the driver in force is `preview`, which renders the message, records what it would have sent and touches no network. The log says which driver carried each row.',
+  'Delivery receipts from a gateway arrive by webhook, and the service has no endpoint for the provider to call yet. So the log says `sent` — the provider accepted it — and never `delivered` until something can verify it.',
 ];

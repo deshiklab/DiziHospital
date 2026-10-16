@@ -35,6 +35,7 @@
     "test:auth": "node tools/test/auth.mjs",
     "perf:grid": "node tools/perf/grid.mjs",
     "api:calls": "node tools/ci/php-calls.mjs",
-    "test:appointments": "node tools/test/appointments.mjs"
+    "test:appointments": "node tools/test/appointments.mjs",
+    "test:messaging": "node tools/test/messaging.mjs"
   }
 }

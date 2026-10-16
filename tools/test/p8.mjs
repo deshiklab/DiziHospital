@@ -17,7 +17,8 @@
  *   3. **The website is content, not a page builder.** One parser reads the stored body for the editor and for the
  *      public page, the published revision is the one the public sees, and a draft is not live by accident.
  *   4. **A notice that cannot be recalled is treated differently from one that can.** The board works with the
- *      uplink down; SMS, WhatsApp and email carry a per-channel consent, no attachments and quiet hours.
+ *      uplink down; WhatsApp and e-mail — the two channels the contract says this node carries — each carry their own
+ *      consent, and no attachment and no clinical detail goes out on either.
  *   5. **Numbered documents come from this node's own block.** A card cannot outlive a licence, an exhausted block
  *      refuses rather than renumbering, and both registers are looked up by the number they print.
  *   6. **The portal's refusals are the patient's, in Bangla.** A lost slot comes back with the next free times, a
@@ -236,19 +237,24 @@ try {
   pass('a notice already sent to the board today is flagged as a correction rather than sent twice', warns(MG.checkNotice({ subject: MG.NOTICES[0].subject, body: 'The same notice again, to the same people, this afternoon.', priority: 'normal', audienceRef: `${team.kind}:${team.ref}`, relatedTo: '', channel: 'board' }, mctx)).includes('already-sent'));
   pass('the board works with the uplink down: a notice is queued while an outward message is refused', MG.checkNotice({ subject: 'Pharmacy stock count this afternoon', body: 'The pharmacy will count stock from 14:00 and the counter will be slow for about an hour.', priority: 'normal', audienceRef: `${team.kind}:${team.ref}`, relatedTo: '', channel: 'board' }, { ...mctx, cloudReachable: false }).ok);
 
-  const consent = MG.CONSENTS.find((c) => c.channel === 'sms' && !c.withdrawnOn);
-  const message = { channel: 'sms', patientMrn: consent.mrn, patientName: consent.patientName, phone: '01711 000 111', body: 'Your appointment with the medicine clinic is on 22 October at 11:00. Please arrive fifteen minutes early and bring your card.', template: 'appointment-reminder', attachments: 0, consent };
+  /* WhatsApp, not SMS: the contract's `x-dizi-notifications.channels` names the two channels this node carries, and
+     SMS is not one of them. A screen offering a channel no driver carries is a screen offering a send that cannot
+     happen — so the battery tests the two that can. */
+  const consent = MG.CONSENTS.find((c) => c.channel === 'whatsapp' && !c.withdrawnOn);
+  const message = { channel: 'whatsapp', patientMrn: consent.mrn, patientName: consent.patientName, phone: '01711 000 111', body: 'Your appointment with the medicine clinic is on 22 October at 11:00. Please arrive fifteen minutes early and bring your card.', template: 'appointment-reminder', attachments: 0, consent };
   const outbound = (patch) => MG.checkOutbound({ ...message, ...patch }, mctx);
   pass('a patient message with a consent, a number from the record and a template is accepted', outbound({}).ok, codes(outbound({})).join(', ') || `to ${consent.patientName} on ${consent.channel}`);
   const noConsent = outbound({ consent: undefined });
   pass('the same message with no consent is refused by the contract’s own code', codes(noConsent).includes('consent-missing') && noConsent.reasons.some((r) => r.message.includes('dizi.consent-missing')));
-  pass('SMS and WhatsApp are separate consents, and one does not stand for the other', MG.CONSENTS.some((c) => c.channel === 'whatsapp') && MG.consentFor(consent.mrn, 'sms')?.channel !== MG.consentFor(consent.mrn, 'whatsapp')?.channel, `sms: ${Boolean(MG.consentFor(consent.mrn, 'sms'))}, whatsapp: ${Boolean(MG.consentFor(consent.mrn, 'whatsapp'))}`);
+  pass('WhatsApp and e-mail are separate consents, and one does not stand for the other', MG.CONSENTS.some((c) => c.channel === 'email') && MG.consentFor(consent.mrn, 'whatsapp')?.channel !== MG.consentFor(consent.mrn, 'email')?.channel, `whatsapp: ${Boolean(MG.consentFor(consent.mrn, 'whatsapp'))}, email: ${Boolean(MG.consentFor(consent.mrn, 'email'))}`);
+  pass('the channels the screen offers are the two the contract carries, and SMS is not one of them', MG.CHANNELS.filter((c) => !c.worksOffline).map((c) => c.channel).join(' · ') === 'whatsapp · email', MG.CHANNELS.map((c) => c.channel).join(' · '));
   pass('a message with no number on the record is refused rather than typed in here', codes(outbound({ phone: '' })).includes('no-number') && MG.checkOutbound({ ...message, phone: '' }, mctx).reasons.some((r) => r.message.includes('mistyped digit')));
   pass('an attachment is refused on every outbound channel: a share can be withdrawn, an email cannot', codes(outbound({ attachments: 1 })).includes('no-attachments'));
-  pass('a message past three SMS segments is refused, with the segment count in the sentence', codes(outbound({ body: 'x'.repeat(500) })).includes('too-long') && outbound({ body: 'x'.repeat(500) }).reasons.some((r) => r.message.includes('SMS segments')));
+  pass('a message long enough to be a letter is refused, in a sentence about a telephone rather than about a tariff', codes(outbound({ body: 'x'.repeat(500) })).includes('too-long') && outbound({ body: 'x'.repeat(500) }).reasons.some((r) => r.message.includes('letter on a telephone')));
   pass('a message carrying a diagnosis is refused', codes(outbound({ body: 'Your biopsy shows cancer and the oncologist will see you next week about treatment.' })).includes('clinical-detail'));
+  pass('the quiet hours are the contract’s numbers rather than the screen’s own', MG.QUIET_HOURS.from === 21 * 60 && MG.QUIET_HOURS.to === 8 * 60 && MG.QUIET_HOURS.note.includes('23:40'), `${MG.QUIET_HOURS.from / 60}:00 → ${MG.QUIET_HOURS.to / 60}:00`);
   pass('an outward channel with the uplink down is refused as online-only, and the sentence says why', codes(MG.checkOutbound(message, { ...mctx, cloudReachable: false })).includes('offline-not-allowed') && MG.checkOutbound(message, { ...mctx, cloudReachable: false }).reasons.some((r) => r.message.includes('online-only')), 'a queued message is one the hospital believes it sent');
-  pass('a message sent at 23:00 is given the quiet hours back', warns(MG.checkOutbound(message, { ...mctx, nowMinute: NIGHT })).includes('quiet-hours') && MG.QUIET_HOURS.from === 20 * 60 && MG.QUIET_HOURS.to === 8 * 60);
+  pass('a message sent at 23:00 is given the quiet hours back, and the window is the contract’s rather than the screen’s memory of it', warns(MG.checkOutbound(message, { ...mctx, nowMinute: NIGHT })).includes('quiet-hours') && MG.QUIET_HOURS.from === 21 * 60 && MG.QUIET_HOURS.to === 8 * 60);
   const oneNotice = MG.NOTICES[0];
   const itsAudience = audiences.find((a) => `${a.kind}:${a.ref}` === oneNotice.audience) ?? team;
   const readCodes = new Set(MG.receiptsFor(oneNotice.id).map((r) => r.staffCode));

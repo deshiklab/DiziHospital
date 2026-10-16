@@ -145,6 +145,13 @@ jobs:
       - name: The booking sheet books the time it was offered, and asks the contract's own path
         run: npm run test:appointments
 
+      # P0-403's half that a machine can hold without a service: the delivery log, the failure alerting at the
+      # contract's own threshold, the per-event wording in both languages, and the refusals — driven through the
+      # screen's source against a stubbed service, and through the preview, which must refuse what the service refuses
+      # and name its own driver on every row. The service's side of P0-403 is the api job's PHPUnit run.
+      - name: The delivery log, the alert and the wording per event, against both sources
+        run: npm run test:messaging
+
       # P0-204's acceptance line, measured: a hundred thousand records behind a source, through the real component.
       # The budget is 1 s for the first page on the *development* build of React, which is the slower of the two — so
       # a green run here is a green run in production with room to spare.
