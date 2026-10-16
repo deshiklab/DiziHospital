@@ -334,7 +334,7 @@ final class KeycloakTokenVerifier implements VerifiesTokens
 
         $bytes = '';
         while ($length > 0) {
-            $bytes = chr($length & 0xff).$bytes;
+            $bytes = chr($length & 0xFF).$bytes;
             $length >>= 8;
         }
 

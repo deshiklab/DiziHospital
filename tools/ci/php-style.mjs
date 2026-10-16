@@ -65,6 +65,11 @@ function annotatedLines(text) {
   return out;
 }
 
+/** A line with its string literals blanked out, for the rules that are about syntax rather than about prose. */
+function unquoted(line) {
+  return line.replace(/'((?:[^'\\]|\\.)*)'/g, "''").replace(/"((?:[^"\\]|\\.)*)"/g, '""');
+}
+
 const findings = [];
 const files = phpFiles(target);
 
@@ -146,6 +151,11 @@ for (const file of files) {
   });
   rule('braces', (line) => line.trim().slice(0, 70), (line) => line.trim() === 'else {' || /^else\s+if\b/.test(line.trim()));
 
+  /* `if($x)` — a keyword with no space before its bracket. Pint's single_space_around_construct rewrites it, and it
+     is invisible in review because it reads like a function call. */
+  rule('single_space_around_construct', (line) => `no space between the keyword and its bracket: ${line.trim().slice(0, 60)}`, (line) =>
+    /(?<![\w:$>\\])(if|elseif|for|foreach|while|switch|catch|match)\(/.test(unquoted(line)));
+
   // no_unused_imports, ordered_imports — top-level imports only: a `use Trait;` inside a class body is not an import.
   const uses = [];
   for (const { number, line, comment } of annotated) {
@@ -165,6 +175,34 @@ for (const file of files) {
   const sorted = [...order].sort();
   if (order.length > 1 && order.join('\u0000') !== sorted.join('\u0000')) {
     report(uses[0].number, 'ordered_imports', uses.map((u) => u.target.split('\\').pop()).join(' -> '));
+  }
+
+  /* A control structure whose body is one unbraced statement. Pint adds the braces; this reports the header, which
+     is the line that has to change. */
+  annotated.forEach(({ number, line, comment }, index) => {
+    if (comment) return;
+    if (!/^\s*(if|elseif|else|for|foreach|while|do|switch|try|catch|finally)\b/.test(line)) return;
+    const trimmed = line.trim();
+    if (trimmed.endsWith('{') || trimmed.endsWith(';')) return;
+    const next = lines[index + 1]?.trim() ?? '';
+    if (next && !next.startsWith('{')) report(number, 'braces', `control structure without braces: ${trimmed.slice(0, 60)}`);
+  });
+
+  /* integer_literal_case — a hexadecimal literal spells its digits in upper case. The CI failure this would have
+     caught was one character (`0xff` in a DER encoder); strings come out first, because a claim or a message may
+     legitimately quote a hex value. */
+  rule('integer_literal_case', (line) => `hexadecimal literal with lower-case digits: ${line.trim().slice(0, 60)}`, (line) =>
+    /0[xX][0-9a-fA-F]*[a-f][0-9a-fA-F]*/.test(unquoted(line)));
+
+  /* fully_qualified_strict_types — a class named by its full path where an import would do. The rule applies to
+     docblocks as well as to code (a `@throws \App\Support\ProblemException` is exactly the case Pint fixed), so this
+     reads every line rather than only the uncommented ones, and leaves global functions (`\strlen`) alone: a run of
+     segments means a class, and the roots below are the ones this service can import. */
+  for (const { number, line } of annotated) {
+    if (/^\s*use\s+/.test(line)) continue;
+    if (/(^|[^\w$\\])\\(App|Tests|Illuminate|Symfony|Database|OpenApi)\\[A-Z]\w*\\\w+/.test(line)) {
+      report(number, 'fully_qualified_strict_types', `names a class by its full path: ${line.trim().slice(0, 60)}`);
+    }
   }
 }
 

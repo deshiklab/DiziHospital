@@ -12,6 +12,7 @@ on:
       - 'tools/ci/**'
       - 'tools/test/**'
       - 'tools/perf/**'
+      - 'infra/**'
       - 'package.json'
       - 'docs/plan/design-tokens.json'
       - '.github/workflows/ci-app.yml'
@@ -23,6 +24,7 @@ on:
       - 'tools/ci/**'
       - 'tools/test/**'
       - 'tools/perf/**'
+      - 'infra/**'
       - 'package.json'
       - 'docs/plan/design-tokens.json'
       - '.github/workflows/ci-app.yml'
@@ -63,6 +65,13 @@ jobs:
       # utilities in one class list, and the stylesheet order picked the one that keeps it visible.
       - name: No class list carries two base display utilities
         run: npm run check:classes
+
+      # And a public environment variable once read as `env.NEXT_PUBLIC_OIDC_ISSUER`, which the bundler does not
+      # replace: a realm that was configured, provisioned and running was never reached, because the sign-in page
+      # quietly kept showing the preview. The proof needs a build with the variable set (`tools/test/oidc-page.mjs`);
+      # this is the second-long version of the same rule.
+      - name: Public environment variables are read the way a bundler can replace them
+        run: npm run check:env
 
       # The API service's PHP style, checked without PHP. The real gate is `vendor/bin/pint --test` in ci-api, which
       # only runs when services/ changes; this one runs on every pull request and checks the same pinned rules, so a
@@ -115,6 +124,13 @@ jobs:
       # case per rule through it, which is the only way to see a rule that stopped firing.
       - name: The duplicate rule set behaves as the contract says
         run: npm run test:rules
+
+      # Sign-in, against a provider that behaves like Keycloak: the PKCE challenge really is SHA-256 of the verifier
+      # the client keeps, a code is spent once, a callback from another tab is refused, and the roles a realm issues
+      # become the shell and the abilities the app draws. It brings its own realm because Keycloak needs somewhere to
+      # run; the API's suite proves the verifying half against real RS256 signatures.
+      - name: Sign-in goes to the hospital's realm, and the token's roles are the roles the app draws
+        run: npm run test:auth
 
       # The grid's own rules: a page is a query rather than a slice, a view is a named query whose active state is
       # derived, the address carries the window, and the export walks the whole filtered set and says how much of it

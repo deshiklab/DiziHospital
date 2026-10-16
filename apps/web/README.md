@@ -49,7 +49,8 @@ NEXT_DIST_DIR=.next-build npm run build --workspace @dizi/web   # keep builds ou
 | `/patients/discharged` | The discharged register: today, this week or the whole record, with the summary gaps, the results still pending, the calls to make, the follow-ups not booked, the dues outstanding and the readmissions inside 30 days — and the discharge summary itself behind each row |
 | `/appointments` | The appointment desk: doctor × time calendar (desktop) and list (mobile), a drag-free queue board, online requests from the patient portal, and the full list — plus the booking sheet with real slot conflicts |
 | `/appointments/queue` | The live queue: who is next and in which room, waiting times measured rather than guessed, tokens called and skipped and requeued, walk-ins triaged into the line without ever jumping it, and the check-in-to-consultation timeline on each token |
-| `/login` | Two-step sign-in preview (credentials → six-digit code), branch picker, English ⇄ বাংলা |
+| `/login` | **Sign-in.** With `NEXT_PUBLIC_OIDC_ISSUER` set, one button that hands off to the hospital's Keycloak (Authorization Code + PKCE) — the password and the one-time code are typed there, never here, and are never seen by this app. With no realm configured (the default) the two-step preview stays and says on itself that it validates nothing: credentials → six-digit code, branch picker, English ⇄ বাংলা |
+| `/login/callback` | Where the realm sends the browser back: checks the `state` against the attempt this tab stored *before* the code is spent, exchanges it with the verifier PKCE proves, checks the id token's `nonce`, then keeps the session. Every failure ends in a sentence and a way back — it never half-signs anybody in |
 | `/clinical` | OPD consultation: the room queue beside one patient's workspace — vitals with reference-range flags, SOAP notes, ICD-10 diagnosis, lab/imaging orders, and a prescription screened for allergies, high-alert medicines and dangerous abbreviations before it can be signed |
 | `/diagnostics` | Laboratory and imaging worklist: every specimen's journey (ordered → collected → in the lab → resulted → verified → dispatched), per-analyte reference ranges checked as the value is typed, turnaround deadlines on the row, verification as a second-person gate, the critical-value call-back log, rejected samples with reasons, and the day's quality-control runs |
 | `/diagnostics/search` | Pathology and radiology search: verified results only by default, values against the analyte's own reference range, the previous verified result beside each one, trends that compare like with like, imaging reports read by the question that was asked, and the list of critical results nobody has telephoned about yet |
@@ -160,7 +161,15 @@ value on the server and another in the browser, and React throws the rendered tr
 * No API calls: `lib/mock.ts` is deterministic synthetic data (2 000 patients) that disappears in `P0-301`.
   The grid layer is already built for it — a page is a query the source answers, so moving a screen to the API
   is pointing `useGrid` at a fetch and deleting the generator, not a rewrite of the table.
-* No auth (Keycloak/OIDC is `P0-205`), so the role switcher and sign-out are placeholders.
+* **Auth is wired but unproven against a real realm.** `lib/auth.ts` is the OIDC client (PKCE S256, state, nonce,
+  refresh, end-session, and the token's roles → a shell and a set of abilities), and `lib/session-store.ts` keeps the
+  session per tab in `sessionStorage` — deliberately: these desks are shared, so closing the tab ends the session.
+  The shell takes the role from the token when there is one, and sign-out clears the local session first and then
+  ends it at Keycloak. What has **not** happened is a real sign-in: no Keycloak runs in this repository's development
+  environment (`infra/keycloak/README.md` says exactly what has and has not been run). `npm run test:auth` drives
+  this client against a stand-in provider; the API verifies tokens for real, in its own suite.
+* With no realm configured the role switcher and the sign-out toast are the preview's, and the sign-in screen says so
+  on itself.
 * Row-level keyboard navigation (↑/↓/Home/End/Escape, announced through a live region) landed with `P0-204`; virtualisation is still ahead, and it is not what gives the register its speed — the grid asks its source for one page, so a 100 000-row register puts 25 rows in the document (`npm run perf:grid` measures it). The screens that still pass a plain array to `<DataGrid>` (`components/ListView.tsx` and the register screens not yet moved onto `useGrid`) hold the whole list in memory as before; moving them is a wiring change, and the grid is where the cost lives.
 * Clinical terminology is not translated yet — that needs the reviewed glossary (`docs/plan/02` §9).
 * Sign-in is a **preview**: no session is created and no password is checked. Keycloak/OIDC is `P0-205`, and the

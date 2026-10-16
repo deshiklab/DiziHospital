@@ -16,6 +16,8 @@ import {
 } from '@dizi/ui';
 import { APP_PHASE, APP_VERSION, TEXT_STEPS, ZOOM_STEPS, useShell, type Density, type Locale, type Role, type SidebarMode } from '@/lib/shell';
 import { HOTKEYS, NAV, breadcrumbsFor, roleLabels, t } from '@/lib/nav';
+import { endSessionUrl, oidcConfig, type Session } from '@/lib/auth';
+import { SESSION_CHANGED, clearSession, loadSession } from '@/lib/session-store';
 import { MobileBar } from '@/components/MobileBar';
 import { MobileNav } from '@/components/MobileNav';
 import { patients } from '@/lib/mock';
@@ -104,6 +106,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const [displayOpen, setDisplayOpen] = useState(false);
   const [syncOpen, setSyncOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  /* The session, when there is one. `null` is the preview: no realm configured, or nobody signed in yet. */
+  const [session, setSession] = useState<Session | null>(null);
   const [query, setQuery] = useState('');
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -137,6 +141,36 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     // keyboard (and the next Escape would go to a drawer nobody can see).
     if (navMode === 'rail') setMobileNavOpen(false);
   }, [navMode, setMobileNavOpen]);
+
+  /* Read the session on mount and whenever it changes. In an effect rather than during the render: `sessionStorage`
+   * does not exist on the server, and reading it while rendering is a hydration mismatch. With a session the shell
+   * takes its role from the token — a signed-in desk is not a place to offer a demo role switcher. */
+  useEffect(() => {
+    const read = () => {
+      const live = loadSession();
+      setSession(live);
+      if (live) setRole(live.shell);
+    };
+    read();
+    window.addEventListener(SESSION_CHANGED, read);
+    return () => window.removeEventListener(SESSION_CHANGED, read);
+  }, [setRole]);
+
+  /* Sign out, in two halves that both matter: the local session first, so this tab is signed out even when Keycloak
+   * cannot be reached — a sign-out that depends on a network call is one that fails on the ward's bad link. Then the
+   * browser is sent to Keycloak's end-session endpoint when there is an id token, which is what ends the session
+   * server-side rather than leaving a token that still works for whoever is holding it. */
+  const signOut = () => {
+    const idToken = session?.idToken;
+    clearSession();
+    setSession(null);
+    const config = oidcConfig();
+    if (config && idToken) {
+      window.location.assign(endSessionUrl(config, idToken, `${window.location.origin}/login`));
+      return;
+    }
+    push({ title: 'Signed out on this device', tone: 'info' });
+  };
 
   /* ------------------------------------------------------------------ shortcuts */
   const hotkeys = useMemo(
@@ -588,18 +622,31 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 className="flex h-9 items-center gap-2 rounded-md border border-border-default bg-surface-default px-2 text-sm hover:bg-surface-sunken"
               >
                 <span aria-hidden className="grid size-6 place-items-center rounded-full bg-brand-100 text-xs font-semibold text-brand-700">
-                  {roleLabels[role].en.slice(0, 1)}
+                  {(session ? session.name : roleLabels[role].en).slice(0, 1)}
                 </span>
-                <span className="hidden lg:inline">{roleLabels[role][locale]}</span>
+                <span className="hidden lg:inline">{session ? session.name : roleLabels[role][locale]}</span>
               </button>
             )}
-            items={[
-              { label: 'Signed in as', hint: roleLabels[role].en, disabled: true },
-              { label: `Version ${version}`, hint: `${APP_VERSION === version ? 'Phase 0 shell' : ''} · build ${buildStamp}`, disabled: true, separated: true },
-              { label: 'Switch role', onSelect: () => setRole(nextRole(role)), shortcut: 'demo' },
-              { label: t('shell.hotkeys', locale), onSelect: () => setHotkeysOpen(true), shortcut: '?' },
-              { label: t('shell.signOut', locale), onSelect: () => push({ title: 'Sign out is wired to Keycloak in P0-205', tone: 'info' }), danger: true, separated: true },
-            ]}
+            items={
+              session
+                ? [
+                    /* A real session: the role comes from the token, so there is no switcher here — and the branch
+                       and the node are shown because every write this desk makes is attributed to both. */
+                    { label: 'Signed in as', hint: `${session.name} · ${roleLabels[role].en}`, disabled: true },
+                    { label: 'Branch', hint: session.branch || 'not in the token', disabled: true },
+                    { label: 'Node', hint: session.node || 'not in the token', disabled: true },
+                    { label: `Version ${version}`, hint: `${APP_VERSION === version ? 'Phase 0 shell' : ''} · build ${buildStamp}`, disabled: true, separated: true },
+                    { label: t('shell.hotkeys', locale), onSelect: () => setHotkeysOpen(true), shortcut: '?' },
+                    { label: t('shell.signOut', locale), onSelect: signOut, danger: true, separated: true },
+                  ]
+                : [
+                    { label: 'Signed in as', hint: `${roleLabels[role].en} · preview`, disabled: true },
+                    { label: `Version ${version}`, hint: `${APP_VERSION === version ? 'Phase 0 shell' : ''} · build ${buildStamp}`, disabled: true, separated: true },
+                    { label: 'Switch role', onSelect: () => setRole(nextRole(role)), shortcut: 'demo' },
+                    { label: t('shell.hotkeys', locale), onSelect: () => setHotkeysOpen(true), shortcut: '?' },
+                    { label: t('shell.signOut', locale), onSelect: () => push({ title: 'Sign out is wired to Keycloak in P0-205', tone: 'info' }), danger: true, separated: true },
+                  ]
+            }
           />
         </div>
       </header>

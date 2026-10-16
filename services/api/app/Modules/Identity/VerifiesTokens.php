@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Identity;
 
+use App\Support\ProblemException;
+
 /**
  * Turn a bearer token into an Actor, or refuse it.
  *
@@ -18,7 +20,7 @@ namespace App\Modules\Identity;
 interface VerifiesTokens
 {
     /**
-     * @throws \App\Support\ProblemException when the token is missing, altered, expired or from somewhere else
+     * @throws ProblemException when the token is missing, altered, expired or from somewhere else
      */
     public function verify(string $token): Actor;
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Support;
 
+use App\Modules\Identity\Actor;
 use App\Modules\Identity\TokenVerifier;
 use App\Support\ProblemException;
 use Illuminate\Support\Facades\Http;
@@ -135,7 +136,7 @@ trait KeycloakFixture
     }
 
     /** Drive the driver directly, for the cases that are about verification rather than about a request. */
-    protected function verifyKeycloak(string $token): \App\Modules\Identity\Actor
+    protected function verifyKeycloak(string $token): Actor
     {
         $this->useKeycloakDriver();
 

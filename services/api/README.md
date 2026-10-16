@@ -9,7 +9,7 @@ records; it is not yet a service that runs a hospital.
 
 ## What it serves
 
-Eight of the contract's ninety-three operations, one route each, at the contract's own paths (no `/api` segment, no
+Ten of the contract's ninety-four operations, one route each, at the contract's own paths (no `/api` segment, no
 prettier alias):
 
 | Operation | Route | Middleware |
@@ -22,6 +22,7 @@ prettier alias):
 | `listPatientDuplicates` | `GET /patients/{mrn}/duplicates` | `dizi.auth:read` |
 | `listNumberBlocks` | `GET /node/number-blocks` | `dizi.auth:write` |
 | `appendAuditEntry` | `POST /audit` | `dizi.auth:write` + `dizi.idempotency` |
+| `getMe` | `GET /me` | `dizi.auth:read` |
 
 `tests/Contract/ContractTest.php` checks that list both ways round: every registered route is an operation the contract
 declares, at the contract's path and method, with the contract's own placeholder names — and every operation this
@@ -101,7 +102,12 @@ by hand. Each module's migration is what creates its schema, so nothing else has
   never shared between branches: two branches with one secret is one branch that can mint the other's MRNs.
 * `DIZI_NODE_ID` / `DIZI_BRANCH` — the default identity of this deployment. Writes are attributed to the *token's*
   node, not to these, because one cloud tier serves every branch.
-* `AUTH_PREVIEW_SECRET` + `DIZI_AUTH_DRIVER` — see the honest gap below.
+* `DIZI_AUTH_DRIVER` — `preview` or `keycloak`, and there is no fallback between them on purpose: a verifier that
+  falls back is one that can be made to fall back. `AUTH_PREVIEW_SECRET` signs the preview driver's own tokens.
+* `OIDC_ISSUER` / `OIDC_AUDIENCE` / `OIDC_JWKS_URI` — the realm the `keycloak` driver trusts. Only read when that
+  driver is selected; configured for it with no issuer, the service refuses every request rather than guessing. The
+  realm is `infra/keycloak/`, and `OIDC_JWKS_URI` is an override for a deployment that fronts Keycloak under another
+  name.
 * `DIZI_CONTRACT_PATH` — where `openapi.json` is. The duplicate rules are read from it at runtime, and a missing or
   malformed contract is a `503` rather than a built-in default: the register must not admit patients against rules
   nobody configured.
@@ -111,11 +117,21 @@ by hand. Each module's migration is what creates its schema, so nothing else has
 
 ## The honest gaps in this slice
 
-* **Keycloak is not wired.** `App\Modules\Identity\TokenVerifier` names ticket **#24** as the destination and ships a
-  `preview` driver in the meantime: `<base64url(payload)>.<base64url(HMAC-SHA256)>` over `{sub, name, role, branch,
-  node, exp}`, verified with `hash_equals` and a real expiry. It is not a bypass — the middleware, the role table and
-  every role test exercise the same path #24 plugs into — but it does not federate, refresh, or verify an RS256
-  signature against a JWKS, and the `keycloak` driver refuses with a `503` that says so rather than pretending.
+* **Both token drivers are implemented; no real Keycloak has verified one here.** `App\Modules\Identity\TokenVerifier`
+  picks between two, and neither is a stub. `preview` exchanges a token this repository signs for itself
+  (`<base64url(payload)>.<base64url(HMAC-SHA256)>` over `{sub, name, role, branch, node, exp}`, `hash_equals` and a
+  real expiry) and is what a checkout with no identity provider runs. `keycloak` verifies a real OIDC access token:
+  RS256 pinned, the key id resolved against the realm's published JWKS (cached for an hour, with one fresh fetch
+  before a refusal so a rotation mid-hour is not an outage), and the issuer, audience, `azp`, `sub`, `nbf` and `exp`
+  all checked — see `tests/Unit/KeycloakTokenVerifierTest.php`, which signs real tokens with a real key and proves
+  each refusal. What has **not** happened is the other half: no Keycloak runs in this repository's development
+  environment, so no token minted by a real realm has ever reached this service. Turning it on is
+  `DIZI_AUTH_DRIVER=keycloak` + `OIDC_ISSUER`, and `infra/keycloak/README.md` says what has and has not been run.
+* **A role the contract does not declare is refused, not ignored.** `realm_access.roles` is read out of
+  `x-dizi-roles`; a token carrying a role that is not in that table is answered with `403 dizi.forbidden` naming the
+  role, because ignoring it is how a person ends up with less access than any of their roles claims. `GET /me` is the
+  same table from the other side: it answers with the abilities a person's roles add up to, so "why is this button
+  missing" has an answer on screen rather than only in a log.
 * **The sync change feed is not here.** P0-210 (cursors, batch signatures, the drain protocol) and P0-311 (nightly
   reconciliation) are the next slices. What exists is the part a node cannot start without: the reserved ranges, the
   idempotency table, and the ledger the reconciliation will walk.

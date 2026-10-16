@@ -63,6 +63,23 @@ export interface OidcConfig {
 }
 
 /**
+ * The public environment, read the one way a bundler can read it.
+ *
+ * **Every one of these five has to be spelled `process.env.NEXT_PUBLIC_X` in full**, because that is the form Next
+ * replaces at build time: it inlines the *text*, and a lookup through a variable — `env.NEXT_PUBLIC_OIDC_ISSUER` —
+ * is left alone and reads back as undefined in the browser. That is not a theory: a production build with
+ * `NEXT_PUBLIC_OIDC_ISSUER` set went on showing the preview, silently, because the switch was written the second
+ * way. Fixed here and checked by probing a build that has the variable set.
+ */
+const FROM_BUILD = {
+  NEXT_PUBLIC_OIDC_ISSUER: process.env.NEXT_PUBLIC_OIDC_ISSUER,
+  NEXT_PUBLIC_OIDC_CLIENT_ID: process.env.NEXT_PUBLIC_OIDC_CLIENT_ID,
+  NEXT_PUBLIC_OIDC_REDIRECT_URI: process.env.NEXT_PUBLIC_OIDC_REDIRECT_URI,
+  NEXT_PUBLIC_OIDC_ACCOUNT_URL: process.env.NEXT_PUBLIC_OIDC_ACCOUNT_URL,
+  NEXT_PUBLIC_OIDC_SCOPES: process.env.NEXT_PUBLIC_OIDC_SCOPES,
+} as Record<string, string | undefined>;
+
+/**
  * The provider, from the environment — and the honest answer when there is none.
  *
  * `NEXT_PUBLIC_OIDC_ISSUER` is the switch. Unset (which is how this repository's preview is deployed, because
@@ -70,7 +87,7 @@ export interface OidcConfig {
  * screen hands off to Keycloak and never sees a password again. Nothing here falls back silently: a build that
  * says it is signed in and is not would be worse than the preview it replaced.
  */
-export function oidcConfig(env: Record<string, string | undefined> = process.env): OidcConfig | null {
+export function oidcConfig(env: Record<string, string | undefined> = FROM_BUILD): OidcConfig | null {
   const issuer = env.NEXT_PUBLIC_OIDC_ISSUER?.replace(/\/+$/, '');
   if (!issuer) return null;
   return {

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
+use App\Modules\Identity\TokenVerifier;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Tests\Support\KeycloakFixture;
 use Tests\TestCase;
 
@@ -163,12 +166,12 @@ final class KeycloakTokenVerifierTest extends TestCase
             'dizi.oidc.audience' => $this->apiAudience,
             'dizi.oidc.jwks_uri' => $this->issuer.'/protocol/openid-connect/certs',
         ]);
-        $this->app->forgetInstance(\App\Modules\Identity\TokenVerifier::class);
+        $this->app->forgetInstance(TokenVerifier::class);
 
         // The first fetch publishes the *new* set, as a realm that has just rotated would.
-        \Illuminate\Support\Facades\Cache::flush();
-        \Illuminate\Support\Facades\Http::fake([
-            $this->issuer.'/protocol/openid-connect/certs' => \Illuminate\Support\Facades\Http::response($rotated, 200),
+        Cache::flush();
+        Http::fake([
+            $this->issuer.'/protocol/openid-connect/certs' => Http::response($rotated, 200),
         ]);
 
         $actor = $this->verifyKeycloak($this->keycloakToken([], ['kid' => 'realm-key-2']));
@@ -210,10 +213,10 @@ final class KeycloakTokenVerifierTest extends TestCase
             'dizi.oidc.audience' => $this->apiAudience,
             'dizi.oidc.jwks_uri' => $this->issuer.'/protocol/openid-connect/certs',
         ]);
-        $this->app->forgetInstance(\App\Modules\Identity\TokenVerifier::class);
-        \Illuminate\Support\Facades\Cache::flush();
-        \Illuminate\Support\Facades\Http::fake([
-            $this->issuer.'/protocol/openid-connect/certs' => \Illuminate\Support\Facades\Http::response('', 502),
+        $this->app->forgetInstance(TokenVerifier::class);
+        Cache::flush();
+        Http::fake([
+            $this->issuer.'/protocol/openid-connect/certs' => Http::response('', 502),
         ]);
 
         $refusal = $this->refusalFor($this->keycloakToken());
@@ -234,10 +237,10 @@ final class KeycloakTokenVerifierTest extends TestCase
             'dizi.oidc.audience' => $this->apiAudience,
             'dizi.oidc.jwks_uri' => $this->issuer.'/protocol/openid-connect/certs',
         ]);
-        $this->app->forgetInstance(\App\Modules\Identity\TokenVerifier::class);
-        \Illuminate\Support\Facades\Cache::flush();
-        \Illuminate\Support\Facades\Http::fake([
-            $this->issuer.'/protocol/openid-connect/certs' => \Illuminate\Support\Facades\Http::response(['keys' => []], 200),
+        $this->app->forgetInstance(TokenVerifier::class);
+        Cache::flush();
+        Http::fake([
+            $this->issuer.'/protocol/openid-connect/certs' => Http::response(['keys' => []], 200),
         ]);
 
         $refusal = $this->refusalFor($this->keycloakToken());
@@ -263,10 +266,10 @@ final class KeycloakTokenVerifierTest extends TestCase
             'dizi.oidc.audience' => $this->apiAudience,
             'dizi.oidc.jwks_uri' => $this->issuer.'/protocol/openid-connect/certs',
         ]);
-        $this->app->forgetInstance(\App\Modules\Identity\TokenVerifier::class);
-        \Illuminate\Support\Facades\Cache::flush();
-        \Illuminate\Support\Facades\Http::fake([
-            $this->issuer.'/protocol/openid-connect/certs' => \Illuminate\Support\Facades\Http::response(['keys' => [[
+        $this->app->forgetInstance(TokenVerifier::class);
+        Cache::flush();
+        Http::fake([
+            $this->issuer.'/protocol/openid-connect/certs' => Http::response(['keys' => [[
                 'kid' => $this->realmKid,
                 'kty' => 'RSA',
                 'alg' => 'RS256',

@@ -4,17 +4,23 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button, SafetyBanner, Segmented, Tooltip, cx, useToast } from '@dizi/ui';
 import { DOCTORS } from '@/lib/appointments';
+import { authorizationRequest, oidcConfig, type OidcConfig } from '@/lib/auth';
 import { roleLabels, t } from '@/lib/nav';
+import { safeNext, saveAttempt, takeAttempt } from '@/lib/session-store';
 import { useShell, type Role } from '@/lib/shell';
 
-/* Sign-in (P0-205 preview).
+/* Sign-in (P0-205).
  *
- * Two steps, because the real system has two: password, then a six-digit code from an authenticator app —
- * mandatory for every role that can see clinical or financial records (ADR 0003).
+ * **Two states, and the screen never pretends to be in the other one.**
  *
- * Honest about its own state: this screen validates nothing. The credential check, MFA verification, lockout,
- * session cookies and device trust arrive with Keycloak; what is real here is the flow, the copy, the Bangla
- * toggle, the branch selector and the accessibility (labels, autocomplete hints, one-time-code input).
+ * With a realm configured (`NEXT_PUBLIC_OIDC_ISSUER`), the button hands off to Keycloak and this app never sees a
+ * password or a one-time code again: the credential check, the MFA challenge, lockout, device trust and the session
+ * live there. That is the whole of this ticket on the app's side — start an Authorization Code + PKCE flow, come
+ * back, read the roles the hospital granted.
+ *
+ * With no realm configured — which is how this repository's preview is deployed, because Keycloak needs somewhere to
+ * run — the two-step preview stays and says on itself that it validates nothing. It is a *flow* preview: the labels,
+ * the Bangla toggle, the branch selector, the one-time-code input and the accessibility are real, the check is not.
  */
 export default function LoginPage() {
   const { locale, setLocale, role, setRole, siteMode } = useShell();
@@ -27,10 +33,43 @@ export default function LoginPage() {
   const [branch, setBranch] = useState('Main Campus');
   const [remember, setRemember] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [config, setConfig] = useState<OidcConfig | null>(null);
+  const [attemptFailed, setAttemptFailed] = useState('');
 
+  /* The provider is read in an effect rather than during the render. The environment is the same on both sides, but
+     the *attempt* lives in `sessionStorage`, which only exists in the browser — and reading storage while rendering
+     is how a sign-in page flashes a signed-in header. */
   useEffect(() => {
     document.title = 'Sign in · DiziHospital';
+    setConfig(oidcConfig());
+
+    // An attempt left over from a redirect that never came back. Saying so is better than a button that appears to do
+    // nothing the second time: the state check would refuse the old callback anyway, and this explains why.
+    const stale = takeAttempt();
+    if (stale) {
+      setAttemptFailed('A sign-in started in this tab and did not finish. Start it again below — nothing is lost, and anything queued on this device is still queued.');
+    }
   }, []);
+
+  const startSingleSignOn = async () => {
+    if (!config) return;
+    setBusy(true);
+    try {
+      const request = await authorizationRequest(config);
+      const next = safeNext(new URLSearchParams(window.location.search).get('next'));
+      saveAttempt({ verifier: request.verifier, state: request.state, nonce: request.nonce, next });
+      /* A real navigation, not a fetch: the point of OIDC is that the password is typed on the provider's own page,
+         under the provider's own origin, and this app never sees it. */
+      window.location.assign(request.url);
+    } catch (error) {
+      setBusy(false);
+      push({
+        title: 'Could not reach the hospital sign-in service',
+        description: error instanceof Error ? error.message : String(error),
+        tone: 'critical',
+      });
+    }
+  };
 
   const submitCredentials = (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,12 +134,55 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <SafetyBanner severity="info" title="Preview sign-in">
-            The credential check and MFA verification are stubbed in this shell; they move to Keycloak in P0-205.
-            Any value works. What is real: the flow, the MFA requirement, the language and the layout.
-          </SafetyBanner>
+          {config ? (
+            <SafetyBanner severity="info" title="You will sign in at the hospital's own sign-in service">
+              Your password and your one-time code are typed on the sign-in service&rsquo;s own page and are never seen
+              by this app, which only receives the roles the hospital granted you. Enrolment is forced there: a person
+              who has not set up an authenticator cannot be issued a session at all.
+            </SafetyBanner>
+          ) : (
+            <SafetyBanner severity="info" title="Preview sign-in">
+              No single sign-on is configured in this deployment, so this screen validates nothing and any value works.
+              What is real: the flow, the two steps, the language and the layout. Set `NEXT_PUBLIC_OIDC_ISSUER` to the
+              hospital realm and this page hands off to Keycloak instead.
+            </SafetyBanner>
+          )}
 
-          {step === 'credentials' ? (
+          {attemptFailed && (
+            <SafetyBanner severity="warning" title="A sign-in did not finish">
+              {attemptFailed}
+            </SafetyBanner>
+          )}
+
+          {config ? (
+            <div className="mt-4 flex flex-col gap-3">
+              <Button type="button" variant="primary" busy={busy} className="w-full" onClick={startSingleSignOn}>
+                Continue with your hospital account
+              </Button>
+              <p className="text-xs text-text-tertiary">
+                You will be taken to {config.issuer.replace(/^https?:\/\//, '')} and brought back here. Nothing you
+                type there is visible to this application.
+              </p>
+              <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
+                <a href={config.accountUrl} className="text-brand-600 hover:underline">
+                  Set up or change your authenticator
+                </a>
+                <button
+                  type="button"
+                  className="text-brand-600 hover:underline"
+                  onClick={() =>
+                    push({
+                      title: 'Password reset is handled by the hospital IT desk',
+                      description: 'They verify you in person and re-enrol the device, and the action is audited.',
+                      tone: 'info',
+                    })
+                  }
+                >
+                  Forgot password
+                </button>
+              </div>
+            </div>
+          ) : step === 'credentials' ? (
             <form onSubmit={submitCredentials} className="mt-4 flex flex-col gap-3">
               <div className="flex flex-col gap-1">
                 <label htmlFor="branch" className="text-sm font-medium text-text-secondary">Branch</label>
@@ -159,7 +241,10 @@ export default function LoginPage() {
               </Button>
 
               <div className="mt-2 border-t border-border-subtle pt-3">
-                <p className="mb-2 text-xs text-text-tertiary">Demo roles (this sets the shell's permissions preview):</p>
+                <p className="mb-2 text-xs text-text-tertiary">
+                  Preview only — with single sign-on configured the role comes from your token and cannot be picked
+                  here:
+                </p>
                 <div className="flex flex-wrap gap-1">
                   {(Object.keys(roleLabels) as Role[]).map((r) => (
                     <button

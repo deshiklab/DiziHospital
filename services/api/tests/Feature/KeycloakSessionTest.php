@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Modules\Identity\TokenVerifier;
 use Tests\Support\KeycloakFixture;
 use Tests\TestCase;
 
@@ -117,7 +118,7 @@ final class KeycloakSessionTest extends TestCase
     {
         $this->useKeycloakDriver();
 
-        $this->assertSame('keycloak', $this->app->make(\App\Modules\Identity\TokenVerifier::class)->driver());
+        $this->assertSame('keycloak', $this->app->make(TokenVerifier::class)->driver());
     }
 
     public function test_a_service_configured_for_keycloak_with_no_issuer_refuses_everything(): void
@@ -129,7 +130,7 @@ final class KeycloakSessionTest extends TestCase
             'dizi.auth.driver' => 'keycloak',
             'dizi.oidc.issuer' => '',
         ]);
-        $this->app->forgetInstance(\App\Modules\Identity\TokenVerifier::class);
+        $this->app->forgetInstance(TokenVerifier::class);
 
         $this->getJson('/patients')->assertStatus(503);
     }

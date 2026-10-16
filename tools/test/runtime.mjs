@@ -53,6 +53,11 @@ try {
 const BASE = process.env.DIZI_BASE ?? 'http://127.0.0.1:3000';
 const ROUTES = [
   '/',
+  /* Both halves of sign-in. These are the two routes a person reaches with no session at all, so they are the two
+     that must render for somebody who has none: the callback's honest answer when there is no attempt in this tab is
+     checked by the auth harness, and what is checked here is that neither of them throws while hydrating. */
+  '/login',
+  '/login/callback',
   '/patients',
   '/patients/SH-102311',
   '/patients/new',
@@ -301,7 +306,10 @@ async function check(route) {
    * and public-site route was reported as a page that never hydrated: those shells have no navigation rail, and a
    * check that waits on one shell's marker reads the other two as failures. A fixed sleep is what made this harness flaky against `next dev`, which compiles a
    * route on its first request: four routes at once, and the check was pressing a button whose handler had not
-   * been attached yet. Against a prebuilt server it returns in well under a second. */
+   * been attached yet. Against a prebuilt server it returns in well under a second.
+   *
+   * A page with no shell marks itself: the sign-in callback is a waypoint rather than a screen, deliberately drawn
+   * outside the staff chrome, and it writes `data-shell="auth"` for the same reason the shells write their own. */
   const readyMs = Number(process.env.DIZI_READY_MS ?? 20_000);
   const readyStarted = Date.now();
   while (!doc.documentElement.dataset.shell && Date.now() - readyStarted < readyMs) {

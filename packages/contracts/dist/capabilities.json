@@ -43,13 +43,13 @@
       "path": "/me",
       "tag": "platform",
       "summary": "The session: who is signed in and what their roles may do",
-      "entity": null,
+      "entity": "staff.member",
       "offline": "cache",
       "authority": "edge",
       "idempotency": "none",
       "audit": false,
       "because": "A screen asks this once per session to decide which navigation and which actions to draw. The node answers from the token it has just verified, so a desk with the uplink down still signs in and still works — and the answer is what the API will enforce, because both read the same role table.",
-      "notes": "The session is the token: this is not a second source of truth about permissions. What it adds is the ability words a person can read, so “why is this button missing” has an answer on the screen rather than only in a log.",
+      "notes": "The session is the token: this is not a second source of truth about permissions, and the record it reads is the staff member the token names — `staff.member`, which is where the roles come from. What it adds is the ability words a person can read, so “why is this button missing” has an answer on the screen rather than only in a log.",
       "request": null,
       "responses": {
         "200": "Me",
@@ -3532,6 +3532,12 @@
     "reportAggregate"
   ],
   "byEntity": {
+    "staff.member": [
+      "getMe",
+      "listStaff",
+      "createStaffRecord",
+      "updateStaffRecord"
+    ],
     "patient.demographic": [
       "listPatients",
       "createPatient",
@@ -3592,11 +3598,6 @@
     ],
     "commission.payout": [
       "createCommissionPayout"
-    ],
-    "staff.member": [
-      "listStaff",
-      "createStaffRecord",
-      "updateStaffRecord"
     ],
     "attendance.punch": [
       "recordAttendancePunch",
