@@ -3099,6 +3099,9 @@ how patients get access to the patient panel (see §8).</p>
 <p><img alt="OPD patient view" src="../assets/screens/sub-20-opd-patient-view.jpg" /></p>
 <h2 id="5-roles-and-access-model">5. Roles and access model</h2>
 <p>Nine staff roles plus the patient portal. Each role gets its own dashboard and its own slice of the menu; the table below was produced by logging in as each role and reading the rendered sidebar.</p>
+<blockquote>
+<p><strong>This section is the source of the platform's role table.</strong> The screens-reachable column below is what <code>packages/contracts/openapi.json</code> → <code>x-dizi-roles</code> carries as <code>legacyScreens</code>, alongside each role's abilities, the shell it lands on in the new app, and the reason it has them. That table is what the Keycloak realm (<code>infra/keycloak/realm-dizihospital.json</code>), the app's navigation (<code>apps/web/lib/auth.ts</code>) and the API's ability check (<code>services/api/app/Modules/Identity/ContractRoles.php</code>) all read, so the mapping is checked by <code>packages/contracts/check.mjs</code> rather than kept in step by hand. The key decisions — recorded in the table rather than here, so they can be argued with — are: three of the nine roles (nurse, pathologist, radiologist) share the clinical shell because that is the work they do in the new platform; the two admin roles differ by the vendor's own screens, which the new platform does not have; and <strong>every one of the nine requires MFA</strong>, because every one of them reaches a clinical or a financial record (ADR 0003). <code>auditor</code> is not a legacy role: it is a read-only account for an inspection, and it exists as a role rather than as an exception in code.</p>
+</blockquote>
 <table>
 <thead>
 <tr>
