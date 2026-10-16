@@ -33,6 +33,7 @@ final class ContractTest extends TestCase
      */
     private const SERVED = [
         'health',
+        'getMe',
         'listPatients',
         'createPatient',
         'getPatient',

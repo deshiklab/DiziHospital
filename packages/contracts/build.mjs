@@ -102,6 +102,7 @@ const capabilities = {
   drainOutcomes: doc['x-dizi-drain-outcomes'] ?? {},
   problemTypes: doc['x-dizi-problem-types'] ?? {},
   duplicateRules: doc['x-dizi-duplicate-rules'] ?? {},
+  roles: doc['x-dizi-roles'] ?? {},
   conventions: doc['x-dizi-conventions'] ?? {},
 };
 
@@ -259,6 +260,11 @@ export const drainOutcomes = ${JSON.stringify(capabilities.drainOutcomes, null, 
 export const problemTypes = ${JSON.stringify(capabilities.problemTypes, null, 2)} as const;
 
 export const duplicateRules = ${JSON.stringify(capabilities.duplicateRules, null, 2)} as const;
+
+/* The role table, verbatim from the contract: the app's navigation reads the shells from here, and its own access
+   check reads the abilities from here, so a role that gains an ability in the contract gains it in the app at the
+   same commit. The auth suite holds the realm beside it. */
+export const roles = ${JSON.stringify(capabilities.roles, null, 2)} as const;
 
 export const contract = ${JSON.stringify(capabilities.contract, null, 2)} as const;`);
 

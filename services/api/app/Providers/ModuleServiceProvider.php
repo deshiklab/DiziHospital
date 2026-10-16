@@ -6,7 +6,12 @@ namespace App\Providers;
 
 use App\Modules\Audit\HashChainLedger;
 use App\Modules\Audit\Ledger;
+use App\Modules\Identity\ContractRoles;
+use App\Modules\Identity\KeycloakTokenVerifier;
+use App\Modules\Identity\RoleAbilities;
+use App\Modules\Identity\SignedTokenVerifier;
 use App\Modules\Identity\TokenVerifier;
+use App\Modules\Identity\VerifiesTokens;
 use App\Modules\Registration\ContractDuplicateRules;
 use App\Modules\Registration\DuplicateRules;
 use App\Modules\Registration\DuplicateScorer;
@@ -39,11 +44,37 @@ final class ModuleServiceProvider extends ServiceProvider
            desk's screenshot and the log line match. */
         $this->app->singleton(Trace::class);
 
+        /* The two token drivers, built from configuration and held by the one the application depends on. The
+           issuer's JWKS URI is derived from the issuer when it is not given, which is the shape Keycloak publishes:
+           `<issuer>/.well-known/openid-configuration` names it, and this is the same path. */
         $this->app->singleton(TokenVerifier::class, fn (): TokenVerifier => new TokenVerifier(
             driver: (string) config('dizi.auth.driver'),
-            secret: (string) config('dizi.auth.secret'),
-            leewaySeconds: (int) config('dizi.auth.leeway_seconds'),
+            preview: new SignedTokenVerifier(
+                secret: (string) config('dizi.auth.secret'),
+                leewaySeconds: (int) config('dizi.auth.leeway_seconds'),
+            ),
+            keycloak: new KeycloakTokenVerifier(
+                issuer: rtrim((string) config('dizi.oidc.issuer'), '/'),
+                audience: (string) config('dizi.oidc.audience'),
+                jwksUri: (string) (config('dizi.oidc.jwks_uri') ?: rtrim((string) config('dizi.oidc.issuer'), '/').'/protocol/openid-connect/certs'),
+                leewaySeconds: (int) config('dizi.auth.leeway_seconds'),
+                jwksTtlSeconds: (int) config('dizi.oidc.jwks_ttl_seconds'),
+                timeoutSeconds: (int) config('dizi.oidc.timeout_seconds'),
+            ),
         ));
+
+        /* The verification seam is an alias rather than a second binding: `TokenVerifier` is the singleton, and this
+           is the interface the middleware's dependency is expressed against (`VerifiesTokens`), so the contract test
+           can ask the container for the seam by name and get the configured one. */
+        $this->app->alias(TokenVerifier::class, VerifiesTokens::class);
+
+        /* The role table, read out of the same contract the client is generated from (P0-205). Bound as a seam so
+           the ability check does not care whether the table is a file or a table in the database. */
+        $this->app->singleton(ContractRoles::class, fn (): ContractRoles => new ContractRoles(
+            (string) config('dizi.contract.path'),
+        ));
+
+        $this->app->bind(RoleAbilities::class, ContractRoles::class);
 
         $this->app->singleton(ReservedBlocks::class, fn (): ReservedBlocks => new ReservedBlocks(
             nodeSecret: (string) config('dizi.node.secret'),

@@ -23,12 +23,29 @@ return [
     ],
 
     'auth' => [
-        /* `preview` verifies a signed token this repository issues to itself; `keycloak` is the destination and is
-           not implemented until #24 lands. Naming them both keeps the gap legible instead of implied. */
+        /* Two drivers, both implemented (P0-205, ticket #24). `preview` exchanges a token this repository signs for
+           itself, which is what a checkout with no Keycloak runs; `keycloak` verifies a real OIDC access token
+           against the realm's published keys. Which one is in force is a deployment decision and a named one —
+           there is no fallback between them, because a verifier that falls back is a verifier that can be made to
+           fall back. */
         'driver' => env('DIZI_AUTH_DRIVER', 'preview'),
         'drivers' => ['preview', 'keycloak'],
         'secret' => env('AUTH_PREVIEW_SECRET', ''),
         'leeway_seconds' => (int) env('AUTH_LEEWAY_SECONDS', 30),
+    ],
+
+    /* The realm the staff app signs in to (`infra/keycloak/realm-dizihospital.json`). Only read when the driver is
+       `keycloak`; a service configured for it with no issuer refuses every request rather than guessing. */
+    'oidc' => [
+        'issuer' => env('OIDC_ISSUER', ''),
+        'audience' => env('OIDC_AUDIENCE', 'dizi-api'),
+        /* Keycloak publishes keys under the realm; the override is for deployments that front it with another name. */
+        'jwks_uri' => env('OIDC_JWKS_URI', ''),
+        /* How long a fetched key set is trusted. An hour is well inside Keycloak's own key rotation window, and a
+           `kid` that is not in the cache forces one more fetch before a refusal, so a rotation mid-hour is a
+           non-event rather than an outage. */
+        'jwks_ttl_seconds' => (int) env('OIDC_JWKS_TTL_SECONDS', 3600),
+        'timeout_seconds' => (int) env('OIDC_TIMEOUT_SECONDS', 5),
     ],
 
     'blocks' => [

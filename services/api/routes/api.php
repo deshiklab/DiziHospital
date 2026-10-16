@@ -17,11 +17,17 @@ declare(strict_types=1);
 
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\HealthController;
+use App\Http\Controllers\MeController;
 use App\Http\Controllers\NodeNumberBlockController;
 use App\Http\Controllers\PatientController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', HealthController::class)->name('health');
+
+/* The session, for any role that may read anything — which is every role the contract declares, so the ability it
+   asks for is `read` rather than nothing at all: an endpoint with no check would answer a token this service has not
+   looked at. */
+Route::get('/me', MeController::class)->middleware('dizi.auth:read')->name('getMe');
 
 Route::get('/patients', [PatientController::class, 'index'])->middleware('dizi.auth:read')->name('listPatients');
 Route::post('/patients', [PatientController::class, 'store'])

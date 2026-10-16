@@ -66,6 +66,19 @@ const REQUIRED_CODES = [
  * know about is a rule that is documented and never applied. */
 const DUPLICATE_SIGNALS = ['mrn', 'phone', 'name', 'dob', 'age', 'sex', 'nationalId', 'address', 'guardian'];
 
+/* The role vocabulary. `x-dizi-roles` is what the realm, the app's navigation and the API's ability check all read
+ * (P0-205, ticket #24), so a role the table does not declare is a token this platform refuses to act on. The nine
+ * legacy roles are the acceptance line — a tenth is a decision nobody has argued for, and a missing one is a
+ * person who can no longer sign in. */
+const ABILITIES = ['read', 'write', 'administer'];
+const SHELLS = ['receptionist', 'doctor', 'pharmacist', 'billing', 'admin'];
+const LEGACY_ROLE_COUNT = 9;
+
+/* The realm is authored beside the contract, and this is where the two are compared. A realm that has drifted from
+ * the table — a renamed role, a client that no longer does PKCE, a missing forced enrolment — is a role that signs
+ * in and is then refused, which is the worst of both. */
+const REALM_PATH = 'infra/keycloak/realm-dizihospital.json';
+
 /* ------------------------------------------------------------------ reading the client */
 
 /** The conflict policies the client implements. A contract policy outside this set cannot be honoured yet. */
@@ -98,6 +111,110 @@ function readDrainOutcomes(source) {
   const m = source.match(/export type DrainOutcome =([\s\S]*?);/);
   if (!m) return null;
   return [...m[1].matchAll(/'([^']+)'/g)].map((x) => x[1]);
+}
+
+/**
+ * The Keycloak realm export, read for the facts this contract's role table makes promises about: which roles exist,
+ * whether enrolment is forced, whether the clients are the ones the app and the API expect, and whether the mappers
+ * put the branch, the node and the roles into the token. Absence is not a failure of this function — a checkout
+ * without `infra/` reports it once, rather than nine times, and the caller says so.
+ */
+function readRealm(roles, fileExists, readFile, fail) {
+  if (!fileExists(REALM_PATH)) {
+    fail('x-dizi-roles', `x-dizi-roles names ${REALM_PATH} and it is not in the repository`);
+    return {};
+  }
+  let realm;
+  try {
+    realm = JSON.parse(readFile(REALM_PATH));
+  } catch (error) {
+    fail(REALM_PATH, `is not valid JSON: ${error.message}`);
+    return {};
+  }
+
+  const declared = (realm.roles?.realm ?? []).map((r) => r.name);
+  const clients = (realm.clients ?? []).map((c) => c.clientId);
+  for (const required of ['dizi-web', 'dizi-api']) {
+    if (!clients.includes(required)) fail(REALM_PATH, `has no \`${required}\` client — the app and the API cannot both be served by this realm`);
+  }
+
+  const web = (realm.clients ?? []).find((c) => c.clientId === 'dizi-web') ?? {};
+  if (web.publicClient !== true) fail(REALM_PATH, 'the `dizi-web` client must be public: a browser cannot keep a client secret, and a secret in a bundle is a secret published');
+  if (web.attributes?.['pkce.code.challenge.method'] !== 'S256') {
+    fail(REALM_PATH, 'the `dizi-web` client must require PKCE S256 — a public client without it lets an intercepted code be exchanged by anybody');
+  }
+  if (!(web.redirectUris ?? []).length) fail(REALM_PATH, 'the `dizi-web` client has no redirect URI, so no sign-in can return');
+
+  const api = (realm.clients ?? []).find((c) => c.clientId === 'dizi-api') ?? {};
+  if (api.bearerOnly !== true) fail(REALM_PATH, 'the `dizi-api` client must be bearer-only: it verifies tokens and never starts a login of its own');
+  // The audience mapper lives on the client that *mints* the token, which is the staff app — a mapper on the
+  // bearer-only client would never run, and the API would then have to accept any token from this realm.
+  const audience = (realm.clients ?? []).some((c) =>
+    (c.protocolMappers ?? []).some((m) => m.config?.['included.client.audience'] === 'dizi-api'));
+  if (!audience) fail(REALM_PATH, 'no mapper puts `dizi-api` in the token audience — the API would accept a token minted for another client');
+
+  const mappers = (web.protocolMappers ?? []).map((m) => m.name);
+  for (const required of ['roles', 'branch', 'node']) {
+    if (!mappers.includes(required)) fail(REALM_PATH, `no \`${required}\` mapper — the token has to carry it, or the app and the API have to guess`);
+  }
+
+  const requiredActions = realm.requiredActions ?? [];
+  const totp = requiredActions.find((a) => a.providerId === 'CONFIGURE_TOTP');
+  if (!totp?.enabled || totp?.defaultAction !== true) {
+    fail(REALM_PATH, '`CONFIGURE_TOTP` must be enabled and a default action — enrolment is enforced by the realm, not requested by a screen');
+  }
+  if (Number(realm.otpPolicyDigits ?? 0) !== 6 || realm.otpPolicyType !== 'totp') {
+    fail(REALM_PATH, 'the OTP policy must be TOTP with six digits, which is what the sign-in screen tells people to type');
+  }
+  if (realm.otpPolicyCodeReusable === true) {
+    fail(REALM_PATH, 'a one-time code that can be used twice is not a second factor');
+  }
+  const policy = Array.isArray(realm.passwordPolicy) ? realm.passwordPolicy.join(' and ') : String(realm.passwordPolicy ?? '');
+  if (!/(^|and\s+)failureFactor\(\d+\)/.test(policy)) {
+    fail(REALM_PATH, 'no lockout in `passwordPolicy` — the sign-in screen promises a lockout after five failed attempts');
+  }
+  const policyLength = Number(policy.match(/(^|and\s+)length\((\d+)\)/)?.[2] ?? 0);
+  if (policyLength < 12) {
+    fail(REALM_PATH, `the password policy asks for ${policyLength || 'no'} characters; the hospital's own policy and the migration in ADR 0003 assume at least 12`);
+  }
+  const tokenLifespan = Number(realm.accessTokenLifespan ?? 0);
+  if (!(tokenLifespan > 0 && tokenLifespan <= 600)) {
+    fail(REALM_PATH, `access tokens live ${tokenLifespan}s; ADR 0003 asks for ten minutes or less, because a token that outlives the laptop it was issued to is a session nobody can end`);
+  }
+  /* The login theme. Keycloak ships no Bangla bundle, so the hospital's own sign-in page is a messages-only overlay
+     in this repository — and if the realm points at a theme that is not here, the first screen a receptionist sees
+     silently falls back to English. */
+  const themePath = `infra/keycloak/themes/${realm.loginTheme}/login`;
+  if (!fileExists(`${themePath}/theme.properties`)) {
+    fail(REALM_PATH, `login theme \`${realm.loginTheme}\` has no ${themePath}/theme.properties — the realm would fall back to Keycloak's own English pages`);
+  } else {
+    const theme = readFile(`${themePath}/theme.properties`);
+    for (const locale of realm.supportedLocales ?? []) {
+      if (!fileExists(`${themePath}/messages/messages_${locale}.properties`) && locale !== 'en') {
+        fail(`${themePath}/messages`, `the realm offers \`${locale}\` and the theme has no bundle for it — the realm would offer a language the page cannot speak`);
+      }
+    }
+    if ((realm.supportedLocales ?? []).includes('bn') && !theme.includes('bn')) {
+      fail(`${themePath}/theme.properties`, 'does not list `bn` in `locales`, so the Bangla bundle is never offered');
+    }
+    const banglaFile = `${themePath}/messages/messages_bn.properties`;
+    if (fileExists(banglaFile)) {
+      const bangla = readFile(banglaFile);
+      const keys = bangla.split('\n').filter((l) => l && !l.startsWith('#') && l.includes('=')).map((l) => l.split('=')[0].trim());
+      if (keys.length < 40) fail(banglaFile, `carries ${keys.length} strings — too few to be a translated sign-in page`);
+      /* A key that is not in Keycloak's own bundle renders nothing at all, which looks translated and is not. The
+         upstream bundle cannot be read from here, so what is checked is the keys this repository knows about. */
+      for (const required of ['doLogIn', 'username', 'password', 'loginOtpOneTime', 'invalidUserMessage', 'requiredAction.CONFIGURE_TOTP']) {
+        if (!keys.includes(required)) fail(banglaFile, `is missing \`${required}\` — the sign-in page or the enrolment screen would still be English`);
+      }
+    }
+  }
+
+  if (!(realm.supportedLocales ?? []).includes('bn')) {
+    fail(REALM_PATH, 'the staff desk is Bangla-first and the realm does not offer Bangla');
+  }
+
+  return { path: REALM_PATH, roles: declared, clients, theme: realm.loginTheme, locales: realm.supportedLocales ?? [] };
 }
 
 function readClient(source) {
@@ -462,7 +579,7 @@ function validate(doc, syncSource, options = {}) {
     }
 
     // The copied blocks have to be the contract's own words, not a summary of them.
-    for (const [key, block] of [['entities', entities], ['drainOutcomes', drainOutcomes], ['problemTypes', problemTypes], ['duplicateRules', doc['x-dizi-duplicate-rules'] ?? {}]]) {
+    for (const [key, block] of [['entities', entities], ['drainOutcomes', drainOutcomes], ['problemTypes', problemTypes], ['duplicateRules', doc['x-dizi-duplicate-rules'] ?? {}], ['roles', doc['x-dizi-roles'] ?? {}]]) {
       if (JSON.stringify(caps[key]) !== JSON.stringify(block)) {
         fail(`${capsPath}.${key}`, 'differs from the contract — these blocks are copied verbatim so a screen can render the rule it is enforcing');
       }
@@ -538,7 +655,86 @@ function validate(doc, syncSource, options = {}) {
     fail('x-dizi-duplicate-rules.rules', 'no rule names a file that implements it — the rule set is documentation, not the rule set the product runs');
   }
 
-  return { errors, warnings, operations, policyTable, client, entities, drainOutcomes, problemTypes, duplicateRules, ruleRows, thresholds, caps };
+  /* The roles. P0-205's acceptance is nine legacy roles mapped, MFA forced, and the role claims visible in the
+   * token (P0-205). What makes that checkable is that the realm is a file in this repository: the check reads it
+   * and holds it against the table, so "the realm has been updated too" is a fact rather than a hope. */
+  const roles = doc['x-dizi-roles'] ?? {};
+  const roleRows = [];
+
+  for (const key of ['description', 'issuedBy', 'claim', 'abilityMeaning', 'shellNote', 'legacyNote']) {
+    if (!roles[key]) fail(`x-dizi-roles.${key}`, `missing \`${key}\``);
+  }
+  if (JSON.stringify(roles.abilities ?? []) !== JSON.stringify(ABILITIES)) {
+    fail('x-dizi-roles.abilities', `must be exactly ${JSON.stringify(ABILITIES)} — the API's ability check and the client read this list`);
+  }
+  if (JSON.stringify(roles.shells ?? []) !== JSON.stringify(SHELLS)) {
+    fail('x-dizi-roles.shells', `must name the app's own shells, ${JSON.stringify(SHELLS)}`);
+  }
+
+  const abilitySet = new Set(roles.abilities ?? []);
+  const shellSet = new Set(roles.shells ?? []);
+  const readOnly = [];
+  const roleIds = new Set();
+  const legacy = roles.legacy ?? [];
+  if (legacy.length !== LEGACY_ROLE_COUNT) {
+    fail('x-dizi-roles.legacy', `has ${legacy.length} roles — P0-205 maps exactly ${LEGACY_ROLE_COUNT} legacy roles`);
+  }
+  for (const [kind, list] of [['legacy', legacy], ['service', roles.service ?? []]]) {
+    for (const role of list) {
+      const where = `x-dizi-roles.${kind}.${role.id ?? '(no id)'}`;
+      if (!role.id || !/^[a-z]+(-[a-z]+)*$/.test(role.id)) fail(where, 'ids are lower-case words joined by hyphens');
+      else if (roleIds.has(role.id)) fail(where, 'duplicate role id');
+      else roleIds.add(role.id);
+      if (!role.label?.en) fail(where, 'missing `label.en` — a role a person cannot read is a role nobody checks');
+      if (!role.label?.bn) fail(where, 'missing `label.bn` — the desk is Bangla-first and the role appears in Bangla on the staff list');
+      if (!shellSet.has(role.shell)) fail(where, `\`shell: ${role.shell}\` is not one of the app's shells (${SHELLS.join(', ')})`);
+      if (!Array.isArray(role.abilities) || !role.abilities.length) fail(where, 'needs `abilities`');
+      else {
+        for (const ability of role.abilities) if (!abilitySet.has(ability)) fail(where, `\`${ability}\` is outside the ability vocabulary`);
+        if (!role.abilities.includes('read')) fail(where, 'every role that can sign in can read something — a role with no `read` cannot use a single screen');
+        if (!role.abilities.includes('write') && !role.abilities.includes('administer')) readOnly.push(role.id);
+      }
+      if (role.mfa !== 'required') fail(where, '`mfa` must be `required` — ADR 0003 makes it mandatory for every role that can reach a clinical or financial record');
+      if (!role.because || role.because.length < 80) fail(where, '`because` must explain the mapping in at least 80 characters — it is the sentence a reviewer argues with');
+      if (kind === 'legacy') {
+        if (!Number.isInteger(role.legacyScreens) || role.legacyScreens <= 0) fail(where, '`legacyScreens` must be the measured count from docs/FEATURE-CATALOG.md §5');
+        if (role.legacyScreens > 76) fail(where, 'the legacy Super Admin reaches 76 screens; no role reaches more');
+      }
+      roleRows.push({ id: role.id, kind, shell: role.shell, abilities: role.abilities ?? [], screens: role.legacyScreens ?? null });
+    }
+  }
+  /* A read-only role has to exist: the API refuses a write to a role that may not write, and if every role may
+   * write then that refusal is untestable and, in practice, untested. */
+  if (!readOnly.length) {
+    fail('x-dizi-roles.service', 'no read-only role — an inspection account that cannot change anything is how a whole class of accident is designed out');
+  }
+
+  for (const entry of roles.implementedBy ?? []) {
+    const where = `x-dizi-roles.implementedBy.${entry.file ?? '(no file)'}`;
+    if (!entry.file) {
+      fail('x-dizi-roles.implementedBy', 'an entry names no file');
+      continue;
+    }
+    if (!fileExists(entry.file)) {
+      fail(where, 'does not exist — the role table is attributed to a file that is not there');
+      continue;
+    }
+    const source = readFile(entry.file);
+    for (const needle of entry.evidence ?? []) {
+      if (!source.includes(needle)) fail(where, `no longer contains \`${needle}\` — the role table has drifted from the code that implements it`);
+    }
+    if (!entry.what || entry.what.length < 40) fail(where, '`what` must say what this file is responsible for');
+  }
+
+  const realm = readRealm(roles, fileExists, readFile, fail);
+  for (const role of realm.roles ?? []) {
+    if (!roleIds.has(role)) fail(REALM_PATH, `declares the role \`${role}\`, which x-dizi-roles.legacy does not — a token for it would be refused`);
+  }
+  for (const role of legacy) {
+    if (!(realm.roles ?? []).includes(role.id)) fail(REALM_PATH, `does not declare \`${role.id}\` — that person cannot sign in`);
+  }
+
+  return { roles, roleRows, realm, legacyRoleCount: legacy.length, readOnly, errors, warnings, operations, policyTable, client, entities, drainOutcomes, problemTypes, duplicateRules, ruleRows, thresholds, caps };
 }
 
 /* ------------------------------------------------------------------ report */
@@ -546,7 +742,7 @@ function validate(doc, syncSource, options = {}) {
 const VERBS = { get: 'GET ', post: 'POST', patch: 'PATCH', put: 'PUT', delete: 'DEL ' };
 const pad = (value, width) => String(value).padEnd(width);
 
-function report({ errors, warnings, operations, policyTable, client, drainOutcomes, problemTypes, ruleRows, thresholds, caps }, doc, contractLabel, syncLabel) {
+function report({ errors, warnings, operations, policyTable, client, drainOutcomes, problemTypes, ruleRows, thresholds, roles, roleRows, realm, readOnly, caps }, doc, contractLabel, syncLabel) {
   const widths = {
     verb: 5,
     path: Math.max(6, ...operations.map((o) => o.path.length)),
@@ -583,6 +779,21 @@ function report({ errors, warnings, operations, policyTable, client, drainOutcom
 
   if (ruleRows?.length) {
     console.log(`\nduplicate rules  warn ${thresholds.warn} · block ${thresholds.block} · ${ruleRows.length} rules`);
+
+  if (roleRows?.length) {
+    const legacyRows = roleRows.filter((r) => r.kind === 'legacy');
+    console.log(`\nroles            ${legacyRows.length} legacy · ${roleRows.length - legacyRows.length} service · mfa forced · ${readOnly?.length ?? 0} read-only`);
+    for (const row of legacyRows) {
+      console.log(`  ${pad(row.id, 14)} ${pad(row.shell, 13)} ${pad(row.abilities.join('+'), 22)} ${row.screens} legacy screens`);
+    }
+    for (const row of roleRows.filter((r) => r.kind === 'service')) {
+      console.log(`  ${pad(row.id, 14)} ${pad(row.shell, 13)} ${pad(row.abilities.join('+'), 22)} not a legacy role`);
+    }
+    if (realm?.roles?.length) {
+      console.log(`realm            ${realm.path} · ${realm.roles.length} roles · ${(realm.clients ?? []).join(', ')}`);
+      console.log(`sign-in theme    ${realm.theme} · locales ${(realm.locales ?? []).join(', ')}`);
+    }
+  }
     for (const row of ruleRows) {
       const mark = row.implemented ? '✓' : '~';
       const where = row.by ? `${row.implemented}/${row.by} file${row.by === 1 ? '' : 's'}` : 'the API computes it; no screen does yet';

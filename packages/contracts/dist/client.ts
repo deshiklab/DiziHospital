@@ -1717,6 +1717,35 @@ export interface ReportAggregate {
   readonly registerAt: string;
 }
 
+/** Who this token belongs to, and what its roles may do — read out of `x-dizi-roles` rather than described again here, so the answer a person sees on screen is the answer the API enforces. */
+export interface Me {
+  /** The token subject: the account, not the person’s name. */
+  readonly actor: string;
+  readonly name: string;
+  /** Every role the token carries that the contract declares, widest first. A role outside the table is refused rather than listed. */
+  readonly roles: Array<RoleInToken>;
+  /** The union of the abilities of those roles — what this session may do here and now. */
+  readonly abilities: Array<"read" | "write" | "administer">;
+  /** The branch this account works in, from the token. Empty when the realm does not map it, which is a realm that needs its branch mapper rather than a bug here. */
+  readonly branch: string;
+  readonly node: string;
+  /** Who signed the token, so a log line answers “was this the edge realm or the cloud one”. */
+  readonly issuer: string;
+  readonly driver: "preview" | "keycloak";
+  /** How many screens the legacy system reached with the widest role held, from `docs/FEATURE-CATALOG.md` §5. Zero for a role the legacy system did not have. */
+  readonly legacyScreens: number;
+}
+
+/** One role, as the contract declares it. */
+export interface RoleInToken {
+  /** The realm role name, e.g. `receptionist`. */
+  readonly id: string;
+  readonly label: { en: string; bn: string };
+  /** The app shell this role renders as. A shell is navigation, not a permission. */
+  readonly shell: "receptionist" | "doctor" | "pharmacist" | "billing" | "admin";
+  readonly abilities: Array<"read" | "write" | "administer">;
+}
+
 
 /* ------------------------------------------------------------- operations */
 
@@ -1774,6 +1803,28 @@ export const operations = {
     mayQueue: false,
     servesFromReplica: false,
     needsNetwork: true,
+    requiresIdempotencyKey: false,
+  },
+  getMe: {
+    id: "getMe",
+    method: "get",
+    path: "/me",
+    tag: "platform",
+    summary: "The session: who is signed in and what their roles may do",
+    entity: null,
+    offline: "cache",
+    authority: "edge",
+    idempotency: "none",
+    audit: false,
+    because: "A screen asks this once per session to decide which navigation and which actions to draw. The node answers from the token it has just verified, so a desk with the uplink down still signs in and still works — and the answer is what the API will enforce, because both read the same role table.",
+    notes: "The session is the token: this is not a second source of truth about permissions. What it adds is the ability words a person can read, so “why is this button missing” has an answer on the screen rather than only in a log.",
+    request: null,
+    responses: { "200": "Me", "401": null, "403": null, "503": null },
+    problemResponses: ["401", "403", "503"],
+    statuses: [200, 401, 403, 503],
+    mayQueue: false,
+    servesFromReplica: true,
+    needsNetwork: false,
     requiresIdempotencyKey: false,
   },
   listPatients: {
@@ -4266,6 +4317,244 @@ export const duplicateRules = {
       ]
     }
   ]
+} as const;
+
+/* The role table, verbatim from the contract: the app's navigation reads the shells from here, and its own access
+   check reads the abilities from here, so a role that gains an ability in the contract gains it in the app at the
+   same commit. The auth suite holds the realm beside it. */
+export const roles = {
+  "description": "Who is at the keyboard, and what the platform will therefore accept. The nine legacy roles are the hospital's own: they are what the old system's dashboards were captured with, and every one of them keeps working. The roles are issued by Keycloak (P0-205, ticket #24) as `realm_access.roles`; this block is the one table the realm, the app's navigation and the API's ability check all read, so a role added to the realm and not here is a token this platform refuses to act on rather than one it half-understands.",
+  "issuedBy": "Keycloak, self-hosted on the edge node so staff sign-in works with the uplink down (ADR 0003), one-way federated to a cloud realm for the patient portal and remote staff. The realm's export is `infra/keycloak/realm-dizihospital.json`; the contract's guardrail holds the realm and this table together, so a role renamed in one and not the other fails the build rather than the sign-in.",
+  "claim": "`realm_access.roles` — an array, because a person may hold two roles: a consultant who is also the clinical lead is one account with `doctor` and `admin`, and the union of the abilities applies. The API takes the union as well, and a role the table does not declare is refused by name rather than ignored, because ignoring it is how a person ends up with less access than any of their roles says.",
+  "abilities": [
+    "read",
+    "write",
+    "administer"
+  ],
+  "abilityMeaning": {
+    "read": "List and read records, including exports. The contract marks every operation that needs it.",
+    "write": "Create, update and append records the contract marks as queued or immediate.",
+    "administer": "Change what the system itself does: branches, masters, payers, print templates, user accounts. The narrowest role that is allowed to change a rule somebody else is working under."
+  },
+  "shells": [
+    "receptionist",
+    "doctor",
+    "pharmacist",
+    "billing",
+    "admin"
+  ],
+  "shellNote": "The app has five shells, not nine. A shell is the shape of the navigation and the home screen, and the new platform only builds the screens it has: the legacy sidebar's section list was 76 screens wide and mostly legacy. Three of the nine roles (pathologist, radiologist, nurse) share the clinical workspace, because that is the work they do here; their own legacy screens arrive with the modules that own them (P4 diagnostics, P5 clinical). Nothing is decided by the role alone — the API's ability check is the authority, and the app hides a screen a role cannot use rather than offering it and refusing.",
+  "legacy": [
+    {
+      "id": "super-admin",
+      "label": {
+        "en": "Super admin",
+        "bn": "সুপার অ্যাডমিন"
+      },
+      "shell": "admin",
+      "legacyScreens": 76,
+      "abilities": [
+        "read",
+        "write",
+        "administer"
+      ],
+      "mfa": "required",
+      "because": "The legacy system’s only role with the vendor and licence screens. In the new platform it is the role that may change configuration other roles work under — branches, masters, print templates, roles themselves."
+    },
+    {
+      "id": "admin",
+      "label": {
+        "en": "Hospital admin",
+        "bn": "হাসপাতাল অ্যাডমিন"
+      },
+      "shell": "admin",
+      "legacyScreens": 74,
+      "abilities": [
+        "read",
+        "write",
+        "administer"
+      ],
+      "mfa": "required",
+      "because": "Everything the super admin has except the vendor’s own screens, which the legacy catalogue lists as the only difference between the two (76 screens against 74). It administers the hospital, not the software."
+    },
+    {
+      "id": "doctor",
+      "label": {
+        "en": "Doctor",
+        "bn": "ডাক্তার"
+      },
+      "shell": "doctor",
+      "legacyScreens": 42,
+      "abilities": [
+        "read",
+        "write"
+      ],
+      "mfa": "required",
+      "because": "Clinical workspace: their own out-patient and in-patient lists, prescriptions, orders, results and reports. Not the till, not the store and not the settings — the legacy role reaches 42 of 76 screens and the other 34 are other people’s work."
+    },
+    {
+      "id": "nurse",
+      "label": {
+        "en": "Nurse",
+        "bn": "নার্স"
+      },
+      "shell": "doctor",
+      "legacyScreens": 16,
+      "abilities": [
+        "read",
+        "write"
+      ],
+      "mfa": "required",
+      "because": "Ward and clinical records: the observations, the medication round and the nursing notes for the patients they are looking after. The narrowest role in the system and the one most likely to be working on a tablet at the bedside with no signal."
+    },
+    {
+      "id": "pharmacist",
+      "label": {
+        "en": "Pharmacist",
+        "bn": "ফার্মাসিস্ট"
+      },
+      "shell": "pharmacist",
+      "legacyScreens": 18,
+      "abilities": [
+        "read",
+        "write"
+      ],
+      "mfa": "required",
+      "because": "Dispensing: the prescription queue, the batch and expiry register, stock movements and returns. It may not change a prescription and it may not price one."
+    },
+    {
+      "id": "pathologist",
+      "label": {
+        "en": "Pathologist",
+        "bn": "প্যাথলজিস্ট"
+      },
+      "shell": "doctor",
+      "legacyScreens": 20,
+      "abilities": [
+        "read",
+        "write"
+      ],
+      "mfa": "required",
+      "because": "The laboratory worklist, verification, reference ranges and the call-back log. Verification is a clinical act and is audited under this role’s own name, which is why it may not be shared with the technician who ran the analyser."
+    },
+    {
+      "id": "radiologist",
+      "label": {
+        "en": "Radiologist",
+        "bn": "রেডিওলজিস্ট"
+      },
+      "shell": "doctor",
+      "legacyScreens": 17,
+      "abilities": [
+        "read",
+        "write"
+      ],
+      "mfa": "required",
+      "because": "The imaging worklist and the report that is signed on it. Seventeen screens in the legacy system, and the three the other clinical roles do not have are the ones that write an impression."
+    },
+    {
+      "id": "accountant",
+      "label": {
+        "en": "Accountant",
+        "bn": "হিসাবরক্ষক"
+      },
+      "shell": "billing",
+      "legacyScreens": 45,
+      "abilities": [
+        "read",
+        "write"
+      ],
+      "mfa": "required",
+      "because": "Money: bills, receipts, the day book, payer claims, commission and the finance reports. The largest non-admin role after the doctor (45 screens), and the one the ledger refuses to attribute to anybody else."
+    },
+    {
+      "id": "receptionist",
+      "label": {
+        "en": "Receptionist",
+        "bn": "রিসেপশনিস্ট"
+      },
+      "shell": "receptionist",
+      "legacyScreens": 40,
+      "abilities": [
+        "read",
+        "write"
+      ],
+      "mfa": "required",
+      "because": "The front desk: registration, appointments, the queue, taking money over the counter and the visitor passes. The role that creates the record every other role then reads, which is why duplicate detection is enforced hardest at this door."
+    }
+  ],
+  "legacyNote": "`legacyScreens` is not an estimate: it is the number of screens the review actually reached while signed in as each role, read off the rendered sidebar and recorded in `docs/FEATURE-CATALOG.md` §5. It is kept here so the mapping can be argued with. Where a role’s reach in the new platform differs, that is a decision to make in the open — the number is the legacy system’s, not a promise.",
+  "service": [
+    {
+      "id": "auditor",
+      "label": {
+        "en": "Auditor",
+        "bn": "নিরীক্ষক"
+      },
+      "shell": "admin",
+      "abilities": [
+        "read"
+      ],
+      "mfa": "required",
+      "because": "Not a legacy role. An inspection — the drugs controller, an insurance review, the hospital board — reads the ledger and the registers and changes nothing. It exists in the table rather than as an exception in code, so a read-only account is a role with `read` and not a second code path around the ability check."
+    }
+  ],
+  "mfa": {
+    "requiredFor": [
+      "super-admin",
+      "admin",
+      "doctor",
+      "nurse",
+      "pharmacist",
+      "pathologist",
+      "radiologist",
+      "accountant",
+      "receptionist"
+    ],
+    "policy": "All nine staff roles, because every one of them can reach a clinical or a financial record — the pharmacist reads prescriptions, the receptionist takes money, the nurse writes observations. ADR 0003 makes MFA mandatory for privileged roles and for any role that can reach such a record; measured against the legacy catalogue, that is all of them.",
+    "method": "TOTP from an authenticator app, with WebAuthn supported for the two admin roles. Recovery codes are issued at enrolment by the realm’s own required action (`CONFIGURE_TOTP` with `add-recovery-codes`), twelve of them, each usable once.",
+    "enrolment": "Enforced by the realm as an OIDC required action, not by this app: a person who has not enrolled cannot be issued a token at all, rather than being issued one and asked politely by a screen.",
+    "legacyState": "The old system offers two-factor authentication per user and does not force it — which is the gap ADR 0003 closes. Nothing can be migrated as \"already enrolled\": the demo users carry no TOTP secret, so enrolment is part of the pilot onboarding, assisted at the desk for the first cohort."
+  },
+  "implementedBy": [
+    {
+      "file": "infra/keycloak/realm-dizihospital.json",
+      "evidence": [
+        "\"dizi-web\"",
+        "\"dizi-api\"",
+        "CONFIGURE_TOTP",
+        "realm_access.roles"
+      ],
+      "what": "The realm the roles are actually issued from: role names, the clients, the forced enrolment and the mappers that put the roles, the branch and the node into the token."
+    },
+    {
+      "file": "apps/web/lib/auth.ts",
+      "evidence": [
+        "roleFor",
+        "shellFor",
+        "abilitiesFor"
+      ],
+      "what": "The app side: claim to role to shell, and the ability check a screen uses to hide an action rather than offer it and refuse."
+    },
+    {
+      "file": "services/api/app/Modules/Identity/ContractRoles.php",
+      "evidence": [
+        "x-dizi-roles",
+        "abilitiesFor"
+      ],
+      "what": "The API side: the same table, read out of this contract at start-up, so the ability check that refuses a write is the table printed here."
+    },
+    {
+      "file": "infra/keycloak/themes/dizi/login/messages/messages_bn.properties",
+      "evidence": [
+        "doLogIn=",
+        "loginOtpOneTime=",
+        "requiredAction.CONFIGURE_TOTP="
+      ],
+      "what": "The Bangla sign-in strings. Keycloak ships 65 bundles and Bangla is not one of them, and the desk is Bangla-first, so the sign-in page is ours."
+    }
+  ],
+  "selfTest": "`GET /me` returns the token's roles with the shell and the abilities this table gives them, so the acceptance line — role claims visible in the token — can be checked in a browser or with curl rather than only in a test."
 } as const;
 
 export const contract = {

@@ -32,7 +32,9 @@ final class Modules
         'identity' => [
             'schema' => 'identity',
             'entities' => ['staff.member', 'identity.card'],
-            'seams' => [],
+            /* Two seams, both implemented by P0-205: how a token is checked, and what a role may do. The first has
+               two drivers behind it (`preview` and `keycloak`), which is exactly what a seam is for. */
+            'seams' => ['Identity\VerifiesTokens', 'Identity\RoleAbilities'],
             'implemented' => true,
         ],
         'registration' => [

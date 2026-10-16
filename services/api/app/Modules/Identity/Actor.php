@@ -7,38 +7,36 @@ namespace App\Modules\Identity;
 /**
  * Who is asking, taken from the token and never from the request body.
  *
- * `branch` matters more than it looks: every write this service accepts is attributed to a node and a branch, and the
- * audit ledger names both, so "who admitted this patient" is answerable with the device as well as the person.
+ * `roles` is a list, because a person may hold more than one: a consultant who is also the clinical lead is one
+ * account with `doctor` and `admin`, and the abilities of both apply. The single `role` is kept for the sentences
+ * that have to name one — a refusal reads better as "the role `receptionist` may not administer here" than as a
+ * list — and it is the *widest* role held, so the sentence names the one that came closest to allowing it.
+ *
+ * `branch` and `node` matter more than they look: every write this service accepts is attributed to a node and a
+ * branch, and the audit ledger names both, so "who admitted this patient" is answerable with the device as well as
+ * the person. `issuer` is the identity provider that signed the token, which is what makes a log line answer the
+ * question "was this the edge realm or the cloud one" during an outage.
+ *
+ * What a role may *do* is not decided here: it is the contract's table, read through `RoleAbilities` and checked in
+ * `App\Http\Middleware\Authenticate`. Keeping the abilities out of this value object is what lets the table move
+ * from the contract to a database without every caller changing.
  */
 final class Actor
 {
+    /**
+     * @param  list<string>  $roles  every role in the token, in the order the issuer listed them
+     */
     public function __construct(
         public readonly string $id,
         public readonly string $name,
         public readonly string $role,
-        public readonly string $branch,
-        public readonly string $node,
-    ) {}
-
-    /** The role an operation needs, checked here rather than in each controller. */
-    public function may(string $ability): bool
-    {
-        return in_array($ability, self::ABILITIES[$this->role] ?? [], true);
+        public readonly array $roles = [],
+        public readonly string $branch = '',
+        public readonly string $node = '',
+        public readonly string $issuer = 'preview',
+    ) {
+        if ($this->roles === [] && $this->role !== '') {
+            $this->roles = [$this->role];
+        }
     }
-
-    /**
-     * What each role may do, until Keycloak's roles arrive with #24.
-     *
-     * This table is small on purpose and it is *enforced*: a viewer who calls `POST /patients` receives the
-     * contract's own `dizi.forbidden` with a 403, which is what makes the app's "hide the action rather than offer it
-     * and refuse it" rule checkable from the outside.
-     */
-    private const ABILITIES = [
-        'reception' => ['read', 'write'],
-        'nurse' => ['read', 'write'],
-        'doctor' => ['read', 'write'],
-        'admin' => ['read', 'write', 'administer'],
-        'auditor' => ['read'],
-        'viewer' => ['read'],
-    ];
 }
