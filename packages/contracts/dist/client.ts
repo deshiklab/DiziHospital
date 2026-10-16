@@ -1779,6 +1779,8 @@ export interface AppointmentSlotDay {
   readonly doctorId: string;
   readonly room?: string;
   readonly slotMinutes: number;
+  /** How many consecutive slots a consultation at this sitting claims. It is roster data rather than a product constant: a cardiology clinic books four steps where a paediatric one books two, and a sheet that guesses would offer a block the service then refuses. */
+  readonly claimStarts: number;
   /** Whether the clinic is open: a closed day is a 200 with no slots and the reason, not a 404. */
   readonly open?: boolean;
   readonly closedBecause?: unknown;

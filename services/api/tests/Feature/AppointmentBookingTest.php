@@ -300,6 +300,8 @@ final class AppointmentBookingTest extends TestCase
             ->assertJsonPath('open', true)
             ->assertJsonPath('room', 'OPD-1')
             ->assertJsonPath('slotMinutes', 15)
+            /* The claim size travels with the grid: Dr. Rahman's medicine clinic books three steps in one. */
+            ->assertJsonPath('claimStarts', 3)
             ->assertJsonPath('window.from', 540)
             ->assertJsonPath('window.to', 840)
             ->assertJsonCount(20, 'slots')

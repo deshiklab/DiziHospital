@@ -53,6 +53,9 @@ final class Availability
             'doctorId' => $doctorId,
             'room' => (string) $sitting->room,
             'slotMinutes' => $this->rules->slotMinutes(),
+            /* The claim size travels with the grid, because a sheet that draws a one-slot block for a doctor whose
+               consultations take four is offering a booking the service will refuse one tap later. */
+            'claimStarts' => max(1, (int) $sitting->capacity),
             'open' => $open['open'],
             'closedBecause' => $open['because'],
             'window' => ['from' => $window['from'], 'to' => $window['to']],

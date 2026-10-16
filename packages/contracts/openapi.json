@@ -14738,6 +14738,7 @@
           "day",
           "doctorId",
           "slotMinutes",
+          "claimStarts",
           "slots"
         ],
         "properties": {
@@ -14753,6 +14754,10 @@
           },
           "slotMinutes": {
             "type": "integer"
+          },
+          "claimStarts": {
+            "type": "integer",
+            "description": "How many consecutive slots a consultation at this sitting claims. It is roster data rather than a product constant: a cardiology clinic books four steps where a paediatric one books two, and a sheet that guesses would offer a block the service then refuses."
           },
           "open": {
             "type": "boolean",
