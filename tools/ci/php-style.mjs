@@ -188,11 +188,12 @@ for (const file of files) {
     if (next && !next.startsWith('{')) report(number, 'braces', `control structure without braces: ${trimmed.slice(0, 60)}`);
   });
 
-  /* ordered_traits and class_attributes_separation — `use Trait;` inside a class body. Pint sorts them and keeps
-     them together: the CI failure this would have caught was a class written `use RefreshDatabase;`, a blank line,
-     then `use KeycloakFixture;` — the order wrong and the two separated. A comment may sit between them (a trait
-     with a reason above it is the commonest case here), a blank line may not, and the first trait's own indentation
-     is what marks it as a trait import rather than the file's imports. */
+  /* ordered_traits and class_attributes_separation — `use Trait;` inside a class body. Pint sorts them and separates
+     them by exactly one blank line. Both halves cost a CI round each on these same three lines: the order first
+     (`use RefreshDatabase;` before `use KeycloakFixture;`), then the separation — and getting the separation wrong
+     twice in opposite directions is why the rule below counts the blank lines rather than guessing. A comment may
+     sit between two traits, but the blank line goes above it: the comment belongs to the trait under it. The leading
+     indentation is what marks a line as a trait import rather than one of the file's imports. */
   const traits = [];
   annotated.forEach(({ number, line, comment }) => {
     if (comment) return;
@@ -205,9 +206,9 @@ for (const file of files) {
     if (previous.name.toLowerCase() > current.name.toLowerCase()) {
       report(current.number, 'ordered_traits', `${current.name} comes after ${previous.name}`);
     }
-    const between = lines.slice(previous.number, current.number - 1);
-    if (between.some((line) => line.trim() === '')) {
-      report(current.number, 'class_attributes_separation', `a blank line between ${previous.name} and ${current.name}`);
+    const blanks = lines.slice(previous.number, current.number - 1).filter((line) => line.trim() === '').length;
+    if (blanks !== 1) {
+      report(current.number, 'class_attributes_separation', `${blanks} blank line(s) between ${previous.name} and ${current.name}, and the rule is exactly one`);
     }
   }
 

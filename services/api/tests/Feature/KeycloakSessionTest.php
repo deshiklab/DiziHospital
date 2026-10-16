@@ -24,6 +24,7 @@ use Tests\TestCase;
 final class KeycloakSessionTest extends TestCase
 {
     use KeycloakFixture;
+
     /* A realm token is checked against the register and the number blocks behind it, so this class needs the same
        migrated SQLite the rest of the Feature suite uses — the first CI run that reached these cases found the
        table missing rather than the assertion wrong. */
