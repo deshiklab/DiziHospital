@@ -24,7 +24,7 @@ final class ModulesCommand extends Command
 {
     protected $signature = 'dizi:modules {--check : Fail when an implemented module is missing its schema or tables}';
 
-    protected $description = 'The ten modules, their schemas, their seams, and whether they are in the database';
+    protected $description = 'The eleven modules, their schemas, their seams, and whether they are in the database';
 
     /**
      * The tables each module's migrations create, so `--check` can tell a schema that exists from a module that is
@@ -34,6 +34,7 @@ final class ModulesCommand extends Command
     private const TABLES = [
         'sync' => ['series_counters', 'number_blocks', 'operations'],
         'registration' => ['patients', 'patient_fields'],
+        'messaging' => ['notices', 'notice_recipients', 'notice_receipts', 'consents', 'deliveries', 'outbox'],
         'audit' => ['entries'],
     ];
 

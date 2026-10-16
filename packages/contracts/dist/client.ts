@@ -1373,6 +1373,8 @@ export interface NoticeSend {
   readonly subject: string;
   readonly body: string;
   readonly priority?: "normal" | "urgent";
+  /** Why it could not wait. Required when the priority is `urgent`: an urgent notice interrupts a ward wherever its people are, and one that does that without a reason is a notice people learn to dismiss. */
+  readonly because?: string;
   readonly relatedTo?: string;
   readonly at?: string;
 }
@@ -1385,7 +1387,8 @@ export interface NoticeReceipt {
 }
 
 export interface OutboundMessage {
-  readonly channel: "sms" | "whatsapp" | "email";
+  /** The channels this node carries, which are `x-dizi-notifications.channels`. `sms` is not one of them: the branch pays for WhatsApp and e-mail, and a channel in the schema that no driver carries is a screen offering a send that cannot happen. */
+  readonly channel: "whatsapp" | "email";
   /** The number or address as it is recorded on the patient’s own record, not as typed into a dialog */
   readonly to: string;
   readonly patientMrn?: string;
@@ -1811,6 +1814,10 @@ export interface NotificationDelivery {
   readonly errorCode?: unknown;
   /** The sentence a person reads: what happened, in the service’s or the provider’s own words. */
   readonly detail?: unknown;
+  /** The e-mail subject, when the channel has one. Kept for the same reason as the body: a retry has to say the same thing, not a paraphrase of it. */
+  readonly subject?: unknown;
+  /** What was said, in the wording the branch approved. It is on the row so that a retry repeats the message rather than inventing a second one, and so that "what did we tell them?" is answered from the log instead of from somebody’s memory. Nothing clinical is ever in it: the rule is that a result value, a diagnosis or a prescription never travels by message. */
+  readonly body?: unknown;
   readonly attempt: number;
   readonly at: string;
   /** Whether a person may retry it: a failed attempt with attempts left. A suppression is not retryable — pressing retry does not create consent. */
@@ -1820,7 +1827,7 @@ export interface NotificationDelivery {
 export interface NotificationDeliveryPage {
   readonly rows: Array<NotificationDelivery>;
   readonly asOf: string;
-  /** Which driver is in force per channel. `preview` renders the message, records what it would have sent and touches no network — a log of preview rows is not evidence that anybody was told. */
+  /** Which driver is in force per channel. `preview` renders the message, records what it would have sent and touches no network — a log of preview rows is not evidence that anybody was told. `none` means no driver is configured for that channel at all, so every send on it is refused rather than attempted — a preview row at least carries the sentence that would have gone. */
   readonly driver: { whatsapp: string; email: string };
   /** Channels that are not delivering: at least `x-dizi-notifications.alerting.consecutiveFailures` failures inside the window. Suppressions do not count — a policy refusal is not a channel that is down. */
   readonly alerts: Array<{ channel: string; failures: number; since: string; because: string }>;
@@ -3551,9 +3558,9 @@ export const operations = {
     because: "A retry is a message leaving the hospital, which is the one act that cannot be queued and replayed later: the gateway may have delivered the first attempt after all, and a queued retry would send a second message the desk has no way to see.",
     notes: "Online only because the answer depends on the gateway being reachable *now*: queuing it would send tomorrow a message the desk expected to leave today, and the patient would be told twice about one appointment.",
     request: null,
-    responses: { "201": "NotificationDelivery", "401": null, "403": null, "409": null, "422": null },
-    problemResponses: ["401", "403", "409", "422"],
-    statuses: [201, 401, 403, 409, 422],
+    responses: { "201": "NotificationDelivery", "401": null, "403": null, "409": null, "422": null, "503": null },
+    problemResponses: ["401", "403", "409", "422", "503"],
+    statuses: [201, 401, 403, 409, 422, 503],
     mayQueue: false,
     servesFromReplica: false,
     needsNetwork: true,
@@ -3631,17 +3638,17 @@ export const operations = {
     path: "/notifications/outbound",
     tag: "messaging",
     summary: "Message a patient by SMS, WhatsApp or email",
-    entity: "message.notice",
+    entity: "message.delivery",
     offline: "online-only",
     authority: "cloud",
     idempotency: "required",
     audit: true,
-    because: "An SMS that leaves the hospital cannot be called back, and the gateway is a third party that may be down, may reject the number or may deliver tomorrow. The moment of sending is the one moment this module has to know the answer to.",
+    because: "A message that leaves the hospital cannot be called back, and the gateway is a third party that may be down, may reject the number or may deliver tomorrow: the moment of sending is the one moment this module has to know the answer to. The attempt is appended to the delivery log before the answer is returned, so a gateway that fails is a row in the log and not only a sentence on a screen.",
     notes: "Deliberately online-only: the outbound channels go through a third-party gateway and carry patient information outside the hospital, so the app refuses the send when it cannot get a receipt. The internal noticeboard is unaffected, and the screen says which of the two it is about.",
     request: "OutboundMessage",
-    responses: { "201": "Notice", "401": null, "403": null, "409": null, "502": null },
-    problemResponses: ["401", "403", "409", "502"],
-    statuses: [201, 401, 403, 409, 502],
+    responses: { "201": "NotificationDelivery", "401": null, "403": null, "409": null, "422": null, "502": null, "503": null },
+    problemResponses: ["401", "403", "409", "422", "502", "503"],
+    statuses: [201, 401, 403, 409, 422, 502, 503],
     mayQueue: false,
     servesFromReplica: false,
     needsNetwork: true,
@@ -4403,6 +4410,11 @@ export const problemTypes = {
     "title": "It is inside the quiet hours",
     "when": "A patient-facing message is due between the hours the branch has set as quiet, when a household sleeping is the normal state of a household",
     "client": "Record the delivery as suppressed and say when it will be sent — it is due again at the hour the window closes. Never send it late at night to be on time."
+  },
+  "dizi.template-incomplete": {
+    "title": "The message is missing a value",
+    "when": "A template placeholder has no value in the event that raised it, so the sentence would reach the patient with a gap in it",
+    "client": "Name the placeholder and the event, and say which record was supposed to carry it. Never send the message with the gap: `{{day}}` arriving at a patient is worse than no message, and it is the defect that looks like a wording problem."
   }
 } as const;
 

@@ -20,6 +20,7 @@ use App\Http\Controllers\AuditController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\MeController;
 use App\Http\Controllers\NodeNumberBlockController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PatientController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +54,29 @@ Route::patch('/appointments/{id}', [AppointmentController::class, 'update'])
 Route::post('/appointments/{id}/check-in', [AppointmentController::class, 'checkIn'])
     ->middleware(['dizi.auth:write', 'dizi.idempotency'])
     ->name('checkInAppointment');
+
+/* Messaging (P0-403). Two things behind one resource, and the contract's own words for the split: the board is the
+   hospital's (`message.notice`, written to the branch's own table), and the delivery log is what left the building
+   (`message.delivery`, appended per attempt). `/notifications/outbound` is online-only because a message that has left
+   cannot be recalled — queuing it would send tomorrow one the desk expected to leave today.
+
+   The literal paths are registered before the ones with a placeholder, which is what keeps `/notifications/outbound`
+   from being read as a notice id. */
+Route::get('/notifications/deliveries', [NotificationController::class, 'deliveries'])->middleware('dizi.auth:read')->name('listNotificationDeliveries');
+Route::get('/notifications/templates', [NotificationController::class, 'templates'])->middleware('dizi.auth:read')->name('listNotificationTemplates');
+Route::post('/notifications/deliveries/{id}/retry', [NotificationController::class, 'retry'])
+    ->middleware(['dizi.auth:write', 'dizi.idempotency'])
+    ->name('retryNotificationDelivery');
+Route::post('/notifications/outbound', [NotificationController::class, 'outbound'])
+    ->middleware(['dizi.auth:write', 'dizi.idempotency'])
+    ->name('sendPatientMessage');
+Route::get('/notifications', [NotificationController::class, 'index'])->middleware('dizi.auth:read')->name('listNotifications');
+Route::post('/notifications', [NotificationController::class, 'store'])
+    ->middleware(['dizi.auth:write', 'dizi.idempotency'])
+    ->name('sendNotice');
+Route::post('/notifications/{id}/receipts', [NotificationController::class, 'receipts'])
+    ->middleware(['dizi.auth:write', 'dizi.idempotency'])
+    ->name('recordNoticeReceipt');
 
 Route::get('/node/number-blocks', NodeNumberBlockController::class)->middleware('dizi.auth:write')->name('listNumberBlocks');
 

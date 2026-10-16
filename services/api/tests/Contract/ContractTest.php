@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Contract;
 
+use App\Modules\Messaging\Delivery;
+use App\Modules\Messaging\Notice;
+use App\Modules\Messaging\NoticeRecipient;
 use App\Modules\Modules;
 use App\Modules\Scheduling\Appointment;
 use Illuminate\Routing\Route;
@@ -47,6 +50,13 @@ final class ContractTest extends TestCase
         'createAppointment',
         'updateAppointment',
         'checkInAppointment',
+        'listNotifications',
+        'sendNotice',
+        'recordNoticeReceipt',
+        'sendPatientMessage',
+        'listNotificationDeliveries',
+        'listNotificationTemplates',
+        'retryNotificationDelivery',
     ];
 
     /**
@@ -66,7 +76,6 @@ final class ContractTest extends TestCase
         'content.item',
         'content.type',
         'leave.request',
-        'message.notice',
         'payroll.run',
         'platform.setting',
         'portal.feedback',
@@ -81,7 +90,7 @@ final class ContractTest extends TestCase
     ];
 
     /** A config namespace and not a problem type: the service reading its own configuration. */
-    private const CONFIG_NAMESPACES = ['dizi.node', 'dizi.auth', 'dizi.blocks', 'dizi.contract', 'dizi.oidc'];
+    private const CONFIG_NAMESPACES = ['dizi.node', 'dizi.auth', 'dizi.blocks', 'dizi.contract', 'dizi.oidc', 'dizi.messaging'];
 
     public function test_every_route_is_a_contract_operation_at_the_contracts_own_path(): void
     {
@@ -294,6 +303,24 @@ final class ContractTest extends TestCase
             'The check-in guard and the states it is published under have drifted apart.',
         );
 
+        /* The messaging vocabulary (P0-403) is the contract's, once, for the same reason: the delivery log's statuses
+           are what the screen branches on, the channels are what a driver is configured for, and a second copy of
+           either is a screen offering something the service refuses. */
+        $this->assertSame($this->enumOf($contract, 'NotificationDelivery', 'channel'), Delivery::CHANNELS);
+        $this->assertSame($this->enumOf($contract, 'NotificationDelivery', 'status'), Delivery::STATUSES);
+        $this->assertSame($this->enumOf($contract, 'OutboundMessage', 'channel'), Delivery::CHANNELS);
+        $this->assertSame($this->enumOf($contract, 'NoticeSend', 'priority'), Notice::PRIORITIES);
+        $this->assertSame($this->enumOf($contract, 'MessageRecipient', 'kind'), NoticeRecipient::KINDS);
+        $this->assertSame($this->parameterEnumOf($contract, 'listNotifications', 'box'), Notice::BOXES);
+
+        /* The two channels the catalogue declares are the two a message may leave by, and the events are exactly the
+           events this service knows how to say something about — including the one that is deliberately quiet. */
+        $this->assertSame(['whatsapp', 'email'], array_keys($contract['x-dizi-notifications']['channels']));
+        $this->assertNull(
+            $contract['x-dizi-notifications']['events']['encounter.signed']['template'],
+            'A signed consultation is deliberately not notifiable: the clinical record is not a message to the patient, and what a patient may see is decided by the portal’s own rules after they sign in.',
+        );
+
         $this->assertSame($this->enumOf($contract, 'AppointmentCreate', 'type'), Appointment::TYPES);
         $this->assertSame($this->enumOf($contract, 'AppointmentCreate', 'priority'), Appointment::PRIORITIES);
         $this->assertSame($this->enumOf($contract, 'AppointmentCreate', 'source'), Appointment::SOURCES);
@@ -312,6 +339,34 @@ final class ContractTest extends TestCase
         $this->assertIsArray($enum, "`{$schema}.{$property}` is not an enum in the contract, so there is nothing to compare.");
 
         return array_values($enum);
+    }
+
+    /**
+     * The enum one operation declares for one of its query parameters.
+     *
+     * The delivery log's own parameters carry the statuses a screen may filter on, and a list that lives here would be
+     * a third copy of the vocabulary: one in the contract, one in the filter and one in the schema the rows are read
+     * with.
+     *
+     * @param  array<string, mixed>  $contract
+     * @return list<string>
+     */
+    private function parameterEnumOf(array $contract, string $operationId, string $name): array
+    {
+        $operation = $this->operation($contract, $operationId) ?? [];
+
+        foreach ($operation['parameters'] ?? [] as $parameter) {
+            if (($parameter['name'] ?? null) === $name) {
+                $enum = $parameter['schema']['enum'] ?? null;
+                $this->assertIsArray($enum, "`{$operationId}.{$name}` is not an enum in the contract, so there is nothing to compare.");
+
+                return array_values($enum);
+            }
+        }
+
+        $this->fail("`{$operationId}` declares no parameter `{$name}`, so there is nothing to compare.");
+
+        return [];
     }
 
     /**

@@ -62,6 +62,33 @@ return [
         ],
     ],
 
+    'messaging' => [
+        /* Which driver carries which channel. `preview` renders the sentence and records it, and every row it writes
+           says `preview`, so a log of preview rows can never be read as evidence that a patient was told. The real
+           drivers (`meta-cloud`, `smtp`) are what a branch with a paid account runs, and there is no fallback between
+           them: a channel whose driver is misconfigured is refused, never quietly carried by something that sends
+           nothing. */
+        'channels' => [
+            'whatsapp' => ['driver' => env('DIZI_WHATSAPP_DRIVER', 'preview')],
+            'email' => ['driver' => env('DIZI_EMAIL_DRIVER', 'preview')],
+        ],
+
+        /* The WhatsApp Business account. Empty values are a `502` naming the missing setting rather than an attempt
+           against a half-configured account. */
+        'whatsapp' => [
+            'graph_url' => env('DIZI_WHATSAPP_GRAPH_URL', 'https://graph.facebook.com/v21.0'),
+            'phone_number_id' => env('DIZI_WHATSAPP_PHONE_NUMBER_ID', ''),
+            'token' => env('DIZI_WHATSAPP_TOKEN', ''),
+        ],
+
+        /* Where the hospital's own notifications go — a low shelf, a sync conflict. A patient's address comes from the
+           consent they gave and never from here. */
+        'staff_address' => env('DIZI_STAFF_ADDRESS', ''),
+
+        /* The sender an e-mail is from. Empty is a refusal: a message from nowhere is discarded by every relay. */
+        'mail_from' => env('DIZI_MAIL_FROM', ''),
+    ],
+
     'contract' => [
         /* The API reads the same contract the app generates its client from. The duplicate rules are the sharp end of
            that: one tunable table, two readers, so a branch that changes a weight changes it for the desk form and

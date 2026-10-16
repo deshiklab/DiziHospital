@@ -6565,6 +6565,16 @@
                 }
               }
             }
+          },
+          "503": {
+            "description": "This node carries no driver for the attempt’s channel — nothing was attempted",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
           }
         },
         "x-dizi": {
@@ -6887,23 +6897,43 @@
             }
           },
           "201": {
-            "description": "Handed to the gateway; the delivery state is updated as the gateway reports it",
+            "description": "The attempt, appended to the delivery log: handed to the gateway, suppressed by policy, or failed with the gateway’s own words — never silently dropped.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Notice"
+                  "$ref": "#/components/schemas/NotificationDelivery"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed — no body, no patient, or an address that is not the one the consent covers",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "This node carries no driver for that channel — nothing was attempted",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
                 }
               }
             }
           }
         },
         "x-dizi": {
-          "entity": "message.notice",
+          "entity": "message.delivery",
           "offline": "online-only",
           "authority": "cloud",
           "idempotency": "required",
           "audit": true,
-          "because": "An SMS that leaves the hospital cannot be called back, and the gateway is a third party that may be down, may reject the number or may deliver tomorrow. The moment of sending is the one moment this module has to know the answer to.",
+          "because": "A message that leaves the hospital cannot be called back, and the gateway is a third party that may be down, may reject the number or may deliver tomorrow: the moment of sending is the one moment this module has to know the answer to. The attempt is appended to the delivery log before the answer is returned, so a gateway that fails is a row in the log and not only a sentence on a screen.",
           "notes": "Deliberately online-only: the outbound channels go through a third-party gateway and carry patient information outside the hospital, so the app refuses the send when it cannot get a receipt. The internal noticeboard is unaffected, and the screen says which of the two it is about."
         }
       }
@@ -13420,6 +13450,10 @@
               "urgent"
             ]
           },
+          "because": {
+            "type": "string",
+            "description": "Why it could not wait. Required when the priority is `urgent`: an urgent notice interrupts a ward wherever its people are, and one that does that without a reason is a notice people learn to dismiss."
+          },
           "relatedTo": {
             "type": "string"
           },
@@ -13463,10 +13497,10 @@
           "channel": {
             "type": "string",
             "enum": [
-              "sms",
               "whatsapp",
               "email"
-            ]
+            ],
+            "description": "The channels this node carries, which are `x-dizi-notifications.channels`. `sms` is not one of them: the branch pays for WhatsApp and e-mail, and a channel in the schema that no driver carries is a screen offering a send that cannot happen."
           },
           "to": {
             "type": "string",
@@ -15107,6 +15141,20 @@
             ],
             "description": "The sentence a person reads: what happened, in the service’s or the provider’s own words."
           },
+          "subject": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The e-mail subject, when the channel has one. Kept for the same reason as the body: a retry has to say the same thing, not a paraphrase of it."
+          },
+          "body": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "What was said, in the wording the branch approved. It is on the row so that a retry repeats the message rather than inventing a second one, and so that \"what did we tell them?\" is answered from the log instead of from somebody’s memory. Nothing clinical is ever in it: the rule is that a result value, a diagnosis or a prescription never travels by message."
+          },
           "attempt": {
             "type": "integer",
             "minimum": 1
@@ -15142,7 +15190,7 @@
           },
           "driver": {
             "type": "object",
-            "description": "Which driver is in force per channel. `preview` renders the message, records what it would have sent and touches no network — a log of preview rows is not evidence that anybody was told.",
+            "description": "Which driver is in force per channel. `preview` renders the message, records what it would have sent and touches no network — a log of preview rows is not evidence that anybody was told. `none` means no driver is configured for that channel at all, so every send on it is refused rather than attempted — a preview row at least carries the sentence that would have gone.",
             "required": [
               "whatsapp",
               "email"
@@ -15678,6 +15726,11 @@
       "title": "It is inside the quiet hours",
       "when": "A patient-facing message is due between the hours the branch has set as quiet, when a household sleeping is the normal state of a household",
       "client": "Record the delivery as suppressed and say when it will be sent — it is due again at the hour the window closes. Never send it late at night to be on time."
+    },
+    "dizi.template-incomplete": {
+      "title": "The message is missing a value",
+      "when": "A template placeholder has no value in the event that raised it, so the sentence would reach the patient with a gap in it",
+      "client": "Name the placeholder and the event, and say which record was supposed to carry it. Never send the message with the gap: `{{day}}` arriving at a patient is worse than no message, and it is the defect that looks like a wording problem."
     }
   },
   "x-dizi-duplicate-rules": {
@@ -16292,7 +16345,7 @@
     "rules": [
       "Every event names a template or is deliberately not notifiable. An event with no template and no reason would be a silent hole in the coverage, so the contract says which events are quiet and why.",
       "A message is sent in the language on the patient’s record when that language has a template, and in Bangla otherwise — the portal is Bangla-first, and an English-only message to a Bangla-speaking household is a message that is not read.",
-      "A template placeholder with no value in the event refuses the delivery rather than sending a sentence with a hole in it: `{{day}}` reaching a patient is worse than no message.",
+      "A template placeholder with no value in the event refuses the delivery (`dizi.template-incomplete`) rather than sending a sentence with a hole in it: `{{day}}` reaching a patient is worse than no message.",
       "Nothing clinical leaves by message. The events carry a test name, a time, a room and a receipt number; a result value, a diagnosis or a prescription never appears in one.",
       "The delivery log is append-only: an attempt is a fact about a moment, and a retry appends a new attempt rather than editing the one that failed. The log is what the hospital can point at when a patient says they were never told."
     ]

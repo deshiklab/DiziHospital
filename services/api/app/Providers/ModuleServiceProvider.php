@@ -12,6 +12,10 @@ use App\Modules\Identity\RoleAbilities;
 use App\Modules\Identity\SignedTokenVerifier;
 use App\Modules\Identity\TokenVerifier;
 use App\Modules\Identity\VerifiesTokens;
+use App\Modules\Messaging\ChannelSenders;
+use App\Modules\Messaging\ContractNotificationCatalogue;
+use App\Modules\Messaging\NotificationCatalogue;
+use App\Modules\Messaging\SendsMessages;
 use App\Modules\Registration\ContractDuplicateRules;
 use App\Modules\Registration\DuplicateRules;
 use App\Modules\Registration\DuplicateScorer;
@@ -101,6 +105,28 @@ final class ModuleServiceProvider extends ServiceProvider
         ));
 
         $this->app->bind(AvailabilityRules::class, ContractAvailabilityRules::class);
+
+        /* The messaging catalogue (P0-403), read from the same contract and bound the same way: what this node notices,
+           what each event is said in, the retry policy, the quiet hours. A branch that edits its wording in Setup is
+           changing the file the screens and this service both read. */
+        $this->app->singleton(ContractNotificationCatalogue::class, fn (): ContractNotificationCatalogue => new ContractNotificationCatalogue(
+            (string) config('dizi.contract.path'),
+        ));
+
+        $this->app->bind(NotificationCatalogue::class, ContractNotificationCatalogue::class);
+
+        /* The drivers a message may leave by. The channel map is configuration, so a branch that has a WhatsApp account
+           and no mail relay is a two-line change with no code path that can be half-updated, and a channel with no
+           driver is refused by name rather than carried by something that sends nothing. */
+        $this->app->singleton(ChannelSenders::class, fn (): ChannelSenders => new ChannelSenders(
+            channels: (array) config('dizi.messaging.channels'),
+            whatsappGraphUrl: (string) config('dizi.messaging.whatsapp.graph_url'),
+            whatsappPhoneNumberId: (string) config('dizi.messaging.whatsapp.phone_number_id'),
+            whatsappToken: (string) config('dizi.messaging.whatsapp.token'),
+            mailFrom: (string) config('dizi.messaging.mail_from'),
+        ));
+
+        $this->app->bind(SendsMessages::class, ChannelSenders::class);
 
         $this->app->singleton(DuplicateScorer::class, fn ($app): DuplicateScorer => new DuplicateScorer(
             $app->make(DuplicateRules::class),

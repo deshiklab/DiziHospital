@@ -9,8 +9,8 @@ records; it is not yet a service that runs a hospital.
 
 ## What it serves
 
-Ten of the contract's ninety-four operations, one route each, at the contract's own paths (no `/api` segment, no
-prettier alias):
+Twenty-one of the contract's ninety-eight operations, one route each, at the contract's own paths (no `/api`
+segment, no prettier alias):
 
 | Operation | Route | Middleware |
 |---|---|---|
@@ -23,6 +23,18 @@ prettier alias):
 | `listNumberBlocks` | `GET /node/number-blocks` | `dizi.auth:write` |
 | `appendAuditEntry` | `POST /audit` | `dizi.auth:write` + `dizi.idempotency` |
 | `getMe` | `GET /me` | `dizi.auth:read` |
+| `listAppointments` | `GET /appointments` | `dizi.auth:read` |
+| `listAppointmentSlots` | `GET /appointments/slots` | `dizi.auth:read` |
+| `createAppointment` | `POST /appointments` | `dizi.auth:write` + `dizi.idempotency` |
+| `updateAppointment` | `PATCH /appointments/{id}` | `dizi.auth:write` + `dizi.idempotency` |
+| `checkInAppointment` | `POST /appointments/{id}/check-in` | `dizi.auth:write` + `dizi.idempotency` |
+| `listNotifications` | `GET /notifications` | `dizi.auth:read` |
+| `sendNotice` | `POST /notifications` | `dizi.auth:write` + `dizi.idempotency` |
+| `recordNoticeReceipt` | `POST /notifications/{id}/receipts` | `dizi.auth:write` + `dizi.idempotency` |
+| `sendPatientMessage` | `POST /notifications/outbound` | `dizi.auth:write` + `dizi.idempotency` |
+| `listNotificationDeliveries` | `GET /notifications/deliveries` | `dizi.auth:read` |
+| `listNotificationTemplates` | `GET /notifications/templates` | `dizi.auth:read` |
+| `retryNotificationDelivery` | `POST /notifications/deliveries/{id}/retry` | `dizi.auth:write` + `dizi.idempotency` |
 
 `tests/Contract/ContractTest.php` checks that list both ways round: every registered route is an operation the contract
 declares, at the contract's path and method, with the contract's own placeholder names — and every operation this
@@ -43,6 +55,16 @@ desk form and for the API at once. A match at or above `block` is `409 dizi.dupl
 and which rules matched; the desk may register anyway with `duplicateAcknowledged: true`, and who dismissed what is
 written on the record. A rule the service does not know how to compute is a `503`, not a rule quietly skipped.
 
+**A message that did not go out is a row, never a silence.** `POST /notifications/outbound` is the one operation that
+puts words on a patient's telephone, and it is online-only for that reason: a message that has left cannot be recalled,
+so queuing it would send tomorrow one the desk expected to leave today. Consent is per channel *and per address* — the
+consent records the number it was given for, and a message goes there and nowhere else, which is why a typo at the desk
+is a `422` rather than a message to a stranger. Inside the quiet hours (21:00–08:00, read on `x-dizi-scheduling`'s
+timezone) a patient message is recorded as `suppressed` with `dizi.quiet-hours` and a sentence saying it is due again at
+08:00 — not sent late, not dropped. A gateway that is down is a `failed` attempt carrying the gateway's own words
+*before* the `502` goes back, so three failures in an hour become a visible channel rather than three sentences somebody
+read once; the page says so above the rows (`alerts`), and the profile of the morning is in `counts`.
+
 **A conflict is offered, not merged.** `PATCH /patients/{mrn}` carries the `version` the desk read and a required
 `reason`. Different fields merge automatically; the same field is offered back with both values, who set the other one
 and when (`409 dizi.stale-version`, `conflict.fields[].yours`/`theirs`/`theirsActor`/`theirsAt`) — and nothing is
@@ -60,8 +82,8 @@ found, which is what `tests/Feature/AuditLedgerTest.php` proves by tampering wit
 
 ## The modules and their seams
 
-Ten modules, one Postgres schema each, named in `App\Modules\Modules` — the same ten names the contract's tags and
-`apps/web/lib/sync.ts` use. A module reaches another only through a named seam, and the seams are bound in
+Eleven modules, one Postgres schema each, named in `App\Modules\Modules` — the same eleven names the contract's tags
+and `apps/web/lib/sync.ts` use. A module reaches another only through a named seam, and the seams are bound in
 `app/Providers/ModuleServiceProvider.php`:
 
 | Seam | Implementation | State |
@@ -70,6 +92,8 @@ Ten modules, one Postgres schema each, named in `App\Modules\Modules` — the sa
 | `Registration\DuplicateRules` | `app/Modules/Registration/ContractDuplicateRules.php` | built — read from the contract, cached per process |
 | `Audit\Ledger` | `app/Modules/Audit/HashChainLedger.php` | built — append-only, hash-chained per node |
 | `Scheduling\AvailabilityRules` | `app/Modules/Scheduling/ContractAvailabilityRules.php` | built — the slot step, the OPD window, the timezone, the horizon and the closed day, read from `x-dizi-scheduling` in the contract |
+| `Messaging\NotificationCatalogue` | `app/Modules/Messaging/ContractNotificationCatalogue.php` | built — the events, the wording in both languages, the retry policy and the quiet hours, read from `x-dizi-notifications` |
+| `Messaging\SendsMessages` | `app/Modules/Messaging/ChannelSenders.php` | built — one driver per channel, and no fallback: `preview` labels every row it writes |
 | **`Billing\Ledger`** | **`app/Modules/Billing/Ledger.php`** | **not built** — the billing module owes it, and this slice serves no money |
 
 The seam a slice does not build is named in this table on purpose: `ContractTest` fails if a pending seam stops being
@@ -151,6 +175,18 @@ by hand. Each module's migration is what creates its schema, so nothing else has
   `scheduling.sittings` are **seeded by the migration** — the Setup screen that edits a roster arrives with P0-402, so
   today changing a sitting is a new migration. The app's appointment screens still read `lib/mock.ts` for the same
   reason; P0-402 is the slice that points them at these five operations.
+* **Nothing raises a notification event yet, and no real gateway has carried one.** `messaging.outbox` is the
+  transactional half of P0-403 — an event commits with the record that caused it — and `php artisan dizi:notify` drains
+  it with the backoff, the quiet hours and the retry budget the catalogue declares. The producers are the missing half:
+  a paid invoice, a released result and a shelf below its re-order level belong to the billing, diagnostics and pharmacy
+  modules, so today a fresh deployment's drain prints zeroes and `tests/Feature/NotificationOutboxTest.php` is what
+  proves the mechanism, by raising events through the module's own method. The two real drivers (`meta-cloud` for
+  WhatsApp, `smtp` for e-mail) are implemented and **have never carried a message from this repository**: there is no
+  Meta account here, no mail relay, and no network to either. Everything else — the preview driver, the consent
+  refusals, the masking, the quiet hours, the retry, the alerting — is exercised against SQLite, and the WhatsApp
+  driver's refusal shape is tested with a faked gateway (`Http::fake`), which is a test of this service and not of Meta.
+  The desk screen that records a patient's consent does not exist yet, so a send with no consent row is refused with
+  `dizi.consent-missing` — the honest state of a permission table nothing writes to.
 * **The sync change feed is not here.** P0-210 (cursors, batch signatures, the drain protocol) and P0-311 (nightly
   reconciliation) are the next slices. What exists is the part a node cannot start without: the reserved ranges, the
   idempotency table, and the ledger the reconciliation will walk.
@@ -201,8 +237,8 @@ app/Console/Commands/ModulesCommand.php   php artisan dizi:modules
 app/Exceptions/ProblemRenderer.php        every failure as RFC 9457 application/problem+json
 app/Http/Controllers/                     one class per contract resource; no rules live here
 app/Http/Middleware/                      trace id, token + role, idempotency key
-app/Modules/Modules.php                   the ten modules, their schemas, their entities, their seams
-app/Modules/{Identity,Sync,Registration,Audit,Scheduling}/   what this slice builds
+app/Modules/Modules.php                   the eleven modules, their schemas, their entities, their seams
+app/Modules/{Identity,Sync,Registration,Audit,Scheduling,Messaging}/   what this slice builds
 app/Support/                              ApiTime, Trace, ProblemException, ModuleSchema
 database/migrations/                      one migration per module: the schema, then its tables
 tests/{Unit,Feature,Contract}/            the rules, the operations, and the agreement with the contract

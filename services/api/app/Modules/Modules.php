@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Modules;
 
 /**
- * The ten modules, their Postgres schemas and the entities each one owns.
+ * The eleven modules, their Postgres schemas and the entities each one owns.
  *
  * The words here are the same words in three places, and that is the whole point of the table: the OpenAPI contract's
  * tags, the schemas in the database, and `apps/web/lib/sync.ts`'s `ENTITY_POLICY` name the same ten modules. A module
@@ -80,6 +80,15 @@ final class Modules
             'entities' => ['invoice', 'payment', 'claim', 'ledger.income', 'ledger.expense'],
             'seams' => ['Billing\Ledger'],
             'implemented' => false,
+        ],
+        'messaging' => [
+            'schema' => 'messaging',
+            'entities' => ['message.notice', 'message.delivery'],
+            /* Two seams, both read from data rather than written in PHP: the catalogue of what this node notices and
+               what each event is said in (`x-dizi-notifications`), and the drivers a message may leave by — one
+               `preview` driver that carries nothing and labels every row it writes, and the real ones behind it. */
+            'seams' => ['Messaging\\NotificationCatalogue', 'Messaging\\SendsMessages'],
+            'implemented' => true,
         ],
         'audit' => [
             'schema' => 'audit',

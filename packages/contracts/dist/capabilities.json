@@ -2792,20 +2792,23 @@
         "401": null,
         "403": null,
         "409": null,
-        "422": null
+        "422": null,
+        "503": null
       },
       "problemResponses": [
         "401",
         "403",
         "409",
-        "422"
+        "422",
+        "503"
       ],
       "statuses": [
         201,
         401,
         403,
         409,
-        422
+        422,
+        503
       ],
       "mayQueue": false,
       "servesFromReplica": false,
@@ -2920,33 +2923,39 @@
       "path": "/notifications/outbound",
       "tag": "messaging",
       "summary": "Message a patient by SMS, WhatsApp or email",
-      "entity": "message.notice",
+      "entity": "message.delivery",
       "offline": "online-only",
       "authority": "cloud",
       "idempotency": "required",
       "audit": true,
-      "because": "An SMS that leaves the hospital cannot be called back, and the gateway is a third party that may be down, may reject the number or may deliver tomorrow. The moment of sending is the one moment this module has to know the answer to.",
+      "because": "A message that leaves the hospital cannot be called back, and the gateway is a third party that may be down, may reject the number or may deliver tomorrow: the moment of sending is the one moment this module has to know the answer to. The attempt is appended to the delivery log before the answer is returned, so a gateway that fails is a row in the log and not only a sentence on a screen.",
       "notes": "Deliberately online-only: the outbound channels go through a third-party gateway and carry patient information outside the hospital, so the app refuses the send when it cannot get a receipt. The internal noticeboard is unaffected, and the screen says which of the two it is about.",
       "request": "OutboundMessage",
       "responses": {
-        "201": "Notice",
+        "201": "NotificationDelivery",
         "401": null,
         "403": null,
         "409": null,
-        "502": null
+        "422": null,
+        "502": null,
+        "503": null
       },
       "problemResponses": [
         "401",
         "403",
         "409",
-        "502"
+        "422",
+        "502",
+        "503"
       ],
       "statuses": [
         201,
         401,
         403,
         409,
-        502
+        422,
+        502,
+        503
       ],
       "mayQueue": false,
       "servesFromReplica": false,
@@ -3826,13 +3835,13 @@
     "message.delivery": [
       "listNotificationDeliveries",
       "listNotificationTemplates",
-      "retryNotificationDelivery"
+      "retryNotificationDelivery",
+      "sendPatientMessage"
     ],
     "message.notice": [
       "listNotifications",
       "sendNotice",
-      "recordNoticeReceipt",
-      "sendPatientMessage"
+      "recordNoticeReceipt"
     ],
     "prescription": [
       "listPortalPrescriptions"
@@ -4382,6 +4391,11 @@
       "title": "It is inside the quiet hours",
       "when": "A patient-facing message is due between the hours the branch has set as quiet, when a household sleeping is the normal state of a household",
       "client": "Record the delivery as suppressed and say when it will be sent — it is due again at the hour the window closes. Never send it late at night to be on time."
+    },
+    "dizi.template-incomplete": {
+      "title": "The message is missing a value",
+      "when": "A template placeholder has no value in the event that raised it, so the sentence would reach the patient with a gap in it",
+      "client": "Name the placeholder and the event, and say which record was supposed to carry it. Never send the message with the gap: `{{day}}` arriving at a patient is worse than no message, and it is the defect that looks like a wording problem."
     }
   },
   "duplicateRules": {
@@ -4762,7 +4776,7 @@
     "rules": [
       "Every event names a template or is deliberately not notifiable. An event with no template and no reason would be a silent hole in the coverage, so the contract says which events are quiet and why.",
       "A message is sent in the language on the patient’s record when that language has a template, and in Bangla otherwise — the portal is Bangla-first, and an English-only message to a Bangla-speaking household is a message that is not read.",
-      "A template placeholder with no value in the event refuses the delivery rather than sending a sentence with a hole in it: `{{day}}` reaching a patient is worse than no message.",
+      "A template placeholder with no value in the event refuses the delivery (`dizi.template-incomplete`) rather than sending a sentence with a hole in it: `{{day}}` reaching a patient is worse than no message.",
       "Nothing clinical leaves by message. The events carry a test name, a time, a room and a receipt number; a result value, a diagnosis or a prescription never appears in one.",
       "The delivery log is append-only: an attempt is a fact about a moment, and a retry appends a new attempt rather than editing the one that failed. The log is what the hospital can point at when a patient says they were never told."
     ]
