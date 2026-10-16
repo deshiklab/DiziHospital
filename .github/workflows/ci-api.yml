@@ -90,12 +90,16 @@ jobs:
           vendor/bin/phpunit --display-warnings 2>&1 | tee /tmp/phpunit.log
           status=${PIPESTATUS[0]}
           if [ "$status" -ne 0 ]; then
-            # The failure names, the assertion sentences and this service's own messages — one line each, as one
-            # annotation. A check run's annotations are limited and its diffs are not worth the room: what is needed
-            # from outside the log is which test failed and what it expected.
-            sed -n '/^There w/,$p' /tmp/phpunit.log \
-              | grep -vE '^(\s|[-+]|\$)' \
-              | head -50 | sed 's/%/%25/g' | sed -z 's/\n/%0A/g' | sed 's/^/::error ::/'
+            # One line per failure: the test, then the sentence that failed, with the stack trace left in the log.
+            # A check run's annotation is capped at 4 kB and everything emitted here collapses into one, so a list
+            # that carries the traces is a list that shows two failures out of twelve — which is how this step was
+            # first written, and why it now prints names rather than diffs.
+            awk '
+              /^There w/ { list = 1 }
+              list && /^[0-9]+\) / { name = $0; getline message; while (message ~ /^[[:space:]]*$/) getline message;
+                                    printf "%s -- %s\n", name, message; next }
+            ' /tmp/phpunit.log | head -40 | cut -c1-150 \
+              | sed 's/%/%25/g' | sed -z 's/\n/%0A/g' | sed 's/^/::error ::/'
           fi
           exit "$status"
 
