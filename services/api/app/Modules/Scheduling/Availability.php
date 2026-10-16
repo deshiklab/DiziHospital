@@ -223,6 +223,18 @@ final class Availability
     }
 
     /**
+     * The slot step, from the rule set.
+     *
+     * One number, three readers — this class's grid, the diary's duration arithmetic and the calendar these two
+     * answer — and the seam is where it is read from. A caller that reaches into `$this->rules` for it, or that
+     * carries its own copy of 15, is a caller that can disagree with the grid about how long a consultation is.
+     */
+    public function slotMinutes(): int
+    {
+        return $this->rules->slotMinutes();
+    }
+
+    /**
      * The instant as the column will read it back.
      *
      * Three ways of writing one moment, and each is the right one for where it goes: `day` and `start_minute` are the
