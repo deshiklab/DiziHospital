@@ -29,17 +29,21 @@ final class Actor
     /**
      * @param  list<string>  $roles  every role in the token, in the order the issuer listed them
      */
+    public readonly array $roles;
+
     public function __construct(
         public readonly string $id,
         public readonly string $name,
         public readonly string $role,
-        public readonly array $roles = [],
+        array $roles = [],
         public readonly string $branch = '',
         public readonly string $node = '',
         public readonly string $issuer = 'preview',
     ) {
-        if ($this->roles === [] && $this->role !== '') {
-            $this->roles = [$this->role];
-        }
+        /* One initialization, in the constructor, and never a second: a promoted `readonly` property is initialized by
+           the promotion itself, so assigning to it in the body is a modification and PHP refuses it at runtime — the
+           shape `new Actor(role: 'receptionist')` reached that path and threw. A caller that knows one role and not
+           the token's whole list passes it here and the list is derived from it. */
+        $this->roles = $roles === [] && $this->role !== '' ? [$this->role] : $roles;
     }
 }

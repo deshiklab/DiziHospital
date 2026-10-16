@@ -342,7 +342,8 @@ final class NotificationDeliveryTest extends TestCase
     }
 
     /** An attempt as the log would hold one: sent, or failed, or refused by policy. */
-    private function failedAttempt(string $channel, int $attempt, string $status = 'failed', ?string $code = 'dizi.unavailable'): Delivery
+    /** An attempt as the log would hold one: failed, sent, or refused by policy. */
+    private function attempt(string $channel, int $attempt, string $status = 'failed', ?string $code = 'dizi.unavailable'): Delivery
     {
         return Delivery::query()->create([
             'id' => Delivery::newId(),
