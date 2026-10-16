@@ -188,6 +188,29 @@ for (const file of files) {
     if (next && !next.startsWith('{')) report(number, 'braces', `control structure without braces: ${trimmed.slice(0, 60)}`);
   });
 
+  /* ordered_traits and class_attributes_separation — `use Trait;` inside a class body. Pint sorts them and keeps
+     them together: the CI failure this would have caught was a class written `use RefreshDatabase;`, a blank line,
+     then `use KeycloakFixture;` — the order wrong and the two separated. A comment may sit between them (a trait
+     with a reason above it is the commonest case here), a blank line may not, and the first trait's own indentation
+     is what marks it as a trait import rather than the file's imports. */
+  const traits = [];
+  annotated.forEach(({ number, line, comment }) => {
+    if (comment) return;
+    if (!/^[ \t]+use\s+[A-Za-z_\\][\w\\]*;$/.test(line)) return;
+    traits.push({ number, name: line.trim().slice('use '.length, -1) });
+  });
+  for (let i = 1; i < traits.length; i += 1) {
+    const previous = traits[i - 1];
+    const current = traits[i];
+    if (previous.name.toLowerCase() > current.name.toLowerCase()) {
+      report(current.number, 'ordered_traits', `${current.name} comes after ${previous.name}`);
+    }
+    const between = lines.slice(previous.number, current.number - 1);
+    if (between.some((line) => line.trim() === '')) {
+      report(current.number, 'class_attributes_separation', `a blank line between ${previous.name} and ${current.name}`);
+    }
+  }
+
   /* integer_literal_case — a hexadecimal literal spells its digits in upper case. The CI failure this would have
      caught was one character (`0xff` in a DER encoder); strings come out first, because a claim or a message may
      legitimately quote a hex value. */
