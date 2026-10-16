@@ -188,12 +188,18 @@ for (const file of files) {
     if (next && !next.startsWith('{')) report(number, 'braces', `control structure without braces: ${trimmed.slice(0, 60)}`);
   });
 
-  /* ordered_traits and class_attributes_separation — `use Trait;` inside a class body. Pint sorts them and separates
-     them by exactly one blank line. Both halves cost a CI round each on these same three lines: the order first
-     (`use RefreshDatabase;` before `use KeycloakFixture;`), then the separation — and getting the separation wrong
-     twice in opposite directions is why the rule below counts the blank lines rather than guessing. A comment may
-     sit between two traits, but the blank line goes above it: the comment belongs to the trait under it. The leading
-     indentation is what marks a line as a trait import rather than one of the file's imports. */
+  /* ordered_traits and class_attributes_separation — `use Trait;` inside a class body. Pint sorts them, and the
+     spacing between them is not one rule but two, which cost this repository a CI round each before they were
+     counted rather than guessed:
+
+       * two trait imports in a row carry **no** blank line between them (`trait_import` is not an element Pint
+         separates), and
+       * a comment between two traits gets **one** blank line above it, because the comment belongs to the trait
+         under it and Pint separates a trait import from the element that follows it.
+
+     Both spellings exist in this service, so the rule below asks what sits between the two imports rather than
+     applying one number to both. The leading indentation is what marks a line as a trait import rather than one of
+     the file's imports. */
   const traits = [];
   annotated.forEach(({ number, line, comment }) => {
     if (comment) return;
@@ -206,11 +212,30 @@ for (const file of files) {
     if (previous.name.toLowerCase() > current.name.toLowerCase()) {
       report(current.number, 'ordered_traits', `${current.name} comes after ${previous.name}`);
     }
-    const blanks = lines.slice(previous.number, current.number - 1).filter((line) => line.trim() === '').length;
-    if (blanks !== 1) {
-      report(current.number, 'class_attributes_separation', `${blanks} blank line(s) between ${previous.name} and ${current.name}, and the rule is exactly one`);
+    const between = lines.slice(previous.number, current.number - 1);
+    const blanks = between.filter((line) => line.trim() === '').length;
+    const comment = between.some((line) => /^\s*(\/\/|\/\*|\*)/.test(line));
+    const want = comment ? 1 : 0;
+
+    if (blanks !== want) {
+      report(
+        current.number,
+        'class_attributes_separation',
+        `${blanks} blank line(s) between ${previous.name} and ${current.name}, and the rule is ${want}${comment ? ' (a comment sits between them, and it belongs to the trait under it)' : ' (two trait imports in a row are not separated)'}`,
+      );
     }
   }
+
+  /* class_attributes_separation, the other half of what Pint printed for it: an element ends where its closing brace
+     is, so whitespace above that brace is trimmed. It is reported under Pint's own rule name because a reader who
+     sees the failure here should find the same sentence in the CI log. */
+  lines.forEach((line, index) => {
+    if (line.trim() !== '}' || index === 0) return;
+    let above = index - 1;
+    while (above >= 0 && lines[above].trim() === '') above -= 1;
+    const blanks = index - 1 - above;
+    if (blanks > 0) report(index + 1, 'class_attributes_separation', `${blanks} blank line(s) before a closing brace`);
+  });
 
   /* integer_literal_case — a hexadecimal literal spells its digits in upper case. The CI failure this would have
      caught was one character (`0xff` in a DER encoder); strings come out first, because a claim or a message may

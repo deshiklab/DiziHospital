@@ -21,7 +21,6 @@ use Tests\TestCase;
 final class AppointmentQueueTest extends TestCase
 {
     use BooksAppointments;
-
     use RefreshDatabase;
 
     public function test_cancelling_releases_the_slot_and_the_number_is_never_given_to_another_patient(): void

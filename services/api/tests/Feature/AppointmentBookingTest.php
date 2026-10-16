@@ -23,7 +23,6 @@ use Tests\TestCase;
 final class AppointmentBookingTest extends TestCase
 {
     use BooksAppointments;
-
     use RefreshDatabase;
 
     public function test_a_booking_claims_the_slot_and_writes_the_ticket_to_the_ledger(): void

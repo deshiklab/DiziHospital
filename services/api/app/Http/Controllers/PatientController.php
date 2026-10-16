@@ -108,5 +108,4 @@ final class PatientController
             'duplicateAcknowledged' => ['nullable', 'boolean'],
         ]);
     }
-
 }
