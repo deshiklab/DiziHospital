@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\ReadsQueryStrings;
 use App\Modules\Identity\Actor;
 use App\Modules\Registration\Register;
-use App\Support\ProblemException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -19,6 +19,8 @@ use Illuminate\Http\Request;
  */
 final class PatientController
 {
+    use ReadsQueryStrings;
+
     public function __construct(private readonly Register $register) {}
 
     public function index(Request $request): JsonResponse
@@ -107,23 +109,4 @@ final class PatientController
         ]);
     }
 
-    private function integer(mixed $value, int $default): int
-    {
-        if ($value === null || $value === '') {
-            return $default;
-        }
-
-        return is_numeric($value) ? (int) $value : -1;
-    }
-
-    private function malformed(string $field, string $message): ProblemException
-    {
-        return ProblemException::of(
-            'dizi.validation-failed',
-            'Some fields need attention',
-            400,
-            "The query string cannot be read: `{$field}` {$message}.",
-            ['errors' => [['field' => $field, 'message' => $message, 'code' => 'dizi.validation-failed']]],
-        );
-    }
 }

@@ -16,6 +16,8 @@ use App\Modules\Registration\ContractDuplicateRules;
 use App\Modules\Registration\DuplicateRules;
 use App\Modules\Registration\DuplicateScorer;
 use App\Modules\Registration\Register;
+use App\Modules\Scheduling\AvailabilityRules;
+use App\Modules\Scheduling\ContractAvailabilityRules;
 use App\Modules\Sync\NodePolicy;
 use App\Modules\Sync\ReservedBlocks;
 use App\Support\Trace;
@@ -91,6 +93,14 @@ final class ModuleServiceProvider extends ServiceProvider
         ));
 
         $this->app->bind(DuplicateRules::class, ContractDuplicateRules::class);
+
+        /* The appointment rules (P0-401), read from the same contract and bound the same way: a branch that tunes its
+           sitting hours in Setup is changing the file both the calendar and this service read. */
+        $this->app->singleton(ContractAvailabilityRules::class, fn (): ContractAvailabilityRules => new ContractAvailabilityRules(
+            (string) config('dizi.contract.path'),
+        ));
+
+        $this->app->bind(AvailabilityRules::class, ContractAvailabilityRules::class);
 
         $this->app->singleton(DuplicateScorer::class, fn ($app): DuplicateScorer => new DuplicateScorer(
             $app->make(DuplicateRules::class),

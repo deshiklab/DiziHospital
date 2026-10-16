@@ -355,6 +355,45 @@
       "needsNetwork": false,
       "requiresIdempotencyKey": true
     },
+    "listAppointmentSlots": {
+      "id": "listAppointmentSlots",
+      "method": "get",
+      "path": "/appointments/slots",
+      "tag": "appointments",
+      "summary": "The slots a doctor's calendar offers on a day",
+      "entity": "appointment",
+      "offline": "cache",
+      "authority": "edge",
+      "idempotency": "none",
+      "audit": false,
+      "because": "The calendar draws from the replica during an outage. A slot shown here is a slot this branch will claim, and the claim is decided when the booking lands — so the screen offers it and the service can still refuse it with the alternatives, which is the honest order rather than a calendar that cannot be drawn offline.",
+      "notes": null,
+      "request": null,
+      "responses": {
+        "200": "AppointmentSlotDay",
+        "400": null,
+        "401": null,
+        "403": null,
+        "422": null
+      },
+      "problemResponses": [
+        "400",
+        "401",
+        "403",
+        "422"
+      ],
+      "statuses": [
+        200,
+        400,
+        401,
+        403,
+        422
+      ],
+      "mayQueue": false,
+      "servesFromReplica": true,
+      "needsNetwork": false,
+      "requiresIdempotencyKey": false
+    },
     "updateAppointment": {
       "id": "updateAppointment",
       "method": "patch",
@@ -374,20 +413,23 @@
         "401": null,
         "403": null,
         "404": null,
-        "409": null
+        "409": null,
+        "422": null
       },
       "problemResponses": [
         "401",
         "403",
         "404",
-        "409"
+        "409",
+        "422"
       ],
       "statuses": [
         200,
         401,
         403,
         404,
-        409
+        409,
+        422
       ],
       "mayQueue": true,
       "servesFromReplica": false,
@@ -413,20 +455,23 @@
         "401": null,
         "403": null,
         "404": null,
-        "409": null
+        "409": null,
+        "422": null
       },
       "problemResponses": [
         "401",
         "403",
         "404",
-        "409"
+        "409",
+        "422"
       ],
       "statuses": [
         200,
         401,
         403,
         404,
-        409
+        409,
+        422
       ],
       "mayQueue": true,
       "servesFromReplica": false,
@@ -3446,6 +3491,7 @@
     "listPatientDuplicates",
     "listAppointments",
     "createAppointment",
+    "listAppointmentSlots",
     "updateAppointment",
     "checkInAppointment",
     "claimBed",
@@ -3552,6 +3598,7 @@
     "appointment": [
       "listAppointments",
       "createAppointment",
+      "listAppointmentSlots",
       "updateAppointment",
       "checkInAppointment",
       "listPortalAppointments",
@@ -3769,6 +3816,7 @@
     "getPatient",
     "listPatientDuplicates",
     "listAppointments",
+    "listAppointmentSlots",
     "listStaff",
     "listVitalEvents",
     "listTeleSessions",
@@ -4327,6 +4375,29 @@
           "services/api/app/Modules/Registration/DuplicateScorer.php"
         ]
       }
+    ]
+  },
+  "scheduling": {
+    "description": "How the desk decides which slots exist. A sitting is a window with a step: the step is the slot grid the calendar draws, and a consultation claims as many steps as the doctor's capacity for that sitting allows, because a 45-minute first visit is three 15-minute slots and not an appointment that quietly overlaps the next patient. A slot holds one patient, and the branch that took the booking owns it — `appointment` in `x-dizi-entities` is the exclusivity rule, and `dizi.slot-taken` is the refusal the second branch reads. The rule set is data rather than code (Setup → Appointments tunes it per branch) so that the calendar the desk sees and the refusal the API writes come from one set of numbers: a slot the screen offers and the service refuses is a bug, not a policy.",
+    "configuredIn": "Setup → Appointments → sitting hours and step, per branch; the values below are the pilot's defaults and the client reads them through the generated client. The per-doctor roster (who sits when, in which room, and how many steps a consultation claims) is appointment data rather than a product rule and lives in `scheduling.sittings` in this slice, seeded with the pilot's six OPD doctors; the staff module takes the roster over when it lands.",
+    "slotMinutes": 15,
+    "window": {
+      "from": 540,
+      "to": 840,
+      "note": "Minutes from midnight, local time: 09:00 to 14:00, the OPD morning sitting the calendar draws."
+    },
+    "timezone": "Asia/Dhaka",
+    "horizonDays": 30,
+    "closedOn": [
+      "Friday"
+    ],
+    "defaultCapacity": 2,
+    "rules": [
+      "A slot is offered only if it lies inside the doctor's sitting window and on the slot grid: `start` is the window's opening time plus a whole number of steps.",
+      "A consultation claims `capacity` consecutive steps from its start. The next slot that can be booked is the step after the last claimed one, and the calendar draws the claimed steps as one appointment rather than as three separate patients.",
+      "A slot that is held by an appointment that is not cancelled is not offered. Cancelling releases it, which is the whole reason a cancellation is recorded with a reason rather than deleting a row.",
+      "The day is closed (‘closedOn’) and the booking horizon is `horizonDays` ahead: a booking outside either is refused as a validation failure naming the day, because “come back on Sunday” is a sentence the desk can say and an empty calendar is not.",
+      "Bookings taken while offline are queued with the slot they claim, and the branch that took the booking owns it: a node that drains into a slot another node has since taken is refused with `dizi.slot-taken` and the alternatives, never merged."
     ]
   },
   "roles": {

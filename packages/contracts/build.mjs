@@ -102,6 +102,7 @@ const capabilities = {
   drainOutcomes: doc['x-dizi-drain-outcomes'] ?? {},
   problemTypes: doc['x-dizi-problem-types'] ?? {},
   duplicateRules: doc['x-dizi-duplicate-rules'] ?? {},
+  scheduling: doc['x-dizi-scheduling'] ?? {},
   roles: doc['x-dizi-roles'] ?? {},
   conventions: doc['x-dizi-conventions'] ?? {},
 };

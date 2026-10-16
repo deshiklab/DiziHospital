@@ -15,6 +15,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\MeController;
@@ -38,6 +39,20 @@ Route::get('/patients/{mrn}/duplicates', [PatientController::class, 'duplicates'
 Route::patch('/patients/{mrn}', [PatientController::class, 'update'])
     ->middleware(['dizi.auth:write', 'dizi.idempotency'])
     ->name('updatePatient');
+
+/* Appointments (P0-401). `/appointments/slots` is declared before the day list's own route because the literal path is
+   what the calendar calls per doctor; the diary itself is the branch's, so all of these read from this node. */
+Route::get('/appointments/slots', [AppointmentController::class, 'slots'])->middleware('dizi.auth:read')->name('listAppointmentSlots');
+Route::get('/appointments', [AppointmentController::class, 'index'])->middleware('dizi.auth:read')->name('listAppointments');
+Route::post('/appointments', [AppointmentController::class, 'store'])
+    ->middleware(['dizi.auth:write', 'dizi.idempotency'])
+    ->name('createAppointment');
+Route::patch('/appointments/{id}', [AppointmentController::class, 'update'])
+    ->middleware(['dizi.auth:write', 'dizi.idempotency'])
+    ->name('updateAppointment');
+Route::post('/appointments/{id}/check-in', [AppointmentController::class, 'checkIn'])
+    ->middleware(['dizi.auth:write', 'dizi.idempotency'])
+    ->name('checkInAppointment');
 
 Route::get('/node/number-blocks', NodeNumberBlockController::class)->middleware('dizi.auth:write')->name('listNumberBlocks');
 

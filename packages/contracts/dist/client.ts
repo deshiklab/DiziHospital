@@ -117,8 +117,18 @@ export interface Appointment {
   readonly doctorId: string;
   readonly start: string;
   readonly durationMin?: number;
+  /** Where the patient goes. The branch’s room for that sitting, so the token is not the only thing the desk knows. */
+  readonly room: string;
   readonly status: "Requested" | "Confirmed" | "Checked in" | "Waiting" | "In consultation" | "Completed" | "No show" | "Cancelled";
   readonly type?: "New" | "Follow-up" | "Report review" | "Procedure";
+  /** How urgent the desk booked it. Urgent bookings are taken at the next free slot rather than refused for being late. */
+  readonly priority?: "Routine" | "Urgent" | "Emergency";
+  /** How the booking arrived, which is what a no-show rate is computed over. */
+  readonly source?: "Walk-in" | "Phone" | "Online portal" | "Follow-up";
+  /** What the patient is coming for, in the desk’s own words. */
+  readonly reason?: unknown;
+  /** How many slot steps the consultation claims. The grid blocks the whole claim, not its first slot. */
+  readonly steps: number;
   /** The branch that owns the slot — the appointment lives where it was taken */
   readonly origin?: string;
   /** Still in the local outbox: the screen says so rather than implying the branch holds the slot */
@@ -1746,6 +1756,32 @@ export interface RoleInToken {
   readonly abilities: Array<"read" | "write" | "administer">;
 }
 
+export interface AppointmentSlot {
+  readonly start: string;
+  /** Minutes from midnight, local: the slot's own clock face, so a calendar can draw it without parsing the timestamp. */
+  readonly minutes: number;
+  readonly state: "free" | "booked";
+  /** Which appointment holds it, when one does. */
+  readonly appointmentId?: string;
+  /** The queue token that appointment was given, which is what the board calls the patient. */
+  readonly token?: string;
+  /** How long the appointment holding it runs for; a booked slot is the first of its claimed steps. */
+  readonly durationMin?: number;
+}
+
+export interface AppointmentSlotDay {
+  readonly day: string;
+  readonly doctorId: string;
+  readonly room?: string;
+  readonly slotMinutes: number;
+  /** Whether the clinic is open: a closed day is a 200 with no slots and the reason, not a 404. */
+  readonly open?: boolean;
+  readonly closedBecause?: unknown;
+  readonly window?: { from: number; to: number };
+  readonly slots: Array<AppointmentSlot>;
+  readonly asOf?: string;
+}
+
 
 /* ------------------------------------------------------------- operations */
 
@@ -2003,6 +2039,28 @@ export const operations = {
     needsNetwork: false,
     requiresIdempotencyKey: true,
   },
+  listAppointmentSlots: {
+    id: "listAppointmentSlots",
+    method: "get",
+    path: "/appointments/slots",
+    tag: "appointments",
+    summary: "The slots a doctor's calendar offers on a day",
+    entity: "appointment",
+    offline: "cache",
+    authority: "edge",
+    idempotency: "none",
+    audit: false,
+    because: "The calendar draws from the replica during an outage. A slot shown here is a slot this branch will claim, and the claim is decided when the booking lands — so the screen offers it and the service can still refuse it with the alternatives, which is the honest order rather than a calendar that cannot be drawn offline.",
+    notes: null,
+    request: null,
+    responses: { "200": "AppointmentSlotDay", "400": null, "401": null, "403": null, "422": null },
+    problemResponses: ["400", "401", "403", "422"],
+    statuses: [200, 400, 401, 403, 422],
+    mayQueue: false,
+    servesFromReplica: true,
+    needsNetwork: false,
+    requiresIdempotencyKey: false,
+  },
   updateAppointment: {
     id: "updateAppointment",
     method: "patch",
@@ -2017,9 +2075,9 @@ export const operations = {
     because: "Slots are exclusive: one appointment holds one slot. A reschedule is a claim on the new slot and a release of the old one, in that order, so a failed second step never leaves two appointments holding one slot.",
     notes: null,
     request: "AppointmentPatch",
-    responses: { "200": "Appointment", "401": null, "403": null, "404": null, "409": null },
-    problemResponses: ["401", "403", "404", "409"],
-    statuses: [200, 401, 403, 404, 409],
+    responses: { "200": "Appointment", "401": null, "403": null, "404": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "404", "409", "422"],
+    statuses: [200, 401, 403, 404, 409, 422],
     mayQueue: true,
     servesFromReplica: false,
     needsNetwork: false,
@@ -2039,9 +2097,9 @@ export const operations = {
     because: "Check-in is what puts a patient into the queue, and it is the event the queue board and the bill both read. It is exclusive: the second check-in of the same token is refused rather than duplicated, because a patient called twice is a patient seen once.",
     notes: null,
     request: null,
-    responses: { "200": "Appointment", "401": null, "403": null, "404": null, "409": null },
-    problemResponses: ["401", "403", "404", "409"],
-    statuses: [200, 401, 403, 404, 409],
+    responses: { "200": "Appointment", "401": null, "403": null, "404": null, "409": null, "422": null },
+    problemResponses: ["401", "403", "404", "409", "422"],
+    statuses: [200, 401, 403, 404, 409, 422],
     mayQueue: true,
     servesFromReplica: false,
     needsNetwork: false,

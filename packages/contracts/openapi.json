@@ -800,6 +800,103 @@
         ]
       }
     },
+    "/appointments/slots": {
+      "get": {
+        "operationId": "listAppointmentSlots",
+        "summary": "The slots a doctor's calendar offers on a day",
+        "tags": [
+          "appointments"
+        ],
+        "parameters": [
+          {
+            "name": "day",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "The day to draw. A day the clinic is closed is a 200 with an empty slot list and the reason, so the calendar can say “Friday — closed” rather than showing a gap."
+          },
+          {
+            "name": "doctorId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "excludeAppointmentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The appointment being rescheduled, so its own slot is offered rather than hidden."
+          }
+        ],
+        "x-dizi": {
+          "entity": "appointment",
+          "offline": "cache",
+          "authority": "edge",
+          "idempotency": "none",
+          "audit": false,
+          "because": "The calendar draws from the replica during an outage. A slot shown here is a slot this branch will claim, and the claim is decided when the booking lands — so the screen offers it and the service can still refuse it with the alternatives, which is the honest order rather than a calendar that cannot be drawn offline."
+        },
+        "responses": {
+          "200": {
+            "description": "The day's slots, in order, each saying whether it is free and which appointment holds it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppointmentSlotDay"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed query string — a day that is not a date, or no day at all",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or expired token",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The role in the token may not do this",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The doctor is not on this branch’s roster, so there is no window to draw slots in",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/appointments/{id}": {
       "patch": {
         "operationId": "updateAppointment",
@@ -853,6 +950,16 @@
           },
           "409": {
             "description": "Slot taken — alternatives are returned",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The move or the cancellation is not allowed in the appointment’s current state",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -935,6 +1042,16 @@
           },
           "409": {
             "description": "Already checked in",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "The appointment is cancelled or a no-show, so there is nobody to check in",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -8384,7 +8501,9 @@
           "token",
           "doctorId",
           "start",
-          "status"
+          "status",
+          "room",
+          "steps"
         ],
         "properties": {
           "id": {
@@ -8405,6 +8524,10 @@
           },
           "durationMin": {
             "type": "integer"
+          },
+          "room": {
+            "type": "string",
+            "description": "Where the patient goes. The branch’s room for that sitting, so the token is not the only thing the desk knows."
           },
           "status": {
             "type": "string",
@@ -8427,6 +8550,36 @@
               "Report review",
               "Procedure"
             ]
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "Routine",
+              "Urgent",
+              "Emergency"
+            ],
+            "description": "How urgent the desk booked it. Urgent bookings are taken at the next free slot rather than refused for being late."
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "Walk-in",
+              "Phone",
+              "Online portal",
+              "Follow-up"
+            ],
+            "description": "How the booking arrived, which is what a no-show rate is computed over."
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "What the patient is coming for, in the desk’s own words."
+          },
+          "steps": {
+            "type": "integer",
+            "description": "How many slot steps the consultation claims. The grid blocks the whole claim, not its first slot."
           },
           "origin": {
             "type": "string",
@@ -14453,6 +14606,98 @@
             }
           }
         }
+      },
+      "AppointmentSlot": {
+        "type": "object",
+        "required": [
+          "start",
+          "minutes",
+          "state"
+        ],
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "minutes": {
+            "type": "integer",
+            "description": "Minutes from midnight, local: the slot's own clock face, so a calendar can draw it without parsing the timestamp."
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "free",
+              "booked"
+            ]
+          },
+          "appointmentId": {
+            "type": "string",
+            "description": "Which appointment holds it, when one does."
+          },
+          "token": {
+            "type": "string",
+            "description": "The queue token that appointment was given, which is what the board calls the patient."
+          },
+          "durationMin": {
+            "type": "integer",
+            "description": "How long the appointment holding it runs for; a booked slot is the first of its claimed steps."
+          }
+        }
+      },
+      "AppointmentSlotDay": {
+        "type": "object",
+        "required": [
+          "day",
+          "doctorId",
+          "slotMinutes",
+          "slots"
+        ],
+        "properties": {
+          "day": {
+            "type": "string",
+            "format": "date"
+          },
+          "doctorId": {
+            "type": "string"
+          },
+          "room": {
+            "type": "string"
+          },
+          "slotMinutes": {
+            "type": "integer"
+          },
+          "open": {
+            "type": "boolean",
+            "description": "Whether the clinic is open: a closed day is a 200 with no slots and the reason, not a 404."
+          },
+          "closedBecause": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "window": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "integer"
+              },
+              "to": {
+                "type": "integer"
+              }
+            }
+          },
+          "slots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AppointmentSlot"
+            }
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
       }
     }
   },
@@ -15157,5 +15402,28 @@
       }
     ],
     "selfTest": "`GET /me` returns the token's roles with the shell and the abilities this table gives them, so the acceptance line — role claims visible in the token — can be checked in a browser or with curl rather than only in a test."
+  },
+  "x-dizi-scheduling": {
+    "description": "How the desk decides which slots exist. A sitting is a window with a step: the step is the slot grid the calendar draws, and a consultation claims as many steps as the doctor's capacity for that sitting allows, because a 45-minute first visit is three 15-minute slots and not an appointment that quietly overlaps the next patient. A slot holds one patient, and the branch that took the booking owns it — `appointment` in `x-dizi-entities` is the exclusivity rule, and `dizi.slot-taken` is the refusal the second branch reads. The rule set is data rather than code (Setup → Appointments tunes it per branch) so that the calendar the desk sees and the refusal the API writes come from one set of numbers: a slot the screen offers and the service refuses is a bug, not a policy.",
+    "configuredIn": "Setup → Appointments → sitting hours and step, per branch; the values below are the pilot's defaults and the client reads them through the generated client. The per-doctor roster (who sits when, in which room, and how many steps a consultation claims) is appointment data rather than a product rule and lives in `scheduling.sittings` in this slice, seeded with the pilot's six OPD doctors; the staff module takes the roster over when it lands.",
+    "slotMinutes": 15,
+    "window": {
+      "from": 540,
+      "to": 840,
+      "note": "Minutes from midnight, local time: 09:00 to 14:00, the OPD morning sitting the calendar draws."
+    },
+    "timezone": "Asia/Dhaka",
+    "horizonDays": 30,
+    "closedOn": [
+      "Friday"
+    ],
+    "defaultCapacity": 2,
+    "rules": [
+      "A slot is offered only if it lies inside the doctor's sitting window and on the slot grid: `start` is the window's opening time plus a whole number of steps.",
+      "A consultation claims `capacity` consecutive steps from its start. The next slot that can be booked is the step after the last claimed one, and the calendar draws the claimed steps as one appointment rather than as three separate patients.",
+      "A slot that is held by an appointment that is not cancelled is not offered. Cancelling releases it, which is the whole reason a cancellation is recorded with a reason rather than deleting a row.",
+      "The day is closed (‘closedOn’) and the booking horizon is `horizonDays` ahead: a booking outside either is refused as a validation failure naming the day, because “come back on Sunday” is a sentence the desk can say and an empty calendar is not.",
+      "Bookings taken while offline are queued with the slot they claim, and the branch that took the booking owns it: a node that drains into a slot another node has since taken is refused with `dizi.slot-taken` and the alternatives, never merged."
+    ]
   }
 }

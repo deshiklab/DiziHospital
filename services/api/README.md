@@ -69,6 +69,7 @@ Ten modules, one Postgres schema each, named in `App\Modules\Modules` — the sa
 | `Sync\NodePolicy` | `app/Modules/Sync/ReservedBlocks.php` | built — number ranges, leases derived with HKDF over the node's secret |
 | `Registration\DuplicateRules` | `app/Modules/Registration/ContractDuplicateRules.php` | built — read from the contract, cached per process |
 | `Audit\Ledger` | `app/Modules/Audit/HashChainLedger.php` | built — append-only, hash-chained per node |
+| `Scheduling\AvailabilityRules` | `app/Modules/Scheduling/ContractAvailabilityRules.php` | built — the slot step, the OPD window, the timezone, the horizon and the closed day, read from `x-dizi-scheduling` in the contract |
 | **`Billing\Ledger`** | **`app/Modules/Billing/Ledger.php`** | **not built** — the billing module owes it, and this slice serves no money |
 
 The seam a slice does not build is named in this table on purpose: `ContractTest` fails if a pending seam stops being
@@ -132,6 +133,17 @@ by hand. Each module's migration is what creates its schema, so nothing else has
   role, because ignoring it is how a person ends up with less access than any of their roles claims. `GET /me` is the
   same table from the other side: it answers with the abilities a person's roles add up to, so "why is this button
   missing" has an answer on screen rather than only in a log.
+* **The diary is served; no real patient has been booked through it here.** `scheduling.appointments` carries the
+  exclusive claim as a unique index over `slot_key` (`{doctorId}@{day}T{minute}`), so two desks claiming the last slot
+  of a morning are decided by the index rather than by a check followed by a race: the loser gets
+  `409 dizi.slot-taken`, the branch that holds the slot, and the next three free starts.
+  `tests/Feature/AppointmentBookingTest.php` books the first of those alternatives, which is what "the conflict prompt
+  is verified" means for this slice. A cancelled appointment keeps its token and clears its slot key, so a number
+  already called out is never given to another patient. Not run here: these queries against Postgres (the suite is
+  SQLite, and the `schema` job migrates and walks back without booking anything), and the six OPD doctors in
+  `scheduling.sittings` are **seeded by the migration** — the Setup screen that edits a roster arrives with P0-402, so
+  today changing a sitting is a new migration. The app's appointment screens still read `lib/mock.ts` for the same
+  reason; P0-402 is the slice that points them at these five operations.
 * **The sync change feed is not here.** P0-210 (cursors, batch signatures, the drain protocol) and P0-311 (nightly
   reconciliation) are the next slices. What exists is the part a node cannot start without: the reserved ranges, the
   idempotency table, and the ledger the reconciliation will walk.
@@ -183,7 +195,7 @@ app/Exceptions/ProblemRenderer.php        every failure as RFC 9457 application/
 app/Http/Controllers/                     one class per contract resource; no rules live here
 app/Http/Middleware/                      trace id, token + role, idempotency key
 app/Modules/Modules.php                   the ten modules, their schemas, their entities, their seams
-app/Modules/{Identity,Sync,Registration,Audit}/   what this slice builds
+app/Modules/{Identity,Sync,Registration,Audit,Scheduling}/   what this slice builds
 app/Support/                              ApiTime, Trace, ProblemException, ModuleSchema
 database/migrations/                      one migration per module: the schema, then its tables
 tests/{Unit,Feature,Contract}/            the rules, the operations, and the agreement with the contract

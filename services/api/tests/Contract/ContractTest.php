@@ -41,6 +41,11 @@ final class ContractTest extends TestCase
         'listPatientDuplicates',
         'listNumberBlocks',
         'appendAuditEntry',
+        'listAppointments',
+        'listAppointmentSlots',
+        'createAppointment',
+        'updateAppointment',
+        'checkInAppointment',
     ];
 
     /**

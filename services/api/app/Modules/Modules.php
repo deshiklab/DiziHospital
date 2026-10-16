@@ -46,8 +46,10 @@ final class Modules
         'scheduling' => [
             'schema' => 'scheduling',
             'entities' => ['appointment'],
-            'seams' => [],
-            'implemented' => false,
+            /* The availability rule set: the slot step, the OPD window, the horizon and the closed day are data the
+               branch tunes, and P0-401 reads them from the contract through this seam. */
+            'seams' => ['Scheduling\\AvailabilityRules'],
+            'implemented' => true,
         ],
         'beds' => [
             'schema' => 'beds',

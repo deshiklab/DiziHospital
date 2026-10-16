@@ -17,7 +17,7 @@
  *
  * Exit code 0 when every file parses, 1 when one does not, 2 when the tooling is missing.
  *
- * How a file is parsed: the wasm runtime is handed the file's own text and `include`s it inside a `try`, so PHP's
+ * How a file is parsed: the wasm runtime is handed the file's own text and asks PHP's parser for tokens, so PHP's
  * own compiler reports a `ParseError` (catchable since PHP 7) instead of the process dying. Anything that is not a
  * `ParseError` — an unknown class, a missing extension — means the file *compiled* and then failed at runtime, which
  * is exactly what this gate wants to ignore.
@@ -81,10 +81,14 @@ console.log(`\nphp — parsing ${files.length} file(s) with the wasm runtime, si
 for (const [index, file] of files.entries()) {
   const path = `/lint/f${index}.php`;
   await php.writeFile(path, readFileSync(file, 'utf8'));
-  /* `include` runs the file: a parse error throws `ParseError` before any of it executes, which is the signal. The
-     `return ""` keeps the snippet an expression, which is what `exec` evaluates. */
+  /* `token_get_all(..., TOKEN_PARSE)` is the parser on its own, and it is used rather than `include` for a reason
+     that cost a false failure: including a file *declares* the classes in it, and PHP resolves a class-level
+     `use TraitName;` at declaration time — so a controller whose trait lives in another file was reported as a parse
+     error by a tool whose promise is "does this file parse". Parsing asks the parser and nothing else; the trait,
+     the parent class and the imports are the test suite's business. The `return ""` keeps the snippet an expression,
+     which is what `exec` evaluates. */
   const say = await drain(
-    `(function () { try { include ${JSON.stringify(path)}; echo "PARSE-OK"; } catch (\\ParseError $e) { echo "PARSE-ERROR " . str_replace("\\n", " ", $e->getMessage()); } catch (\\Throwable $e) { echo "PARSE-OK"; } return ""; })()`,
+    `(function () { try { token_get_all(file_get_contents(${JSON.stringify(path)}), TOKEN_PARSE); echo "PARSE-OK"; } catch (\\ParseError $e) { echo "PARSE-ERROR " . str_replace("\\n", " ", $e->getMessage()); } return ""; })()`,
   );
   const said = say.trim();
   const ok = said.includes('PARSE-OK');
