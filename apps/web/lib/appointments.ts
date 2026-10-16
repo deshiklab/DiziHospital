@@ -39,17 +39,32 @@ export interface Appointment {
   id: string;
   token: string;
   doctorId: string;
-  /** Minutes from midnight — the slot start. */
+  /** Minutes from midnight — the slot start, in the branch's own clock. */
   start: number;
   durationMin: number;
-  patient: Pick<Patient, 'mrn' | 'name' | 'nameBn' | 'age' | 'sex' | 'phone' | 'allergies'>;
+  patient: Pick<Patient, 'mrn' | 'name' | 'nameBn' | 'sex' | 'phone'> & {
+    /* A patient whose age or allergy has never been recorded is not a patient aged nothing with no allergies: the
+       API sends null and the screens print "—" rather than a number nobody typed. */
+    age?: number | null;
+    allergies?: string | null;
+  };
   type: AppointmentType;
   status: AppointmentStatus;
   priority: Priority;
   source: Source;
   reason: string;
+  /** The branch's day, when the row came from the API rather than from a generator that was handed one. */
+  day?: string;
+  /** The room the desk sends the patient to, as the branch's roster had it at booking time. */
+  room?: string;
+  /** How many slot steps the consultation claims. The grid blocks the whole claim, not its first slot. */
+  steps?: number;
   liveConsultation: boolean;
-  createdAt: string;
+  /** When the booking was taken. The API keeps it in the ledger rather than on the row, so a row read back from the
+      server has none — and the detail sheet says where to look instead of showing a plausible time. */
+  createdAt?: string;
+  /** Still in the local outbox: the screen says so rather than implying the branch holds the slot. */
+  queued?: boolean;
 }
 
 export const DOCTORS: Doctor[] = [
@@ -114,9 +129,11 @@ function rng(seed: number) {
 }
 
 export const STATUS_FLOW: Record<AppointmentStatus, AppointmentStatus[]> = {
-  // Cancelled/No show are terminal but can be re-booked as a new appointment, not by dragging this one back.
+  /* The moves the service accepts, in the contract's own words, and `services/api` is where they are enforced. The
+     two terminal states are terminal: a cancelled appointment's slot is already free again and a no-show is a fact
+     about the day, so a patient who comes back is a *new* booking rather than this row dragged backwards. */
   Cancelled: [],
-  'No show': ['Confirmed'],
+  'No show': [],
   Requested: ['Confirmed', 'Cancelled'],
   Confirmed: ['Checked in', 'No show', 'Cancelled'],
   'Checked in': ['Waiting', 'In consultation', 'Cancelled'],

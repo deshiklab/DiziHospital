@@ -142,12 +142,15 @@ export interface AppointmentCreate {
   readonly doctorId: string;
   readonly start: string;
   readonly type?: "New" | "Follow-up" | "Report review" | "Procedure";
+  /** How urgent the desk booked it. Urgent and emergency bookings are taken at the next free slot and shown as such on the board; a routine booking is what fills the grid. */
+  readonly priority?: "Routine" | "Urgent" | "Emergency";
   readonly reason?: string;
   readonly source?: "Walk-in" | "Phone" | "Online portal" | "Follow-up";
 }
 
 export interface AppointmentPatch {
-  readonly status: "Confirmed" | "Cancelled" | "No show";
+  /** The state the appointment moves to. The service owns the allowed moves rather than accepting any value: a patient is checked in once, a consultation that has not started cannot be completed, and a visit that happened is not re-opened. `Completed` means the visit is out of the queue — what was written during it belongs to the clinical record, not to this row. `Requested` is how the portal’s booking arrives and is not a state the desk moves an appointment *to*. */
+  readonly status: "Requested" | "Confirmed" | "Checked in" | "Waiting" | "In consultation" | "Completed" | "No show" | "Cancelled";
   /** Reschedule: the new slot is claimed before the old one is released */
   readonly start?: string;
   /** A cancellation without a reason cannot be reviewed later */

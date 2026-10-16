@@ -173,34 +173,79 @@ final class Diary
             return $this->cancel($appointment, $because, $actor);
         }
 
+        /*
+         * The queue moves: a patient who has arrived is checked in (once), waits, goes in, and is through. The service
+         * owns the machine rather than accepting any value the enum allows, because every one of these is a sentence
+         * the board and the audit ledger have to be able to defend afterwards: "this patient was called in at 11:20"
+         * is a fact about the room, not a field a screen may set to anything.
+         *
+         * `Completed` means out of the queue — what was written during the consultation belongs to the clinical record
+         * and arrives with that module. The transitions are listed rather than derived so that adding a state means
+         * deciding, here, what may lead into it.
+         */
+        $allowed = [
+            'Requested' => ['Confirmed', 'No show'],
+            /* A patient who has confirmed and does not come is a no-show at the door; the desk cannot move them into
+               the queue, because only arriving does that. */
+            'Confirmed' => ['No show'],
+            'Checked in' => ['Waiting', 'In consultation', 'No show'],
+            'Waiting' => ['In consultation', 'No show'],
+            'In consultation' => ['Completed'],
+        ];
+
+        if (! in_array($status, $allowed[$appointment->status] ?? [], true)) {
+            throw ProblemException::of(
+                'dizi.validation-failed',
+                'That is not the next step for this appointment',
+                422,
+                'Token '.$appointment->token.' is '.$appointment->status.', and from there the diary records '
+                .($this->nextSteps($allowed[$appointment->status] ?? []))
+                .'. A cancelled appointment and a no-show are both finished: book a new appointment rather than moving this one backwards.',
+            );
+        }
+
+        if ($status === 'Checked in') {
+            return $this->checkIn($appointment, $actor);
+        }
+
         if ($status === 'No show') {
+            $before = $appointment->toApiArray();
             $appointment->status = 'No show';
             $appointment->updated_by = $actor->id;
             $appointment->version++;
             $appointment->save();
 
-            $this->ledger->append($actor->node, $actor->id, 'appointment.no-show', 'appointment', (string) $appointment->id, [], $appointment->toApiArray() + ['because' => $because]);
+            $this->ledger->append($actor->node, $actor->id, 'appointment.no-show', 'appointment', (string) $appointment->id, $before, $appointment->toApiArray() + ['because' => $because]);
 
             return $appointment;
         }
 
-        if ($appointment->status === 'Requested') {
-            $appointment->status = 'Confirmed';
-            $appointment->updated_by = $actor->id;
-            $appointment->version++;
-            $appointment->save();
+        $before = $appointment->toApiArray();
+        $appointment->status = $status;
+        $appointment->updated_by = $actor->id;
+        $appointment->version++;
+        $appointment->save();
 
-            $this->ledger->append($actor->node, $actor->id, 'appointment.confirm', 'appointment', (string) $appointment->id, [], $appointment->toApiArray());
+        $this->ledger->append($actor->node, $actor->id, 'appointment.queue', 'appointment', (string) $appointment->id, $before, $appointment->toApiArray() + ['because' => $because]);
 
-            return $appointment;
+        return $appointment;
+    }
+
+    /**
+     * The moves a status allows, as a sentence.
+     *
+     * A refusal that says "that is not allowed" makes the desk telephone somebody; one that says what *is* allowed is
+     * a refusal they can act on there and then.
+     *
+     * @param  list<string>  $steps
+     */
+    private function nextSteps(array $steps): string
+    {
+        if ($steps === []) {
+            return 'nothing further — the desk books a new appointment for a patient who comes back';
         }
 
-        throw ProblemException::of(
-            'dizi.validation-failed',
-            'There is nothing to change',
-            422,
-            'Token '.$appointment->token.' is already '.$appointment->status.'. A patch either cancels it, marks it a no-show, or moves it to another slot; sending the status it already has would write a change to the record that did not happen.',
-        );
+        return 'one of: '.implode(', ', $steps);
     }
 
     /**

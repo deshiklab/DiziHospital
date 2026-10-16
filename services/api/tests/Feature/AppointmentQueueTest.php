@@ -7,6 +7,7 @@ namespace Tests\Feature;
 use App\Modules\Scheduling\Appointment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Tests\Support\BooksAppointments;
 use Tests\TestCase;
 
@@ -119,6 +120,63 @@ final class AppointmentQueueTest extends TestCase
             'slot_key' => 'dr-rahman@2026-11-03T0540',
             'start_minute' => 540,
         ]);
+    }
+
+    public function test_the_board_moves_a_patient_through_the_queue_and_the_ledger_keeps_each_step(): void
+    {
+        $this->patient();
+        $id = $this->booked([], 'a01');
+
+        $this->asRole()->postJson('/appointments/'.$id.'/check-in', [], ['Idempotency-Key' => $this->key('k01')])->assertOk();
+
+        /* Checked in → waiting → in consultation → completed, one write each, and a reason on each. */
+        foreach ([['Waiting', 'q01'], ['In consultation', 'q02'], ['Completed', 'q03']] as [$to, $key]) {
+            $this->asRole()
+                ->patchJson('/appointments/'.$id, ['status' => $to, 'because' => 'Nurse moved the token'], ['Idempotency-Key' => $this->key($key)])
+                ->assertOk()
+                ->assertJsonPath('status', $to);
+        }
+
+        $this->assertDatabaseHas('scheduling_appointments', ['id' => $id, 'status' => 'Completed']);
+        /* Four steps in the ledger, from four writes: a board that reports timings nobody recorded is a board nobody
+           can audit. */
+        $this->assertSame(4, DB::table('audit_entries')->where('record_id', $id)->count());
+    }
+
+    public function test_a_finished_appointment_is_not_moved_backwards(): void
+    {
+        $this->patient();
+        $id = $this->booked([], 'a01');
+
+        Appointment::query()->where('id', $id)->update(['status' => 'In consultation']);
+
+        /* The one refusal a board has to make in the room: a patient already with the doctor cannot be put back in
+           the waiting line, because the line would then call them twice. */
+        $this->asRole()
+            ->patchJson('/appointments/'.$id, ['status' => 'Waiting', 'because' => 'Back to the queue'], ['Idempotency-Key' => $this->key('q01')])
+            ->assertStatus(422)
+            ->assertJsonPath('title', 'That is not the next step for this appointment')
+            ->assertJsonPath('status', 422);
+
+        $this->assertDatabaseHas('scheduling_appointments', ['id' => $id, 'status' => 'In consultation']);
+    }
+
+    public function test_a_confirmed_patient_cannot_be_moved_into_the_queue_without_arriving(): void
+    {
+        $this->patient();
+        $id = $this->booked([], 'a01');
+
+        /* Being in the queue is what arriving means: the desk records it with a check-in, and the board would count a
+           patient twice if a status change could do it without one. */
+        $this->asRole()
+            ->patchJson('/appointments/'.$id, ['status' => 'Waiting', 'because' => 'Put them in the line'], ['Idempotency-Key' => $this->key('q01')])
+            ->assertStatus(422)
+            ->assertJsonPath('title', 'That is not the next step for this appointment');
+
+        $this->asRole()
+            ->postJson('/appointments/'.$id.'/check-in', [], ['Idempotency-Key' => $this->key('k01')])
+            ->assertOk()
+            ->assertJsonPath('status', 'Checked in');
     }
 
     public function test_a_no_show_keeps_the_slot_and_asks_for_a_reason(): void
