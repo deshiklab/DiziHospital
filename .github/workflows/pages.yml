@@ -53,6 +53,16 @@ jobs:
       - name: Assemble the site, and fail if any link inside it does not resolve
         run: python3 tools/docs/build_site.py
 
+      # The rendered site is also uploaded as an ordinary artifact, *before* the Pages check, so that a repository
+      # whose owner has not switched Pages on yet still gets the thing this job built: Actions → this run → download
+      # `documentation-site.zip`, open `index.html`. A deployment that cannot happen should still hand over its work.
+      - name: Upload the site as a downloadable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation-site
+          path: docs/build/site
+          retention-days: 30
+
       # Pages has to be switched on once by somebody who can administer the repository. The permission the workflow
       # itself carries cannot do it (the API answers `Resource not accessible by integration`), and a red build whose
       # log is a stack trace is a poor way to learn that — so this asks first and says what to do in one sentence.
