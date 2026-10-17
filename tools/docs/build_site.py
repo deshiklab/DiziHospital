@@ -444,6 +444,11 @@ def help_index(pages: dict) -> tuple[str, int]:
         if os.path.join(directory, '_index.md') not in pages:
             target = f'help/{slug_name}.html' if os.path.join(HELP, f'{slug_name}.md') in pages else ''
         blurb = re.sub(r'\s+', ' ', category.get('description') or '').strip()
+        # Nine categories open their vendor page with a "Latest Articles" sidebar list, which the mirror captured
+        # as the description: "Latest Articles Version 1.0 Version 1.0 …". That is navigation, not a description;
+        # a card that repeats it is noise, so those categories get their name and their count and nothing else.
+        if 'Latest Articles' in blurb:
+            blurb = blurb.split('Latest Articles')[0].strip()
         if len(blurb) > 150:
             blurb = blurb[:147].rstrip() + '…'
         link_open = f'<a class="card" href="{escape(target)}">' if target else '<div class="card">'
