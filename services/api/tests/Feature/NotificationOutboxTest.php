@@ -113,7 +113,10 @@ final class NotificationOutboxTest extends TestCase
            holds that as an empty body — the difference between "" and null is the database's, not the reader's. */
         $this->assertStringNotContainsString('{{', (string) $delivery->body);
         $this->assertSame('', trim((string) $delivery->body), 'A suppression whose wording could not be filled says nothing rather than showing a sentence with a hole in it.');
-        $this->assertSame('', $delivery->to);
+        /* The column and the API say the same thing: no address was used, so there is nothing to mask and nothing to
+           show — `$delivery->to` is not an attribute (the column is `to_address`), and the API's `to` is the mask. */
+        $this->assertSame('', (string) $delivery->to_address);
+        $this->assertSame('', $delivery->toApiArray(3)['to']);
     }
 
     public function test_a_patient_with_no_consent_is_a_suppression_rather_than_a_failure(): void
@@ -272,7 +275,8 @@ final class NotificationOutboxTest extends TestCase
             $this->outbox()->raise('appointment.rescheduled', 'MRN-000001', [], $this->actor());
             $this->fail('An event the catalogue does not carry has no wording, and raising it should be refused.');
         } catch (ProblemException $refused) {
-            $this->assertStringContainsString('does not notice', $refused->getMessage());
+            $this->assertStringContainsString('carries no event named', $refused->getMessage());
+            $this->assertStringContainsString('appointment.rescheduled', $refused->getMessage());
         }
 
         $this->assertDatabaseCount('messaging_outbox', 0);

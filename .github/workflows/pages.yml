@@ -53,9 +53,25 @@ jobs:
       - name: Assemble the site, and fail if any link inside it does not resolve
         run: python3 tools/docs/build_site.py
 
-      # `enablement: true` lets this job turn Pages on with the workflow's own `pages: write` token the first time it
-      # runs. Without it the repository has to be configured by hand before the first push, which is the step people
-      # forget and then read a green build as a published site.
+      # Pages has to be switched on once by somebody who can administer the repository. The permission the workflow
+      # itself carries cannot do it (the API answers `Resource not accessible by integration`), and a red build whose
+      # log is a stack trace is a poor way to learn that — so this asks first and says what to do in one sentence.
+      - name: Is Pages enabled?
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          code=$(curl -s -o /tmp/pages.json -w '%{http_code}' \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/pages")
+          if [ "$code" != "200" ]; then
+            echo "::error::Pages is not enabled for $GITHUB_REPOSITORY (the API answered $code). A repository administrator opens Settings → Pages once and sets Source to 'GitHub Actions'; after that this workflow publishes on every change under docs/."
+            exit 1
+          fi
+          echo "Pages is enabled: $(python3 -c "import json;print(json.load(open('/tmp/pages.json')).get('html_url'))")"
+
+      # `enablement: true` asks Actions to turn Pages on if the repository is permitted to. It is here as well as the
+      # check above so that a deployment does not depend on the order an administrator happened to grant things.
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
