@@ -2,7 +2,7 @@
 
 > **Evidence-based product documentation**, generated from a live screen-by-screen exploration of the **Smart Hospital** hospital-management system (by QDOCS) running at `demo.smart-hospital.in`.
 >
-> Captured on **2026-10-16**: 76 application screens, 96 data-entry dialogs, 2 record/tab views, 9 role dashboards and the public website.
+> Captured on **2026-10-17**: 76 application screens, 96 data-entry dialogs, 2 record/tab views, 9 role dashboards and the public website.
 
 | | |
 |---|---|
@@ -2035,5 +2035,5 @@ The same installation serves the public hospital website (driven by Front CMS) a
 
 ---
 
-_Generated automatically from the capture pipeline in `tools/` on 2026-10-16. Re-run with `python3 tools/docs/build_docs.py` after a new capture._
+_Generated automatically from the capture pipeline in `tools/` on 2026-10-17. Re-run with `python3 tools/docs/build_docs.py` after a new capture._
 
