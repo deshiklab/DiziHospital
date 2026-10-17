@@ -13,3 +13,8 @@ services/*/dist/
 .env.local
 # production build output when built beside a running dev server
 .next-build/
+
+# The documentation site GitHub Pages publishes. It is ~50 MB of rendered pages and mirrored
+# images, uploaded as a workflow artifact — `build-pdf.yml` runs `git add -A docs`, so without
+# this line a local build would be committed by the next docs job.
+docs/build/site/

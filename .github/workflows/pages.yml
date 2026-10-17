@@ -1,0 +1,84 @@
+name: pages
+
+# The documentation preview: this repository's own documents — the operator handbook,
+# catalogue, plan, research, migration notes and the mirrored help library — assembled
+# into a static site and published to GitHub Pages on every push that changes them.
+#
+# What it publishes and what it does not: it builds `docs/` only. No part of `apps/web`
+# is built here, nothing calls `services/api`, and there is no database — so a green
+# deployment is evidence that the documentation renders, never that the product runs.
+# The help library is a mirror of the vendor's public help centre and is marked as such
+# on the page that indexes it; the clean-room rule still governs `apps/`, `services/`
+# and `packages/`, which this job never reads.
+#
+# The site is generated into `docs/build/site/`, which is ignored by git: the artifact is
+# the deployment, so half a hundred megabytes of HTML never enters the history.
+
+on:
+  push:
+    branches: [ arena/ac321db7-dizihospital, main ]
+    paths:
+      - 'docs/**'
+      - 'tools/docs/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time, and never cancel one that is already publishing a site.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install the renderer
+        run: pip install --quiet markdown
+
+      - name: Render the guide (the printable single page the PDF is made from)
+        run: python3 tools/docs/build_html.py
+
+      - name: Assemble the site, and fail if any link inside it does not resolve
+        run: python3 tools/docs/build_site.py
+
+      # `enablement: true` lets this job turn Pages on with the workflow's own `pages: write` token the first time it
+      # runs. Without it the repository has to be configured by hand before the first push, which is the step people
+      # forget and then read a green build as a published site.
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/build/site
+
+      - name: What was published
+        run: |
+          du -sh docs/build/site
+          echo "pages: $(find docs/build/site -name '*.html' | wc -l) html file(s)" >> "$GITHUB_STEP_SUMMARY"
+          echo "size: $(du -sh docs/build/site | cut -f1)" >> "$GITHUB_STEP_SUMMARY"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
