@@ -1,0 +1,357 @@
+{
+ "pages": [
+  {
+   "label": "Appointment",
+   "url": "https://demo.smart-hospital.in/form/appointment",
+   "file": "01-appointment.jpg",
+   "title": "Book an Appointment",
+   "headings": [
+    "Book an Appointment",
+    "Book an Appointment",
+    "YOUR SELECTION",
+    "NEED IT NOW",
+    "Complete Your Booking",
+    "YOUR SELECTION",
+    "Booking, however your day works."
+   ]
+  },
+  {
+   "label": "https://demo.smart-hospital.in/frontend",
+   "url": "https://demo.smart-hospital.in/frontend",
+   "file": "02-https-demo-smart-hospital-in-frontend.jpg",
+   "title": "World-class care, close to home",
+   "headings": [
+    "World-class care, close to home",
+    "Our Specialties",
+    "Our Doctors",
+    "Sonia Bush",
+    "Sansa Gomez",
+    "Amit Singh",
+    "Reyan Jain",
+    "Three steps. No paperwork."
+   ]
+  },
+  {
+   "label": "Home",
+   "url": "https://demo.smart-hospital.in/page/home",
+   "file": "03-home.jpg",
+   "title": "World-class care, close to home",
+   "headings": [
+    "World-class care, close to home",
+    "Our Specialties",
+    "Our Doctors",
+    "Sonia Bush",
+    "Sansa Gomez",
+    "Amit Singh",
+    "Reyan Jain",
+    "Three steps. No paperwork."
+   ]
+  },
+  {
+   "label": "Annual Calendar",
+   "url": "https://demo.smart-hospital.in/page/annual_calendar",
+   "file": "04-annual-calendar.jpg",
+   "title": "Annual Calendar",
+   "headings": [
+    "Annual Calendar",
+    "Annual Calendar",
+    "August 2025 · 1 Event",
+    "Happy Independence Day! Let's celebrate the freedom and unity of our nation, remembering the sacrifices of our heroes and striving for a bet",
+    "September 2025 · 1 Event",
+    "The month of September is NICU Awareness Month. It is a campaign designed to illuminate the various challenges faced in neonatal intensive c",
+    "October 2025 · 1 Event",
+    "\"Happy Diwali to our incredible healthcare team! As we celebrate the festival of lights, we acknowledge the warmth and kindness you bring to"
+   ]
+  },
+  {
+   "label": "Events",
+   "url": "https://demo.smart-hospital.in/page/events",
+   "file": "05-events.jpg",
+   "title": "Events",
+   "headings": [
+    "Events",
+    "Eye Donation Day Celebration",
+    "Eye Donation Day Celebration",
+    "39 events.",
+    "Control diabetes for a healthy heart Camp",
+    "Heart Disease Awareness campaign",
+    "Clinical trials: A significant part of cancer care",
+    "Prevention of Diabetes Mellifluous"
+   ]
+  },
+  {
+   "label": "About Us",
+   "url": "https://demo.smart-hospital.in/",
+   "file": "06-about-us.jpg",
+   "title": "World-class care, close to home",
+   "headings": [
+    "World-class care, close to home",
+    "Our Specialties",
+    "Our Doctors",
+    "Sonia Bush",
+    "Sansa Gomez",
+    "Amit Singh",
+    "Reyan Jain",
+    "Three steps. No paperwork."
+   ]
+  },
+  {
+   "label": "https://demo.smart-hospital.in/page/about-hospitals",
+   "url": "https://demo.smart-hospital.in/page/about-hospitals",
+   "file": "07-https-demo-smart-hospital-in-page-about-hospi.jpg",
+   "title": "About Hospitals",
+   "headings": [
+    "About Hospitals",
+    "Some Words About Us",
+    "Our Mission",
+    "Health information",
+    "Medical education",
+    "Symptom Check",
+    "Qualified Doctors",
+    "MONDAY – FRIDAY"
+   ]
+  },
+  {
+   "label": "https://demo.smart-hospital.in/page/vision-and-mission",
+   "url": "https://demo.smart-hospital.in/page/vision-and-mission",
+   "file": "08-https-demo-smart-hospital-in-page-vision-and-.jpg",
+   "title": "Vision and Mission",
+   "headings": [
+    "Vision and Mission",
+    "Our Mission",
+    "Health information",
+    "Medical education",
+    "Symptom Check",
+    "Qualified Doctors",
+    "MONDAY – FRIDAY",
+    "Goals"
+   ]
+  },
+  {
+   "label": "https://demo.smart-hospital.in/page/meet-our-doctors",
+   "url": "https://demo.smart-hospital.in/page/meet-our-doctors",
+   "file": "09-https-demo-smart-hospital-in-page-meet-our-do.jpg",
+   "title": "Meet Our Doctors",
+   "headings": [
+    "Meet Our Doctors",
+    "Marc Parcival",
+    "Alen Bailey",
+    "Alen Bailey",
+    "Marc Parcival",
+    "Alen Bailey",
+    "Alen Bailey",
+    "Marc Parcival"
+   ]
+  },
+  {
+   "label": "https://demo.smart-hospital.in/page/faq",
+   "url": "https://demo.smart-hospital.in/page/faq",
+   "file": "10-https-demo-smart-hospital-in-page-faq.jpg",
+   "title": "faq",
+   "headings": [
+    "faq",
+    "What Our Clients Say",
+    "Lorem ipsum dolor sit amet, an eripuit laboramus",
+    "What is the deposit amount for admission?",
+    "Problem with Knowledge base Article and knowledge",
+    "Problem with Knowledge base Article and knowledge",
+    "Problem with Knowledge base Article and knowledge",
+    "What Our Doctor Say"
+   ]
+  },
+  {
+   "label": "https://demo.smart-hospital.in/page/departments",
+   "url": "https://demo.smart-hospital.in/page/departments",
+   "file": "11-https-demo-smart-hospital-in-page-departments.jpg",
+   "title": "Departments",
+   "headings": [
+    "Departments",
+    "DEPARTMENT",
+    "Emergency Care",
+    "ENT Department",
+    "Eye Care",
+    "Diabetes Care",
+    "Radiology",
+    "Rheumatology"
+   ]
+  },
+  {
+   "label": "https://demo.smart-hospital.in/page/testimonials",
+   "url": "https://demo.smart-hospital.in/page/testimonials",
+   "file": "12-https-demo-smart-hospital-in-page-testimonial.jpg",
+   "title": "testimonials",
+   "headings": [
+    "testimonials",
+    "James Gandofin",
+    "James Gandofin",
+    "James Gandofin",
+    "James Gandofin",
+    "James Gandofin",
+    "James Gandofin"
+   ]
+  },
+  {
+   "label": "Survey Form",
+   "url": "https://demo.smart-hospital.in/surveys",
+   "file": "13-survey-form.jpg",
+   "title": "Survey Forms",
+   "headings": [
+    "Survey Forms",
+    "General Feedback",
+    "Patient Satisfaction Survey"
+   ]
+  },
+  {
+   "label": "Gallery",
+   "url": "https://demo.smart-hospital.in/page/gallery",
+   "file": "14-gallery.jpg",
+   "title": "Gallery",
+   "headings": [
+    "Gallery",
+    "Your Health",
+    "Procedures",
+    "Recreation Centre",
+    "Specialities",
+    "Hospitals and Directions",
+    "Health & Wellness",
+    "Surgery"
+   ]
+  }
+ ],
+ "home": {
+  "url": "https://demo.smart-hospital.in/",
+  "title": "Smart Hospital & Research Center",
+  "pageTitle": "World-class care, close to home",
+  "breadcrumb": "",
+  "headings": [
+   "World-class care, close to home",
+   "Our Specialties",
+   "Our Doctors",
+   "Sonia Bush",
+   "Sansa Gomez",
+   "Amit Singh",
+   "Reyan Jain",
+   "Three steps. No paperwork.",
+   "Pick a slot",
+   "Meet the specialist",
+   "Get reports & care",
+   "Trusted care, measurable results",
+   "Our Locations",
+   "Smart Hospital — Andheri West",
+   "Smart Hospital — Bandra East",
+   "What Patients Say",
+   "Cashless on 38 insurers & all major TPAs.",
+   "Ready to Book?"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/form/appointment",
+    "method": "get",
+    "name": "",
+    "visible": true,
+    "fields": [
+     {
+      "label": "SPECIALIST — Select — Cardiologists Dermatologists Endocrinologists Gastroenterologists Ne",
+      "name": "specialist",
+      "type": "select",
+      "required": false,
+      "options": [
+       "— Select —",
+       "Cardiologists",
+       "Dermatologists",
+       "Endocrinologists",
+       "Gastroenterologists",
+       "Neuroradiology",
+       "Ophthalmologists"
+      ]
+     }
+    ]
+   }
+  ],
+  "tables": [],
+  "tabs": [],
+  "sections": [],
+  "buttons": [
+   {
+    "text": "Check Availability",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": []
+ },
+ "links": [
+  {
+   "label": "Appointment",
+   "url": "https://demo.smart-hospital.in/form/appointment"
+  },
+  {
+   "label": "https://demo.smart-hospital.in/frontend",
+   "url": "https://demo.smart-hospital.in/frontend"
+  },
+  {
+   "label": "Home",
+   "url": "https://demo.smart-hospital.in/page/home"
+  },
+  {
+   "label": "Annual Calendar",
+   "url": "https://demo.smart-hospital.in/page/annual_calendar"
+  },
+  {
+   "label": "Events",
+   "url": "https://demo.smart-hospital.in/page/events"
+  },
+  {
+   "label": "About Us",
+   "url": "https://demo.smart-hospital.in/"
+  },
+  {
+   "label": "https://demo.smart-hospital.in/page/about-hospitals",
+   "url": "https://demo.smart-hospital.in/page/about-hospitals"
+  },
+  {
+   "label": "https://demo.smart-hospital.in/page/vision-and-mission",
+   "url": "https://demo.smart-hospital.in/page/vision-and-mission"
+  },
+  {
+   "label": "https://demo.smart-hospital.in/page/meet-our-doctors",
+   "url": "https://demo.smart-hospital.in/page/meet-our-doctors"
+  },
+  {
+   "label": "https://demo.smart-hospital.in/page/faq",
+   "url": "https://demo.smart-hospital.in/page/faq"
+  },
+  {
+   "label": "https://demo.smart-hospital.in/page/departments",
+   "url": "https://demo.smart-hospital.in/page/departments"
+  },
+  {
+   "label": "https://demo.smart-hospital.in/page/testimonials",
+   "url": "https://demo.smart-hospital.in/page/testimonials"
+  },
+  {
+   "label": "Survey Form",
+   "url": "https://demo.smart-hospital.in/surveys"
+  },
+  {
+   "label": "Gallery",
+   "url": "https://demo.smart-hospital.in/page/gallery"
+  },
+  {
+   "label": "Contact Us",
+   "url": "https://demo.smart-hospital.in/page/contact-us"
+  },
+  {
+   "label": "Find a Doctor",
+   "url": "https://demo.smart-hospital.in/#departments"
+  },
+  {
+   "label": "View lab reports View lab reports subtitle",
+   "url": "https://demo.smart-hospital.in/patient"
+  },
+  {
+   "label": "Check your insurer →",
+   "url": "https://demo.smart-hospital.in/#"
+  }
+ ]
+}

@@ -1,0 +1,280 @@
+{
+ "role": "pharmacist",
+ "label": "Pharmacist",
+ "user": "harry@gmail.com",
+ "ok": true,
+ "landing": "https://demo.smart-hospital.in/admin/admin/dashboard",
+ "loggedIn": true,
+ "dashboard": {
+  "url": "https://demo.smart-hospital.in/admin/admin/dashboard",
+  "title": "Dashboard · Smart Hospital",
+  "pageTitle": "Dashboard",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Dashboard",
+   "Staff Attendance",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "",
+    "rows": 10,
+    "columns": [
+     "Role",
+     "Total",
+     "Present",
+     "Attendance"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [],
+  "buttons": [],
+  "anchors": []
+ },
+ "nav": {
+  "sections": [
+   {
+    "name": "CORE OPERATIONS",
+    "items": [
+     {
+      "label": "Dashboard",
+      "href": "https://demo.smart-hospital.in/admin/admin/dashboard",
+      "children": []
+     },
+     {
+      "label": "Patient",
+      "href": "https://demo.smart-hospital.in/admin/admin/search",
+      "children": []
+     },
+     {
+      "label": "Billing",
+      "href": "https://demo.smart-hospital.in/admin/bill/dashboard",
+      "children": []
+     },
+     {
+      "label": "OPD - Out Patient",
+      "href": "https://demo.smart-hospital.in/admin/patient/search",
+      "children": []
+     },
+     {
+      "label": "IPD - In Patient",
+      "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch",
+      "children": []
+     }
+    ]
+   },
+   {
+    "name": "CLINICAL",
+    "items": [
+     {
+      "label": "Pharmacy",
+      "href": "https://demo.smart-hospital.in/admin/pharmacy/bill",
+      "children": []
+     },
+     {
+      "label": "Blood Bank",
+      "href": "https://demo.smart-hospital.in/admin/bloodbankstatus/",
+      "children": []
+     }
+    ]
+   },
+   {
+    "name": "ADMINISTRATION",
+    "items": [
+     {
+      "label": "Human Resource",
+      "href": "https://demo.smart-hospital.in/admin/staff",
+      "children": []
+     }
+    ]
+   },
+   {
+    "name": "TOOLS & CONTENT",
+    "items": [
+     {
+      "label": "Messaging",
+      "href": "https://demo.smart-hospital.in/admin/notification",
+      "children": []
+     },
+     {
+      "label": "Download Center",
+      "href": "#",
+      "children": [
+       {
+        "label": "Upload /Share Content",
+        "href": "https://demo.smart-hospital.in/admin/content/upload"
+       },
+       {
+        "label": "Content Share List",
+        "href": "https://demo.smart-hospital.in/admin/content/list"
+       },
+       {
+        "label": "Content Type",
+        "href": "https://demo.smart-hospital.in/admin/contenttype/"
+       }
+      ]
+     },
+     {
+      "label": "Live Consultation",
+      "href": "#",
+      "children": [
+       {
+        "label": "Live Meeting",
+        "href": "https://demo.smart-hospital.in/admin/zoom_conference/meeting"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "REPORTS & SETUP",
+    "items": [
+     {
+      "label": "Reports",
+      "href": "#",
+      "children": [
+       {
+        "label": "Pharmacy",
+        "href": "https://demo.smart-hospital.in/admin/report/pharmacy"
+       }
+      ]
+     },
+     {
+      "label": "Setup",
+      "href": "#",
+      "children": [
+       {
+        "label": "Hospital Charges",
+        "href": "https://demo.smart-hospital.in/admin/charges"
+       },
+       {
+        "label": "Print Header Footer",
+        "href": "https://demo.smart-hospital.in/admin/printing"
+       },
+       {
+        "label": "Pharmacy",
+        "href": "https://demo.smart-hospital.in/admin/medicinecategory/medicine"
+       },
+       {
+        "label": "Finance",
+        "href": "https://demo.smart-hospital.in/admin/expensehead"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "topbar": []
+ },
+ "pageCount": 18,
+ "pages": [
+  {
+   "label": "Dashboard",
+   "url": "https://demo.smart-hospital.in/admin/admin/dashboard",
+   "file": "01-dashboard.jpg",
+   "title": "Dashboard",
+   "tables": 1,
+   "forms": 3
+  },
+  {
+   "label": "Patient",
+   "url": "https://demo.smart-hospital.in/admin/admin/search",
+   "file": "02-patient.jpg",
+   "title": "Patient List",
+   "tables": 1,
+   "forms": 5
+  },
+  {
+   "label": "Billing",
+   "url": "https://demo.smart-hospital.in/admin/bill/dashboard",
+   "file": "03-billing.jpg",
+   "title": "Single Module Billing",
+   "tables": 0,
+   "forms": 4
+  },
+  {
+   "label": "OPD - Out Patient",
+   "url": "https://demo.smart-hospital.in/admin/patient/search",
+   "file": "04-opd-out-patient.jpg",
+   "title": "OPD Patient · Smart Hospital",
+   "tables": 2,
+   "forms": 7
+  },
+  {
+   "label": "IPD - In Patient",
+   "url": "https://demo.smart-hospital.in/admin/patient/ipdsearch",
+   "file": "05-ipd-in-patient.jpg",
+   "title": "IPD Patient",
+   "tables": 1,
+   "forms": 7
+  },
+  {
+   "label": "Pharmacy",
+   "url": "https://demo.smart-hospital.in/admin/pharmacy/bill",
+   "file": "06-pharmacy.jpg",
+   "title": "Pharmacy Bill",
+   "tables": 1,
+   "forms": 6
+  }
+ ]
+}

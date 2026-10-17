@@ -1,0 +1,4 @@
+login status=200 url=https://demo.smart-hospital.in/site/login
+inputs=[{"name":"ci_csrf_token","id":"","type":"hidden","ph":"","cls":""},{"name":"username","id":"al-username","type":"text","ph":"Username","cls":"lp-input"},{"name":"password","id":"al-password","type":"password","ph":"••••••••","cls":"lp-input"}]
+clicked button[type="submit"]
+url-after-login=https://demo.smart-hospital.in/admin/admin/dashboard

@@ -1,0 +1,260 @@
+{
+ "sections": [
+  {
+   "name": "CORE OPERATIONS",
+   "items": [
+    {
+     "label": "Dashboard",
+     "href": "https://demo.smart-hospital.in/admin/admin/dashboard",
+     "children": []
+    },
+    {
+     "label": "Patient",
+     "href": "https://demo.smart-hospital.in/admin/admin/search",
+     "children": []
+    },
+    {
+     "label": "Billing",
+     "href": "https://demo.smart-hospital.in/admin/bill/dashboard",
+     "children": []
+    },
+    {
+     "label": "Appointment",
+     "href": "https://demo.smart-hospital.in/admin/appointment/index",
+     "children": []
+    },
+    {
+     "label": "OPD - Out Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/search",
+     "children": []
+    },
+    {
+     "label": "IPD - In Patient",
+     "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch",
+     "children": []
+    }
+   ]
+  },
+  {
+   "name": "CLINICAL",
+   "items": [
+    {
+     "label": "Pharmacy",
+     "href": "https://demo.smart-hospital.in/admin/pharmacy/bill",
+     "children": []
+    },
+    {
+     "label": "Pathology",
+     "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch",
+     "children": []
+    },
+    {
+     "label": "Radiology",
+     "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch",
+     "children": []
+    },
+    {
+     "label": "Blood Bank",
+     "href": "https://demo.smart-hospital.in/admin/bloodbankstatus/",
+     "children": []
+    },
+    {
+     "label": "Ambulance",
+     "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance",
+     "children": []
+    }
+   ]
+  },
+  {
+   "name": "ADMINISTRATION",
+   "items": [
+    {
+     "label": "Human Resource",
+     "href": "https://demo.smart-hospital.in/admin/staff",
+     "children": []
+    },
+    {
+     "label": "Referral",
+     "href": "https://demo.smart-hospital.in/admin/referral/payment",
+     "children": []
+    },
+    {
+     "label": "TPA Management",
+     "href": "https://demo.smart-hospital.in/admin/tpamanagement",
+     "children": []
+    },
+    {
+     "label": "Finance",
+     "href": "#",
+     "children": [
+      {
+       "label": "Income",
+       "href": "https://demo.smart-hospital.in/admin/income"
+      },
+      {
+       "label": "Expenses",
+       "href": "https://demo.smart-hospital.in/admin/expense"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "TOOLS & CONTENT",
+   "items": [
+    {
+     "label": "Messaging",
+     "href": "https://demo.smart-hospital.in/admin/notification",
+     "children": []
+    },
+    {
+     "label": "Inventory",
+     "href": "https://demo.smart-hospital.in/admin/itemstock",
+     "children": []
+    },
+    {
+     "label": "Download Center",
+     "href": "#",
+     "children": [
+      {
+       "label": "Upload /Share Content",
+       "href": "https://demo.smart-hospital.in/admin/content/upload"
+      },
+      {
+       "label": "Content Share List",
+       "href": "https://demo.smart-hospital.in/admin/content/list"
+      },
+      {
+       "label": "Content Type",
+       "href": "https://demo.smart-hospital.in/admin/contenttype/"
+      }
+     ]
+    },
+    {
+     "label": "Live Consultation",
+     "href": "#",
+     "children": [
+      {
+       "label": "Live Meeting",
+       "href": "https://demo.smart-hospital.in/admin/zoom_conference/meeting"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "REPORTS & SETUP",
+   "items": [
+    {
+     "label": "Reports",
+     "href": "#",
+     "children": [
+      {
+       "label": "Finance",
+       "href": "https://demo.smart-hospital.in/admin/report/finance"
+      },
+      {
+       "label": "Appointment",
+       "href": "https://demo.smart-hospital.in/admin/report/appointment"
+      },
+      {
+       "label": "OPD",
+       "href": "https://demo.smart-hospital.in/admin/report/opd"
+      },
+      {
+       "label": "IPD",
+       "href": "https://demo.smart-hospital.in/admin/report/ipd"
+      },
+      {
+       "label": "Pharmacy",
+       "href": "https://demo.smart-hospital.in/admin/report/pharmacy"
+      },
+      {
+       "label": "Pathology",
+       "href": "https://demo.smart-hospital.in/admin/report/pathology"
+      },
+      {
+       "label": "Radiology",
+       "href": "https://demo.smart-hospital.in/admin/report/radiology"
+      },
+      {
+       "label": "Ambulance",
+       "href": "https://demo.smart-hospital.in/admin/report/ambulance"
+      },
+      {
+       "label": "TPA",
+       "href": "https://demo.smart-hospital.in/admin/report/tpa"
+      },
+      {
+       "label": "Inventory",
+       "href": "https://demo.smart-hospital.in/admin/report/inventory"
+      },
+      {
+       "label": "Live Consultation",
+       "href": "https://demo.smart-hospital.in/admin/report/live_consultation"
+      },
+      {
+       "label": "Log",
+       "href": "https://demo.smart-hospital.in/admin/report/log"
+      },
+      {
+       "label": "OT",
+       "href": "https://demo.smart-hospital.in/admin/report/ot"
+      },
+      {
+       "label": "Patient",
+       "href": "https://demo.smart-hospital.in/admin/report/patient"
+      }
+     ]
+    },
+    {
+     "label": "Setup",
+     "href": "#",
+     "children": [
+      {
+       "label": "Settings",
+       "href": "https://demo.smart-hospital.in/schsettings"
+      },
+      {
+       "label": "Hospital Charges",
+       "href": "https://demo.smart-hospital.in/admin/charges"
+      },
+      {
+       "label": "Bed",
+       "href": "https://demo.smart-hospital.in/admin/setup/bed/status"
+      },
+      {
+       "label": "Print Header Footer",
+       "href": "https://demo.smart-hospital.in/admin/printing"
+      },
+      {
+       "label": "Pharmacy",
+       "href": "https://demo.smart-hospital.in/admin/medicinecategory/medicine"
+      },
+      {
+       "label": "Blood Bank",
+       "href": "https://demo.smart-hospital.in/admin/bloodbank/products"
+      },
+      {
+       "label": "Finance",
+       "href": "https://demo.smart-hospital.in/admin/incomehead"
+      },
+      {
+       "label": "Referral",
+       "href": "https://demo.smart-hospital.in/admin/referral/commission"
+      },
+      {
+       "label": "Appointment",
+       "href": "https://demo.smart-hospital.in/admin/onlineappointment/index"
+      },
+      {
+       "label": "Inventory",
+       "href": "https://demo.smart-hospital.in/admin/itemcategory"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "topbar": []
+}

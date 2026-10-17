@@ -1,0 +1,918 @@
+{
+ "record": "billing-screen",
+ "tab": "Old Appointment",
+ "index": 2,
+ "url": "https://demo.smart-hospital.in/admin/bill/appointment",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/bill/appointment",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Smart Hospital & Research Center · Smart Hospital",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Add Appointment",
+   "Appointment Details",
+   "Add Patient",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formadd",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Doctor",
+      "name": "doctorid",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Sansa Gomez (9008)",
+       "Sonia Bush (9002)"
+      ]
+     },
+     {
+      "label": "Doctor Fees ($)",
+      "name": "amount",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Shift",
+      "name": "global_shift",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Appointment Date",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Slot",
+      "name": "slot",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Appointment Priority",
+      "name": "priority",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Normal",
+       "Urgent",
+       "Very Urgent",
+       "Low"
+      ]
+     },
+     {
+      "label": "Status *",
+      "name": "appointment_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Pending",
+       "Approved",
+       "Cancel"
+      ]
+     },
+     {
+      "label": "Discount Percentage",
+      "name": "discount_percentage",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Live Consultant (On Video Conference)",
+      "name": "live_consult",
+      "type": "select",
+      "required": false,
+      "options": [
+       "No",
+       "Yes"
+      ]
+     },
+     {
+      "label": "Payment Mode",
+      "name": "payment_mode",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Cash",
+       "Cheque",
+       "Transfer to Bank Account",
+       "UPI",
+       "Online",
+       "Other"
+      ]
+     },
+     {
+      "label": "Message",
+      "name": "message",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Cheque No",
+      "name": "cheque_no",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Cheque Date",
+      "name": "cheque_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "document",
+      "name": "document",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Alternate Address",
+      "name": "custom_fields[appointment][4]",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "rescheduleform",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Doctor",
+      "name": "",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Sansa Gomez (9008)",
+       "Sonia Bush (9002)"
+      ]
+     },
+     {
+      "label": "Doctor Fees ($)",
+      "name": "doctor_fees",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Shift",
+      "name": "rglobal_shift",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Appointment Date",
+      "name": "appointment_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Slot",
+      "name": "rslot",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Appointment Priority",
+      "name": "priority",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Normal",
+       "Urgent",
+       "Very Urgent",
+       "Low"
+      ]
+     },
+     {
+      "label": "Payment Mode",
+      "name": "edit_payment_mode",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Cash",
+       "Cheque",
+       "Transfer to Bank Account",
+       "UPI",
+       "Online",
+       "Other"
+      ]
+     },
+     {
+      "label": "Discount Percentage",
+      "name": "discount_percentage",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Status *",
+      "name": "edit_appointment_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Pending",
+       "Approved",
+       "Cancel"
+      ]
+     },
+     {
+      "label": "Live Consultant (On Video Conference)",
+      "name": "live_consult",
+      "type": "select",
+      "required": false,
+      "options": [
+       "No",
+       "Yes"
+      ]
+     },
+     {
+      "label": "Message",
+      "name": "message",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formaddpa",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Name *",
+      "name": "name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Guardian Name",
+      "name": "guardian_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Phone",
+      "name": "mobileno",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Gender",
+      "name": "gender",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Male",
+       "Female"
+      ]
+     },
+     {
+      "label": "Date Of Birth",
+      "name": "dob",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Year",
+      "name": "age[year]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Month",
+      "name": "age[month]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Day",
+      "name": "age[day]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Blood Group",
+      "name": "blood_group",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "B+",
+       "A+",
+       "AB-",
+       "AB+",
+       "O-",
+       "A-",
+       "B-",
+       "O+"
+      ]
+     },
+     {
+      "label": "Marital Status",
+      "name": "marital_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Single",
+       "Married",
+       "Widowed",
+       "Separated",
+       "Not Specified"
+      ]
+     },
+     {
+      "label": "Email",
+      "name": "email",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Address",
+      "name": "address",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "National Identification Number",
+      "name": "identification_number",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "file",
+      "name": "file",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Remarks",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Any Known Allergies",
+      "name": "known_allergies",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "TPA",
+      "name": "organisation_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Medi life2",
+       "Medicare TPA Services (India)",
+       "Family Health Plan (FHPL)",
+       "Raksha Health Insurance",
+       "Paramount Health Services",
+       "LIFE MEDICAL INSURANCE",
+       "Medi Assist",
+       "Health Life Insurance",
+       "Star Health Insurance",
+       "IDBI Federal",
+       "CGHS"
+      ]
+     },
+     {
+      "label": "TPA ID",
+      "name": "insurance_id",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "TPA Validity",
+      "name": "validity",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "Alternate Number",
+      "name": "custom_fields[patient][3]",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 2,
+    "columns": [
+     "Patient Name",
+     "Appointment No",
+     "Date",
+     "Phone",
+     "Gender",
+     "Doctor",
+     "Source",
+     "Priority",
+     "Live Consultant",
+     "Alternate Address",
+     "Created By",
+     "Status",
+     "Fees ($)",
+     "Discount (%)",
+     "Paid ($)"
+    ]
+   },
+   {
+    "id": "DataTables_Table_1",
+    "rows": 25,
+    "columns": [
+     "Patient Name",
+     "Appointment No",
+     "Date",
+     "Phone",
+     "Gender",
+     "Doctor",
+     "Source",
+     "Priority",
+     "Live Consultant",
+     "Alternate Address",
+     "Created By",
+     "Status",
+     "Fees ($)",
+     "Discount (%)",
+     "Paid ($)"
+    ]
+   },
+   {
+    "id": "DataTables_Table_2",
+    "rows": 101,
+    "columns": [
+     "Patient Name",
+     "Appointment No",
+     "Date",
+     "Phone",
+     "Gender",
+     "Doctor",
+     "Source",
+     "Priority",
+     "Live Consultant",
+     "Alternate Address",
+     "Created By",
+     "Status",
+     "Fees ($)",
+     "Discount (%)",
+     "Paid ($)"
+    ]
+   },
+   {
+    "id": "field_data",
+    "rows": 0,
+    "columns": []
+   }
+  ],
+  "tabs": [
+   "Today Appointment",
+   "Upcoming Appointment",
+   "Old Appointment"
+  ],
+  "sections": [
+   "Today Appointment Upcoming Appointment Old Appointment Add Appointment"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Today Appointment",
+    "href": "",
+    "target": "#tab_1"
+   },
+   {
+    "text": "Upcoming Appointment",
+    "href": "",
+    "target": "#tab_2"
+   },
+   {
+    "text": "Old Appointment",
+    "href": "",
+    "target": "#tab_3"
+   },
+   {
+    "text": "Add Appointment",
+    "href": "",
+    "target": "#myModal"
+   }
+  ],
+  "anchors": [
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Maya Agarwal (1084)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Christy D. Murray (937)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Adam Driscoll (1135)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Marcus Jacobsen (1141)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Jonathan Hibbins (1107)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Samuel Palmos (1136)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Elizabeth Hancock (1100)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Nishant Kadakia (980)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Harpreet Varkey (884)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Marcus Jacobsen (1141)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Aaron Hardie (1145)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Jonathan Hibbins (1107)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "William Thorby (1138)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Aadish Mody (1072)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Sudhakar Mati (1087)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Arthur Wood (872)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "William Thorby (1138)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Marcus Jacobsen (1141)",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   }
+  ]
+ },
+ "file": "billing-screen__tab-3-old-appointment.jpg"
+}

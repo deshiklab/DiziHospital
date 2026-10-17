@@ -1,0 +1,18 @@
+# Inventory (4)
+
+About Inventory. Inventory Module is used to maintain entire Inventory record including hospital uniforms, bill book and many more. The main purpose of this module is to make hospital equipment tracking easy.Inventory Module Workflow: First we will add items then add item stocks then we will manage issue and return of items to different staff members. Read More
+
+- [About Inventory.](about-inventory.md) — Tue, 02 Nov, 2021
+- [How to add Item Stock?](how-to-add-item-stock.md) — Sun, 31 Oct, 2021
+- [How to add Item?](how-to-add-item.md) — Sun, 31 Oct, 2021
+- [How to check issue and return item?](how-to-check-issue-and-return-item.md) — Sun, 31 Oct, 2021
+- [Version 1.0](../known-issues/version-1-0-6.md) — Thu, 30 Jul, 2026
+- [Version 1.0](../known-issues/version-1-0-5.md) — Thu, 30 Jul, 2026
+- [Version 2.0](../known-issues/version-2-0-3.md) — Thu, 30 Jul, 2026
+- [Version 2.0](../known-issues/version-2-0-2.md) — Thu, 30 Jul, 2026
+- [Version 2.0](../known-issues/version-2-0-1.md) — Thu, 30 Jul, 2026
+- [Version 7.0](../known-issues/version-7-0.md) — Mon, 27 Jul, 2026
+- [How to enable WhatsApp for a Notification Event?](../known-issues/how-to-enable-whatsapp-for-a-notification-event.md) — Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Twilio?](../known-issues/how-to-configure-whatsapp-using-twilio.md) — Sat, 25 Jul, 2026
+- [How to configure WhatsApp using Meta (Cloud API)?](../known-issues/how-to-configure-whatsapp-using-meta-cloud-api.md) — Sat, 25 Jul, 2026
+- [About WhatsApp Messaging](../known-issues/about-whatsapp-messaging.md) — Sat, 25 Jul, 2026

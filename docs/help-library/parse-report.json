@@ -1,0 +1,18 @@
+{
+ "categories": 39,
+ "articles": 306,
+ "failed": [],
+ "images": 909,
+ "warnings": [
+  "image https://prnt.sc/1xilq7o: cannot identify image file <_io.BytesIO object at 0x7f8f8b04cf40>",
+  "https://dev.webfeb.com/shkbr/assets/article-media/stafflist1.png: HTTP 404",
+  "https://dev.webfeb.com/shkbr/assets/article-media/add_dept.png: HTTP 404",
+  "https://dev.webfeb.com/shkbr/assets/article-media/deptlist.png: HTTP 404",
+  "https://dev.webfeb.com/shkbr/assets/article-media/designationadd.png: HTTP 404",
+  "https://dev.webfeb.com/shkbr/assets/article-media/designationlist.png: HTTP 404",
+  "https://dev.webfeb.com/shkbr/assets/article-media/leave1.png: HTTP 404",
+  "https://dev.webfeb.com/shkbr/assets/article-media/leavelist.png: HTTP 404",
+  "https://dev.webfeb.com/shkbr/assets/article-media/liveconsult-meeting-list.png: HTTP 404",
+  "https://dev.webfeb.com/shkbr/assets/article-media/liveconsult-add-live-meeting.png: HTTP 404"
+ ]
+}

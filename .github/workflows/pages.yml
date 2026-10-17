@@ -13,6 +13,18 @@ name: pages
 #
 # The site is generated into `docs/build/site/`, which is ignored by git: the artifact is
 # the deployment, so half a hundred megabytes of HTML never enters the history.
+#
+# Publishing needs one thing this workflow cannot give itself: somebody with repository
+# administrator rights has to switch Pages on once (Settings → Pages → Source: "GitHub
+# Actions"). A token may not create a Pages site, so `POST /repos/…/pages` answers
+# `Resource not accessible by integration` and `configure-pages` answers the same.
+#
+# When that switch is off, this workflow is **green and does not deploy**: it builds the
+# site, uploads it as a downloadable artifact and skips the deployment with a warning
+# that names the setting. A red cross for a repository setting nobody in this commit
+# touched would train people to ignore red crosses — and the thing being reported is
+# "not published yet", which is a state, not a broken build. Flip the switch and the
+# next push (or a manual run) publishes normally, with no change to this file.
 
 on:
   push:
@@ -37,61 +49,132 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # `true` when Pages is switched on and this run should publish. The deploy job reads
+    # this; everything that needs Pages is skipped when it is not `true`.
+    outputs:
+      deploy: ${{ steps.tree.outputs.full == 'true' && steps.pages.outputs.enabled == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
+      # Before anything is built: is this checkout the documentation this site is made of?
+      #
+      # The workflow is a file like any other, so a run can be started on a commit that carries the
+      # workflow but not the documents — a placeholder branch, or an old commit that somebody keeps
+      # re-running. On such a commit the builders either fail with a traceback about a missing file or,
+      # worse, succeed and publish one page over a site of four hundred. Both are answered by asking the
+      # question first: a checkout without the four anchors below is not this documentation, so it builds
+      # nothing, publishes nothing, and says which anchors are missing.
+      - name: Is this the documentation tree?
+        id: tree
+        run: |
+          missing=""
+          for anchor in docs/WIKI.md docs/FEATURE-CATALOG.md docs/plan/README.md docs/help-library/index.json; do
+            [ -f "$anchor" ] || missing="${missing:+$missing, }$anchor"
+          done
+          if [ -n "$missing" ]; then
+            echo "full=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Nothing published::This checkout does not carry the documentation this site is made of (missing: $missing). The workflow can be started on any commit, but only a checkout of the documentation branch has anything to publish."
+            {
+              echo "### Nothing published — this checkout is not the documentation tree"
+              echo
+              echo "Missing: \`$missing\`"
+              echo
+              echo "A run can be started on any commit, including one that has this workflow but not the documents."
+              echo "Nothing was built and nothing was published; the site already at the Pages address was left alone."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          echo "full=true" >> "$GITHUB_OUTPUT"
+          echo "The documentation tree is here: $(find docs -name '*.md' -not -path '*/_debug/*' | wc -l) page(s) to render."
+
       - uses: actions/setup-python@v5
+        if: steps.tree.outputs.full == 'true'
         with:
           python-version: '3.12'
 
       - name: Install the renderer
+        if: steps.tree.outputs.full == 'true'
         run: pip install --quiet markdown
 
       - name: Render the guide (the printable single page the PDF is made from)
+        if: steps.tree.outputs.full == 'true'
         run: python3 tools/docs/build_html.py
 
       - name: Assemble the site, and fail if any link inside it does not resolve
+        if: steps.tree.outputs.full == 'true'
         run: python3 tools/docs/build_site.py
 
-      # The rendered site is also uploaded as an ordinary artifact, *before* the Pages check, so that a repository
-      # whose owner has not switched Pages on yet still gets the thing this job built: Actions → this run → download
-      # `documentation-site.zip`, open `index.html`. A deployment that cannot happen should still hand over its work.
+      # The rendered site is uploaded as an ordinary artifact *before* the Pages check, so
+      # that a repository whose owner has not switched Pages on still gets the thing this
+      # job built: Actions → this run → `documentation-site.zip`, open `index.html`. A
+      # deployment that cannot happen should still hand over its work.
       - name: Upload the site as a downloadable artifact
+        if: steps.tree.outputs.full == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: documentation-site
           path: docs/build/site
           retention-days: 30
 
-      # `enablement: true` asks Actions to turn Pages on if the repository is permitted to. It is positioned before
-      # the explicit check so a first-time setup does not fail the workflow before the repo is switched on.
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-
-      # Pages may still be unavailable if the repository is not permitted to enable it programmatically. In that case
-      # we warn instead of aborting the build, but the deployment step below will still surface the real status.
-      - name: Verify Pages is enabled
+      # Ask, rather than discover it as a stack trace out of `configure-pages`. A 404 means
+      # "no Pages site exists"; anything else is reported verbatim. Neither fails the run.
+      - name: Is Pages enabled?
+        id: pages
+        if: steps.tree.outputs.full == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           code=$(curl -s -o /tmp/pages.json -w '%{http_code}' \
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
-            "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/pages")
-          if [ "$code" != "200" ]; then
-            echo "::warning::Pages is not enabled for $GITHUB_REPOSITORY (the API answered $code). A repository administrator opens Settings → Pages once and sets Source to 'GitHub Actions'; after that this workflow publishes on every change under docs/."
+            "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/pages") || code=000
+
+          if [ "$code" = "200" ]; then
+            url=$(python3 -c "import json;print(json.load(open('/tmp/pages.json')).get('html_url') or '')")
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+            echo "Pages is enabled${url:+ at $url}."
+            echo "### Deploying to GitHub Pages" >> "$GITHUB_STEP_SUMMARY"
+            echo "This run publishes to ${url:-this repository Pages site}." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
-          echo "Pages is enabled: $(python3 -c "import json;print(json.load(open('/tmp/pages.json')).get('html_url'))")"
+
+          echo "enabled=false" >> "$GITHUB_OUTPUT"
+          # 404 is the ordinary answer while Pages is off; anything else is worth quoting as itself.
+          if [ "$code" = "404" ]; then
+            why="no Pages site exists to publish to"
+          else
+            why="the Pages API did not answer 200"
+          fi
+          echo "::warning title=Deployment skipped::Pages is not enabled for $GITHUB_REPOSITORY (the API answered $code), so there is no site to publish to. The rendered site is in this run's artifacts as 'documentation-site'. To publish: a repository administrator opens $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/settings/pages and sets Source to 'GitHub Actions' — the next push, or a manual run of this workflow, then deploys with no change to this file."
+          {
+            echo "### Deployment skipped — Pages is not enabled"
+            echo
+            echo "The site was built and is attached to this run as **\`documentation-site\`** (30 days)."
+            echo "GitHub answered \`$code\` for \`/repos/$GITHUB_REPOSITORY/pages\`: $why."
+            echo
+            echo "**To publish:** a repository administrator opens [Settings → Pages]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/settings/pages)"
+            echo "and sets **Source** to **GitHub Actions**. Then re-run this workflow (or push any change under \`docs/\`)."
+            echo
+            echo "This run is green on purpose: the build is not broken, and a red cross for a repository setting would be a lie about what the commit did."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # `enablement: true` asks Actions to turn Pages on if the repository is permitted to.
+      # It costs nothing when it is already on, and it means a deployment does not depend on
+      # the order in which an administrator happened to grant things.
+      - name: Configure Pages
+        if: steps.tree.outputs.full == 'true' && steps.pages.outputs.enabled == 'true'
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Upload the site
+        if: steps.tree.outputs.full == 'true' && steps.pages.outputs.enabled == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/build/site
 
-      - name: What was published
+      - name: What was built
+        if: steps.tree.outputs.full == 'true'
         run: |
           du -sh docs/build/site
           echo "pages: $(find docs/build/site -name '*.html' | wc -l) html file(s)" >> "$GITHUB_STEP_SUMMARY"
@@ -99,11 +182,33 @@ jobs:
 
   deploy:
     needs: build
+    # Skipped, not failed, when Pages is off: `needs.build.outputs.deploy` is what the build
+    # job's Pages check wrote, and the run is green either way.
+    if: needs.build.outputs.deploy == 'true'
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    # Deliberately not declaring `environment: github-pages` here.
+    #
+    # When Pages is switched on, GitHub creates that environment with a deployment branch
+    # policy — by default only `main` may deploy to it. Declaring the environment makes the
+    # runner enforce that policy, so a documentation preview built on a working branch is
+    # rejected before `deploy-pages` runs, with "Branch … is not allowed to deploy to
+    # github-pages due to environment protection rules". The branch rule itself can only be
+    # changed by a repository administrator, which is the same permission that was needed to
+    # switch Pages on — the point of this workflow is that the *docs* preview does not need
+    # anything from a person after that one switch.
+    #
+    # The deployment is still recorded against the repository's Pages site by `deploy-pages`
+    # itself; what is lost is the environment URL banner on the run, so the address is
+    # printed in the summary instead. On `main`, where GitHub's default policy allows it,
+    # declaring the environment would add nothing and this comment would still hold.
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Where it went
+        if: success()
+        run: |
+          url="${{ steps.deployment.outputs.page_url }}"
+          echo "### Published" >> "$GITHUB_STEP_SUMMARY"
+          echo "The documentation site is live at ${url:-the repository Pages address}." >> "$GITHUB_STEP_SUMMARY"

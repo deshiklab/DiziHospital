@@ -1,0 +1,193 @@
+name: ci-api
+
+# The API service's own job, and the only place in this repository where PHP and Composer can run.
+#
+# That is not an oversight in the development environment; it is the environment. Packagist is reachable from GitHub
+# Actions and nowhere else, so the service is written against PHP 8.4 and proved here rather than on somebody's
+# laptop. `services/api/README.md` states the same limitation, and tools/ci/php-lint.mjs is what keeps a syntax error
+# from costing a CI round trip: it parses every file with PHP compiled to WebAssembly.
+on:
+  push:
+    branches:
+      - main
+      - 'arena/**'
+    paths:
+      - 'services/**'
+      - 'packages/contracts/**'
+      - 'tools/ci/php-lint.mjs'
+      - '.github/workflows/ci-api.yml'
+  pull_request:
+    paths:
+      - 'services/**'
+      - 'packages/contracts/**'
+      - 'tools/ci/php-lint.mjs'
+      - '.github/workflows/ci-api.yml'
+
+concurrency:
+  group: ci-api-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  api:
+    name: php 8.4, style, contract and rules
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # The default token, which is read-only. Nothing in this job writes to the repository: the one step that did —
+    # committing the lock file on the run that resolved it — landed that file and has been removed with it.
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: services/api
+    steps:
+      - uses: actions/checkout@v4
+
+      # php 8.4 because that is what composer.json pins, and the extensions are the ones this service actually
+      # uses: mbstring for the Bangla name comparison and the length checks, the SQLite pair for the test suite,
+      # and the Postgres pair because the production database is Postgres and a driver that is missing from the
+      # image must be a setup failure here rather than a 500 on a ward.
+      - name: PHP 8.4 with the extensions this service uses
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, pdo_sqlite, sqlite3, pgsql, pdo_pgsql, openssl, tokenizer, dom, xml, curl
+          tools: composer:v2
+          coverage: none
+
+      # Installed from the committed `composer.lock`, so this job gets the versions the last green run was proved
+      # against rather than whatever packagist resolved this morning.
+      - name: Install the service's dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      # Every file, one at a time, before anything heavier: a parse error reported by name is a minute; the same
+      # parse error found by PHPUnit is a stack trace about an autoloader.
+      - name: Every PHP file parses
+        run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
+
+      - name: Pint — the style rules this repository pins
+        run: |
+          set +e
+          vendor/bin/pint --test -v > /tmp/pint.log 2>&1
+          status=$?
+          cat /tmp/pint.log
+          if [ "$status" -ne 0 ]; then
+            # Two annotations: the files and rules at the end of the report, and the beginning of the first diff. A
+            # check run's annotations are the part of a failure that can be read from outside the log.
+            echo "::error ::$(tail -30 /tmp/pint.log | head -c 5000 | sed 's/%/%25/g' | sed -z 's/\n/%0A/g')"
+            echo "::error ::$(head -c 3000 /tmp/pint.log | sed 's/%/%25/g' | sed -z 's/\n/%0A/g')"
+          fi
+          exit "$status"
+
+      # The suite runs against SQLite in memory, which needs no service container, and the assertions the product
+      # cares about are about rules rather than about the engine: which numbers a node may mint, what a stale version
+      # does, what a replayed key does, and whether an altered ledger entry can be found. The Postgres-specific half —
+      # the module schemas and the row locks — is the second job below, because SQLite cannot prove it.
+      # The failure list is echoed as an annotation rather than left in the log alone: a check run's annotations are
+      # what a contributor — or an agent working in a sandbox that cannot download Actions logs — can read back.
+      - name: The contract, the rules and the ledger
+        run: |
+          set +e
+          vendor/bin/phpunit --display-warnings 2>&1 | tee /tmp/phpunit.log
+          status=${PIPESTATUS[0]}
+          if [ "$status" -ne 0 ]; then
+            # One line per failure: the test, then the sentence that failed, with the stack trace left in the log.
+            # A check run's annotation is capped at 4 kB and everything emitted here collapses into one, so a list
+            # that carries the traces is a list that shows two failures out of twelve — which is how this step was
+            # first written, and why it now prints names rather than diffs.
+            awk '
+              /^There w/ { list = 1 }
+              list && /^[0-9]+\) / { name = $0; getline message; while (message ~ /^[[:space:]]*$/) getline message;
+                                    printf "%s -- %s\n", name, message; next }
+            ' /tmp/phpunit.log | head -40 | cut -c1-400 \
+              | sed 's/%/%25/g' | sed -z 's/\n/%0A/g' | sed 's/^/::error ::/'
+          fi
+          exit "$status"
+
+      # The service's own log, echoed as an annotation rather than left in the log alone. When a case fails with a 500
+      # this is the line that says which exception it was — and a check run's annotations are the only part of a
+      # failure that can be read back from here (a sandboxed contributor cannot download Actions logs at all).
+      - name: What the service said
+        if: failure()
+        run: |
+          ls -la storage/logs || true
+          log=storage/logs/laravel.log
+          if [ -f "$log" ]; then
+            # The last three entries that were *not* a product refusal: every refusal is logged too, and a run that
+            # proves the refusals log correctly buries the one entry that says what actually broke — which is what
+            # happened the first time this step ran. Each is printed from its header line (the exception's own
+            # sentence) down through the frames under it, which name the class in this service that threw it.
+            grep -an 'testing\.ERROR' "$log" | grep -av 'ProblemException' | tail -3 | cut -d: -f1 | while read -r line; do
+              sed -n "${line},$((line + 12))p" "$log" | sed 's/ {"exception".*//' | cut -c1-200
+              echo '---'
+            done | sed 's/%/%25/g' | sed -z 's/\n/%0A/g' | sed 's/^/::error ::/'
+          fi
+
+  # `ModuleSchema` creates one Postgres schema per module, so on Postgres the tests' `registration_patients` is
+  # `registration.patients`. That difference is exactly the part of the production DDL SQLite cannot check, and it is
+  # the part that would fail on the first deployment of the first module. This job migrates a real Postgres 18 from
+  # empty and then from scratch again.
+  schema:
+    name: the module schemas migrate on postgres
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: services/api
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: dizihospital
+          POSTGRES_USER: dizi
+          POSTGRES_PASSWORD: secret
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DB_CONNECTION: pgsql
+      DB_HOST: 127.0.0.1
+      DB_PORT: '5432'
+      DB_DATABASE: dizihospital
+      DB_USERNAME: dizi
+      DB_PASSWORD: secret
+      NODE_SECRET: ci-node-secret
+      AUTH_PREVIEW_SECRET: ci-auth-secret
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: PHP 8.4 with the extensions this service uses
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, pgsql, pdo_pgsql, pdo_sqlite, sqlite3, openssl, tokenizer, dom, xml, curl
+          tools: composer:v2
+          coverage: none
+
+      - name: Install the service's dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Migrate an empty Postgres
+        run: |
+          set +e
+          output=$(php artisan migrate --force 2>&1)
+          status=$?
+          printf '%s\n' "$output"
+          printf '%s\n' "$output" | head -10 | sed 's/^/::error ::/'
+          exit "$status"
+
+      - name: Every implemented module has its schema and its tables
+        run: php artisan dizi:modules --check
+
+      # `migrate:refresh`, not `migrate:fresh`: fresh wipes the schema Laravel knows about (public) and would leave
+      # `registration`, `sync` and `audit` standing, so the second migrate would fail on a table that already exists.
+      # Refresh walks every migration's `down()`, which drops the module schemas — so this step proves the rollback
+      # path as well as the migrate path, and the README says the same thing for anybody doing it by hand.
+      - name: Migrate back down and up again
+        run: php artisan migrate:refresh --force
+
+      - name: ... and the modules are there after the round trip
+        run: php artisan dizi:modules --check

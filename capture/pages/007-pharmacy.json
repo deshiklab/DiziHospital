@@ -1,0 +1,598 @@
+{
+ "id": "007-pharmacy",
+ "label": "Pharmacy",
+ "url": "https://demo.smart-hospital.in/admin/pharmacy/bill",
+ "section": "CLINICAL",
+ "parent": "",
+ "ok": true,
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/pharmacy/bill",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Pharmacy Bill",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Pharmacy Bill",
+   "Bill Details",
+   "Generate Bill",
+   "Sale Return",
+   "Payments",
+   "Add Patient",
+   "Return History",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "bill",
+    "fields": [
+     {
+      "label": "Apply TPA",
+      "name": "patient_id",
+      "type": "select",
+      "required": false,
+      "options": []
+     },
+     {
+      "label": "Prescription No",
+      "name": "prescription_no",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Apply TPA",
+      "name": "is_tpa",
+      "type": "checkbox",
+      "required": false
+     },
+     {
+      "label": "Bill No",
+      "name": "bill_no",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Case ID",
+      "name": "case_reference_id",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Date",
+      "name": "date",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "srForm",
+    "fields": [
+     {
+      "label": "sr_patient_id_display",
+      "name": "sr_patient_id_display",
+      "type": "select",
+      "required": false,
+      "options": []
+     },
+     {
+      "label": "Bill No / Sale Bill No",
+      "name": "",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Bill No",
+      "name": "sr_return_no",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Date",
+      "name": "sr_date",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formaddpa",
+    "fields": [
+     {
+      "label": "Name *",
+      "name": "name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Guardian Name",
+      "name": "guardian_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Phone",
+      "name": "mobileno",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Gender",
+      "name": "gender",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Male",
+       "Female"
+      ]
+     },
+     {
+      "label": "Date Of Birth",
+      "name": "dob",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Year",
+      "name": "age[year]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Month",
+      "name": "age[month]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Day",
+      "name": "age[day]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Blood Group",
+      "name": "blood_group",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "O+",
+       "A+",
+       "B+",
+       "AB+",
+       "O-",
+       "A-",
+       "B-",
+       "AB-"
+      ]
+     },
+     {
+      "label": "Marital Status",
+      "name": "marital_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Single",
+       "Married",
+       "Widowed",
+       "Separated",
+       "Not Specified"
+      ]
+     },
+     {
+      "label": "Email",
+      "name": "email",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Address",
+      "name": "address",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "National Identification Number",
+      "name": "identification_number",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "file",
+      "name": "file",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Remarks",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Any Known Allergies",
+      "name": "known_allergies",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "TPA",
+      "name": "organisation_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Medi life2",
+       "Medicare TPA Services (India)",
+       "Family Health Plan (FHPL)",
+       "Raksha Health Insurance",
+       "Paramount Health Services",
+       "LIFE MEDICAL INSURANCE",
+       "Medi Assist",
+       "Health Life Insurance",
+       "Star Health Insurance",
+       "IDBI Federal",
+       "CGHS"
+      ]
+     },
+     {
+      "label": "TPA ID",
+      "name": "insurance_id",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "TPA Validity",
+      "name": "validity",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "Alternate Number",
+      "name": "custom_fields[patient][3]",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "pharmacyBillTable",
+    "cls": "table table-striped table-bordered table-hover ajaxlist dataTable no-footer",
+    "rows": 101,
+    "columns": [
+     "Bill No",
+     "Case ID",
+     "Date",
+     "Patient Name",
+     "Generated By",
+     "Doctor Name",
+     "Amount ($)",
+     "Discount ($)",
+     "Tax ($)",
+     "Net Amount ($)",
+     "Paid Amount ($)",
+     "Refund Amount ($)",
+     "Balance Amount ($)"
+    ],
+    "sample": [
+     [
+      "PHARMAB606",
+      "",
+      "13/10/2026 06:44 PM",
+      "Daniel Wood (509)",
+      "Super Admin (9001)",
+      "",
+      "400.00",
+      "0.00 (0.00%)",
+      "0",
+      "400.00",
+      "400.00",
+      "0.00",
+      "0.00"
+     ],
+     [
+      "PHARMAB605",
+      "",
+      "13/10/2026 06:34 PM",
+      "Daniel Wood (509)",
+      "Super Admin (9001)",
+      "Amit Singh (9009)",
+      "100.00",
+      "0.00 (0.00%)",
+      "0",
+      "100.00",
+      "0.00",
+      "0.00",
+      "100.00"
+     ]
+    ]
+   }
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Generate Bill",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Sale Return",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Sale Return Bills",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/salereturnbills",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Medicines",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/search",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "New Patient",
+    "href": "",
+    "target": "",
+    "onclick": "holdModal('myModalpa')"
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save & Print",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   }
+  ],
+  "tabs": [],
+  "filters": [
+   "Filter Menu",
+   "Search By Patient Name",
+   "Type to searchâ€¦",
+   "pharmacyBillTable_length",
+   "patient_id",
+   "Prescription No",
+   "bill_no",
+   "case_reference_id",
+   "date",
+   "sr_patient_id_display",
+   "Bill No / Sale Bill No",
+   "sr_return_no",
+   "sr_date",
+   "name",
+   "guardian_name",
+   "mobileno",
+   "gender",
+   "dob",
+   "Year",
+   "Month",
+   "Day",
+   "blood_group",
+   "marital_status",
+   "email",
+   "organisation_id"
+  ],
+  "sections": [
+   "Pharmacy Bill Generate Bill Sale Return Sale Return Bills Medicines"
+  ],
+  "stats": [],
+  "addLinks": [
+   {
+    "text": "Add Patient Patient List",
+    "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+   },
+   {
+    "text": "New OPD Patient OPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+   },
+   {
+    "text": "New IPD Patient IPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+   },
+   {
+    "text": "New Appointment Appointment",
+    "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+   },
+   {
+    "text": "New Bill Bill",
+    "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+   },
+   {
+    "text": "New Pharmacy Bill Pharmacy Bill",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+   },
+   {
+    "text": "New Pathology Test Pathology Test",
+    "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Radiology Test Radiology Test",
+    "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Blood Issue Blood Issue",
+    "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+   },
+   {
+    "text": "New Ambulance Call Ambulance Call",
+    "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+   },
+   {
+    "text": "New Visitor Visitor",
+    "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+   },
+   {
+    "text": "New Income Income",
+    "href": "https://demo.smart-hospital.in/admin/income?action=add"
+   },
+   {
+    "text": "New Expense Expense",
+    "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+   }
+  ],
+  "hasChart": false
+ }
+}

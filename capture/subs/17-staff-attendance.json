@@ -1,0 +1,22 @@
+{
+ "id": "17-staff-attendance",
+ "label": "Staff attendance",
+ "url": "/admin/staff/attendance",
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/staff/attendance",
+  "title": "Smart Hospital & Research Center",
+  "pageTitle": "Page Not Found",
+  "breadcrumb": "",
+  "headings": [
+   "Page Not Found"
+  ],
+  "forms": [],
+  "tables": [],
+  "tabs": [],
+  "sections": [],
+  "buttons": [],
+  "anchors": []
+ },
+ "file": "17-staff-attendance.jpg"
+}

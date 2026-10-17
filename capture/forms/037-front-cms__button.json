@@ -1,0 +1,395 @@
+{
+ "pageId": "037-front-cms",
+ "pageLabel": "Front CMS",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/front/page",
+ "from": "https://demo.smart-hospital.in/admin/front/page",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/front/page",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Page List",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Page List",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 16,
+    "columns": [
+     "Title",
+     "URL",
+     "Page Type",
+     "Action"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Page List Add Page Media Manager Menus"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Add Page",
+    "href": "#",
+    "target": ""
+   },
+   {
+    "text": "Media Manager",
+    "href": "https://demo.smart-hospital.in/admin/front/media",
+    "target": ""
+   },
+   {
+    "text": "Menus",
+    "href": "https://demo.smart-hospital.in/admin/front/menus",
+    "target": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Add Page",
+    "h": "#"
+   },
+   {
+    "t": "Add Event",
+    "h": "https://demo.smart-hospital.in/admin/front/events"
+   },
+   {
+    "t": "Add Gallery",
+    "h": "https://demo.smart-hospital.in/admin/front/gallery"
+   },
+   {
+    "t": "Add News",
+    "h": "https://demo.smart-hospital.in/admin/front/notice"
+   },
+   {
+    "t": "Media Manager",
+    "h": "https://demo.smart-hospital.in/admin/front/media"
+   },
+   {
+    "t": "Menus",
+    "h": "https://demo.smart-hospital.in/admin/front/menus"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Home",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/home",
+    "h": "https://demo.smart-hospital.in/page/home"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Complain",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/comp",
+    "h": "https://demo.smart-hospital.in/page/complain"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "404 page",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/404-",
+    "h": "https://demo.smart-hospital.in/page/404-page"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Contact us",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/cont",
+    "h": "https://demo.smart-hospital.in/page/contact-us"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Vision and Mission",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/visi",
+    "h": "https://demo.smart-hospital.in/page/vision-and-mission"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "faq",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/faq",
+    "h": "https://demo.smart-hospital.in/page/faq"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "About Hospitals",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/abou",
+    "h": "https://demo.smart-hospital.in/page/about-hospitals"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Meet Our Doctors",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/meet",
+    "h": "https://demo.smart-hospital.in/page/meet-our-doctors"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "testimonials",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/test",
+    "h": "https://demo.smart-hospital.in/page/testimonials"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Departments",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/depa",
+    "h": "https://demo.smart-hospital.in/page/departments"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Events",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/even",
+    "h": "https://demo.smart-hospital.in/page/events"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Gallery",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/gall",
+    "h": "https://demo.smart-hospital.in/page/gallery"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Events1",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/even",
+    "h": "https://demo.smart-hospital.in/page/events1"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "World Health Day",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/worl",
+    "h": "https://demo.smart-hospital.in/page/world-health-day"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "World Health Day",
+    "h": "#"
+   },
+   {
+    "t": "https://demo.smart-hospital.in/page/worl",
+    "h": "https://demo.smart-hospital.in/page/world-health-day-1"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "037-front-cms__button.jpg"
+}

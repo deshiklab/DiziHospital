@@ -1,0 +1,215 @@
+{
+ "pageId": "070-setup-zoom-setting",
+ "pageLabel": "Setup › Zoom Setting",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/zoom_conference",
+ "from": "https://demo.smart-hospital.in/admin/zoom_conference",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/zoom_conference",
+  "title": "Email Config List · Smart Hospital",
+  "pageTitle": "Settings",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Settings",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/zoom_conference",
+    "method": "post",
+    "name": "employeeform",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Zoom Api Key",
+      "name": "zoom_api_key",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Zoom Api Secret",
+      "name": "zoom_api_secret",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Disabled",
+      "name": "use_doctor_api",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Disabled",
+      "name": "use_doctor_api",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Disabled",
+      "name": "use_zoom_app",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Disabled",
+      "name": "use_zoom_app",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Default OPD Duration (In Minutes)",
+      "name": "opd_duration",
+      "type": "number",
+      "required": false
+     },
+     {
+      "label": "Default IPD Duration (In Minutes)",
+      "name": "ipd_duration",
+      "type": "number",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [],
+  "tabs": [],
+  "sections": [
+   "Settings"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Get Access Token",
+    "href": "https://zoom.us/oauth/authorize?response_type=code&client_id=XLOY2Kg_QyWgyhzxbT4Zig&redirect_uri=https://demo.smart-hospital.in/admin/zoom_conference/generatetoken",
+    "target": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Click here →",
+    "h": "https://marketplace.zoom.us/"
+   },
+   {
+    "t": "Get Access Token",
+    "h": "https://zoom.us/oauth/authorize?response_type=code&client_id=XLOY2Kg_QyWgyhzxbT4Zig&redirect_uri=https://demo.smart-hospital.in/admin/zoom_conference/generatetoken"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "070-setup-zoom-setting__button.jpg"
+}

@@ -1,0 +1,345 @@
+{
+ "pageId": "062-setup-pharmacy",
+ "pageLabel": "Setup › Pharmacy",
+ "trigger": {
+  "label": "Add Medicine Category",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 1
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/medicinecategory/medicine",
+ "from": "https://demo.smart-hospital.in/admin/medicinecategory/medicine",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/medicinecategory/medicine",
+  "title": "Add Medicine Category · Smart Hospital",
+  "pageTitle": "Medicine Category List",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Medicine Category List",
+   "Add Medicine Category",
+   "Edit Medicine Category",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/medicinecategory/add",
+    "method": "post",
+    "name": "employeeform",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Category Name",
+      "name": "medicine_category",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/medicinecategory/add",
+    "method": "post",
+    "name": "employeeform",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Category Name",
+      "name": "medicine_category",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 14,
+    "columns": [
+     "Category Name",
+     "Action"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Medicine Category List Add Medicine Category"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Add Medicine Category",
+    "href": "",
+    "target": "#myModal"
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Medicine Category",
+    "h": "https://demo.smart-hospital.in/admin/medicinecategory/medicine"
+   },
+   {
+    "t": "Supplier",
+    "h": "https://demo.smart-hospital.in/admin/medicinecategory/supplier"
+   },
+   {
+    "t": "Medicine Dosage",
+    "h": "https://demo.smart-hospital.in/admin/medicinedosage"
+   },
+   {
+    "t": "Dose Interval",
+    "h": "https://demo.smart-hospital.in/admin/medicinedosage/interval"
+   },
+   {
+    "t": "Dose Duration",
+    "h": "https://demo.smart-hospital.in/admin/medicinedosage/duration"
+   },
+   {
+    "t": "Unit",
+    "h": "https://demo.smart-hospital.in/admin/medicineunit"
+   },
+   {
+    "t": "Company",
+    "h": "https://demo.smart-hospital.in/admin/medicineunit/medicine_company"
+   },
+   {
+    "t": "Medicine Group",
+    "h": "https://demo.smart-hospital.in/admin/medicineunit/medicine_group"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Add Medicine Category",
+  "bodyText": "Add Medicine Category Medicine Category Category Name * Cancel Save",
+  "required": 0,
+  "fieldCount": 1,
+  "errors": []
+ },
+ "file": "062-setup-pharmacy__add-medicine-category.jpg"
+}

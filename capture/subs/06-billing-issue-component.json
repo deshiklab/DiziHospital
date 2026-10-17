@@ -1,0 +1,744 @@
+{
+ "id": "06-billing-issue-component",
+ "label": "Billing - Issue Component",
+ "url": "/admin/bill/issuecomponent",
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/bill/issuecomponent",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Blood Components Issue Billing",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Blood Components Issue Billing",
+   "Payments",
+   "Issue Component",
+   "Edit Issue Component",
+   "Blood Component Issue Details",
+   "Bill Details",
+   "Add Patient",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formadd",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Apply TPA",
+      "name": "patient_id",
+      "type": "select",
+      "required": false,
+      "options": []
+     },
+     {
+      "label": "Case ID",
+      "name": "case_reference_id",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Apply TPA",
+      "name": "is_tpa",
+      "type": "checkbox",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formedit",
+    "visible": false,
+    "fields": [
+     {
+      "label": "patient_id",
+      "name": "patient_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select Patient",
+       "AADI ( )",
+       "Aadi jain ( )",
+       "Aadish Mody ( )",
+       "AANU ( )",
+       "AANU ( )",
+       "Aaron Hardie ( )",
+       "Adam Battye ( )",
+       "Adam Driscoll ( )",
+       "Aditya Mannan ( )",
+       "Alfred ( )",
+       "Alisha Knowles ( )",
+       "AMAN ( )",
+       "Aman Barma ( )",
+       "AMIT ( )",
+       "Amit Deshpande ( )",
+       "ANANTA ( )",
+       "Angela Clark ( )",
+       "Ankit Singh ( )",
+       "ANU ( )",
+       "Anushka sanjeewani ( )",
+       "ARJUN ( )",
+       "ARMAAN ( )",
+       "Arpit ( )",
+       "Arthur Wood ( )",
+       "Ashok ( )",
+       "Ashok ( )",
+       "Ashton Swanton ( )",
+       "Ashutosh pandey ( )",
+       "ATUL ( )"
+      ]
+     },
+     {
+      "label": "Issue Date *",
+      "name": "date_of_issue",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Hospital Doctor",
+      "name": "consultant_doctor",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh",
+       "Reyan Jain",
+       "Sansa Gomez",
+       "Sonia Bush"
+      ]
+     },
+     {
+      "label": "Doctor Name *",
+      "name": "doctor",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Technician",
+      "name": "technician",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Donor Name *",
+      "name": "donor_name",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select Donor"
+      ]
+     },
+     {
+      "label": "Blood Group",
+      "name": "blood_group",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Lot",
+      "name": "lot",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Bag",
+      "name": "bag_no",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Amount ($) *",
+      "name": "amount",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Remarks",
+      "name": "remark",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formaddpa",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Name *",
+      "name": "name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Guardian Name",
+      "name": "guardian_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Phone",
+      "name": "mobileno",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Gender",
+      "name": "gender",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Male",
+       "Female"
+      ]
+     },
+     {
+      "label": "Date Of Birth",
+      "name": "dob",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Year",
+      "name": "age[year]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Month",
+      "name": "age[month]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Day",
+      "name": "age[day]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Blood Group",
+      "name": "blood_group",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "B+",
+       "A+",
+       "AB-",
+       "AB+",
+       "O-",
+       "A-",
+       "B-",
+       "O+"
+      ]
+     },
+     {
+      "label": "Marital Status",
+      "name": "marital_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Single",
+       "Married",
+       "Widowed",
+       "Separated",
+       "Not Specified"
+      ]
+     },
+     {
+      "label": "Email",
+      "name": "email",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Address",
+      "name": "address",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "National Identification Number",
+      "name": "identification_number",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "file",
+      "name": "file",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Remarks",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Any Known Allergies",
+      "name": "known_allergies",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "TPA",
+      "name": "organisation_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "TPA ID",
+      "name": "insurance_id",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "TPA Validity",
+      "name": "validity",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "Alternate Number",
+      "name": "custom_fields[patient][3]",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 68,
+    "columns": [
+     "Bill No",
+     "Case ID",
+     "Issue Date",
+     "Generated By",
+     "Received To",
+     "Blood Group",
+     "Component",
+     "Gender",
+     "Donor Name",
+     "Bags",
+     "Blood Group",
+     "Amount ($)",
+     "Discount ($)",
+     "Tax ($)",
+     "Net Amount ($)",
+     "Paid Amount ($)",
+     "Balance Amount ($)"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Blood Components Issue Billing Issue Component"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Issue Component",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   }
+  ]
+ },
+ "file": "06-billing-issue-component.jpg"
+}

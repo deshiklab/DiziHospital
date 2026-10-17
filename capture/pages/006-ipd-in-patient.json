@@ -1,0 +1,921 @@
+{
+ "id": "006-ipd-in-patient",
+ "label": "IPD - In Patient",
+ "url": "https://demo.smart-hospital.in/admin/patient/ipdsearch",
+ "section": "CORE OPERATIONS",
+ "parent": "",
+ "ok": true,
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/patient/ipdsearch",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "IPD Patient",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "IPD Patient",
+   "Add Patient",
+   "Patient Information",
+   "Patient Information",
+   "Add Patient",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/patient/add_inpatient",
+    "method": "post",
+    "name": "formadd",
+    "fields": [
+     {
+      "label": "",
+      "name": "",
+      "type": "select",
+      "required": false,
+      "options": []
+     },
+     {
+      "label": "Symptoms Type",
+      "name": "symptoms_type",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Eating or weight problems",
+       "Emotional problems",
+       "Muscle or joint problems",
+       "Skin problems",
+       "Bladder problems",
+       "Stomach problems",
+       "Lung problems"
+      ]
+     },
+     {
+      "label": "Select",
+      "name": "",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Symptoms Description",
+      "name": "symptoms",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "ICD-10 Groups",
+      "name": "",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select Group",
+       "Infectious & Parasitic Diseases",
+       "Infectious Diseases",
+       "Mental & Behavioural Disorders",
+       "Neoplasms",
+       "Viral Diseases"
+      ]
+     },
+     {
+      "label": "ICD-10 Diagnosis",
+      "name": "icd_code_ids[]",
+      "type": "select",
+      "required": false,
+      "options": [
+       "[A09] Infectious Gastroenteritis",
+       "[A15.0] Pulmonary Tuberculosis",
+       "[B34.9] Viral Infection, Unspecified",
+       "[C50.9] Malignant Neoplasm of Breast",
+       "[F41.1] Generalized Anxiety Disorder"
+      ]
+     },
+     {
+      "label": "Note",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Previous Medical Issue",
+      "name": "custom_fields[ipd][6]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Admission Date *",
+      "name": "appointment_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Case",
+      "name": "case",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "TPA",
+      "name": "showorganisation_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Casualty",
+      "name": "casualty",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Yes",
+       "No"
+      ]
+     },
+     {
+      "label": "Old Patient",
+      "name": "old_patient",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Yes",
+       "No"
+      ]
+     },
+     {
+      "label": "Credit Limit ($) *",
+      "name": "credit_limit",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Reference",
+      "name": "refference",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Consultant Doctor *",
+      "name": "consultant_doctor",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Sansa Gomez (9008)",
+       "Sonia Bush (9002)"
+      ]
+     },
+     {
+      "label": "Bed Group",
+      "name": "bed_group_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "VIP Ward - Ground Floor",
+       "Private Ward - 3rd Floor",
+       "General Ward Male - 3rd Floor",
+       "ICU - 2nd Floor",
+       "NICU - 2nd Floor",
+       "AC (Normal) - 1st Floor",
+       "Non AC - 4th Floor"
+      ]
+     },
+     {
+      "label": "Bed Number *",
+      "name": "bed_no",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Live Consultation",
+      "name": "live_consult",
+      "type": "select",
+      "required": false,
+      "options": [
+       "No",
+       "Yes"
+      ]
+     },
+     {
+      "label": "Is For Antenatal",
+      "name": "is_for_antenatal",
+      "type": "checkbox",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formrevisit",
+    "fields": [
+     {
+      "label": "Patient ID",
+      "name": "patient_id",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Name",
+      "name": "name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Phone",
+      "name": "contact",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Appointment Date",
+      "name": "appointment_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "revisit_case",
+      "name": "revisit_case",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "casualty",
+      "name": "casualty",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Yes",
+       "No"
+      ]
+     },
+     {
+      "label": "old_patient",
+      "name": "old_patient",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Yes",
+       "No"
+      ]
+     },
+     {
+      "label": "Symptoms",
+      "name": "symptoms",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Any Known Allergies",
+      "name": "known_allergies",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Address",
+      "name": "address",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Note",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "refference",
+      "name": "refference",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "consultant_doctor",
+      "name": "consultant_doctor",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh",
+       "Reyan Jain",
+       "Sansa Gomez",
+       "Sonia Bush"
+      ]
+     },
+     {
+      "label": "Amount",
+      "name": "amount",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Tax",
+      "name": "tax",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Payment Mode",
+      "name": "payment_mode",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Cash",
+       "Cheque",
+       "Transfer to Bank Account",
+       "UPI",
+       "Online",
+       "Other"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formedit",
+    "fields": [
+     {
+      "label": "Name",
+      "name": "name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Guardian Name",
+      "name": "guardian_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Gender",
+      "name": "gender",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Male",
+       "Female"
+      ]
+     },
+     {
+      "label": "Marital Status",
+      "name": "marital_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Single",
+       "Married",
+       "Widowed",
+       "Separated",
+       "Not Specified"
+      ]
+     },
+     {
+      "label": "Phone",
+      "name": "contact",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "file",
+      "name": "file",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Symptoms",
+      "name": "email",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Blood Group",
+      "name": "blood_group",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "B+",
+       "A+",
+       "AB-",
+       "AB+",
+       "O-",
+       "A-",
+       "B-",
+       "O+"
+      ]
+     },
+     {
+      "label": "Year",
+      "name": "age",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Month",
+      "name": "month",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Height",
+      "name": "height",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Weight",
+      "name": "weight",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "organisation",
+      "name": "organisation",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Medi life2",
+       "Medicare TPA Services (India)",
+       "Family Health Plan (FHPL)",
+       "Raksha Health Insurance",
+       "Paramount Health Services",
+       "LIFE MEDICAL INSURANCE",
+       "Medi Assist",
+       "Health Life Insurance",
+       "Star Health Insurance",
+       "IDBI Federal",
+       "CGHS"
+      ]
+     },
+     {
+      "label": "credit_limit",
+      "name": "credit_limit",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formaddpa",
+    "fields": [
+     {
+      "label": "Name *",
+      "name": "name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Guardian Name",
+      "name": "guardian_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Phone",
+      "name": "mobileno",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Gender",
+      "name": "gender",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Male",
+       "Female"
+      ]
+     },
+     {
+      "label": "Date Of Birth",
+      "name": "dob",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Year",
+      "name": "age[year]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Month",
+      "name": "age[month]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Day",
+      "name": "age[day]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Blood Group",
+      "name": "blood_group",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "B+",
+       "A+",
+       "AB-",
+       "AB+",
+       "O-",
+       "A-",
+       "B-",
+       "O+"
+      ]
+     },
+     {
+      "label": "Marital Status",
+      "name": "marital_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Single",
+       "Married",
+       "Widowed",
+       "Separated",
+       "Not Specified"
+      ]
+     },
+     {
+      "label": "Email",
+      "name": "email",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Address",
+      "name": "address",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "National Identification Number",
+      "name": "identification_number",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "file",
+      "name": "file",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Remarks",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Any Known Allergies",
+      "name": "known_allergies",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "TPA",
+      "name": "organisation_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Medi life2",
+       "Medicare TPA Services (India)",
+       "Family Health Plan (FHPL)",
+       "Raksha Health Insurance",
+       "Paramount Health Services",
+       "LIFE MEDICAL INSURANCE",
+       "Medi Assist",
+       "Health Life Insurance",
+       "Star Health Insurance",
+       "IDBI Federal",
+       "CGHS"
+      ]
+     },
+     {
+      "label": "TPA ID",
+      "name": "insurance_id",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "TPA Validity",
+      "name": "validity",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "Alternate Number",
+      "name": "custom_fields[patient][3]",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "cls": "table table-striped table-bordered table-hover ajaxlist dataTable no-footer",
+    "rows": 40,
+    "columns": [
+     "IPD No",
+     "Case ID",
+     "Name",
+     "Gender",
+     "Phone",
+     "Generated By",
+     "Consultant Doctor",
+     "Bed",
+     "Is Antenatal",
+     "Previous Medical Issue",
+     "Credit Limit ($)"
+    ],
+    "sample": [
+     [
+      "IPDN138",
+      "7862",
+      "AANU (1234)",
+      "Female",
+      "",
+      "Super Admin (9001)",
+      "Reyan Jain (9011)",
+      "SF - 140-ICU-2nd Floor",
+      "No",
+      "",
+      "20000.00"
+     ],
+     [
+      "IPDN137",
+      "7816",
+      "ARJUN (1231)",
+      "Female",
+      "673775678578",
+      "Super Admin (9001)",
+      "Amit Singh (9009)",
+      "TF - 143-General Ward Male-3rd Floor",
+      "No",
+      "",
+      "20000.00"
+     ]
+    ]
+   }
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Add Patient",
+    "href": "",
+    "target": "",
+    "onclick": "holdModal('myModal')"
+   },
+   {
+    "text": "Discharged Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/discharged_patients",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "New Patient",
+    "href": "",
+    "target": "",
+    "onclick": "holdModal('myModalpa')"
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   }
+  ],
+  "tabs": [],
+  "filters": [
+   "Filter Menu",
+   "Search By Patient Name",
+   "Type to searchâ€¦",
+   "DataTables_Table_0_length",
+   "symptoms_type",
+   "icd_code_ids[]",
+   "custom_fields[ipd][6]",
+   "appointment_date",
+   "case",
+   "showorganisation_name",
+   "casualty",
+   "old_patient",
+   "credit_limit",
+   "refference",
+   "consultant_doctor",
+   "bed_group_id",
+   "bed_no",
+   "live_consult",
+   "patient_id",
+   "name",
+   "contact",
+   "appointment_date",
+   "revisit_case",
+   "casualty",
+   "old_patient"
+  ],
+  "sections": [
+   "IPD Patient Add Patient Discharged Patient"
+  ],
+  "stats": [],
+  "addLinks": [
+   {
+    "text": "Add Patient Patient List",
+    "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+   },
+   {
+    "text": "New OPD Patient OPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+   },
+   {
+    "text": "New IPD Patient IPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+   },
+   {
+    "text": "New Appointment Appointment",
+    "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+   },
+   {
+    "text": "New Bill Bill",
+    "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+   },
+   {
+    "text": "New Pharmacy Bill Pharmacy Bill",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+   },
+   {
+    "text": "New Pathology Test Pathology Test",
+    "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Radiology Test Radiology Test",
+    "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Blood Issue Blood Issue",
+    "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+   },
+   {
+    "text": "New Ambulance Call Ambulance Call",
+    "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+   },
+   {
+    "text": "New Visitor Visitor",
+    "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+   },
+   {
+    "text": "New Income Income",
+    "href": "https://demo.smart-hospital.in/admin/income?action=add"
+   },
+   {
+    "text": "New Expense Expense",
+    "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+   }
+  ],
+  "hasChart": false
+ }
+}

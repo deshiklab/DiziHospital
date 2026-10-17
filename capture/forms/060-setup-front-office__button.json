@@ -1,0 +1,267 @@
+{
+ "pageId": "060-setup-front-office",
+ "pageLabel": "Setup › Front Office",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/visitorspurpose",
+ "from": "https://demo.smart-hospital.in/admin/visitorspurpose",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/visitorspurpose",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Purpose List",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Purpose List",
+   "Add Purpose",
+   "Edit Purpose",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/visitorspurpose/add_multiple_purpose",
+    "method": "post",
+    "name": "form_add_multiple",
+    "visible": false,
+    "fields": [
+     {
+      "label": "visitors_purpose_1",
+      "name": "visitors_purpose_1",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "description_1",
+      "name": "description_1",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/visitorspurpose/edit",
+    "method": "post",
+    "name": "employeeform",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Purpose",
+      "name": "visitors_purpose",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 4,
+    "columns": [
+     "Purpose",
+     "Description",
+     "Action"
+    ]
+   },
+   {
+    "id": "tableID_vitals",
+    "rows": 2,
+    "columns": [
+     "Purpose *",
+     "Description",
+     ""
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Purpose List Add Purpose"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Add Purpose",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Purpose",
+    "h": "https://demo.smart-hospital.in/admin/visitorspurpose"
+   },
+   {
+    "t": "Complain Type",
+    "h": "https://demo.smart-hospital.in/admin/complainttype"
+   },
+   {
+    "t": "Source",
+    "h": "https://demo.smart-hospital.in/admin/source"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "060-setup-front-office__button.jpg"
+}

@@ -1,0 +1,549 @@
+{
+ "pageId": "057-setup-hospital-charges",
+ "pageLabel": "Setup › Hospital Charges",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/charges",
+ "from": "https://demo.smart-hospital.in/admin/charges",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/charges",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Charges Details List",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Charges Details List",
+   "Charges Details",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formadd",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Charge Name",
+      "name": "charge_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Charge Type",
+      "name": "charge_type",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Appointment",
+       "OPD",
+       "IPD",
+       "Pathology",
+       "Radiology",
+       "Blood Bank",
+       "Ambulance",
+       "Procedures",
+       "Investigations",
+       "Supplier",
+       "Operations",
+       "Others"
+      ]
+     },
+     {
+      "label": "Charge Category",
+      "name": "charge_category",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Unit Type",
+      "name": "unit_type",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "(ML)",
+       "Litter",
+       "(nm)",
+       "per day",
+       "Hour",
+       "Insurance",
+       "g/dl",
+       "MG",
+       "per km",
+       "per hour",
+       "Digital mammography",
+       "PET/CT scan",
+       "Bone density scan",
+       "10-21 mm Hg"
+      ]
+     },
+     {
+      "label": "Tax Category",
+      "name": "taxcategory",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Blood Module",
+       "OPD Tax",
+       "IPD Tax",
+       "Operation Charges",
+       "Pathology Tax",
+       "Radiology Tax",
+       "Ambulance Tax",
+       "Procedures",
+       "Investigation Tax",
+       "Supplier",
+       "Others Tax"
+      ]
+     },
+     {
+      "label": "tax_percentage",
+      "name": "tax_percentage",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Standard Charge ($)",
+      "name": "standard_charge",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Description",
+      "name": "description",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "schedule_charge_14",
+      "name": "schedule_charge_14",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "schedule_charge_13",
+      "name": "schedule_charge_13",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "schedule_charge_12",
+      "name": "schedule_charge_12",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "schedule_charge_8",
+      "name": "schedule_charge_8",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "schedule_charge_7",
+      "name": "schedule_charge_7",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "schedule_charge_6",
+      "name": "schedule_charge_6",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "schedule_charge_5",
+      "name": "schedule_charge_5",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "schedule_charge_4",
+      "name": "schedule_charge_4",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "schedule_charge_3",
+      "name": "schedule_charge_3",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "schedule_charge_2",
+      "name": "schedule_charge_2",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "schedule_charge_1",
+      "name": "schedule_charge_1",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 22,
+    "columns": [
+     "Name",
+     "Charge Category",
+     "Charge Type",
+     "Unit",
+     "Tax(%)",
+     "Standard Charge ($)",
+     "Action"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 11,
+    "columns": []
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Charges Details List Add Charges"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Add Charges",
+    "href": "",
+    "target": "#myModal"
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Charges",
+    "h": "https://demo.smart-hospital.in/admin/charges"
+   },
+   {
+    "t": "Charge Category",
+    "h": "https://demo.smart-hospital.in/admin/chargecategory/charges"
+   },
+   {
+    "t": "Charge Type",
+    "h": "https://demo.smart-hospital.in/admin/chargetype"
+   },
+   {
+    "t": "Tax Category",
+    "h": "https://demo.smart-hospital.in/admin/taxcategory"
+   },
+   {
+    "t": "Unit Type",
+    "h": "https://demo.smart-hospital.in/admin/unittype"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "057-setup-hospital-charges__button.jpg"
+}

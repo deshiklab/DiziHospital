@@ -1,0 +1,312 @@
+{
+ "id": "022-annual-calendar",
+ "label": "Annual Calendar",
+ "url": "https://demo.smart-hospital.in/admin/holiday/index",
+ "section": "ADMINISTRATION",
+ "parent": "",
+ "ok": true,
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/holiday/index",
+  "title": "Select Criteria · Smart Hospital",
+  "pageTitle": "Annual Calendar",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Annual Calendar",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/holiday",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "Type *",
+      "name": "search_holiday_type",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Holiday",
+       "Activity",
+       "Vacation"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "add_holiday",
+    "fields": [
+     {
+      "label": "Type *",
+      "name": "holiday_type",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Type *",
+      "name": "holiday_type",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Type *",
+      "name": "holiday_type",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "From Date *",
+      "name": "from_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "To Date *",
+      "name": "to_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Description *",
+      "name": "description",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "front_site",
+      "name": "front_site",
+      "type": "checkbox",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "cls": "table table-hover table-striped table-bordered example dataTable no-footer",
+    "rows": 50,
+    "columns": [
+     "Date",
+     "Type",
+     "Description",
+     "Created By",
+     "Front Site",
+     "Action"
+    ],
+    "sample": [
+     [
+      "15/08/2025",
+      "Activity",
+      "Happy Independence Day! Let's celebrate ",
+      "Super Admin (9001)",
+      "Yes",
+      ""
+     ],
+     [
+      "14/09/2025",
+      "Activity",
+      "The month of September is NICU Awareness",
+      "Super Admin (9001)",
+      "Yes",
+      ""
+     ]
+    ]
+   }
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Add",
+    "href": "",
+    "target": "",
+    "onclick": "add_holiday()"
+   },
+   {
+    "text": "Search",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": "refresh()"
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   }
+  ],
+  "tabs": [],
+  "filters": [
+   "Filter Menu",
+   "Search By Patient Name",
+   "Type to searchâ€¦",
+   "search_holiday_type",
+   "DataTables_Table_0_length",
+   "from_date",
+   "to_date",
+   "envato_market_purchase_code",
+   "email",
+   "app-envato_market_purchase_code",
+   "app-email"
+  ],
+  "sections": [
+   "Annual Calendar Add"
+  ],
+  "stats": [],
+  "addLinks": [
+   {
+    "text": "Add Patient Patient List",
+    "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+   },
+   {
+    "text": "New OPD Patient OPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+   },
+   {
+    "text": "New IPD Patient IPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+   },
+   {
+    "text": "New Appointment Appointment",
+    "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+   },
+   {
+    "text": "New Bill Bill",
+    "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+   },
+   {
+    "text": "New Pharmacy Bill Pharmacy Bill",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+   },
+   {
+    "text": "New Pathology Test Pathology Test",
+    "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Radiology Test Radiology Test",
+    "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Blood Issue Blood Issue",
+    "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+   },
+   {
+    "text": "New Ambulance Call Ambulance Call",
+    "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+   },
+   {
+    "text": "New Visitor Visitor",
+    "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+   },
+   {
+    "text": "New Income Income",
+    "href": "https://demo.smart-hospital.in/admin/income?action=add"
+   },
+   {
+    "text": "New Expense Expense",
+    "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+   }
+  ],
+  "hasChart": false
+ }
+}

@@ -1,0 +1,481 @@
+{
+ "pageId": "029-messaging",
+ "pageLabel": "Messaging",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/notification",
+ "from": "https://demo.smart-hospital.in/admin/notification",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/notification",
+  "title": "Notifications · Smart Hospital",
+  "pageTitle": "Notice Board",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Notice Board",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [],
+  "tabs": [],
+  "sections": [
+   "Notice Board Post New Message Send SMS Send Email Send Credential"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Post New Message",
+    "href": "https://demo.smart-hospital.in/admin/notification/add",
+    "target": ""
+   },
+   {
+    "text": "Send SMS",
+    "href": "https://demo.smart-hospital.in/admin/mailsms/compose",
+    "target": ""
+   },
+   {
+    "text": "Send Email",
+    "href": "https://demo.smart-hospital.in/admin/mailsms/composemail",
+    "target": ""
+   },
+   {
+    "text": "Send Credential",
+    "href": "https://demo.smart-hospital.in/admin/bulkmessage",
+    "target": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Post New Message",
+    "h": "https://demo.smart-hospital.in/admin/notification/add"
+   },
+   {
+    "t": "Send SMS",
+    "h": "https://demo.smart-hospital.in/admin/mailsms/compose"
+   },
+   {
+    "t": "Send Email",
+    "h": "https://demo.smart-hospital.in/admin/mailsms/composemail"
+   },
+   {
+    "t": "Send Credential",
+    "h": "https://demo.smart-hospital.in/admin/bulkmessage"
+   },
+   {
+    "t": "Doctor's Meeting",
+    "h": "#collapse289"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/289"
+   },
+   {
+    "t": "The Blood Donation camp",
+    "h": "#collapse290"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/290"
+   },
+   {
+    "t": "Free Dental Check Up & Awareness Camp",
+    "h": "#collapse291"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/291"
+   },
+   {
+    "t": "Blood Pressure Treatment Campaign",
+    "h": "#collapse292"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/292"
+   },
+   {
+    "t": "Doctors Meeting",
+    "h": "#collapse293"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/293"
+   },
+   {
+    "t": "Eye Check-up Camp",
+    "h": "#collapse294"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/294"
+   },
+   {
+    "t": "Children's Eye Health and Safety Awarene",
+    "h": "#collapse295"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/295"
+   },
+   {
+    "t": "Free Dental Treatment",
+    "h": "#collapse296"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/296"
+   },
+   {
+    "t": "Children’s eye health and safety program",
+    "h": "#collapse297"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/297"
+   },
+   {
+    "t": "The Blood Donation camp",
+    "h": "#collapse298"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/298"
+   },
+   {
+    "t": "Doctor's Meeting",
+    "h": "#collapse299"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/299"
+   },
+   {
+    "t": "Staff Notice ..!!!!!!",
+    "h": "#collapse300"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/300"
+   },
+   {
+    "t": "General Message",
+    "h": "#collapse301"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/301"
+   },
+   {
+    "t": "Doctor Schedule Update",
+    "h": "#collapse302"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/302"
+   },
+   {
+    "t": "Staff Instruction",
+    "h": "#collapse303"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/303"
+   },
+   {
+    "t": "Appointment Reminder",
+    "h": "#collapse304"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/304"
+   },
+   {
+    "t": "Appointment Reminder",
+    "h": "#collapse305"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/305"
+   },
+   {
+    "t": "Appointment Reminder",
+    "h": "https://demo.smart-hospital.in/admin/notification#collapse304"
+   },
+   {
+    "t": "Hospitals celebrate Children's Day",
+    "h": "#collapse306"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/306"
+   },
+   {
+    "t": "Free Dental Check Up & Awareness Camp",
+    "h": "#collapse307"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/307"
+   },
+   {
+    "t": "Eye Check-up Camp",
+    "h": "#collapse308"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/308"
+   },
+   {
+    "t": "Doctor Schedule Update",
+    "h": "#collapse309"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/309"
+   },
+   {
+    "t": "Free Dental Check Up & Awareness Camp",
+    "h": "#collapse310"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/310"
+   },
+   {
+    "t": "Free Dental Check Up & Awareness Camp",
+    "h": "https://demo.smart-hospital.in/admin/notification#collapse291"
+   },
+   {
+    "t": "Staff Instraction",
+    "h": "#collapse311"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/311"
+   },
+   {
+    "t": "Free Dental Check Up & Awareness Camp",
+    "h": "#collapse312"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/312"
+   },
+   {
+    "t": "Free Dental Check Up & Awareness Camp",
+    "h": "https://demo.smart-hospital.in/admin/notification#collapse291"
+   },
+   {
+    "t": "Hospitals celebrate Children's Day",
+    "h": "#collapse313"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/313"
+   },
+   {
+    "t": "Hospitals celebrate Children's Day",
+    "h": "https://demo.smart-hospital.in/admin/notification#collapse288"
+   },
+   {
+    "t": "Blood Pressure Treatment Campaign",
+    "h": "#collapse314"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/314"
+   },
+   {
+    "t": "Blood Pressure Treatment Campaign",
+    "h": "https://demo.smart-hospital.in/admin/notification#collapse292"
+   },
+   {
+    "t": "Children’s eye health and safety program",
+    "h": "#collapse315"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/315"
+   },
+   {
+    "t": "Children’s eye health and safety program",
+    "h": "https://demo.smart-hospital.in/admin/notification#collapse297"
+   },
+   {
+    "t": "Doctor Schedule Update",
+    "h": "#collapse316"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/316"
+   },
+   {
+    "t": "Doctor Schedule Update",
+    "h": "https://demo.smart-hospital.in/admin/notification#collapse302"
+   },
+   {
+    "t": "Appointment Reminder",
+    "h": "#collapse317"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/317"
+   },
+   {
+    "t": "Appointment Reminder",
+    "h": "https://demo.smart-hospital.in/admin/notification#collapse304"
+   },
+   {
+    "t": "Staff Instraction",
+    "h": "#collapse318"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/318"
+   },
+   {
+    "t": "Staff Instraction",
+    "h": "https://demo.smart-hospital.in/admin/notification#collapse311"
+   },
+   {
+    "t": "Hospitals celebrate Children's Day",
+    "h": "#collapse319"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/319"
+   },
+   {
+    "t": "Hospitals celebrate Children's Day",
+    "h": "https://demo.smart-hospital.in/admin/notification#collapse288"
+   },
+   {
+    "t": "The Blood Donation camp",
+    "h": "#collapse320"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/320"
+   },
+   {
+    "t": "Children's Eye Health and Safety Awarene",
+    "h": "#collapse321"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/notification/edit/321"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "029-messaging__button.jpg"
+}

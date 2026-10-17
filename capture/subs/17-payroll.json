@@ -1,0 +1,226 @@
+{
+ "id": "17-payroll",
+ "label": "Payroll",
+ "url": "/admin/payroll",
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/payroll",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Payroll",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Payroll",
+   "Details",
+   "Proceed To Pay",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/payroll",
+    "method": "post",
+    "name": "form1",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Role",
+      "name": "role",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Admin",
+       "Accountant",
+       "Doctor",
+       "Pharmacist",
+       "Pathologist",
+       "Radiologist",
+       "Super Admin",
+       "Receptionist",
+       "Nurse"
+      ]
+     },
+     {
+      "label": "Month",
+      "name": "month",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "January",
+       "February",
+       "March",
+       "April",
+       "May",
+       "June",
+       "July",
+       "August",
+       "September",
+       "October",
+       "November",
+       "December"
+      ]
+     },
+     {
+      "label": "Year",
+      "name": "year",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "2025",
+       "2026"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/payroll/paymentSuccess",
+    "method": "get",
+    "name": "schsetting_form",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Name",
+      "name": "emp_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Payment Amount ($)",
+      "name": "amount",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Month Year",
+      "name": "month",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Payment Mode",
+      "name": "payment_mode",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Cash",
+       "Cheque",
+       "Transfer to Bank Account",
+       "UPI",
+       "Online",
+       "Other"
+      ]
+     },
+     {
+      "label": "Cheque No",
+      "name": "cheque_no",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Cheque Date",
+      "name": "cheque_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "document",
+      "name": "document",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Payment Date",
+      "name": "payment_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Note",
+      "name": "remarks",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [],
+  "tabs": [],
+  "sections": [
+   "Payroll"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Search",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": []
+ },
+ "file": "17-payroll.jpg"
+}

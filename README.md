@@ -1,5 +1,56 @@
 # DiziHospital
 
-This repository's documentation site is generated automatically for GitHub Pages.
+Working repository for **improving the Smart Hospital hospital-management system**.
 
-Trigger: re-run pages workflow (requested by Copilot)
+The starting point is an evidence-based exploration of the product: every screen, every form, all roles and the public
+site were captured from the live demo, documented, and turned into a printable guide. The improvement backlog is the
+agenda for the next phase.
+
+## Deliverables
+
+| Document | What it is |
+|---|---|
+| **[apps/web](apps/web/README.md)** | **Phase 0 application shell** (running): role-aware navigation, ⌘K command palette, global patient search, DataGrid with server-shaped paging and export, patient registration with live duplicate detection, offline/sync states, en/bn and density switches — `npm install && npm run dev` |
+| **[@dizi/contracts](packages/contracts/README.md)** | **The platform API contract** (OpenAPI 3.1): the endpoints the built screens write through, each carrying the offline, authority, idempotency, audit and conflict metadata the sync engine is driven from, the eleven entity policies it shares with `apps/web/lib/sync.ts`, the tunable duplicate rule set behind P0-301, and a guardrail — `npm run contract:check` / `contract:test` — that fails the build when the contract and the client drift apart |
+| **[services/api](services/api/README.md)** | **The cloud tier** (skeleton, P0-207/P0-301): Laravel 13 on PHP 8.4 serving the contract's paths — `GET /health`, the patient register with block-minted MRNs and evidence-carrying duplicate refusals, optimistic-locking conflicts that offer both values instead of merging, idempotent replay of a queued write, and a per-node hash-chained audit ledger. Ten modules, one Postgres schema each, seams bound in one provider; index `Registration` owns `DuplicateRules` and `Audit` owns `Ledger`, while the pending `Billing\Ledger` is named in its README. **PHP runs in GitHub Actions only** — `npm run api:lint` is the local syntax gate and the `ci-api` job is the proof |
+| **[docs/plan/](docs/plan/README.md)** | **Development plan & process** for rebuilding the app with a modern UI/UX — strategy and target architecture (no vendor source: module ownership + data bridge), design system & UX spec (incl. offline states), screen-by-phase map, roadmap & budget, engineering process, data migration & rollout, hybrid LAN/cloud deployment (ADR 0007), legacy integration & vendor exit, and a 30-day kickoff |
+| **[docs/research/](docs/research/README.md)** | Week-1 field templates: infrastructure survey, branch inventory and pilot selection, shadowing notes, baseline task timings, hardware inventory |
+| **[docs/migration/](docs/migration/01-profile.md)** | Migration working files: the module × branch ownership matrix and the data-profile template |
+| **[docs/vendor/requests.md](docs/vendor/requests.md)** | Vendor log: safety fixes to request, and the data-access tracking Phase 0 exit depends on |
+| **[docs/Smart-Hospital-Complete-Guide.pdf](docs/Smart-Hospital-Complete-Guide.pdf)** | The full PDF guide — cover, contents, operator wiki/help handbook, screen-by-screen feature catalogue with screenshots, the improvement backlog, the vendor help-library index and a selection of help articles in full |
+| [docs/FEATURE-CATALOG.md](docs/FEATURE-CATALOG.md) | Markdown feature catalogue: 76 screens, 96 data-entry dialogs, 29 sub-screens, 5 record views (with every tab), all 9 role dashboards — each screen documented with its purpose, grids, filters, actions and form fields, plus a screenshot |
+| [docs/WIKI.md](docs/WIKI.md) | Operator handbook / help wiki — how to run each module day to day (registration, appointment, OPD, IPD, billing, pharmacy, lab, imaging, blood bank, HR, finance, reports, CMS, telemedicine), troubleshooting and glossary |
+| [docs/IMPROVEMENT-BACKLOG.md](docs/IMPROVEMENT-BACKLOG.md) | Findings and a prioritised backlog (P0/P1/P2) with proposals, sizes and a phased sequence — the plan for improving the application |
+| [docs/HELP-LIBRARY.md](docs/HELP-LIBRARY.md) | Index of the **mirrored vendor knowledge base** — every category and article from smart-hospital.in/articles, mirrored offline under `docs/help-library/` with screenshots |
+| [docs/COVERAGE.md](docs/COVERAGE.md) | How the capture was done, what is covered, what is out of scope, and how to refresh it |
+
+## What the application is
+
+**Smart Hospital** (vendor: QDOCS) is a PHP/CodeIgniter + MySQL hospital-management suite covering:
+
+* **Core operations** — dashboard, patient master index, billing, appointments, OPD and IPD clinical desks
+* **Clinical** — pharmacy, pathology, radiology, blood bank, ambulance, front office
+* **Administration** — birth/death registers, multi-branch, HR (staff, QR attendance, duty roster, payroll, leaves), referral, TPA/insurance, income/expense
+* **Tools & content** — surveys, notice board, download centre, inventory, certificates, ID cards, Front CMS website, Zoom telemedicine
+* **Reports & setup** — 17 reports and the master/lookup configuration for every module
+* Roles: Super Admin, Admin, Doctor, Nurse, Pharmacist, Pathologist, Radiologist, Accountant, Receptionist + patient portal
+* Platform features beyond the screens: Two-Factor Authentication (Google Authenticator), event-driven notifications over in-app/e-mail/SMS/**WhatsApp (Meta Cloud API or Twilio)**/mobile push, an Android app, and a patient self-service panel
+
+## Evidence and tooling
+
+```
+capture/      raw evidence from the live demo (screenshots + JSON profiles + logs)
+docs/         deliverables and curated screenshots (docs/assets/screens)
+tools/capture Playwright capture pipeline (recon, crawl, forms, roles, sub-screens)
+tools/docs    document pipeline (catalogue → help-library index → print-ready HTML → PDF)
+.github/workflows  the CI jobs that run capture and build the PDF
+```
+
+The demo host is reachable from GitHub Actions runners but not from every environment, so capture jobs run in CI and
+commit their output back to the branch. See [docs/COVERAGE.md](docs/COVERAGE.md) for the exact commands.
+
+## Next steps
+
+1. Review the backlog and agree on Phase 1 scope (trust & safety items: KPI correctness, currency/locale, safe delete, allergy checks, smarter patient search, security baseline, backups).
+2. Decide the platform direction recorded in `IMPROVEMENT-BACKLOG.md` §E3 (harden the current stack vs. a strangler re-platform) and write it up as a decision record.
+3. Stand up the CI/test harness (backlog E8) so every improvement ships with an automated check and a refreshed screenshot in this repository.

@@ -1,0 +1,156 @@
+{
+ "listUrl": "https://demo.smart-hospital.in/admin/admin/search",
+ "href": "https://demo.smart-hospital.in/admin/patient/import",
+ "id": "patient-master-detail",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/patient/import",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Patient",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Patient",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/patient/import",
+    "method": "post",
+    "name": "employeeform",
+    "visible": true,
+    "fields": [
+     {
+      "label": "blood_group",
+      "name": "blood_group",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "B+",
+       "A+",
+       "AB-",
+       "AB+",
+       "O-",
+       "A-",
+       "B-",
+       "O+"
+      ]
+     },
+     {
+      "label": "file",
+      "name": "file",
+      "type": "file",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "sampledata",
+    "rows": 2,
+    "columns": [
+     "*Patient",
+     "Guardian",
+     "Gender",
+     "Age (Year)",
+     "Age (Month)",
+     "Age (Day)",
+     "Marital Status",
+     "Phone",
+     "Email",
+     "Address",
+     "Remarks",
+     "Known Allergies",
+     "Identification Number",
+     "TPA ID",
+     "TPA Validity"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Patient Download Sample Data"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Download Sample Data",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Import",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Download Sample Data",
+    "h": "https://demo.smart-hospital.in/admin/patient/exportformat"
+   }
+  ]
+ }
+}

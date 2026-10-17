@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    The test run, on SQLite in memory.
+
+    No Postgres service is needed to prove the rules: the module schemas become name prefixes there (see
+    `App\Support\ModuleSchema`), the queries are the same, and a suite that needs a database container is a suite that
+    stops being run. What SQLite cannot prove — row locks, schema grants, the partial index behaviour — is stated in the
+    README as untested here rather than quietly assumed.
+
+    The `DIZI_*` values are the test node's own: a block size of five makes "this node has run out of numbers" a
+    three-line test instead of a five-hundred-row fixture.
+-->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         failOnWarning="true"
+         failOnRisky="true"
+         cacheDirectory=".phpunit.cache">
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
+        <testsuite name="Contract">
+            <directory>tests/Contract</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>app</directory>
+        </include>
+    </source>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_KEY" value="base64:AckfSECXIvnK5r28GVIWUAxmbBSjTsmF/0rqHDHmtHY="/>
+        <env name="APP_DEBUG" value="true"/>
+        <env name="APP_TIMEZONE" value="Asia/Dhaka"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="CACHE_STORE" value="array"/>
+        <env name="DB_CONNECTION" value="sqlite"/>
+        <env name="DB_DATABASE" value=":memory:"/>
+        <env name="MAIL_MAILER" value="array"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="TELESCOPE_ENABLED" value="false"/>
+        <env name="DIZI_NODE_ID" value="node-test"/>
+        <env name="DIZI_BRANCH" value="Main Campus"/>
+        <env name="NODE_SECRET" value="test-node-secret"/>
+        <env name="DIZI_AUTH_DRIVER" value="preview"/>
+        <env name="AUTH_PREVIEW_SECRET" value="test-auth-secret"/>
+        <env name="DIZI_BLOCK_SIZE" value="5"/>
+        <env name="DIZI_BLOCK_LEASE_HOURS" value="72"/>
+    </php>
+</phpunit>

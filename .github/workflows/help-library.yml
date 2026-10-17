@@ -1,0 +1,59 @@
+name: help-library
+on:
+  push:
+    branches: [ arena/ac321db7-dizihospital ]
+    paths:
+      - 'tools/docs/fetch_help.py'
+      - '.github/workflows/help-library.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: help-mirror
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install --quiet requests beautifulsoup4 markdownify pillow
+
+      - name: Mirror vendor help library
+        continue-on-error: true
+        timeout-minutes: 80
+        run: |
+          git config user.name "docs-bot"
+          git config user.email "docs-bot@users.noreply.github.com"
+          # rebuild the mirror from scratch so stale/duplicate files cannot accumulate
+          rm -rf docs/help-library
+          python3 tools/docs/fetch_help.py 2>&1 | tee /tmp/help.log
+          echo "exit=$?"
+
+      - name: Commit mirror
+        if: always()
+        run: |
+          git config user.name "docs-bot"
+          git config user.email "docs-bot@users.noreply.github.com"
+          mkdir -p docs/help-library
+          cp /tmp/help.log docs/help-library/fetch.log 2>/dev/null || true
+          git add -A docs/help-library
+          if git diff --cached --quiet; then echo "no changes"; du -sh docs/help-library; exit 0; fi
+          git commit -q -m "docs: mirror vendor help library [skip ci]"
+          for i in 1 2 3 4 5; do
+            if git push -q origin HEAD:arena/ac321db7-dizihospital; then echo "pushed (attempt $i)"; break; fi
+            echo "push attempt $i rejected - rebasing"; sleep 5
+            git fetch -q origin arena/ac321db7-dizihospital
+            git rebase -q -X ours origin/arena/ac321db7-dizihospital || { git rebase --abort; git pull -q --no-rebase -X ours origin arena/ac321db7-dizihospital; }
+          done
+          du -sh docs/help-library || true

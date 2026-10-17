@@ -1,0 +1,85 @@
+name: capture-crawl
+on:
+  push:
+    branches: [ arena/ac321db7-dizihospital ]
+    paths:
+      - '.github/workflows/capture-crawl.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: capture
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Diagnostics (env)
+        run: |
+          {
+            echo "== whoami/pwd =="; whoami; pwd; ls -la
+            echo "== node =="; node -v; npm -v
+            echo "== tree tools =="; find tools -maxdepth 3 -type f | head -30
+            echo "== target site reachability =="
+            curl -sS -o /dev/null -w "http=%{http_code} time=%{time_total}\n" https://demo.smart-hospital.in/site/login || echo "curl failed"
+          } > /tmp/diag.txt 2>&1; cat /tmp/diag.txt
+
+      - name: Install playwright
+        run: |
+          set -x
+          cd tools/capture
+          npm install --no-audit --no-fund > /tmp/npm.log 2>&1; echo "npm_exit=$?"
+          npx playwright install chromium > /tmp/pw.log 2>&1; echo "pw_exit=$?"
+          node -e "console.log('playwright require:', typeof require('playwright').chromium)" || echo "REQUIRE_FAILED"
+          tail -5 /tmp/npm.log; tail -5 /tmp/pw.log
+          mkdir -p ../../capture/logs
+          cp /tmp/npm.log ../../capture/logs/npm.log 2>/dev/null || true
+
+      - name: Crawl application
+        id: crawl
+        continue-on-error: true
+        timeout-minutes: 58
+        working-directory: tools/capture
+        env:
+          SH_BASE: https://demo.smart-hospital.in
+          SH_USER: superadmin@gmail.com
+          SH_PASS: password
+          OUT_DIR: ../../capture
+          MAX_PAGES: '150'
+          PAGE_BUDGET_MS: '2900000'
+        run: |
+          set -x
+          mkdir -p ../../capture/logs
+          git config user.name "capture-bot"
+          git config user.email "capture-bot@users.noreply.github.com"
+          node crawl.js > ../../capture/logs/crawl.log 2>&1
+          echo "crawl_exit=$?" | tee -a ../../capture/logs/crawl.log
+          ls -la ../../capture | tee -a ../../capture/logs/crawl.log
+          ls ../../capture/pages 2>/dev/null | head -5 | tee -a ../../capture/logs/crawl.log
+
+      - name: Final commit
+        if: always()
+        run: |
+          set -x
+          git config user.name "capture-bot"
+          git config user.email "capture-bot@users.noreply.github.com"
+          mkdir -p capture/logs
+          cp /tmp/diag.txt capture/logs/diag.txt 2>/dev/null || true
+          echo "crawl step outcome: ${{ steps.crawl.outcome }}" >> capture/logs/crawl.log
+          git pull --rebase -q || true
+          git add -A capture
+          if git diff --cached --quiet; then echo "no changes"; else
+            git commit -q -m "chore(capture): crawl output [skip ci]"
+            git push || (git pull --rebase -q && git push)
+          fi

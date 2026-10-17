@@ -1,0 +1,225 @@
+{
+ "pageId": "034-certificate-certificate",
+ "pageLabel": "Certificate › Certificate",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/generatecertificate",
+ "from": "https://demo.smart-hospital.in/admin/generatecertificate",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/generatecertificate",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Generate Certificate",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Generate Certificate",
+   "Patient List",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/generatecertificate/search",
+    "method": "post",
+    "name": "form1",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Module",
+      "name": "module",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "OPD",
+       "IPD"
+      ]
+     },
+     {
+      "label": "Patient Status",
+      "name": "patient_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Not Discharged",
+       "Discharged"
+      ]
+     },
+     {
+      "label": "Certificate Template",
+      "name": "certificate_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Sample Patient File Cover",
+       "Certificate Template"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/generatecertificate/generatemultiple",
+    "method": "post",
+    "name": "",
+    "visible": true,
+    "fields": [
+     {
+      "label": "",
+      "name": "",
+      "type": "checkbox",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 2,
+    "columns": [
+     "#",
+     "OPD/IPD No",
+     "Patient Name",
+     "Gender",
+     "Mobile Number",
+     "Discharged"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Generate Certificate Certificate Template",
+   "Patient List Generate"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Certificate Template",
+    "href": "https://demo.smart-hospital.in/admin/certificate",
+    "target": ""
+   },
+   {
+    "text": "Search",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Generate",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": []
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "034-certificate-certificate__button.jpg"
+}
