@@ -52,21 +52,56 @@ jobs:
     # `true` when Pages is switched on and this run should publish. The deploy job reads
     # this; everything that needs Pages is skipped when it is not `true`.
     outputs:
-      deploy: ${{ steps.pages.outputs.enabled }}
+      deploy: ${{ steps.tree.outputs.full == 'true' && steps.pages.outputs.enabled == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
+      # Before anything is built: is this checkout the documentation this site is made of?
+      #
+      # The workflow is a file like any other, so a run can be started on a commit that carries the
+      # workflow but not the documents — a placeholder branch, or an old commit that somebody keeps
+      # re-running. On such a commit the builders either fail with a traceback about a missing file or,
+      # worse, succeed and publish one page over a site of four hundred. Both are answered by asking the
+      # question first: a checkout without the four anchors below is not this documentation, so it builds
+      # nothing, publishes nothing, and says which anchors are missing.
+      - name: Is this the documentation tree?
+        id: tree
+        run: |
+          missing=""
+          for anchor in docs/WIKI.md docs/FEATURE-CATALOG.md docs/plan/README.md docs/help-library/index.json; do
+            [ -f "$anchor" ] || missing="${missing:+$missing, }$anchor"
+          done
+          if [ -n "$missing" ]; then
+            echo "full=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Nothing published::This checkout does not carry the documentation this site is made of (missing: $missing). The workflow can be started on any commit, but only a checkout of the documentation branch has anything to publish."
+            {
+              echo "### Nothing published — this checkout is not the documentation tree"
+              echo
+              echo "Missing: \`$missing\`"
+              echo
+              echo "A run can be started on any commit, including one that has this workflow but not the documents."
+              echo "Nothing was built and nothing was published; the site already at the Pages address was left alone."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          echo "full=true" >> "$GITHUB_OUTPUT"
+          echo "The documentation tree is here: $(find docs -name '*.md' -not -path '*/_debug/*' | wc -l) page(s) to render."
+
       - uses: actions/setup-python@v5
+        if: steps.tree.outputs.full == 'true'
         with:
           python-version: '3.12'
 
       - name: Install the renderer
+        if: steps.tree.outputs.full == 'true'
         run: pip install --quiet markdown
 
       - name: Render the guide (the printable single page the PDF is made from)
+        if: steps.tree.outputs.full == 'true'
         run: python3 tools/docs/build_html.py
 
       - name: Assemble the site, and fail if any link inside it does not resolve
+        if: steps.tree.outputs.full == 'true'
         run: python3 tools/docs/build_site.py
 
       # The rendered site is uploaded as an ordinary artifact *before* the Pages check, so
@@ -74,6 +109,7 @@ jobs:
       # job built: Actions → this run → `documentation-site.zip`, open `index.html`. A
       # deployment that cannot happen should still hand over its work.
       - name: Upload the site as a downloadable artifact
+        if: steps.tree.outputs.full == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: documentation-site
@@ -84,6 +120,7 @@ jobs:
       # "no Pages site exists"; anything else is reported verbatim. Neither fails the run.
       - name: Is Pages enabled?
         id: pages
+        if: steps.tree.outputs.full == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -125,18 +162,19 @@ jobs:
       # It costs nothing when it is already on, and it means a deployment does not depend on
       # the order in which an administrator happened to grant things.
       - name: Configure Pages
-        if: steps.pages.outputs.enabled == 'true'
+        if: steps.tree.outputs.full == 'true' && steps.pages.outputs.enabled == 'true'
         uses: actions/configure-pages@v5
         with:
           enablement: true
 
       - name: Upload the site
-        if: steps.pages.outputs.enabled == 'true'
+        if: steps.tree.outputs.full == 'true' && steps.pages.outputs.enabled == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/build/site
 
       - name: What was built
+        if: steps.tree.outputs.full == 'true'
         run: |
           du -sh docs/build/site
           echo "pages: $(find docs/build/site -name '*.html' | wc -l) html file(s)" >> "$GITHUB_STEP_SUMMARY"
