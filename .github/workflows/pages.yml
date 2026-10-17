@@ -148,10 +148,29 @@ jobs:
     # job's Pages check wrote, and the run is green either way.
     if: needs.build.outputs.deploy == 'true'
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    # Deliberately not declaring `environment: github-pages` here.
+    #
+    # When Pages is switched on, GitHub creates that environment with a deployment branch
+    # policy — by default only `main` may deploy to it. Declaring the environment makes the
+    # runner enforce that policy, so a documentation preview built on a working branch is
+    # rejected before `deploy-pages` runs, with "Branch … is not allowed to deploy to
+    # github-pages due to environment protection rules". The branch rule itself can only be
+    # changed by a repository administrator, which is the same permission that was needed to
+    # switch Pages on — the point of this workflow is that the *docs* preview does not need
+    # anything from a person after that one switch.
+    #
+    # The deployment is still recorded against the repository's Pages site by `deploy-pages`
+    # itself; what is lost is the environment URL banner on the run, so the address is
+    # printed in the summary instead. On `main`, where GitHub's default policy allows it,
+    # declaring the environment would add nothing and this comment would still hold.
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Where it went
+        if: success()
+        run: |
+          url="${{ steps.deployment.outputs.page_url }}"
+          echo "### Published" >> "$GITHUB_STEP_SUMMARY"
+          echo "The documentation site is live at ${url:-the repository Pages address}." >> "$GITHUB_STEP_SUMMARY"
