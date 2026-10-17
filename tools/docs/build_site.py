@@ -402,6 +402,20 @@ def documents_index(pages: dict) -> str:
 
 # --------------------------------------------------------------------------------------------------- the help index
 
+def mirrored_articles(category: dict) -> int:
+    """How many article files this category actually has on disk.
+
+    The vendor's index cross-lists: one article can be entered under every category, so summing its
+    per-category entries says 686 where 306 files exist. A count printed on a page has to be a count of
+    pages a reader can open, so it comes from the directory — falling back to the index only when the
+    directory is not there at all (nothing to count, and nothing to open).
+    """
+    directory = os.path.join(HELP, category.get('slug') or '')
+    if not os.path.isdir(directory):
+        return len(category.get('articles') or [])
+    return len([name for name in os.listdir(directory) if name.endswith('.md') and name != '_index.md'])
+
+
 def help_index(pages: dict) -> tuple[str, int]:
     index_path = os.path.join(HELP, 'index.json')
     categories = []
@@ -423,9 +437,7 @@ def help_index(pages: dict) -> tuple[str, int]:
     for category in categories:
         slug_name = category.get('slug') or ''
         directory = os.path.join(HELP, slug_name)
-        count = len(category.get('articles') or [])
-        if count == 0 and os.path.isdir(directory):
-            count = len([name for name in os.listdir(directory) if name.endswith('.md') and name != '_index.md'])
+        count = mirrored_articles(category)
         articles += count
         # This page lives at `help/index.html`, so a category is its own directory beside it — not `help/` again.
         target = f"{slug_name}/index.html"
@@ -540,11 +552,15 @@ def main() -> None:
             handle.write(guide)
         guide_written = True
 
+    with open(os.path.join(HELP, 'index.json'), encoding='utf-8') as handle:
+        help_categories = json.load(handle).get('categories', [])
+    help_article_total = sum(mirrored_articles(category) for category in help_categories)
+
     counts = {
         'plan': sum(1 for out in pages.values() if out.startswith('plan/')),
         'research': sum(1 for out in pages.values() if out.startswith('research/')),
         'migration': sum(1 for out in pages.values() if out.startswith('migration/')),
-        'help': sum(1 for out in pages.values() if out.startswith('help/')),
+        'help': help_article_total,
         'assets': len(os.listdir(os.path.join(DOCS, 'assets'))) if os.path.isdir(os.path.join(DOCS, 'assets')) else 0,
     }
 
