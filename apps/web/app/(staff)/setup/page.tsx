@@ -204,7 +204,7 @@ export default function SetupPage() {
             </ul>
           </Panel>
 
-          <div className="space-y-3">
+          <div className="min-w-0 space-y-3">
             <Panel
               title={`${catalogue.name} — ${catalogue.legacy}`}
               actions={

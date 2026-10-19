@@ -27,8 +27,8 @@ export default async function HelpSearchPage({ searchParams }: { searchParams: P
         <Link href="/help" className="hover:text-brand-600">Help</Link> <span aria-hidden>/</span> <span className="text-text-primary">Search</span>
       </nav>
 
-      <form action="/help/search" className="flex items-end gap-2">
-        <div className="flex flex-1 flex-col gap-1">
+      <form action="/help/search" className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-end">
+        <div className="flex min-w-0 flex-1 flex-col gap-1">
           <label htmlFor="q" className="text-sm text-text-secondary">Search the help library</label>
           <input
             id="q"
@@ -38,7 +38,7 @@ export default async function HelpSearchPage({ searchParams }: { searchParams: P
             className="h-10 w-full max-w-2xl rounded-md border border-border-default bg-surface-default px-3 text-base"
           />
         </div>
-        <button type="submit" className="h-10 rounded-md bg-brand-500 px-4 text-sm font-medium text-text-inverse hover:bg-brand-600">
+        <button type="submit" className="h-10 w-full rounded-md bg-brand-500 px-4 text-sm font-medium text-text-inverse hover:bg-brand-600 sm:w-auto">
           Search
         </button>
       </form>

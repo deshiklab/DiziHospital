@@ -321,7 +321,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-screen flex-col bg-surface-canvas">
       {/* ================================================================== header */}
       <header className="no-print sticky top-0 z-40 border-b border-border-subtle bg-surface-raised">
-        <div className="flex items-center gap-2 px-2 py-2 sm:px-3">
+        <div className="flex flex-wrap items-center gap-2 px-2 py-2 sm:px-3">
           {/* sidebar controls: collapse to a rail on desktop, open a drawer on mobile */}
           {/* The single collapse/expand control for desktop. The sidebar itself no longer carries one,
               which is what made two buttons appear to do the same job. */}

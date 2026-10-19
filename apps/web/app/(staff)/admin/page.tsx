@@ -69,9 +69,9 @@ export default function AdminHubPage() {
         return (
           <Panel key={group.id} title={group.title} actions={<span className="text-xs text-text-secondary">{members.length} of {planTotal}</span>}>
             <p className="mb-3 text-sm text-text-secondary">{group.because}</p>
-            <ul className="grid gap-2 md:grid-cols-2">
+            <ul className="grid min-w-0 gap-2 md:grid-cols-2">
               {members.map((screen) => (
-                <li key={screen.id}>
+                <li key={screen.id} className="min-w-0">
                   <Link href={screen.route} onClick={() => write(screen.id)} className="flex items-start justify-between gap-2 rounded-md border border-border-subtle px-3 py-2 hover:bg-surface-sunken">
                     <span className="min-w-0">
                       <span className="flex flex-wrap items-center gap-2">
@@ -79,7 +79,7 @@ export default function AdminHubPage() {
                         <span className={cx('rounded-full border px-1.5 py-0.5 text-xs', OWNER_TONE[screen.owner])}>{screen.kind === 'sub' ? 'sub-screen' : 'screen'}</span>
                       </span>
                       <span className="mt-0.5 block text-xs text-text-tertiary">
-                        <span className="font-numeric">{screen.legacy}</span> → <span className="font-numeric">{screen.route}</span>
+                        <span className="font-numeric break-all">{screen.legacy}</span> → <span className="font-numeric break-all">{screen.route}</span>
                       </span>
                       <span className="mt-1 block text-sm text-text-secondary">{screen.purpose}</span>
                     </span>
@@ -121,9 +121,11 @@ export default function AdminHubPage() {
         </p>
         <p className="mt-2 flex items-start gap-2 text-xs text-text-tertiary">
           <ShieldAlert className="mt-0.5 size-3.5 shrink-0" aria-hidden />
-          Every screen on this page replaces a legacy screen that is still the system of record for it. The
-          ownership matrix (<span className="font-numeric">docs/migration/ownership.md</span>) is what decides when
-          a branch stops writing in the old one, and it is not this page’s decision to make.
+          <span className="min-w-0 break-words">
+            Every screen on this page replaces a legacy screen that is still the system of record for it. The
+            ownership matrix (<span className="font-numeric break-all">docs/migration/ownership.md</span>) is what decides when
+            a branch stops writing in the old one, and it is not this page’s decision to make.
+          </span>
         </p>
       </Panel>
     </div>

@@ -200,7 +200,7 @@ export default function ModuleBillingPage() {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="min-w-0 space-y-3">
       <header className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h1 className="flex items-center gap-2 text-lg font-semibold text-text-primary">
@@ -240,8 +240,8 @@ export default function ModuleBillingPage() {
       />
 
       {tab === 'bill' && (
-        <div className="grid gap-3 xl:grid-cols-[1fr_24rem]">
-          <div className="space-y-3">
+        <div className="grid min-w-0 gap-3 xl:grid-cols-[1fr_24rem]">
+          <div className="min-w-0 space-y-3">
             <Panel
               title={`${module} worklist — ${items.length} item(s)`}
               actions={
@@ -352,7 +352,7 @@ export default function ModuleBillingPage() {
             )}
           </div>
 
-          <div className="space-y-3">
+          <div className="min-w-0 space-y-3">
             <Panel title="Who is paying, and on what authority">
               <div className="space-y-2">
                 <label className="block text-xs text-text-secondary">
@@ -490,7 +490,7 @@ export default function ModuleBillingPage() {
       )}
 
       {tab === 'modules' && (
-        <div className="space-y-3">
+        <div className="min-w-0 space-y-3">
           <Panel title="What each module has produced, and what has been billed">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[720px] text-sm">
@@ -561,9 +561,9 @@ export default function ModuleBillingPage() {
       )}
 
       {tab === 'rules' && (
-        <div className="space-y-3">
+        <div className="min-w-0 space-y-3">
           <Panel title="When each module charges, and who owes it">
-            <div className="space-y-3">
+            <div className="min-w-0 space-y-3">
               {MODULE_RULES.map((r) => (
                 <div key={r.module} className="rounded-md border border-border-subtle px-3 py-2">
                   <p className="flex flex-wrap items-center gap-2 text-sm font-medium text-text-primary">

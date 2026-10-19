@@ -151,7 +151,7 @@ export function ReportScreen({ topic }: { topic: string }) {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="min-w-0 flex flex-col gap-3">
       <header className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
           <h1 className="flex flex-wrap items-center gap-2 text-lg font-semibold text-text-primary">
@@ -227,7 +227,7 @@ export function ReportScreen({ topic }: { topic: string }) {
         />
       </div>
 
-      <div className="grid gap-3 xl:grid-cols-[1fr_21rem]">
+      <div className="grid min-w-0 gap-3 xl:grid-cols-[1fr_21rem]">
         <Panel>
           {table.rows.length === 0 ? (
             <p className="text-sm text-text-secondary">
@@ -279,7 +279,7 @@ export function ReportScreen({ topic }: { topic: string }) {
           )}
         </Panel>
 
-        <div className="flex flex-col gap-3">
+        <div className="min-w-0 flex flex-col gap-3">
           <Panel title="Scope and period">
             <Segmented<Scope>
               name="report-scope"

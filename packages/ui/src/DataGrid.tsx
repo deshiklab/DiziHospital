@@ -727,7 +727,7 @@ export function DataGrid<T>({
       </p>
 
       {/* ------------------------------------------------------------------- table */}
-      <div className="overflow-hidden rounded-lg border border-border-subtle bg-surface-default">
+      <div className="min-w-0 overflow-hidden rounded-lg border border-border-subtle bg-surface-default">
         <div
           ref={scroller}
           /* Focusable because it scrolls: a keyboard user has to be able to reach the region and then move inside it

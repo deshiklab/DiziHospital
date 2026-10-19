@@ -160,7 +160,7 @@ export default function ReportSchedulesPage() {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="min-w-0 flex flex-col gap-3">
       <header className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
           <h1 className="flex flex-wrap items-center gap-2 text-lg font-semibold text-text-primary">
@@ -198,9 +198,9 @@ export default function ReportSchedulesPage() {
         </p>
       </SafetyBanner>
 
-      <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_24rem]">
+      <div className="grid min-w-0 gap-3 xl:grid-cols-[minmax(0,1fr)_24rem]">
         {/* ------------------------------------------------------------------ the register */}
-        <div className="flex flex-col gap-3">
+        <div className="min-w-0 flex flex-col gap-3">
           <Panel title="The register — one schedule per report the register says is sent">
             <ul className="flex flex-col divide-y divide-border-subtle">
               {schedules.map((s) => {
@@ -295,7 +295,7 @@ export default function ReportSchedulesPage() {
         </div>
 
         {/* ------------------------------------------------------------------ the editor */}
-        <div className="flex flex-col gap-3">
+        <div className="min-w-0 flex flex-col gap-3">
           <Panel
             title={def?.title ?? schedule.topic}
             actions={
@@ -520,18 +520,20 @@ export default function ReportSchedulesPage() {
           <Panel title="What the server has to do">
             <ul className="flex flex-col gap-2 text-xs">
               {SCHEDULING_SERVER_DUTIES.map((d) => (
-                <li key={d.title}>
+                <li key={d.title} className="min-w-0">
                   <span className="font-medium text-text-primary">{d.title}</span>
-                  <span className="font-numeric block text-text-tertiary">{d.endpoint}</span>
+                  <span className="font-numeric block break-all text-text-tertiary">{d.endpoint}</span>
                   <span className="block text-text-secondary">{d.because}</span>
                 </li>
               ))}
             </ul>
             <p className="mt-3 flex items-start gap-2 border-t border-border-subtle pt-2 text-xs text-text-tertiary">
               <Info className="mt-0.5 size-3.5 shrink-0" aria-hidden />
-              The contract carries all three: <span className="font-numeric">listReportSchedules</span> (cached at the node, because a branch with the uplink down still has to know who
-              gets the morning sheet), <span className="font-numeric">saveReportSchedule</span> (queued, idempotent, audited) and <span className="font-numeric">runReportSchedule</span>{' '}
-              (online-only, because a run is a delivery and a queued one is a promise nobody kept).
+              <span className="min-w-0">
+                The contract carries all three: <span className="font-numeric break-all">listReportSchedules</span> (cached at the node, because a branch with the uplink down still has to know who
+                gets the morning sheet), <span className="font-numeric break-all">saveReportSchedule</span> (queued, idempotent, audited) and <span className="font-numeric break-all">runReportSchedule</span>{' '}
+                (online-only, because a run is a delivery and a queued one is a promise nobody kept).
+              </span>
             </p>
           </Panel>
         </div>

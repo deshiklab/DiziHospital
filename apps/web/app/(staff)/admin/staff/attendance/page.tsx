@@ -195,7 +195,8 @@ export default function StaffAttendanceRegisterPage() {
         <div tabIndex={0}
           role="region"
           aria-label={`Attendance register for ${monthLabel(month)}; scroll to read all days`}
-          className="overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500">
+          className="scroll-mt-28 overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
+          style={{ contain: 'paint' }}>
           <table className="min-w-max w-full border-collapse text-xs">
             <caption className="sr-only">
               Attendance register for {monthLabel(month)}: one row per member of staff, one column per day of the month.

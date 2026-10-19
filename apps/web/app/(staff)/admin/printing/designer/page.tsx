@@ -253,7 +253,7 @@ export default function PrintDesignerPage() {
         </p>
       </Panel>
 
-      <div className="grid gap-3 xl:grid-cols-[16rem_minmax(0,1fr)_20rem]">
+      <div className="grid min-w-0 gap-3 xl:grid-cols-[16rem_minmax(0,1fr)_20rem]">
         {/* ---------------------------------------------------------------- the block library */}
         <Panel title="Blocks">
           <ul className="space-y-1">
@@ -288,7 +288,7 @@ export default function PrintDesignerPage() {
         </Panel>
 
         {/* ---------------------------------------------------------------- the sheet */}
-        <div className="space-y-2">
+        <div className="min-w-0 space-y-2">
           <div className="flex flex-wrap items-center gap-2">
             <Segmented
               label="Show"
@@ -385,7 +385,7 @@ export default function PrintDesignerPage() {
         </div>
 
         {/* ---------------------------------------------------------------- the properties */}
-        <div className="space-y-3">
+        <div className="min-w-0 space-y-3">
           <Panel
             title={block ? blockSpec(block.kind).label : 'No block selected'}
             actions={

@@ -41,7 +41,7 @@ export function Segmented<T extends string>({
   };
 
   return (
-    <fieldset className={cx('flex flex-col gap-1', className)}>
+    <fieldset className={cx('flex min-w-0 flex-col gap-1', className)} style={{ minInlineSize: 0 }}>
       <legend className="text-sm font-medium text-text-secondary">{label}</legend>
       <div className="flex flex-wrap gap-1">
         {options.map((o) => {

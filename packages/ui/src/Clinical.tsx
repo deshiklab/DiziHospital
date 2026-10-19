@@ -154,7 +154,7 @@ export function KpiTile({
   footnote?: string;
 }) {
   return (
-    <div className="rounded-lg border border-border-subtle bg-surface-default p-4">
+    <div className="min-w-0 rounded-lg border border-border-subtle bg-surface-default p-4">
       <div className="flex items-center justify-between">
         <span className="text-sm text-text-secondary">{label}</span>
         <span className="group relative">
@@ -166,8 +166,8 @@ export function KpiTile({
           </span>
         </span>
       </div>
-      <div className="mt-1 flex items-baseline gap-2">
-        <span className="font-numeric text-3xl font-semibold text-text-primary">{value}</span>
+      <div className="mt-1 flex min-w-0 items-baseline gap-2">
+        <span className="min-w-0 font-numeric text-xl font-semibold text-text-primary sm:text-3xl">{value}</span>
         {delta && (
           <span className={cx('text-sm font-medium', delta.direction === 'up' ? 'text-safety-success' : 'text-safety-critical')}>
             {delta.direction === 'up' ? '▲' : '▼'} {delta.value}
@@ -184,7 +184,7 @@ export function KpiTile({
 
 export function Panel({ title, actions, children, className }: { title?: string; actions?: React.ReactNode; children: React.ReactNode; className?: string }) {
   return (
-    <section className={cx('rounded-lg border border-border-subtle bg-surface-default', className)}>
+    <section className={cx('min-w-0 rounded-lg border border-border-subtle bg-surface-default', className)}>
       {(title || actions) && (
         <header className="flex items-center justify-between border-b border-border-subtle px-4 py-2">
           {title && <h2 className="text-sm font-semibold text-text-primary">{title}</h2>}

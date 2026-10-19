@@ -36,17 +36,17 @@ export default function HelpHomePage() {
             Guides for the new platform, plus the mirrored reference library of the legacy product.
           </p>
         </div>
-        <form action="/help/search" className="flex items-end gap-2">
-          <div className="flex flex-col gap-1">
+        <form action="/help/search" className="flex w-full flex-col items-stretch gap-2 sm:w-auto sm:flex-row sm:items-end">
+          <div className="flex min-w-0 flex-col gap-1">
             <label htmlFor="q" className="text-sm text-text-secondary">Search all help</label>
             <input
               id="q"
               name="q"
               placeholder="e.g. dispense, appointment, backup"
-              className="h-9 w-72 rounded-md border border-border-default bg-surface-default px-3 text-base"
+              className="h-9 w-full rounded-md border border-border-default bg-surface-default px-3 text-base sm:w-72"
             />
           </div>
-          <button type="submit" className="h-9 rounded-md bg-brand-500 px-3 text-sm font-medium text-text-inverse hover:bg-brand-600">
+          <button type="submit" className="h-9 w-full rounded-md bg-brand-500 px-3 text-sm font-medium text-text-inverse hover:bg-brand-600 sm:w-auto">
             Search
           </button>
         </form>
