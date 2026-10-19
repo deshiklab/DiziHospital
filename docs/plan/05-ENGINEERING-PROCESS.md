@@ -39,6 +39,7 @@ change without the clinical owner's sign-off recorded in the ticket; no screen w
 * **Trunk-based development** — short-lived branches (≤ 2 days), small PRs (≤ 400 changed lines), squash merges, conventional commits, semantic versioning per app.
 * **Feature flags** (self-hosted Unleash) for every user-visible change; flags declared and retired in the same PR series; no flag lives longer than one phase.
 * **Environments** — local → CI → preview (per PR) → staging (anonymised prod data) → pilot → production.
+* **Documentation site** — `.github/workflows/pages.yml` builds `docs/` only on documentation changes and supports manual dispatch. It publishes to GitHub Pages when Pages is enabled; otherwise the green run attaches a `documentation-site` artifact and reports that no deployment occurred. The workflow does not deploy `apps/web/`.
 * **Migrations** are forward-only, one concern each, with a tested down-script and a dry-run against a restored production snapshot in CI.
 * **Definition of Ready** — user and task identified; acceptance criteria; design ready (all states); data and API contract agreed; safety/privacy impact noted; test approach agreed.
 * **Definition of Done** — merged to trunk behind a flag; unit + integration + contract tests green; E2E journey added or extended; a11y (axe 0 critical) and visual regression clean; performance budget met; docs updated (`docs/`, in-app help); audit events emitted; print output verified where applicable; telemetry in place; demoed to the clinical owner; flag rollout plan written.
