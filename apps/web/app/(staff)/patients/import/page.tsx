@@ -119,7 +119,9 @@ export default function PatientImportPage() {
         <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
           <Panel title="Choose the file">
             <div className="flex flex-col gap-3">
+              <label htmlFor="patient-import-file" className="text-sm font-medium text-text-secondary">Choose a patient CSV file</label>
               <input
+                id="patient-import-file"
                 ref={fileRef}
                 type="file"
                 accept=".csv,text/csv,text/plain"
@@ -167,7 +169,9 @@ export default function PatientImportPage() {
           </Panel>
 
           <Panel title="…or paste the rows">
+            <label htmlFor="patient-import-csv" className="mb-1 block text-sm font-medium text-text-secondary">Patient CSV text</label>
             <textarea
+              id="patient-import-csv"
               className="font-numeric min-h-40 w-full rounded-md border border-border-default bg-surface-default p-2 text-xs"
               value={csv}
               onChange={(e) => { setCsv(e.target.value); setSource('pasted'); setMapping(null); setImported(null); }}

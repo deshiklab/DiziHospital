@@ -60,8 +60,9 @@ export default function PortalVisitDetailPage() {
     return (
       <div className="space-y-4">
         <BackLink label={t(STR.back)} />
-        <Panel title={t(STR.notFoundVisit)}>
-          <p className="text-sm text-text-secondary">{t(STR.notFoundVisitWhy)}</p>
+        <Panel>
+          <h1 className="text-lg font-semibold text-text-primary">{t(STR.notFoundVisit)}</h1>
+          <p className="mt-2 text-sm text-text-secondary">{t(STR.notFoundVisitWhy)}</p>
           <Link href="/portal/visits" className="mt-3 inline-block">
             <Button variant="secondary">{t(STR.myVisits)}</Button>
           </Link>

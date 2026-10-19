@@ -205,7 +205,7 @@ export default function DutyPage() {
                             {s.name}
                             <span className="ml-2 text-xs text-text-tertiary">{a.covering}</span>
                           </span>
-                          <button type="button" onClick={() => setStaffId(s.id)} className="text-xs underline">
+                          <button type="button" onClick={() => setStaffId(s.id)} className="inline-flex min-h-6 items-center px-1 text-xs underline">
                             details
                           </button>
                         </li>

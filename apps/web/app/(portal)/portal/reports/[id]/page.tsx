@@ -68,8 +68,9 @@ export default function PortalReportDetailPage() {
     return (
       <div className="space-y-4">
         <BackLink label={t(STR.back)} />
-        <Panel title={t(STR.notFoundReport)}>
-          <p className="text-sm text-text-secondary">{t(STR.notFoundReportWhy)}</p>
+        <Panel>
+          <h1 className="text-lg font-semibold text-text-primary">{t(STR.notFoundReport)}</h1>
+          <p className="mt-2 text-sm text-text-secondary">{t(STR.notFoundReportWhy)}</p>
           <Link href="/portal/reports" className="mt-3 inline-block">
             <Button variant="secondary">{t(STR.myReports)}</Button>
           </Link>

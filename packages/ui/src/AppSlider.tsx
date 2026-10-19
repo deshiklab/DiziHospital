@@ -153,8 +153,10 @@ export function AppSlider({
               aria-label={`Show highlight ${i + 1}: ${s.title}`}
               aria-current={i === index}
               onClick={() => go(i)}
-              className={cx('h-1.5 rounded-full transition-all', i === index ? 'w-6 bg-brand-500' : 'w-2.5 bg-border-default hover:bg-border-subtle')}
-            />
+              className="grid size-7 shrink-0 place-items-center rounded-full"
+            >
+              <span className={cx('h-1.5 rounded-full transition-all', i === index ? 'w-6 bg-brand-500' : 'w-2.5 bg-border-default hover:bg-border-subtle')} />
+            </button>
           ))}
         </div>
         <div className="flex items-center gap-2">

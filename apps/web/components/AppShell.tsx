@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Ambulance, Banknote, Globe2, Megaphone, Smartphone, BedDouble, Bell, CalendarClock, CalendarDays, ChartColumn, Check, CircleHelp, Command, Droplet, FlaskConical, Footprints, Keyboard, LayoutDashboard, LogOut, Maximize, Menu as MenuIcon, Minimize, Package, PanelLeftClose, PanelLeftOpen, Pill, Plus, Receipt, RefreshCw, Scissors, Search, Settings2, ShieldCheck, Stethoscope, Type, Users, X, ZoomIn, ZoomOut } from 'lucide-react';
+import { Ambulance, Banknote, Globe2, Megaphone, Smartphone, BedDouble, Bell, CalendarClock, CalendarDays, ChartColumn, Check, CircleHelp, Command, Droplet, FlaskConical, Footprints, Keyboard, LayoutDashboard, LogOut, Maximize, Menu as MenuIcon, Minimize, Package, PanelLeftClose, PanelLeftOpen, Pill, Plus, Receipt, RefreshCw, Scissors, Search, Settings2, ShieldCheck, Stethoscope, Type, UserRound, Users, X, ZoomIn, ZoomOut } from 'lucide-react';
 import {
   Button,
   Menu,
@@ -31,11 +31,12 @@ import { patients } from '@/lib/mock';
  * a decision anyone made: that is how the sidebar toggle ended up on a phone, toggling a rail that is not
  * there, doing nothing. `npm run check:classes` now fails on that pattern.
  *
- * The shell chrome (bar, drawer, aside, rail toggle, footer offset) does not spell its own display at all:
+ * The shell chrome (bar, drawer, aside and rail toggle) does not spell its own display at all:
  * globals.css owns it in one place, and `data-nav` settles it. See the navigation-mode block there.
  */
 /** The shell's navigation breakpoint, spelled exactly as globals.css spells it so both resolve the same. */
 const NAV_MODE_QUERY = '(min-width: 64rem)';
+const SYNC_STATUS_LABEL = { live: 'Synced', lanOnly: 'Local', queued: 'Waiting to sync', syncing: 'Syncing', conflict: 'Needs review', stale: 'As of' } as const;
 
 const ICON_BTN_SHAPE =
   'size-9 shrink-0 place-items-center rounded-md text-text-secondary hover:bg-surface-sunken hover:text-text-primary';
@@ -361,6 +362,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <button
                 type="button"
                 onClick={() => { setSearchOpen(true); setTimeout(() => searchRef.current?.focus(), 30); }}
+                aria-label={t('shell.search', locale)}
                 className="flex h-9 items-center gap-2 rounded-md border border-border-default bg-surface-default px-2.5 text-sm text-text-tertiary hover:bg-surface-sunken md:w-72 xl:w-96"
               >
                 <Search className="size-4" aria-hidden />
@@ -384,7 +386,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   type="button"
                   aria-label="Close search"
                   onClick={() => { setSearchOpen(false); setQuery(''); }}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-text-tertiary hover:text-text-primary"
+                  className="absolute right-0.5 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-md text-text-tertiary hover:bg-surface-sunken hover:text-text-primary"
                 >
                   <X className="size-3.5" aria-hidden />
                 </button>
@@ -413,7 +415,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {/* sync state — same words the staff use */}
           <div className="relative">
             <Tooltip title="Connection" content="Every screen shows whether your work is on the hospital server or still on this device.">
-              <button type="button" onClick={() => setSyncOpen((o) => !o)} aria-expanded={syncOpen} aria-label={`Connection: ${sync}`}>
+              <button type="button" onClick={() => setSyncOpen((o) => !o)} aria-expanded={syncOpen} aria-label={`Connection: ${sync === 'queued' && queued.length > 0 ? `${SYNC_STATUS_LABEL[sync]} (${queued.length})` : SYNC_STATUS_LABEL[sync]}`}>
                 <SyncPill state={sync} count={queued.length} />
               </button>
             </Tooltip>
@@ -590,7 +592,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               type="button"
               onClick={() => setLocale((locale === 'en' ? 'bn' : 'en') as Locale)}
               className="h-9 rounded-md border border-border-default bg-surface-default px-2 text-sm hover:bg-surface-sunken"
-              aria-label={t('shell.language', locale)}
+              aria-label={`${t('shell.language', locale)}: ${locale === 'en' ? 'বাংলা' : 'EN'}`}
             >
               {locale === 'en' ? 'বাংলা' : 'EN'}
             </button>
@@ -620,9 +622,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 aria-expanded={open}
                 aria-haspopup="menu"
                 className="flex h-9 items-center gap-2 rounded-md border border-border-default bg-surface-default px-2 text-sm hover:bg-surface-sunken"
+                aria-label={`Account: ${session ? session.name : roleLabels[role][locale]}`}
               >
-                <span aria-hidden className="grid size-6 place-items-center rounded-full bg-brand-100 text-xs font-semibold text-brand-700">
-                  {(session ? session.name : roleLabels[role].en).slice(0, 1)}
+                <span aria-hidden className="grid size-6 place-items-center rounded-full bg-brand-100 text-brand-700">
+                  <UserRound className="size-4" aria-hidden />
                 </span>
                 <span className="hidden lg:inline">{session ? session.name : roleLabels[role][locale]}</span>
               </button>
@@ -652,7 +655,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </header>
 
       {/* ============================================================ body + sidebar */}
-      <div className="flex min-h-0 flex-1">
+      <div className="flex flex-1">
         <aside
           className={cx(
             'dizi-aside no-print sticky top-[3.25rem] hidden h-[calc(100vh-3.25rem-2.25rem)] shrink-0 flex-col border-r border-border-subtle bg-surface-raised lg:flex',
@@ -720,17 +723,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* =================================================================== footer */}
-      <footer className="dizi-footer no-print sticky bottom-[calc(var(--dizi-mobile-bar)+env(safe-area-inset-bottom))] z-30 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border-subtle bg-surface-raised px-3 py-1.5 text-[11px] text-text-tertiary lg:bottom-0">
+      <footer className="dizi-footer no-print mb-[calc(var(--dizi-mobile-bar)+env(safe-area-inset-bottom))] flex shrink-0 flex-wrap items-center gap-x-4 gap-y-1 border-t border-border-subtle bg-surface-raised px-3 py-1.5 text-[11px] text-text-tertiary lg:mb-0">
         {/* The breadcrumb trail lives down here, not in the header: the header is for actions, and the trail is
             orientation — it does not need to be at the top, but it does need to be visible on every screen size. */}
-        <nav aria-label="Breadcrumb" className="flex min-w-0 flex-1 items-center gap-1 text-xs text-text-secondary">
+        <nav aria-label="Breadcrumb" className="flex min-w-0 flex-1 flex-wrap items-center gap-x-1 gap-y-1 text-xs text-text-secondary">
           {crumbTrail.map((c, i) => (
-            <span key={c.href + i} className="flex min-w-0 items-center gap-1">
+            <span key={c.href + i} className="flex shrink-0 items-center gap-1">
               {i > 0 && <span aria-hidden className="text-text-tertiary">/</span>}
               {i === crumbTrail.length - 1 ? (
-                <span aria-current="page" className="truncate font-medium text-text-primary">{c.label}</span>
+                <span aria-current="page" className="max-w-40 truncate font-medium text-text-primary">{c.label}</span>
               ) : (
-                <Link href={c.href} className="truncate hover:text-brand-600">{c.label}</Link>
+                <Link href={c.href} className="inline-flex min-h-6 min-w-8 shrink-0 items-center truncate px-2 hover:text-brand-600">{c.label}</Link>
               )}
             </span>
           ))}
@@ -741,7 +744,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <span className="hidden sm:inline">Credits: clinical workflow captured from the legacy system · design tokens from the plan</span>
         <span className="flex items-center gap-3 lg:ml-auto">
           <span className="font-numeric">{t('shell.mode', locale)}: {siteMode}</span>
-          <button type="button" onClick={() => setHotkeysOpen(true)} className="inline-flex items-center gap-1 hover:text-text-primary">
+          <button type="button" onClick={() => setHotkeysOpen(true)} className="inline-flex min-h-6 items-center gap-1 px-1 hover:text-text-primary">
             <Keyboard className="size-3" aria-hidden />
             {t('shell.hotkeys', locale)}
           </button>

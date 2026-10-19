@@ -58,7 +58,7 @@ export function Board({ columns, cards, columnOf, onTransition, emptyLabel = 'No
       {columns.map((col) => {
         const items = cards.filter((c) => columnOf(c) === col.id);
         return (
-          <section
+          <div
             key={col.id}
             role="listitem"
             aria-label={`${col.title} (${items.length})`}
@@ -67,7 +67,7 @@ export function Board({ columns, cards, columnOf, onTransition, emptyLabel = 'No
             <header className="border-b border-border-subtle px-3 py-2">
               <div className="flex items-center gap-2">
                 <span aria-hidden className={cx('size-2.5 rounded-full', toneStrip[col.tone ?? 'neutral'])} />
-                <h3 className="text-sm font-semibold text-text-primary">{col.title}</h3>
+                <h2 className="text-sm font-semibold text-text-primary">{col.title}</h2>
                 <span className="ml-auto rounded-full bg-surface-sunken px-2 font-numeric text-xs text-text-secondary">{items.length}</span>
               </div>
               {col.hint && <p className="mt-0.5 text-xs text-text-tertiary">{col.hint}</p>}
@@ -88,7 +88,6 @@ export function Board({ columns, cards, columnOf, onTransition, emptyLabel = 'No
                         type="button"
                         onClick={card.onOpen}
                         className="min-w-0 flex-1 text-left"
-                        aria-label={`Open ${card.title}`}
                       >
                         <p className="truncate text-base font-medium text-text-primary">{card.title}</p>
                         {card.subtitle && <p className="truncate text-xs text-text-secondary">{card.subtitle}</p>}
@@ -131,7 +130,7 @@ export function Board({ columns, cards, columnOf, onTransition, emptyLabel = 'No
                 );
               })}
             </ul>
-          </section>
+          </div>
         );
       })}
     </div>

@@ -127,7 +127,7 @@ export default function SetupFrontOfficePage() {
       </Panel>
 
       <Panel title="The areas, and who may reach them" actions={<span className="text-xs text-text-secondary">{VISIT_AREAS.length} areas</span>}>
-        <div className="overflow-x-auto">
+        <div tabIndex={0} role="region" aria-label="Visiting hours table; scroll horizontally to read all columns" className="overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border-subtle text-left text-xs text-text-secondary">

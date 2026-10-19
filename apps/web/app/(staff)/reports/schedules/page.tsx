@@ -212,7 +212,6 @@ export default function ReportSchedulesPage() {
                       type="button"
                       onClick={() => setSelected(s.id)}
                       aria-pressed={s.id === schedule.id}
-                      aria-label={`${reportByTopic(s.topic)?.title ?? s.topic}, ${describeSchedule(s)}, next ${c.next[0] ? describeRun(c.next[0]) : 'never'}`}
                       className={cx('flex w-full flex-col gap-0.5 rounded-md px-2 py-2 text-left', s.id === schedule.id ? 'bg-brand-50' : 'hover:bg-surface-sunken')}
                     >
                       <span className="flex flex-wrap items-baseline justify-between gap-2">

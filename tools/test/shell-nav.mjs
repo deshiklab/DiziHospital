@@ -152,7 +152,13 @@ async function runScenario(scenario) {
   check(scenario.label, doc.documentElement.dataset.nav === scenario.mode, `data-nav is "${doc.documentElement.dataset.nav}", expected "${scenario.mode}"`);
   check(scenario.label, !!doc.querySelector('.dizi-bar'), 'the thumb bar is not rendered');
   check(scenario.label, !!doc.querySelector('aside.dizi-aside'), 'the sidebar is not rendered');
-  check(scenario.label, !!doc.querySelector('footer.dizi-footer'), 'the footer is not rendered');
+  const footer = doc.querySelector('footer.dizi-footer');
+  check(scenario.label, !!footer, 'the footer is not rendered');
+  check(
+    scenario.label,
+    footer?.classList.contains('mb-[calc(var(--dizi-mobile-bar)+env(safe-area-inset-bottom))]') && footer?.classList.contains('lg:mb-0'),
+    'the footer is missing its mobile safe-area offset or desktop reset',
+  );
   const railToggle = doc.querySelector('.dizi-rail-toggle');
   check(scenario.label, !!railToggle, 'the rail toggle is not rendered');
 
@@ -238,7 +244,8 @@ try {
       [['.dizi-drawer'], 'the drawer has no display rule'],
       [['.dizi-aside'], 'the sidebar has no display rule'],
       [['.dizi-rail-toggle'], 'the rail toggle has no display rule'],
-      [['.dizi-footer'], 'the footer has no offset rule'],
+      [['mb-\\[calc\\(var\\(--dizi-mobile-bar\\)\\+env\\(safe-area-inset-bottom\\)\\)\\]'], 'the mobile footer offset utility did not survive the build'],
+      [['lg\\:mb-0'], 'the desktop footer offset reset did not survive the build'],
       [['html[data-nav=drawer]'], 'the drawer override did not survive the build'],
       [['html[data-nav=rail]'], 'the rail override did not survive the build'],
       [['(min-width:64rem)', '(width >= 64rem)'], 'the default breakpoint is not in the built stylesheet'],

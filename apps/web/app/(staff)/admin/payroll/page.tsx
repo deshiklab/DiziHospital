@@ -208,8 +208,8 @@ export default function PayrollPage() {
         subtitle={`${monthLabel(month)} · cut-off ${cutOff} · run by one person, approved by another.`}
         actions={
           <>
-            <Button variant="ghost" onClick={() => { setMonth(addMonths(month, -1)); setRun(null); }} aria-label="Previous month">‹ {monthLabel(addMonths(month, -1)).split(' ')[0]}</Button>
-            <Button variant="ghost" onClick={() => { setMonth(addMonths(month, 1)); setRun(null); }} aria-label="Next month">{monthLabel(addMonths(month, 1)).split(' ')[0]} ›</Button>
+            <Button variant="ghost" onClick={() => { setMonth(addMonths(month, -1)); setRun(null); }} aria-label={`Previous month: ${monthLabel(addMonths(month, -1)).split(' ')[0]}`}>‹ {monthLabel(addMonths(month, -1)).split(' ')[0]}</Button>
+            <Button variant="ghost" onClick={() => { setMonth(addMonths(month, 1)); setRun(null); }} aria-label={`Next month: ${monthLabel(addMonths(month, 1)).split(' ')[0]}`}>{monthLabel(addMonths(month, 1)).split(' ')[0]} ›</Button>
             <Button variant="primary" onClick={computeRun} disabled={!onThisNode}>
               <Calculator className="size-4" aria-hidden /> Compute the run
             </Button>

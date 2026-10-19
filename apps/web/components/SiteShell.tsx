@@ -55,7 +55,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         </a>
 
         {/* The emergency strip is above everything, including the name: it is the one thing a stranger may need. */}
-        <div className="bg-safety-critical px-4 py-1.5 text-center text-xs font-medium text-white">
+        <aside aria-label={t('জরুরি যোগাযোগ', 'Emergency contacts')} className="bg-safety-critical px-4 py-1.5 text-center text-xs font-medium text-white">
           {t('জরুরি অবস্থায় ২৪ ঘণ্টা: ', 'Emergency, 24 hours: ')}
           <a href="tel:+88029876500" className="underline">
             02 9876 500
@@ -65,7 +65,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <a href="tel:+88029876555" className="underline">
             02 9876 555
           </a>
-        </div>
+        </aside>
 
         <header className="sticky top-0 z-40 border-b border-border-subtle bg-surface-raised/95 backdrop-blur">
           <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3">
@@ -100,15 +100,16 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 type="button"
                 onClick={() => setMenuOpen((open) => !open)}
                 aria-expanded={menuOpen}
+                aria-controls="site-sections"
                 className="rounded-md border border-border-subtle p-2 text-text-secondary lg:hidden"
               >
                 {menuOpen ? <X className="size-4" aria-hidden /> : <MenuIcon className="size-4" aria-hidden />}
-                <span className="sr-only">{t('মেনু', 'Menu')}</span>
+                <span className="sr-only">{menuOpen ? t('মেনু বন্ধ করুন', 'Close menu') : t('মেনু খুলুন', 'Open menu')}</span>
               </button>
             </div>
           </div>
 
-          <nav aria-label={t('বিভাগসমূহ', 'Sections')} className={cx('mx-auto max-w-5xl gap-1 px-3 pb-2 lg:flex', menuOpen ? 'grid grid-cols-2 gap-1 lg:grid-cols-none' : 'hidden')}>
+          <nav id="site-sections" aria-label={t('বিভাগসমূহ', 'Sections')} className={cx('mx-auto max-w-5xl gap-1 px-3 pb-2 lg:flex', menuOpen ? 'grid grid-cols-2 gap-1 lg:grid-cols-none' : 'hidden')}>
             {snapshot.menu
               .filter((item) => item.pages.length > 0)
               .map((item) => {

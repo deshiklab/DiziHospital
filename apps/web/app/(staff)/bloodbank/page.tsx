@@ -267,7 +267,7 @@ export default function BloodBankPage() {
   /* ---------------------------------------------------------------- the sheet body */
 
   const matrix = (component: Component) => (
-    <div className="overflow-x-auto">
+    <div tabIndex={0} role="region" aria-label="Blood bank register; scroll horizontally to read all columns" className="overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500">
       <table className="w-full min-w-[620px] border-collapse text-xs">
         <caption className="sr-only">Compatibility matrix for {COMPONENT_LABEL[component]}</caption>
         <thead>
@@ -400,7 +400,7 @@ export default function BloodBankPage() {
                   the ones who can donate are called. A replacement request is a conversation with a family, so the list
                   says who is eligible before anybody is asked.
                 </p>
-                <div className="overflow-x-auto">
+                <div tabIndex={0} role="region" aria-label="Donation history; scroll horizontally to read all columns" className="overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500">
                   <table className="w-full min-w-[520px] text-sm">
                     <caption className="sr-only">Donors who can be called for this component</caption>
                     <thead>
@@ -458,7 +458,7 @@ export default function BloodBankPage() {
             <ListView id="bb-donors" caption="Donor register for the day" rows={register.donors} columns={donorColumns} rowId={(d) => d.id} onRowClick={(d) => setDonorId(d.id)} />
           </Panel>
           <Panel title="What the donor chair screens">
-            <div className="overflow-x-auto">
+            <div tabIndex={0} role="region" aria-label="Donor screening rules; scroll horizontally to read all columns" className="overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500">
               <table className="w-full min-w-[560px] text-sm">
                 <caption className="sr-only">Donor deferral criteria</caption>
                 <thead>
@@ -562,7 +562,7 @@ export default function BloodBankPage() {
             </ul>
           </Panel>
           <Panel title="Shelf life as it is stored here">
-            <div className="overflow-x-auto">
+            <div tabIndex={0} role="region" aria-label="Shelf-life by component; scroll horizontally to read all columns" className="overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500">
               <table className="w-full min-w-[480px] text-sm">
                 <caption className="sr-only">Shelf life by component</caption>
                 <thead>

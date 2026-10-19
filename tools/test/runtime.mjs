@@ -631,7 +631,9 @@ async function check(route) {
           pressChip(/^Open register$/);
           await new Promise((r) => setTimeout(r, 300));
           const openRows = [...doc.querySelectorAll('tbody tr')];
-          const draftRow = openRows.find((r) => /Draft/.test(r.textContent ?? '')) ?? openRows[0];
+          const draftRow = openRows.find((r) => /CL-\d+-1352/.test(r.textContent ?? '') && /Draft/.test(r.textContent ?? ''))
+            ?? openRows.find((r) => /Draft/.test(r.textContent ?? ''))
+            ?? openRows[0];
           const claimNo = (draftRow?.textContent ?? '').match(/CL-\d+-\d+/)?.[0] ?? '';
           if (!draftRow) {
             claims = refused ? 'refused · NO DRAFT ROW' : 'NO DRAFT ROW';
@@ -882,7 +884,7 @@ async function check(route) {
       }
     };
 
-    const rows = doc.querySelectorAll('[aria-label*=", next "]').length;
+    const rows = doc.querySelectorAll('li > button[aria-pressed]').length;
     const hour = doc.querySelector('input[name="schedule-times"]');
     const save = buttonBy(/^save this schedule$/i);
     const take = buttonBy(/^download today’s sheet$/i);
@@ -900,19 +902,24 @@ async function check(route) {
       const queued = (read('dizi.outbox.v1')?.pending ?? []).filter((op) => op.operationId === 'saveReportSchedule');
       const named = /saveReportSchedule/.test(textOf());
 
-      press(take);
-      await new Promise((r) => setTimeout(r, 300));
-      const taken = (read('dizi.report.downloads') ?? []).find((r) => r.scheduleId === 'sch-finance');
-
-      /* The register's own contradiction is on another schedule, so it is read the way a person reads it: by
-         opening the audit committee's monthly extract and finding the refusal, not by hoping it is on screen. */
-      const audit = [...doc.querySelectorAll('[aria-label^="Audit log,"]')][0];
+      /* The register's own contradiction is on another schedule. Read its visible “Audit log — 1 to fix” state,
+         confirm the refusal in the editor, then restore the finance schedule before taking its sheet. */
+      const scheduleButtons = [...doc.querySelectorAll('li > button[aria-pressed]')];
+      const audit = scheduleButtons.find((b) => /Audit log/.test(b.textContent ?? '') && /1\s*to fix/.test(b.textContent ?? ''));
       let refused = false;
       if (audit) {
         press(audit);
         await new Promise((r) => setTimeout(r, 300));
         refused = /The period is wider than the data/.test(textOf()) && /reads \d+ day\(s\) of data/.test(textOf());
       }
+      const finance = [...doc.querySelectorAll('li > button[aria-pressed]')].find((b) => /Income and expense by head/.test(b.textContent ?? ''));
+      if (finance) {
+        press(finance);
+        await new Promise((r) => setTimeout(r, 250));
+      }
+      press(take);
+      await new Promise((r) => setTimeout(r, 300));
+      const taken = (read('dizi.report.downloads') ?? []).find((r) => r.scheduleId === 'sch-finance');
       const runs = /Friday 16 October 2026 at/.test(textOf()) || /at \d\d:\d\d/.test(textOf());
       schedules = `${rows} schedules · ${(kept?.cadence?.times ?? []).join('/') || 'NOT SAVED'} · ${queued.length === 1 ? 'queued as saveReportSchedule' : `queued=${queued.length}`} · ${taken ? `took ${taken.name}` : 'NOT TAKEN'} · ${refused ? 'refusal stated' : audit ? 'NO REFUSAL' : 'NO AUDIT ROW'}`;
       if (rows !== 16) routeProblems.push(`the schedule register drew ${rows} schedules, not one per report the register says is sent`);
@@ -920,7 +927,8 @@ async function check(route) {
       if (queued.length !== 1) routeProblems.push(`saving a schedule did not reach the saved queue as \`saveReportSchedule\` (${queued.length} matching operations)`);
       if (!named) routeProblems.push('the save did not name the contract operation it went through');
       if (!taken) routeProblems.push('downloading today’s sheet recorded nothing on the node');
-      if (!refused) routeProblems.push('the register’s own contradiction — a monthly extract of a one-day trail — was not stated on the screen');
+      if (!audit || !refused) routeProblems.push('the visible “Audit log — 1 to fix” schedule did not state its monthly-extract refusal before the download');
+      if (!finance) routeProblems.push('the finance schedule could not be restored before downloading its sheet');
       if (!runs) routeProblems.push('the schedule screen did not print the next runs as days');
     }
   }

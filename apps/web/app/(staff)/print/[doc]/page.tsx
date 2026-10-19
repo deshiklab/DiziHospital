@@ -1233,7 +1233,7 @@ export default function PrintPage({
         )}
       </div>
 
-      <div className="print-preview flex justify-center overflow-auto pb-8">
+      <div tabIndex={0} role="region" aria-label="Print preview; scroll to inspect the full page" className="print-preview flex justify-center overflow-auto pb-8 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500">
         {published ? <PrintSheet layout={published} /> : <div className="print-paper shadow-lg">{docContent()}</div>}
       </div>
     </div>

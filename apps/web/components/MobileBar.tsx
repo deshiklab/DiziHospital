@@ -76,8 +76,6 @@ export function MobileBar({
         type="button"
         id={triggerId}
         onClick={onMenuToggle}
-        aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
-        title={menuOpen ? 'Close navigation' : 'Open navigation'}
         aria-expanded={menuOpen}
         aria-controls="mobile-nav-panel"
         className={cx(ITEM, menuOpen ? CURRENT : IDLE)}

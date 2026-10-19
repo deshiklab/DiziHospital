@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { useParams } from 'next/navigation';
-import { Button, EmptyState } from '@dizi/ui';
+import { Button } from '@dizi/ui';
 import { FileWarning, Phone } from 'lucide-react';
 import { SiteText } from '@/components/SiteBlocks';
 import { useSiteLocale } from '@/components/SiteShell';
@@ -38,39 +38,33 @@ export default function SitePage() {
   const section = page ? sectionFor(page.section) : undefined;
 
   if (!page) {
+    const title = unpublished
+      ? t('এই পাতাটি এখনো প্রকাশ করা হয়নি', 'This page has not been published yet')
+      : t('এই ঠিকানায় কোনো পাতা নেই', 'There is no page at this address');
+    const description = unpublished
+      ? t(
+          `“${unpublished.titleBn}” লেখা হয়েছে কিন্তু প্রকাশ করা হয়নি, তাই জনসাধারণের জন্য এটি এখনো খোলা নয়। শীঘ্রই এখানে দেখা যাবে।`,
+          `“${unpublished.titleEn}” has been written but not published, so it is not open to the public yet. It will appear here when it is.`,
+        )
+      : t(
+          'ঠিকানাটি হয়তো বদলেছে, অথবা লিংকটিতে ভুল আছে। নিচের যেকোনো অংশে গিয়ে খুঁজে দেখতে পারেন, অথবা ডেস্কে ফোন করুন ০২ ৯৮৭৬ ৫৪০।',
+          'The address may have changed, or the link may have a typo in it. Use the menu above, or telephone the desk on 02 9876 540 — somebody will find it for you.',
+        );
     return (
-      <div className="rounded-lg border border-border-subtle bg-surface-default p-4">
-        <EmptyState
-          title={
-            unpublished
-              ? t('এই পাতাটি এখনো প্রকাশ করা হয়নি', 'This page has not been published yet')
-              : t('এই ঠিকানায় কোনো পাতা নেই', 'There is no page at this address')
-          }
-          description={
-            unpublished
-              ? t(
-                  `“${unpublished.titleBn}” লেখা হয়েছে কিন্তু প্রকাশ করা হয়নি, তাই জনসাধারণের জন্য এটি এখনো খোলা নয়। শীঘ্রই এখানে দেখা যাবে।`,
-                  `“${unpublished.titleEn}” has been written but not published, so it is not open to the public yet. It will appear here when it is.`,
-                )
-              : t(
-                  'ঠিকানাটি হয়তো বদলেছে, অথবা লিংকটিতে ভুল আছে। নিচের যেকোনো অংশে গিয়ে খুঁজে দেখতে পারেন, অথবা ডেস্কে ফোন করুন ০২ ৯৮৭৬ ৫৪০।',
-                  'The address may have changed, or the link may have a typo in it. Use the menu above, or telephone the desk on 02 9876 540 — somebody will find it for you.',
-                )
-          }
-          action={
-            <span className="mt-2 flex flex-wrap justify-center gap-2">
-              <Link href="/site">
-                <Button variant="primary">{t('প্রথম পাতায় যান', 'Go to the front page')}</Button>
-              </Link>
-              <a href="tel:+88029876540">
-                <Button variant="secondary">
-                  <Phone className="size-4" aria-hidden /> 02 9876 540
-                </Button>
-              </a>
-            </span>
-          }
-        />
-      </div>
+      <section className="rounded-lg border border-border-subtle bg-surface-default p-4">
+        <h1 className="text-xl font-semibold text-text-primary">{title}</h1>
+        <p className="mt-2 max-w-2xl text-sm text-text-secondary">{description}</p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Link href="/site">
+            <Button variant="primary">{t('প্রথম পাতায় যান', 'Go to the front page')}</Button>
+          </Link>
+          <a href="tel:+88029876540">
+            <Button variant="secondary">
+              <Phone className="size-4" aria-hidden /> 02 9876 540
+            </Button>
+          </a>
+        </div>
+      </section>
     );
   }
 

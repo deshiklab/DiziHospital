@@ -459,7 +459,7 @@ export default function ReportsPage() {
           </Link>
         }
       >
-        <div className="overflow-x-auto">
+        <div tabIndex={0} role="region" aria-label="Reports; scroll horizontally to read all columns" className="overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500">
           <table className="w-full text-left text-sm">
             <caption className="sr-only">Which report goes out, to whom and when — the schedules this branch runs</caption>
             <thead className="bg-surface-sunken text-xs text-text-secondary">

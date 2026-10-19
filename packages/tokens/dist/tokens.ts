@@ -1,5 +1,5 @@
-/* DiziHospital design tokens v0.2.0 — GENERATED. Do not edit. */
-export const tokensVersion = "0.2.0";
+/* DiziHospital design tokens v0.3.0 — GENERATED. Do not edit. */
+export const tokensVersion = "0.3.0";
 export const tokens = {
   "color": {
     "brand": {
@@ -28,28 +28,28 @@ export const tokens = {
     "text": {
       "primary": "#101828",
       "secondary": "#475467",
-      "tertiary": "#667085",
+      "tertiary": "#5A6474",
       "disabled": "#98A2B3",
       "inverse": "#FFFFFF",
       "link": "#0B5C66"
     },
     "safety": {
       "critical": "#B3261E",
-      "warning": "#B26B00",
-      "success": "#1B7F4B",
+      "warning": "#8A4F00",
+      "success": "#197648",
       "info": "#1D4ED8"
     },
     "clinical": {
       "status-neutral": "#667085",
       "status-admitted": "#1D4ED8",
-      "status-discharged": "#1B7F4B",
-      "status-in-progress": "#B26B00",
+      "status-discharged": "#197648",
+      "status-in-progress": "#8A4F00",
       "status-awaiting": "#7C3AED",
       "status-cancelled": "#667085",
-      "status-no-show": "#B26B00",
+      "status-no-show": "#8A4F00",
       "critical-value": "#B3261E",
       "allergy": "#B3261E",
-      "interaction": "#B26B00"
+      "interaction": "#8A4F00"
     },
     "chart": {
       "series-1": "#0E6E7A",
@@ -171,9 +171,9 @@ export const tokens = {
     "palette": "600"
   },
   "sync": {
-    "live": "#1B7F4B",
+    "live": "#197648",
     "lanOnly": "#5A6B7B",
-    "queued": "#B26B00",
+    "queued": "#8A4F00",
     "syncing": "#1D4ED8",
     "conflict": "#B3261E",
     "stale": "#5A6B7B",

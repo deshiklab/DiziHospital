@@ -477,7 +477,7 @@ export function DataGrid<T>({
                           aria-expanded={open}
                           aria-haspopup="menu"
                           aria-label={`Manage the view ${v.name}`}
-                          className="grid w-6 place-items-center border-l border-current/20"
+                          className="grid size-8 place-items-center border-l border-current/20"
                         >
                           <MoreVertical className="size-3" aria-hidden />
                         </button>
@@ -767,10 +767,15 @@ export function DataGrid<T>({
                 {visible.map((c, i) => {
                   const isSorted = sort?.key === c.key;
                   const canSort = (c.sortable ?? true) && Boolean(onQuery);
-                  const headerButton = (
+                  const headerContent = (
+                    <span className={cx('inline-flex items-center gap-1', !c.header && 'sr-only')}>
+                      {c.header || 'Select row'}
+                      {isSorted && (sort?.dir === 'asc' ? <ArrowUp className="size-3" aria-hidden /> : <ArrowDown className="size-3" aria-hidden />)}
+                    </span>
+                  );
+                  const headerButton = canSort ? (
                     <button
                       type="button"
-                      disabled={!canSort}
                       onClick={() =>
                         onQuery?.({
                           page: 1,
@@ -778,12 +783,11 @@ export function DataGrid<T>({
                           sort: { key: c.key, dir: isSorted && sort?.dir === 'asc' ? 'desc' : 'asc' },
                         })
                       }
-                      className={cx('inline-flex items-center gap-1', canSort ? 'hover:text-text-primary' : 'cursor-default')}
+                      className="inline-flex items-center gap-1 hover:text-text-primary"
                     >
-                      {c.header}
-                      {isSorted && (sort?.dir === 'asc' ? <ArrowUp className="size-3" aria-hidden /> : <ArrowDown className="size-3" aria-hidden />)}
+                      {headerContent}
                     </button>
-                  );
+                  ) : headerContent;
                   return (
                     <th
                       key={c.key}
@@ -1006,7 +1010,7 @@ export function DataGrid<T>({
               value={pageSize}
               onChange={(e) => onQuery?.({ page: 1, pageSize: Number(e.target.value), sort })}
               aria-label="Rows per page"
-              className="h-7 rounded-sm border border-border-default bg-surface-default px-1 text-sm"
+              className="min-h-8 rounded-sm border border-border-default bg-surface-default px-2 text-sm"
             >
               {[10, 25, 50, 100].map((n) => (
                 <option key={n} value={n}>
@@ -1075,7 +1079,7 @@ export function DataGrid<T>({
               type="number"
               min={1}
               max={pages}
-              className="h-7 w-16 rounded-sm border border-border-default bg-surface-default px-1 text-sm"
+              className="min-h-8 w-16 rounded-sm border border-border-default bg-surface-default px-2 text-sm"
             />
           </form>
         </div>

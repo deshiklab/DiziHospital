@@ -15,8 +15,8 @@
   --dizi-density-row-height: var(--dizi-density-comfortable-row-height);
   --dizi-density-field-height: var(--dizi-density-comfortable-field-height);
   --dizi-zoom: 1;
-  /* Height of the mobile thumb bar, before the device's own bottom inset. The bar, the drawer and the sticky
-     footer all take their offset from this one number so they cannot drift apart. */
+  /* Height of the mobile thumb bar, before the device's own bottom inset. Shell content reserves this space
+     after the footer so the fixed bar never covers the last readable control. */
   --dizi-mobile-bar: 3.5rem;
 }
 html[data-density='compact'] {
@@ -94,9 +94,6 @@ tbody tr:focus-within {
 .dizi-rail-toggle {
   display: none;
 }
-.dizi-footer {
-  bottom: calc(var(--dizi-mobile-bar) + env(safe-area-inset-bottom));
-}
 .dizi-palette {
   padding-bottom: 6rem;
 }
@@ -113,9 +110,6 @@ tbody tr:focus-within {
   }
   .dizi-rail-toggle {
     display: inline-grid;
-  }
-  .dizi-footer {
-    bottom: 0;
   }
   .dizi-palette {
     padding-bottom: 1rem;
@@ -134,9 +128,6 @@ html[data-nav='drawer'] .dizi-aside {
 html[data-nav='drawer'] .dizi-rail-toggle {
   display: none;
 }
-html[data-nav='drawer'] .dizi-footer {
-  bottom: calc(var(--dizi-mobile-bar) + env(safe-area-inset-bottom));
-}
 html[data-nav='drawer'] .dizi-palette {
   padding-bottom: 6rem;
 }
@@ -152,9 +143,6 @@ html[data-nav='rail'] .dizi-aside {
 }
 html[data-nav='rail'] .dizi-rail-toggle {
   display: inline-grid;
-}
-html[data-nav='rail'] .dizi-footer {
-  bottom: 0;
 }
 html[data-nav='rail'] .dizi-palette {
   padding-bottom: 1rem;

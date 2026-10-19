@@ -532,7 +532,6 @@ export default function WardPage() {
                             type="button"
                             onClick={() => setBedSheet(bed.id)}
                             className={cx('flex w-full flex-col gap-0.5 rounded-md border p-2 text-left hover:shadow-sm', BED_BG[bed.status])}
-                            aria-label={`Bed ${bed.label}, ${bed.status}${admission ? `, ${admission.patient.name}` : ''}`}
                           >
                             <span className="flex items-center justify-between gap-1">
                               <span className="font-numeric text-xs font-semibold">{bed.label}</span>

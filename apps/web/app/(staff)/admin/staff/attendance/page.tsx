@@ -119,8 +119,8 @@ export default function StaffAttendanceRegisterPage() {
         subtitle={`${monthLabel(month)} for ${HR_NODES[0]}: every person, every day, from the readers at the doors.`}
         actions={
           <>
-            <Button variant="ghost" onClick={() => setMonth(addMonths(month, -1))} aria-label="Previous month">‹ {monthLabel(addMonths(month, -1)).split(' ')[0]}</Button>
-            <Button variant="ghost" onClick={() => setMonth(addMonths(month, 1))} aria-label="Next month">{monthLabel(addMonths(month, 1)).split(' ')[0]} ›</Button>
+            <Button variant="ghost" onClick={() => setMonth(addMonths(month, -1))} aria-label={`Previous month: ${monthLabel(addMonths(month, -1)).split(' ')[0]}`}>‹ {monthLabel(addMonths(month, -1)).split(' ')[0]}</Button>
+            <Button variant="ghost" onClick={() => setMonth(addMonths(month, 1))} aria-label={`Next month: ${monthLabel(addMonths(month, 1)).split(' ')[0]}`}>{monthLabel(addMonths(month, 1)).split(' ')[0]} ›</Button>
             <Link href="/admin/attendance">
               <Button variant="ghost">Today</Button>
             </Link>
@@ -161,7 +161,7 @@ export default function StaffAttendanceRegisterPage() {
         actions={
           <div className="flex flex-wrap items-center gap-2">
             <SelectField
-              label=""
+              label="Department"
               name="register-department"
               value={department}
               onChange={(e) => setDepartment(e.target.value)}
@@ -192,8 +192,11 @@ export default function StaffAttendanceRegisterPage() {
           {spotlight && <span className="text-xs text-text-tertiary">{REGISTER_CODES[spotlight].because}</span>}
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-xs">
+        <div tabIndex={0}
+          role="region"
+          aria-label={`Attendance register for ${monthLabel(month)}; scroll to read all days`}
+          className="overflow-x-auto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500">
+          <table className="min-w-max w-full border-collapse text-xs">
             <caption className="sr-only">
               Attendance register for {monthLabel(month)}: one row per member of staff, one column per day of the month.
             </caption>
@@ -219,12 +222,11 @@ export default function StaffAttendanceRegisterPage() {
                     </button>
                   </th>
                   {row.days.map((d) => (
-                    <td key={d.day} className="p-0.5 text-center">
+                    <td key={d.day} className="px-1 py-1 text-center">
                       <button
                         type="button"
                         onClick={() => { setOpenCode(row.staffCode); setSelectedDay(d.day); }}
                         title={`${d.day} · ${REGISTER_CODES[d.code].label}${d.note ? ` — ${d.note}` : ''}`}
-                        aria-label={`${row.name}, ${d.day}: ${REGISTER_CODES[d.code].label}`}
                         className={cx(
                           'size-6 rounded-sm font-numeric font-medium',
                           TONE_CELL[d.code],
@@ -233,6 +235,7 @@ export default function StaffAttendanceRegisterPage() {
                         )}
                       >
                         {d.code}
+                        <span className="sr-only">{row.name}, {d.day}: {REGISTER_CODES[d.code].label}</span>
                       </button>
                     </td>
                   ))}
