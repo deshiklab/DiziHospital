@@ -1,0 +1,11 @@
+.DS_Store
+Thumbs.db
+**/.git/
+
+smart_hospital_src/smart_hospital_src/backup/
+smart_hospital_src/smart_hospital_src/uploads/
+smart_hospital_src/smart_hospital_src/backend/captcha_images/
+smart_hospital_src/smart_hospital_src/application/cache/
+smart_hospital_src/smart_hospital_src/application/logs/
+smart_hospital_src/smart_hospital_src.zip
+smart_hospital_update_3.1_to_4.0/step-2/step-2.zip
