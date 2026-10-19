@@ -11,6 +11,7 @@ on:
       - 'services/**'
       - 'tools/ci/**'
       - 'tools/test/**'
+      - 'tools/migration/**'
       - 'tools/perf/**'
       - 'infra/**'
       - 'package.json'
@@ -23,6 +24,7 @@ on:
       - 'services/**'
       - 'tools/ci/**'
       - 'tools/test/**'
+      - 'tools/migration/**'
       - 'tools/perf/**'
       - 'infra/**'
       - 'package.json'
@@ -53,6 +55,10 @@ jobs:
 
       - name: The contract guardrail catches its 40 mutations
         run: npm run contract:test
+
+      # P0-406 compares normalized snapshots from both systems and proves that an injected money mismatch reaches the alert receiver.
+      - name: The reconciliation harness alerts on injected drift
+        run: npm run test:reconciliation
 
       # The generator has no dependencies, so no install step is needed for the gates below.
       - name: Design tokens are in sync with the plan
