@@ -1,0 +1,958 @@
+{
+ "pageId": "004-appointment",
+ "pageLabel": "Appointment",
+ "trigger": {
+  "label": "Upcoming Appointment",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 2
+ },
+ "modalVisible": false,
+ "url": "https://demo.smart-hospital.in/admin/appointment/index",
+ "from": "https://demo.smart-hospital.in/admin/appointment/index",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/appointment/index",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Smart Hospital & Research Center · Smart Hospital",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Add Appointment",
+   "Appointment Details",
+   "Add Patient",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formadd",
+    "visible": false,
+    "fields": [
+     {
+      "label": "patient_id",
+      "name": "patient_id",
+      "type": "select",
+      "required": false,
+      "options": []
+     },
+     {
+      "label": "Doctor",
+      "name": "doctorid",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Sansa Gomez (9008)",
+       "Sonia Bush (9002)"
+      ]
+     },
+     {
+      "label": "Doctor Fees ($)",
+      "name": "amount",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Shift",
+      "name": "global_shift",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Appointment Date",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Slot",
+      "name": "slot",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Appointment Priority",
+      "name": "priority",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Normal",
+       "Urgent",
+       "Very Urgent",
+       "Low"
+      ]
+     },
+     {
+      "label": "Status *",
+      "name": "appointment_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Pending",
+       "Approved",
+       "Cancel"
+      ]
+     },
+     {
+      "label": "Discount Percentage",
+      "name": "discount_percentage",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Live Consultant (On Video Conference)",
+      "name": "live_consult",
+      "type": "select",
+      "required": false,
+      "options": [
+       "No",
+       "Yes"
+      ]
+     },
+     {
+      "label": "Payment Mode",
+      "name": "payment_mode",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Cash",
+       "Cheque",
+       "Transfer to Bank Account",
+       "UPI",
+       "Online",
+       "Other"
+      ]
+     },
+     {
+      "label": "Message",
+      "name": "message",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Cheque No",
+      "name": "cheque_no",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Cheque Date",
+      "name": "cheque_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "document",
+      "name": "document",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Alternate Address",
+      "name": "custom_fields[appointment][4]",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "rescheduleform",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Doctor",
+      "name": "",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Sansa Gomez (9008)",
+       "Sonia Bush (9002)"
+      ]
+     },
+     {
+      "label": "Doctor Fees ($)",
+      "name": "doctor_fees",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Shift",
+      "name": "rglobal_shift",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Appointment Date",
+      "name": "appointment_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Slot",
+      "name": "rslot",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Appointment Priority",
+      "name": "priority",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Normal",
+       "Urgent",
+       "Very Urgent",
+       "Low"
+      ]
+     },
+     {
+      "label": "Discount Percentage",
+      "name": "discount_percentage",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Status *",
+      "name": "edit_appointment_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Pending",
+       "Approved",
+       "Cancel"
+      ]
+     },
+     {
+      "label": "Live Consultant (On Video Conference)",
+      "name": "live_consult",
+      "type": "select",
+      "required": false,
+      "options": [
+       "No",
+       "Yes"
+      ]
+     },
+     {
+      "label": "Message",
+      "name": "message",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formaddpa",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Name *",
+      "name": "name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Guardian Name",
+      "name": "guardian_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Phone",
+      "name": "mobileno",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Gender",
+      "name": "gender",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Male",
+       "Female"
+      ]
+     },
+     {
+      "label": "Date Of Birth",
+      "name": "dob",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Year",
+      "name": "age[year]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Month",
+      "name": "age[month]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Day",
+      "name": "age[day]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Blood Group",
+      "name": "blood_group",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "B+",
+       "A+",
+       "AB-",
+       "AB+",
+       "O-",
+       "A-",
+       "B-",
+       "O+"
+      ]
+     },
+     {
+      "label": "Marital Status",
+      "name": "marital_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Single",
+       "Married",
+       "Widowed",
+       "Separated",
+       "Not Specified"
+      ]
+     },
+     {
+      "label": "Email",
+      "name": "email",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Address",
+      "name": "address",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "National Identification Number",
+      "name": "identification_number",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "file",
+      "name": "file",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Remarks",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Any Known Allergies",
+      "name": "known_allergies",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "TPA",
+      "name": "organisation_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Medi life2",
+       "Medicare TPA Services (India)",
+       "Family Health Plan (FHPL)",
+       "Raksha Health Insurance",
+       "Paramount Health Services",
+       "LIFE MEDICAL INSURANCE",
+       "Medi Assist",
+       "Health Life Insurance",
+       "Star Health Insurance",
+       "IDBI Federal",
+       "CGHS"
+      ]
+     },
+     {
+      "label": "TPA ID",
+      "name": "insurance_id",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "TPA Validity",
+      "name": "validity",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "Alternate Number",
+      "name": "custom_fields[patient][3]",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 2,
+    "columns": [
+     "Patient Name",
+     "Appointment No",
+     "Date",
+     "Phone",
+     "Gender",
+     "Doctor",
+     "Source",
+     "Priority",
+     "Live Consultant",
+     "Alternate Address",
+     "Created By",
+     "Status",
+     "Fees ($)",
+     "Discount (%)",
+     "Paid ($)"
+    ]
+   },
+   {
+    "id": "DataTables_Table_1",
+    "rows": 25,
+    "columns": [
+     "Patient Name",
+     "Appointment No",
+     "Date",
+     "Phone",
+     "Gender",
+     "Doctor",
+     "Source",
+     "Priority",
+     "Live Consultant",
+     "Alternate Address",
+     "Created By",
+     "Status",
+     "Fees ($)",
+     "Discount (%)",
+     "Paid ($)"
+    ]
+   },
+   {
+    "id": "DataTables_Table_2",
+    "rows": 101,
+    "columns": [
+     "Patient Name",
+     "Appointment No",
+     "Date",
+     "Phone",
+     "Gender",
+     "Doctor",
+     "Source",
+     "Priority",
+     "Live Consultant",
+     "Alternate Address",
+     "Created By",
+     "Status",
+     "Fees ($)",
+     "Discount (%)",
+     "Paid ($)"
+    ]
+   }
+  ],
+  "tabs": [
+   "Today Appointment",
+   "Upcoming Appointment",
+   "Old Appointment"
+  ],
+  "sections": [
+   "Today Appointment Upcoming Appointment Old Appointment Add Appointment Doctor Wise Queue"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Today Appointment",
+    "href": "",
+    "target": "#tab_1"
+   },
+   {
+    "text": "Upcoming Appointment",
+    "href": "",
+    "target": "#tab_2"
+   },
+   {
+    "text": "Old Appointment",
+    "href": "",
+    "target": "#tab_3"
+   },
+   {
+    "text": "Add Appointment",
+    "href": "",
+    "target": "#myModal"
+   },
+   {
+    "text": "Doctor Wise",
+    "href": "https://demo.smart-hospital.in/admin/onlineappointment/patientschedule",
+    "target": ""
+   },
+   {
+    "text": "Queue",
+    "href": "https://demo.smart-hospital.in/admin/onlineappointment/patientqueue",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Doctor Wise",
+    "h": "https://demo.smart-hospital.in/admin/onlineappointment/patientschedule"
+   },
+   {
+    "t": "Queue",
+    "h": "https://demo.smart-hospital.in/admin/onlineappointment/patientqueue"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Maya Agarwal (1084)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1084"
+   },
+   {
+    "t": "APPNO7857",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1084"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Christy D. Murray (937)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/937"
+   },
+   {
+    "t": "APPNO7875",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/937"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Adam Driscoll (1135)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1135"
+   },
+   {
+    "t": "APPNO7856",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1135"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Marcus Jacobsen (1141)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1141"
+   },
+   {
+    "t": "APPNO7867",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1141"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Jonathan Hibbins (1107)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1107"
+   },
+   {
+    "t": "APPNO7872",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1107"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Samuel Palmos (1136)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1136"
+   },
+   {
+    "t": "APPNO7871",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1136"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Elizabeth Hancock (1100)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1100"
+   },
+   {
+    "t": "APPNO7855",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1100"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Nishant Kadakia (980)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/980"
+   },
+   {
+    "t": "APPNO7854",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/980"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Harpreet Varkey (884)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/884"
+   },
+   {
+    "t": "APPNO7853",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/884"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Marcus Jacobsen (1141)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1141"
+   },
+   {
+    "t": "APPNO7852",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1141"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Aaron Hardie (1145)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1145"
+   },
+   {
+    "t": "APPNO7870",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1145"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Jonathan Hibbins (1107)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1107"
+   },
+   {
+    "t": "APPNO7874",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1107"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "William Thorby (1138)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1138"
+   },
+   {
+    "t": "APPNO7863",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1138"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "Aadish Mody (1072)",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1072"
+   },
+   {
+    "t": "APPNO7851",
+    "h": "https://demo.smart-hospital.in/admin/patient/profile/1072"
+   },
+   {
+    "t": "",
+    "h": "#"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Add Appointment New Patient",
+  "bodyText": "",
+  "required": 0,
+  "fieldCount": 62,
+  "errors": [
+   "Logout"
+  ]
+ },
+ "file": "004-appointment__upcoming-appointment.jpg"
+}

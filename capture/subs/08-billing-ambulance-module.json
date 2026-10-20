@@ -1,0 +1,22 @@
+{
+ "id": "08-billing-ambulance-module",
+ "label": "Billing - Ambulance module",
+ "url": "/admin/bill/ambulance",
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/bill/ambulance",
+  "title": "Smart Hospital & Research Center",
+  "pageTitle": "Page Not Found",
+  "breadcrumb": "",
+  "headings": [
+   "Page Not Found"
+  ],
+  "forms": [],
+  "tables": [],
+  "tabs": [],
+  "sections": [],
+  "buttons": [],
+  "anchors": []
+ },
+ "file": "08-billing-ambulance-module.jpg"
+}

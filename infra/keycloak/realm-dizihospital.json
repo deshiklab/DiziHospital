@@ -1,0 +1,524 @@
+{
+  "realm": "dizihospital",
+  "enabled": true,
+  "displayName": "DiziHospital",
+  "displayNameHtml": "<strong>DiziHospital</strong> — হাসপাতাল ব্যবস্থাপনা",
+  "notBefore": 0,
+  "defaultSignatureAlgorithm": "RS256",
+  "revokeRefreshToken": true,
+  "refreshTokenMaxReuse": 0,
+  "accessTokenLifespan": 600,
+  "accessTokenLifespanForImplicitFlow": 900,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "ssoSessionIdleTimeoutRememberMe": 2592000,
+  "ssoSessionMaxLifespanRememberMe": 2592000,
+  "offlineSessionIdleTimeout": 2592000,
+  "offlineSessionMaxLifespanEnabled": true,
+  "offlineSessionMaxLifespan": 5184000,
+  "accessCodeLifespan": 60,
+  "accessCodeLifespanUserAction": 300,
+  "accessCodeLifespanLogin": 1800,
+  "actionTokenGeneratedByAdminLifespan": 43200,
+  "actionTokenGeneratedByUserLifespan": 300,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "registrationEmailAsUsername": false,
+  "rememberMe": false,
+  "verifyEmail": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "maxTemporaryLockouts": 2,
+  "maxFailureWaitSeconds": 900,
+  "minimumQuickLoginWaitSeconds": 60,
+  "waitIncrementSeconds": 300,
+  "quickLoginCheckMilliSeconds": 1000,
+  "maxDeltaTimeSeconds": 43200,
+  "failureFactor": 5,
+  "passwordPolicy": "length(12) and upperCase(1) and lowerCase(1) and digits(1) and specialChars(1) and notUsername and notEmail and passwordHistory(5) and forceExpiredPasswordChange(365) and failureFactor(5)",
+  "otpPolicyType": "totp",
+  "otpPolicyAlgorithm": "HmacSHA1",
+  "otpPolicyInitialCounter": 0,
+  "otpPolicyDigits": 6,
+  "otpPolicyLookAheadWindow": 1,
+  "otpPolicyPeriod": 30,
+  "otpPolicyCodeReusable": false,
+  "otpSupportedApplications": [
+    "totpAppFreeOTPName",
+    "totpAppGoogleName",
+    "totpAppMicrosoftAuthenticatorName"
+  ],
+  "webAuthnPolicyRpEntityName": "DiziHospital",
+  "webAuthnPolicySignatureAlgorithms": [
+    "ES256",
+    "RS256"
+  ],
+  "webAuthnPolicyRpId": "",
+  "webAuthnPolicyAttestationConveyancePreference": "not specified",
+  "webAuthnPolicyAuthenticatorAttachment": "not specified",
+  "webAuthnPolicyRequireResidentKey": "not specified",
+  "webAuthnPolicyUserVerificationRequirement": "preferred",
+  "webAuthnPolicyCreateTimeout": 0,
+  "webAuthnPolicyAvoidSameAuthenticatorRegister": true,
+  "browserFlow": "browser",
+  "registrationFlow": "registration",
+  "directGrantFlow": "direct grant",
+  "resetCredentialsFlow": "reset credentials",
+  "clientAuthenticationFlow": "clients",
+  "dockerAuthenticationFlow": "docker auth",
+  "defaultLocale": "bn",
+  "supportedLocales": [
+    "bn",
+    "en"
+  ],
+  "internationalizationEnabled": true,
+  "loginTheme": "dizi",
+  "accountTheme": "keycloak.v2",
+  "adminTheme": "keycloak.v2",
+  "emailTheme": "keycloak",
+  "requiredActions": [
+    {
+      "alias": "CONFIGURE_TOTP",
+      "name": "Configure OTP",
+      "providerId": "CONFIGURE_TOTP",
+      "enabled": true,
+      "defaultAction": true,
+      "priority": 10,
+      "config": {
+        "add-recovery-codes": "true"
+      }
+    },
+    {
+      "alias": "CONFIGURE_RECOVERY_AUTHN_CODES",
+      "name": "Configure Recovery Codes",
+      "providerId": "CONFIGURE_RECOVERY_AUTHN_CODES",
+      "enabled": true,
+      "defaultAction": false,
+      "priority": 15,
+      "config": {
+        "warningThreshold": "3"
+      }
+    },
+    {
+      "alias": "UPDATE_PASSWORD",
+      "name": "Update Password",
+      "providerId": "UPDATE_PASSWORD",
+      "enabled": true,
+      "defaultAction": true,
+      "priority": 20,
+      "config": {}
+    },
+    {
+      "alias": "VERIFY_PROFILE",
+      "name": "Verify Profile",
+      "providerId": "VERIFY_PROFILE",
+      "enabled": true,
+      "defaultAction": false,
+      "priority": 30,
+      "config": {}
+    },
+    {
+      "alias": "webauthn-register",
+      "name": "Webauthn Register",
+      "providerId": "webauthn-register",
+      "enabled": true,
+      "defaultAction": false,
+      "priority": 40,
+      "config": {}
+    },
+    {
+      "alias": "webauthn-register-passwordless",
+      "name": "Webauthn Register Passwordless",
+      "providerId": "webauthn-register-passwordless",
+      "enabled": true,
+      "defaultAction": false,
+      "priority": 50,
+      "config": {}
+    },
+    {
+      "alias": "TERMS_AND_CONDITIONS",
+      "name": "Terms and Conditions",
+      "providerId": "terms_and_conditions",
+      "enabled": false,
+      "defaultAction": false,
+      "priority": 60,
+      "config": {}
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "id": "9f2b7c10-0001-4a10-9a01-000000000001",
+        "name": "super-admin",
+        "description": "The vendor and licence screens, and the configuration other roles work under. P0-205: docs/plan/09 §Sprint 2. Read from packages/contracts/openapi.json → x-dizi-roles.",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "dizihospital"
+      },
+      {
+        "id": "9f2b7c10-0002-4a10-9a01-000000000002",
+        "name": "admin",
+        "description": "Hospital administration: clinical, billing, HR, finance and reporting without the vendor's own screens (74 of the legacy 76).",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "dizihospital"
+      },
+      {
+        "id": "9f2b7c10-0003-4a10-9a01-000000000003",
+        "name": "doctor",
+        "description": "Clinical workspace: own OPD/IPD lists, prescriptions, investigations, results and reports (42 legacy screens).",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "dizihospital"
+      },
+      {
+        "id": "9f2b7c10-0004-4a10-9a01-000000000004",
+        "name": "nurse",
+        "description": "Ward and clinical records: observations, the medication round, nursing notes (16 legacy screens — the narrowest role).",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "dizihospital"
+      },
+      {
+        "id": "9f2b7c10-0005-4a10-9a01-000000000005",
+        "name": "pharmacist",
+        "description": "Dispensing: the prescription queue, batches and expiries, stock movements and returns (18 legacy screens).",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "dizihospital"
+      },
+      {
+        "id": "9f2b7c10-0006-4a10-9a01-000000000006",
+        "name": "pathologist",
+        "description": "The laboratory worklist, verification, reference ranges and the call-back log (20 legacy screens).",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "dizihospital"
+      },
+      {
+        "id": "9f2b7c10-0007-4a10-9a01-000000000007",
+        "name": "radiologist",
+        "description": "The imaging worklist and the report signed on it (17 legacy screens).",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "dizihospital"
+      },
+      {
+        "id": "9f2b7c10-0008-4a10-9a01-000000000008",
+        "name": "accountant",
+        "description": "Money: bills, receipts, the day book, payer claims, commission and finance reports (45 legacy screens).",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "dizihospital"
+      },
+      {
+        "id": "9f2b7c10-0009-4a10-9a01-000000000009",
+        "name": "receptionist",
+        "description": "The front desk: registration, appointments, the queue, counter payments and visitor passes (40 legacy screens).",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "dizihospital"
+      },
+      {
+        "id": "9f2b7c10-000a-4a10-9a01-00000000000a",
+        "name": "auditor",
+        "description": "Not a legacy role: an inspection account that reads the ledger and the registers and changes nothing.",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "dizihospital"
+      }
+    ],
+    "client": {}
+  },
+  "groups": [],
+  "users": [],
+  "clients": [
+    {
+      "clientId": "dizi-web",
+      "name": "DiziHospital web app (staff)",
+      "description": "The staff application. Public client: a browser cannot keep a secret, so it is PKCE or nothing. The access token it receives is what the API verifies — this client never talks to the API itself.",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "publicClient": true,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "fullScopeAllowed": false,
+      "nodeReRegistrationTimeout": -1,
+      "rootUrl": "http://localhost:3000",
+      "baseUrl": "/",
+      "redirectUris": [
+        "http://localhost:3000/*",
+        "http://127.0.0.1:3000/*",
+        "http://localhost:3100/*",
+        "http://127.0.0.1:3100/*",
+        "https://*.e2b.app/*"
+      ],
+      "webOrigins": [
+        "+"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://localhost:3000/*",
+        "use.refresh.tokens": "true",
+        "tls.client.certificate.bound.access.tokens": "false",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": [
+        {
+          "id": "9f2b7c10-1001-4a10-9a01-000000001001",
+          "name": "roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "claim.name": "realm_access.roles",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "id": "9f2b7c10-1002-4a10-9a01-000000001002",
+          "name": "branch",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "branch",
+            "claim.name": "branch",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "id": "9f2b7c10-1003-4a10-9a01-000000001003",
+          "name": "node",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "node",
+            "claim.name": "node",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "id": "9f2b7c10-1004-4a10-9a01-000000001004",
+          "name": "staff-id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "staffId",
+            "claim.name": "staff_id",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "id": "9f2b7c10-1005-4a10-9a01-000000001005",
+          "name": "dizi-api-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "dizi-api",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
+        },
+        {
+          "id": "9f2b7c10-1006-4a10-9a01-000000001006",
+          "name": "preferred-username-into-sub",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "username",
+            "claim.name": "preferred_username",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "dizi-api",
+      "name": "DiziHospital API",
+      "description": "The cloud tier and the edge nodes. Bearer-only: it verifies the token the staff app already has, and never starts a login of its own.",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "publicClient": false,
+      "bearerOnly": true,
+      "consentRequired": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "protocol": "openid-connect",
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "redirectUris": [],
+      "webOrigins": [],
+      "attributes": {},
+      "protocolMappers": [
+        {
+          "id": "9f2b7c10-2001-4a10-9a01-000000002001",
+          "name": "roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "claim.name": "realm_access.roles",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "userinfo.token.claim": "false"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "dizi-account",
+      "name": "DiziHospital account console",
+      "description": "Where a person enrols their authenticator and reads their recovery codes. Reached from the app rather than embedded in it, so no credential is ever typed into a page this repository serves.",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "publicClient": true,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "fullScopeAllowed": false,
+      "rootUrl": "http://localhost:8080/realms/dizihospital/account",
+      "redirectUris": [
+        "http://localhost:8080/realms/dizihospital/account/*",
+        "http://localhost:3000/account/*",
+        "http://127.0.0.1:3000/account/*",
+        "https://*.e2b.app/account/*"
+      ],
+      "webOrigins": [
+        "+"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      },
+      "protocolMappers": []
+    }
+  ],
+  "clientScopes": [
+    {
+      "id": "9f2b7c10-3001-4a10-9a01-000000003001",
+      "name": "dizi-branch",
+      "description": "Branch and node, on the standard scopes so they travel with any client that asks for them.",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": [
+        {
+          "id": "9f2b7c10-3002-4a10-9a01-000000003002",
+          "name": "branch",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "branch",
+            "claim.name": "branch",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        },
+        {
+          "id": "9f2b7c10-3003-4a10-9a01-000000003003",
+          "name": "node",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "node",
+            "claim.name": "node",
+            "jsonType.label": "String",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "identityProviders": [],
+  "identityProviderMappers": [],
+  "authenticationFlows": [],
+  "authenticatorConfig": [],
+  "eventsEnabled": true,
+  "eventsExpiration": 7776000,
+  "eventsListeners": [
+    "jboss-logging"
+  ],
+  "enabledEventTypes": [
+    "LOGIN",
+    "LOGIN_ERROR",
+    "LOGOUT",
+    "REGISTER",
+    "UPDATE_PASSWORD",
+    "UPDATE_TOTP",
+    "REMOVE_TOTP",
+    "GRANT_CONSENT",
+    "UPDATE_CONSENT",
+    "REVOKE_GRANT",
+    "TOKEN_EXCHANGE",
+    "PERMISSION_TOKEN",
+    "IDENTITY_PROVIDER_LINK_ACCOUNT",
+    "CUSTOM_REQUIRED_ACTION",
+    "UPDATE_CREDENTIAL",
+    "REMOVE_CREDENTIAL"
+  ],
+  "adminEventsEnabled": true,
+  "adminEventsDetailsEnabled": true,
+  "userManagedAccessAllowed": false,
+  "attributes": {
+    "cibaBackchannelTokenDeliveryMode": "poll",
+    "cibaExpiresIn": "120",
+    "cibaAuthRequestedUserHint": "login_hint",
+    "oauth2DeviceCodeLifespan": "600",
+    "parRequestUriLifespan": "60",
+    "cibaInterval": "5",
+    "frontendUrl": "",
+    "dizi.contract": "packages/contracts/openapi.json → x-dizi-roles",
+    "dizi.provisionedBy": "infra/keycloak/provision.mjs",
+    "dizi.purpose": "P0-205 / ticket #24. Nine legacy staff roles plus a read-only inspection role; enrolment forced by the realm rather than requested by a screen."
+  }
+}

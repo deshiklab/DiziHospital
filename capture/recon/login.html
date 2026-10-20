@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="en" data-preset="clinical"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Hospital &amp; Research Center</title>
+<link rel="shortcut icon" href="https://demo.smart-hospital.in/uploads/hospital_content/logo/0mini_logo.png" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Roboto:wght@400;500;700;900&amp;family=Nunito:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://demo.smart-hospital.in/backend/css/sh-tokens.css">
+<link rel="stylesheet" href="https://demo.smart-hospital.in/backend/css/sh-login.css">
+<style id="sh-theme-vars">
+/* Theme Studio per-request overlay. Higher source order than sh-tokens.css
+   variant-a/b/c blocks; same specificity (body[class*="variant-"]) so this wins. */
+:root { --text-scale: 1; }
+body[class*="variant-"] {
+  --bg: #F7FAFC;
+  --surface: #FFFFFF;
+  --surface-2: #F1F5F9;
+  --surface-3: #E2E8F0;
+  --ink: #0F172A;
+  --ink-2: #334155;
+  --muted: #64748B;
+  --faint: #94A3B8;
+  --border: #E2E8F0;
+  --border-light: #F1F5F9;
+  --border-strong: #CBD5E1;
+  --accent: #00B5AD;
+  --accent-ink: #FFFFFF;
+  --accent-soft: rgba(0,181,173,0.14);
+  --accent-dark: #009C95;
+  --link: #00B5AD;
+  --link-2: #009C95;
+  --rowhover: #F1F5F9;
+  --rail: #FFFFFF;
+  --rail-ink: #64748B;
+  --rail-ink-active: #0F172A;
+  --topbar: #FFFFFF;
+  --topbar-ink: #0F172A;
+  --font: 'Roboto', system-ui, -apple-system, sans-serif;
+  --density-y: 0.75rem;
+  --radius: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+}
+/* --text-scale lives on :root so that --fs-* token definitions (also on :root in
+   sh-tokens.css) resolve their var(--text-scale) correctly. Setting it on body would
+   bake in the wrong value when :root computes those tokens. */
+/* --density-y consumption: vertical padding on table cells + card bodies.
+   No-op when var falls back; takes effect when density buttons change the var. */
+.table > :not(caption) > * > * { padding-top: var(--density-y, 0.5rem) !important; padding-bottom: var(--density-y, 0.5rem) !important; }
+.card > .card-body { padding-top: calc(var(--density-y, 0.75rem) * 1.5); padding-bottom: calc(var(--density-y, 0.75rem) * 1.5); }
+</style>
+<script>document.documentElement.setAttribute('data-preset','clinical');</script></head>
+<body class="variant-a" data-preset="clinical">
+
+<div class="lp-wrap">
+
+  <!-- LEFT: Brand / pitch / news -->
+  <div class="lp-brand">
+
+    <div class="lp-logo-row">
+      <div class="lp-logo-mark">
+                  <img src="https://demo.smart-hospital.in/uploads/hospital_content/logo/0mini_logo.png?1791925692" alt="Smart Hospital &amp; Research Center">
+              </div>
+      <div class="lp-logo-name">Smart Hospital &amp; Research Center</div>
+    </div>
+
+    <div class="lp-pitch">
+      <div class="lp-badge"><span class="dot"></span>Admin Portal</div>
+
+              <div class="lp-news">
+          <div class="lp-news-label">What's new in Smart Hospital &amp; Research Center</div>
+                      <div class="lp-news-item">
+                              <div class="lp-news-meta">05 Jan 2026</div>
+                            <h4>National Pharmacist Day</h4>
+                            <p>Celebrated as National Pharmacist Day to appreciate the contributions of pharmacists in patient care, medication...</p>
+              <a href="https://demo.smart-hospital.in/read/national-pharmacist-day" class="lp-news-read-more" target="_blank" rel="noopener">
+                Read More                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"></path></svg>
+              </a>
+            </div>
+                      <div class="lp-news-item">
+                              <div class="lp-news-meta">03 Dec 2025</div>
+                            <h4>International Day of Persons with Disabilities</h4>
+                            <p>Today, communities around the globe mark the International Day of Persons with Disabilities, a day dedicated to...</p>
+              <a href="https://demo.smart-hospital.in/read/international-day-of-persons-with-disabilities" class="lp-news-read-more" target="_blank" rel="noopener">
+                Read More                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"></path></svg>
+              </a>
+            </div>
+                      <div class="lp-news-item">
+                              <div class="lp-news-meta">03 Nov 2025</div>
+                            <h4>World Neuroendocrine Cancer Day(Every Stripe Tells a Story)</h4>
+                            <p>World Neuroendocrine Cancer Day is "Every Stripe Tells a Story," focusing on the importance of early diagnosis and the...</p>
+              <a href="https://demo.smart-hospital.in/read/world-neuroendocrine-cancer-dayevery-stripe-tells-a-story" class="lp-news-read-more" target="_blank" rel="noopener">
+                Read More                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"></path></svg>
+              </a>
+            </div>
+                      <div class="lp-news-item">
+                              <div class="lp-news-meta">03 Nov 2025</div>
+                            <h4>Diabetes and Well-being Camps</h4>
+                            <p>The official theme for World Diabetes Day 2025 is "Diabetes and Well-being," with a major focus on creating healthy...</p>
+              <a href="https://demo.smart-hospital.in/read/diabetes-and-well-being-camps" class="lp-news-read-more" target="_blank" rel="noopener">
+                Read More                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"></path></svg>
+              </a>
+            </div>
+                      <div class="lp-news-item">
+                              <div class="lp-news-meta">03 Oct 2025</div>
+                            <h4>Free Dental Treatment Camp</h4>
+                            <p>Free dental treatment for poor people that include simple extractions, temporary fillings and other few treatments.</p>
+              <a href="https://demo.smart-hospital.in/read/free-dental-treatment-camp" class="lp-news-read-more" target="_blank" rel="noopener">
+                Read More                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"></path></svg>
+              </a>
+            </div>
+                  </div>
+          </div>
+
+    <div class="lp-tiny">© 2026 Smart Hospital &amp; Research Center · All rights reserved</div>
+  </div>
+
+  <!-- RIGHT: Login form -->
+  <div class="lp-form-panel">
+    <div class="lp-card">
+      <h2>Admin Login</h2>
+
+            
+      <form action="https://demo.smart-hospital.in/site/login" method="post" class="lp-form">
+        <input type="hidden" name="ci_csrf_token" value="">
+        <div>
+          <label class="lp-label" for="al-username">Username</label>
+          <input type="text" id="al-username" name="username" class="lp-input" placeholder="Username" autocomplete="username" value="">
+          <span class="text-danger"></span>
+        </div>
+
+        <div>
+          <label class="lp-label" for="al-password">Password</label>
+          <input type="password" id="al-password" name="password" class="lp-input" placeholder="••••••••" autocomplete="current-password" value="">
+          <span class="text-danger"></span>
+        </div>
+
+        
+        <div class="lp-meta">
+          <a href="https://demo.smart-hospital.in/site/forgotpassword" class="lp-forgot">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="lp-btn-submit">Sign In</button>
+      </form>
+
+      <div class="lp-demo">
+        <div class="lp-demo-label">Quick demo login</div>
+        <div class="lp-demo-grid">
+          <button type="button" class="lp-demo-btn" style="--demo-c:#0084B4" onclick="fillDemoLogin('superadmin@gmail.com', 'password')">Super Admin</button>
+          <button type="button" class="lp-demo-btn" style="--demo-c:#1bbed3" onclick="fillDemoLogin('jason@gmail.com', 'password')">Admin</button>
+          <button type="button" class="lp-demo-btn" style="--demo-c:#999999" onclick="fillDemoLogin('sonia@gmail.com', 'password')">Doctor</button>
+
+          <button type="button" class="lp-demo-btn" style="--demo-c:#999999" onclick="fillDemoLogin('harry@gmail.com', 'password')">Pharmacist</button>
+          <button type="button" class="lp-demo-btn" style="--demo-c:#e91e63" onclick="fillDemoLogin('belinat@gmail.com', 'password')">Pathologist</button>
+          <button type="button" class="lp-demo-btn" style="--demo-c:#4aa64e" onclick="fillDemoLogin('johnhook@gmail.com', 'password')">Radiologist</button>
+
+          <button type="button" class="lp-demo-btn" style="--demo-c:#079fb7" onclick="fillDemoLogin('bradf@gmail.com', 'password')">Accountant</button>
+          <button type="button" class="lp-demo-btn" style="--demo-c:#0084B4" onclick="fillDemoLogin('maria@gmail.com', 'password')">Receptionist</button>
+          <button type="button" class="lp-demo-btn" style="--demo-c:#1bbed3" onclick="fillDemoLogin('april@gmail.com', 'password')">Nurse</button>
+        </div>
+      </div>
+
+      <div class="lp-card-alt lp-alt-row">
+        <a href="https://demo.smart-hospital.in/site/userlogin" target="_blank" rel="noopener" class="lp-back-link">User Login</a>
+        <a href="https://demo.smart-hospital.in" target="_blank" rel="noopener" class="lp-back-link">Front Site</a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+function refreshCaptcha() {
+  fetch('https://demo.smart-hospital.in/site/refreshCaptcha', { method: 'POST' })
+    .then(function(r){ return r.text(); })
+    .then(function(html){ document.getElementById('captcha_image').innerHTML = html; });
+}
+
+function fillDemoLogin(username, password) {
+  document.getElementById('al-username').value = username;
+  document.getElementById('al-password').value = password;
+}
+</script>
+
+
+</body></html>

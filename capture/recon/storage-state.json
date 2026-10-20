@@ -1,0 +1,25 @@
+{
+  "cookies": [
+    {
+      "name": "ci_session",
+      "value": "ci49c1ik4idvqpt9vphqglff1m",
+      "domain": "demo.smart-hospital.in",
+      "path": "/",
+      "expires": 1791932901.551462,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://demo.smart-hospital.in",
+      "localStorage": [
+        {
+          "name": "admin_notif_last_check",
+          "value": "2026-10-13T21:08:18.399Z"
+        }
+      ]
+    }
+  ]
+}

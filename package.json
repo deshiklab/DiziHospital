@@ -1,0 +1,42 @@
+{
+  "name": "dizihospital",
+  "private": true,
+  "version": "0.1.0",
+  "description": "DiziHospital \u2014 modern hospital management platform (monorepo root)",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "services/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "tokens:build": "npm run build --workspace @dizi/tokens",
+    "tokens:check": "npm run check --workspace @dizi/tokens",
+    "clean-room": "node tools/ci/clean-room.mjs",
+    "check:classes": "node tools/ci/display-order.mjs",
+    "check:env": "node tools/ci/public-env.mjs",
+    "contract:build": "npm run build --workspace @dizi/contracts",
+    "contract:check": "npm run check --workspace @dizi/contracts",
+    "contract:test": "npm run self-test --workspace @dizi/contracts",
+    "verify": "npm run contract:check && npm run contract:test && npm run clean-room && npm run tokens:check && npm run check:classes && npm run check:env && npm run api:calls && npm run test:reconciliation",
+    "test:shell": "node tools/test/shell-nav.mjs",
+    "test:runtime": "node tools/test/runtime.mjs",
+    "test:rules": "node tools/test/duplicate-rules.mjs",
+    "test:finance": "node tools/test/finance.mjs",
+    "test:reports": "node tools/test/reports.mjs",
+    "test:admin": "node tools/test/admin.mjs",
+    "test:p8": "node tools/test/p8.mjs",
+    "api:lint": "node tools/ci/php-lint.mjs",
+    "api:style": "node tools/ci/php-style.mjs",
+    "test:grid": "node tools/test/grid.mjs",
+    "test:auth": "node tools/test/auth.mjs",
+    "perf:grid": "node tools/perf/grid.mjs",
+    "api:calls": "node tools/ci/php-calls.mjs",
+    "test:appointments": "node tools/test/appointments.mjs",
+    "test:messaging": "node tools/test/messaging.mjs",
+    "test:reconciliation": "node tools/test/reconciliation.mjs"
+  }
+}

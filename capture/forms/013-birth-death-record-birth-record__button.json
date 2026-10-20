@@ -1,0 +1,660 @@
+{
+ "pageId": "013-birth-death-record-birth-record",
+ "pageLabel": "Birth & Death Record › Birth Record",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/birthordeath",
+ "from": "https://demo.smart-hospital.in/admin/birthordeath",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/birthordeath",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Birth Record",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Birth Record",
+   "Add Birth Record",
+   "Birth Record Details",
+   "Attachments",
+   "Birth Record Details",
+   "Edit Birth Record",
+   "Birth Record Details",
+   "Attachments",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formadd",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Child Name",
+      "name": "child_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Gender",
+      "name": "gender",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Male",
+       "Female"
+      ]
+     },
+     {
+      "label": "Weight",
+      "name": "weight",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Birth Date",
+      "name": "birth_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Phone",
+      "name": "contact",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Case ID",
+      "name": "case_id",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Mother Name",
+      "name": "mother",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Father Name",
+      "name": "father_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Address",
+      "name": "address",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Report",
+      "name": "birth_report",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Blood Group",
+      "name": "custom_fields[birth_report][12]",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "1",
+       "2"
+      ]
+     },
+     {
+      "label": "child_img",
+      "name": "child_img",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "first_img",
+      "name": "first_img",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "second_img",
+      "name": "second_img",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "document",
+      "name": "document",
+      "type": "file",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formedit",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Child Name",
+      "name": "child_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Gender",
+      "name": "gender",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Male",
+       "Female"
+      ]
+     },
+     {
+      "label": "Weight",
+      "name": "weight",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Birth Date",
+      "name": "birth_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Phone",
+      "name": "contact",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Case ID",
+      "name": "case_id",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Mother Name",
+      "name": "mother",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Father Name",
+      "name": "father_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Address",
+      "name": "address",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Report",
+      "name": "birth_report",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "child_img",
+      "name": "child_img",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "mother_pic",
+      "name": "mother_pic",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "father_pic",
+      "name": "father_pic",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "document",
+      "name": "document",
+      "type": "file",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "birthTable",
+    "rows": 22,
+    "columns": [
+     "Reference No",
+     "Case ID",
+     "Generated By",
+     "Child Name",
+     "Gender",
+     "Birth Date",
+     "Mother Name",
+     "Father Name",
+     "Blood Group",
+     "Report",
+     "Action"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Birth Record Add Birth Record",
+   "Birth Record Details",
+   "Attachments",
+   "Birth Record Details",
+   "Attachments"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Add Birth Record",
+    "href": "javascript:void(0)",
+    "target": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Add Birth Record",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "013-birth-death-record-birth-record__button.jpg"
+}

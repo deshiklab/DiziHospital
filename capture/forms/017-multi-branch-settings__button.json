@@ -1,0 +1,225 @@
+{
+ "pageId": "017-multi-branch-settings",
+ "pageLabel": "Multi Branch › Settings",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/multibranch/branch",
+ "from": "https://demo.smart-hospital.in/admin/multibranch/branch",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/multibranch/branch",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Setting",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Setting",
+   "Add New Branch",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/add",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Purchase Code *",
+      "name": "purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Branch name *",
+      "name": "branch_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Host Name *",
+      "name": "host_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Database Name *",
+      "name": "database",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Username *",
+      "name": "username",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Password *",
+      "name": "password",
+      "type": "password",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 3,
+    "columns": [
+     "Branch",
+     "URL",
+     "Action"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Setting Add New Branch"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Add New Branch",
+    "href": "",
+    "target": "#addModal"
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "017-multi-branch-settings__button.jpg"
+}

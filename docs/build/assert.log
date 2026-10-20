@@ -1,0 +1,5 @@
+paths: 394 distinct images, 394 verified, 0 missing, 0 unreadable
+browser: 405/405 images decoded, 0 broken
+pdf: 381 pages, 427 embedded images (guide declares 405 img tags)
+
+PASSED - every screenshot is present, readable and rendered

@@ -1,0 +1,290 @@
+{
+ "id": "035-certificate-patient-id-card",
+ "label": "Certificate › Patient ID Card",
+ "url": "https://demo.smart-hospital.in/admin/generatepatientidcard/",
+ "section": "TOOLS & CONTENT",
+ "parent": "Certificate",
+ "ok": true,
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/generatepatientidcard/",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Generate Patient ID Card",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Generate Patient ID Card",
+   "Patient List",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "form1",
+    "fields": [
+     {
+      "label": "Patient",
+      "name": "patient_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "All",
+       "AADI(1171)",
+       "Aadi jain(1179)",
+       "Aadish Mody(1072)",
+       "AANU(1233)",
+       "AANU(1234)",
+       "Aaron Hardie(1145)",
+       "Adam Battye(1129)",
+       "Adam Driscoll(1135)",
+       "Aditya Mannan(1073)",
+       "Alfred(987)",
+       "Alisha Knowles(896)",
+       "AMAN(1187)",
+       "Aman Barma(1168)",
+       "AMIT(1232)",
+       "Amit Deshpande(954)",
+       "ANANTA(1195)",
+       "Angela Clark(873)",
+       "Ankit Singh(493)",
+       "ANU(1212)",
+       "Anushka sanjeewani(1147)",
+       "ARJUN(1231)",
+       "ARMAAN(1208)",
+       "Arpit(1180)",
+       "Arthur Wood(872)"
+      ]
+     },
+     {
+      "label": "ID Card Template",
+      "name": "patient_id_card",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Sample Patient Id Card",
+       "Patient Id Card"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/Generatepatientidcard/generatemultiple",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "",
+      "name": "",
+      "type": "checkbox",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "cls": "table table-striped table-bordered table-hover ajaxlist dataTable no-footer",
+    "rows": 2,
+    "columns": [
+     "",
+     "Patient Name",
+     "Age",
+     "Gender",
+     "Phone",
+     "Guardian Name",
+     "Address"
+    ],
+    "sample": [
+     [
+      "No data available in table Add new recor"
+     ]
+    ]
+   }
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "ID Card Template",
+    "href": "https://demo.smart-hospital.in/admin/patientidcard/",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Search",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Generate",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   }
+  ],
+  "tabs": [],
+  "filters": [
+   "Filter Menu",
+   "Search By Patient Name",
+   "Type to searchâ€¦",
+   "patient_id",
+   "patient_id_card",
+   "envato_market_purchase_code",
+   "email",
+   "app-envato_market_purchase_code",
+   "app-email"
+  ],
+  "sections": [
+   "Generate Patient ID Card ID Card Template",
+   "Patient List Generate"
+  ],
+  "stats": [],
+  "addLinks": [
+   {
+    "text": "Add Patient Patient List",
+    "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+   },
+   {
+    "text": "New OPD Patient OPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+   },
+   {
+    "text": "New IPD Patient IPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+   },
+   {
+    "text": "New Appointment Appointment",
+    "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+   },
+   {
+    "text": "New Bill Bill",
+    "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+   },
+   {
+    "text": "New Pharmacy Bill Pharmacy Bill",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+   },
+   {
+    "text": "New Pathology Test Pathology Test",
+    "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Radiology Test Radiology Test",
+    "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Blood Issue Blood Issue",
+    "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+   },
+   {
+    "text": "New Ambulance Call Ambulance Call",
+    "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+   },
+   {
+    "text": "New Visitor Visitor",
+    "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+   },
+   {
+    "text": "New Income Income",
+    "href": "https://demo.smart-hospital.in/admin/income?action=add"
+   },
+   {
+    "text": "New Expense Expense",
+    "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+   }
+  ],
+  "hasChart": false
+ }
+}

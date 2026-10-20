@@ -1,0 +1,366 @@
+{
+ "pageId": "015-multi-branch-overview",
+ "pageLabel": "Multi Branch › Overview",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/multibranch/branch/overview",
+ "from": "https://demo.smart-hospital.in/admin/multibranch/branch/overview",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/multibranch/branch/overview",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Overview",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Overview",
+   "Appointment",
+   "OPD - Out Patient",
+   "IPD - In Patient",
+   "Operation Theatre",
+   "Pharmacy",
+   "Pathology",
+   "Radiology",
+   "Blood Donor Transactions",
+   "Blood Issue Transactions",
+   "Component Issue Transactions",
+   "Ambulance",
+   "Birth Record",
+   "Death Record",
+   "Staff Attendance",
+   "Payroll",
+   "Transactions",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/overview",
+    "method": "post",
+    "name": "",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Time Duration",
+      "name": "search_type",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Today",
+       "This Week",
+       "Last Week",
+       "This Month",
+       "Last Month",
+       "Last 3 Months",
+       "Last 6 Months",
+       "Last 12 Months",
+       "This Year",
+       "Last Year",
+       "Period"
+      ]
+     },
+     {
+      "label": "Date From",
+      "name": "date_from",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Date To",
+      "name": "date_to",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Online Appointment",
+     "Online Amount ($)",
+     "Offline Appointment",
+     "Offline Amount ($)",
+     "Total Appointments",
+     "Total Amount ($)"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Total OPD",
+     "Total Visit",
+     "Total Amount ($)",
+     "Total Paid ($)"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Patient Count",
+     "Total IPD",
+     "Total Amount ($)",
+     "Total Paid ($)"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Patient Count",
+     "Total Operation"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Patient Count",
+     "Total Amount ($)",
+     "Total Paid ($)",
+     "Total Refund ($)"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Patient Count",
+     "Total Amount ($)",
+     "Total Paid ($)"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Patient Count",
+     "Total Amount ($)",
+     "Total Paid ($)"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Patient Count",
+     "Total Amount ($)",
+     "Total Paid ($)"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Patient Count",
+     "Total Amount ($)",
+     "Total Paid ($)"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Patient Count",
+     "Total Amount ($)",
+     "Total Paid ($)"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Patient Count",
+     "Total Amount ($)",
+     "Total Paid ($)"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Total Birth"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Total Death"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Total Staff",
+     "Total Present",
+     "Total Absent"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Total Staff",
+     "Payroll Generated",
+     "Payroll Paid",
+     "Net Payroll Amount ($)",
+     "Payroll Paid ($)"
+    ]
+   },
+   {
+    "id": "",
+    "rows": 4,
+    "columns": [
+     "Branch",
+     "Patient Count",
+     "Online Paid ($)",
+     "Offline Paid ($)",
+     "Total Refund ($)",
+     "Total ($)"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Overview"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Search",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": []
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "015-multi-branch-overview__button.jpg"
+}

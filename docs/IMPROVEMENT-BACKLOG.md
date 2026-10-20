@@ -1,0 +1,148 @@
+# Improvement Backlog — DiziHospital / Smart Hospital
+
+Findings from the full application exploration (76 screens, all forms, all roles, public site) and a prioritised plan for
+the next phase. Every item references evidence: the screenshot id is the file name in `docs/assets/screens/`.
+
+**Priority key** — `P0` blocking/risky, `P1` high value, `P2` valuable, `P3` nice to have.
+**Size** — `S` ≤ 1 day, `M` 2–5 days, `L` 1–3 weeks, `XL` > 3 weeks.
+
+---
+
+## 1. What the product already does well (protect these)
+
+| Strength | Evidence |
+|---|---|
+| Complete hospital ERP surface — registration, OPD, IPD, pharmacy, lab, imaging, blood bank, ambulance, HR, finance, reports, CMS, telemedicine | `001` … `076` catalogued screens |
+| Genuine clinical depth (vitals, obstetric history, ICD-10, findings libraries, batch prescriptions) | `005-opd-out-patient`, `006-ipd-in-patient` |
+| Nine granular staff roles driven by real menu/screen permissions | role dashboards captured in `docs/FEATURE-CATALOG.md` §4 |
+| Analytics on the landing page (KPIs, 12-month trend, module income donut, live activity) | `001-dashboard` |
+| Legal + statutory coverage (birth/death registers, certificates, ID cards, print header/footer per module) | `013`, `014`, `034`, `035`, `036`, `059` |
+| Multi-branch operation with consolidated overview and comparative reporting | `015`, `016`, `017` |
+| Modern public website + patient portal served by the same installation | front-site capture |
+
+---
+
+## 2. Findings & backlog
+
+### 2.1 Correctness, trust and data integrity
+
+| # | Finding (evidence) | Why it matters | Fix | Pri | Size |
+|---|---|---|---|---|---|
+| A1 | Dashboard tile arithmetic is inconsistent: *Bed occupancy 56%* vs *30 / 54*, and the same card says *24 Available · 30 Allotted · 0 Unused* (`001-dashboard`) | Numeric contradictions destroy trust in every other number | Centralise KPI computation in one service; add server-side tests for each KPI; show "as of" timestamp | **P0** | M |
+| A2 | Mixed currency presentation — the demo shows `$` on all money columns (`001`, `003`, `025`, `026`) while the product is used mostly in INR markets | Wrong invoices/reports for the payer | Make currency symbol/locale a single setting; format through one helper; add thousand/lakh formatting option | **P0** | S |
+| A3 | Outstanding-bills tile shows *171 Unpaid · 67 Overdue* but *Today's appointments 0* with an empty grid (`001`, `004`) — empty-state vs zero-state are conflated | Users cannot tell "no data" from "not loaded" | Distinguish empty states with explicit messaging + "why is this empty" hint | P1 | S |
+| A4 | Terminology drift in navigation: "Complain" (should be *Complaint*), "Overview" vs "Overview ", inconsistent Title Case, "Birth & Death Record" group holding a "Birth Record" duplicate (`012`, `015`, nav.json) | Professionalism + searchability | Ship a terminology pass + i18n key review | P1 | S |
+| A5 | Duplicated destructive actions: *Delete Selected* on list screens with no confirmation summary of what will be deleted (`002-patient`) | Accidental loss of clinical records | Two-step delete with count preview + soft-delete default + restore view | **P0** | M |
+| A6 | Character-encoding defects in the IPD patient header — `Â·` mojibake and a raw `&mdash;` entity are printed where separators belong (`detail-ipd-profile.jpg`) | Looks unprofessional on the screen a clinician opens most; same class of bug can corrupt names/addresses | Force UTF-8 end to end (PHP output, DB connection charset, HTML meta), escape once only, add a smoke test asserting no raw entities in rendered pages | **P0** | S |
+| A7 | A stray literal **"2"** is rendered as a button/link on almost every list screen (visible in every captured profile, e.g. `002-patient`, `018-human-resource`) — a badge/count leaking into the DOM as an action label | Confusing affordance; screen-reader noise | Trace the label (likely a notification count template), give it a proper accessible name or render an icon with `aria-label` | P1 | S |
+| A8 | Field/column naming typos reach the UI: `refference` in the OPD/IPD form field names, "Complain" instead of "Complaint" (`005`, `012`) | Data exports and integrations inherit the typos | Terminology + field-name cleanup pass with a migration-safe alias map | P2 | S |
+
+### 2.2 Clinical & operational workflow gaps
+
+| # | Gap | Impact | Proposal | Pri | Size |
+|---|---|---|---|---|---|
+| B1 | No visible patient queue/token display for waiting rooms; *Queue* exists inside Appointment only (`004`) | Reception crowding, no patient self-visibility | Add a queue/token board screen (TV mode) with live status per doctor/counter | P1 | M |
+| B2 | No bed-transfer / bed-board interaction in the captured UI (`058` is a status list) | Nurses phone the desk to move patients | Drag-and-drop bed board with transfer history and housekeeping status (clean/dirty/blocked) | P1 | L |
+| B3 | Lab workflow has no barcode/specimen tracking or instrument interface (`008`) | Sample mix-ups, manual transcription | Specimen barcode + analyzer (HL7/ASTM) interface + critical-value alerting with acknowledgement | P1 | XL |
+| B4 | Discharge summary / OT notes templates are not visible as structured documents (`006`, `061`, `055`) | Doctors retype; medico-legal risk | Template engine with specialty packs, versioning, e-sign and print/PDF | P1 | L |
+| B5 | No consent forms, no patient allergy/interaction checking in pharmacy (`007`) | Patient safety | Allergy/intolerance register + interaction warnings at prescription and dispense time | **P0** | L |
+| B6 | No appointment reminders or no-show handling visible (`004`, `029`, `004` online queue) | Revenue leakage (no-shows ~15–25%) | SMS/WhatsApp/e-mail reminder ladder, confirm/decline links, waitlist auto-fill | P1 | M |
+| B7 | Blood bank has stock and issue but no cross-match/antibody record screens captured (`010`) | Transfusion safety | Cross-match worksheet, reaction reporting, donor deferral register | P1 | L |
+| B8 | No ambulance dispatch tracking (driver app/GPS) — only a call register (`011`) | Emergency response visibility | Live dispatch board + ETA + vehicle status, optional driver mobile link | P2 | L |
+| B9 | No structured referral/transfer-out letter between branches or hospitals (`023`, `015`) | Continuity of care | Referral document with clinical summary attached to the case | P2 | M |
+
+### 2.3 Money and billing
+
+| # | Gap | Impact | Proposal | Pri | Size |
+|---|---|---|---|---|---|
+| C1 | No online payment capture in the admin billing screens captured (`003`) | Patients must pay at the counter | Payment-gateway integration (UPI/card/netbanking) with reconciliation report | P1 | L |
+| C2 | Outstanding/overdue bills have no dunning workflow (`001` tile only) | Slow collections | Ageing buckets, statement generation, reminder schedule, write-off approval flow | P1 | M |
+| C3 | Insurance/TPA is a register, not a claim pipeline (`024`, `051`) | Claims delayed/rejected | Claim status workflow, document checklist, shortfall tracking, submission log | P1 | L |
+| C4 | No GST/e-invoice compliance artefacts visible on bills (`003`, `059`) | Statutory risk in India | GST fields per charge head, HSN/SAC, tax invoice format, e-invoice export | P2 | L |
+| C5 | No financial close/period locking or expense approval chain (`025`, `026`) | Books can be edited after closing | Period close + approval workflow + immutable audit of edits | P1 | M |
+
+### 2.4 Experience, design and accessibility
+
+| # | Finding (evidence) | Impact | Fix | Pri | Size |
+|---|---|---|---|---|---|
+| D1 | 76 screens, many list screens with 8–15 near-identical forms in the DOM (all modals pre-rendered: `002` shows 5 forms, `038`/`039` show 31/34 forms) | Slow pages, fragile DOM, hard to maintain | Lazy-render modals; split screens; introduce a component library with consistent patterns | P1 | L |
+| D2 | Global patient search matches name only (`002`, header) | Staff cannot find patients by ID/phone (the most reliable identifiers) | Extend to MR number, phone, guardian name, with fuzzy match and recent results | **P0** | S |
+| D3 | Filter/search controls reset when you return from a record (typical DataTables client-side state) | Repetitive work per patient | Persist filters in URL/session; remember last view per user | P1 | M |
+| D4 | Accessibility: icon-only controls without accessible names, low-contrast badges/status pills, inconsistent focus outlines, table headers not scoped (observed across all screens) | WCAG failure, poor for low-vision staff | Accessibility pass: names/roles, contrast tokens, focus rings, `scope` on headers, modal focus trap | P1 | M |
+| D5 | No keyboard shortcuts or command palette; power users click through menus (`sh-sidenav`) | Slow for heavy users (billing/lab) | Command palette (Ctrl-K) + screen shortcuts + barcode/scan-to-search | P2 | M |
+| D6 | No dark mode / high-contrast theme for night shifts (a `--sh-theme-vars` token block exists but no toggle) | Eye strain on night duty | Ship theme toggle wired to the existing token layer, honour `prefers-color-scheme` | P2 | S |
+| D7 | Print/PDF output uses per-module headers; no unified preview (`059`) | Surprise formatting on real paper | WYSIWYG print preview + template validation before saving | P2 | M |
+| D8 | Mobile: admin screens are desktop-first (fixed 1440 layout, wide tables) | Doctors/nurses work on phones/tablets | Responsive table pattern (card mode), touch targets, PWA shell | P1 | L |
+
+### 2.5 Platform, integration and scale
+
+| # | Gap | Impact | Proposal | Pri | Size |
+|---|---|---|---|---|---|
+| E1 | No API layer found for the admin app (server-rendered CodeIgniter views + jQuery) | Blocks mobile apps, kiosks, partner integrations | Versioned REST/JSON API with token auth, OpenAPI spec, rate limits | P1 | XL |
+| E2 | No webhook/event bus for external systems (`029` is a notice board) | Cannot integrate with HIS/LIS/PACS/ERP | Event outbox (patient.created, bill.paid, report.ready) + webhooks | P2 | L |
+| E3 | Legacy stack (PHP/CodeIgniter + jQuery, vendor-maintained) | Hiring and security updates | Decide: harden current stack vs. strangler-pattern re-platform; document decision record | P1 | XL |
+| E4 | Security hardening gaps: two-factor authentication **exists** (Google Authenticator, see `docs/help-library/two-factor-authentication/`) but is optional and per-user, and there is no password-policy UI, no session/IP register, no login throttling and no forced enrolment for privileged roles (`/site/login`) | Breach and compliance risk | Enforce 2FA for Super Admin/Admin and for any role that can see billing or clinical records, add recovery codes, password policy, login throttling, session register and admin action audit | **P0** | L |
+| E11 | Notification delivery (e-mail/SMS/WhatsApp/mobile push) is configured per event, but there is no delivery log, retry or failure alerting surfaced in the product (`docs/help-library/system-settings/`, `whatsapp-messaging/`) | Reminders and credentials silently fail to send | Delivery log with status/error per message, automatic retry with backoff, provider failover and a daily failure digest | P1 | M |
+| E12 | WhatsApp is one-way (template notifications); patient replies are not captured into the app | Patients reply "CONFIRM"/"cancel" and nothing happens | Two-way WhatsApp/webhook inbox linked to the appointment and case, with opt-in/opt-out handling | P2 | L |
+| E13 | The Android app and its push channel are documented by the vendor but not covered by our screen-level catalogue or by any in-repo test | Mobile regressions invisible; parity unknown | Add the Android app to the coverage map: capture its screens, document feature parity with the web app and add smoke tests | P2 | L |
+| E5 | Vendor licence validation screen in the super-admin shell (`001` footer modals: *Register your purchase code*, *Register your Addon*) | SaaS/productisation blocker; runtime dependency on vendor licence server | Replace with first-party licensing/feature flags; make it non-blocking for self-hosted builds | P1 | M |
+| E6 | No observability: no health endpoint, structured logs, metrics or error tracking observed | Blind during incidents | Health/readiness endpoints, structured audit + app logs, metrics (latency, errors), alerting | P1 | M |
+| E7 | Backup/restore not exposed in the UI (vendor docs cover manual DB backup only) | Data-loss risk | One-click encrypted backups, retention policy, restore drill, documented RPO/RTO | **P0** | M |
+| E8 | No automated tests / CI in the product | Regressions on every change | Add CI (lint + unit + smoke E2E on the golden-path journeys used for this capture) | P1 | L |
+| E9 | Large datasets: lists are DataTables client-side with default page length 10 (`002`, `018`) | Degrades at hospital scale (100k+ patients) | Server-side pagination/search, DB indexes, query budgets, caching for dashboards | P1 | L |
+| E10 | India digital-health interoperability (ABDM/ABHA, FHIR) absent | Regulatory direction and payer requirements | ABHA creation/linking, FHIR R4 facade for key resources, consent artefact handling | P2 | XL |
+
+### 2.6 Content, portal and communication
+
+| # | Gap | Impact | Proposal | Pri | Size |
+|---|---|---|---|---|---|
+| F1 | Patient portal capture shows only login; self-service depth (reports, bills, rebooking) unverified (`patient-portal-login.jpg`) | Adoption of self-service | Confirm/extend: download reports, pay bills, rebook, family accounts, notification preferences | P2 | M |
+| F2 | Survey forms are admin-defined; no NPS/feedback trigger after discharge (`027`, `028`) | No voice-of-patient loop | Auto-send feedback survey after discharge/payment with KPI dashboard | P2 | M |
+| F3 | Notice board/messaging has no read receipts or escalation (`029`) | Policy notices unverified | Read tracking, acknowledgement-required notices, escalation | P2 | S |
+| F4 | Front CMS content is strong but has no SEO/schema analytics surface in the capture (`037`) | Lost patient acquisition | Health-check for SEO meta, structured data for departments/doctors, analytics hookup | P3 | S |
+| F5 | No patient-facing cost estimate or package pricing on the site/front desk | Price anxiety and disputes | Package/estimate builder (procedure → expected cost) printable for the patient | P2 | M |
+
+---
+
+## 3. Suggested sequence
+
+**Phase 1 — Trust & safety (2–3 weeks, P0 items)**
+A1 KPI correctness · A2 currency/locale · A5 safe delete · B5 allergy & interaction checks · D2 smarter patient search ·
+E4 security baseline (MFA, throttle, session register) · E7 backup/restore.
+
+**Phase 2 — Front-desk velocity (3–4 weeks, high-value P1)**
+B1 queue board · B6 reminders & no-show recovery · C2 collections ageing + statements · D1 page/modals performance ·
+D3 filter persistence · E9 server-side pagination on the biggest lists (patients, bills, lab).
+
+**Phase 3 — Clinical depth (4–6 weeks)**
+B3 lab barcode + analyzer interface · B4 discharge/OT templates · B7 cross-match & reaction reporting · C3 TPA claim pipeline ·
+C1 online payments.
+
+**Phase 4 — Platform (ongoing)**
+E1 API layer + E2 webhooks · E10 ABDM/FHIR · E6 observability · E8 CI/test harness · D8 responsive/PWA.
+
+---
+
+## 3b. Where these items land in the modernization plan
+
+The rebuild in [`docs/plan/`](plan/README.md) absorbs most of this backlog. Mapping so nothing is lost:
+
+| Backlog items | Handled by | When |
+|---|---|---|
+| A1 KPI correctness, A2 currency/locale, A3 empty states, A4 terminology, A6 encoding, A7 stray label | Rebuilt dashboard + design-system content rules | Quick fixes on legacy in **week 1–2**; fully resolved in **P1/P2** |
+| A5 safe delete, A8 field naming | New API write policies + audit ledger + DataGrid bulk-action design | **P1** |
+| B1 queue board, B2 bed board, B6 reminders/no-shows, B9 referral letters | Boards component + notification engine | **P1/P5**, reminders **P2** |
+| B3 lab barcode/analyzer, B5 allergy checks, B7 cross-match | Order composer, safety surfaces, lab adapter | **P3/P4** |
+| B4 discharge/OT templates, B8 ambulance dispatch | Template engine, worklists | **P5** |
+| C1 online payments, C2 collections ageing, C3 TPA pipeline, C4 GST/e-invoice, C5 period close | Revenue-cycle modules | **P2/P6** |
+| D1 DOM/modals, D3 filter persistence, D4 accessibility, D5 command palette, D6 dark mode, D8 responsive/PWA | Design system + AppShell + DataGrid | **P0–P2** |
+| D2 smarter patient search | Patient module with MRN/phone/fuzzy search | **P1** |
+| E1 API, E2 webhooks, E4 security baseline (MFA enforcement), E5 licensing replacement, E6 observability, E7 backups, E8 CI/tests, E9 server-side data | Platform workstream | **P0–P2** |
+| E10 ABDM/FHIR, E11 delivery log, E12 two-way WhatsApp, E13 mobile parity | Interoperability and integration roadmap | **P4 onward / post-programme** |
+| F1 portal depth, F2 feedback surveys, F3 read receipts, F4 SEO, F5 estimates/packages | Patient experience phase | **P8** |
+
+## 4. Definition of done (shared)
+
+Every item above ships with: acceptance criteria written first, automated test where the layer allows it,
+documentation updated in this repo (`docs/`), a screenshot of the new state replacing the old one in `docs/assets/screens/`,
+and an entry in `docs/CHANGELOG.md`.

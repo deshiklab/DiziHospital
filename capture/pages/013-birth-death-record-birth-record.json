@@ -1,0 +1,551 @@
+{
+ "id": "013-birth-death-record-birth-record",
+ "label": "Birth & Death Record › Birth Record",
+ "url": "https://demo.smart-hospital.in/admin/birthordeath",
+ "section": "ADMINISTRATION",
+ "parent": "Birth & Death Record",
+ "ok": true,
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/birthordeath",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Birth Record",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Birth Record",
+   "Add Birth Record",
+   "Birth Record Details",
+   "Attachments",
+   "Birth Record Details",
+   "Edit Birth Record",
+   "Birth Record Details",
+   "Attachments",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formadd",
+    "fields": [
+     {
+      "label": "Child Name",
+      "name": "child_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Gender",
+      "name": "gender",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Male",
+       "Female"
+      ]
+     },
+     {
+      "label": "Weight",
+      "name": "weight",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Birth Date",
+      "name": "birth_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Phone",
+      "name": "contact",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Case ID",
+      "name": "case_id",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Mother Name",
+      "name": "mother",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Father Name",
+      "name": "father_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Address",
+      "name": "address",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Report",
+      "name": "birth_report",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Blood Group",
+      "name": "custom_fields[birth_report][12]",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "1",
+       "2"
+      ]
+     },
+     {
+      "label": "child_img",
+      "name": "child_img",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "first_img",
+      "name": "first_img",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "second_img",
+      "name": "second_img",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "document",
+      "name": "document",
+      "type": "file",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formedit",
+    "fields": [
+     {
+      "label": "Child Name",
+      "name": "child_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Gender",
+      "name": "gender",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Male",
+       "Female"
+      ]
+     },
+     {
+      "label": "Weight",
+      "name": "weight",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Birth Date",
+      "name": "birth_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Phone",
+      "name": "contact",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Case ID",
+      "name": "case_id",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Mother Name",
+      "name": "mother",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Father Name",
+      "name": "father_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Address",
+      "name": "address",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Report",
+      "name": "birth_report",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "child_img",
+      "name": "child_img",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "mother_pic",
+      "name": "mother_pic",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "father_pic",
+      "name": "father_pic",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "document",
+      "name": "document",
+      "type": "file",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "birthTable",
+    "cls": "table table-striped table-bordered table-hover ajaxlist dataTable no-footer",
+    "rows": 22,
+    "columns": [
+     "Reference No",
+     "Case ID",
+     "Generated By",
+     "Child Name",
+     "Gender",
+     "Birth Date",
+     "Mother Name",
+     "Father Name",
+     "Blood Group",
+     "Report",
+     "Action"
+    ],
+    "sample": [
+     [
+      "BREF105",
+      "3005",
+      "Super Admin (9001)",
+      "aamal",
+      "Female",
+      "02/10/2026 04:27 PM",
+      "Emma Watson (642)",
+      "",
+      "1",
+      "",
+      ""
+     ],
+     [
+      "BREF104",
+      "3005",
+      "Super Admin (9001)",
+      "JAY",
+      "Male",
+      "02/09/2026 01:24 PM",
+      "Emma Watson (642)",
+      "",
+      "1",
+      "",
+      ""
+     ]
+    ]
+   }
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Add Birth Record",
+    "href": "javascript:void(0)",
+    "target": "",
+    "onclick": "shModal('myModal').show(); $('.filestyle','#myModal').dropify({height:80});"
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   }
+  ],
+  "tabs": [],
+  "filters": [
+   "Filter Menu",
+   "Search By Patient Name",
+   "Type to searchâ€¦",
+   "birthTable_length",
+   "child_name",
+   "gender",
+   "weight",
+   "birth_date",
+   "contact",
+   "case_id",
+   "mother",
+   "father_name",
+   "address",
+   "custom_fields[birth_report][12]",
+   "child_name",
+   "gender",
+   "weight",
+   "birth_date",
+   "contact",
+   "case_id",
+   "mother",
+   "father_name",
+   "address",
+   "envato_market_purchase_code",
+   "email"
+  ],
+  "sections": [
+   "Birth Record Add Birth Record",
+   "Birth Record Details",
+   "Attachments",
+   "Birth Record Details",
+   "Attachments"
+  ],
+  "stats": [],
+  "addLinks": [
+   {
+    "text": "Add Patient Patient List",
+    "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+   },
+   {
+    "text": "New OPD Patient OPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+   },
+   {
+    "text": "New IPD Patient IPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+   },
+   {
+    "text": "New Appointment Appointment",
+    "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+   },
+   {
+    "text": "New Bill Bill",
+    "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+   },
+   {
+    "text": "New Pharmacy Bill Pharmacy Bill",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+   },
+   {
+    "text": "New Pathology Test Pathology Test",
+    "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Radiology Test Radiology Test",
+    "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Blood Issue Blood Issue",
+    "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+   },
+   {
+    "text": "New Ambulance Call Ambulance Call",
+    "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+   },
+   {
+    "text": "New Visitor Visitor",
+    "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+   },
+   {
+    "text": "New Income Income",
+    "href": "https://demo.smart-hospital.in/admin/income?action=add"
+   },
+   {
+    "text": "New Expense Expense",
+    "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+   },
+   {
+    "text": "Add Birth Record",
+    "href": "javascript:void(0)"
+   }
+  ],
+  "hasChart": false
+ }
+}

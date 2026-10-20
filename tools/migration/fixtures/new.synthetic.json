@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "planId": "synthetic-p0-406-v1",
+  "source": "new",
+  "snapshotId": "new-fixture-20261020-01",
+  "capturedAt": "2026-10-20T02:04:00.000Z",
+  "scope": {
+    "branch": "synthetic-branch-a",
+    "period": {
+      "from": "2026-10-19T00:00:00.000Z",
+      "to": "2026-10-20T00:00:00.000Z"
+    },
+    "entities": ["appointments", "invoices", "inventory", "patients"]
+  },
+  "entities": {
+    "appointments": {
+      "category": "clinical",
+      "count": 3,
+      "byStatus": { "booked": 1, "cancelled": 1, "checked-in": 1 },
+      "totals": {}
+    },
+    "invoices": {
+      "category": "financial",
+      "count": 2,
+      "byStatus": { "open": 1, "paid": 1 },
+      "totals": {
+        "gross": { "kind": "money", "currency": "BDT", "minorUnits": "125000" },
+        "paid": { "kind": "money", "currency": "BDT", "minorUnits": "100000" }
+      }
+    },
+    "inventory": {
+      "category": "inventory",
+      "count": 2,
+      "byStatus": { "available": 2 },
+      "totals": {
+        "onHand": { "kind": "quantity", "unit": "each", "value": "42.50" }
+      }
+    },
+    "patients": {
+      "category": "clinical",
+      "count": 2,
+      "byStatus": { "active": 2 },
+      "totals": {}
+    }
+  }
+}

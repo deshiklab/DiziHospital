@@ -1,0 +1,76 @@
+2026-10-13T21:44:46.182Z login -> https://demo.smart-hospital.in/admin/admin/dashboard
+2026-10-13T21:44:46.369Z detail walk: opd
+2026-10-13T21:44:48.404Z detail: no link matching action=profile|/patient/view/|/patient/profile on https://demo.smart-hospital.in/admin/patient/search
+2026-10-13T21:44:48.404Z detail walk: ipd
+2026-10-13T21:44:50.317Z detail: opening https://demo.smart-hospital.in/admin/patient/ipdprofile/138/1
+2026-10-13T21:44:55.751Z   tab captured: Overview
+2026-10-13T21:44:57.099Z   tab captured: Nurse Notes
+2026-10-13T21:44:58.446Z   tab captured: Medication
+2026-10-13T21:44:59.795Z   tab captured: Prescription
+2026-10-13T21:45:01.172Z   tab captured: Consultant Register
+2026-10-13T21:45:02.528Z   tab captured: Lab Investigation
+2026-10-13T21:45:03.895Z   tab captured: Operations
+2026-10-13T21:45:05.263Z   tab captured: Charges
+2026-10-13T21:45:05.263Z detail walk: appointment
+2026-10-13T21:45:07.388Z detail: no link matching appointment/edit|/appointment/view on https://demo.smart-hospital.in/admin/appointment/index
+2026-10-13T21:45:07.389Z detail walk: staff
+2026-10-13T21:45:09.302Z detail: no link matching /staff/view/ on https://demo.smart-hospital.in/admin/staff
+2026-10-13T21:45:09.302Z detail walk: patient-master
+2026-10-13T21:45:11.194Z detail: opening https://demo.smart-hospital.in/admin/patient/import
+2026-10-13T21:45:14.181Z detail walk: billing
+2026-10-13T21:45:16.154Z detail: no link matching /bill/view/|action=edit on https://demo.smart-hospital.in/admin/bill/dashboard
+2026-10-13T21:45:16.154Z detail walk: pharmacy
+2026-10-13T21:45:18.053Z detail: no link matching /pharmacy/bill/view|pdf|print on https://demo.smart-hospital.in/admin/pharmacy/bill
+2026-10-13T21:45:18.053Z detail walk: pathology
+2026-10-13T21:45:19.946Z detail: no link matching view|report on https://demo.smart-hospital.in/admin/pathology/gettestreportbatch
+2026-10-13T21:45:19.946Z detail walk: bloodbank
+2026-10-13T21:45:21.844Z detail: no link matching view|detail on https://demo.smart-hospital.in/admin/bloodbankstatus/
+2026-10-13T21:45:21.844Z detail walk: ambulance
+2026-10-13T21:45:23.748Z detail: no link matching view|edit on https://demo.smart-hospital.in/admin/vehicle/getcallambulance
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:45:24.063Z autocommit push attempt 1 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:45:24.666Z autocommit push attempt 2 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:45:25.211Z autocommit push attempt 3 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+To https://github.com/deshiklab/DiziHospital
+ ! [rejected]        HEAD -> arena/ac321db7-dizihospital (non-fast-forward)
+error: failed to push some refs to 'https://github.com/deshiklab/DiziHospital'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+2026-10-13T21:45:25.758Z autocommit push attempt 4 rejected, rebasing…
+error: cannot rebase: You have unstaged changes.
+error: Please commit or stash them.
+fatal: no rebase in progress
+2026-10-13T21:45:26.033Z autocommit gave up (continuing): detail walk complete
+2026-10-13T21:45:26.033Z stage 2 finished
+forms_exit=0

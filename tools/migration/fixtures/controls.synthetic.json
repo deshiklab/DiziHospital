@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "planId": "synthetic-p0-406-v1",
+  "entities": {
+    "appointments": {
+      "category": "clinical",
+      "totals": {}
+    },
+    "invoices": {
+      "category": "financial",
+      "totals": {
+        "gross": { "kind": "money", "currency": "BDT" },
+        "paid": { "kind": "money", "currency": "BDT" }
+      }
+    },
+    "inventory": {
+      "category": "inventory",
+      "totals": {
+        "onHand": { "kind": "quantity", "unit": "each" }
+      }
+    },
+    "patients": {
+      "category": "clinical",
+      "totals": {}
+    }
+  }
+}

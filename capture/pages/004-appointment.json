@@ -1,0 +1,856 @@
+{
+ "id": "004-appointment",
+ "label": "Appointment",
+ "url": "https://demo.smart-hospital.in/admin/appointment/index",
+ "section": "CORE OPERATIONS",
+ "parent": "",
+ "ok": true,
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/appointment/index",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Smart Hospital & Research Center · Smart Hospital",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Add Appointment",
+   "Appointment Details",
+   "Add Patient",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formadd",
+    "fields": [
+     {
+      "label": "patient_id",
+      "name": "patient_id",
+      "type": "select",
+      "required": false,
+      "options": []
+     },
+     {
+      "label": "Doctor",
+      "name": "doctorid",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Sansa Gomez (9008)",
+       "Sonia Bush (9002)"
+      ]
+     },
+     {
+      "label": "Doctor Fees ($)",
+      "name": "amount",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Shift",
+      "name": "global_shift",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Appointment Date",
+      "name": "date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Slot",
+      "name": "slot",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Appointment Priority",
+      "name": "priority",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Normal",
+       "Urgent",
+       "Very Urgent",
+       "Low"
+      ]
+     },
+     {
+      "label": "Status *",
+      "name": "appointment_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Pending",
+       "Approved",
+       "Cancel"
+      ]
+     },
+     {
+      "label": "Discount Percentage",
+      "name": "discount_percentage",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Live Consultant (On Video Conference)",
+      "name": "live_consult",
+      "type": "select",
+      "required": false,
+      "options": [
+       "No",
+       "Yes"
+      ]
+     },
+     {
+      "label": "Payment Mode",
+      "name": "payment_mode",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Cash",
+       "Cheque",
+       "Transfer to Bank Account",
+       "UPI",
+       "Online",
+       "Other"
+      ]
+     },
+     {
+      "label": "Message",
+      "name": "message",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Cheque No",
+      "name": "cheque_no",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Cheque Date",
+      "name": "cheque_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "document",
+      "name": "document",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Alternate Address",
+      "name": "custom_fields[appointment][4]",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "rescheduleform",
+    "fields": [
+     {
+      "label": "Doctor",
+      "name": "",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Amit Singh (9009)",
+       "Reyan Jain (9011)",
+       "Sansa Gomez (9008)",
+       "Sonia Bush (9002)"
+      ]
+     },
+     {
+      "label": "Doctor Fees ($)",
+      "name": "doctor_fees",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Shift",
+      "name": "rglobal_shift",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Appointment Date",
+      "name": "appointment_date",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Slot",
+      "name": "rslot",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Appointment Priority",
+      "name": "priority",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Normal",
+       "Urgent",
+       "Very Urgent",
+       "Low"
+      ]
+     },
+     {
+      "label": "Discount Percentage",
+      "name": "discount_percentage",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Status *",
+      "name": "edit_appointment_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Pending",
+       "Approved",
+       "Cancel"
+      ]
+     },
+     {
+      "label": "Live Consultant (On Video Conference)",
+      "name": "live_consult",
+      "type": "select",
+      "required": false,
+      "options": [
+       "No",
+       "Yes"
+      ]
+     },
+     {
+      "label": "Message",
+      "name": "message",
+      "type": "textarea",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formaddpa",
+    "fields": [
+     {
+      "label": "Name *",
+      "name": "name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Guardian Name",
+      "name": "guardian_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Phone",
+      "name": "mobileno",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Gender",
+      "name": "gender",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Male",
+       "Female"
+      ]
+     },
+     {
+      "label": "Date Of Birth",
+      "name": "dob",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Year",
+      "name": "age[year]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Month",
+      "name": "age[month]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Day",
+      "name": "age[day]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Blood Group",
+      "name": "blood_group",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "B+",
+       "A+",
+       "AB-",
+       "AB+",
+       "O-",
+       "A-",
+       "B-",
+       "O+"
+      ]
+     },
+     {
+      "label": "Marital Status",
+      "name": "marital_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Single",
+       "Married",
+       "Widowed",
+       "Separated",
+       "Not Specified"
+      ]
+     },
+     {
+      "label": "Email",
+      "name": "email",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Address",
+      "name": "address",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "National Identification Number",
+      "name": "identification_number",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "file",
+      "name": "file",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Remarks",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Any Known Allergies",
+      "name": "known_allergies",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "TPA",
+      "name": "organisation_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Medi life2",
+       "Medicare TPA Services (India)",
+       "Family Health Plan (FHPL)",
+       "Raksha Health Insurance",
+       "Paramount Health Services",
+       "LIFE MEDICAL INSURANCE",
+       "Medi Assist",
+       "Health Life Insurance",
+       "Star Health Insurance",
+       "IDBI Federal",
+       "CGHS"
+      ]
+     },
+     {
+      "label": "TPA ID",
+      "name": "insurance_id",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "TPA Validity",
+      "name": "validity",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "Alternate Number",
+      "name": "custom_fields[patient][3]",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "cls": "table table-striped table-bordered table-hover ajaxlist_todays dataTable no-foot",
+    "rows": 2,
+    "columns": [
+     "Patient Name",
+     "Appointment No",
+     "Date",
+     "Phone",
+     "Gender",
+     "Doctor",
+     "Source",
+     "Priority",
+     "Live Consultant",
+     "Alternate Address",
+     "Created By",
+     "Status",
+     "Fees ($)",
+     "Discount (%)",
+     "Paid ($)"
+    ],
+    "sample": [
+     [
+      "No data available in table Add new recor"
+     ]
+    ]
+   },
+   {
+    "id": "DataTables_Table_1",
+    "cls": "table table-striped table-bordered table-hover ajaxlist_upcoming dataTable no-fo",
+    "rows": 25,
+    "columns": [
+     "Patient Name",
+     "Appointment No",
+     "Date",
+     "Phone",
+     "Gender",
+     "Doctor",
+     "Source",
+     "Priority",
+     "Live Consultant",
+     "Alternate Address",
+     "Created By",
+     "Status",
+     "Fees ($)",
+     "Discount (%)",
+     "Paid ($)"
+    ],
+    "sample": [
+     [
+      "Maya Agarwal (1084)",
+      "APPNO7857",
+      "30/10/2026 11:50 PM",
+      "98363535636",
+      "Female",
+      "Sansa Gomez (9008)",
+      "Offline",
+      "Normal",
+      "No",
+      "",
+      "",
+      "Approved",
+      "147.60",
+      "0.00 (0.00 %)",
+      "147.60"
+     ],
+     [
+      "Christy D. Murray (937)",
+      "APPNO7875",
+      "30/10/2026 06:20 PM",
+      "789746464",
+      "Female",
+      "Amit Singh (9009)",
+      "Online",
+      "Normal",
+      "",
+      "",
+      "",
+      "Approved",
+      "123.00",
+      "0.00 (0.00 %)",
+      "147.60"
+     ]
+    ]
+   },
+   {
+    "id": "DataTables_Table_2",
+    "cls": "table table-striped table-bordered table-hover ajaxlist_old dataTable no-footer",
+    "rows": 101,
+    "columns": [
+     "Patient Name",
+     "Appointment No",
+     "Date",
+     "Phone",
+     "Gender",
+     "Doctor",
+     "Source",
+     "Priority",
+     "Live Consultant",
+     "Alternate Address",
+     "Created By",
+     "Status",
+     "Fees ($)",
+     "Discount (%)",
+     "Paid ($)"
+    ],
+    "sample": [
+     [
+      "Cameron Martin (641)",
+      "APPNO7844",
+      "10/10/2026 03:00 PM",
+      "80890787867",
+      "Male",
+      "Sansa Gomez (9008)",
+      "Offline",
+      "Normal",
+      "No",
+      "",
+      "",
+      "Approved",
+      "147.60",
+      "0.00 (0.00 %)",
+      "147.60"
+     ],
+     [
+      "Mahima Shinde (363)",
+      "APPNO7843",
+      "10/10/2026 02:30 PM",
+      "94894161854",
+      "Female",
+      "Reyan Jain (9011)",
+      "Offline",
+      "Normal",
+      "No",
+      "",
+      "",
+      "Approved",
+      "147.60",
+      "0.00 (0.00 %)",
+      "147.60"
+     ]
+    ]
+   }
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Today Appointment",
+    "href": "",
+    "target": "#tab_1",
+    "onclick": ""
+   },
+   {
+    "text": "Upcoming Appointment",
+    "href": "",
+    "target": "#tab_2",
+    "onclick": ""
+   },
+   {
+    "text": "Old Appointment",
+    "href": "",
+    "target": "#tab_3",
+    "onclick": ""
+   },
+   {
+    "text": "Add Appointment",
+    "href": "",
+    "target": "#myModal",
+    "onclick": ""
+   },
+   {
+    "text": "Doctor Wise",
+    "href": "https://demo.smart-hospital.in/admin/onlineappointment/patientschedule",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Queue",
+    "href": "https://demo.smart-hospital.in/admin/onlineappointment/patientqueue",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "New Patient",
+    "href": "",
+    "target": "",
+    "onclick": "holdModal('myModalpa')"
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save & Print",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   }
+  ],
+  "tabs": [
+   "Today Appointment",
+   "Upcoming Appointment",
+   "Old Appointment"
+  ],
+  "filters": [
+   "Filter Menu",
+   "Search By Patient Name",
+   "Type to searchâ€¦",
+   "DataTables_Table_0_length",
+   "DataTables_Table_1_length",
+   "DataTables_Table_2_length",
+   "patient_id",
+   "doctorid",
+   "amount",
+   "global_shift",
+   "date",
+   "slot",
+   "priority",
+   "appointment_status",
+   "discount_percentage",
+   "live_consult",
+   "payment_mode",
+   "cheque_no",
+   "cheque_date",
+   "doctor_fees",
+   "rglobal_shift",
+   "appointment_date",
+   "rslot",
+   "priority",
+   "discount_percentage"
+  ],
+  "sections": [
+   "Today Appointment Upcoming Appointment Old Appointment Add Appointment Doctor Wise Queue"
+  ],
+  "stats": [],
+  "addLinks": [
+   {
+    "text": "Add Patient Patient List",
+    "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+   },
+   {
+    "text": "New OPD Patient OPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+   },
+   {
+    "text": "New IPD Patient IPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+   },
+   {
+    "text": "New Appointment Appointment",
+    "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+   },
+   {
+    "text": "New Bill Bill",
+    "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+   },
+   {
+    "text": "New Pharmacy Bill Pharmacy Bill",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+   },
+   {
+    "text": "New Pathology Test Pathology Test",
+    "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Radiology Test Radiology Test",
+    "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Blood Issue Blood Issue",
+    "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+   },
+   {
+    "text": "New Ambulance Call Ambulance Call",
+    "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+   },
+   {
+    "text": "New Visitor Visitor",
+    "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+   },
+   {
+    "text": "New Income Income",
+    "href": "https://demo.smart-hospital.in/admin/income?action=add"
+   },
+   {
+    "text": "New Expense Expense",
+    "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+   }
+  ],
+  "hasChart": false
+ }
+}

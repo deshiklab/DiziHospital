@@ -1,0 +1,22 @@
+{
+ "id": "07-billing-pharmacy-module",
+ "label": "Billing - Pharmacy module",
+ "url": "/admin/bill/pharmacy",
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/bill/pharmacy",
+  "title": "Smart Hospital & Research Center",
+  "pageTitle": "Page Not Found",
+  "breadcrumb": "",
+  "headings": [
+   "Page Not Found"
+  ],
+  "forms": [],
+  "tables": [],
+  "tabs": [],
+  "sections": [],
+  "buttons": [],
+  "anchors": []
+ },
+ "file": "07-billing-pharmacy-module.jpg"
+}

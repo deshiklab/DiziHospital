@@ -1,0 +1,325 @@
+{
+ "pageId": "061-setup-operations",
+ "pageLabel": "Setup › Operations",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/operationtheatre/index",
+ "from": "https://demo.smart-hospital.in/admin/operationtheatre/index",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/operationtheatre/index",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Operation List",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Operation List",
+   "Add Operation",
+   "Edit Operation",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/operationtheatre/add_multiple_addoperation",
+    "method": "post",
+    "name": "form_add_multiple",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Operation Name",
+      "name": "operation_name_1",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "category_1",
+      "name": "category_1",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "ENT and Oral Surgery",
+       "Gynaecology",
+       "Ophthalmology",
+       "Orthopedic Surgery",
+       "Plastic Surgery",
+       "Thoracic Surgery",
+       "Thoracic Surgery",
+       "Urology"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/operationtheatre/edit",
+    "method": "post",
+    "name": "employeeform",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Operation Name",
+      "name": "edit_operation_name",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "Category",
+      "name": "edit_category",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "ENT and Oral Surgery",
+       "Gynaecology",
+       "Ophthalmology",
+       "Orthopedic Surgery",
+       "Plastic Surgery",
+       "Thoracic Surgery",
+       "Thoracic Surgery",
+       "Urology"
+      ]
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 9,
+    "columns": [
+     "Name",
+     "Category",
+     "Action"
+    ]
+   },
+   {
+    "id": "tableID_vitals",
+    "rows": 2,
+    "columns": [
+     "Operation Name *",
+     "Category *",
+     ""
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Operation List Add Operation"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Add Operation",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Operation",
+    "h": "https://demo.smart-hospital.in/admin/operationtheatre"
+   },
+   {
+    "t": "Operation Category",
+    "h": "https://demo.smart-hospital.in/admin/operationtheatre/category"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "061-setup-operations__button.jpg"
+}

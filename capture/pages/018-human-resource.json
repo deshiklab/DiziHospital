@@ -1,0 +1,299 @@
+{
+ "id": "018-human-resource",
+ "label": "Human Resource",
+ "url": "https://demo.smart-hospital.in/admin/staff",
+ "section": "ADMINISTRATION",
+ "parent": "",
+ "ok": true,
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/staff",
+  "title": "Staff Search · Smart Hospital",
+  "pageTitle": "Staff Directory",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Staff Directory",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/staff",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "Role",
+      "name": "role",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Admin",
+       "Accountant",
+       "Doctor",
+       "Pharmacist",
+       "Pathologist",
+       "Radiologist",
+       "Super Admin",
+       "Receptionist",
+       "Nurse"
+      ]
+     },
+     {
+      "label": "Search By Keyword",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "cls": "table table-striped table-bordered table-hover example dataTable no-footer",
+    "rows": 14,
+    "columns": [
+     "Staff ID",
+     "Name",
+     "Role",
+     "Department",
+     "Designation",
+     "Mobile Number",
+     "Action"
+    ],
+    "sample": [
+     [
+      "9001",
+      "Super Admin",
+      "Super Admin",
+      "",
+      "",
+      "9686576776",
+      ""
+     ],
+     [
+      "9002",
+      "Sonia Bush",
+      "Doctor",
+      "OT",
+      "Doctor",
+      "96464644341",
+      ""
+     ]
+    ]
+   }
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Add Staff",
+    "href": "https://demo.smart-hospital.in/admin/staff/create",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Staff Attendance",
+    "href": "https://demo.smart-hospital.in/admin/staffattendance",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Payroll",
+    "href": "https://demo.smart-hospital.in/admin/payroll",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Leaves",
+    "href": "https://demo.smart-hospital.in/admin/staff/leaverequest",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Search",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Card View",
+    "href": "",
+    "target": "",
+    "onclick": "shStaffSwitchView('card', this)"
+   },
+   {
+    "text": "List View",
+    "href": "",
+    "target": "",
+    "onclick": "shStaffSwitchView('list', this)"
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   }
+  ],
+  "tabs": [],
+  "filters": [
+   "Filter Menu",
+   "Search By Patient Name",
+   "Type to searchâ€¦",
+   "role",
+   "Search By Staff ID, Name, Role etc...",
+   "DataTables_Table_0_length",
+   "envato_market_purchase_code",
+   "email",
+   "app-envato_market_purchase_code",
+   "app-email"
+  ],
+  "sections": [
+   "Staff Directory Add Staff Staff Attendance Payroll Leaves"
+  ],
+  "stats": [],
+  "addLinks": [
+   {
+    "text": "Add Patient Patient List",
+    "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+   },
+   {
+    "text": "New OPD Patient OPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+   },
+   {
+    "text": "New IPD Patient IPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+   },
+   {
+    "text": "New Appointment Appointment",
+    "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+   },
+   {
+    "text": "New Bill Bill",
+    "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+   },
+   {
+    "text": "New Pharmacy Bill Pharmacy Bill",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+   },
+   {
+    "text": "New Pathology Test Pathology Test",
+    "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Radiology Test Radiology Test",
+    "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Blood Issue Blood Issue",
+    "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+   },
+   {
+    "text": "New Ambulance Call Ambulance Call",
+    "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+   },
+   {
+    "text": "New Visitor Visitor",
+    "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+   },
+   {
+    "text": "New Income Income",
+    "href": "https://demo.smart-hospital.in/admin/income?action=add"
+   },
+   {
+    "text": "New Expense Expense",
+    "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+   },
+   {
+    "text": "Add Staff",
+    "href": "https://demo.smart-hospital.in/admin/staff/create"
+   }
+  ],
+  "hasChart": false
+ }
+}

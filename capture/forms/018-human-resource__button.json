@@ -1,0 +1,474 @@
+{
+ "pageId": "018-human-resource",
+ "pageLabel": "Human Resource",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/staff",
+ "from": "https://demo.smart-hospital.in/admin/staff",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/staff",
+  "title": "Staff Search · Smart Hospital",
+  "pageTitle": "Staff Directory",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Staff Directory",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/staff",
+    "method": "post",
+    "name": "",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Role",
+      "name": "role",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Admin",
+       "Accountant",
+       "Doctor",
+       "Pharmacist",
+       "Pathologist",
+       "Radiologist",
+       "Super Admin",
+       "Receptionist",
+       "Nurse"
+      ]
+     },
+     {
+      "label": "Search By Keyword",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 14,
+    "columns": [
+     "Staff ID",
+     "Name",
+     "Role",
+     "Department",
+     "Designation",
+     "Mobile Number",
+     "Action"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Staff Directory Add Staff Staff Attendance Payroll Leaves"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Add Staff",
+    "href": "https://demo.smart-hospital.in/admin/staff/create",
+    "target": ""
+   },
+   {
+    "text": "Staff Attendance",
+    "href": "https://demo.smart-hospital.in/admin/staffattendance",
+    "target": ""
+   },
+   {
+    "text": "Payroll",
+    "href": "https://demo.smart-hospital.in/admin/payroll",
+    "target": ""
+   },
+   {
+    "text": "Leaves",
+    "href": "https://demo.smart-hospital.in/admin/staff/leaverequest",
+    "target": ""
+   },
+   {
+    "text": "Search",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Card View",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "List View",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Add Staff",
+    "h": "https://demo.smart-hospital.in/admin/staff/create"
+   },
+   {
+    "t": "Disabled Staff",
+    "h": "https://demo.smart-hospital.in/admin/staff/disablestafflist"
+   },
+   {
+    "t": "Staff Attendance",
+    "h": "https://demo.smart-hospital.in/admin/staffattendance"
+   },
+   {
+    "t": "Payroll",
+    "h": "https://demo.smart-hospital.in/admin/payroll"
+   },
+   {
+    "t": "Leaves",
+    "h": "https://demo.smart-hospital.in/admin/staff/leaverequest"
+   },
+   {
+    "t": "Show",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/1"
+   },
+   {
+    "t": "Edit",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/1"
+   },
+   {
+    "t": "Show",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/2"
+   },
+   {
+    "t": "Edit",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/2"
+   },
+   {
+    "t": "Show",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/4"
+   },
+   {
+    "t": "Edit",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/4"
+   },
+   {
+    "t": "Show",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/5"
+   },
+   {
+    "t": "Edit",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/5"
+   },
+   {
+    "t": "Show",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/6"
+   },
+   {
+    "t": "Edit",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/6"
+   },
+   {
+    "t": "Show",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/9"
+   },
+   {
+    "t": "Edit",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/9"
+   },
+   {
+    "t": "Show",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/10"
+   },
+   {
+    "t": "Edit",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/10"
+   },
+   {
+    "t": "Show",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/11"
+   },
+   {
+    "t": "Edit",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/11"
+   },
+   {
+    "t": "Show",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/12"
+   },
+   {
+    "t": "Edit",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/12"
+   },
+   {
+    "t": "Show",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/13"
+   },
+   {
+    "t": "Edit",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/13"
+   },
+   {
+    "t": "Show",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/14"
+   },
+   {
+    "t": "Edit",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/14"
+   },
+   {
+    "t": "Show",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/15"
+   },
+   {
+    "t": "Edit",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/15"
+   },
+   {
+    "t": "Show",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/16"
+   },
+   {
+    "t": "Edit",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/16"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/1"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/1"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/2"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/2"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/4"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/4"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/5"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/5"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/6"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/6"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/9"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/9"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/10"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/10"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/11"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/11"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/12"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/12"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/13"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/13"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/14"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/14"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/15"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/15"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/profile/16"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/staff/edit/16"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "018-human-resource__button.jpg"
+}

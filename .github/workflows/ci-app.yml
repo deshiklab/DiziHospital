@@ -1,0 +1,224 @@
+name: ci-app
+
+on:
+  push:
+    branches:
+      - main
+      - 'arena/**'
+    paths:
+      - 'apps/**'
+      - 'packages/**'
+      - 'services/**'
+      - 'tools/ci/**'
+      - 'tools/test/**'
+      - 'tools/migration/**'
+      - 'tools/perf/**'
+      - 'infra/**'
+      - 'package.json'
+      - 'docs/plan/design-tokens.json'
+      - '.github/workflows/ci-app.yml'
+  pull_request:
+    paths:
+      - 'apps/**'
+      - 'packages/**'
+      - 'services/**'
+      - 'tools/ci/**'
+      - 'tools/test/**'
+      - 'tools/migration/**'
+      - 'tools/perf/**'
+      - 'infra/**'
+      - 'package.json'
+      - 'docs/plan/design-tokens.json'
+      - '.github/workflows/ci-app.yml'
+
+concurrency:
+  group: ci-app-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: tokens, clean-room, docs links, class order
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # The contract gate has no dependencies either. It checks the API contract's shape and, more importantly,
+      # that its conflict policies still agree with the ones apps/web/lib/sync.ts enforces; the self-test then
+      # mutates the contract 40 ways and fails if any mutation slips through, because a guardrail that cannot
+      # fail is not a guardrail.
+      - name: The API contract conforms and agrees with the app
+        run: npm run contract:check
+
+      - name: The contract guardrail catches its 40 mutations
+        run: npm run contract:test
+
+      # P0-406 compares normalized snapshots from both systems and proves that an injected money mismatch reaches the alert receiver.
+      - name: The reconciliation harness alerts on injected drift
+        run: npm run test:reconciliation
+
+      # The generator has no dependencies, so no install step is needed for the gates below.
+      - name: Design tokens are in sync with the plan
+        run: npm run tokens:check
+
+      - name: Clean-room scan (no vendor material in the product)
+        run: npm run clean-room
+
+      # The mobile header once shipped an "Expand sidebar" button that could not do anything: two base display
+      # utilities in one class list, and the stylesheet order picked the one that keeps it visible.
+      - name: No class list carries two base display utilities
+        run: npm run check:classes
+
+      # And a public environment variable once read as `env.NEXT_PUBLIC_OIDC_ISSUER`, which the bundler does not
+      # replace: a realm that was configured, provisioned and running was never reached, because the sign-in page
+      # quietly kept showing the preview. The proof needs a build with the variable set (`tools/test/oidc-page.mjs`);
+      # this is the second-long version of the same rule.
+      - name: Public environment variables are read the way a bundler can replace them
+        run: npm run check:env
+
+      # The API service's PHP style, checked without PHP. The real gate is `vendor/bin/pint --test` in ci-api, which
+      # only runs when services/ changes; this one runs on every pull request and checks the same pinned rules, so a
+      # stray unused import in a service file is a second rather than a job that did not trigger.
+      - name: The API service's PHP follows the pinned rules
+        run: npm run api:style
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Every relative link in docs/ resolves
+        run: python3 tools/docs/check_links.py
+
+  # The shell and runtime harnesses were written and run by hand for months, which meant the strongest check in
+  # the repository — a hundred routes hydrating with no console error, and the navigation driven at five
+  # widths — was the one check that did not run on a pull request. They need jsdom and esbuild, which the product
+  # does not depend on, so this job installs them without saving them and serves the production build: the same
+  # artefact that ships, minified stylesheet included.
+  runtime:
+    name: production build, every route hydrated, shell driven
+    runs-on: ubuntu-latest
+    # The harness checks a hundred routes and each one is a page load; the pool keeps it to a few minutes, and
+    # this is the ceiling that keeps a slow runner from being killed mid-run.
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install the workspace
+        run: npm install --no-audit --no-fund
+
+      # --no-save on purpose: the product must not grow a dependency on its own test harness.
+      - name: Install the harness dependencies
+        run: npm i --no-save jsdom esbuild --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck --workspace @dizi/web
+
+      # P0-207's acceptance is that the generated client builds. It is generated from the contract by a
+      # dependency-free generator and committed, so compiling it here is what stops the contract and the client
+      # from drifting apart in a way the JSON checks cannot see.
+      - name: The generated API client typechecks
+        run: npm run typecheck --workspace @dizi/contracts
+
+      # The duplicate rules are contract data and the engine is code; this bundles the real engine and puts one
+      # case per rule through it, which is the only way to see a rule that stopped firing.
+      - name: The duplicate rule set behaves as the contract says
+        run: npm run test:rules
+
+      # Sign-in, against a provider that behaves like Keycloak: the PKCE challenge really is SHA-256 of the verifier
+      # the client keeps, a code is spent once, a callback from another tab is refused, and the roles a realm issues
+      # become the shell and the abilities the app draws. It brings its own realm because Keycloak needs somewhere to
+      # run; the API's suite proves the verifying half against real RS256 signatures.
+      - name: Sign-in goes to the hospital's realm, and the token's roles are the roles the app draws
+        run: npm run test:auth
+
+      # The grid's own rules: a page is a query rather than a slice, a view is a named query whose active state is
+      # derived, the address carries the window, and the export walks the whole filtered set and says how much of it
+      # it wrote. It drives the real component in jsdom, which is why it needs the harness dependencies above.
+      - name: The grid pages, views and exports what it says it does
+        run: npm run test:grid
+
+      # The appointment screens against the API contract: the call is the operation the contract documents, a 409
+      # carrying alternatives survives as the refusal the sheet renders, the branch's zone (not the browser's) turns
+      # instants into minutes of the day, and the *shipping* booking sheet books a time a refusal offered — driven in
+      # jsdom with a source that refuses the first attempt, which is the half of P0-402's acceptance a machine can hold.
+      - name: The booking sheet books the time it was offered, and asks the contract's own path
+        run: npm run test:appointments
+
+      # P0-403's half that a machine can hold without a service: the delivery log, the failure alerting at the
+      # contract's own threshold, the per-event wording in both languages, and the refusals — driven through the
+      # screen's source against a stubbed service, and through the preview, which must refuse what the service refuses
+      # and name its own driver on every row. The service's side of P0-403 is the api job's PHPUnit run.
+      - name: The delivery log, the alert and the wording per event, against both sources
+        run: npm run test:messaging
+
+      # P0-204's acceptance line, measured: a hundred thousand records behind a source, through the real component.
+      # The budget is 1 s for the first page on the *development* build of React, which is the slower of the two — so
+      # a green run here is a green run in production with room to spare.
+      - name: A hundred thousand rows still render a page inside the budget
+        run: npm run perf:grid
+
+      # The approval ladder, withholding, and the three verdicts a reconciliation can reach: a book that agrees,
+      # a difference the queue explains, and a short drawer nobody can explain.
+      - name: The cash book's rules hold
+        run: npm run test:finance
+
+      # The report suite's framework: per branch and consolidated are the same query added up, a maximum and a
+      # ratio and an average are recomputed rather than summed, and a branch that cannot answer says so instead of
+      # printing zero. This is the check that keeps seventeen report screens honest at once.
+      - name: Every report adds up per branch, and says where it cannot answer
+        run: npm run test:reports
+
+      # The administration phase's arithmetic, which is where a wrong figure costs somebody money: the payroll
+      # recomputed from the attendance register the same month was walked on, every deduction rebuilt from the
+      # allowance and tax tables, the refusals in the birth, death, leave, visitor and holiday registers driven
+      # one by one, the branch console's totals re-added, and the eighteen registered screens diffed against the
+      # screen map in docs/plan.
+      - name: The payroll pays the register, and the registers refuse what they must
+        run: npm run test:admin
+
+      # The communication phase's arithmetic and its refusals: the survey forms and their refusals, the answer
+      # side that keeps what a person typed when the round closes underneath them, the CMS body parser the editor
+      # and the public site share, the noticeboard that works with the uplink down against the outward channels
+      # that cannot, the numbered documents drawn from this node's own block, the portal's own arithmetic and its
+      # Bangla refusals, and the twelve registered screens diffed against the screen map.
+      - name: The forms answer, the notices queue, and the portal refuses in the patient's words
+        run: npm run test:p8
+
+      - name: Build (default dist directory — no dev server is running here)
+        run: npm run build --workspace @dizi/web
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+
+      - name: Serve the production build
+        run: |
+          # nohup so the server survives the shell that started it — each CI step is its own shell.
+          nohup npm run start --workspace @dizi/web > /tmp/next.log 2>&1 &
+          for i in $(seq 1 60); do
+            if curl -sf -o /dev/null http://127.0.0.1:3000/; then echo "server answered after ${i}s"; exit 0; fi
+            sleep 1
+          done
+          echo "the server never answered:"; cat /tmp/next.log; exit 1
+
+      # The stylesheet assertions read whichever server DIZI_BASE points at, so they are checked here against
+      # the minified production CSS rather than the dev server's.
+      - name: Shell navigation — drawer and rail at five widths
+        run: npm run test:shell
+        env:
+          DIZI_BASE: http://127.0.0.1:3000
+
+      - name: Every route hydrates, with the clipboard refusing
+        run: npm run test:runtime
+        env:
+          DIZI_BASE: http://127.0.0.1:3000
+          DIZI_CONCURRENCY: '4'
+
+      - name: Server log
+        if: failure()
+        run: tail -100 /tmp/next.log || true

@@ -1,0 +1,523 @@
+{
+ "id": "023-referral",
+ "label": "Referral",
+ "url": "https://demo.smart-hospital.in/admin/referral/payment",
+ "section": "ADMINISTRATION",
+ "parent": "",
+ "ok": true,
+ "status": 200,
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/referral/payment",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Referral Payment List",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Referral Payment List",
+   "Add Referral Payment",
+   "Edit Referral Payment",
+   "Add Patient",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "addpayment",
+    "fields": [
+     {
+      "label": "Patient Type *",
+      "name": "patient_type",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select Type",
+       "OPD",
+       "IPD",
+       "Pharmacy",
+       "Pathology",
+       "Radiology",
+       "Blood Bank",
+       "Ambulance"
+      ]
+     },
+     {
+      "label": "Bill No/Case Id *",
+      "name": "bill_no",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Patient Bill Amount ($) *",
+      "name": "bill_amount",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Payee *",
+      "name": "payee",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select Payee",
+       "ABHI",
+       "Aarav",
+       "Laxmi Sahu",
+       "Amol",
+       "Ankita",
+       "Bandana",
+       "Ashok",
+       "Mariya Forde",
+       "Suresh Verma",
+       "Surya Lalwani"
+      ]
+     },
+     {
+      "label": "Commission Percentage (%) *",
+      "name": "percentage",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Commission Amount ($) *",
+      "name": "commission_amount",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "editpayment",
+    "fields": [
+     {
+      "label": "Commission Percentage (%) *",
+      "name": "commission_percentage",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Commission Amount ($) *",
+      "name": "commission_amount",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "",
+    "method": "post",
+    "name": "formaddpa",
+    "fields": [
+     {
+      "label": "Name *",
+      "name": "name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Guardian Name",
+      "name": "guardian_name",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Phone",
+      "name": "mobileno",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Gender",
+      "name": "gender",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select",
+       "Male",
+       "Female"
+      ]
+     },
+     {
+      "label": "Date Of Birth",
+      "name": "dob",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Year",
+      "name": "age[year]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Month",
+      "name": "age[month]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Day",
+      "name": "age[day]",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Blood Group",
+      "name": "blood_group",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Marital Status",
+      "name": "marital_status",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "Email",
+      "name": "email",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Address",
+      "name": "address",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "National Identification Number",
+      "name": "identification_number",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "file",
+      "name": "file",
+      "type": "file",
+      "required": false
+     },
+     {
+      "label": "Remarks",
+      "name": "note",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "Any Known Allergies",
+      "name": "known_allergies",
+      "type": "textarea",
+      "required": false
+     },
+     {
+      "label": "TPA",
+      "name": "organisation_id",
+      "type": "select",
+      "required": false,
+      "options": [
+       "Select"
+      ]
+     },
+     {
+      "label": "TPA ID",
+      "name": "insurance_id",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "TPA Validity",
+      "name": "validity",
+      "type": "input",
+      "required": false
+     },
+     {
+      "label": "Alternate Number",
+      "name": "custom_fields[patient][3]",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "cls": "table table-hover table-striped table-bordered example dataTable no-footer",
+    "rows": 15,
+    "columns": [
+     "Payee",
+     "Patient Name",
+     "Bill No",
+     "Bill Amount ($)",
+     "Commission Percentage (%)",
+     "Commission Amount ($)",
+     "Action"
+    ],
+    "sample": [
+     [
+      "Surya Lalwani",
+      "John Marshall (2)",
+      "IPDN8",
+      "1404.00",
+      "20.00",
+      "280.80",
+      ""
+     ],
+     [
+      "Mariya Forde",
+      "Nidhu varma (1169)",
+      "OPDN7616",
+      "128.40",
+      "13.00",
+      "16.69",
+      ""
+     ]
+    ]
+   }
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Add Referral Payment",
+    "href": "",
+    "target": "#myModal",
+    "onclick": ""
+   },
+   {
+    "text": "Referral Person",
+    "href": "https://demo.smart-hospital.in/admin/referral/person",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Remove",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": "",
+    "onclick": ""
+   }
+  ],
+  "tabs": [],
+  "filters": [
+   "Filter Menu",
+   "Search By Patient Name",
+   "Type to searchâ€¦",
+   "DataTables_Table_0_length",
+   "patient_type",
+   "bill_no",
+   "bill_amount",
+   "payee",
+   "percentage",
+   "commission_amount",
+   "commission_percentage",
+   "commission_amount",
+   "name",
+   "guardian_name",
+   "mobileno",
+   "gender",
+   "dob",
+   "Year",
+   "Month",
+   "Day",
+   "blood_group",
+   "marital_status",
+   "email",
+   "organisation_id",
+   "custom_fields[patient][3]"
+  ],
+  "sections": [
+   "Referral Payment List Add Referral Payment Referral Person"
+  ],
+  "stats": [],
+  "addLinks": [
+   {
+    "text": "Add Patient Patient List",
+    "href": "https://demo.smart-hospital.in/admin/admin/search?action=add"
+   },
+   {
+    "text": "New OPD Patient OPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/search?action=add"
+   },
+   {
+    "text": "New IPD Patient IPD Patient",
+    "href": "https://demo.smart-hospital.in/admin/patient/ipdsearch?action=add"
+   },
+   {
+    "text": "New Appointment Appointment",
+    "href": "https://demo.smart-hospital.in/admin/appointment?action=add"
+   },
+   {
+    "text": "New Bill Bill",
+    "href": "https://demo.smart-hospital.in/admin/bill/dashboard"
+   },
+   {
+    "text": "New Pharmacy Bill Pharmacy Bill",
+    "href": "https://demo.smart-hospital.in/admin/pharmacy/bill?action=add"
+   },
+   {
+    "text": "New Pathology Test Pathology Test",
+    "href": "https://demo.smart-hospital.in/admin/pathology/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Radiology Test Radiology Test",
+    "href": "https://demo.smart-hospital.in/admin/radio/gettestreportbatch?action=add"
+   },
+   {
+    "text": "New Blood Issue Blood Issue",
+    "href": "https://demo.smart-hospital.in/admin/bloodbank/issue?action=add"
+   },
+   {
+    "text": "New Ambulance Call Ambulance Call",
+    "href": "https://demo.smart-hospital.in/admin/vehicle/getcallambulance?action=add"
+   },
+   {
+    "text": "New Visitor Visitor",
+    "href": "https://demo.smart-hospital.in/admin/visitors?action=add"
+   },
+   {
+    "text": "New Income Income",
+    "href": "https://demo.smart-hospital.in/admin/income?action=add"
+   },
+   {
+    "text": "New Expense Expense",
+    "href": "https://demo.smart-hospital.in/admin/expense?action=add"
+   }
+  ],
+  "hasChart": false
+ }
+}

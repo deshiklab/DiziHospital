@@ -1,0 +1,10 @@
+staffId,name,email,role,branch,node
+9001,Super Admin,superadmin@dizihospital.example,super-admin,Main Campus,node-main-01
+9018,Maria Ford,maria@dizihospital.example,receptionist,Main Campus,node-main-01
+9002,Sonia Bush,sonia@dizihospital.example,doctor,Main Campus,node-main-02
+9010,Natasha Romanoff,natasha@dizihospital.example,nurse,Mirpur Branch,node-mirpur-01
+9012,Harry Grant,harry@dizihospital.example,pharmacist,Main Campus,node-main-03
+9005,Belina Turner,belina@dizihospital.example,pathologist,Main Campus,node-main-04
+9006,John Hook,john@dizihospital.example,radiologist,Main Campus,node-main-04
+9003,Brad Frost,brad@dizihospital.example,accountant,Uttara Branch,node-uttara-01
+9017,Jason Abbot,jason@dizihospital.example,admin,Uttara Branch,node-uttara-01

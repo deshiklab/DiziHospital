@@ -1,0 +1,217 @@
+{
+ "pageId": "016-multi-branch-report",
+ "pageLabel": "Multi Branch › Report",
+ "trigger": {
+  "label": "button",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 0
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/multibranch/branch/report",
+ "from": "https://demo.smart-hospital.in/admin/multibranch/branch/report",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/multibranch/branch/report",
+  "title": "Smart Hospital & Research Center · Smart Hospital",
+  "pageTitle": "Report",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Report",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [],
+  "tabs": [],
+  "sections": [
+   "Report"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Close",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Update",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Appointment Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/appointmentreport"
+   },
+   {
+    "t": "OPD Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/opdreport"
+   },
+   {
+    "t": "IPD Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/ipdreport"
+   },
+   {
+    "t": "OT Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/otreport"
+   },
+   {
+    "t": "Pharmacy Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/pharmacyreport"
+   },
+   {
+    "t": "Medicine Expiry Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/expmedicinereport"
+   },
+   {
+    "t": "Pathology Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/pathologyreport"
+   },
+   {
+    "t": "Radiology Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/radiologyreport"
+   },
+   {
+    "t": "Blood Issue Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/bloodissuereport"
+   },
+   {
+    "t": "Component Issue Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/componentissuereport"
+   },
+   {
+    "t": "Blood Donor Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/blooddonorreport"
+   },
+   {
+    "t": "Ambulance Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/ambulancereport"
+   },
+   {
+    "t": "Birth Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/birthreport"
+   },
+   {
+    "t": "Payroll Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/payrollreport"
+   },
+   {
+    "t": "Income Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/incomereport"
+   },
+   {
+    "t": "Expense Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/expensesreport"
+   },
+   {
+    "t": "Live Consultation Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/liveconsultationissuereport"
+   },
+   {
+    "t": "Transaction Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/transactionreport"
+   },
+   {
+    "t": "Death Report",
+    "h": "https://demo.smart-hospital.in/admin/multibranch/branch/deathreport"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Switch Branch",
+  "bodyText": "Switch Branch Smart Hospital & Research Center (Home Branch) Your Hospital Name Smart Hospital Branch 2 Close Update",
+  "required": 0,
+  "fieldCount": 3,
+  "errors": []
+ },
+ "file": "016-multi-branch-report__button.jpg"
+}

@@ -1,0 +1,269 @@
+{
+ "pageId": "063-setup-pathology",
+ "pageLabel": "Setup › Pathology",
+ "trigger": {
+  "label": "Add Pathology Category",
+  "kind": "modal",
+  "sel": "[data-target]",
+  "idx": 1
+ },
+ "modalVisible": true,
+ "url": "https://demo.smart-hospital.in/admin/pathologycategory/addcategory",
+ "from": "https://demo.smart-hospital.in/admin/pathologycategory/addcategory",
+ "profile": {
+  "url": "https://demo.smart-hospital.in/admin/pathologycategory/addcategory",
+  "title": "Add Pathology Categories · Smart Hospital",
+  "pageTitle": "Pathology Category List",
+  "breadcrumb": "",
+  "headings": [
+   "Quick Add",
+   "Pathology Category List",
+   "Add Pathology Category",
+   "Edit Pathology Category",
+   "Bed Status",
+   "Register your purchase code",
+   "Register your Addon",
+   "Switch Branch"
+  ],
+  "forms": [
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/search",
+    "method": "post",
+    "name": "",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Search By Patient Name",
+      "name": "search_text",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/pathologycategory/add",
+    "method": "post",
+    "name": "employeeform",
+    "visible": true,
+    "fields": [
+     {
+      "label": "Category Name",
+      "name": "category_name",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/pathologycategory/add",
+    "method": "post",
+    "name": "employeeform",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Category Name",
+      "name": "category_name",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updatePurchaseCode",
+    "method": "post",
+    "name": "purchase_code",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Smart Hospital ( How to find it? )",
+      "name": "envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/admin/updateaddon",
+    "method": "post",
+    "name": "addon_verify",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Envato Market Purchase Code for Addon ( How to find it? )",
+      "name": "app-envato_market_purchase_code",
+      "type": "text",
+      "required": false
+     },
+     {
+      "label": "Your Email Registered With Envato",
+      "name": "app-email",
+      "type": "text",
+      "required": false
+     }
+    ]
+   },
+   {
+    "action": "https://demo.smart-hospital.in/admin/multibranch/branch/switch",
+    "method": "post",
+    "name": "form_branch_change",
+    "visible": false,
+    "fields": [
+     {
+      "label": "Smart Hospital & Research Center (Home Branch)",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Your Hospital Name",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     },
+     {
+      "label": "Smart Hospital Branch 2",
+      "name": "branch",
+      "type": "radio",
+      "required": false
+     }
+    ]
+   }
+  ],
+  "tables": [
+   {
+    "id": "DataTables_Table_0",
+    "rows": 7,
+    "columns": [
+     "Category Name",
+     "Action"
+    ]
+   }
+  ],
+  "tabs": [],
+  "sections": [
+   "Pathology Category List Add Pathology Category"
+  ],
+  "buttons": [
+   {
+    "text": "2",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Add Pathology Category",
+    "href": "",
+    "target": "#myModal"
+   },
+   {
+    "text": "Cancel",
+    "href": "",
+    "target": ""
+   },
+   {
+    "text": "Save",
+    "href": "",
+    "target": ""
+   }
+  ],
+  "anchors": [
+   {
+    "t": "Pathology Category",
+    "h": "https://demo.smart-hospital.in/admin/pathologycategory/addcategory"
+   },
+   {
+    "t": "Unit",
+    "h": "https://demo.smart-hospital.in/admin/pathologycategory/unit"
+   },
+   {
+    "t": "Pathology Parameter",
+    "h": "https://demo.smart-hospital.in/admin/pathologycategory/pathoparameter"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "#"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/pathologycategory/delete/1"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/pathologycategory/delete/2"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/pathologycategory/delete/3"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/pathologycategory/delete/4"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/pathologycategory/delete/5"
+   },
+   {
+    "t": "",
+    "h": "javascript:void(0)"
+   },
+   {
+    "t": "",
+    "h": "https://demo.smart-hospital.in/admin/pathologycategory/delete/6"
+   },
+   {
+    "t": "1",
+    "h": "#"
+   }
+  ]
+ },
+ "form": {
+  "modalTitle": "Add Pathology Category",
+  "bodyText": "Add Pathology Category Pathology Category Category Name * Cancel Save",
+  "required": 0,
+  "fieldCount": 1,
+  "errors": []
+ },
+ "file": "063-setup-pathology__add-pathology-category.jpg"
+}
