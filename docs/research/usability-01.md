@@ -1,23 +1,35 @@
 # Usability test #1 — the booking desk
 
+**Study status: NOT RUN — this is a protocol and results template only. No participants, timings, deltas, or findings have been collected.**
+
+**Role coverage:** the prepared task set below covers reception / appointment-desk work. P0-408 requires five participants for each role in the approved pilot scope; five receptionists alone do not cover any other role. Add and approve role-specific tasks before recruiting any additional role.
+
 **Ticket:** P0-408 (`docs/plan/09-EXECUTION-BACKLOG-P0.md:101`) · **Acceptance evidence for:** P0-402
 ("Appointment screens: day calendar, queue board, online-request inbox — usability test with 5 receptionists completed")
 **Designs under test:** `/appointments` (calendar, queue board, request inbox, full list, booking sheet) and
-`/appointments/queue` (the live queue) · **Branch:** ______ · **Observer:** _name_ · **Date/shift:** ______
+`/appointments/queue` (the queue) · **Target role for this task set:** receptionist · **Branch / build / observer / date:** TBD
 
 ---
 
-## Status: not run
+## Status and run prerequisites
 
-**No session has been run.** There is no pilot branch, no reception desk and no receptionists in this repository's
-development environment, and `docs/research/baseline-tasks.md` is still an empty table — the legacy medians the test is
-supposed to beat do not exist yet either. A "usability test" carried out now would be one developer reading his own
-screen, and its numbers would be worse than useless: they would be entered in a table and compared *against nothing*.
+**No session has been run.** The pilot branch has not been selected, the approved role/module scope is not recorded, and
+`docs/research/baseline-tasks.md` contains no measured legacy timings. There is no accepted comparison build or
+approved, isolated test environment documented here. Do not run sessions or report task-time deltas until these gaps
+are closed. A developer reviewing the screen is not a participant usability test.
 
-So this file is the **instrument**, not the result. Everything below is what the pilot branch needs in order to run the
-test in one shift: the task set, the machine starting state for each task, what counts as success, what counts as a
-defect, the scripted conflict, the comprehension questions, and the tables the observer fills in. The empty cells mean
-empty, and they stay empty until a session happens.
+This file is the **instrument**, not the result. It defines tasks, controlled starting states, success/error criteria,
+consent and privacy requirements, measurement, and result tables. Blank cells are intentionally blank; do not estimate
+or backfill results.
+
+| Required before recruiting / testing | Current status |
+|---|---|
+| Pilot branch, approved module scope, and ownership for the test window | **TBD** — `docs/research/branches.md` and `docs/migration/ownership.md` are unfilled for an active pilot. |
+| Five participants for every in-scope role; role-specific task list | **TBD** — current prepared tasks cover reception only. |
+| Legacy baseline measured for each comparable task under matched conditions | **NOT MEASURED** — `docs/research/baseline-tasks.md` is blank. |
+| Candidate build, branch/API source, role permissions, and source labels | **TBD** — verify and record build SHA before the session. |
+| Isolated environment, synthetic fixtures, consent/privacy approval, and safe observer setup | **TBD** — production patient records and live appointment slots are out of scope. |
+| Clinical owner approval of task outcomes, blocking criteria, and participant materials | **PENDING** |
 
 **What is left for people, in one sentence:** whether a receptionist who has never seen this screen can book, reschedule
 and answer a taken slot without being told what to do — and, when the slot is refused, can read the refusal and act on
@@ -46,39 +58,54 @@ exercised against the harness's own stub and against the preview source.
 
 ---
 
-## 1. Participants
+## 1. Participants and role coverage
 
-Five receptionists (P0-408's "5 users per role"), chosen so that the sample is not five copies of one desk:
+Recruit **five distinct users for every staff role that performs an in-scope pilot task**, as confirmed by the clinical
+owner and the branch/module ownership notice. The current tasks below cover receptionist workflows only. Do not infer
+that a receptionist sample represents nurses, clinicians, or any other role. If another role is in scope, add its task
+script, starting state, expected outcome, safety stop, and baseline mapping before testing.
 
-| # | Name (or initials, consented) | Shift | Years in the role | Used a hospital system before? | Consented |
+| In-scope role | Role-specific task set | Required | Recruited | Completed |
+|---|---|---:|---:|---:|
+| Receptionist | T1–T8 (prepared here; confirm scope) | 5 | 0 | 0 |
+| Add each other approved role | Add role-specific tasks before recruiting | 5 per role | 0 | 0 |
+
+Duplicate this participant profile once per participant, using a study code such as `REC-01`; do not write names, initials,
+contact details, MRNs, or consent-form identifiers into this file. Keep any code-to-identity key and consent records in
+the hospital-approved restricted location.
+
+| Participant code | Role | Shift | Years in role (band) | Used a hospital system before? | Consent recorded securely? |
 |---|---|---|---|---|---|
-| 1 | | morning | | yes / no | |
-| 2 | | morning | | | |
-| 3 | | afternoon | | | |
-| 4 | | night / relief | | | |
-| 5 | | | | | |
+| REC-01 | Receptionist | | | yes / no | yes / no |
+| REC-02 | Receptionist | | | yes / no | yes / no |
+| REC-03 | Receptionist | | | yes / no | yes / no |
+| REC-04 | Receptionist | | | yes / no | yes / no |
+| REC-05 | Receptionist | | | yes / no | yes / no |
 
-* At least one participant must **never** have used any hospital software — the design claims a new clerk can use the
-  desk without training, and that claim is what this person is here to test.
-* At least one must be from the relief or night shift: they cover the desk with less context, and they are the ones the
-  help screens are written for.
-* Nobody is asked to take part by their line manager in the room. Consent is a sentence, not a form: what is recorded,
-  what is deleted, and the fact that stopping mid-task is allowed and costs nothing.
-* **No patient-identifiable data.** The tasks run against the pilot branch's own test MRN block or against the preview's
-  synthetic register. Nothing a participant types into a real record is copied into this file.
+* Include a mix of shifts and experience; where feasible, include someone new to hospital software and someone from a
+  relief/night shift. Do not let one experienced champion stand in for the target users.
+* Participation is voluntary. Do not recruit in front of a line manager or imply that a task result affects employment.
+  Use the hospital-approved consent process; explain what will be observed, how notes are protected, how long they are
+  kept, and that participants may stop at any time.
+* **No patient-identifiable data.** Use an isolated approved test environment with synthetic patient and appointment
+  records only. Do not use a live patient MRN block, real phone number, production slot, or real patient transaction.
+  Do not store audio/video/screenshots unless separately approved and consented; redact all evidence before it leaves the
+  restricted study location.
 
 ## 2. Conditions of the run
 
-The comparison against `baseline-tasks.md` is only meaningful if the conditions match:
+The comparison against `baseline-tasks.md` is meaningful only when the task, role, system state, and observation
+conditions match. Confirm and record these before testing; do not run against production or active patient work.
 
 | Condition | Value for this run |
 |---|---|
-| Branch and desk | the pilot branch's reception counter 1 (the one the baseline was taken at) |
+| Branch and desk | approved pilot branch and designated test desk — **TBD** |
+| Environment and data | isolated approved staging / test tenant; synthetic records only; no production writes, live slot conflicts, or direct database seeding |
 | Time of day | not 08:00 opening, not the 11:00 rush — the baseline's own rule |
 | Repetitions | ≥ 3 per task, per participant; the **median** is the number recorded |
 | Stopwatch | one observer, stopwatch, timing from the participant's first movement to the task being *finished* (not "looks finished") |
 | Machine and printer | the pilot desk's own machine, the desk's own receipt/day-list printer |
-| Screens shown first | the desk as it ships: no developer console, no dev server, no hidden banner. The screen says which source it is reading, and that sentence is part of the interface being tested |
+| Screens shown first | the tested candidate build with source/environment label visible; no developer console, no hidden banner, and no coaching |
 | What is withheld | nobody explains a step, points at a button, or answers "what now?". Help is only given if the participant is stuck for 60 seconds, is asked for it, or the task has become impossible — and every use of help is counted in §7 |
 
 ## 3. Task set — the booking desk
@@ -89,7 +116,7 @@ already names; tasks 4–8 are what P0-402 added to the desk.
 
 ### T1 — Book a walk-in appointment (baseline task 3)
 
-* **Starting state:** a patient is at the counter with a card (test MRN). The desk is on today's calendar.
+* **Starting state:** a synthetic test participant is at the counter with a card bearing a synthetic identifier. The desk is on today's calendar.
 * **Task, as said to the participant:** "This patient is here now and was told to see a doctor today. Book them in."
 * **Success:** an appointment exists on today's diary, for a doctor the patient is willing to see, at a time the desk
   considers reasonable — and the token the sheet shows is the token the desk would write on the patient's slip.
@@ -130,12 +157,13 @@ already names; tasks 4–8 are what P0-402 added to the desk.
 
 ### T5 — Read the diary before answering the patient
 
-* **Starting state:** the calendar for today, all doctors.
-* **Task:** "The next patient asks: how many people are still to be seen by Dr Rahman this morning, and how long is the
-  wait?"
-* **Success:** the participant reads the count off the board/list without counting with a finger on paper, and answers in
-  under 20 seconds.
-* **Defect if:** the answer requires scrolling through a list to count, or the count they give is wrong by more than one.
+* **Starting state:** the synthetic calendar for today, with a pre-agreed queue fixture for Clinician A.
+* **Task:** "The next patient asks how many people are still to be seen by Clinician A this morning and what the displayed
+  wait estimate is."
+* **Success:** the participant gives the fixture's correct count and reads the displayed wait estimate accurately.
+* **Defect if:** the participant cannot locate the information, the count/status disagrees with the fixture, or the wait
+  estimate is presented without enough context to explain it. Record time and errors; do not impose a speed threshold for
+  this task until the clinical owner approves one.
 
 ### T6 — Move a patient through the queue board
 
@@ -161,22 +189,25 @@ already names; tasks 4–8 are what P0-402 added to the desk.
 
 ### T8 — Notice which diary this is
 
-* **Starting state:** the desk as it is actually deployed in the session: **either** the live source (the branch's own
-  server answering) **or** the preview, decided by the observer pulling the uplink or by the tester stopping the service.
-* **Task:** "Before you start: tell me what this screen is showing, and whether you should trust it with a real
-  patient."
-* **Success:** the participant reads the source sentence at the top of the screen and answers from it.
-* **Defect if:** the participant cannot say whether it is the branch's diary or sample data (**blocking** — a desk that
-  cannot tell a fixture from a patient's appointment is the exact failure this banner exists to prevent).
+* **Starting state:** an approved, isolated test build with a clearly labelled synthetic-data source. If comparing two
+  source labels, use two isolated test configurations prepared in advance; never pull a production uplink, stop a live
+  service, or expose real patient records.
+* **Task:** "Before you start: tell me what this screen is showing and whether it is approved for real patient work."
+* **Success:** the participant correctly identifies the environment/source label and says whether it is test-only or
+  approved for the stated pilot scope.
+* **Defect if:** the participant cannot distinguish sample data from an approved patient-care source (blocking). If the
+  build has no verifiable source/environment label, mark this task blocked before recruiting; do not simulate by
+  disrupting a live system.
 
 ## 4. The scripted conflict, exactly
 
-Two desks, one slot. The observer prepares it before the participant sits down:
+Two test desks, one synthetic slot. Run this only in the approved isolated test environment; never reserve or
+conflict a real patient's appointment. The observer prepares it before the participant sits down:
 
-1. Desk A (the participant) opens the booking sheet for Dr Rahman, tomorrow 09:00, and fills in the patient, the type
-   and the reason — but does **not** confirm.
-2. Desk B (the observer, in another browser session or another machine) books that same doctor at 09:00 with a different
-   patient and confirms.
+1. Desk A (the participant) opens the booking sheet for synthetic Clinician A, tomorrow 09:00, and fills in a synthetic
+   patient, appointment type, and reason — but does **not** confirm.
+2. Desk B (the observer, in another browser session or another machine) books the same synthetic clinician at 09:00
+   with a different synthetic patient and confirms.
 3. Desk A confirms. The service refuses (409 `dizi.slot-taken`); the sheet shows the sentence and the offered times.
 
 What the observer watches for, in order: does the participant read the refusal at all; do they see the offered times as
@@ -193,9 +224,9 @@ service. The operation the *portal* writes with, `POST /portal/appointments`, is
 served by the branch node in this build**. So in the pilot branch the inbox stays empty until the portal side takes
 bookings, and an empty inbox is the honest state, not a defect.
 
-If it is empty on the day of the session, T7 is run against requests seeded into the branch's own service by the
-observer (a direct insert), and the observer says so out loud before the task — the participant is testing the *answer*
-flow, not the portal.
+If it is empty, run T7 only if the approved isolated test environment has a supported fixture/seed path that creates
+synthetic requests through an approved test mechanism. **Do not insert directly into the database or use a production
+portal/live request.** If no safe seed path exists, mark T7 not evaluable and record the blocker; do not improvise.
 
 ## 6. Comprehension questions (asked once, after T8, in Bangla first)
 
@@ -215,23 +246,41 @@ timings say.
 
 ## 7. Timing and errors
 
-One row per participant per task. `Δ` is against the baseline median where a baseline exists; where none exists, the
-number is recorded bare and this file says so.
+Time from the participant's first action after the prompt until the expected outcome is verified in the approved
+test environment. Use three timed attempts per task per participant when safe and appropriate; exclude the practice
+rehearsal and keep any failed/abandoned attempt visible. First calculate each participant's median; then report the
+role/task median across participants. Use the measured legacy median for the matching baseline row only.
 
-| Task | Participant | Attempt 1 | Attempt 2 | Attempt 3 | Median | Baseline median | Δ % | Errors | Help used (what was asked) |
+**Delta formula:** `((new role median − legacy median) / legacy median) × 100`. Negative is faster; the plan's target is
+`≤ −30%` (new median no more than 70% of legacy). If the baseline is blank, the task/role does not match, or the
+conditions differ, report **N/A — no valid comparison**; do not substitute zero or estimate a legacy value. Timing never
+overrides a blocking safety error. With five participants per role, report descriptive medians, counts, errors, and
+help rates only; do not claim statistical significance or generalize beyond the tested branch and roles.
+
+| Task | Role | Participant code | Attempt 1 | Attempt 2 | Attempt 3 | Participant median | Legacy median | Δ % | Errors / help / outcome |
 |---|---|---|---|---|---|---|---|---|---|
-| T1 | | | | | | | | | |
-| T2 | | | | | | | | | |
-| T3 | | | | | | | | | |
-| T4 | | | | | | (no baseline) | — | | |
-| T5 | | | | | | (no baseline) | — | | |
-| T6 | | | | | | (no baseline) | — | | |
-| T7 | | | | | | (no baseline) | — | | |
-| T8 | | | | | | (no baseline) | — | | |
+| T1 | Receptionist | REC-01 | | | | | | | |
+| T2 | Receptionist | REC-01 | | | | | | | |
+| T3 | Receptionist | REC-01 | | | | | | | |
+| T4 | Receptionist | REC-01 | | | | | (no baseline) | N/A | |
+| T5 | Receptionist | REC-01 | | | | | (no baseline) | N/A | |
+| T6 | Receptionist | REC-01 | | | | | (no baseline) | N/A | |
+| T7 | Receptionist | REC-01 | | | | | (no baseline) | N/A | |
+| T8 | Receptionist | REC-01 | | | | | (no baseline) | N/A | |
+
+Duplicate these rows for every participant and every approved in-scope role. Keep participant-level notes in the
+restricted study record; this repository contains only de-identified codes and aggregate results.
+
+| Role | Task | N attempted / successful | Role median (s) | Legacy median (s) | Δ % | Help / errors | Blocking finding? |
+|---|---|---|---|---|---|---|---|
+| Receptionist | T1 | | | | | | |
+| Receptionist | T2 | | | | | | |
+| Receptionist | T3 | | | | | | |
+| Add each other in-scope role | Add mapped tasks | | | | | | |
 
 Task-level notes (what was slow, what was read aloud, what was missed):
 
-| Task | Observation | Quote worth keeping (no names) |
+| Task | Observation | De-identified quote (no names or patient/staff details) |
 |---|---|---|
 | | | |
 
@@ -258,14 +307,20 @@ defect with a ticket, ranked by how many participants hit it.
 
 | Field | Value |
 |---|---|
-| Sessions run | __ of 5 |
-| Tasks met (median) | __ of 8 |
+| Approved pilot roles in scope | |
+| Roles with five completed participants | __ of __ |
+| Receptionist participants completed | __ of 5 |
+| Total sessions / task attempts | |
+| Task success and help rates by role | |
 | Blocking findings | |
-| Defects filed (ticket ids) | |
-| Baseline tasks 3/4/5 beaten by ≥ 30 % | yes / no |
-| P0-402 acceptance ("5 receptionists completed") | **not met** / met on ______ |
-| Read by (clinical lead) | |
+| Defects filed (ticket IDs; no PHI) | |
+| Valid baseline comparisons meeting ≤ −30 % | __ of __ mapped tasks |
+| Tasks without a valid baseline | |
+| P0-402 acceptance (5 receptionists completed) | **not met** / met on ______ |
+| P0-408 acceptance (5 users per in-scope role; deltas reported) | **not met** / met on ______ |
+| Clinical lead review (name/reference kept in approved record) | **PENDING** |
 | Outcome feeds | P0-409 go/no-go |
 
-**Until the row above says met, P0-402 is implemented and mechanically tested, not accepted.** The screens ship with
-that stated on them and in `apps/web/README.md`.
+**Current outcome: NOT RUN.** No user session, task-time delta, blocking finding, or clinical review is claimed. An empty
+table is not acceptance evidence. P0-408 remains open until the approved role sample is complete and actual, valid
+task-time deltas and findings are recorded. P0-402's mechanical CI coverage does not substitute for the human study.

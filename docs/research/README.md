@@ -12,9 +12,10 @@ deliberately plain markdown: every answer goes in the repo, in a diff, next to t
 | [`hardware.md`](hardware.md) | P0-004 | hospital IT | Reference devices for print/scanner work; the paper formats we must reproduce |
 
 Later in the pilot wave the same folder takes the instruments that are **run**, not just filled in:
-[`usability-01.md`](usability-01.md) (P0-408 — the booking desk's task set, timings and blocking findings;
-its empty tables are the acceptance evidence for P0-402) and the drill logs P0-404/P0-405 name. Those say
-"not run" until somebody runs them.
+[`usability-01.md`](usability-01.md) (P0-408 — the booking desk's protocol, role coverage, timings and blocking findings;
+its tables are currently empty and the study is **not run**. Empty tables are not acceptance evidence. P0-408 requires
+five participants per approved in-scope role and valid task-time deltas against measured baselines.) and the drill logs
+P0-404/P0-405 name. Those say "not run" until somebody runs them.
 
 Rules for anyone filling these in:
 
